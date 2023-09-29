@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const { logout, isSignUp } = useAuth();
 
   const navigate = useNavigate();
 
-  const logout = () => {
-    localStorage.removeItem("user");
+  function handleLogout() {
     navigate("/login", { replace: true });
-  };
+    logout();
+  }
 
   const [user, setUser] = useState({});
 
@@ -27,7 +29,7 @@ const Home = () => {
       <p>You are successfully logged in</p>
 
       <div>
-        <button onClick={logout}>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );

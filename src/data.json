@@ -1,0 +1,28 @@
+[
+    {
+        "code": 1,
+        "section": "general",
+        "questions": [
+            {
+                "questionCode": 1,
+                "text": "What is your goal",
+                "type": ["text", "number", "multichoice"],
+                "options": [
+                    {
+                        "text": "Shred",
+                        "id": 1
+                    },
+                    {
+                        "text": "Bulk",
+                        "id": 2
+                    },
+                    {
+                        "text": "Lean",
+                        "id": 3
+                    }
+                ]
+            }
+        ]
+    }
+]
+

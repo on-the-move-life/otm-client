@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import useFetch from "../hooks/useFetch";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { handleAuth, loading, error } = useFetch(
-    "http://localhost:882/auth/login"
-  );
+  const { login, isAuthenticated, error } = useAuth();
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,12 +13,15 @@ const Login = () => {
   const handleEmailAuth = (e) => {
     e.preventDefault();
 
-    const body = {
-      email,
-      password,
-      isGoogleLogin: false,
-    };
-    handleAuth(body);
+    if (email && password) {
+      const body = {
+        email,
+        password,
+        isGoogleLogin: false,
+      };
+
+      login(body);
+    }
   };
 
   useEffect(() => {
@@ -28,7 +32,7 @@ const Login = () => {
         credential: res.credential,
         isGoogleLogin: true,
       };
-      handleAuth(body);
+      login(body);
     };
 
     if (window.google) {
@@ -38,13 +42,17 @@ const Login = () => {
       });
 
       google.accounts.id.renderButton(document.getElementById("loginDiv"), {
-        theme: "filled_black",
+        // theme: "filled_black",
         text: "signin_with",
         shape: "pill",
       });
-
     }
-  }, [handleAuth]);
+  }, [login]);
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/home", {replace: true});
+    else navigate("/new-user", {replace: true});
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="flex flex-col justify-center items-center w-100 h-100 py-8">
@@ -71,7 +79,7 @@ const Login = () => {
         </div>
         <div className="text-center mb-6">OR</div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {loading ? <div>Loading....</div> : <div className="flex justify-center items-center" id="loginDiv"></div>}
+        <div className="flex justify-center items-center" id="loginDiv"></div>
       </main>
       {/* <footer>
         Don't have an account?
@@ -82,4 +90,3 @@ const Login = () => {
 };
 
 export default Login;
-
