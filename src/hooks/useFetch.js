@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const useAuth = (url) => {
+const LOGIN_URL = "http://localhost:882/auth/login";
+
+const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -10,7 +12,7 @@ const useAuth = (url) => {
   //google auth
   const handleAuth = async (body) => {
     setLoading(true);
-    fetch(url, {
+    fetch(LOGIN_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

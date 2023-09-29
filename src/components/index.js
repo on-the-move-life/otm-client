@@ -1,5 +1,6 @@
-export { default as Login } from "./Login";
-export { default as Signup } from "./Signup";
-export { default as Home } from "./Home";
-export { default as Questionnaire } from "./Questionnaire";
+export { default as QuestionTitle } from "../features/Questionnaire/QuestionTitle";
+export { default as QuestionContent } from "../features/Questionnaire/QuestionContent";
+export { default as NextButton } from "../features/Questionnaire/NextButton";
+
+
 
