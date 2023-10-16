@@ -1,6 +1,4 @@
-export { default as QuestionTitle } from "../features/Questionnaire/QuestionTitle";
-export { default as QuestionContent } from "../features/Questionnaire/QuestionContent";
-export { default as NextButton } from "../features/Questionnaire/NextButton";
-
-
+export { default as Loader } from './Loader';
+export { default as Error } from './Error';
+export { default as LoginInput } from './LoginInput';
 

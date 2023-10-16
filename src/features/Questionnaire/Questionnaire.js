@@ -1,27 +1,42 @@
-import React from 'react'
-import { QuestionTitle, NextButton, QuestionContent } from '../../components'
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  LandingPage,
+  ProgressBar,
+  Question,
+  SubmissionPage,
+} from '../Questionnaire';
+import { getSections, setLoading } from './QuestionnaireSlice';
+import { Error, Loader } from '../../components';
 
 const Questionnaire = () => {
+  //getting state from the store
 
-  //state declerations
-  const feature1 = useSelector((store) => store.questionnaireReducer.dummy);
+  const { status, error } = useSelector((store) => store.questionnaireReducer);
 
   const dispatch = useDispatch();
 
-  // function handleClick() {
-  //   dispatch(testFunction1(500));
-  // }
+  useEffect(() => {
+    dispatch(setLoading());
+
+    dispatch(getSections());
+  }, [dispatch]);
 
   return (
-    <div className='flex flex-col justify-evenly items-center h-screen'>
-      <QuestionTitle />
-      <QuestionContent />
-      <NextButton />
-    </div>
-  )
-}
+    <>
+      {status === 'loading' && <Loader />}
+      {status === 'error' && <Error>{error}</Error>}
+      {status === 'ready' && <LandingPage />}
+      {status === 'active' && (
+        <>
+          <ProgressBar />
+          <Question />
+        </>
+      )}
+
+      {status === 'finish' && <SubmissionPage />}
+    </>
+  );
+};
 
 export default Questionnaire;
-
-
