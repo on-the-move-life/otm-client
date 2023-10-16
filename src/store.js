@@ -1,12 +1,25 @@
-import questionnaireReducer from "./features/Questionnaire/QuestionnaireSlice";
-import reducer2 from "./features/feature2/featureSlice2";
+import questionnaireReducer from './features/Questionnaire/QuestionnaireSlice';
+import reducer2 from './features/feature2/featureSlice2';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+// import { configureStore } from '@reduxjs/toolkit';
 
-const { createStore, combineReducers } = require("redux");
+const { createStore, combineReducers, applyMiddleware } = require('redux');
 
 const rootReducer = combineReducers({
   questionnaireReducer,
   reducer2,
 });
-const store = createStore(rootReducer);
+
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk)),
+);
+// const store = configureStore({
+//   reducer: {
+//     quetionnaire: questionnaireReducer,
+//     feature2: reducer2
+//   }
+// })
 
 export default store;

@@ -7,3 +7,64 @@
   margin: 0;
   padding: 0;
 }
+
+body {
+background-color: #050505;
+color: white;
+}
+
+.textbox{
+  background: none;
+  border-bottom: 1px solid;
+  padding-top: 20px;
+  color: #B1B1B1;
+  font-size: 1em;
+  width: 100%;
+  margin-bottom: 3em;
+}
+
+input:focus{
+  outline: none;
+}
+input:focus::placeholder {
+  color: transparent;
+}
+
+button:active {
+  background-color: rgba(61, 61, 61, 0.30);
+}
+
+.continueButton {
+  position: fixed;
+  bottom: 2em;
+  border-radius: 12px;
+  width: 90%;
+  padding: 14px 10px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.line{
+  border: 1px solid white;
+    width: 90%;
+    height: 0px;
+}
+
+.multichoice{
+  border-radius: 12px;
+  background: rgba(61, 61, 61, 0.30);
+
+  padding: 1em 0;
+  color: #D6B6F0;
+  margin: 0.6em 0;
+  font-size: 18px;
+
+}
+
+.purpleGradient {
+  background: rgb(0,0,0);
+background: -moz-linear-gradient(180deg, rgba(0,0,0,1) 31%, rgba(210,45,255,1) 100%);
+background: -webkit-linear-gradient(180deg, rgba(0,0,0,1) 31%, rgba(210,45,255,1) 100%);
+background: linear-gradient(180deg, rgba(0,0,0,1) 31%, rgba(210,45,255,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#d22dff",GradientType=1);
+}
