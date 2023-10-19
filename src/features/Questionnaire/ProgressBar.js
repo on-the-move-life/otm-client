@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Progress } from 'rsuite';
+// import { Progress } from 'rsuite';
 
 const ProgressBar = () => {
   const { index, sections } = useSelector(
