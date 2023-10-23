@@ -1,8 +1,11 @@
+import { useAuth } from '../../contexts/AuthContext';
 import { start } from './QuestionnaireSlice';
 import { useDispatch } from 'react-redux';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
+
+  const { user } = useAuth();
 
   function startQuestionnaire() {
     // dispatch
@@ -10,15 +13,15 @@ const LandingPage = () => {
   }
 
   return (
-    <div className="bg-landing-cover flex h-screen flex-col items-center justify-evenly bg-contain">
-      <div className="bg-logo ml-14 h-12 w-44 bg-no-repeat"></div>
+    <div className="flex h-screen flex-col items-center justify-evenly bg-landing-cover bg-contain">
+      <div className="ml-14 h-12 w-44 bg-logo bg-no-repeat"></div>
 
       <section className="mb-48 text-center">
         <div className=" text-3xl font-bold text-white">
           <span className="block">WELCOME,</span>
-          <span>RISHI</span>
+          <span>USER</span>
         </div>
-        <p className="text-green py-2 font-semibold leading-6">
+        <p className="py-2 font-semibold leading-6 text-green">
           Your account has been created
         </p>
       </section>

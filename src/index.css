@@ -44,16 +44,15 @@ button:active {
   color: #000000;
 }
 
-.line{
+.line {
   border: 1px solid white;
-    width: 90%;
-    height: 0px;
+  width: 90%;
+  height: 0px;
 }
 
 .multichoice{
   border-radius: 12px;
   background: rgba(61, 61, 61, 0.30);
-
   padding: 1em 0;
   color: #D6B6F0;
   margin: 0.6em 0;
@@ -68,3 +67,39 @@ background: -webkit-linear-gradient(180deg, rgba(0,0,0,1) 31%, rgba(210,45,255,1
 background: linear-gradient(180deg, rgba(0,0,0,1) 31%, rgba(210,45,255,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#d22dff",GradientType=1);
 }
+
+.container div {
+  border-radius: 12px;
+  height: 5em;
+  background-color: rgba(61, 61, 61, 0.30);
+  padding: 0.5em;
+}
+.tags span {
+  border-radius: 26.6px;
+  padding: 4px;
+}
+
+.grid-title h4{
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 25px;
+  color: #7E87EF;
+}
+
+.grid-title span {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.main-section {
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  padding: 0.5em;
+  width: 358px;
+  height: 98px;
+  border-radius: 12px;
+  margin: 1em 0;
+}
+
