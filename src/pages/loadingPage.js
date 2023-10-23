@@ -1,56 +1,70 @@
-import React from 'react';
-import { ProgressBar } from 'react-loader-spinner';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import LoadingBar from 'react-top-loading-bar';
+
+import LoadingScreenDown from '../components/loadingScreenDown';
+import LoadingScreenUp from '../components/loadingScreenUp';
 
 const LoadingPage = () => {
-  const divStyleTop = {
-    backgroundColor: '#FA5757',
-    borderRadius: '0px 0px 170px 30px',
-    width: '390px',
-    height: '436px',
-  };
+  const [progress, setProgress] = useState(0);
+  const [showLower, setShowLower] = useState(false);
 
-  const contentStyle = {
-    position: 'absolute',
-    width: '258px',
-    height: '120px',
-    top: '189px',
-    left: '34px',
-    fontFamily: 'SF Pro Text',
-    fontWeight: 700,
-    fontSize: '50.67px',
-    lineHeight: '60.46px',
-    letterSpacing: '-0.54px',
-  };
+  useEffect(() => {
+    // Simulate progress update every 1500 milliseconds
+    const interval = setInterval(() => {
+      if (progress < 17) {
+        setProgress(progress + 1);
 
-  const imageStyle = {
+        // Check if progress reaches 50%, then hide the upper loading screen and show the lower one
+        if (progress >= 7) {
+          setShowLower(true);
+        }
+      } else {
+        // Clear the interval when progress reaches 100%
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [progress]);
+
+  const loadingBarDiv = {
     position: 'absolute',
-    width: '108px',
-    height: '23.65px',
-    top: '734px',
-    left: '141px',
+    top: '50px',
+    left: '10px',
+    marginTop: '10px',
+    marginLeft: '55px',
+    backgroundColor: 'white',
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      <div className="ml-2.5 h-28 w-28 bg-icon bg-no-repeat">
-        <ProgressBar
-          height="40"
-          width="350"
-          ariaLabel="progress-bar-loading"
-          wrapperStyle={{}}
-          wrapperClass="progress-bar-wrapper"
-          borderColor="#F4442E"
-          barColor="#51E5FF"
+    <div>
+      {/* <div
+        style={loadingBarDiv}
+        // className="top-100 ml-50 absolute left-20 bg-red-500"
+      >
+        <LoadingBar
+          
+          color="white"
+          height={6}
+          waitingTime={5000}
+          shadow={false}
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
         />
-        <div style={divStyleTop}>
-          <div style={contentStyle}>Prepping your repps! </div>
-        </div>
+      </div> */}
 
-        <div style={imageStyle}>
-          <img src={'/assets/logo.svg'}></img>
-        </div>
-      </div>
+      <LoadingBar
+        color="white"
+        height={6}
+        waitingTime={5000}
+        shadow={false}
+        style={loadingBarDiv}
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
+
+      {!showLower ? <LoadingScreenUp /> : null}
+      {showLower && <LoadingScreenDown />}
     </div>
   );
 };
