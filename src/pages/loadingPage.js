@@ -11,11 +11,11 @@ const LoadingPage = () => {
   useEffect(() => {
     // Simulate progress update every 1500 milliseconds
     const interval = setInterval(() => {
-      if (progress < 17) {
+      if (progress < 68) {
         setProgress(progress + 1);
 
         // Check if progress reaches 50%, then hide the upper loading screen and show the lower one
-        if (progress >= 7) {
+        if (progress >= 34) {
           setShowLower(true);
         }
       } else {
@@ -29,7 +29,7 @@ const LoadingPage = () => {
 
   const loadingBarDiv = {
     position: 'absolute',
-    top: '50px',
+    top: '40px',
     left: '10px',
     marginTop: '10px',
     marginLeft: '55px',
@@ -38,21 +38,6 @@ const LoadingPage = () => {
 
   return (
     <div>
-      {/* <div
-        style={loadingBarDiv}
-        // className="top-100 ml-50 absolute left-20 bg-red-500"
-      >
-        <LoadingBar
-          
-          color="white"
-          height={6}
-          waitingTime={5000}
-          shadow={false}
-          progress={progress}
-          onLoaderFinished={() => setProgress(0)}
-        />
-      </div> */}
-
       <LoadingBar
         color="white"
         height={6}
