@@ -7,6 +7,7 @@ import LoadingScreenUp from '../components/loadingScreenUp';
 const LoadingPage = () => {
   const [progress, setProgress] = useState(0);
   const [showLower, setShowLower] = useState(false);
+  // const [showLower, setShowLower] = useState(true);
 
   useEffect(() => {
     // Simulate progress update every 1500 milliseconds
@@ -30,9 +31,8 @@ const LoadingPage = () => {
   const loadingBarDiv = {
     position: 'absolute',
     top: '40px',
-    left: '10px',
-    marginTop: '10px',
-    marginLeft: '55px',
+    left: '60px',
+    // width: '250px',
     backgroundColor: 'white',
   };
 
@@ -48,8 +48,7 @@ const LoadingPage = () => {
         onLoaderFinished={() => setProgress(0)}
       />
 
-      {!showLower ? <LoadingScreenUp /> : null}
-      {showLower && <LoadingScreenDown />}
+      {!showLower ? <LoadingScreenUp /> : <LoadingScreenDown />}
     </div>
   );
 };
