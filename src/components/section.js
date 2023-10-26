@@ -1,75 +1,15 @@
 import React from 'react';
 
 const Section = (props) => {
-  const divStyle = {
-    display: 'flex',
-    borderRadius: '12px',
-    background: 'rgba(63, 63, 63, 0.30)',
-    mixBlendMode: 'screen',
-    width: '358px',
-    height: '76px',
-    flexShrink: 0,
-    margin: '10px 0 10px 0'
-  };
-
-  const workoutTextStyle = {
-    color: '#FFF',
-    fontFamily: 'SF Pro Display',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 700,
-    lineHeight: '25px',
-  };
-
-  const equipmentTextStyle = {
-    color: '#FFF',
-    fontFamily: 'SF Pro Display',
-    fontSize: '12px',
-    fontStyle: 'normal',
-    fontWeight: 300,
-    lineHeight: 'normal',
-    padding: '20px',
-    // borderLeft: '1px solid white'
-  };
-
-  const repsStyle = {
-    color: '#A3926F',
-    fontFamily: 'Regio Mono',
-    fontSize: '13.125px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: 'normal',
-    paddingTop: '5px',
-  };
-
-  const imageStyle = {
-    width: '109px',
-    height: '76px',
-    flexShrink: 0,
-    borderRadius: '12px 0 0 12px',
-  };
-
-  const middleDivStyle = {
-    padding: '15px',
-  };
-
-  const lineDivStyle = {
-    position: 'relative',
-    top: '15px',
-    width: '1px',
-    height: '49px',
-    background: '#0E0E0E',
-    mixBlendMode: 'screen',
-  };
   return (
-    <div style={divStyle}>
-      <img src={'/assets/workout.png'} style={imageStyle}></img>
-      <div style={middleDivStyle}>
-        <p style={workoutTextStyle}>Workout name</p>
-        <p style={repsStyle}>10 Reps x 2 Sets</p>
+    <div className="flex rounded-[12px] bg-[rgba(63,_63,_63,_0.30)] mix-blend-screen w-[300px] h-[76px] flex-shrink-0 mx-[0] my-[10px]">
+      <img src={'/assets/workout.png'} className="w-[80px] h-[76px] flex-shrink-0 rounded-tl-[12px] rounded-br-[0] rounded-tr-[0] rounded-bl-[12px]"></img>
+      <div className="p-[12px]">
+        <p className="text-[#FFF] font-['SF_Pro_Display'] text-[16px] not-italic font-bold leading-[25px]">Workout name</p>
+        <p className="text-[#A3926F] font-['Regio_Mono'] text-[13.125px] not-italic font-normal leading-[normal] pt-[5px]">10 Reps x 2 Sets</p>
       </div>
-      <div style={lineDivStyle}></div>
-      <p style={equipmentTextStyle}>Equipment</p>
+      <div className="relative top-[15px] w-px h-[49px] bg-[#0E0E0E] mix-blend-screen"></div>
+      <p className="text-[#FFF] font-['SF_Pro_Display'] text-[12px] not-italic font-light leading-[normal] p-[20px]">Equipment</p>
     </div>
   );
 };

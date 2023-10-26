@@ -2,47 +2,22 @@ import React from 'react';
 
 const HomeBar = () => {
   const containerStyle = {
-    width: '390px',
+    width: '358px',
     height: '139px',
     flexShrink: 0,
     background: 'rgba(0, 0, 0, 0.85)',
     backdropFilter: 'blur(37px)',
     // padding: '5px'
   };
-  const startDivStyle = {
-    width: '358px',
-    height: '49px',
-    flexShrink: 0,
-    borderRadius: '12px',
-    background: '#A3926F',
-    mixBlendMode: 'screen',
-  };
-  const startContentStyle = {
-    position: 'relative',
-    top: '10px',
-    left:'150px',
-    color: '#000',
-    fontFamily: 'SF Pro Display',
-    fontSize: '20px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: 'normal',
-  };
-  const iconDivStyle = {
-    position:'relative',
-    left: '20px',
-    display: 'flex',
-    'justify-content': 'space-between',
-    width: '320px',
-    height: '49px',
-    paddingTop: '15px'
-  };
+
   return (
-    <div style={containerStyle}>
-      <div style={startDivStyle}>
-        <p style={startContentStyle}>Start</p>
+    <div className="h-[139px] w-[358px] flex-shrink-0 bg-[rgba(0,_0,_0,_0.85)] backdrop-blur-[37px] backdrop-filter">
+      <div className="h-[49px] w-[290px] flex-shrink-0 rounded-[12px] bg-[#A3926F] mix-blend-screen">
+        <p className="relative left-[125px] top-[12px] font-['SF_Pro_Display'] text-[20px] font-medium not-italic leading-[normal] text-[#000]">
+          Start
+        </p>
       </div>
-      <div style={iconDivStyle}>
+      <div className="relative left-[10px] flex h-[49px] w-[275px] justify-between pt-[15px]">
         <img src={'/assets/home.svg'}></img>
         <img src={'/assets/stats.svg'}></img>
         <img src={'/assets/community.svg'}></img>
