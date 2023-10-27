@@ -1,5 +1,5 @@
 import questionnaireReducer from './features/Questionnaire/QuestionnaireSlice';
-import reducer2 from './features/feature2/featureSlice2';
+import nutritionReducer from './features/Nutrition/NutritionSlice';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 // import { configureStore } from '@reduxjs/toolkit';
@@ -8,7 +8,7 @@ const { createStore, combineReducers, applyMiddleware } = require('redux');
 
 const rootReducer = combineReducers({
   questionnaireReducer,
-  reducer2,
+  nutritionReducer,
 });
 
 const store = createStore(

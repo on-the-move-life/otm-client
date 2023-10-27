@@ -1,0 +1,84 @@
+{
+    "overview": {
+        "userID": 123,
+        "mealPlan": [
+            {
+                "code": "BRK",
+                "mealMacros": {},
+                "mealItems": [
+                    {
+                        "name": "Banana",
+                        "quantity": 1,
+                        "unit": "",
+                        "displayString": "2 bananas",
+                        "mealItemMacros": {}
+                    },
+                    {
+                        "name": "seeds mix",
+                        "quantity": 10,
+                        "unit": "g",
+                        "displayString": "10g seeds mix"
+                    }
+                ]
+            },
+            {
+                "code": "LNH",
+                "mealMacros": {},
+                "mealItems": [
+                    {
+                        "name": "Banana",
+                        "quantity": 1,
+                        "unit": "",
+                        "displayString": "2 bananas",
+                        "mealItemMacros": {}
+                    },
+                    {
+                        "name": "seeds mix",
+                        "quantity": 10,
+                        "unit": "g",
+                        "displayString": "10g seeds mix"
+                    }
+                ]
+            },
+            {
+                "code": "DNR",
+                "mealMacros": {},
+                "mealItems": [
+                    {
+                        "name": "Banana",
+                        "quantity": 1,
+                        "unit": "",
+                        "displayString": "2 bananas",
+                        "mealItemMacros": {}
+                    },
+                    {
+                        "name": "seeds mix",
+                        "quantity": 10,
+                        "unit": "g",
+                        "displayString": "10g seeds mix"
+                    }
+                ]
+            }
+        ],
+        "planMacros": {
+            "cals": 2500,
+            "carbs": 118
+        }
+    },
+    "mealTypes": [
+        {
+            "code": "BRK",
+            "recipes": [
+                {
+                    "id": 1
+                },
+                {
+                    "id": 2
+                },
+                {
+                    "id": 3
+                }
+            ]
+        }
+    ]
+}
