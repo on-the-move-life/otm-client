@@ -8,6 +8,7 @@ import {
 } from '../Questionnaire';
 import { getSections, setLoading } from './QuestionnaireSlice';
 import { Error, Loader } from '../../components';
+import { LoadingPage } from '../../pages';
 
 const Questionnaire = () => {
   //getting state from the store
@@ -34,7 +35,7 @@ const Questionnaire = () => {
         </>
       )}
 
-      {status === 'finish' && <SubmissionPage />}
+      {status === 'finish' && <LoadingPage />}
     </>
   );
 };
