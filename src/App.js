@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Login, Home, PageNotFound, OpeningPage, Workout } from './pages';
 import { AuthProvider } from './contexts/AuthContext';
 import Questionnaire from './features/Questionnaire/Questionnaire';
+import SectionDetail from './features/workout/SectionDetail';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/questionnaire" element={<Questionnaire />} />
+          <Route path='/section-details' element={<SectionDetail/>} />
           <Route path='/test' element={<Workout/>} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
