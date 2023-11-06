@@ -68,25 +68,26 @@ background: linear-gradient(180deg, rgba(0,0,0,1) 31%, rgba(210,45,255,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#d22dff",GradientType=1);
 }
 
-.container div {
-  border-radius: 12px;
+.main-stat {
   height: 5em;
   background-color: rgba(61, 61, 61, 0.30);
   padding: 0.5em;
+  text-align: center;
 }
 .tags span {
-  border-radius: 26.6px;
+  border-radius: 6px;
   padding: 4px;
+  letter-spacing: 1px;
+}
+.main-stat h4{
+  color: var(--Light-gray, #B1B1B1);
+  font-size: 8px;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
-.grid-title h4{
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 25px;
-  color: #7E87EF;
-}
-
-.grid-title span {
+.main-stat span {
   font-size: 1.5rem;
   line-height: 2rem;
 }

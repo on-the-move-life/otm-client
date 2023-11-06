@@ -1,25 +1,18 @@
 {
-    "userId": "123",
     "name": "Vrinda",
     "code": "VRIN",
     "frequency": 4,
     "totalPerfectWeeks": 0,
     "streak": 0,
-    "totalWorkoutsDone": 3,
+    "totalWorkoutsDone": 5,
     "avgIntensity": 50.2,
     "score": 1.2,
-    "badge": "Elite",
-    "rank": 4,
-    "level": 5,
-    "perfectDays": 6,
-    "goalPercent": 80,
-    "timeTrained": 156,
     "batch": [
         "HYPER"
     ],
-    "consistency": 3,
+    "consistency": 2,
     "dailyRoutine": 0,
     "isEvolveMember": true,
-    "weeklySummaryImgUrl": "https://storage.googleapis.com/otm_week_summary/Vrinda_25Sep-1Oct.png",
-    "points": 150
+    "weeklySummaryImgUrl": "https://storage.googleapis.com/otm_week_summary/Vrinda_30Oct-5Nov.png",
+    "points": 250
 }

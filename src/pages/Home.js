@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div className="flex h-screen w-screen flex-col">
-      <nav className="h-{13vh} flex w-full justify-between rounded-b-3xl bg-darkGray">
+      {/* <nav className="h-{13vh} flex w-full justify-between rounded-b-3xl bg-darkGray">
         <div className="text-lightGray flex w-8/12 justify-between px-4 pb-4 pt-8 text-xs">
           <div className="flex flex-col items-center">
             <span>LEVEL</span>
@@ -39,52 +39,69 @@ const Home = () => {
           </div>
         </div>
         <span className="px-4 py-8">PROFILE</span>
-      </nav>
+      </nav> */}
       <section className="px-4 pb-6 pt-10">
-        <h1 className="text-3xl font-semibold">Hi, Rishi</h1>
+        <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-3xl font-semibold text-transparent">
+          Rishi Solanki
+        </h1>
         <div className="tags mt-2 space-x-3">
-          <span className="border border-[#8DACEF66] bg-[#172339] text-[#8DACEF66]">
+          <span className="bg-[#172339] font-semibold text-[#C2D3FA]">
             Elite
           </span>
-          <span className="border border-[#F2D670] bg-[#363629] text-[#F2D670]">
+          <span className="bg-[#363629] font-semibold text-[#F2D670]">
             Perfect Week x2
           </span>
         </div>
-      </section>
-      <section className="container grid grid-cols-2 grid-rows-2 gap-2 px-4">
-        <div className="grid-title">
-          <h4>Workouts Done</h4>
-          <span>5</span>
-        </div>
-        <div className="grid-title">
-          <h4>Fitness Score</h4>
-          <span>8.5</span>
-        </div>
-        <div className="grid-title">
-          <h4>Time Trained</h4>
-          <span>46Hrs</span>
-        </div>
-        <div className="grid-title">
-          <h4>Community Rank</h4>
-          <span>8</span>
-        </div>
+        <p className="mt-2 w-11/12 font-extralight">
+          Fitness is not a destination. It's a journey of self-improvement, one
+          workout at a time.
+        </p>
       </section>
       <section className="px-4">
-        <div className="main-section bg-blue">
-          <h4>Workouts</h4>
-          <div></div>
+        <p className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">
+          At a glance
+        </p>
+        <div className="flex items-center justify-between">
+          <span className="text-xs tracking-widest text-lightGray">
+            EVOLVE CYCLE 1
+          </span>
+          <div>
+            <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs font-bold text-lightGray">
+              Sep-Nov 2023
+            </span>
+            <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs font-bold text-lightGray">
+              Week 2/12
+            </span>
+          </div>
         </div>
-
-        <div className="main-section bg-yellow">
-          <h4>Meal Planner</h4>
-          <div></div>
-        </div>
-
-        <div className="main-section bg-red">
-          <h4>Leaderboard</h4>
-          <div></div>
+        <div className="mt-4 grid grid-cols-2 rounded-xl border-[0.5px] border-[#383838] bg-gradient-to-b">
+          <div className="main-stat">
+            <h4>Workouts Done</h4>
+            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+              5
+            </span>
+          </div>
+          <div className="main-stat">
+            <h4>Fitness Score</h4>
+            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+              8.5
+            </span>
+          </div>
+          <div className="main-stat">
+            <h4>Time Trained</h4>
+            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+              46Hrs
+            </span>
+          </div>
+          <div className="main-stat">
+            <h4>Community Rank</h4>
+            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+              8
+            </span>
+          </div>
         </div>
       </section>
+
       <footer className="px-4 text-end text-2xl">
         <button onClick={handleLogout}>Logout</button>
       </footer>
