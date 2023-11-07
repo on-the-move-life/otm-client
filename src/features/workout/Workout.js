@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Error, Loader } from '../../components';
 
-import SectionItem from './SectionItem';
-import { getWorkout } from './WorkoutSlice';
+import Section from './Section';
+import { getWorkout, setLoading } from './WorkoutSlice';
 
 const Workout = () => {
   // const [workout, setWorkout] = useState([]);
@@ -34,25 +33,21 @@ const Workout = () => {
     dispatch(setLoading());
 
     dispatch(getWorkout());
+    console.log('got workout')
   }, [dispatch]);
 
-  const handleStart = () => {
-    navigate('/section-details', { state: { sectionList: section, index: 0 } });
-  };
-
+  console.log(status, error)
   return (
-    <div>
-      {workout && workout[0]?.program ? (
-        <div>
-          {section.map((sect, index) => (
-            <SectionItem key={sect.code} sectionList={section} index={index} />
-          ))}
-          <p onClick={handleStart}>Start</p>
-        </div>
-      ) : (
-        <p>Loading .....</p>
+    <>
+      {status==='loading' && <Loader/>}
+      {status === 'error' && <Error>{error}</Error>}
+      {status === 'ready' && (
+        <>
+          <Section/>
+        </>
       )}
-    </div>
+
+    </>
   );
 };
 

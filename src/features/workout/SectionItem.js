@@ -23,6 +23,9 @@ const SectionItem = ({ sectionList, index }) => {
     navigate('/section-details',{ state: {sectionList, index}});
   };
 
+  if(index==0){
+    return <p></p>
+  }
   return (
     <div style={containerStyle} onClick={()=>handleClick(index)}>
       <p id="name">{section.name}</p>

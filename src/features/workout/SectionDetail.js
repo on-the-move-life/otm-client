@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
-
+import DataInputComponent from './DataInputComponent';
 import ImageModal from './ImageModal';
 
+import {
+  previousWorkoutSection,
+  nextWorkoutSection,
+  finishWorkout,
+} from './WorkoutSlice';
+
 const SectionDetail = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { sectionList, index } = location.state;
 
@@ -26,18 +33,26 @@ const SectionDetail = () => {
   };
 
   const handleNext = () => {
-    const newIndex = currentIndex + 1;
-    setCurrentIndex(newIndex);
-    setCurrentSection(sectionList[newIndex]);
+    if (currentIndex + 1 === sectionList.length) {
+      dispatch(finishWorkout);
+    } else {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      setCurrentSection(sectionList[newIndex]);
+      // dispatch(nextWorkoutSection)
+    }
   };
 
   const handlePrevious = () => {
     const newIndex = currentIndex - 1;
     setCurrentIndex(newIndex);
     setCurrentSection(sectionList[newIndex]);
+    // dispatch(previousWorkoutSection)
   };
 
   const { name, format, movements, dataInput } = currentSection;
+
+  const inputValues = useSelector((store) => store.workoutReducer.inputValues);
 
   return (
     <div>
@@ -45,60 +60,45 @@ const SectionDetail = () => {
       <p>{format}</p>
 
       {movements.map((mvmt, idx) => (
-        <div key={mvmt.name} onClick={() => openModal(mvmt.link[0])}>
+        <div key={mvmt.name}>
           <div>
             <img src={mvmt.link[0]} alt="Movement" />
             <p>{mvmt.name} | equipment</p>
             <p>{mvmt.hint}</p>
           </div>
-          <div>
-            <p>Data Input</p>
-            {dataInput.map((input, index) => (
-              <div key={index}>
-                <label htmlFor={input.id}>{input.label}</label>
-                {input.type === 'select' ? (
-                  <select id={input.id} name={input.id}>
-                    {input.options.map((option, optionIndex) => (
-                      <option key={optionIndex} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                ) : input.type === 'textarea' ? (
-                  <textarea
-                    id={input.id}
-                    name={input.id}
-                    placeholder={input.placeholder}
-                  ></textarea>
-                ) : (
-                  <input
-                    type={input.type}
-                    id={input.id}
-                    name={input.id}
-                    placeholder={input.placeholder}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
         </div>
       ))}
+
+      {
+        <div>
+          {dataInput.map((input, index) => (
+            <DataInputComponent
+              key={index}
+              inputId={input.id}
+              inputType={input.type}
+              inputOptions={input.options}
+              placeholder={input.placeholder}
+              label={input.label}
+            />
+          ))}
+        </div>
+      }
 
       {isModalOpen && (
         <ImageModal imageUrl={selectedImage} onClose={closeModal} />
       )}
 
-      <button disabled={currentIndex <= 0} onClick={handlePrevious}>
+      <button disabled={currentIndex == 1} onClick={handlePrevious}>
         Previous
       </button>
       <p>
-        {currentIndex + 1} / {sectionList.length}
+        {currentIndex} / {sectionList.length - 1}
       </p>
       <button
-        disabled={currentIndex + 1 === sectionList.length}
+        // disabled={currentIndex + 1 === sectionList.length}
         onClick={handleNext}
       >
-        Next
+        {currentIndex + 1 === sectionList.length ? 'Submit' : 'Next'}
       </button>
     </div>
   );
