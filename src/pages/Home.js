@@ -4,10 +4,11 @@ import { FitnessScore, Loader, Error } from '../components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
 
 const Home = () => {
-  const { logout, isSignUp } = useAuth();
-  const [user, setUser] = useState({});
+  const { logout } = useAuth();
+  // const [user, setUser] = useState({});
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
 
@@ -21,26 +22,26 @@ const Home = () => {
   }
 
   useEffect(() => {
-    const theUser = localStorage.getItem('user');
-
-    if (theUser && !theUser.includes('undefined')) {
-      setUser(JSON.parse(theUser));
+    const today = new Date().toLocaleDateString('en-GB');
+    let user = localStorage.getItem('user');
+    if (user && !user.includes('undefined')) {
+      user = JSON.parse(user);
     }
 
     function getUserData() {
       setLoader(true);
       axios
         .get('https://otm-insight-production.up.railway.app/client', {
-          // params: { email: user ? user.email : '', day: 8/11/2023 },
           params: {
-            email: 'vrindatyagi09@gmail.com',
-            day: '8/11/2023',
+            email: user.email,
+            day: today,
           },
         })
         .then((res) => {
           console.log(res.data);
           setHomeStats(res.data);
           setLoader(false);
+          setError(null);
         })
         .catch((err) => {
           console.log(err.message);
@@ -48,7 +49,12 @@ const Home = () => {
         });
     }
 
-    getUserData();
+    if (user.email) {
+      console.log(user);
+      getUserData();
+    } else {
+      setError('Please login first');
+    }
   }, []);
 
   return (
