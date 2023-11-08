@@ -92,7 +92,7 @@ const Login = () => {
             color={'#5ECC7B'}
             onClick={() => handleBack()}
           />
-          <header className="text-green my-6 text-2xl">
+          <header className="my-6 text-2xl text-green">
             Enter your log in details
           </header>
           <form
@@ -133,10 +133,10 @@ const Login = () => {
               )}
             </div>
             <button
-              disabled={!email || !password || error}
+              disabled={!email || !password}
               type="submit"
               className={`continueButton w-full ${
-                !email || !password || error ? 'bg-darkGray' : 'bg-green'
+                !email || !password ? 'bg-darkGray' : 'bg-green'
               }`}
             >
               Continue
@@ -146,19 +146,19 @@ const Login = () => {
       ) : (
         <div className="flex h-screen w-full flex-col items-center justify-evenly py-8">
           {/* DIV 1 */}
-          <header className="bg-logo ml-14 h-12 w-44 bg-no-repeat"></header>
+          <header className="ml-14 h-12 w-44 bg-logo bg-no-repeat"></header>
           {/* DIV 2 */}
           <section className="mb-48 text-center">
             <div className=" text-3xl font-bold text-white">
               <span className="block">Create Your Account</span>
             </div>
-            <p className="text-green py-2 font-semibold leading-6">
+            <p className="py-2 font-semibold leading-6 text-green">
               Lorem ipsum dolor sit amet.
             </p>
           </section>
           <footer className="flex w-11/12 flex-col items-center">
             <button
-              className="bg-green flex w-full justify-evenly rounded-xl px-3.5 py-2.5 text-lg font-semibold text-black"
+              className="flex w-full justify-evenly rounded-xl bg-green px-3.5 py-2.5 text-lg font-semibold text-black"
               onClick={() => setShowLoginInput(true)}
             >
               <HiOutlineMail size={25} />
