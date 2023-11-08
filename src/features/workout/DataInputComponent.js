@@ -2,7 +2,14 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { updateInput } from './WorkoutSlice';
 
-const DataInputComponent = ({ inputId, inputType, inputOptions, placeholder, label, value }) => {
+const DataInputComponent = ({
+  inputId,
+  inputType,
+  inputOptions,
+  placeholder,
+  label,
+  value,
+}) => {
   const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
@@ -11,7 +18,7 @@ const DataInputComponent = ({ inputId, inputType, inputOptions, placeholder, lab
   };
 
   const inputStyle = {
-    color: 'black'
+    color: 'white',
   };
 
   return (
@@ -19,6 +26,7 @@ const DataInputComponent = ({ inputId, inputType, inputOptions, placeholder, lab
       <label htmlFor={inputId}>{label}</label>
       {inputType === 'select' ? (
         <select
+          className="w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
           id={inputId}
           name={inputId}
           value={value}
@@ -33,6 +41,7 @@ const DataInputComponent = ({ inputId, inputType, inputOptions, placeholder, lab
         </select>
       ) : inputType === 'textarea' ? (
         <textarea
+          className="w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
           id={inputId}
           name={inputId}
           value={value}
@@ -42,6 +51,7 @@ const DataInputComponent = ({ inputId, inputType, inputOptions, placeholder, lab
         ></textarea>
       ) : (
         <input
+          className="w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
           type={inputType}
           id={inputId}
           name={inputId}
