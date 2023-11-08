@@ -11,7 +11,8 @@ module.exports = withMT({
       },
       backgroundImage: {
         'landing-cover': "url('../public/assets/landing-cover.png')",
-        logo: "url('../public/assets/logo.svg')",
+        'green-logo': "url('../public/assets/green-logo.svg')",
+        'red-logo': "url('../public/assets/red-logo.svg')",
         icon: "url('../public/assets/icon.svg')",
       },
     },
