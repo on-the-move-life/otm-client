@@ -64,8 +64,8 @@ button:active {
   background-color: rgba(61, 61, 61, 0.30);
   border-radius: 12px;
   border: 0.5px solid #444;
-  height: 4em;
-  font-size: 20px;
+  height: 3em;
+  font-size: 1.5em;
   margin-top: 24px;
   display: flex;
   align-items: center;

@@ -30,7 +30,13 @@ const Home = () => {
     function getUserData() {
       setLoader(true);
       axios
-        .get('http://localhost:3001/user')
+        .get('https://otm-insight-production.up.railway.app/client', {
+          // params: { email: user ? user.email : '', day: 8/11/2023 },
+          params: {
+            email: 'vrindatyagi09@gmail.com',
+            day: '8/11/2023',
+          },
+        })
         .then((res) => {
           console.log(res.data);
           setHomeStats(res.data);
@@ -104,9 +110,9 @@ const Home = () => {
                 </span>
               </div>
               <div className="main-stat">
-                <h4>Fitness Score</h4>
+                <h4>Points</h4>
                 <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  8.5
+                  {homeStats.points}
                 </span>
               </div>
               <div className="main-stat">
@@ -124,7 +130,9 @@ const Home = () => {
             </div>
           </section>
           <Link to="/workout" className="main-cta">
-            <span>Workouts</span>
+            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+              Workouts
+            </span>
             <span>
               <AiOutlineRight size={22} />
             </span>
