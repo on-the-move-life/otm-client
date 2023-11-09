@@ -9,6 +9,7 @@ const DataInputComponent = ({
   placeholder,
   label,
   value,
+  twClasses
 }) => {
   const dispatch = useDispatch();
 
@@ -21,12 +22,13 @@ const DataInputComponent = ({
     color: 'white',
   };
 
+  twClasses = (twClasses)? twClasses : "w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
   return (
-    <div>
+    <div className='py-4'>
       <label htmlFor={inputId}>{label}</label>
       {inputType === 'select' ? (
         <select
-          className="w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
+          className={twClasses}
           id={inputId}
           name={inputId}
           value={value}

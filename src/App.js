@@ -3,6 +3,7 @@ import { Login, Home, PageNotFound, OpeningPage, Workout } from './pages';
 import { AuthProvider } from './contexts/AuthContext';
 import Questionnaire from './features/Questionnaire/Questionnaire';
 import SectionDetail from './features/workout/SectionDetail';
+import CustomizeWorkout from './features/workout/CustomizeWorkoutModal';
 
 function App() {
   return (

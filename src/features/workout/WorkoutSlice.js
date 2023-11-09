@@ -18,6 +18,14 @@ export default function workoutReducer(state = initialState, action) {
         error: null,
       };
 
+    case 'workout/updateWorkout':
+      return {
+        ...state,
+        workout: action.payload,
+        status: 'ready',
+        error: null,
+      };
+
     case 'workout/setLoading':
       return {
         ...state,
@@ -73,6 +81,22 @@ export function getWorkout() {
   };
 }
 
+export function updateWorkout() {
+  return async function (dispatch) {
+    axiosClient
+      .get('/?memberCode=KU')
+      .then((res) => {
+        console.log('workout', res.data);
+        dispatch({ type: 'workout/getWorkout', payload: res.data });
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err.message, 'ERROR');
+        // dispatch(error(err.message));
+      });
+  };
+}
+
 export function startWorkout() {
   return { type: 'workout/start' };
 }
@@ -90,10 +114,11 @@ export function previousWorkoutSection() {
 }
 
 export function finishWorkout() {
-  console.log('workout fiised')
-  return async function (dispatch, getState) { // Add getState as a parameter
+  console.log('workout fiised');
+  return async function (dispatch, getState) {
+    // Add getState as a parameter
     const state = getState().workoutReducer; // Get the current state
-    console.log(state.inputValues)
+    console.log(state.inputValues);
     axiosClient
       .post('/score', state.inputValues)
       .then((res) => {
@@ -108,4 +133,3 @@ export function finishWorkout() {
   };
   return { type: 'workout/finish' };
 }
-

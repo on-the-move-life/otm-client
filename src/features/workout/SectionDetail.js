@@ -15,7 +15,6 @@ const SectionDetail = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { sectionList, index } = location.state;
-console.log(sectionList, index)
   const [currentIndex, setCurrentIndex] = useState(index);
   const [currentSection, setCurrentSection] = useState(sectionList[index]);
 
@@ -129,7 +128,7 @@ console.log(sectionList, index)
 
       <div className="my-5 flex h-[78px] w-[350px] flex-shrink-0 justify-between border-t-[1px_solid_#2B2B2B] bg-[rgba(0,_0,_0,_0.85)]">
         <div className="realtive left-5 top-5 flex">
-          <span disabled={currentIndex == 1} onClick={handlePrevious}>
+          <span disabled={currentIndex === 2} onClick={handlePrevious}>
             <img src="./assets/chevron.left.svg" />
           </span>
           <h2 className="text-[20px] font-medium not-italic leading-[32px]">
@@ -144,9 +143,8 @@ console.log(sectionList, index)
           style={bgStyle}
         >
           <span className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
-            Close{' '}
+            Close
           </span>
-          {/* </span> */}
         </div>
       </div>
     </div>
