@@ -16,10 +16,8 @@ const NextButton = ({ submitResponse, disableButton, sectionCode }) => {
 
   return (
     <button
-      className={`w-11/12 rounded-xl px-2.5 py-3.5 font-semibold text-black ${
-        disableButton ? 'bg-gray-500' : 'bg-lightPurple'
-      } `}
-      disabled={disableButton}
+      className={`w-11/12 rounded-xl bg-lightPurple px-2.5 py-3.5 font-semibold text-black`}
+      // disabled={disableButton}
       onClick={handleNext}
     >
       {sections && index === sections.length - 1 ? 'SUBMIT' : 'NEXT'}

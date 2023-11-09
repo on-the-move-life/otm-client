@@ -129,7 +129,7 @@ const Question = () => {
                   <h4
                     className={` ${
                       inputType === 'multichoice' ? 'mb-12' : ''
-                    } text-lightPurple my-2 text-xl`}
+                    } my-2 text-2xl text-lightPurple`}
                   >
                     {content}
                   </h4>
