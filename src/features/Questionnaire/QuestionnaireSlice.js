@@ -118,9 +118,9 @@ export function start() {
   return { type: 'questionnaire/start' };
 }
 
-export function nextSection(reqBody) {
+export function nextSection(reqBody, email) {
   return function (dispatch) {
-    axiosClient.put('/', reqBody).then((res) => {
+    axiosClient.put('/', { ...reqBody, email }).then((res) => {
       dispatch({ type: 'questionnaire/nextSection' });
     });
   };
