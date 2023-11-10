@@ -127,9 +127,9 @@ const Home = () => {
                 </span>
               </div>
               <div className="main-stat">
-                <h4>Level</h4>
+                <h4>level</h4>
                 <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  4
+                  {Math.ceil(homeStats.totalWorkoutsDone / 11)}
                 </span>
               </div>
               <div className="main-stat">
