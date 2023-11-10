@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Error } from '../../components';
-import { getWorkout } from './WorkoutSlice';
+import { getWorkout, updateWorkout } from './WorkoutSlice';
 import SectionItem from './SectionItem';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -48,6 +48,10 @@ const Section = () => {
     });
   };
 
+  const handleUpdateWorkout = () => {
+    dispatch(updateWorkout());
+  };
+
   const handleCustomize = () => {
     openModal();
   };
@@ -67,7 +71,7 @@ const Section = () => {
   const bgStyle = {
     background:
       'linear-gradient(96deg, #999 1.59%, #616161 15%, #323232 19.77%, #818181 31.33%, #E7E7E7 43.14%, #848484 56.78%, #474747 67.1%, #C2C2C2 72.27%, #FFF 80.72%, #B7B7B7 87.42%, #242424 96.75%)',
-    'mix-blend-mode': 'screen',
+    mixBlendMode: 'screen',
   };
 
   return (
@@ -98,7 +102,7 @@ const Section = () => {
           Theme: {workoutData[0].theme}
         </h2>
       </div>
-      {workoutData[0].program.map((data, index) => (
+      {workoutData[0].program.slice(1).map((data, index) => (
         <SectionItem
           sectionList={workoutData[0].program}
           index={index}
@@ -110,7 +114,7 @@ const Section = () => {
         style={bgStyle}
         onClick={handleStart}
       >
-        <p className="static text-[18px] font-[SF_Pro_Display] font-medium not-italic leading-[normal]">
+        <p className="static text-[18px] font-[SF_Pro_Display] font-medium not-italic leading-[normal] text-[#000]">
           Start
         </p>
       </div>
@@ -139,7 +143,7 @@ const Section = () => {
         </h3>
 
         <DataInputComponent
-          inputId="custom-theme"
+          inputId="customTheme"
           inputType="select"
           inputOptions={WORKOUT_THEME_OPTIONS}
           placeholder="select"
@@ -147,7 +151,7 @@ const Section = () => {
           twClasses="block w-full px-4 py-2 border border-gray-300 bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
         />
         <DataInputComponent
-          inputId="custom-equipments"
+          inputId="customEquipments"
           inputType="select"
           inputOptions={EQUIPMENT_OPTIONS}
           placeholder="Choose equipment"
@@ -155,7 +159,7 @@ const Section = () => {
           twClasses="block w-full px-4 py-2 border border-gray-300 bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
         />
         <DataInputComponent
-          inputId="custom-duration"
+          inputId="customDuration"
           inputType="select"
           inputOptions={WORKOUT_DURATION_OPTIONS}
           placeholder="REGULAR"
@@ -165,6 +169,7 @@ const Section = () => {
         <div
           className="relative top-[35%] flex h-[49px] w-[358px] flex-shrink-0 items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
           style={bgStyle}
+          onClick={handleUpdateWorkout}
         >
           <p className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
             Update

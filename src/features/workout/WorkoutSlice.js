@@ -1,7 +1,8 @@
 import { axiosClient } from './apiClient';
 
 const initialState = {
-  workoutData: [],
+  workout: [],
+  workoutSummary: [],
   answers: [],
   status: 'loading',
   inputValues: {},
@@ -52,10 +53,15 @@ export default function workoutReducer(state = initialState, action) {
     case 'workout/finish':
       return {
         ...state,
+        workoutSummary: action.payload,
         status: 'finish',
         error: null,
       };
-
+    case 'workout/getWorkoutSummary':
+      return {
+        ...state,
+        workoutSummary: action.payload,
+      };
     default:
       return state;
   }
@@ -72,7 +78,6 @@ export function getWorkout() {
       .then((res) => {
         console.log('workout', res.data);
         dispatch({ type: 'workout/getWorkout', payload: res.data });
-        return res.data;
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');
@@ -82,9 +87,18 @@ export function getWorkout() {
 }
 
 export function updateWorkout() {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
+    const { inputValues } = getState().workoutReducer; // Get the current state
+    console.log(inputValues);
+    const { customTheme, customEquipments, customDuration } = inputValues;
+    const reqBody = {
+      memberCode: 'KU',
+      theme: customTheme,
+      equipment: customEquipments,
+      isLite: customDuration !== 'Regular',
+    };
     axiosClient
-      .get('/?memberCode=KU')
+      .put('/', reqBody)
       .then((res) => {
         console.log('workout', res.data);
         dispatch({ type: 'workout/getWorkout', payload: res.data });
@@ -113,23 +127,37 @@ export function previousWorkoutSection() {
   return { type: 'workout/previous' };
 }
 
-export function finishWorkout() {
-  console.log('workout fiised');
+export function getWorkoutSummary() {
+  console.log('in get summary')
   return async function (dispatch, getState) {
-    // Add getState as a parameter
-    const state = getState().workoutReducer; // Get the current state
-    console.log(state.inputValues);
+    const state = getState().workoutReducer;
+    const {inputValues}= state;
+    const pl = {
+      ...inputValues,
+      code: 'KU',
+      day: 'Nov Day 2',
+      batch: 'HYPER',
+    };
+    console.log('pl', pl)
     axiosClient
-      .post('/score', state.inputValues)
+      .post('/score', pl) 
       .then((res) => {
-        console.log('submit workout', res.data);
-        dispatch({ type: 'workout/finishWorkout', payload: res.data });
-        return res.data;
+        console.log('workout summary', res.data);
+        dispatch({ type: 'workout/getWorkoutSummary', payload: res.data });
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');
-        // dispatch(error(err.message));
+        // Handle errors as needed
       });
   };
-  return { type: 'workout/finish' };
 }
+
+export function finishWorkout() {
+  console.log('workout finished');
+  return async function (dispatch, getState) {
+    const state = getState().workoutReducer;
+    console.log(state.inputValues);
+    return { type: 'workout/finishWorkout', payload: state.inputValues };
+  };
+}
+

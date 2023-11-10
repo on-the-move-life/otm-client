@@ -9,7 +9,7 @@ const DataInputComponent = ({
   placeholder,
   label,
   value,
-  twClasses
+  twClasses,
 }) => {
   const dispatch = useDispatch();
 
@@ -22,9 +22,11 @@ const DataInputComponent = ({
     color: 'white',
   };
 
-  twClasses = (twClasses)? twClasses : "w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
+  twClasses = twClasses
+    ? twClasses
+    : 'w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500';
   return (
-    <div className='py-4'>
+    <div className="py-4">
       <label htmlFor={inputId}>{label}</label>
       {inputType === 'select' ? (
         <select
@@ -36,7 +38,11 @@ const DataInputComponent = ({
           style={inputStyle}
         >
           {inputOptions.map((option, optionIndex) => (
-            <option key={optionIndex} value={option}>
+            <option
+              key={optionIndex}
+              value={option}
+              className="bg-grey text-white"
+            >
               {option}
             </option>
           ))}

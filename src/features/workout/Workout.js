@@ -6,28 +6,9 @@ import Section from './Section';
 import { getWorkout, setLoading } from './WorkoutSlice';
 
 const Workout = () => {
-  // const [workout, setWorkout] = useState([]);
-  // const [section, setSection] = useState([]);
-  // const navigate = useNavigate();
 
   const {status, error}= useSelector((store) => store.workoutReducer)
   const dispatch= useDispatch();
-
-
-  // const fetchWorkout = async () => {
-  //   try {
-  //     const workoutRes = await fetch(
-  //       'https://otm-main-production.up.railway.app/api/v1/workout/hyper?memberCode=KU',
-  //     );
-
-  //     const workoutData = await workoutRes.json();
-  //     setWorkout(workoutData);
-  //     const sectionData = workoutData[0].program.slice(1);
-  //     setSection(sectionData);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
 
   useEffect(() => {
     dispatch(setLoading());
