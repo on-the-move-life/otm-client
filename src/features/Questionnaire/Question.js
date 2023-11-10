@@ -15,6 +15,11 @@ const Question = () => {
   const [disableButton, setDisableButton] = useState(true);
   const answersRef = useRef([]);
 
+  let user = localStorage.getItem('user');
+  if (user && !user.includes('undefined')) {
+    user = JSON.parse(user);
+  }
+
   const { sections, index } = useSelector(
     (store) => store.questionnaireReducer,
   );
@@ -98,10 +103,13 @@ const Question = () => {
     }
 
     dispatch(
-      nextSection({
-        sectionCode: sectionCode,
-        answers: answersRef.current,
-      }),
+      nextSection(
+        {
+          sectionCode: sectionCode,
+          answers: answersRef.current,
+        },
+        user.email,
+      ),
     );
 
     setInputResponse('');

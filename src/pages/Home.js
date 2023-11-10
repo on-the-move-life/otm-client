@@ -4,7 +4,6 @@ import { FitnessScore, Loader, Error } from '../components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
-import { useDispatch } from 'react-redux';
 
 const Home = () => {
   const { logout } = useAuth();
@@ -13,6 +12,9 @@ const Home = () => {
   const [error, setError] = useState(false);
 
   const [homeStats, setHomeStats] = useState(null);
+
+  const showElite =
+    homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
 
   const navigate = useNavigate();
 
@@ -26,6 +28,8 @@ const Home = () => {
     let user = localStorage.getItem('user');
     if (user && !user.includes('undefined')) {
       user = JSON.parse(user);
+    } else {
+      navigate('/');
     }
 
     function getUserData() {
@@ -49,8 +53,7 @@ const Home = () => {
         });
     }
 
-    if (user.email) {
-      console.log(user);
+    if (user && user.email) {
       getUserData();
     } else {
       setError('Please login first');
@@ -73,12 +76,16 @@ const Home = () => {
               </button>
             </div>
             <div className="tags mt-2 space-x-3">
-              <span className="bg-[#172339] font-semibold text-[#C2D3FA]">
-                Elite
-              </span>
-              <span className="bg-[#363629] font-semibold text-[#F2D670]">
-                Perfect Week x{homeStats.totalPerfectWeeks}
-              </span>
+              {homeStats.avgIntensity > 75 && (
+                <span className="bg-[#172339] font-semibold text-[#C2D3FA]">
+                  {showElite ? 'Elite' : 'Advanced'}
+                </span>
+              )}
+              {parseInt(homeStats.totalPerfectWeeks) > 0 && (
+                <span className="bg-[#363629] font-semibold text-[#F2D670]">
+                  Perfect Week x{homeStats.totalPerfectWeeks}
+                </span>
+              )}
             </div>
             <p className="mt-2 w-11/12 font-extralight">
               Fitness is not a destination. It's a journey of self-improvement,
@@ -97,14 +104,18 @@ const Home = () => {
             </p>
             <div className="flex items-center justify-between">
               <span className="text-xs tracking-widest text-lightGray">
-                EVOLVE CYCLE 1
+                EVOLVE CYCLE {homeStats.evolveCycleDetails.count || 0}
               </span>
               <div>
-                <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs font-bold text-lightGray">
-                  Sep-Nov 2023
-                </span>
+                {homeStats.evolveCycleDetails.durationString && (
+                  <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs font-bold text-lightGray">
+                    {homeStats.evolveCycleDetails.durationString}
+                  </span>
+                )}
+
                 <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs font-bold text-lightGray">
-                  Week 2/12
+                  Week {homeStats.evolveCycleDetails.currentWeek}/
+                  {homeStats.evolveCycleDetails.totalWeeks}
                 </span>
               </div>
             </div>
@@ -116,21 +127,21 @@ const Home = () => {
                 </span>
               </div>
               <div className="main-stat">
+                <h4>Level</h4>
+                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+                  4
+                </span>
+              </div>
+              <div className="main-stat">
                 <h4>Points</h4>
                 <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
                   {homeStats.points}
                 </span>
               </div>
               <div className="main-stat">
-                <h4>Time Trained</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  46Hrs
-                </span>
-              </div>
-              <div className="main-stat">
                 <h4>Community Rank</h4>
                 <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  8
+                  {homeStats.rank}
                 </span>
               </div>
             </div>
