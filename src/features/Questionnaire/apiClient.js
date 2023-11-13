@@ -2,7 +2,8 @@ import axios from 'axios';
 
 export const axiosClient = axios.create({
   // baseURL: `http://localhost:3001`,
-  baseURL: `http://localhost:882/api/v1/questionnaire`,
+  baseURL: `https://otm-main-production.up.railway.app/api/v1/questionnaire`,
+
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

@@ -2,7 +2,7 @@ import { useContext, useReducer, createContext } from 'react';
 
 import axios from 'axios';
 
-const LOGIN_URL = 'https://otm-main-production.up.railway.app/auth/login';
+onst LOGIN_URL = 'https://otm-main-production.up.railway.app/auth/login';
 
 //create a new context
 const AuthContext = createContext();
