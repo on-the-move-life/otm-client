@@ -1,7 +1,7 @@
 import { axiosClient } from './apiClient';
 
 const initialState = {
-  workout: [],
+  workout: {},
   workoutSummary: {},
   answers: [],
   status: 'loading',
@@ -12,17 +12,24 @@ const initialState = {
 export default function workoutReducer(state = initialState, action) {
   switch (action.type) {
     case 'workout/getWorkout':
+      const workoutData= {
+        ...action.payload[0], program:action.payload[0].program.slice(1) 
+      }
+      console.log(workoutData)
       return {
         ...state,
-        workout: action.payload,
+        workout: workoutData,
         status: 'ready',
         error: null,
       };
 
     case 'workout/updateWorkout':
+      const updateData= {
+        ...action.payload[0], program:action.payload[0].program.slice(1) 
+      }
       return {
         ...state,
-        workout: action.payload,
+        workout: updateData,
         status: 'ready',
         error: null,
       };
@@ -35,7 +42,7 @@ export default function workoutReducer(state = initialState, action) {
       };
 
     case 'workout/updateInput':
-      console.log(state.inputValues);
+      // console.log(state.inputValues);
       return {
         ...state,
         inputValues: {

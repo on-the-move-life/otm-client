@@ -44,7 +44,7 @@ const Section = () => {
 
   const handleStart = () => {
     navigate('/section-details', {
-      state: { sectionList: workoutData[0].program, index: 1 },
+      state: { sectionList: workoutData.program, index: 0 },
     });
   };
 
@@ -87,24 +87,24 @@ const Section = () => {
           Let's crush this workout
         </p>
         <div className="fixed left-[52%] top-20 flex h-[49px] w-[43px] flex-shrink-0 flex-col items-center justify-center rounded-[8px] border-[1px] border-[#B1B1B1] border-[solid] bg-[rgba(37,_37,_37,_0.30)] backdrop-blur-[5px] backdrop-filter">
-          <p className="text-[8px] font-[510]">Nov </p>
+          <p className="text-[8px] font-[510]">{workoutData.day.split(" ")[0]} </p>
           <p className="text-[8px] font-[510]">Day </p>
-          <p className="text-[17px] font-extrabold">1</p>
+          <p className="text-[17px] font-extrabold">{workoutData.day.split(" ")[2]}</p>
         </div>
-        <div className="fixed left-[52%] top-40 flex flex-col items-center justify-center">
+        {/* <div className="fixed left-[52%] top-40 flex flex-col items-center justify-center">
           <p className="text-[12px] font-semibold">35 mins </p>
           <p className="text-[12px] font-semibold">740 Kcal</p>
-        </div>
+        </div> */}
         <p className="relative left-5 top-20 text-[12px] font-[SF_Pro_Text] font-extralight not-italic leading-[17px]">
           Today's focus
         </p>
         <h2 className="relative left-5 top-20 text-[20px] font-[SF_Pro_Display] font-medium not-italic leading-[32px]">
-          Theme: {workoutData[0].theme}
+          Theme: {workoutData.theme}
         </h2>
       </div>
-      {workoutData[0].program.slice(1).map((data, index) => (
+      {workoutData.program.map((data, index) => (
         <SectionItem
-          sectionList={workoutData[0].program}
+          sectionList={workoutData.program}
           index={index}
           key={index}
         />

@@ -47,7 +47,7 @@ const SectionDetail = () => {
   };
 
   const handleNext = () => {
-    if (currentIndex + 1 === sectionList.length) {
+    if (currentIndex === sectionList.length-1) {
       navigate('/workout-summary');
     } else {
       const newIndex = currentIndex + 1;
@@ -96,9 +96,9 @@ const SectionDetail = () => {
       <span className="ml-8 mr-4 text-[12px] font-[590] font-[SF_Pro] capitalize leading-[normal] tracking-[-0.36px]">
         {format}
       </span>
-      <span className="pb-4 text-[12px] font-[590] font-[SF_Pro] capitalize leading-[normal] tracking-[-0.36px]">
+      {/* <span className="pb-4 text-[12px] font-[590] font-[SF_Pro] capitalize leading-[normal] tracking-[-0.36px]">
         6-8 reps
-      </span>
+      </span> */}
 
       {notes.length > 0 && (
         <div className="my-5 flex-shrink-0 rounded-[12px] bg-[#0E0E0E] object-contain p-5">
@@ -185,11 +185,11 @@ const SectionDetail = () => {
 
       <div className="my-5 flex h-[78px] w-[350px] flex-shrink-0 justify-between border-t-[1px_solid_#2B2B2B] bg-[rgba(0,_0,_0,_0.85)]">
         <div className="realtive left-5 top-5 flex">
-          <span disabled={currentIndex === 1} onClick={handlePrevious}>
+          <span disabled={currentIndex === 0} onClick={handlePrevious}>
             <img src="./assets/chevron.left.svg" />
           </span>
           <h2 className="text-[20px] font-medium not-italic leading-[32px]">
-            {currentIndex} / {sectionList.length - 1}
+            {currentIndex+1} / {sectionList.length }
           </h2>
           <span onClick={handleNext}>
             <img src="./assets/chevron.right.svg" />
@@ -199,13 +199,13 @@ const SectionDetail = () => {
           className="flex h-[49px] w-[202px] items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
           style={bgStyle}
           onClick={
-            currentIndex + 1 === sectionList.length
-              ? handleCloseWorkout
-              : handleSubmit
+            currentIndex === sectionList.length-1
+              ? handleSubmit
+              : handleCloseWorkout
           }
         >
           <span className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
-            {currentIndex === sectionList.length - 1 ? 'Submit' : 'Close'}
+            {currentIndex === sectionList.length-1 ? 'Submit' : 'Close'}
           </span>
         </div>
       </div>

@@ -10,7 +10,7 @@ const WorkoutSummary = () => {
   console.log('loaded workout summary');
   const navigate = useNavigate();
   const [workoutSummary, setWorkoutSummary] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { inputValues } = useSelector((store) => store.workoutReducer);
   console.log(inputValues);
@@ -21,7 +21,7 @@ const WorkoutSummary = () => {
     const pl = {
       ...inputValues,
       code: 'KU',
-      day: 'Nov Day 2',
+      day: 'Nov Day 76',
       batch: 'HYPER',
     };
     console.log('pl', pl);
@@ -33,7 +33,11 @@ const WorkoutSummary = () => {
       )
       .then((res) => {
         console.log('workout summary', res.data);
-        setWorkoutSummary(res.data);
+
+        setWorkoutSummary({
+          ...res.data,
+          sectionPerformance: res.data.sectionPerformance.slice(1),
+        });
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');
@@ -61,8 +65,9 @@ const WorkoutSummary = () => {
 
   return (
     <>
-      {loading && <Loader />}
-      {workoutSummary && (
+      {loading ? (
+        <Loader />
+      ) : (
         <div className="bg-slate-50 h-[844px] w-[390px] overflow-hidden p-4">
           <div className="mt-5 flex w-2/5 items-center justify-between text-[17px]">
             <h2>Total Workouts </h2>
@@ -70,17 +75,17 @@ const WorkoutSummary = () => {
               {workoutSummary.consistency.total}
             </p>
           </div>
-          <p className="mt-4 w-40 rounded-[4px] border-[0.5px] border-[#323232] border-[solid] py-2 pl-1 text-[12px] font-[590] font-[SF_Pro] lowercase not-italic leading-[normal] tracking-[-0.36px]">
+          <p className="mt-4 w-44 rounded-[4px] border-[0.5px] border-[#323232] border-[solid] py-2 pl-1 text-[12px] font-[590] font-[SF_Pro] lowercase not-italic leading-[normal] tracking-[-0.36px]">
             {workoutSummary.consistency.weekly}
           </p>
-          {/* {workoutSummary.sectionPerformance.slice(1).map((data, index) => (
+          {workoutSummary.sectionPerformance.map((data, index) => (
             <SectionItem
-              sectionList={workoutSummary.sectionPerformance.slice(1)}
+              sectionList={data}
               index={index}
               key={index}
               isReport={true}
             />
-          ))} */}
+          ))}
           <div
             className="relative top-[6%] flex h-[49px] w-[358px] flex-shrink-0 items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
             style={bgStyle}

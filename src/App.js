@@ -15,7 +15,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/questionnaire" element={<Questionnaire />} />
           <Route path="/section-details" element={<SectionDetail />} />
-          <Route path="/test" element={<Workout />} />
+          <Route path="/workout" element={<Workout />} />
           <Route path="/workout-summary" element={<WorkoutSummary />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
