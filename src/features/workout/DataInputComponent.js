@@ -22,6 +22,14 @@ const DataInputComponent = ({
     color: 'white',
   };
 
+  const inputDropdownStyle = {
+    // backgroundColor: 'grey',
+    backgroundColor: '#0F0F0F',
+    color: 'white',
+    width: '10px'
+  };
+  
+
   twClasses = twClasses
     ? twClasses
     : 'w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500';
@@ -41,7 +49,7 @@ const DataInputComponent = ({
             <option
               key={optionIndex}
               value={option}
-              className="bg-grey text-white"
+              style={inputDropdownStyle}
             >
               {option}
             </option>

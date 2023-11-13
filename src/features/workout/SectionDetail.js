@@ -48,7 +48,7 @@ const SectionDetail = () => {
 
   const handleNext = () => {
     if (currentIndex + 1 === sectionList.length) {
-      navigate('/test-2');
+      navigate('/workout-summary');
     } else {
       const newIndex = currentIndex + 1;
       console.log(newIndex);

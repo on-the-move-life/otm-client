@@ -2,7 +2,7 @@ import { axiosClient } from './apiClient';
 
 const initialState = {
   workout: [],
-  workoutSummary: [],
+  workoutSummary: {},
   answers: [],
   status: 'loading',
   inputValues: {},
@@ -125,31 +125,6 @@ export function updateInput(inputId, value) {
 
 export function previousWorkoutSection() {
   return { type: 'workout/previous' };
-}
-
-export function getWorkoutSummary() {
-  console.log('in get summary')
-  return async function (dispatch, getState) {
-    const state = getState().workoutReducer;
-    const {inputValues}= state;
-    const pl = {
-      ...inputValues,
-      code: 'KU',
-      day: 'Nov Day 2',
-      batch: 'HYPER',
-    };
-    console.log('pl', pl)
-    axiosClient
-      .post('/score', pl) 
-      .then((res) => {
-        console.log('workout summary', res.data);
-        dispatch({ type: 'workout/getWorkoutSummary', payload: res.data });
-      })
-      .catch((err) => {
-        console.log(err.message, 'ERROR');
-        // Handle errors as needed
-      });
-  };
 }
 
 export function finishWorkout() {

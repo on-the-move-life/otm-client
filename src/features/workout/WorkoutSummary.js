@@ -1,21 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import SectionItem from './SectionItem';
 
-import { getWorkoutSummary } from './WorkoutSlice';
+import axios from 'axios';
+import SectionItem from './SectionItem';
+import { Loader } from '../../components';
 
 const WorkoutSummary = () => {
   console.log('loaded workout summary');
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [workoutSummary, setWorkoutSummary] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const { inputValues } = useSelector((store) => store.workoutReducer);
+  console.log(inputValues);
+
+  function getWorkoutSummary() {
+    console.log('in get summary');
+
+    const pl = {
+      ...inputValues,
+      code: 'KU',
+      day: 'Nov Day 2',
+      batch: 'HYPER',
+    };
+    console.log('pl', pl);
+    setLoading(true);
+    axios
+      .post(
+        'https://otm-main-production.up.railway.app/api/v1/workout/hyper/score',
+        pl,
+      )
+      .then((res) => {
+        console.log('workout summary', res.data);
+        setWorkoutSummary(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message, 'ERROR');
+        // Handle errors as needed
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
 
   useEffect(() => {
-    console.log('calling ws');
-    dispatch(getWorkoutSummary());
-  }, [dispatch]);
-
-  const { workoutSummary } = useSelector((store) => store.workoutReducer);
+    console.log('in ue');
+    getWorkoutSummary();
+  }, []);
 
   const handleHomeRedirect = () => {
     navigate('/home');
@@ -27,40 +59,40 @@ const WorkoutSummary = () => {
     mixBlendMode: 'screen',
   };
 
-  (() => {
-    console.log('test');
-  })();
-
-  console.log(workoutSummary);
   return (
-    <div className="bg-slate-50 h-[844px] w-[390px] overflow-hidden p-4">
-      <div className="mt-5 flex w-2/5 items-center justify-between text-[17px]">
-        <h2>Total Workouts </h2>
-        <p className="rounded-[6px] border-[#B1B1B1] bg-[#1B1B1B] p-1">
-          {workoutSummary.consistency.total}
-        </p>
-      </div>
-      <p className="mt-4 w-40 rounded-[4px] border-[0.5px] border-[#323232] border-[solid] py-2 pl-1 text-[12px] font-[590] font-[SF_Pro] lowercase not-italic leading-[normal] tracking-[-0.36px]">
-        {workoutSummary.consistency.weekly}
-      </p>
-      {workoutSummary.map((data, index) => (
-        <SectionItem
-          sectionList={workoutSummary.sectionPerformance.slice(1)}
-          index={index}
-          key={index}
-          isReport={true}
-        />
-      ))}
-      <div
-        className="relative top-[6%] flex h-[49px] w-[358px] flex-shrink-0 items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
-        style={bgStyle}
-        onClick={handleHomeRedirect}
-      >
-        <p className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
-          Done
-        </p>
-      </div>
-    </div>
+    <>
+      {loading && <Loader />}
+      {workoutSummary && (
+        <div className="bg-slate-50 h-[844px] w-[390px] overflow-hidden p-4">
+          <div className="mt-5 flex w-2/5 items-center justify-between text-[17px]">
+            <h2>Total Workouts </h2>
+            <p className="rounded-[6px] border-[#B1B1B1] bg-[#1B1B1B] p-1">
+              {workoutSummary.consistency.total}
+            </p>
+          </div>
+          <p className="mt-4 w-40 rounded-[4px] border-[0.5px] border-[#323232] border-[solid] py-2 pl-1 text-[12px] font-[590] font-[SF_Pro] lowercase not-italic leading-[normal] tracking-[-0.36px]">
+            {workoutSummary.consistency.weekly}
+          </p>
+          {/* {workoutSummary.sectionPerformance.slice(1).map((data, index) => (
+            <SectionItem
+              sectionList={workoutSummary.sectionPerformance.slice(1)}
+              index={index}
+              key={index}
+              isReport={true}
+            />
+          ))} */}
+          <div
+            className="relative top-[6%] flex h-[49px] w-[358px] flex-shrink-0 items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
+            style={bgStyle}
+            onClick={handleHomeRedirect}
+          >
+            <p className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
+              Done
+            </p>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
