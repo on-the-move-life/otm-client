@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Error } from '../../components';
-import { getWorkout, updateWorkout } from './WorkoutSlice';
+import { getWorkout, setLoading, updateWorkout } from './WorkoutSlice';
 import SectionItem from './SectionItem';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -32,14 +32,14 @@ const Section = () => {
     }
   }, [dispatch, status]);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
-    setModalIsOpen(true);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setModalIsOpen(false);
+    setIsModalOpen(false);
   };
 
   const handleStart = () => {
@@ -49,7 +49,14 @@ const Section = () => {
   };
 
   const handleUpdateWorkout = () => {
-    dispatch(updateWorkout());
+    try {
+      closeModal();
+      dispatch(setLoading())
+      dispatch(updateWorkout());
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error updating workout:', error);
+    }
   };
 
   const handleCustomize = () => {
@@ -87,9 +94,12 @@ const Section = () => {
           Let's crush this workout
         </p>
         <div className="fixed left-[52%] top-20 flex h-[49px] w-[43px] flex-shrink-0 flex-col items-center justify-center rounded-[8px] border-[1px] border-[#B1B1B1] border-[solid] bg-[rgba(37,_37,_37,_0.30)] backdrop-blur-[5px] backdrop-filter">
-          <p className="text-[8px] font-[510]">{workoutData.day.split(" ")[0]} </p>
+          <p className="text-[8px] font-[510]">
+            {workoutData.day.split(' ')[0]}
+          </p>
           <p className="text-[8px] font-[510]">Day </p>
-          <p className="text-[17px] font-extrabold">{workoutData.day.split(" ")[2]}</p>
+          <p className="text-[17px] font-extrabold">
+            {workoutData.day.split(' ')[2]}          </p>
         </div>
         {/* <div className="fixed left-[52%] top-40 flex flex-col items-center justify-center">
           <p className="text-[12px] font-semibold">35 mins </p>
@@ -127,7 +137,7 @@ const Section = () => {
         </p>
       </div>
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Customize Your Workout Modal"
         className="h-[783px] w-[390px] flex-shrink-0 rounded-[12px] bg-[#141414] p-4"
