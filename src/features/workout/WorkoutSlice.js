@@ -12,10 +12,11 @@ const initialState = {
 export default function workoutReducer(state = initialState, action) {
   switch (action.type) {
     case 'workout/getWorkout':
-      const workoutData= {
-        ...action.payload[0], program:action.payload[0].program.slice(1) 
-      }
-      console.log(workoutData)
+      const workoutData = {
+        ...action.payload[0],
+        program: action.payload[0].program.slice(1),
+      };
+      console.log(workoutData);
       return {
         ...state,
         workout: workoutData,
@@ -24,9 +25,10 @@ export default function workoutReducer(state = initialState, action) {
       };
 
     case 'workout/updateWorkout':
-      const updateData= {
-        ...action.payload[0], program:action.payload[0].program.slice(1) 
-      }
+      const updateData = {
+        ...action.payload[0],
+        program: action.payload[0].program.slice(1),
+      };
       return {
         ...state,
         workout: updateData,
@@ -78,10 +80,10 @@ export function setLoading() {
   return { type: 'workout/setLoading' };
 }
 
-export function getWorkout() {
+export function getWorkout(code) {
   return async function (dispatch) {
     axiosClient
-      .get('/?memberCode=KU')
+      .get(`/?memberCode=${code}`)
       .then((res) => {
         console.log('workout', res.data);
         dispatch({ type: 'workout/getWorkout', payload: res.data });
@@ -142,4 +144,3 @@ export function finishWorkout() {
     return { type: 'workout/finishWorkout', payload: state.inputValues };
   };
 }
-

@@ -26,11 +26,14 @@ const Section = () => {
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
-  useEffect(() => {
-    if (status === 'loading' || status === 'ready') {
-      dispatch(getWorkout());
-    }
-  }, [dispatch, status]);
+  // useEffect(() => {
+  //   if (status === 'loading' || status === 'ready') {
+  //     if (memberCode) {
+  //       console.log(memberCode, 'memberCode');
+  //       dispatch(getWorkout(memberCode));
+  //     }
+  //   }
+  // }, [dispatch, status, memberCode]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -87,9 +90,13 @@ const Section = () => {
           Let's crush this workout
         </p>
         <div className="fixed left-[52%] top-20 flex h-[49px] w-[43px] flex-shrink-0 flex-col items-center justify-center rounded-[8px] border-[1px] border-[#B1B1B1] border-[solid] bg-[rgba(37,_37,_37,_0.30)] backdrop-blur-[5px] backdrop-filter">
-          <p className="text-[8px] font-[510]">{workoutData.day.split(" ")[0]} </p>
+          <p className="text-[8px] font-[510]">
+            {workoutData.day.split(' ')[0]}{' '}
+          </p>
           <p className="text-[8px] font-[510]">Day </p>
-          <p className="text-[17px] font-extrabold">{workoutData.day.split(" ")[2]}</p>
+          <p className="text-[17px] font-extrabold">
+            {workoutData.day.split(' ')[2]}
+          </p>
         </div>
         {/* <div className="fixed left-[52%] top-40 flex flex-col items-center justify-center">
           <p className="text-[12px] font-semibold">35 mins </p>
@@ -110,19 +117,19 @@ const Section = () => {
         />
       ))}
       <div
-        className="mt-4 flex h-[49px] w-[358px] items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
+        className="mt-4 flex h-[49px] w-[358px] items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)]  mix-blend-screen"
         style={bgStyle}
         onClick={handleStart}
       >
-        <p className="static text-[18px] font-[SF_Pro_Display] font-medium not-italic leading-[normal] text-[#000]">
+        <p className="static text-[18px] not-italic leading-[normal] text-[#000]">
           Start
         </p>
       </div>
       <div
-        className="static top-[] mt-4 flex h-[49px] w-[358px] items-center justify-center rounded-[12px] border-[2px]"
+        className="static mt-4 flex h-[49px] w-[358px] items-center justify-center rounded-[12px] border-[2px]"
         onClick={handleCustomize}
       >
-        <p className="text-[18px] font-[SF_Pro_Display] font-medium not-italic leading-[normal]">
+        <p className="text-[18px] not-italic leading-[normal]">
           Customize Workout
         </p>
       </div>
@@ -138,7 +145,7 @@ const Section = () => {
         >
           X
         </span>
-        <h3 className="relative left-16 mb-24 text-[20px] font-[SF_Pro_Display] font-medium not-italic leading-[32px]">
+        <h3 className="relative left-16 mb-24 text-[20px] not-italic leading-[32px]">
           Customize your workout
         </h3>
 
