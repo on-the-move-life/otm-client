@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateInput } from './WorkoutSlice';
 
 const DataInputComponent = ({
@@ -8,10 +8,13 @@ const DataInputComponent = ({
   inputOptions,
   placeholder,
   label,
-  value,
+  // value,
   twClasses,
 }) => {
   const dispatch = useDispatch();
+  const storedValue = useSelector(
+    (state) => state.workoutReducer.inputValues[inputId],
+  );
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
@@ -23,16 +26,18 @@ const DataInputComponent = ({
   };
 
   const inputDropdownStyle = {
-    // backgroundColor: 'grey',
     backgroundColor: '#0F0F0F',
     color: 'white',
-    width: '10px'
+    width: '10px',
   };
-  
 
   twClasses = twClasses
     ? twClasses
     : 'w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500';
+
+  // Set default value to an empty string if not provided
+  const value = storedValue !== undefined ? storedValue : '';
+
   return (
     <div className="py-4">
       <label htmlFor={inputId}>{label}</label>
@@ -46,18 +51,14 @@ const DataInputComponent = ({
           style={inputStyle}
         >
           {inputOptions.map((option, optionIndex) => (
-            <option
-              key={optionIndex}
-              value={option}
-              style={inputDropdownStyle}
-            >
+            <option key={optionIndex} value={option} style={inputDropdownStyle}>
               {option}
             </option>
           ))}
         </select>
       ) : inputType === 'textarea' ? (
         <textarea
-          className="w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
+          className="focus:border-blue-500 w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none"
           id={inputId}
           name={inputId}
           value={value}
@@ -67,7 +68,7 @@ const DataInputComponent = ({
         ></textarea>
       ) : (
         <input
-          className="w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none focus:border-blue-500"
+          className="focus:border-blue-500 w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none"
           type={inputType}
           id={inputId}
           name={inputId}

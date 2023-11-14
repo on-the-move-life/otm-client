@@ -96,6 +96,7 @@ export function getWorkout(code) {
 }
 
 export function updateWorkout() {
+  console.log('update called')
   return async function (dispatch, getState) {
     const { inputValues } = getState().workoutReducer; // Get the current state
     console.log(inputValues);
@@ -110,7 +111,8 @@ export function updateWorkout() {
       .put('/', reqBody)
       .then((res) => {
         console.log('workout', res.data);
-        dispatch({ type: 'workout/getWorkout', payload: res.data });
+        dispatch({ type: 'workout/updateWorkout', payload: res.data });
+        console.log('update done ')
         return res.data;
       })
       .catch((err) => {

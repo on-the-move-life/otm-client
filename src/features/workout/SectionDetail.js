@@ -44,10 +44,11 @@ const SectionDetail = () => {
 
   const handleCloseWorkout = () => {
     console.log('close');
+    navigate('/workout');
   };
 
   const handleNext = () => {
-    if (currentIndex === sectionList.length-1) {
+    if (currentIndex === sectionList.length - 1) {
       navigate('/workout-summary');
     } else {
       const newIndex = currentIndex + 1;
@@ -60,7 +61,7 @@ const SectionDetail = () => {
   const handlePrevious = () => {
     const newIndex = currentIndex - 1;
     console.log(newIndex);
-    if (newIndex === 0) {
+    if (newIndex === -1) {
       return;
     }
     setCurrentIndex(newIndex);
@@ -105,7 +106,7 @@ const SectionDetail = () => {
           <h3>Notes</h3>
           <ul>
             {notes.map((note, idx) => (
-              <li>{note}</li>
+              <li key={index}>{note}</li>
             ))}
           </ul>
         </div>
@@ -189,7 +190,7 @@ const SectionDetail = () => {
             <img src="./assets/chevron.left.svg" />
           </span>
           <h2 className="text-[20px] font-medium not-italic leading-[32px]">
-            {currentIndex+1} / {sectionList.length }
+            {currentIndex + 1} / {sectionList.length}
           </h2>
           <span onClick={handleNext}>
             <img src="./assets/chevron.right.svg" />
@@ -199,13 +200,13 @@ const SectionDetail = () => {
           className="flex h-[49px] w-[202px] items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
           style={bgStyle}
           onClick={
-            currentIndex === sectionList.length-1
+            currentIndex === sectionList.length - 1
               ? handleSubmit
               : handleCloseWorkout
           }
         >
           <span className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
-            {currentIndex === sectionList.length-1 ? 'Submit' : 'Close'}
+            {currentIndex === sectionList.length - 1 ? 'Submit' : 'Close'}
           </span>
         </div>
       </div>
