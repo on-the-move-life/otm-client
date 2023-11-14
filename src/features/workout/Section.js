@@ -79,13 +79,13 @@ const Section = () => {
             <h1 className="metallic-gradient-text text-2xl font-semibold ">
               Rishi Solanki
             </h1>
-            <span className="text-xs font-extralight text-lightGray">
+            <span className="text-xs font-extralight tracking-wider text-lightGray">
               Let's crush this workout
             </span>
             <span className="mt-6 text-xs tracking-widest text-lightGray">
               TODAY'S FOCUS
             </span>
-            <h3>{workoutData.theme}</h3>
+            <h2 className="text-xl">{workoutData.theme}</h2>
           </div>
 
           <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">
