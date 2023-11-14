@@ -13,28 +13,28 @@ const SectionItem = ({ sectionList, index, isReport }) => {
   };
 
   return (
-    <div
-      className="mt-5 h-[72px] w-[358px] rounded-[12px] border-[0.5px] border-[#383838] border-[solid] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)]"
-      onClick={() => handleClick(index)}
-    >
-      <p className="relative left-4 top-3 text-[24px]  not-italic leading-[40px]">
-        {sectionList.name || section.name}
-      </p>
-      {isReport && (
-        <p className="relative left-8 text-[12px]  leading-[normal] text-[#B1B1B1]">
-          {sectionList.displayInfo[0]}
-        </p>
-      )}
-      <div className="relative left-60 top-[-20px] text-[12px] not-italic leading-[normal]">
+    <div className="flex items-center px-4 py-2">
+      <div
+        className="flex h-16 w-full items-center justify-between rounded-xl border   border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] px-4  text-3xl"
+        onClick={() => handleClick(index)}
+      >
+        <h1 className="metallic-gradient-text text-xl font-bold">
+          {sectionList.name || section.name}
+        </h1>
         {isReport && (
-          <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
+          <p className=" text-lightGray">{sectionList.displayInfo[0]}</p>
         )}
-        {!isReport && (
-          <>
-            <p id="mc">{section.movements.length} movements</p>
-            <p id="format">{section.format}</p>
-          </>
-        )}
+        <div className="p-2 text-xs">
+          {isReport && (
+            <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
+          )}
+          {!isReport && (
+            <>
+              <p id="mc">{section.movements.length} movements</p>
+              <p id="format">{section.format}</p>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

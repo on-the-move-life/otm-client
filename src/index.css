@@ -35,6 +35,20 @@ button:active {
   background-color: rgba(61, 61, 61, 0.30);
 }
 
+.metallic-gradient-text {
+  background: linear-gradient(92deg, #999 -4.6%, #616161 5.26%, #323232 15.12%, #818181 24.98%, #E7E7E7 34.84%, #848484 44.7%, #474747 54.56%, #C2C2C2 64.42%, #FFF 74.27%, #242424 84.75%, #B7B7B7 93.99%);
+background-clip: text;
+-webkit-background-clip: text;
+display: inline-block;
+color: transparent;
+}
+
+.metallic-gradient {
+  background: linear-gradient(92deg, #999 -4.6%, #616161 5.26%, #323232 15.12%, #818181 24.98%, #E7E7E7 34.84%, #848484 44.7%, #474747 54.56%, #C2C2C2 64.42%, #FFF 74.27%, #242424 84.75%, #B7B7B7 93.99%);
+
+}
+
+
 .continueButton {
   position: fixed;
   bottom: 2em;
@@ -81,6 +95,7 @@ button:active {
   text-align: center;
 }
 .tags span {
+  /* border: 0.5px solid; */
   border-radius: 6px;
   padding: 4px;
   letter-spacing: 1px;

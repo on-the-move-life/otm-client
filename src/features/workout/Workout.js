@@ -27,11 +27,7 @@ const Workout = () => {
     <>
       {status === 'loading' && <Loader />}
       {status === 'error' && <Error>{error}</Error>}
-      {status === 'ready' && (
-        <>
-          <Section />
-        </>
-      )}
+      {status === 'ready' && <Section />}
     </>
   );
 };
