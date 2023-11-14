@@ -44,6 +44,7 @@ const SectionDetail = () => {
 
   const handleCloseWorkout = () => {
     console.log('close');
+    navigate('/workout');
   };
 
   const handleNext = () => {
@@ -60,7 +61,7 @@ const SectionDetail = () => {
   const handlePrevious = () => {
     const newIndex = currentIndex - 1;
     console.log(newIndex);
-    if (newIndex === 0) {
+    if (newIndex === -1) {
       return;
     }
     setCurrentIndex(newIndex);
@@ -100,7 +101,7 @@ const SectionDetail = () => {
           <h3>Notes</h3>
           <ul>
             {notes.map((note, idx) => (
-              <li>{note}</li>
+              <li key={index}>{note}</li>
             ))}
           </ul>
         </div>

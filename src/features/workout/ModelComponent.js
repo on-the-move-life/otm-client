@@ -2,7 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import Modal from 'react-modal';
 import DataInputComponent from './DataInputComponent';
-import { updateWorkout } from './WorkoutSlice';
+import { setLoading, updateWorkout } from './WorkoutSlice';
+
 import { useDispatch } from 'react-redux';
 
 const WORKOUT_THEME_OPTIONS = [
@@ -22,24 +23,35 @@ Modal.setAppElement('#root'); // Set the root element for screen readers
 const ModelComponent = () => {
   const dispatch = useDispatch();
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleUpdateWorkout = () => {
+    try {
+      setIsModalOpen(false);
+      dispatch(setLoading());
+      dispatch(updateWorkout());
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error updating workout:', error);
+    }
+  };
 
   return (
     <>
       <button
         className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border border-white bg-[#050505]"
-        onClick={() => setModalIsOpen(true)}
+        onClick={() => setIsModalOpen(true)}
       >
         <p className="text-lg">Customize Workout</p>
       </button>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
         contentLabel="Customize Your Workout Modal"
         className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4"
       >
         <span
-          onClick={() => setModalIsOpen(false)}
+          onClick={() => setIsModalOpen(false)}
           className="close-button relative left-[90%] top-2 mr-2 mt-2 cursor-pointer rounded-full p-2"
         >
           X
@@ -77,7 +89,7 @@ const ModelComponent = () => {
           </section>
           <button
             className="metallic-gradient h-11 w-full  items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-xl text-black"
-            onClick={() => dispatch(updateWorkout())}
+            onClick={() => handleUpdateWorkout()}
           >
             Update
           </button>
