@@ -15,7 +15,7 @@ const SectionItem = ({ sectionList, index, isReport }) => {
   return (
     <div className="flex items-center px-4 py-2">
       <div
-        className="flex h-16 w-full items-center justify-between rounded-xl border   border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] px-4  text-3xl"
+        className="flex h-16 w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] px-4  text-3xl"
         onClick={() => handleClick(index)}
       >
         <h1 className="metallic-gradient-text text-xl font-bold">

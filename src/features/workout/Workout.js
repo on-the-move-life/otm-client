@@ -18,7 +18,11 @@ const Workout = () => {
   }
 
   useEffect(() => {
-    dispatch(getWorkout(memberCode));
+    if (memberCode) {
+      dispatch(getWorkout(memberCode));
+    } else {
+      return <Error>No member code found</Error>;
+    }
     console.log('got workout');
   }, [dispatch, memberCode]);
 

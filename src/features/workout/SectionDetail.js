@@ -9,13 +9,6 @@ import DataInputComponent from './DataInputComponent';
 
 import { finishWorkout } from './WorkoutSlice';
 
-const customStyles = {
-  content: {
-    border: '1px solid #2A2A2A',
-    borderRadius: '12px',
-  },
-};
-
 Modal.setAppElement('#root');
 
 const SectionDetail = () => {
@@ -74,20 +67,8 @@ const SectionDetail = () => {
 
   const { name, format, movements, dataInput, notes } = currentSection;
 
-  const bgStyle = {
-    background:
-      'linear-gradient(96deg, #999 1.59%, #616161 15%, #323232 19.77%, #818181 31.33%, #E7E7E7 43.14%, #848484 56.78%, #474747 67.1%, #C2C2C2 72.27%, #FFF 80.72%, #B7B7B7 87.42%, #242424 96.75%)',
-    mixBlendMode: 'screen',
-  };
-
-  // const textFillStyle = {
-  //   WebkitTextFillColor:
-  //     'linear-gradient(96deg, #999 1.59%, #616161 15%, #323232 19.77%, #818181 31.33%, #E7E7E7 43.14%, #848484 56.78%, #474747 67.1%, #C2C2C2 72.27%, #FFF 80.72%, #B7B7B7 87.42%, #242424 96.75%)',
-  //   mixBlendMode: 'screen',
-  // };
-
   return (
-    <div className="p-4">
+    <div className="my-4 p-4">
       <h1 className="metallic-gradient-text text-3xl">{name}</h1>
       <div className="tags my-2">
         <span className="border border-[#323232] text-xs">{format}</span>
@@ -97,11 +78,16 @@ const SectionDetail = () => {
       </span> */}
 
       {notes.length > 0 && (
-        <div className="my-5 flex-shrink-0 rounded-[12px] bg-[#0E0E0E] object-contain p-5">
-          <h3>Notes</h3>
+        <div className="rounded-xl bg-[#0E0E0E] p-4">
+          <p className="mb-2 text-xs tracking-widest">NOTES</p>
           <ul>
             {notes.map((note, idx) => (
-              <li key={index}>{note}</li>
+              <li
+                className="text-xs font-light tracking-wider text-lightGray"
+                key={idx}
+              >
+                - {note}
+              </li>
             ))}
           </ul>
         </div>
@@ -110,28 +96,28 @@ const SectionDetail = () => {
       {movements.map((mvmt, idx) => (
         <div
           key={mvmt.name}
-          className="mb-8 h-[100px] w-[358px] rounded-[12px] border-[0.5px] border-[#383838] border-[solid] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)]"
+          className="my-4 flex h-24 w-full items-start justify-between rounded-xl border  border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] text-xl"
           onClick={() => openModal(mvmt)}
         >
-          <div className="flex">
+          <div className="flex h-full w-1/3">
             <img
+              className="h-full w-full rounded-l-xl"
               src={mvmt.link[0]}
-              className="h-[100px] w-[128.553px] rounded-[12px]"
               alt="Movement"
             />
-            <div className="ml-5">
-              <p className="relative top-3 mb-5 w-48 text-[18px] font-[SF_Pro_Text] leading-[25px]">
-                {`${mvmt.name} ${mvmt.hint}`}
-              </p>
-              {/* <p>Equipment</p> */}
-              {/* <p>{mvmt.hint}</p> */}
-            </div>
+          </div>
+          <div>
+            <span className="pr-4 text-sm">{`${mvmt.name} ${mvmt.hint}`}</span>
+            {/* <p>Equipment</p> */}
+            {/* <p>{mvmt.hint}</p> */}
           </div>
         </div>
       ))}
 
       <div>
-        <h2 className="text-[20px] ">Data Inputs</h2>
+        <h2 className="metallic-gradient-text mb-4 mt-8 text-2xl">
+          Data Inputs
+        </h2>
         {dataInput.map((input, index) => (
           <DataInputComponent
             key={index}
@@ -148,61 +134,57 @@ const SectionDetail = () => {
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
-          style={customStyles}
-          className="h-[783px] w-[390px] flex-shrink-0 rounded-[12px] bg-[#141414] p-4"
+          // style={customStyles}
+          className=" h-screen w-screen  bg-black p-8"
         >
-          <span
-            onClick={closeModal}
-            className="close-button relative left-[90%] top-2 mr-2 mt-2 cursor-pointer rounded-full p-2"
-          >
-            X
-          </span>
-          <h3 className="relative left-16 mb-24 text-[20px] font-[SF_Pro_Display] font-medium not-italic leading-[32px]">
-            {selectedMvmtName}
-          </h3>
-          <img
-            src={selectedImage}
-            alt="Movement"
-            className="relative left-16"
-          />
-          <div
-            onClick={closeModal}
-            className="relative top-[35%] flex h-[49px] w-[358px] flex-shrink-0 items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
-            style={bgStyle}
-          >
-            <p className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
-              Done
-            </p>
+          <div className=" flex justify-end">
+            <span onClick={closeModal} className="close-button">
+              X
+            </span>
           </div>
+          <div className="flex flex-col justify-around ">
+            <h3 className="metallic-gradient-text my-8 text-center text-2xl">
+              {selectedMvmtName}
+            </h3>
+            <img src={selectedImage} alt="Movement" />
+          </div>
+          <button
+            onClick={closeModal}
+            className="metallic-gradient mt-10 h-10 w-full rounded-xl border-[rgba(209,209,209,0.70)]"
+          >
+            CLOSE
+          </button>
         </Modal>
       )}
 
-      <div className="my-5 flex h-[78px] w-[350px] flex-shrink-0 justify-between border-t-[1px_solid_#2B2B2B] bg-[rgba(0,_0,_0,_0.85)]">
-        <div className="realtive left-5 top-5 flex">
-          <span disabled={currentIndex === 0} onClick={handlePrevious}>
-            <img src="./assets/chevron.left.svg" />
-          </span>
-          <h2 className="text-[20px] font-medium not-italic leading-[32px]">
-            {currentIndex + 1} / {sectionList.length}
-          </h2>
-          <span onClick={handleNext}>
-            <img src="./assets/chevron.right.svg" />
-          </span>
+      <footer className="pt-8">
+        <div className="flex justify-around">
+          <div className="flex w-1/3 items-center space-x-3">
+            <button disabled={currentIndex === 0} onClick={handlePrevious}>
+              <img src="./assets/chevron.left.svg" alt="left-arrow" />
+            </button>
+            <p className="text-xl">
+              {currentIndex + 1} / {sectionList.length}
+            </p>
+            <button onClick={handleNext}>
+              <img src="./assets/chevron.right.svg" alt="right-arrow" />
+            </button>
+          </div>
+          <div
+            className="metallic-gradient flex h-11 w-3/6 items-center justify-center rounded-xl border-[rgba(209,209,209,0.70)] "
+            // style={bgStyle}
+            onClick={
+              currentIndex === sectionList.length - 1
+                ? handleSubmit
+                : handleCloseWorkout
+            }
+          >
+            <span className="text-lg font-semibold uppercase text-black">
+              {currentIndex === sectionList.length - 1 ? 'Submit' : 'Close'}
+            </span>
+          </div>
         </div>
-        <div
-          className="flex h-[49px] w-[202px] items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
-          style={bgStyle}
-          onClick={
-            currentIndex === sectionList.length - 1
-              ? handleSubmit
-              : handleCloseWorkout
-          }
-        >
-          <span className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
-            {currentIndex === sectionList.length - 1 ? 'Submit' : 'Close'}
-          </span>
-        </div>
-      </div>
+      </footer>
     </div>
   );
 };
