@@ -62,7 +62,9 @@ const SectionDetail = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(finishWorkout);
+    if (currentIndex === sectionList.length - 1) {
+      navigate('/workout-summary');
+    }
   };
 
   const { name, format, movements, dataInput, notes } = currentSection;
@@ -73,9 +75,6 @@ const SectionDetail = () => {
       <div className="tags my-2">
         <span className="border border-[#323232] text-xs">{format}</span>
       </div>
-      {/* <span className="pb-4 text-[12px] font-[590] font-[SF_Pro] capitalize leading-[normal] tracking-[-0.36px]">
-        6-8 reps
-      </span> */}
 
       {notes.length > 0 && (
         <div className="rounded-xl bg-[#0E0E0E] p-4">
@@ -106,7 +105,7 @@ const SectionDetail = () => {
               alt="Movement"
             />
           </div>
-          <div className="px-4">
+          <div className="w-2/3 px-4">
             <span className="text-sm">{`${mvmt.name} ${mvmt.hint}`}</span>
             {/* <p>Equipment</p> */}
             {/* <p>{mvmt.hint}</p> */}

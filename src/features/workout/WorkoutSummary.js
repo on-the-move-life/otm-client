@@ -49,35 +49,27 @@ const WorkoutSummary = () => {
   }
 
   useEffect(() => {
-    console.log('in ue');
     getWorkoutSummary();
   }, []);
-
-  const handleHomeRedirect = () => {
-    navigate('/home');
-  };
-
-  const bgStyle = {
-    background:
-      'linear-gradient(96deg, #999 1.59%, #616161 15%, #323232 19.77%, #818181 31.33%, #E7E7E7 43.14%, #848484 56.78%, #474747 67.1%, #C2C2C2 72.27%, #FFF 80.72%, #B7B7B7 87.42%, #242424 96.75%)',
-    mixBlendMode: 'screen',
-  };
 
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-        <div className="bg-slate-50 h-[844px] w-[390px] overflow-hidden p-4">
-          <div className="mt-5 flex w-2/5 items-center justify-between text-[17px]">
-            <h2>Total Workouts </h2>
-            <p className="rounded-[6px] border-[#B1B1B1] bg-[#1B1B1B] p-1">
-              {workoutSummary.consistency.total}
-            </p>
+        <div className="h-screen w-screen py-8">
+          <div className="mb-4 px-4 ">
+            <div className="mb-2 flex space-x-3 ">
+              <h2 className="text-2xl">Total Workouts</h2>
+              <span className="rounded-lg border border-white bg-[#1B1B1B] p-1">
+                {workoutSummary.consistency.total}
+              </span>
+            </div>
+            <span className="rounded border border-[#323232] p-1 text-xs text-lightGray">
+              {workoutSummary.consistency.weekly}
+            </span>
           </div>
-          <p className="mt-4 w-44 rounded-[4px] border-[0.5px] border-[#323232] border-[solid] py-2 pl-1 text-[12px] font-[590] font-[SF_Pro] lowercase not-italic leading-[normal] tracking-[-0.36px]">
-            {workoutSummary.consistency.weekly}
-          </p>
+
           {workoutSummary.sectionPerformance.map((data, index) => (
             <SectionItem
               sectionList={data}
@@ -86,14 +78,15 @@ const WorkoutSummary = () => {
               isReport={true}
             />
           ))}
-          <div
-            className="relative top-[6%] flex h-[49px] w-[358px] flex-shrink-0 items-center justify-center rounded-[12px] border-[2px] border-[rgba(209,209,209,0.70)] border-[solid] mix-blend-screen"
-            style={bgStyle}
-            onClick={handleHomeRedirect}
-          >
-            <p className="text-[18px] font-medium not-italic leading-[normal] text-[#000]">
-              Done
-            </p>
+          <div className="px-4">
+            <button
+              className="metallic-gradient mt-4 flex h-10 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center font-semibold text-black"
+              onClick={() => {
+                navigate('/home');
+              }}
+            >
+              Back to Home
+            </button>
           </div>
         </div>
       )}
