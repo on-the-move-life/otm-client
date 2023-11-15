@@ -20,6 +20,7 @@ module.exports = withMT({
         'green-logo': "url('../public/assets/green-logo.svg')",
         'red-logo': "url('../public/assets/red-logo.svg')",
         icon: "url('../public/assets/icon.svg')",
+        'workout-cover': "url('../public/assets/workout-cover.svg')",
       },
     },
   },

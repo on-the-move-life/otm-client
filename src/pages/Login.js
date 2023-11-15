@@ -128,7 +128,7 @@ const Login = () => {
               {error && (
                 <div className=" flex">
                   <AiFillWarning size={22} color="red" />
-                  <p className="ml-2 text-red-500">{error}</p>
+                  <p className="text-red-500 ml-2">{error}</p>
                 </div>
               )}
             </div>
@@ -146,15 +146,12 @@ const Login = () => {
       ) : (
         <div className="flex h-screen w-full flex-col items-center justify-evenly py-8">
           {/* DIV 1 */}
-          <header className="ml-14 h-12 w-44 bg-logo bg-no-repeat"></header>
+          <header className="bg-logo ml-14 h-12 w-44 bg-no-repeat"></header>
           {/* DIV 2 */}
           <section className="mb-48 text-center">
             <div className=" text-3xl font-bold text-white">
               <span className="block">Create Your Account</span>
             </div>
-            <p className="py-2 font-semibold leading-6 text-green">
-              Lorem ipsum dolor sit amet.
-            </p>
           </section>
           <footer className="flex w-11/12 flex-col items-center">
             <button
