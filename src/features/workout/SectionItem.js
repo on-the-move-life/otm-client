@@ -18,21 +18,21 @@ const SectionItem = ({ sectionList, index, isReport }) => {
         className="flex h-16 w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] px-4  text-3xl"
         onClick={() => handleClick(index)}
       >
-        <div>
-          <h1 className="metallic-gradient-text text-xl font-bold">
+        <div className="flex">
+          <h1 className="metallic-gradient-text items-center text-xl font-bold">
             {sectionList.name || section.name}
           </h1>
           {isReport && (
             <p className="text-lightGray">{sectionList.displayInfo[0]}</p>
           )}
         </div>
-        <div className="p-2 text-xs">
+        <div className="text-xs tracking-widest text-lightGray">
           {isReport && (
             <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
           )}
           {!isReport && (
             <>
-              <p id="mc">{section.movements.length} movements</p>
+              <p id="mc">{section.movements.length} Movements</p>
               <p id="format">{section.format}</p>
             </>
           )}
