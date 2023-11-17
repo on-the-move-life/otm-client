@@ -81,13 +81,13 @@ const Home = () => {
                   {showElite ? 'Elite' : 'Advanced'}
                 </span>
               )}
-              {parseInt(homeStats.totalPerfectWeeks) > 0 && (
+              {parseInt(homeStats.streak) > 0 && (
                 <span className="bg-[#363629] font-semibold text-[#F2D670]">
-                  Perfect Week x{homeStats.totalPerfectWeeks}
+                  Perfect Week x{homeStats.streak}
                 </span>
               )}
             </div>
-            <p className="mt-2 w-11/12 font-extralight">
+            <p className="mt-2 w-11/12 font-extralight text-lightGray">
               Fitness is not a destination. It's a journey of self-improvement,
               one workout at a time.
             </p>
@@ -113,7 +113,7 @@ const Home = () => {
                   </span>
                 )}
 
-                <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs font-bold text-lightGray">
+                <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
                   Week {homeStats.evolveCycleDetails.currentWeek}/
                   {homeStats.evolveCycleDetails.totalWeeks}
                 </span>

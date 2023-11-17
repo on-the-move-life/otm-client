@@ -3,6 +3,7 @@ import { Loader, Error } from '../../components';
 import SectionItem from './SectionItem';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from './ModelComponent';
+import { HiArrowNarrowLeft } from 'react-icons/hi';
 
 const Section = () => {
   const navigate = useNavigate();
@@ -76,6 +77,12 @@ const Section = () => {
       <div className="mb-4 flex h-1/4 bg-workout-cover bg-cover py-6">
         <div className="flex w-full justify-between px-4">
           <div className="flex flex-col">
+            <HiArrowNarrowLeft
+              size={20}
+              onClick={() => {
+                navigate('/home');
+              }}
+            />
             <h1 className="metallic-gradient-text text-2xl font-semibold ">
               Rishi Solanki
             </h1>
