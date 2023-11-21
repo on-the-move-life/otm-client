@@ -10,6 +10,13 @@ const Section = () => {
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
+  let memberName = 'Guest';
+  let user = localStorage.getItem('user');
+  if (user && !user.includes('undefined')) {
+    user = JSON.parse(user);
+    memberName = user['name'];
+  }
+
   const handleStart = () => {
     navigate('/section-details', {
       state: { sectionList: workoutData.program, index: 0 },
@@ -83,8 +90,8 @@ const Section = () => {
                 navigate('/home');
               }}
             />
-            <h1 className="gradient-text text-2xl font-semibold ">
-              Rishi Solanki
+            <h1 className="metallic-gradient-text text-2xl font-semibold ">
+              {memberName}
             </h1>
             <span className="text-xs font-extralight tracking-wider text-lightGray">
               Let's crush this workout
