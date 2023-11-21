@@ -19,7 +19,7 @@ const SectionItem = ({ sectionList, index, isReport }) => {
         onClick={() => handleClick(index)}
       >
         <div className="flex">
-          <h1 className="metallic-gradient-text items-center text-xl font-bold">
+          <h1 className="gradient-text items-center text-xl font-bold">
             {sectionList.name || section.name}
           </h1>
           {isReport && (
@@ -31,10 +31,14 @@ const SectionItem = ({ sectionList, index, isReport }) => {
             <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
           )}
           {!isReport && (
-            <>
-              <p id="mc">{section.movements.length} Movements</p>
-              <p id="format">{section.format}</p>
-            </>
+            <div className="tags flex flex-col items-start justify-center  text-xs">
+              <span className="bg-[#172339]  p-0.5 text-[#C2D3FA]">
+                Elite - 104%
+              </span>
+              <span className="mt-1 ">
+                {section.movements.length} Movements
+              </span>
+            </div>
           )}
         </div>
       </div>

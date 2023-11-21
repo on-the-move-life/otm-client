@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Login, Home, PageNotFound, OpeningPage, Workout } from './pages';
+import { Login, Home, PageNotFound, OpeningPage } from './pages';
 
 import { AuthProvider } from './contexts/AuthContext';
 import Questionnaire from './features/Questionnaire/Questionnaire';
-import SectionDetail from './features/workout/SectionDetail';
-import WorkoutSummary from './features/workout/WorkoutSummary';
+import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 
 function App() {
   let user = localStorage.getItem('user');

@@ -10,7 +10,7 @@ const Section = () => {
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
-  let memberName= "Guest";
+  let memberName = 'Guest';
   let user = localStorage.getItem('user');
   if (user && !user.includes('undefined')) {
     user = JSON.parse(user);
