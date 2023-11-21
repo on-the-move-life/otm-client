@@ -3,11 +3,10 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import LoginInput from '../components/LoginInput';
 import { HiOutlineMail, HiArrowNarrowLeft } from 'react-icons/hi';
-import { AiFillWarning } from 'react-icons/ai';
+// import { AiFillWarning } from 'react-icons/ai';
 
 const Login = () => {
-  const { login, isAuthenticated, resetPasswordLogin, error, isSignUp, reset } =
-    useAuth();
+  const { login, resetPasswordLogin, error, isSignUp, reset } = useAuth();
   const [showLoginInput, setShowLoginInput] = useState(false);
 
   const navigate = useNavigate();
