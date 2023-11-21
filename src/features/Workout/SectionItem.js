@@ -18,12 +18,14 @@ const SectionItem = ({ sectionList, index, isReport }) => {
         className="flex h-16 w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] px-4  text-3xl"
         onClick={() => handleClick(index)}
       >
-        <div className="flex">
+        <div className="flex flex-col">
           <h1 className="gradient-text items-center text-xl font-bold">
             {sectionList.name || section.name}
           </h1>
           {isReport && (
-            <p className="text-lightGray">{sectionList.displayInfo[0]}</p>
+            <p className="text-xs text-lightGray">
+              {sectionList.displayInfo[0]}
+            </p>
           )}
         </div>
         <div className="text-xs tracking-widest text-lightGray">
