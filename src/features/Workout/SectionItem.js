@@ -35,7 +35,9 @@ const SectionItem = ({ sectionList, index, isReport }) => {
               <span className="bg-[#172339]  p-0.5 text-[#C2D3FA]">
                 Elite - 104%
               </span>
-              <span className="mt-1 ">2 Movements</span>
+              <span className="mt-1 ">
+                {section.movements.length} Movements
+              </span>
             </div>
           )}
         </div>
