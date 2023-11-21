@@ -2,7 +2,7 @@ import { useContext, useReducer, createContext } from 'react';
 
 import axios from 'axios';
 
-const LOGIN_URL = 'https://otm-main-production.up.railway.app/auth/login';
+const LOGIN_URL = 'https://otm-main-production.up.railway.app/auth';
 
 //create a new context
 const AuthContext = createContext();
@@ -55,6 +55,15 @@ function reducer(state, action) {
     case 'reset':
       return initialState;
 
+    case 'resetPasswordLogin':
+      return {
+        ...state,
+        isAuthenticated: true,
+        error: null,
+        user: action.payload,
+        isSignUp: false,
+      };
+
     default:
       throw new Error('Unknown action');
   }
@@ -70,7 +79,7 @@ function AuthProvider({ children }) {
   async function login(body) {
     // api call
     axios
-      .post(LOGIN_URL, body)
+      .post(`${LOGIN_URL}/login`, body)
       .then((res) => {
         const user = res.data?.user;
         const isSignUp = res.data?.isSignUp;
@@ -81,10 +90,29 @@ function AuthProvider({ children }) {
           dispatch({ type: isSignUp ? 'signup' : 'login', payload: user });
         }
       })
+      .catch(({ response }) => {
+        console.log(response, 'ERROR');
+        dispatch({ type: 'error', payload: response.data.msg });
+      });
+  }
+
+  async function resetPasswordLogin(body) {
+    console.log(body, 'reset password');
+    // api call
+    axios
+      .post(`${LOGIN_URL}/reset-password`, body)
+      .then((res) => {
+        const user = res.data?.user;
+
+        if (user.email) {
+          localStorage.setItem('user', JSON.stringify(user));
+
+          dispatch({ type: 'login', payload: user });
+        }
+      })
       .catch((error) => {
         console.log(error, 'ERROR');
-        const msg = error.response.data.msg;
-        dispatch({ type: 'error', payload: msg });
+        dispatch({ type: 'error', payload: error.response.msg });
       });
   }
 
@@ -99,7 +127,16 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isSignUp, user, isAuthenticated, login, logout, error, reset }}
+      value={{
+        isSignUp,
+        user,
+        isAuthenticated,
+        resetPasswordLogin,
+        login,
+        logout,
+        error,
+        reset,
+      }}
     >
       {children}
     </AuthContext.Provider>

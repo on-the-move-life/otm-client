@@ -71,7 +71,7 @@ const SectionDetail = () => {
 
   return (
     <div className="my-4 p-4">
-      <h1 className="metallic-gradient-text text-3xl">{name}</h1>
+      <h1 className="gradient-text text-3xl">{name}</h1>
       <div className="tags my-2">
         <span className="border border-[#323232] text-xs">{format}</span>
       </div>
@@ -114,9 +114,7 @@ const SectionDetail = () => {
       ))}
 
       <div>
-        <h2 className="metallic-gradient-text mb-4 mt-8 text-2xl">
-          Data Inputs
-        </h2>
+        <h2 className="gradient-text mb-4 mt-8 text-2xl">Data Inputs</h2>
         {dataInput.map((input, index) => (
           <DataInputComponent
             key={index}
@@ -142,7 +140,7 @@ const SectionDetail = () => {
             </span>
           </div>
           <div className="flex flex-col justify-around ">
-            <h3 className="metallic-gradient-text my-8 text-center text-2xl">
+            <h3 className="gradient-text my-8 text-center text-2xl">
               {selectedMvmtName}
             </h3>
             <img src={selectedImage} alt="Movement" />

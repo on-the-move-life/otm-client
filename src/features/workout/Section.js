@@ -83,7 +83,7 @@ const Section = () => {
                 navigate('/home');
               }}
             />
-            <h1 className="metallic-gradient-text text-2xl font-semibold ">
+            <h1 className="gradient-text text-2xl font-semibold ">
               Rishi Solanki
             </h1>
             <span className="text-xs font-extralight tracking-wider text-lightGray">

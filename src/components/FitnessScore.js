@@ -79,8 +79,7 @@ const Testing = ({ progress }) => {
             <BlockContainer key={i}>
               <Block
                 style={{
-                  backgroundColor:
-                    i <= stepsToFill ? gradient[i] : 'transparent',
+                  backgroundColor: i <= stepsToFill ? gradient[i] : '#242424',
                   width:
                     i === stepsToFill
                       ? `${((progress / 10) * totalSteps - i) * 15}px`

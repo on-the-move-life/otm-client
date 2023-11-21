@@ -6,7 +6,8 @@ import { HiOutlineMail, HiArrowNarrowLeft } from 'react-icons/hi';
 import { AiFillWarning } from 'react-icons/ai';
 
 const Login = () => {
-  const { login, isAuthenticated, error, isSignUp, reset } = useAuth();
+  const { login, isAuthenticated, resetPasswordLogin, error, isSignUp, reset } =
+    useAuth();
   const [showLoginInput, setShowLoginInput] = useState(false);
 
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordType, setPasswordType] = useState('');
+  const [resetPassword, setResetPassword] = useState(false);
 
   // let disableContinue = true;
 
@@ -39,7 +41,11 @@ const Login = () => {
         password,
         isGoogleLogin: false,
       };
-      login(body);
+      if (resetPassword) {
+        resetPasswordLogin(body);
+      } else {
+        login(body);
+      }
     }
   };
 
@@ -66,7 +72,7 @@ const Login = () => {
         shape: 'pill',
       });
     }
-  }, [login]);
+  }, [login, showLoginInput]);
 
   useEffect(() => {
     if (isSignUp === null) navigate('/login');
@@ -81,6 +87,7 @@ const Login = () => {
     setPassword('');
     reset();
     setShowLoginInput(false);
+    setResetPassword(false);
   }
 
   return (
@@ -93,15 +100,17 @@ const Login = () => {
             onClick={() => handleBack()}
           />
           <header className="my-6 text-2xl text-green">
-            Enter your log in details
+            {resetPassword
+              ? 'Update your password'
+              : 'Enter your log in details'}
           </header>
           <form
-            className="my-4 flex w-full flex-col"
+            className="mt-4 flex w-full flex-col"
             action="post"
             onSubmit={handleEmailAuth}
           >
             <input
-              style={{ borderColor: '#5ECC7B' }}
+              style={{ borderColor: '#5ECC7B', marginBottom: '2em' }}
               className="textbox"
               type="email"
               placeholder="EMAIL"
@@ -109,28 +118,52 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <div>
-              <input
-                id="pwd"
-                style={{ borderColor: '#5ECC7B' }}
-                className="textbox"
-                type="password"
-                placeholder="PASSWORD"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-              />
-              <button
-                className="relative -top-8 text-sm"
-                type="text"
-                onClick={(e) => toggleShowPassword(e)}
-              >
-                {passwordType === 'text' ? 'Hide' : 'Show'}
-              </button>
+              {resetPassword ? (
+                <input
+                  id="pwd"
+                  style={{ borderColor: '#5ECC7B' }}
+                  className="textbox"
+                  type="password"
+                  placeholder="NEW PASSWORD"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                />
+              ) : (
+                <input
+                  id="pwd"
+                  style={{ borderColor: '#5ECC7B' }}
+                  className="textbox"
+                  type="password"
+                  placeholder="PASSWORD"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                />
+              )}
               {error && (
-                <div className=" flex">
-                  <AiFillWarning size={22} color="red" />
-                  <p className="text-red-500 ml-2">{error}</p>
+                <div className="flex">
+                  {/* <AiFillWarning size={22} color="red" /> */}
+                  <p className="py-2 text-xs text-red">{error}</p>
                 </div>
               )}
+              <div className="mt-4 flex justify-between">
+                <button
+                  className="text-sm text-green"
+                  type="text"
+                  onClick={(e) => toggleShowPassword(e)}
+                >
+                  {passwordType === 'text' ? 'Hide' : 'Show'}
+                </button>
+                <button
+                  className="text-sm text-green"
+                  type="text"
+                  onClick={() => {
+                    setPassword('');
+                    setResetPassword(true);
+                  }}
+                >
+                  {!resetPassword && 'Forgot Password'}
+                </button>
+              </div>
             </div>
             <button
               disabled={!email || !password}

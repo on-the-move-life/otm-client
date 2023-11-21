@@ -75,7 +75,7 @@ const Home = () => {
                 <AiOutlinePoweroff size={22} />
               </button>
             </div>
-            <div className="tags mt-2 space-x-3">
+            <div className="tags mt-2 space-x-3 p-1">
               {homeStats.avgIntensity > 75 && (
                 <span className="bg-[#172339] font-semibold text-[#C2D3FA]">
                   {showElite ? 'Elite' : 'Advanced'}

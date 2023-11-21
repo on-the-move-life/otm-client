@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Error, Loader } from '../../components';
-
-import Section from './Section';
 import { getWorkout, setLoading } from './WorkoutSlice';
+import Section from './Section';
 
 const Workout = () => {
   const { status, error } = useSelector((store) => store.workoutReducer);

@@ -57,7 +57,7 @@ const ModelComponent = () => {
           X
         </span>
         <div className="flex h-screen flex-col justify-around">
-          <h3 className="metallic-gradient-text text-center text-xl uppercase">
+          <h3 className="gradient-text text-center text-xl uppercase">
             Customize your workout
           </h3>
 
