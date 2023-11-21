@@ -106,7 +106,7 @@ const SectionDetail = () => {
             />
           </div>
           <div className="w-2/3 px-4">
-            <span className="text-sm">{`${mvmt.displayString}`}</span>
+            <span className="text-sm">{mvmt.displayString}</span>
             {/* <p>Equipment</p> */}
             {/* <p>{mvmt.hint}</p> */}
           </div>
