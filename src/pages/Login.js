@@ -117,27 +117,15 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <div>
-              {resetPassword ? (
-                <input
-                  id="pwd"
-                  style={{ borderColor: '#5ECC7B' }}
-                  className="textbox"
-                  type="password"
-                  placeholder="NEW PASSWORD"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                />
-              ) : (
-                <input
-                  id="pwd"
-                  style={{ borderColor: '#5ECC7B' }}
-                  className="textbox"
-                  type="password"
-                  placeholder="PASSWORD"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                />
-              )}
+              <input
+                id="pwd"
+                style={{ borderColor: '#5ECC7B' }}
+                className="textbox"
+                type="password"
+                placeholder={resetPassword ? 'NEW PASSWORD' : 'PASSWORD'}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
               {error && (
                 <div className="flex">
                   {/* <AiFillWarning size={22} color="red" /> */}

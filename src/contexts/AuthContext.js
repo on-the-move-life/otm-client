@@ -110,9 +110,9 @@ function AuthProvider({ children }) {
           dispatch({ type: 'login', payload: user });
         }
       })
-      .catch((error) => {
+      .catch(({ response }) => {
         console.log(error, 'ERROR');
-        dispatch({ type: 'error', payload: error.response.msg });
+        dispatch({ type: 'error', payload: response.data.msg });
       });
   }
 
