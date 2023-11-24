@@ -12,7 +12,7 @@ const WorkoutSummary = () => {
   const [workoutSummary, setWorkoutSummary] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const { inputValues } = useSelector((store) => store.workoutReducer);
+  const { inputValues, workout } = useSelector((store) => store.workoutReducer);
   console.log(inputValues);
 
   function getWorkoutSummary() {
@@ -20,8 +20,8 @@ const WorkoutSummary = () => {
 
     const pl = {
       ...inputValues,
-      code: 'KU',
-      day: 'Nov Day 76',
+      code: workout.memberCode,
+      day: workout.day,
       batch: 'HYPER',
     };
     console.log('pl', pl);
