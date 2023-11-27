@@ -69,6 +69,12 @@ function reducer(state, action) {
         isSignUp: false,
       };
 
+    case 'resetError':
+      return {
+        ...state,
+        error: null,
+      };
+
     default:
       throw new Error('Unknown action');
   }
@@ -148,6 +154,10 @@ function AuthProvider({ children }) {
     dispatch({ type: 'reset' });
   }
 
+  function resetError() {
+    dispatch({ type: 'resetError' });
+  }
+
   function getUserFromStorage() {
     let user = localStorage.getItem('user');
     if (user && !user.includes('undefined')) {
@@ -166,6 +176,7 @@ function AuthProvider({ children }) {
         isAuthenticated,
         resetPasswordLogin,
         login,
+        resetError,
         logout,
         error,
         reset,

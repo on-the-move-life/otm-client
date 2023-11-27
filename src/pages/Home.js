@@ -106,11 +106,9 @@ const Home = () => {
                 EVOLVE CYCLE {homeStats.evolveCycleDetails?.count || 0}
               </span>
               <div>
-                {homeStats.evolveCycleDetails.durationString && (
-                  <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs font-bold text-lightGray">
-                    {homeStats.evolveCycleDetails?.duration}
-                  </span>
-                )}
+                <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
+                  {homeStats.evolveCycleDetails?.duration}
+                </span>
 
                 <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
                   Week {homeStats.evolveCycleDetails.currentWeek}/

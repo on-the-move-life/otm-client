@@ -3,13 +3,18 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import LoginInput from '../components/LoginInput';
 import { HiOutlineMail, HiArrowNarrowLeft } from 'react-icons/hi';
-import { useLocation } from 'react-router';
-
-import axios from 'axios';
 
 const Login = () => {
-  const { login, resetPasswordLogin, error, isSignUp, reset, signup, user } =
-    useAuth();
+  const {
+    login,
+    resetPasswordLogin,
+    error,
+    isSignUp,
+    reset,
+    signup,
+    resetError,
+    user,
+  } = useAuth();
   const [showLoginInput, setShowLoginInput] = useState(false);
   const [showSignUpInput, setShowSignUpInput] = useState(false);
 
@@ -21,8 +26,6 @@ const Login = () => {
 
   const [passwordType, setPasswordType] = useState('');
   const [resetPassword, setResetPassword] = useState(false);
-
-  const location = useLocation();
 
   function toggleShowPassword(e) {
     e.preventDefault();
@@ -62,9 +65,6 @@ const Login = () => {
 
   useEffect(() => {
     /* global google */
-
-    console.log(location.key, 'location.key');
-    console.log(window.google, 'window.google');
 
     const handleGoogleAuth = (res) => {
       const body = {
@@ -160,7 +160,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              {!resetPassword && error && (
+              {error && (
                 <div className="flex">
                   {/* <AiFillWarning size={22} color="red" /> */}
                   <p className="py-2 text-xs text-red">{error}</p>
@@ -180,6 +180,7 @@ const Login = () => {
                   onClick={() => {
                     setPassword('');
                     setResetPassword(true);
+                    resetError();
                   }}
                 >
                   {showLoginInput && !resetPassword && 'Forgot Password'}
