@@ -102,11 +102,11 @@ export function getWorkout(code) {
 export function updateWorkout() {
   console.log('update called');
   return async function (dispatch, getState) {
-    const { inputValues } = getState().workoutReducer; // Get the current state
+    const { inputValues, workout } = getState().workoutReducer; // Get the current state
     console.log(inputValues);
     const { customTheme, customEquipments, customDuration } = inputValues;
     const reqBody = {
-      memberCode: 'KU',
+      memberCode: workout.memberCode,
       theme: customTheme,
       equipment: customEquipments,
       isLite: customDuration !== 'Regular',
