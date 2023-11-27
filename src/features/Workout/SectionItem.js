@@ -33,16 +33,17 @@ const SectionItem = ({ sectionList, index, isReport }) => {
             <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
           )}
           {!isReport && (
-            <div className="tags flex flex-col items-start justify-center text-xs">
+            <div className="tags flex flex-col items-start justify-center">
               {section.meta?.todaysMetconIntensity &&
                 section.meta?.todaysMetconIntensity > 75 && (
-                  <span className="bg-[#172339]  p-0.5 text-[#C2D3FA]">
+                  <span className="bg-[#172339]  p-0.5 text-[10px] text-[#C2D3FA]">
                     {section.meta.todaysMetconIntensity > 100
                       ? 'Elite'
-                      : 'Advanced'}
+                      : 'Advanced'}{' '}
+                    {section.meta.todaysMetconIntensity}%
                   </span>
                 )}
-              <span className="mt-1 tracking-widest ">
+              <span className="mt-1 text-xs tracking-widest">
                 {section.movements.length} Movements
               </span>
             </div>
