@@ -23,8 +23,22 @@ color: white;
   width: 100%;
 }
 
+input,
+textarea,
+button,
+select,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
 .textbox::placeholder {
-  font-size: 0.75em;
+  font-size: 0.6em;
+  letter-spacing: 0.3em;
+}
+
+.main-button-gradient {
+  background: linear-gradient(96deg, #9BF2C0 1.49%, #91BDF6 103.49%);
+  box-shadow: 0px 14px 14px 0px rgba(0, 0, 0, 0.09), 0px 2.5px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
 input:focus{
@@ -44,6 +58,46 @@ button:active {
   -webkit-background-clip: text;
   display: inline-block;
   color: transparent;
+}
+
+.metallic-gradient {
+  background: linear-gradient(92deg, #999 -4.6%, #616161 5.26%, #323232 15.12%, #818181 24.98%, #E7E7E7 34.84%, #848484 44.7%, #474747 54.56%, #C2C2C2 64.42%, #FFF 74.27%, #242424 84.75%, #B7B7B7 93.99%);
+}
+
+.workout-gradient-text {
+  background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  display: inline-block;
+  color: transparent;
+}
+
+.main-gradient-text {
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(96deg, #9BF2C0 1.49%, #91BDF6 103.49%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.metallic-gradient {
+  background: linear-gradient(92deg, #999 -4.6%, #616161 5.26%, #323232 15.12%, #818181 24.98%, #E7E7E7 34.84%, #848484 44.7%, #474747 54.56%, #C2C2C2 64.42%, #FFF 74.27%, #242424 84.75%, #B7B7B7 93.99%);
+}
+
+.workout-gradient-text {
+  background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  display: inline-block;
+  color: transparent;
+}
+
+.main-gradient-text {
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(96deg, #9BF2C0 1.49%, #91BDF6 103.49%);
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 
 .metallic-gradient {

@@ -71,10 +71,12 @@ const SectionDetail = () => {
 
   return (
     <div className="my-4 p-4">
-      <h1 className="gradient-text text-3xl">{name}</h1>
-      <div className="tags my-2">
-        <span className="border border-[#323232] text-xs">{format}</span>
-      </div>
+      <h1 className="workout-gradient-text text-3xl">{name}</h1>
+      {format && (
+        <div className="tags my-2">
+          <span className="border border-[#323232] text-xs">{format}</span>
+        </div>
+      )}
 
       {notes.length > 0 && (
         <div className="rounded-xl bg-[#0E0E0E] p-4">
@@ -114,7 +116,9 @@ const SectionDetail = () => {
       ))}
 
       <div>
-        <h2 className="gradient-text mb-4 mt-8 text-2xl">Data Inputs</h2>
+        <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
+          Data Inputs
+        </h2>
         {dataInput.map((input, index) => (
           <DataInputComponent
             key={index}
@@ -140,7 +144,7 @@ const SectionDetail = () => {
             </span>
           </div>
           <div className="flex flex-col justify-around ">
-            <h3 className="gradient-text my-8 text-center text-2xl">
+            <h3 className="workout-gradient-text my-8 text-center text-2xl">
               {selectedMvmtName}
             </h3>
             <img src={selectedImage} alt="Movement" />
@@ -160,7 +164,7 @@ const SectionDetail = () => {
             <button disabled={currentIndex === 0} onClick={handlePrevious}>
               <img src="./assets/chevron.left.svg" alt="left-arrow" />
             </button>
-            <p className="text-xl">
+            <p className="text-md">
               {currentIndex + 1} / {sectionList.length}
             </p>
             <button onClick={handleNext}>

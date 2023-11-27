@@ -1,9 +1,6 @@
 import { useContext, useReducer, createContext } from 'react';
 
 import axios from 'axios';
-
-const LOGIN_URL = 'https://otm-main-production.up.railway.app/auth';
-
 //create a new context
 const AuthContext = createContext();
 
@@ -52,6 +49,14 @@ function reducer(state, action) {
         isSignUp: null,
       };
 
+    case 'getUserFromStorage':
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
+        error: null,
+      };
+
     case 'reset':
       return initialState;
 
@@ -79,15 +84,35 @@ function AuthProvider({ children }) {
   async function login(body) {
     // api call
     axios
-      .post(`${LOGIN_URL}/login`, body)
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, body)
       .then((res) => {
+        console.log(res.data, 'RES DATA');
         const user = res.data?.user;
-        const isSignUp = res.data?.isSignUp;
 
         if (user.email) {
           localStorage.setItem('user', JSON.stringify(user));
 
-          dispatch({ type: isSignUp ? 'signup' : 'login', payload: user });
+          dispatch({ type: 'login', payload: user });
+        }
+      })
+      .catch(({ response }) => {
+        console.log(response, 'ERROR');
+        dispatch({ type: 'error', payload: response.data.msg });
+      });
+  }
+
+  async function signup(body) {
+    // api call
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/signup`, body)
+      .then((res) => {
+        console.log(res.data, 'RES DATA');
+        const user = res.data?.user;
+
+        if (user.email) {
+          localStorage.setItem('user', JSON.stringify(user));
+
+          dispatch({ type: 'signup', payload: user });
         }
       })
       .catch(({ response }) => {
@@ -97,17 +122,15 @@ function AuthProvider({ children }) {
   }
 
   async function resetPasswordLogin(body) {
-    console.log(body, 'reset password');
     // api call
     axios
-      .post(`${LOGIN_URL}/reset-password`, body)
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/reset-password`, body)
       .then((res) => {
-        const user = res.data?.user;
+        const userFromResponse = res.data?.user;
 
-        if (user.email) {
-          localStorage.setItem('user', JSON.stringify(user));
-
-          dispatch({ type: 'login', payload: user });
+        if (userFromResponse.email) {
+          localStorage.setItem('user', JSON.stringify(userFromResponse));
+          dispatch({ type: 'login', payload: userFromResponse });
         }
       })
       .catch(({ response }) => {
@@ -125,10 +148,20 @@ function AuthProvider({ children }) {
     dispatch({ type: 'reset' });
   }
 
+  function getUserFromStorage() {
+    let user = localStorage.getItem('user');
+    if (user && !user.includes('undefined')) {
+      user = JSON.parse(user);
+      dispatch({ type: 'getUserFromStorage', payload: user });
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
         isSignUp,
+        signup,
+        getUserFromStorage,
         user,
         isAuthenticated,
         resetPasswordLogin,
