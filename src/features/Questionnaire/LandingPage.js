@@ -1,26 +1,46 @@
+import { useEffect } from 'react';
 import { start } from './QuestionnaireSlice';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '../../contexts/AuthContext';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  function startQuestionnaire() {
-    dispatch(start());
-  }
+  const { user, getUserFromStorage } = useAuth();
+
+  useEffect(() => {
+    getUserFromStorage();
+  }, []);
 
   return (
-    <div className="flex h-screen flex-col items-center justify-evenly bg-landing-cover bg-cover bg-no-repeat">
+<<<<<<< Updated upstream
+    <div className="flex h-screen flex-col items-center justify-evenly  bg-landing-cover bg-contain bg-no-repeat">
       <div className="bg-logo ml-14 h-12 w-44 bg-no-repeat"></div>
+=======
+    <div className="flex h-screen flex-col items-center justify-around bg-landing-cover bg-cover bg-no-repeat">
+      <div className="h-6 w-28">
+        <img
+          className="h-full w-full"
+          src={'/assets/green-logo.svg'}
+          alt="green-logo"
+        />
+      </div>
+>>>>>>> Stashed changes
 
       <section className="mb-48 text-center">
-        <div className=" text-3xl font-bold text-white">
-          <span className="block">WELCOME</span>
+        <div className=" text-2xl font-extrabold">
+          <span className="main-gradient-text uppercase">
+            Welcome {user && user.name}
+          </span>
         </div>
-        <p className="py-2 font-semibold leading-6 text-green">
+        {/* <p className="py-2 text-base text-green">
           Your account has been created
-        </p>
+        </p> */}
       </section>
 
-      <button className="continueButton bg-green" onClick={startQuestionnaire}>
+      <button
+        className="continueButton main-button-gradient"
+        onClick={() => dispatch(start())}
+      >
         Craft Your Journey
       </button>
     </div>

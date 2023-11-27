@@ -83,7 +83,11 @@ export function setLoading() {
 export function getWorkout(code) {
   return async function (dispatch) {
     axiosClient
-      .get(`/?memberCode=${code}`)
+      .get('/', {
+        params: {
+          memberCode: code,
+        },
+      })
       .then((res) => {
         console.log('workout', res.data);
         dispatch({ type: 'workout/getWorkout', payload: res.data });
@@ -96,13 +100,13 @@ export function getWorkout(code) {
 }
 
 export function updateWorkout() {
-  console.log('update called')
+  console.log('update called');
   return async function (dispatch, getState) {
-    const { inputValues, workout } = getState().workoutReducer; // Get the current state
+    const { inputValues } = getState().workoutReducer; // Get the current state
     console.log(inputValues);
     const { customTheme, customEquipments, customDuration } = inputValues;
     const reqBody = {
-      memberCode: workout.memberCode,
+      memberCode: 'KU',
       theme: customTheme,
       equipment: customEquipments,
       isLite: customDuration !== 'Regular',
@@ -112,7 +116,7 @@ export function updateWorkout() {
       .then((res) => {
         console.log('workout', res.data);
         dispatch({ type: 'workout/updateWorkout', payload: res.data });
-        console.log('update done ')
+        console.log('update done ');
         return res.data;
       })
       .catch((err) => {

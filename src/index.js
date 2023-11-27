@@ -6,13 +6,16 @@ import store from './store';
 import './index.css';
 import App from './App';
 import { ThemeProvider } from '@material-tailwind/react';
+import { AuthProvider } from './contexts/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <Provider store={store}>
     <ThemeProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ThemeProvider>
   </Provider>,
 );

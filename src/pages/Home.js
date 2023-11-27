@@ -7,11 +7,12 @@ import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
 
 const Home = () => {
   const { logout } = useAuth();
-  // const [user, setUser] = useState({});
+  // const [user, getUserFromStorage] = useState({});
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
 
   const [homeStats, setHomeStats] = useState(null);
+  const { getUserFromStorage, user } = useAuth();
 
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
@@ -25,17 +26,15 @@ const Home = () => {
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
-    let user = localStorage.getItem('user');
-    if (user && !user.includes('undefined')) {
-      user = JSON.parse(user);
-    } else {
-      navigate('/');
-    }
+
+    getUserFromStorage();
+
+    if (user === null) navigate('/');
 
     function getUserData() {
       setLoader(true);
       axios
-        .get('https://otm-insight-production.up.railway.app/client', {
+        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
           params: {
             email: user.email,
             day: today,
