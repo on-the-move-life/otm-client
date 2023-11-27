@@ -3,12 +3,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import LoginInput from '../components/LoginInput';
 import { HiOutlineMail, HiArrowNarrowLeft } from 'react-icons/hi';
-<<<<<<< Updated upstream
-import { AiFillWarning } from 'react-icons/ai';
-
-const Login = () => {
-  const { login, isAuthenticated, error, isSignUp, reset } = useAuth();
-=======
 import { useLocation } from 'react-router';
 
 import axios from 'axios';
@@ -16,7 +10,6 @@ import axios from 'axios';
 const Login = () => {
   const { login, resetPasswordLogin, error, isSignUp, reset, signup, user } =
     useAuth();
->>>>>>> Stashed changes
   const [showLoginInput, setShowLoginInput] = useState(false);
   const [showSignUpInput, setShowSignUpInput] = useState(false);
 
@@ -53,9 +46,6 @@ const Login = () => {
         password,
         platform: 'email',
       };
-<<<<<<< Updated upstream
-      login(body);
-=======
 
       if (showSignUpInput && username) {
         body = { ...body, name: username };
@@ -67,7 +57,6 @@ const Login = () => {
           login(body);
         }
       }
->>>>>>> Stashed changes
     }
   };
 
@@ -115,11 +104,8 @@ const Login = () => {
     setPassword('');
     reset();
     setShowLoginInput(false);
-<<<<<<< Updated upstream
-=======
     setResetPassword(false);
     setShowSignUpInput(false);
->>>>>>> Stashed changes
   }
 
   return (
@@ -132,15 +118,11 @@ const Login = () => {
             onClick={() => handleBack()}
           />
           <header className="my-6 text-2xl text-green">
-<<<<<<< Updated upstream
-            Enter your log in details
-=======
             {showSignUpInput
               ? 'Add your account details'
               : resetPassword
               ? 'Update your password'
               : 'Enter your login details'}
->>>>>>> Stashed changes
           </header>
           <form
             className="mt-4 flex w-full flex-col"
@@ -173,25 +155,6 @@ const Login = () => {
                 style={{ borderColor: '#5ECC7B' }}
                 className="textbox"
                 type="password"
-<<<<<<< Updated upstream
-                placeholder="PASSWORD"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-              />
-              <button
-                className="relative -top-8 text-sm"
-                type="text"
-                onClick={(e) => toggleShowPassword(e)}
-              >
-                {passwordType === 'text' ? 'Hide' : 'Show'}
-              </button>
-              {error && (
-                <div className=" flex">
-                  <AiFillWarning size={22} color="red" />
-                  <p className="ml-2 text-red-500">{error}</p>
-                </div>
-              )}
-=======
                 required
                 placeholder={resetPassword ? 'NEW PASSWORD' : 'PASSWORD'}
                 onChange={(e) => setPassword(e.target.value)}
@@ -222,7 +185,6 @@ const Login = () => {
                   {showLoginInput && !resetPassword && 'Forgot Password'}
                 </button>
               </div>
->>>>>>> Stashed changes
             </div>
             <button
               disabled={!email || !password}
@@ -236,29 +198,6 @@ const Login = () => {
           </form>
         </LoginInput>
       ) : (
-<<<<<<< Updated upstream
-        <div className="flex h-screen w-full flex-col items-center justify-evenly py-8">
-          {/* DIV 1 */}
-          <header className="bg-logo ml-14 h-12 w-44 bg-no-repeat"></header>
-          {/* DIV 2 */}
-          <section className="mb-48 text-center">
-            <div className=" text-3xl font-bold text-white">
-              <span className="block">Create Your Account</span>
-            </div>
-          </section>
-          <footer className="flex w-11/12 flex-col items-center">
-            <button
-              className="flex w-full justify-evenly rounded-xl bg-green px-3.5 py-2.5 text-lg font-semibold text-black"
-              onClick={() => setShowLoginInput(true)}
-            >
-              <HiOutlineMail size={25} />
-              <p className="-ml-6">Continue with Email</p>
-            </button>
-            <div className="my-8 flex w-full flex-row space-x-3">
-              <div className="line"></div>
-              <div className="relative bottom-4 text-xl">or</div>
-              <div className="line"></div>
-=======
         <div className="flex h-screen flex-col items-center justify-evenly bg-landing-cover bg-cover bg-no-repeat">
           <div className="flex h-screen w-full flex-col items-center justify-between py-16">
             <div className=" mt-8 h-6 w-28">
@@ -270,7 +209,6 @@ const Login = () => {
             </div>
             <div className="flex h-24 w-24 items-center justify-center">
               <img src={'/assets/icon.svg'} alt="" />
->>>>>>> Stashed changes
             </div>
 
             <footer className="flex w-11/12 flex-col items-center">

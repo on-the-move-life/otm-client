@@ -12,10 +12,6 @@ const LandingPage = () => {
   }, []);
 
   return (
-<<<<<<< Updated upstream
-    <div className="flex h-screen flex-col items-center justify-evenly  bg-landing-cover bg-contain bg-no-repeat">
-      <div className="bg-logo ml-14 h-12 w-44 bg-no-repeat"></div>
-=======
     <div className="flex h-screen flex-col items-center justify-around bg-landing-cover bg-cover bg-no-repeat">
       <div className="h-6 w-28">
         <img
@@ -24,7 +20,6 @@ const LandingPage = () => {
           alt="green-logo"
         />
       </div>
->>>>>>> Stashed changes
 
       <section className="mb-48 text-center">
         <div className=" text-2xl font-extrabold">

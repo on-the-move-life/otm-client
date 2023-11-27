@@ -1,12 +1,6 @@
 import { useContext, useReducer, createContext } from 'react';
 
 import axios from 'axios';
-<<<<<<< Updated upstream
-
-const LOGIN_URL = 'https://otm-main-production.up.railway.app/auth';
-
-=======
->>>>>>> Stashed changes
 //create a new context
 const AuthContext = createContext();
 
@@ -90,11 +84,7 @@ function AuthProvider({ children }) {
   async function login(body) {
     // api call
     axios
-<<<<<<< Updated upstream
-      .post(LOGIN_URL, body)
-=======
       .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, body)
->>>>>>> Stashed changes
       .then((res) => {
         console.log(res.data, 'RES DATA');
         const user = res.data?.user;
@@ -105,9 +95,6 @@ function AuthProvider({ children }) {
           dispatch({ type: 'login', payload: user });
         }
       })
-<<<<<<< Updated upstream
-      .catch((error) => {
-=======
       .catch(({ response }) => {
         console.log(response, 'ERROR');
         dispatch({ type: 'error', payload: response.data.msg });
@@ -147,7 +134,6 @@ function AuthProvider({ children }) {
         }
       })
       .catch(({ response }) => {
->>>>>>> Stashed changes
         console.log(error, 'ERROR');
         dispatch({ type: 'error', payload: response.data.msg });
       });
@@ -172,9 +158,6 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-<<<<<<< Updated upstream
-      value={{ isSignUp, user, isAuthenticated, login, logout, error, reset }}
-=======
       value={{
         isSignUp,
         signup,
@@ -187,7 +170,6 @@ function AuthProvider({ children }) {
         error,
         reset,
       }}
->>>>>>> Stashed changes
     >
       {children}
     </AuthContext.Provider>
