@@ -16,7 +16,7 @@ const WORKOUT_THEME_OPTIONS = [
 
 const EQUIPMENT_OPTIONS = ['Choose equipments', 'none', 'band-dumbbell', 'gym'];
 
-const WORKOUT_DURATION_OPTIONS = ['REGULAR', 'none', 'band-dumbbell', 'gym'];
+const WORKOUT_DURATION_OPTIONS = ['Regular', 'Shorter'];
 
 Modal.setAppElement('#root'); // Set the root element for screen readers
 
