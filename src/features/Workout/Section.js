@@ -1,84 +1,55 @@
-import { useSelector } from 'react-redux';
-import { Loader, Error } from '../../components';
-import SectionItem from './SectionItem';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ModalComponent from './ModelComponent';
-import { HiArrowNarrowLeft } from 'react-icons/hi';
 
-const Section = () => {
+const Section = ({ sectionList, index, isReport }) => {
+  const [section, setSection] = useState(sectionList[index]);
+
   const navigate = useNavigate();
-  const status = useSelector((store) => store.workoutReducer.status);
-  const workoutData = useSelector((store) => store.workoutReducer.workout);
 
-  let memberName = 'Guest';
-  let user = localStorage.getItem('user');
-  if (user && !user.includes('undefined')) {
-    user = JSON.parse(user);
-    memberName = user['name'];
-  }
-
-  const handleStart = () => {
-    navigate('/section-details', {
-      state: { sectionList: workoutData.program, index: 0 },
-    });
+  const handleClick = (index) => {
+    if (!isReport) {
+      navigate('/section-details', { state: { sectionList, index } });
+    }
   };
 
-  if (status === 'loading') {
-    return <Loader />;
-  }
-
-  if (status === 'error') {
-    return <Error>Error Message</Error>; // Replace with actual error message
-  }
-
   return (
-    <div className="h-screen w-screen">
-      <div className="mb-4 flex h-1/4 bg-workout-cover bg-cover py-6">
-        <div className="flex w-full justify-between px-4">
-          <div className="flex flex-col">
-            <HiArrowNarrowLeft
-              size={20}
-              onClick={() => {
-                navigate('/home');
-              }}
-            />
-            <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
-              {memberName}
-            </h1>
-            <span className="text-xs font-extralight tracking-wider text-lightGray">
-              Let's crush this workout
-            </span>
-            <span className="mt-6 text-xs tracking-widest text-lightGray">
-              TODAY'S FOCUS
-            </span>
-            <h2 className="text-xl">{workoutData.theme}</h2>
-          </div>
-
-          <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">
-            <p>{workoutData.day.split(' ')[0]} </p>
-            <p>Day </p>
-            <p className="text-base">{workoutData.day.split(' ')[2]}</p>
-          </div>
+    <div className="flex items-center px-4 py-2">
+      <div
+        className="flex h-16 w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] px-4  text-3xl"
+        onClick={() => handleClick(index)}
+      >
+        <div className="flex w-2/3 flex-col">
+          <h1 className="workout-gradient-text items-center text-lg font-bold">
+            {sectionList.name || section.name}
+          </h1>
+          {isReport && (
+            <p className="text-xs text-lightGray">
+              {sectionList.displayInfo[0]}
+            </p>
+          )}
+        </div>
+        <div className="text-xs tracking-widest text-lightGray">
+          {isReport && (
+            <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
+          )}
+          {!isReport && (
+            <div className="tags flex flex-col items-start justify-center">
+              {section.meta?.todaysMetconIntensity &&
+                section.meta?.todaysMetconIntensity > 75 && (
+                  <span className="bg-[#172339]  p-0.5 text-[10px] text-[#C2D3FA]">
+                    {section.meta.todaysMetconIntensity > 100
+                      ? 'Elite'
+                      : 'Advanced'}{' '}
+                    {section.meta.todaysMetconIntensity}%
+                  </span>
+                )}
+              <span className="mt-1 text-xs tracking-widest">
+                {section.movements.length} Movements
+              </span>
+            </div>
+          )}
         </div>
       </div>
-
-      {workoutData.program.map((data, index) => (
-        <SectionItem
-          sectionList={workoutData.program}
-          index={index}
-          key={index}
-        />
-      ))}
-
-      <footer className="sticky bottom-4 w-full px-4">
-        <button
-          className="metallic-gradient mt-4 flex h-12 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center"
-          onClick={handleStart}
-        >
-          <p className="text-lg font-semibold text-black">START</p>
-        </button>
-        <ModalComponent />
-      </footer>
     </div>
   );
 };
