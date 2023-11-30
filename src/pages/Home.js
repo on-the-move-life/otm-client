@@ -74,14 +74,14 @@ const Home = () => {
                 <AiOutlinePoweroff size={22} />
               </button>
             </div>
-            <div className="tags mt-2 space-x-3 p-1">
+            <div className="tags space-x-3">
               {homeStats.avgIntensity > 75 && (
-                <span className="bg-[#172339] font-semibold text-[#C2D3FA]">
+                <span className="bg-[#172339] p-1 text-xs font-semibold text-[#C2D3FA]">
                   {showElite ? 'Elite' : 'Advanced'}
                 </span>
               )}
               {parseInt(homeStats.streak) > 0 && (
-                <span className="bg-[#363629] font-semibold text-[#F2D670]">
+                <span className="bg-[#363629] p-1 text-xs font-semibold text-[#F2D670]">
                   Perfect Week x{homeStats.streak}
                 </span>
               )}

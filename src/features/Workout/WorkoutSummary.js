@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
-import SectionItem from './SectionItem';
-import { Loader } from '../../components';
+import Section from './Section';
+import { Error, Loader } from '../../components';
+import { HiHome } from 'react-icons/hi';
 
 const WorkoutSummary = () => {
   console.log('loaded workout summary');
@@ -56,39 +57,39 @@ const WorkoutSummary = () => {
     <>
       {loading ? (
         <Loader />
-      ) : (
+      ) : workoutSummary.consistency ? (
         <div className="h-screen w-screen py-8">
           <div className="mb-4 px-4 ">
-            <div className="mb-2 flex space-x-3 ">
-              <h2 className="text-2xl">Total Workouts</h2>
-              <span className="rounded-lg border border-white bg-[#1B1B1B] p-1">
-                {workoutSummary.consistency.total}
-              </span>
+            <div className="flex justify-between">
+              <div className="mb-2 flex space-x-3 ">
+                <h2 className="text-2xl">Total Workouts</h2>
+                <span className="flex items-center justify-center rounded-lg border border-white bg-[#1B1B1B] p-1">
+                  {workoutSummary.consistency?.total}
+                </span>
+              </div>
+
+              <Link to="/home">
+                <HiHome size={40} color="#5ECC7B" />
+              </Link>
             </div>
+
             <span className="rounded border border-[#323232] p-1 text-xs text-lightGray">
-              {workoutSummary.consistency.weekly}
+              {workoutSummary.consistency?.weekly}
             </span>
           </div>
 
-          {workoutSummary.sectionPerformance.map((data, index) => (
-            <SectionItem
-              sectionList={data}
-              index={index}
-              key={index}
-              isReport={true}
-            />
-          ))}
-          <div className="px-4">
-            <button
-              className="metallic-gradient mt-4 flex h-10 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center font-semibold text-black"
-              onClick={() => {
-                navigate('/home');
-              }}
-            >
-              Back to Home
-            </button>
-          </div>
+          {workoutSummary &&
+            workoutSummary.sectionPerformance?.map((data, index) => (
+              <Section
+                sectionList={data}
+                index={index}
+                key={index}
+                isReport={true}
+              />
+            ))}
         </div>
+      ) : (
+        <Error> no data</Error>
       )}
     </>
   );
