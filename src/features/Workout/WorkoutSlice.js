@@ -109,7 +109,7 @@ export function updateWorkout() {
       memberCode: workout.memberCode,
       theme: customTheme,
       equipment: customEquipments,
-      isLite: customDuration !== 'Regular',  // fixed
+      isLite: customDuration  // fixed
     };
     axiosClient
       .put('/', reqBody)
