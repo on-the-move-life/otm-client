@@ -107,9 +107,12 @@ export function updateWorkout() {
     const { customTheme, customEquipments, customDuration } = inputValues;
     const reqBody = {
       memberCode: workout.memberCode,
-      theme: customTheme,
-      equipment: customEquipments,
-      isLite: customDuration  // fixed
+      theme: customTheme || workout.theme,
+      equipment:
+        customEquipments === 'At gym (full equipment)'
+          ? 'gym'
+          : 'band-dumbbell',
+      isLite: customDuration, 
     };
     axiosClient
       .put('/', reqBody)

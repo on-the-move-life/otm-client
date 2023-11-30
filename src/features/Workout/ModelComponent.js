@@ -1,12 +1,11 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Modal from 'react-modal';
 import DataInputComponent from './DataInputComponent';
 import { setLoading, updateWorkout } from './WorkoutSlice';
 
-import { useDispatch } from 'react-redux';
-
-const WORKOUT_THEME_OPTIONS = [
+const WORKOUT_BASE_THEME_OPTIONS = [
   'Horizontal Push',
   'Horizontal Pull',
   'Squat',
@@ -14,16 +13,20 @@ const WORKOUT_THEME_OPTIONS = [
   'Posterior Chain',
 ];
 
-const EQUIPMENT_OPTIONS = ['Choose equipments', 'none', 'band-dumbbell', 'gym'];
+const EQUIPMENT_OPTIONS = ['At gym (full equipment)', 'At home (bands & dumbbell)'];
 
 const WORKOUT_DURATION_OPTIONS = ['Regular', 'Shorter'];
 
 Modal.setAppElement('#root'); // Set the root element for screen readers
 
 const ModelComponent = () => {
+  const { workout } = useSelector((store) => store.workoutReducer);
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const WORKOUT_THEME_OPTIONS= WORKOUT_BASE_THEME_OPTIONS.filter(theme => theme != workout.theme)
+  WORKOUT_THEME_OPTIONS.unshift(workout.theme)
 
   const handleUpdateWorkout = () => {
     try {
