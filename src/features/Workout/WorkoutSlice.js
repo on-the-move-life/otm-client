@@ -109,9 +109,9 @@ export function updateWorkout() {
       memberCode: workout.memberCode,
       theme: customTheme || workout.theme,
       equipment:
-        customEquipments === 'At gym (full equipment)'
-          ? 'gym'
-          : 'band-dumbbell',
+        customEquipments === 'At home (bands & dumbbell)'
+          ? 'band-dumbbell'
+          : 'gym',
       isLite: customDuration, 
     };
     axiosClient
