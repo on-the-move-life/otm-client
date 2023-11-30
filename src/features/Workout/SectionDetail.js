@@ -36,15 +36,17 @@ const SectionDetail = () => {
     setCurrentSection(sectionList[newIndex]);
   };
 
-  const { name, movements, dataInput, notes, code, rounds } = currentSection;
+  const { name, movements, dataInput, notes, code, rounds, description } = currentSection;
 
   return (
     <div className="max-h-fit min-h-screen w-screen p-4">
       <main className="pb-12">
         <h1 className="workout-gradient-text text-3xl">{name}</h1>
-        <div className="py-2 text-sm text-lightGray">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+        {description && (
+          <div className="py-2 text-sm text-lightGray">
+          <p>{description}</p>
         </div>
+        )}
 
         <div className="max-w-10/12 my-4 flex max-h-20 rounded-lg">
           <div className="flex items-center justify-center ">

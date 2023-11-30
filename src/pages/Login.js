@@ -13,7 +13,6 @@ const Login = () => {
     reset,
     signup,
     resetError,
-    user,
   } = useAuth();
   const [showLoginInput, setShowLoginInput] = useState(false);
   const [showSignUpInput, setShowSignUpInput] = useState(false);
