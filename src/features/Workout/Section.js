@@ -24,7 +24,7 @@ const Section = ({ sectionList, index, isReport }) => {
           </h1>
           {isReport && (
             <p className="text-xs text-lightGray">
-              {sectionList.displayInfo[0]}
+              {sectionList?.displayInfo.join(', ')}
             </p>
           )}
         </div>
