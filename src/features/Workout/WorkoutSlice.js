@@ -4,24 +4,22 @@ const initialState = {
   workout: {},
   workoutSummary: {},
   answers: [],
-  status: 'loading',
+  status: '',
   inputValues: {},
-  index: 0, //to keep track of sections
+  index: 0,
 };
 
 export default function workoutReducer(state = initialState, action) {
   switch (action.type) {
-    case 'workout/getWorkout':
+    case 'workout/setWorkout':
       const workoutData = {
         ...action.payload[0],
         program: action.payload[0].program.slice(1),
       };
-      console.log(workoutData);
       return {
         ...state,
         workout: workoutData,
-        status: 'ready',
-        error: null,
+        status: 'success',
       };
 
     case 'workout/updateWorkout':
@@ -32,19 +30,16 @@ export default function workoutReducer(state = initialState, action) {
       return {
         ...state,
         workout: updateData,
-        status: 'ready',
-        error: null,
+        status: 'success',
       };
 
     case 'workout/setLoading':
       return {
         ...state,
         status: 'loading',
-        error: null,
       };
 
     case 'workout/updateInput':
-      // console.log(state.inputValues);
       return {
         ...state,
         inputValues: {
@@ -53,24 +48,19 @@ export default function workoutReducer(state = initialState, action) {
         },
       };
 
-    case 'workout/next':
-      break;
-
-    case 'workout/previous':
-      break;
-
-    case 'workout/finish':
-      return {
-        ...state,
-        workoutSummary: action.payload,
-        status: 'finish',
-        error: null,
-      };
     case 'workout/getWorkoutSummary':
       return {
         ...state,
         workoutSummary: action.payload,
+        status: 'success',
       };
+
+    case 'workout/setStatus':
+      return {
+        ...state,
+        status: action.payload,
+      };
+
     default:
       return state;
   }
@@ -80,8 +70,14 @@ export function setLoading() {
   return { type: 'workout/setLoading' };
 }
 
+export function dataReceived() {
+  return { type: 'workout/dataReceived' };
+}
+
 export function getWorkout(code) {
   return async function (dispatch) {
+    dispatch(setStatus('loading'));
+
     axiosClient
       .get('/', {
         params: {
@@ -89,67 +85,40 @@ export function getWorkout(code) {
         },
       })
       .then((res) => {
-        console.log('workout', res.data);
-        dispatch({ type: 'workout/getWorkout', payload: res.data });
+        if (res.data) {
+          dispatch({ type: 'workout/setWorkout', payload: res.data });
+          dispatch(setStatus('success'));
+        }
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');
-        // dispatch(error(err.message));
+        dispatch(setStatus('error'));
+        console.log(err.message, 'ERRORRRRRRRR');
       });
   };
 }
 
-export function updateWorkout() {
-  console.log('update called');
-  return async function (dispatch, getState) {
-    const { inputValues, workout } = getState().workoutReducer; // Get the current state
-    console.log(inputValues);
-    const { customTheme, customEquipments, customDuration } = inputValues;
-    const reqBody = {
-      memberCode: workout.memberCode,
-      theme: customTheme || workout.theme,
-      equipment:
-        customEquipments === 'At home (bands & dumbbell)'
-          ? 'band-dumbbell'
-          : 'gym',
-      isLite: customDuration, 
-    };
+export function updateWorkout(reqBody) {
+  return async function (dispatch) {
+    dispatch(setStatus('loading'));
     axiosClient
       .put('/', reqBody)
       .then((res) => {
         console.log('workout', res.data);
         dispatch({ type: 'workout/updateWorkout', payload: res.data });
-        console.log('update done ');
-        return res.data;
+        dispatch(setStatus('success'));
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');
-        // dispatch(error(err.message));
+        dispatch(setStatus('error'));
       });
   };
-}
-
-export function startWorkout() {
-  return { type: 'workout/start' };
-}
-
-export function nextWorkoutSection() {
-  return { type: 'workout/next' };
 }
 
 export function updateInput(inputId, value) {
   return { type: 'workout/updateInput', payload: { inputId, value } };
 }
 
-export function previousWorkoutSection() {
-  return { type: 'workout/previous' };
-}
-
-export function finishWorkout() {
-  console.log('workout finished');
-  return async function (dispatch, getState) {
-    const state = getState().workoutReducer;
-    console.log(state.inputValues);
-    return { type: 'workout/finishWorkout', payload: state.inputValues };
-  };
+export function setStatus(status) {
+  return { type: 'workout/setStatus', payload: status };
 }

@@ -13,26 +13,40 @@ const WORKOUT_BASE_THEME_OPTIONS = [
   'Posterior Chain',
 ];
 
-const EQUIPMENT_OPTIONS = ['At gym (full equipment)', 'At home (bands & dumbbell)'];
+const EQUIPMENT_OPTIONS = [
+  'At gym (full equipment)',
+  'At home (bands & dumbbell)',
+];
 
 const WORKOUT_DURATION_OPTIONS = ['Regular', 'Shorter'];
 
 Modal.setAppElement('#root'); // Set the root element for screen readers
 
 const ModelComponent = () => {
-  const { workout } = useSelector((store) => store.workoutReducer);
+  const { inputValues, workout } = useSelector((store) => store.workoutReducer);
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const WORKOUT_THEME_OPTIONS= WORKOUT_BASE_THEME_OPTIONS.filter(theme => theme != workout.theme)
-  WORKOUT_THEME_OPTIONS.unshift(workout.theme)
+  const WORKOUT_THEME_OPTIONS = WORKOUT_BASE_THEME_OPTIONS.filter(
+    (theme) => theme !== workout.theme,
+  );
+  WORKOUT_THEME_OPTIONS.unshift(workout.theme);
 
   const handleUpdateWorkout = () => {
+    const { customTheme, customEquipments, customDuration } = inputValues;
+    const reqBody = {
+      memberCode: workout.memberCode,
+      theme: customTheme || workout.theme,
+      equipment:
+        customEquipments === 'At home (bands & dumbbell)'
+          ? 'band-dumbbell'
+          : 'gym',
+      isLite: customDuration,
+    };
     try {
       setIsModalOpen(false);
-      dispatch(setLoading());
-      dispatch(updateWorkout());
+      dispatch(updateWorkout(reqBody));
     } catch (error) {
       // Handle errors if needed
       console.error('Error updating workout:', error);

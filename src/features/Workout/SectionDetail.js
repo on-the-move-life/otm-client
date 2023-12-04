@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-
 import DataInputComponent from './DataInputComponent';
 import Movement from './Movement.js';
 
 const SectionDetail = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,26 +33,64 @@ const SectionDetail = () => {
     setCurrentSection(sectionList[newIndex]);
   };
 
-  const { name, movements, dataInput, notes, code, rounds, description } = currentSection;
+  const {
+    name,
+    movements,
+    dataInput,
+    notes,
+    code,
+    rounds,
+    description,
+    formatInfo,
+  } = currentSection;
+
+  console.log(formatInfo, 'formatInfo');
 
   return (
     <div className="max-h-fit min-h-screen w-screen p-4">
       <main className="pb-12">
         <h1 className="workout-gradient-text text-3xl">{name}</h1>
         {description && (
-          <div className="py-2 text-sm text-lightGray">
-          <p>{description}</p>
-        </div>
+          <div className="pt-2 text-sm text-lightGray">
+            <p>{description}</p>
+          </div>
         )}
 
-        <div className="max-w-10/12 my-4 flex max-h-20 rounded-lg">
+        {code === 'METCON' && (
+          <div className="my-4 flex flex-col">
+            <span className="text-sm tracking-widest text-green">
+              TODAY'S FORMAT
+            </span>
+            <div className="flex flex-col">
+              <span className=" workout-gradient-text text-2xl uppercase">
+                {formatInfo?.name}
+              </span>
+              {formatInfo?.name !== 'EMOM' && formatInfo?.name !== 'AMRAP' ? (
+                <span className="text-sm text-lightGray">
+                  Rounds:{' '}
+                  <span className="text-green">{formatInfo?.rounds}</span>
+                </span>
+              ) : (
+                <span className="text-sm text-lightGray">
+                  {formatInfo?.duration}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="max-w-10/12 my-6 flex max-h-20 rounded-lg">
           <div className="flex items-center justify-center ">
             {movements && movements.length > 1 && (
               <div className="h-fit w-fit">
-                <img src={'/assets/bullet-points.svg'} alt="" />
+                <img
+                  className="min-w-[120%]"
+                  src={'/assets/bullet-points.svg'}
+                  alt=""
+                />
               </div>
             )}
-            <ul className="pl-2 text-xs leading-7 text-lightGray">
+            <ul className="pl-2 text-sm leading-7 text-lightGray">
               {/* <li>
                 <span className="text-green">25</span> Butt kicks each side
               </li>
@@ -76,44 +111,52 @@ const SectionDetail = () => {
             </ul>
           </div>
 
-          <div className="flex grow items-center justify-around text-green">
-            {movements && movements.length > 1 && (
-              <div>
-                <img src={'/assets/bracket-arrow.svg'} alt="" />
-              </div>
-            )}
-            <span>x</span>
-            <div className="text-3xl">{rounds}</div>
-          </div>
+          {code !== 'METCON' && (
+            <div className="flex grow items-center justify-around text-green">
+              {movements && movements.length > 1 && (
+                <div>
+                  <img src={'/assets/bracket-arrow.svg'} alt="" />
+                </div>
+              )}
+              <span>x</span>
+              <div className="text-3xl">{rounds}</div>
+            </div>
+          )}
         </div>
 
-        {/* {code === 'METCON' && (
+        {code === 'METCON' && (
           <div className="my-6 flex justify-around">
-            <div className="flex h-16 w-24 flex-col items-center justify-center rounded-lg border border-[#323232]">
-              <span className="pt-1 text-xs text-lightGray">Target Time</span>
+            <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
+              <span className=" text-xs text-lightGray">
+                {formatInfo?.name === 'AMRAP' ? 'Target Rounds' : 'Target Time'}
+              </span>
               <div className="flex h-full w-full items-center justify-center text-green">
-                <span className="text-3xl">15</span>
-                <span className="pl-1 pt-3 text-xs tracking-widest">MINS</span>
+                <span className="text-3xl">{formatInfo.target}</span>
+                {formatInfo?.name !== 'AMRAP' && (
+                  <span className="pl-1 pt-3 text-xs tracking-widest">
+                    MINS
+                  </span>
+                )}
               </div>
             </div>
 
-            <div className="flex h-16 w-24 flex-col items-center rounded-lg border border-[#323232]">
-              <span className="pt-1 text-xs text-lightGray">Target Time</span>
+            <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
+              <span className=" text-xs text-lightGray">Current Intensity</span>
               <div className="flex h-full w-full items-center justify-center text-green">
                 <span className="text-3xl">15</span>
-                <span className="pl-1 pt-3 text-xs tracking-widest">MINS</span>
+                <span className="text-md pl-1 pt-3 tracking-widest">%</span>
               </div>
             </div>
 
-            <div className="flex h-16 w-24 flex-col items-center rounded-lg border border-[#323232]">
-              <span className="pt-1 text-xs text-lightGray">Target Time</span>
+            <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
+              <span className=" text-xs text-lightGray">Target Intensity</span>
               <div className="flex h-full w-full items-center justify-center text-green">
                 <span className="text-3xl">15</span>
-                <span className="pl-1 pt-3 text-xs tracking-widest">MINS</span>
+                <span className="text-md pl-1 pt-3 tracking-widest">%</span>
               </div>
             </div>
           </div>
-        )} */}
+        )}
 
         {/* {notes.length > 0 && (
         <div className="rounded-xl bg-[#0E0E0E] p-4">

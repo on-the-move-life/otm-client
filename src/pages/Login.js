@@ -85,7 +85,7 @@ const Login = () => {
         shape: 'pill',
       });
     }
-  }, [login, showLoginInput]);
+  }, [login, showLoginInput, showSignUpInput]);
 
   useEffect(() => {
     if (isSignUp === null) navigate('/login');
