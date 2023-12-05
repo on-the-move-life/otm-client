@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Error, Loader } from '../../components';
-import { getWorkout, setLoading } from './WorkoutSlice';
+import { getWorkout, setStatus } from './WorkoutSlice';
 import MainPage from './MainPage';
 
 const Workout = () => {
-  const { status, error } = useSelector((store) => store.workoutReducer);
+  const { status } = useSelector((store) => store.workoutReducer);
   const dispatch = useDispatch();
-
   let memberCode = '';
 
   let user = localStorage.getItem('user');
@@ -20,17 +19,20 @@ const Workout = () => {
     if (memberCode) {
       dispatch(getWorkout(memberCode));
     } else {
-      return <Error>No member code found</Error>;
+      dispatch(setStatus('error'));
     }
     console.log('got workout');
   }, [dispatch, memberCode]);
 
-  console.log(status, error);
+  if (user === null || undefined) {
+    return <Error>No User Found</Error>;
+  }
+
   return (
     <>
       {status === 'loading' && <Loader />}
-      {status === 'error' && <Error>{error}</Error>}
-      {status === 'ready' && <MainPage />}
+      {status === 'error' && <Error>Oops! Something Went Wrong</Error>}
+      {status === 'success' && <MainPage />}
     </>
   );
 };

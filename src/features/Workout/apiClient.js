@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const axiosClient = axios.create({
-  baseURL: `https://otm-main-production.up.railway.app/api/v1/workout/hyper`,
+  baseURL: `${process.env.REACT_APP_BASE_URL}/api/v1/workout/hyper`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

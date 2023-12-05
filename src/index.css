@@ -32,8 +32,8 @@ a {
 }
 
 .textbox::placeholder {
-  font-size: 0.6em;
-  letter-spacing: 0.3em;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
 }
 
 .main-button-gradient {

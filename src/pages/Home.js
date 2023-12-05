@@ -81,7 +81,7 @@ const Home = () => {
                 </span>
               )}
               {parseInt(homeStats.streak) > 0 && (
-                <span className="bg-[#363629] p-1 text-xs font-semibold text-[#F2D670]">
+                <span className="bg-[#363629] p-1 text-xs font-semibold  text-[#F2D670]">
                   Perfect Week x{homeStats.streak}
                 </span>
               )}

@@ -1,40 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import axios from 'axios';
-import Section from './Section';
+import { Section } from '../Workout';
 import { Error, Loader } from '../../components';
 import { HiHome } from 'react-icons/hi';
+import { axiosClient } from './apiClient';
+import { setStatus } from './WorkoutSlice';
 
 const WorkoutSummary = () => {
-  console.log('loaded workout summary');
-  const navigate = useNavigate();
   const [workoutSummary, setWorkoutSummary] = useState({});
-  const [loading, setLoading] = useState(true);
 
-  const { inputValues, workout } = useSelector((store) => store.workoutReducer);
-  console.log(inputValues);
+  const dispatch = useDispatch();
+
+  const { inputValues, workout, status } = useSelector(
+    (store) => store.workoutReducer,
+  );
 
   function getWorkoutSummary() {
-    console.log('in get summary');
-
-    const pl = {
+    const payload = {
       ...inputValues,
       code: workout.memberCode,
       day: workout.day,
       batch: 'HYPER',
     };
-    console.log('pl', pl);
-    setLoading(true);
-    axios
-      .post(
-        'https://otm-main-production.up.railway.app/api/v1/workout/hyper/score',
-        pl,
-      )
-      .then((res) => {
-        console.log('workout summary', res.data);
 
+    dispatch(setStatus('loading'));
+    axiosClient
+      .post('/score', payload)
+      .then((res) => {
+        if (res.data) {
+          dispatch(setStatus('success'));
+        }
         setWorkoutSummary({
           ...res.data,
           sectionPerformance: res.data.sectionPerformance.slice(1),
@@ -42,22 +39,23 @@ const WorkoutSummary = () => {
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');
+        dispatch(setStatus('error'));
         // Handle errors as needed
-      })
-      .finally(() => {
-        setLoading(false);
       });
   }
 
   useEffect(() => {
-    getWorkoutSummary();
+    if (inputValues && workout) {
+      getWorkoutSummary();
+    }
   }, []);
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : workoutSummary.consistency ? (
+      {status === 'loading' && <Loader />}
+      {status === 'error' && <Error>Oops! Something Went Wrong</Error>}
+
+      {status === 'success' && Object.keys(workoutSummary).length > 0 && (
         <div className="h-screen w-screen py-8">
           <div className="mb-4 px-4 ">
             <div className="flex justify-between">
@@ -88,8 +86,6 @@ const WorkoutSummary = () => {
               />
             ))}
         </div>
-      ) : (
-        <Error> no data</Error>
       )}
     </>
   );

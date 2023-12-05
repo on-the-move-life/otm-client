@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  LandingPage,
-  ProgressBar,
-  Question,
-  SubmissionPage,
-} from '../Questionnaire';
+import { LandingPage, ProgressBar, Question } from '../Questionnaire';
 import { getSections, setLoading } from './QuestionnaireSlice';
 import { Error, Loader } from '../../components';
 import { LoadingPage } from '../../pages';

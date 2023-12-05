@@ -24,7 +24,7 @@ const Movement = ({ movement }) => {
   return (
     <>
       <div
-        className="h-68 my-4 w-full flex-col items-start justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] py-2 text-lg"
+        className="h-68 mb-8 w-full flex-col items-start justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-2 text-lg"
         onClick={() => openModal(movement)}
       >
         <div className="text-md h-1/12 px-4 text-lightGray">

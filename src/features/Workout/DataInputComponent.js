@@ -21,10 +21,6 @@ const DataInputComponent = ({
     dispatch(updateInput(inputId, newValue));
   };
 
-  const inputStyle = {
-    color: 'white',
-  };
-
   const inputDropdownStyle = {
     backgroundColor: '#0F0F0F',
     color: 'white',
@@ -40,42 +36,47 @@ const DataInputComponent = ({
 
   return (
     <div className="py-4">
-      <label htmlFor={inputId}>{label}</label>
       {inputType === 'select' ? (
-        <select
-          className={twClasses}
-          id={inputId}
-          name={inputId}
-          value={value}
-          onChange={handleInputChange}
-          style={inputStyle}
-        >
-          {inputOptions.map((option) => (
-            <option key={option} value={option} style={inputDropdownStyle}>
-              {option}
-            </option>
-          ))}
-        </select>
+        <>
+          <label
+            className="text-xs tracking-widest text-lightGray"
+            htmlFor={inputId}
+          >
+            {placeholder}
+          </label>
+
+          <select
+            className={twClasses}
+            id={inputId}
+            name={inputId}
+            value={value}
+            onChange={handleInputChange}
+          >
+            {inputOptions.map((option) => (
+              <option key={option} value={option} style={inputDropdownStyle}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </>
       ) : inputType === 'textarea' ? (
         <textarea
-          className="focus:border-blue-500 w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none"
+          className="textbox outline-none"
           id={inputId}
           name={inputId}
           value={value}
           onChange={handleInputChange}
           placeholder={placeholder}
-          style={inputStyle}
         ></textarea>
       ) : (
         <input
-          className="focus:border-blue-500 w-full border-b border-gray-400 bg-transparent py-2 text-white outline-none"
+          className="textbox outline-none"
           type={inputType}
           id={inputId}
           name={inputId}
           value={value}
           onChange={handleInputChange}
           placeholder={placeholder}
-          style={inputStyle}
         />
       )}
     </div>
