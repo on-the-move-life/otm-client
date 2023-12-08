@@ -74,7 +74,7 @@ const MainPage = () => {
 
       <footer className="fixed bottom-4 w-full px-4">
         <button
-          className="metallic-gradient mt-4 flex h-12 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center"
+          className="workout-gradient-button mt-4 flex h-12 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center"
           onClick={handleStart}
         >
           <p className="text-lg font-semibold text-black">START</p>

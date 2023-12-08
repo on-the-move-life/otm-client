@@ -23,7 +23,7 @@ const Section = ({ sectionList, index, isReport }) => {
             {sectionList.name || section.name}
           </h1>
           {isReport && (
-            <p className="text-xs text-lightGray">
+            <p className="comments text-xs text-lightGray">
               {sectionList?.displayInfo.join(', ')}
             </p>
           )}

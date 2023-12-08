@@ -57,7 +57,7 @@ const SectionDetail = () => {
         )}
 
         {code === 'METCON' && (
-          <div className="my-4 flex flex-col">
+          <div className="my-6 flex flex-col">
             <span className="text-sm tracking-widest text-green">
               TODAY'S FORMAT
             </span>
@@ -143,7 +143,7 @@ const SectionDetail = () => {
             <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
               <span className=" text-xs text-lightGray">Current Intensity</span>
               <div className="flex h-full w-full items-center justify-center text-green">
-                <span className="text-3xl">15</span>
+                <span className="text-3xl">{formatInfo?.currentIntensity}</span>
                 <span className="text-md pl-1 pt-3 tracking-widest">%</span>
               </div>
             </div>
@@ -151,7 +151,7 @@ const SectionDetail = () => {
             <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
               <span className=" text-xs text-lightGray">Target Intensity</span>
               <div className="flex h-full w-full items-center justify-center text-green">
-                <span className="text-3xl">15</span>
+                <span className="text-3xl">{formatInfo?.targetIntensity}</span>
                 <span className="text-md pl-1 pt-3 tracking-widest">%</span>
               </div>
             </div>
