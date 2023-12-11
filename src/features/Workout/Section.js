@@ -15,7 +15,7 @@ const Section = ({ sectionList, index, isReport }) => {
   return (
     <div className="flex items-center px-4 py-2">
       <div
-        className="flex h-16 w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] px-4  text-3xl"
+        className="flex h-fit w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 px-4  text-3xl"
         onClick={() => handleClick(index)}
       >
         <div className="flex w-2/3 flex-col">
@@ -23,7 +23,7 @@ const Section = ({ sectionList, index, isReport }) => {
             {sectionList.name || section.name}
           </h1>
           {isReport && (
-            <p className="comments text-xs text-lightGray">
+            <p className="break-words text-xs text-lightGray">
               {sectionList?.displayInfo.join(', ')}
             </p>
           )}
