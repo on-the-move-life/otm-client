@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Loader, Error } from '../../components';
 import SectionItem from './Section';
 import { useNavigate } from 'react-router-dom';
-import ModalComponent from './ModelComponent';
+import UpdateWorkout from './UpdateWorkout';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 
 const MainPage = () => {
@@ -79,7 +79,7 @@ const MainPage = () => {
         >
           <p className="text-lg font-semibold text-black">START</p>
         </button>
-        <ModalComponent />
+        <UpdateWorkout />
       </footer>
     </div>
   );

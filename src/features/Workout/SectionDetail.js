@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import DataInputComponent from './DataInputComponent';
 import Movement from './Movement.js';
+import { HiX } from 'react-icons/hi';
 
 const SectionDetail = () => {
   const location = useLocation();
@@ -11,16 +12,15 @@ const SectionDetail = () => {
   const [currentIndex, setCurrentIndex] = useState(index);
   const [currentSection, setCurrentSection] = useState(sectionList[index]);
 
+  const lastPage = currentIndex === sectionList.length - 1;
+
   const handleNext = () => {
     console.log('handle next');
-    if (currentIndex === sectionList.length - 1) {
-      navigate('/workout-summary');
-    } else {
-      const newIndex = currentIndex + 1;
-      console.log(newIndex);
-      setCurrentIndex(newIndex);
-      setCurrentSection(sectionList[newIndex]);
-    }
+
+    const newIndex = currentIndex + 1;
+    console.log(newIndex);
+    setCurrentIndex(newIndex);
+    setCurrentSection(sectionList[newIndex]);
   };
 
   const handlePrevious = () => {
@@ -44,18 +44,36 @@ const SectionDetail = () => {
     formatInfo,
   } = currentSection;
 
-  console.log(formatInfo, 'formatInfo');
+  const movementLength = movements.length;
+
+  // const redirect = (e) => {
+  //   e.preventDefault();
+  //   navigate('/home');
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener('beforeunload', redirect);
+  //   return () => {
+  //     window.removeEventListener('beforeunload', redirect);
+  //   };
+  // }, []);
 
   return (
-    <div className="max-h-fit min-h-screen w-screen p-4">
-      <main className="pb-12">
-        <h1 className="workout-gradient-text text-3xl">{name}</h1>
+    <div className="max-h-fit min-h-screen w-screen pt-4">
+      <main className="px-4 pb-32">
+        <div className="flex items-center justify-between">
+          <h1 className="workout-gradient-text text-3xl">{name}</h1>
+          <Link to="/workout">
+            <HiX size={24} />
+          </Link>
+        </div>
+
         {description && (
-          <div className="pt-2 text-sm text-lightGray">
+          <div className="py-2 text-sm text-lightGray">
             <p>{description}</p>
           </div>
         )}
-
+        <div className="h-0 w-screen border-b-[0.5px] border-[#2E2E2E]"></div>
         {code === 'METCON' && (
           <div className="my-6 flex flex-col">
             <span className="text-sm tracking-widest text-green">
@@ -79,9 +97,9 @@ const SectionDetail = () => {
           </div>
         )}
 
-        <div className="max-w-10/12 my-6 flex max-h-20 rounded-lg">
+        <div className="max-w-10/12 my-12 flex max-h-20 rounded-lg">
           <div className="flex items-center justify-center ">
-            {movements && movements.length > 1 && (
+            {movements &&movementLength > 1 && (
               <div className="h-fit w-fit">
                 <img
                   className="min-w-[120%]"
@@ -90,7 +108,7 @@ const SectionDetail = () => {
                 />
               </div>
             )}
-            <ul className="pl-2 text-sm leading-7 text-lightGray">
+            <ul className="pl-2 text-sm leading-7 text-lightGray ">
               {/* <li>
                 <span className="text-green">25</span> Butt kicks each side
               </li>
@@ -103,8 +121,9 @@ const SectionDetail = () => {
               {movements &&
                 movements.map((i) => {
                   return (
-                    <li key={i._id}>
-                      <span className="text-green">{i.reps}</span> {i.name}
+                    <li key={i._id} className="text-lg">
+                      <span className="text-green">{i.reps}</span>{' '}
+                      <span className="text-white">{i.name}</span>
                     </li>
                   );
                 })}
@@ -112,8 +131,8 @@ const SectionDetail = () => {
           </div>
 
           {code !== 'METCON' && (
-            <div className="flex grow items-center justify-around text-green">
-              {movements && movements.length > 1 && (
+            <div className="flex grow items-center justify-around text-green w-1/6">
+              {movements &&movementLength > 1 && (
                 <div>
                   <img src={'/assets/bracket-arrow.svg'} alt="" />
                 </div>
@@ -174,9 +193,11 @@ const SectionDetail = () => {
         </div>
       )} */}
 
-        {movements.map((movement) => (
-          <Movement movement={movement} key={movement._id} />
-        ))}
+        <div className="scrolling-wrapper">
+          {movements.map((movement) => (
+            <Movement movement={movement} key={movement._id} code={code} movementLength={movementLength} />
+          ))}
+        </div>
 
         <div>
           <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
@@ -192,9 +213,23 @@ const SectionDetail = () => {
             />
           ))}
         </div>
+
+        {!lastPage && (
+          <div
+            className="mt-8 flex items-center justify-center"
+            onClick={() => navigate('/workout-summary')}
+          >
+            <div className="flex items-center rounded bg-red p-1 font-bold text-black">
+              <span>END WORKOUT</span>
+              <span className="ml-2">
+                <HiX color="black" size={20} />
+              </span>
+            </div>
+          </div>
+        )}
       </main>
 
-      <footer className="fixed bottom-4 h-14 w-11/12 rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)]">
+      {/* <footer className="fixed bottom-4 h-14 w-11/12 rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)]">
         <div className="flex items-center justify-around pt-1">
           <Link
             className="flex h-11 items-center justify-center rounded-xl"
@@ -224,6 +259,46 @@ const SectionDetail = () => {
             <span className="text-lg uppercase">Submit</span>
           </button>
         </div>
+      </footer> */}
+      <footer className=" fixed bottom-0 flex h-20 w-screen items-center justify-around rounded-xl border-t-[0.5px] border-[#383838]">
+        <button
+          disabled={currentIndex === 0}
+          onClick={handlePrevious}
+          className="flex h-full w-1/4 items-center justify-center border-r-[0.5px] border-[#383838] bg-theme"
+        >
+          <img src="./assets/chevron.left.svg" alt="left-arrow" />
+        </button>
+
+        {lastPage ? (
+          <div
+            className="flex h-full w-3/4 flex-col items-center justify-center bg-theme"
+            onClick={() => navigate('/workout-summary')}
+          >
+            <span className="text-2xl tracking-widest text-green">FINISH</span>
+          </div>
+        ) : (
+          <div className="flex h-full w-3/4 flex-col items-center justify-center bg-theme">
+            <span className="text-xs tracking-widest text-lightGray">
+              SECTION
+            </span>
+            <p className="pt-1 text-2xl">
+              {currentIndex + 1} / {sectionList.length}
+            </p>
+          </div>
+        )}
+
+        {lastPage ? (
+          <button className="flex h-full w-1/4 items-center justify-center border-l-[0.5px] border-[#383838] bg-theme">
+            <img src="./assets/chevron.right-hidden.svg" alt="right-arrow" />
+          </button>
+        ) : (
+          <button
+            onClick={handleNext}
+            className="flex h-full w-1/4 items-center justify-center border-l-[0.5px] border-[#383838] bg-theme"
+          >
+            <img src="./assets/chevron.right.svg" alt="right-arrow" />
+          </button>
+        )}
       </footer>
     </div>
   );

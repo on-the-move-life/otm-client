@@ -74,19 +74,19 @@ const Home = () => {
                 <AiOutlinePoweroff size={22} />
               </button>
             </div>
-            <div className="tags space-x-3">
+            <div className="tags my-2 space-x-3 text-xs tracking-[1px]">
               {homeStats.avgIntensity > 75 && (
-                <span className="bg-[#172339] p-1 text-xs font-semibold text-[#C2D3FA]">
+                <span className="bg-[#172339] p-1 text-[#C2D3FA]">
                   {showElite ? 'Elite' : 'Advanced'}
                 </span>
               )}
               {parseInt(homeStats.streak) > 0 && (
-                <span className="bg-[#363629] p-1 text-xs font-semibold  text-[#F2D670]">
+                <span className="bg-[#363629] p-1  text-[#F2D670]">
                   Perfect Week x{homeStats.streak}
                 </span>
               )}
             </div>
-            <p className="mt-2 w-11/12 font-extralight text-lightGray">
+            <p className="w-11/12 font-extralight text-lightGray">
               Fitness is not a destination. It's a journey of self-improvement,
               one workout at a time.
             </p>
@@ -106,9 +106,11 @@ const Home = () => {
                 EVOLVE CYCLE {homeStats.evolveCycleDetails?.count || 0}
               </span>
               <div>
-                <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
-                  {homeStats.evolveCycleDetails?.duration}
-                </span>
+                {homeStats.evolveCycleDetails?.duration && (
+                  <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
+                    {homeStats.evolveCycleDetails?.duration}
+                  </span>
+                )}
 
                 <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
                   Week {homeStats.evolveCycleDetails.currentWeek}/
