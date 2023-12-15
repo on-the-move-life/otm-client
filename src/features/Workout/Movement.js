@@ -1,10 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 import Modal from 'react-modal';
+import ChartComponent from './ChartComponent';
 
 Modal.setAppElement('#root');
 
-const Movement = ({ movement }) => {
+const includeLoadSections = ['ISO', 'MR', 'GYM', 'HYP'];
+
+const Movement = ({ movement, sectionCode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedMvmtName, setSelectedMvmtName] = useState('');
@@ -52,8 +55,24 @@ const Movement = ({ movement }) => {
           </div>
           <div className="flex flex-col justify-around ">
             <h3 className="workout-gradient-text my-8 text-center text-2xl">
-              {selectedMvmtName}
+              {selectedMvmtName.toLocaleUpperCase()}
             </h3>
+            {includeLoadSections.includes(sectionCode) &&
+              movement.totalTimesPerformed && (
+                <div className="flex flex-col">
+                  <p className="workout-gradient-text my-2 text-center text-base">
+                    You have done this exercise {movement.totalTimesPerformed}{' '}
+                    {''}times
+                  </p>
+                  <ChartComponent data={movement} />
+                  <p className="workout-gradient-text my-2 text-center text-base">
+                    Your personal record is{' '}
+                    <span className="bg-[#DDF988] text-black p-1 rounded-md">
+                      {movement.personalRecord} {''}KG
+                    </span>
+                  </p>
+                </div>
+              )}
             <img src={selectedImage} alt="Movement" />
           </div>
           <button

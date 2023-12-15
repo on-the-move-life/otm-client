@@ -175,7 +175,7 @@ const SectionDetail = () => {
       )} */}
 
         {movements.map((movement) => (
-          <Movement movement={movement} key={movement._id} />
+          <Movement movement={movement} sectionCode={code} key={movement._id} />
         ))}
 
         <div>

@@ -1,40 +1,40 @@
 import { Bar } from 'react-chartjs-2';
-export const BarChart = ({ chartData }) => {
+export const BarChart = ({ chartData, maxValue }) => {
   const options = {
     scales: {
       y: {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Load (KG)',
+          text: 'Weight Lifted (KG)',
           font: {
             size: 14,
           },
         },
         grid: {
           display: true, // Show gridlines
-          color: 'rgba(255, 255, 255, 0.1)', // Set the color to white with some opacity
+          color: 'rgba(255, 255, 255, 0.1)', 
         },
-        // ticks: {
-        //   min: 0,
-        //   max: 12,
-        //   stepSize: 2,
-        //   callback: function (value) {
-        //     return value;
-        //   },
-        // },
         suggstedMin: 0,
-        suggestedMax: 12, // Set the maximum value for the y-axis
-        stepSize: 2,
-        // callback: function (value) {
-        //   // Customize the tick labels if needed
-        //   return value + '%';
-        // }
+        suggestedMax: maxValue+2, // Set the dynamic maximum value for the y-axis
+        stepSize: Math.floor(maxValue/10),
       },
     },
     plugins: {
       legend: {
         display: false,
+      },
+      tooltip: {
+        callbacks: {
+          title: function (tooltipItem, data) {
+            if (tooltipItem[0]) {
+              const dataIndex = tooltipItem[0].dataIndex;
+              const barHeader = getBarHeader(dataIndex); 
+              return barHeader;
+            }
+            return '';
+          },
+        },
       },
     },
     layout: {
@@ -53,14 +53,21 @@ export const BarChart = ({ chartData }) => {
           bottomLeft: 5,
           bottomRight: 5,
         },
-        // borderSkipped: 'bottom', // Apply borderRadius to bottom corners
       },
     },
   };
 
+  function getBarHeader(dataIndex) {
+    if (dataIndex === 5) {
+      return 'PR 10KG';
+    } else {
+      return ''; // Return an empty string for other bars
+    }
+  }
+
   return (
     <div className="chart-container">
-      <h2 style={{ textAlign: 'center' }}>Bar Chart</h2>
+      {/* <h2 style={{ textAlign: 'center' }}>Bar Chart</h2> */}
       <Bar data={chartData} options={options} />
     </div>
   );

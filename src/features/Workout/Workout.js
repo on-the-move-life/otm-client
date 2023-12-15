@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Error, Loader } from '../../components';
 import { getWorkout, setStatus } from './WorkoutSlice';
 import MainPage from './MainPage';
-import ChartComponent from './ChartComponent'
 
 const Workout = () => {
   const { status } = useSelector((store) => store.workoutReducer);
@@ -31,10 +30,9 @@ const Workout = () => {
 
   return (
     <>
-    <ChartComponent/>
-      {/* {status === 'loading' && <Loader />}
+      {status === 'loading' && <Loader />}
       {status === 'error' && <Error>Oops! Something Went Wrong</Error>}
-      {status === 'success' && <MainPage />} */}
+      {status === 'success' && <MainPage />}
     </>
   );
 };
