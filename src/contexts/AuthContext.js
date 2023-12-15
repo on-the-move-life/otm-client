@@ -89,8 +89,9 @@ function AuthProvider({ children }) {
 
   async function login(body) {
     // api call
+    console.log('url ', `${process.env.REACT_APP_BACKEND_BASE_URL_LOCAL}/auth/login`)
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, body)
+      .post(`${process.env.REACT_APP_BACKEND_BASE_URL_LOCAL}/auth/login`, body)
       .then((res) => {
         console.log(res.data, 'RES DATA');
         const user = res.data?.user;
@@ -110,7 +111,7 @@ function AuthProvider({ children }) {
   async function signup(body) {
     // api call
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/auth/signup`, body)
+      .post(`${process.env.REACT_APP_BACKEND_BASE_URL_LOCAL}/auth/signup`, body)
       .then((res) => {
         console.log(res.data, 'RES DATA');
         const user = res.data?.user;
@@ -130,7 +131,7 @@ function AuthProvider({ children }) {
   async function resetPasswordLogin(body) {
     // api call
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/auth/reset-password`, body)
+      .post(`${process.env.REACT_APP_BACKEND_BASE_URL_LOCAL}/auth/reset-password`, body)
       .then((res) => {
         const userFromResponse = res.data?.user;
 
