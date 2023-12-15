@@ -26,7 +26,7 @@ const Movement = ({ movement, code, movementLength }) => {
   return (
     <div className="card">
       <div
-        className={`mb-8 flex h-[360px] ${
+        className={`mb-8 flex h-[380px] ${
           movementLength > 1 ? 'w-[300px]' : 'w-[330px]'
         }  flex-col justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-lg`}
         onClick={() => openModal(movement)}
@@ -39,7 +39,7 @@ const Movement = ({ movement, code, movementLength }) => {
           code === 'HYP' ||
           code === 'ISO') && (
           <div className="tags h-1/12 space-x-2 p-2 text-xs font-semibold -tracking-[0.36px] text-black">
-            {/* {movement.personalRecord && (
+            {movement.personalRecord && (
             <span className="my-1 bg-floYellow p-1">
               Personal Record {movement.personalRecord}
             </span>
@@ -48,17 +48,18 @@ const Movement = ({ movement, code, movementLength }) => {
             <span className="my-1 bg-blue p-1">
               Last Workout {movement.lastUsedLoad}
             </span>
-          )} */}
-            <span className="my-1 bg-floYellow p-1">Personal Record 24Kg</span>
-            <span className="my-1 bg-blue p-1">Last Workout 12Kg</span>
+          )}
+            {/* <span className="my-1 bg-floYellow p-1">Personal Record 24Kg</span>
+            <span className="my-1 bg-blue p-1">Last Workout 12Kg</span> */}
           </div>
         )}
         <div
-          className="h-fit w-full items-center justify-center p-2"
+          className="h-fit w-full flex items-center justify-center p-2"
           style={{ maxHeight: '220px' }}
         >
           <img
-            className="h-full w-full rounded-lg"
+            className="h-auto w-auto rounded-lg"
+            style={{ maxHeight: '220px', maxWidth: '250px' }}
             src={movement.link[0]}
             alt="Movement"
           />
