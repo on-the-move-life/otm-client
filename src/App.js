@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, Home, PageNotFound } from './pages';
-import { useAuth } from './contexts/AuthContext';
 import Questionnaire from './features/Questionnaire/Questionnaire';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
-import { useEffect } from 'react';
+import { ChartComponent } from './components';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -35,6 +34,8 @@ function App() {
         <Route path="/workout" element={<Workout />} />
         <Route path="/workout-summary" element={<WorkoutSummary />} />
         <Route path="*" element={<PageNotFound />} />
+
+        <Route path="/test" element={<ChartComponent />} />
       </Routes>
     </BrowserRouter>
   );

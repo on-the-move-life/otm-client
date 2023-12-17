@@ -7,6 +7,7 @@ import { Error, Loader } from '../../components';
 import { HiHome } from 'react-icons/hi';
 import { axiosClient } from './apiClient';
 import { setStatus } from './WorkoutSlice';
+// import { useAuth } from '../../contexts/AuthContext';
 
 const WorkoutSummary = () => {
   const [workoutSummary, setWorkoutSummary] = useState({});
@@ -16,6 +17,10 @@ const WorkoutSummary = () => {
   const { inputValues, workout, status } = useSelector(
     (store) => store.workoutReducer,
   );
+
+  // const { getUserFromStorage } = useAuth();
+
+  // const today = new Date().toLocaleDateString('en-GB');
 
   function getWorkoutSummary() {
     const payload = {
@@ -31,11 +36,11 @@ const WorkoutSummary = () => {
       .then((res) => {
         if (res.data) {
           dispatch(setStatus('success'));
+          setWorkoutSummary({
+            ...res.data,
+            sectionPerformance: res.data.sectionPerformance.slice(1),
+          });
         }
-        setWorkoutSummary({
-          ...res.data,
-          sectionPerformance: res.data.sectionPerformance.slice(1),
-        });
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');
