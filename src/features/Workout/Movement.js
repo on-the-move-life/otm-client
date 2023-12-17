@@ -39,14 +39,14 @@ const Movement = ({ movement, code, movementLength }) => {
           code === 'HYP' ||
           code === 'ISO') && (
           <div className="tags h-1/12 space-x-2 p-2 text-xs font-semibold -tracking-[0.36px] text-black">
-            {movement.personalRecord && (
+            {movement.personalRecord !== undefined && movement.personalRecord !== null &&  (
             <span className="my-1 bg-floYellow p-1">
-              Personal Record {movement.personalRecord}
+              Personal Record - {movement.personalRecord}
             </span>
           )}
-          {movement.lastUsedLoad && (
+          {movement.lastUsedLoad !== undefined && movement.lastUsedLoad !== null &&(
             <span className="my-1 bg-blue p-1">
-              Last Workout {movement.lastUsedLoad}
+              Last Workout - {movement.lastUsedLoad}
             </span>
           )}
             {/* <span className="my-1 bg-floYellow p-1">Personal Record 24Kg</span>

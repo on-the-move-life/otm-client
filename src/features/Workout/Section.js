@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setIndex } from './WorkoutSlice';
 
 const Section = ({ sectionList, index, isReport }) => {
   const [section, setSection] = useState(sectionList[index]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleClick = (index) => {
+    dispatch(setIndex(index))
     if (!isReport) {
-      navigate('/section-details', { state: { sectionList, index } });
+
+      navigate('/section-details' );
     }
   };
 

@@ -1,12 +1,15 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Error } from '../../components';
 import SectionItem from './Section';
 import { useNavigate } from 'react-router-dom';
 import UpdateWorkout from './UpdateWorkout';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
+import { setIndex } from './WorkoutSlice';
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
@@ -18,9 +21,8 @@ const MainPage = () => {
   }
 
   const handleStart = () => {
-    navigate('/section-details', {
-      state: { sectionList: workoutData.program, index: 0 },
-    });
+    dispatch(setIndex(0));
+    navigate('/section-details');
   };
 
   if (status === 'loading') {
