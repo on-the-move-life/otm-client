@@ -122,7 +122,7 @@ function AuthProvider({ children }) {
           dispatch({ type: 'signup', payload: user });
         }
       })
-      .catch(({ response }) => {
+      .catch(({response}) => {
         console.log(response, 'ERROR');
         dispatch({ type: 'error', payload: response.data.msg });
       });
@@ -164,6 +164,7 @@ function AuthProvider({ children }) {
     if (user && !user.includes('undefined')) {
       user = JSON.parse(user);
       dispatch({ type: 'getUserFromStorage', payload: user });
+      return user;
     }
   }
 

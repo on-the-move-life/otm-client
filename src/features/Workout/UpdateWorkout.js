@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import DataInputComponent from './DataInputComponent';
 import { setLoading, updateWorkout } from './WorkoutSlice';
+import { HiX } from 'react-icons/hi';
 
 const WORKOUT_BASE_THEME_OPTIONS = [
   'Horizontal Push',
@@ -22,7 +23,7 @@ const WORKOUT_DURATION_OPTIONS = ['Regular', 'Shorter'];
 
 Modal.setAppElement('#root'); // Set the root element for screen readers
 
-const ModelComponent = () => {
+const UpdateWorkout = () => {
   const { inputValues, workout } = useSelector((store) => store.workoutReducer);
   const dispatch = useDispatch();
 
@@ -67,12 +68,11 @@ const ModelComponent = () => {
         contentLabel="Customize Your Workout Modal"
         className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4"
       >
-        <span
-          onClick={() => setIsModalOpen(false)}
-          className="close-button relative left-[90%] top-2 mr-2 mt-2 cursor-pointer rounded-full p-2"
-        >
-          X
-        </span>
+        <div className="flex justify-end">
+          <span onClick={() => setIsModalOpen(false)}>
+            <HiX size={20} />
+          </span>
+        </div>
         <div className="flex h-screen flex-col justify-around">
           <h3 className="workout-gradient-text text-center text-xl uppercase">
             Customize your workout
@@ -105,7 +105,7 @@ const ModelComponent = () => {
             />
           </section>
           <button
-            className="metallic-gradient h-11 w-full  items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-xl text-black"
+            className="workout-gradient-button h-11 w-full items-center  justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-xl font-bold text-black"
             onClick={() => handleUpdateWorkout()}
           >
             Update
@@ -116,4 +116,4 @@ const ModelComponent = () => {
   );
 };
 
-export default ModelComponent;
+export default UpdateWorkout;

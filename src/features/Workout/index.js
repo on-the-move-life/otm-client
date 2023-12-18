@@ -1,5 +1,5 @@
 export { default as DataInputComponent } from './DataInputComponent';
-export { default as ModelComponent } from './ModelComponent';
+export { default as UpdateWorkout } from './UpdateWorkout';
 export { default as MainPage } from './MainPage';
 export { default as Workout } from './Workout';
 export { default as SectionDetail } from './SectionDetail';

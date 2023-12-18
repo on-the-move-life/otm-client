@@ -4,7 +4,7 @@ const initialState = {
   workout: {},
   workoutSummary: {},
   answers: [],
-  status: '',
+  status: '', //['error', 'loading', 'success']
   inputValues: {},
   index: 0,
 };
@@ -59,6 +59,12 @@ export default function workoutReducer(state = initialState, action) {
       return {
         ...state,
         status: action.payload,
+      };
+
+    case 'workout/setIndex':
+      return {
+        ...state,
+        index: action.payload,
       };
 
     default:
@@ -121,4 +127,8 @@ export function updateInput(inputId, value) {
 
 export function setStatus(status) {
   return { type: 'workout/setStatus', payload: status };
+}
+
+export function setIndex(index) {
+  return { type: 'workout/setIndex', payload: index };
 }
