@@ -25,9 +25,9 @@ export default function ChartComponent({data}) {
   const lastOccurrenceIndex = loadHistory.map(entry => entry.load).lastIndexOf(personalRecord);
 
   const [chartData, setChartData] = useState({
-    labels: loadHistory.map((data) => {
-      const dateObject = new Date();
-      const month = (dateObject.getMonth()).toString().padStart(2, '0'); // Adding 1 because getMonth returns zero-based index
+    labels: loadHistory.map(({date}) => {
+      const dateObject = new Date(date);
+      const month = (dateObject.getMonth()).toString(); // Adding 1 because getMonth returns zero-based index
       const day = dateObject.getDate().toString().padStart(2, '0');
       const formattedDate = `${day} ${monthNames[month]}`;
       return formattedDate;
