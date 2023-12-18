@@ -182,7 +182,7 @@ const SectionDetail = () => {
                 <Movement
                   movement={movement}
                   key={movement._id}
-                  code={code}
+                  sectionCode={code}
                   movementLength={movementLength}
                 />
               ))}

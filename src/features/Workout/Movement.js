@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import Modal from 'react-modal';
-import { ChartComponent } from '../../components';
 import { HiX } from 'react-icons/hi';
+import ChartComponent from './ChartComponent';
 
 Modal.setAppElement('#root');
 
-const Movement = ({ movement, code, movementLength }) => {
+const sectionWithLoadArray = ['ISO', 'MR', 'GYM', 'HYP'];
+
+const Movement = ({ movement, sectionCode, movementLength }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedMvmtName, setSelectedMvmtName] = useState('');
@@ -34,10 +36,7 @@ const Movement = ({ movement, code, movementLength }) => {
         <div className="text-md h-1/12 flex justify-start px-2 text-lightGray">
           <span>{movement.fullName}</span>
         </div>
-        {(code === 'STR' ||
-          code === 'MR' ||
-          code === 'HYP' ||
-          code === 'ISO') && (
+        {(sectionWithLoadArray.includes(sectionCode)) && (
           <div className="tags h-1/12 space-x-2 p-2 text-xs font-semibold -tracking-[0.36px] text-black">
             {movement.personalRecord !== undefined && movement.personalRecord !== null &&  (
             <span className="my-1 bg-floYellow p-1">
@@ -81,16 +80,26 @@ const Movement = ({ movement, code, movementLength }) => {
               <HiX size={20} />
             </span>
           </div>
-          <h3 className="workout-gradient-text py-4 text-center text-2xl">
-            {selectedMvmtName}
-          </h3>
-          <p className="rounded-lg border p-1 text-white">
-            You have done this exercise <span className="text-green">32</span>{' '}
-            times
-          </p>
-          <div className="flex h-full flex-col items-center justify-around">
-            <ChartComponent />
-
+          <div className="flex flex-col justify-around ">
+            <h3 className="workout-gradient-text my-8 text-center text-2xl">
+              {selectedMvmtName.toLocaleUpperCase()}
+            </h3>
+            {sectionWithLoadArray.includes(sectionCode) &&
+              (movement.totalTimesPerformed > 0) && (
+                <div className="flex flex-col">
+                  <p className="workout-gradient-text my-2 text-center text-base">
+                    You have done this exercise {movement.totalTimesPerformed}{' '}
+                    {''}times
+                  </p>
+                  <ChartComponent data={movement} />
+                  <p className="workout-gradient-text my-2 text-center text-base">
+                    Your personal record is{' '}
+                    <span className="bg-[#DDF988] text-black p-1 rounded-md">
+                      {movement.personalRecord} {''}KG
+                    </span>
+                  </p>
+                </div>
+              )}
             <img src={selectedImage} alt="Movement" />
 
             <button
