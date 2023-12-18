@@ -34,7 +34,7 @@ const Home = () => {
     function getUserData() {
       setLoader(true);
       axios
-        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL_LOCAL}/client`, {
+        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
           params: {
             email: user.email,
             day: today,
