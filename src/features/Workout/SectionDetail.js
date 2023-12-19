@@ -205,11 +205,11 @@ const SectionDetail = () => {
 
             {!lastPage && (
               <div
-                className="mt-8 flex items-center justify-center"
-                onClick={() => navigate('/workout-summary')}
+                className="mt-4 flex items-center justify-center"
+                onClick={() => navigate('/workout')}
               >
                 <div className="flex items-center rounded bg-red p-1 font-bold text-black">
-                  <span>END WORKOUT</span>
+                  <span>EXIT WORKOUT</span>
                   <span className="ml-2">
                     <HiX color="black" size={20} />
                   </span>
