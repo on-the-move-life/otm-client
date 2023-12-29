@@ -14,11 +14,13 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case 'login':
-      return {
+      const isSignUp= action.payload['isSignUp']
+      delete action.payload['isSignUp']
+      return {        
         ...state,
         user: action.payload,
         isAuthenticated: true,
-        isSignUp: false,
+        isSignUp,
         error: null,
       };
 
@@ -98,6 +100,7 @@ function AuthProvider({ children }) {
         if (user.email) {
           localStorage.setItem('user', JSON.stringify(user));
 
+          user['isSignUp']= res.data['isSignUp']
           dispatch({ type: 'login', payload: user });
         }
       })
