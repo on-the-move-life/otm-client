@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Modal from 'react-modal';
 import { HiX } from 'react-icons/hi';
 import ChartComponent from './ChartComponent';
+import { Button } from '../../components';
 
 Modal.setAppElement('#root');
 
@@ -31,18 +32,18 @@ const Movement = ({ movement, sectionCode, movementLength }) => {
         className={`mb-8 flex h-[400px] ${
           movementLength > 1 ? 'w-[300px]' : 'w-[330px]'
         }  flex-col justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-lg`}
-
       >
         <div className="text-md flex justify-start px-2 text-lightGray">
           <span>{movement.fullName}</span>
         </div>
         {sectionWithLoadArray.includes(sectionCode) && (
           <div className="tags flex flex-col p-2 text-xs font-semibold -tracking-[0.36px] text-black">
-            {movement.personalRecord !== null && movement.personalRecord > 0 && (
-              <span className="my-1 w-fit bg-floYellow p-1">
-                Personal Record - {movement.personalRecord} kg
-              </span>
-            )}
+            {movement.personalRecord !== null &&
+              movement.personalRecord > 0 && (
+                <span className="my-1 w-fit bg-floYellow p-1">
+                  Personal Record - {movement.personalRecord} kg
+                </span>
+              )}
             {movement.lastUsedLoad !== null && movement.lastUsedLoad > 0 && (
               <span className="my-1 w-fit bg-blue p-1">
                 Last Workout - {movement.lastUsedLoad} kg
@@ -64,7 +65,10 @@ const Movement = ({ movement, sectionCode, movementLength }) => {
             alt="Movement"
           />
         </div>
-        <div className="flex justify-center" onClick={() => openModal(movement)}>
+        <div
+          className="flex justify-center"
+          onClick={() => openModal(movement)}
+        >
           <span className="w-fit rounded border bg-white p-1 text-center text-xs font-bold tracking-wider text-black">
             Tap for Details
           </span>
@@ -74,10 +78,13 @@ const Movement = ({ movement, sectionCode, movementLength }) => {
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
-          className="flex h-screen w-screen flex-col bg-theme p-8"
+          className="flex h-screen w-screen flex-col bg-theme px-4 py-8"
         >
           <div className="flex justify-end">
-            <span onClick={closeModal} className="close-button">
+            <span
+              onClick={closeModal}
+              className="rounded-full bg-[#202020] p-2"
+            >
               <HiX size={20} />
             </span>
           </div>
@@ -106,12 +113,13 @@ const Movement = ({ movement, sectionCode, movementLength }) => {
               )}
             <img src={selectedImage} alt="Movement" />
 
-            <button
+            {/* <button
               onClick={closeModal}
               className="workout-gradient-button mt-4 h-10 w-full rounded-xl border-[rgba(209,209,209,0.70)] font-bold text-black"
             >
               CLOSE
-            </button>
+            </button> */}
+            <Button text="close" type="workout" action={closeModal} />
           </div>
         </Modal>
       )}

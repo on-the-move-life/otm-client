@@ -12,12 +12,6 @@ const Container = styled.div`
   height: auto;
 `;
 
-const Inner = styled.div`
-  width: calc(11 * 20.5px - 10px);
-  height: calc(15px + 1em);
-  max-width: calc(11 * 20.5px - 10px);
-`;
-
 const BarContainer = styled.div`
   display: flex;
   gap: 5px;
@@ -26,25 +20,31 @@ const BarContainer = styled.div`
   z-index: 1;
 `;
 
+const Inner = styled.div`
+  width: calc(26 * 20.5px - 10px);
+  height: calc(15px + 1em);
+  max-width: calc(26 * 20.5px - 10px);
+`;
+
 const Block = styled.div`
   flex-grow: 1;
-  height: 15px;
+  height: 10px;
   border-radius: 3.33px;
   transition: background-color 0.3s ease-in-out;
 `;
 
 const BlockContainer = styled(m.div)`
   position: relative;
-  width: 15px;
+  width: 100%;
 `;
 
 const Label = styled(m.div)`
   color: white;
 `;
 
-const generateGradient = (startHex, endHex) => {
+const generateGradient = (startHex, endHex, total) => {
   let gradient = [];
-  for (let i = 0; i <= 100; i += 10) {
+  for (let i = 0; i <= 100; i += total) {
     const ratio = i / 100;
     const start = parseInt(startHex.slice(0, 2), 16);
     const end = parseInt(endHex.slice(0, 2), 16);
@@ -66,30 +66,36 @@ const generateGradient = (startHex, endHex) => {
   return gradient;
 };
 
-const FitnessScore = ({ progress }) => {
-  const gradient = useMemo(() => generateGradient('ACEBC6', '9CC2EB'), []);
-  const totalSteps = 11;
-  const stepsToFill = Math.floor((progress / 10) * totalSteps);
+const SkillScore = ({ progress, total }) => {
+  const gradient = useMemo(
+    () => generateGradient('ACEBC6', '9CC2EB', total),
+    [],
+  );
+  const totalSteps = total + 1;
+  const stepsToFill = Math.floor((progress / total) * total);
 
   return (
     <Container>
       <Inner>
         <BarContainer>
           {[...new Array(totalSteps)].map((_, i) => (
+
             <BlockContainer key={i}>
               <Block
                 style={{
-                  backgroundColor: i <= stepsToFill ? gradient[i] : '#242424',
+                  backgroundColor: i <= stepsToFill ?  '#DDF988' : '#242424',
                   width:
                     i === stepsToFill
-                      ? `${((progress / 10) * totalSteps - i) * 15}px`
-                      : '15px',
+                      ? `${((progress / total) * totalSteps - i) * 15}px`
+                      : '5px',
                 }}
               />
-              {i === stepsToFill && stepsToFill !== 0 && stepsToFill !== 10 && (
-                <Label layoutId={`percentage-${i}`}>{`${progress}`}</Label>
-              )}
-              {(i === 0 || i === 10) && <Label>{`${i}`}</Label>}
+              {/* {i === stepsToFill &&
+                stepsToFill !== 0 &&
+                stepsToFill !== total && (
+                  <Label layoutId={`percentage-${i}`}>{`${progress}`}</Label>
+                )}
+              {(i === 0 || i === total) && <Label>{`${i}`}</Label>} */}
             </BlockContainer>
           ))}
         </BarContainer>
@@ -98,4 +104,4 @@ const FitnessScore = ({ progress }) => {
   );
 };
 
-export default FitnessScore;
+export default SkillScore;

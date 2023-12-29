@@ -4,6 +4,7 @@ import DataInputComponent from './DataInputComponent';
 import Movement from './Movement.js';
 import { HiX } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
+import SkillProgression from './SkillProgression.js';
 
 const SectionDetail = () => {
   // const location = useLocation();
@@ -15,6 +16,7 @@ const SectionDetail = () => {
 
   const [currentIndex, setCurrentIndex] = useState(index);
   const [currentSection, setCurrentSection] = useState([]);
+  const [showLevel, setShowLevel] = useState(false);
 
   const lastPage = currentIndex === sectionList.length - 1;
 
@@ -56,13 +58,14 @@ const SectionDetail = () => {
 
   return (
     <>
-      {Object.keys(workout).length !== 0 && (
-        <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-4">
+      {showLevel && <SkillProgression setShowLevel={setShowLevel} />}
+      {!showLevel && Object.keys(workout).length !== 0 && (
+        <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
           <main className="px-4 pb-32">
             <div className="flex items-center justify-between">
               <h1 className="workout-gradient-text pb-2 text-3xl">{name}</h1>
-              <Link to="/workout">
-                <HiX size={24} />
+              <Link to="/workout"  className="rounded-full bg-[#202020] p-2">
+                <HiX size={20} />
               </Link>
             </div>
 
@@ -97,7 +100,7 @@ const SectionDetail = () => {
             )}
 
             <div className="max-w-10/12 my-12 flex max-h-20 rounded-lg">
-              <div className="flex items-center justify-center ">
+              <div className="flex items-center justify-center">
                 {movements && movementLength > 1 && (
                   <div className="h-fit w-fit">
                     <img
@@ -111,7 +114,7 @@ const SectionDetail = () => {
                   {movements &&
                     movements.map((i) => {
                       return (
-                        <li key={i._id} className="text-[1rem] tracking-wider">
+                        <li key={i._id} className="tracking- wider text-[1rem]">
                           <span className="text-green">{i.reps}</span>{' '}
                           <span className="text-white">{i.name}</span>
                         </li>
@@ -132,6 +135,19 @@ const SectionDetail = () => {
                 </div>
               )}
             </div>
+
+            {code === 'GYM' && (
+              <div
+                className="my-4 flex items-center justify-center"
+                onClick={() => {
+                  setShowLevel(true);
+                }}
+              >
+                <span className=" workout-gradient-button w-fit rounded border bg-white p-1 text-center text-xs font-bold tracking-wider text-black">
+                  Check Skill Progression
+                </span>
+              </div>
+            )}
 
             {code === 'METCON' && (
               <div className="my-6 flex justify-around">
@@ -218,37 +234,6 @@ const SectionDetail = () => {
             )}
           </main>
 
-          {/* <footer className="fixed bottom-4 h-14 w-11/12 rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)]">
-        <div className="flex items-center justify-around pt-1">
-          <Link
-            className="flex h-11 items-center justify-center rounded-xl"
-            to="/workout"
-          >
-            <span className="text-lg uppercase">Close</span>
-          </Link>
-
-          <div className="flex w-1/3 items-center justify-center space-x-3">
-            <button disabled={currentIndex === 0} onClick={handlePrevious}>
-              <img src="./assets/chevron.left.svg" alt="left-arrow" />
-            </button>
-            <p className="text-md">
-              {currentIndex + 1} / {sectionList.length}
-            </p>
-            <button onClick={handleNext}>
-              <img src="./assets/chevron.right.svg" alt="right-arrow" />
-            </button>
-          </div>
-
-          <button
-            className="flex h-11 items-center justify-center rounded-xl"
-            onClick={() => {
-              navigate('/workout-summary');
-            }}
-          >
-            <span className="text-lg uppercase">Submit</span>
-          </button>
-        </div>
-      </footer> */}
           <footer className="fixed bottom-0 flex h-20 w-screen items-center justify-around rounded-xl border-t-[0.5px] border-[#383838]">
             <button
               disabled={currentIndex === 0}

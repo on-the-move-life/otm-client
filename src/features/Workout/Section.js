@@ -9,13 +9,10 @@ const Section = ({ sectionList, index, isReport }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const handleClick = (index) => {
     dispatch(setIndex(index))
-    if (!isReport) {
 
       navigate('/section-details' );
-    }
   };
 
   return (

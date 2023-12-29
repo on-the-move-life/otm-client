@@ -95,7 +95,7 @@ const Home = () => {
             <p className="m-4 text-center text-xs tracking-widest text-lightGray">
               FITNESS SCORE
             </p>
-            <FitnessScore progress={homeStats.score} />
+            <FitnessScore progress={homeStats.score} total={10} />
           </section>
           <section>
             <p className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">
