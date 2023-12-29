@@ -56,11 +56,11 @@ const MainPage = () => {
             <h2 className="text-xl">{workoutData.theme}</h2>
           </div>
 
-          <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">
+          {/* <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">
             <p>{workoutData.day.split(' ')[0]} </p>
             <p>Day </p>
             <p className="text-base">{workoutData.day.split(' ')[2]}</p>
-          </div>
+          </div> */}
         </div>
       </div>
 
