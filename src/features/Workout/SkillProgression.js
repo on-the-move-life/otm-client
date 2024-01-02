@@ -17,8 +17,7 @@ const SkillProgression = ({ setShowLevel }) => {
 
   const { workout } = useSelector((store) => store.workoutReducer);
 
-  console.log(workout, "workout object")
-
+  console.log(workout, 'workout object');
 
   function setLevelData(data) {
     if (data && data.currentLevelInfo && data.levelArray) {
@@ -41,11 +40,11 @@ const SkillProgression = ({ setShowLevel }) => {
       try {
         const res = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/v1/skill`,
-          {params: {theme: workout?.theme, user: workout?.memberCode}}
+          { params: { theme: workout?.theme, user: workout?.memberCode } },
         );
         if (res.data) {
           const data = res.data.data;
-          setDescription(data.description)
+          setDescription(data.description);
           setLevelData(data);
         }
       } catch (error) {}
@@ -68,10 +67,7 @@ const SkillProgression = ({ setShowLevel }) => {
         <div className="flex h-full flex-col justify-around">
           <section className="flex flex-col items-center justify-center">
             <h1 className="mb-4 text-2xl">{levelArray[index - 1].movement}</h1>
-            <p className="text-center text-base text-lightGray">
-
-
-            </p>
+            <p className="text-center text-base text-lightGray"></p>
           </section>
           <section className="flex flex-col items-center justify-center ">
             <div className="my-4 text-3xl text-floYellow">
@@ -111,8 +107,12 @@ const SkillProgression = ({ setShowLevel }) => {
                   }}
                 />
               </span>
-              <span className="h-full flex-grow">
-                <img src={levelArray[index - 1].link} alt={levelArray[index - 1].name} />
+              <span className="flex h-full flex-grow items-center justify-center">
+                <img
+                  className="h-full w-auto"
+                  src={levelArray[index - 1].link}
+                  alt={levelArray[index - 1].name}
+                />
               </span>
 
               <span>
