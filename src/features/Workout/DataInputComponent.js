@@ -42,7 +42,7 @@ const DataInputComponent = ({
             className="text-xs tracking-widest text-lightGray"
             htmlFor={inputId}
           >
-            {placeholder}
+            {label}
           </label>
 
           <select
