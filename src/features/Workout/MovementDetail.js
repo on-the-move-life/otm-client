@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { HiX } from 'react-icons/hi';
 import ChartComponent from './ChartComponent';
-import { Button } from '../../components';
 
 const sectionWithLoadArray = ['ISO', 'MR', 'GYM', 'HYP'];
 
-const MovementDetail = ({ movement, sectionCode, closeModal }) => {
+const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const [selectedImage, setSelectedImage] = useState(movement.link[0]);
   const [selectedMvmtName, setSelectedMvmtName] = useState(movement.name);
 
+  const handleCloseModal = () => {
+    closeMovementDetail(); 
+  };
+
   return (
-    <div className="h-screen w-screen flex flex-col overflow-x-hidden bg-theme px-4 py-8">
+    <div className="absolute top-0 flex h-screen w-screen flex-col overflow-x-hidden bg-theme px-4 py-8">
       <div className="flex justify-end">
-        <span onClick={closeModal} className="rounded-full bg-[#202020] p-2">
+        <span onClick={handleCloseModal} className="rounded-full bg-[#202020] p-2">
           <HiX size={20} />
         </span>
       </div>
@@ -42,12 +45,11 @@ const MovementDetail = ({ movement, sectionCode, closeModal }) => {
         <img src={selectedImage} alt="Movement" />
 
         <button
-          onClick={closeModal}
+          onClick={closeMovementDetail}
           className="workout-gradient-button mt-4 h-10 w-full rounded-xl border-[rgba(209,209,209,0.70)] font-bold text-black"
         >
           CLOSE
         </button>
-        {/* <Button text="close" type="workout" /> */}
       </div>
     </div>
   );
