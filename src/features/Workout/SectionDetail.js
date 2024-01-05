@@ -74,7 +74,7 @@ const SectionDetail = () => {
         <MovementDetail
           movement={selectedMovement}
           sectionCode={currentSection.code}
-          closeModal={closeMovementDetail}
+          closeMovementDetail={closeMovementDetail}
         />
       )}
       {showLevel && !showMvmtDetail && (
@@ -222,7 +222,7 @@ const SectionDetail = () => {
                     key={movement._id}
                     sectionCode={code}
                     movementLength={movementLength}
-                    openModal={openMovementDetail}
+                    openMovementDetail={openMovementDetail}
                   />
                 );
               })}
