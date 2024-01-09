@@ -41,7 +41,7 @@ const MainPage = () => {
 
   return (
     <div className="h-screen w-screen">
-      {showUpdateWorkout && <UpdateWorkout onCrossClick={handleUpdateClose} />}
+      {showUpdateWorkout && <UpdateWorkout onClose={handleUpdateClose} />}
 
       {!showUpdateWorkout && (
         <>

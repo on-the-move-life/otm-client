@@ -20,7 +20,7 @@ const EQUIPMENT_OPTIONS = [
 
 const WORKOUT_DURATION_OPTIONS = ['Regular', 'Shorter'];
 
-const UpdateWorkout = ({onCrossClick}) => {
+const UpdateWorkout = ({ onClose }) => {
   const { inputValues, workout } = useSelector((store) => store.workoutReducer);
   const dispatch = useDispatch();
 
@@ -52,12 +52,10 @@ const UpdateWorkout = ({onCrossClick}) => {
   };
 
   return (
-    <div className='h-screen w-screen overflow-hidden'>
-      <div
-        className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4"
-      >
+    <div className="h-screen w-screen overflow-hidden">
+      <div className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4">
         <div className="flex justify-end">
-          <span onClick={() => onCrossClick(false)}>
+          <span onClick={() => onClose(false)}>
             <HiX size={20} />
           </span>
         </div>
