@@ -5,28 +5,31 @@ import ChartComponent from './ChartComponent';
 const sectionWithLoadArray = ['ISO', 'MR', 'GYM', 'HYP'];
 
 const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
-  const [selectedImage, setSelectedImage] = useState(movement.link[0]);
-  const [selectedMvmtName, setSelectedMvmtName] = useState(movement.name);
+  const selectedImage = movement.link[0];
+  const selectedMvmtName = movement.name;
 
   const handleCloseModal = () => {
-    closeMovementDetail(); 
+    closeMovementDetail();
   };
 
   return (
-    <div className="absolute top-0 flex h-screen w-screen flex-col overflow-x-hidden bg-theme px-4 py-8">
-      <div className="flex justify-end">
-        <span onClick={handleCloseModal} className="rounded-full bg-[#202020] p-2">
+    <div className="h-min-screen flex h-fit w-screen flex-col overflow-x-hidden bg-theme px-4 pb-32 pt-8">
+      <div className=" flex justify-end">
+        <span
+          onClick={handleCloseModal}
+          className="rounded-full bg-[#202020] p-2"
+        >
           <HiX size={20} />
         </span>
       </div>
-      <div className="my-4 flex h-full flex-col justify-around">
+      <div className="my-4 flex h-full flex-col justify-around ">
         <h3 className="workout-gradient-text text-center text-2xl">
           {selectedMvmtName.toLocaleUpperCase()}
         </h3>
         {sectionWithLoadArray.includes(sectionCode) &&
           movement.totalTimesPerformed > 0 && (
             <div className="flex flex-col">
-              <p className="my-8 rounded-lg border p-1 text-white">
+              <p className="my-8 rounded-lg border p-1 text-center text-white">
                 You have done this exercise{' '}
                 <span className="text-green">
                   {movement.totalTimesPerformed}{' '}
@@ -42,7 +45,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               </p>
             </div>
           )}
-        <img src={selectedImage} alt="Movement" />
+        <img className='my-4' src={selectedImage} alt="Movement" />
 
         <button
           onClick={closeMovementDetail}
