@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { HiX } from 'react-icons/hi';
 import ChartComponent from './ChartComponent';
 
-const sectionWithLoadArray = ['ISO', 'MR', 'GYM', 'HYP'];
+const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP'];
 
 const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const selectedImage = movement.link[0];
