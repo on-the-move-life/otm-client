@@ -136,7 +136,7 @@ const WorkoutSummary = () => {
           <div>
             <span className=" rounded-lg border border-lightGray bg-[#1B1B1B] p-2 text-sm text-white">
               Total Workouts{' '}
-              <span className="text-lg">
+              <span className="text-lg text-[#5ECC7B]">
                 {workoutSummary.consistency?.total}
               </span>
             </span>
@@ -149,10 +149,14 @@ const WorkoutSummary = () => {
                 {countToEarnPerfectWeek} more
               </span>{' '}
               workout(s) this week to earn the{' '}
-              <span className="p-0.3  inline-flex w-fit items-center rounded bg-[#F5C563] font-bold text-black">
-                <FaStar color="black" />{' '}
-                <span className="mx-2">Perfect Week</span>
-              </span>{' '}
+              <div className="inline-flex w-fit items-center justify-center rounded bg-[#F5C563] px-2 py-0.5 text-xs font-bold text-black">
+                <span className="pb-0.3">
+                  <FaStar color="black" size={14} />{' '}
+                </span>
+                <span className="mx-0.5 text-xs -tracking-[0.36px]">
+                  Perfect Week
+                </span>
+              </div>{' '}
               badge
             </p>
           )}
@@ -285,17 +289,19 @@ const WorkoutSummary = () => {
                 ),
             )}
 
-          <div className="my-4 grid grid-cols-2 grid-rows-5 gap-4">
+          <div className="mt-8 grid grid-cols-2 grid-rows-5 gap-4">
+          {/* <div className="flex mt-8  flex-col"> */}
+
             {workoutSummary &&
               workoutSummary.sectionPerformance?.map(
                 (section) =>
                   section.code !== 'ASMT' && (
                     <div
-                      className="flex h-40 w-full items-center justify-between overflow-y-auto rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-2"
+                      className="flex h-28 w-full items-center justify-between overflow-y-auto rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-2"
                       key={section.code}
                     >
                       <div className="flex h-full w-full flex-col ">
-                        <div>
+                        <div className='mb-2'>
                           <div className="flex justify-between">
                             <h1 className=" items-center text-lg ">
                               {section.name}
@@ -304,13 +310,18 @@ const WorkoutSummary = () => {
                               <img src="/assets/done.svg" alt="" />
                             )}
                           </div>
-                          <p className="text-xs tracking-widest text-lightGray">
-                            {section.round ? section.round : '0 round'}
+                          <p className="text-[10px] tracking-widest text-lightGray uppercase">
+                            {section.round ? section.round : '0 rounds'}
                           </p>
                         </div>
-                        <p className="mt-6 break-words text-xs text-lightGray">
-                          {section?.displayInfo.join(', ')}
-                        </p>
+                        <div className="overflow-y-auto text-xs text-lightGray">
+                          <ul className="list-disc pl-3">
+                            {/* {section?.displayInfo.join(', ')} */}
+                            {section?.displayInfo?.map((i) => {
+                              return <li>{i}</li>;
+                            })}
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   ),

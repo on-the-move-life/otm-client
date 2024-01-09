@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { FitnessScore, Loader, Error } from '../components';
+import { FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
@@ -74,15 +75,21 @@ const Home = () => {
                 <AiOutlinePoweroff size={22} />
               </button>
             </div>
-            <div className="tags my-2 space-x-3 text-xs tracking-[1px]">
-              {homeStats.avgIntensity > 75 && (
-                <span className="bg-[#172339] p-1 text-[#C2D3FA]">
-                  {showElite ? 'Elite' : 'Advanced'}
-                </span>
-              )}
+            <div className="my-2  flex text-xs tracking-[1px]">
               {parseInt(homeStats.streak) > 0 && (
-                <span className="bg-[#363629] p-1  text-[#F2D670]">
-                  Perfect Week x{homeStats.streak}
+                <div className="flex w-fit items-center rounded bg-[#F5C563] px-2 py-0.5 font-bold text-black">
+                  <span className="pb-0.5">
+                    <FaStar color="black" size={14} />{' '}
+                  </span>
+
+                  <span className="mx-0.5 text-xs -tracking-[0.36px]">
+                    Perfect Week x{homeStats.streak}
+                  </span>
+                </div>
+              )}
+              {homeStats.avgIntensity > 75 && (
+                <span className="mx-2 rounded bg-[#7CDCF6] px-2 py-0.5 font-bold text-black">
+                  {showElite ? 'Elite' : 'Advanced'}
                 </span>
               )}
             </div>
