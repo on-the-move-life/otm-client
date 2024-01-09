@@ -1,33 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
-import Modal from 'react-modal';
-import { HiX } from 'react-icons/hi';
-import ChartComponent from './ChartComponent';
-import { Button } from '../../components';
 
-Modal.setAppElement('#root');
+const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP'];
 
-const sectionWithLoadArray = ['ISO', 'MR', 'GYM', 'HYP'];
-
-const Movement = ({ movement, sectionCode, movementLength }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
-  const [selectedMvmtName, setSelectedMvmtName] = useState('');
-
-  const openModal = (mvmt) => {
-    setSelectedImage(mvmt.link[0]);
-    setSelectedMvmtName(mvmt.name);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedMvmtName('');
-    setSelectedImage('');
-  };
+const Movement = ({ movement, sectionCode, movementLength, openMovementDetail }) => {
 
   return (
-    <div className="card">
+    <div className="card" onClick={() => openMovementDetail(movement)}>
       <div
         className={`mb-8 flex h-[400px] ${
           movementLength > 1 ? 'w-[300px]' : 'w-[330px]'
@@ -56,7 +34,7 @@ const Movement = ({ movement, sectionCode, movementLength }) => {
         <div
           className="flex h-fit w-full items-center justify-center p-2"
           style={{ maxHeight: '220px' }}
-          onClick={() => openModal(movement)}
+          onClick={() => openMovementDetail(movement)}
         >
           <img
             className="h-auto w-auto rounded-lg"
@@ -67,62 +45,13 @@ const Movement = ({ movement, sectionCode, movementLength }) => {
         </div>
         <div
           className="flex justify-center"
-          onClick={() => openModal(movement)}
+          onClick={() => openMovementDetail(movement)}
         >
           <span className="w-fit rounded border bg-white p-1 text-center text-xs font-bold tracking-wider text-black">
             Tap for Details
           </span>
         </div>
       </div>
-      {isModalOpen && (
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          className="flex h-screen w-screen flex-col bg-theme px-4 py-8"
-        >
-          <div className="flex justify-end">
-            <span
-              onClick={closeModal}
-              className="rounded-full bg-[#202020] p-2"
-            >
-              <HiX size={20} />
-            </span>
-          </div>
-          <div className="my-4 flex h-full flex-col  justify-around">
-            <h3 className="workout-gradient-text text-center text-2xl">
-              {selectedMvmtName.toLocaleUpperCase()}
-            </h3>
-            {sectionWithLoadArray.includes(sectionCode) &&
-              movement.totalTimesPerformed > 0 && (
-                <div className="flex flex-col">
-                  <p className="my-8 rounded-lg border p-1 text-white">
-                    You have done this exercise{' '}
-                    <span className="text-green">
-                      {movement.totalTimesPerformed}{' '}
-                    </span>
-                    {movement.totalTimesPerformed === 1 ? 'time' : 'times'}
-                  </p>
-                  <ChartComponent data={movement} />
-                  <p className=" my-4 text-center text-base">
-                    Your personal record is{' '}
-                    <span className="rounded-lg bg-floYellow p-0.5 font-bold text-black">
-                      {movement.personalRecord} {''}KG
-                    </span>
-                  </p>
-                </div>
-              )}
-            <img src={selectedImage} alt="Movement" />
-
-            {/* <button
-              onClick={closeModal}
-              className="workout-gradient-button mt-4 h-10 w-full rounded-xl border-[rgba(209,209,209,0.70)] font-bold text-black"
-            >
-              CLOSE
-            </button> */}
-            <Button text="close" type="workout" action={closeModal} />
-          </div>
-        </Modal>
-      )}
     </div>
   );
 };

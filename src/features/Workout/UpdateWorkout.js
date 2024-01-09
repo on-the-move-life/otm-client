@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Modal from 'react-modal';
 import DataInputComponent from './DataInputComponent';
 import { setLoading, updateWorkout } from './WorkoutSlice';
 import { HiX } from 'react-icons/hi';
@@ -21,9 +20,7 @@ const EQUIPMENT_OPTIONS = [
 
 const WORKOUT_DURATION_OPTIONS = ['Regular', 'Shorter'];
 
-Modal.setAppElement('#root'); // Set the root element for screen readers
-
-const UpdateWorkout = () => {
+const UpdateWorkout = ({ onClose }) => {
   const { inputValues, workout } = useSelector((store) => store.workoutReducer);
   const dispatch = useDispatch();
 
@@ -55,21 +52,10 @@ const UpdateWorkout = () => {
   };
 
   return (
-    <>
-      <button
-        className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border border-white bg-[#050505]"
-        onClick={() => setIsModalOpen(true)}
-      >
-        <p className="text-lg">Customize Workout</p>
-      </button>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="Customize Your Workout Modal"
-        className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4"
-      >
+    <div className="h-screen w-screen overflow-hidden">
+      <div className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4">
         <div className="flex justify-end">
-          <span onClick={() => setIsModalOpen(false)}>
+          <span onClick={() => onClose(false)}>
             <HiX size={20} />
           </span>
         </div>
@@ -111,8 +97,8 @@ const UpdateWorkout = () => {
             Update
           </button>
         </div>
-      </Modal>
-    </>
+      </div>
+    </div>
   );
 };
 
