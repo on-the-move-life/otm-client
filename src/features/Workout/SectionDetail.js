@@ -5,6 +5,7 @@ import Movement from './Movement.js';
 import { HiX } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import SkillProgression from './SkillProgression.js';
+import MovementDetail from './MovementDetail.js';
 
 const SectionDetail = () => {
   // const location = useLocation();
@@ -17,6 +18,8 @@ const SectionDetail = () => {
   const [currentIndex, setCurrentIndex] = useState(index);
   const [currentSection, setCurrentSection] = useState([]);
   const [showLevel, setShowLevel] = useState(false);
+  const [showMvmtDetail, setShowMvmtDetail] = useState(false);
+  const [selectedMovement, setSelectedMovement] = useState({});
 
   const lastPage = currentIndex === sectionList.length - 1;
 
@@ -34,6 +37,15 @@ const SectionDetail = () => {
     }
     setCurrentIndex(newIndex);
     setCurrentSection(sectionList[newIndex]);
+  };
+
+  const openMovementDetail = (movement) => {
+    setSelectedMovement(movement);
+    setShowMvmtDetail(true);
+  };
+
+  const closeMovementDetail = () => {
+    setShowMvmtDetail(false);
   };
 
   const {
@@ -58,8 +70,17 @@ const SectionDetail = () => {
 
   return (
     <>
-      {showLevel && <SkillProgression setShowLevel={setShowLevel} />}
-      {!showLevel && Object.keys(workout).length !== 0 && (
+      {showMvmtDetail && !showLevel && (
+        <MovementDetail
+          movement={selectedMovement}
+          sectionCode={currentSection.code}
+          closeMovementDetail={closeMovementDetail}
+        />
+      )}
+      {showLevel && !showMvmtDetail && (
+        <SkillProgression setShowLevel={setShowLevel} />
+      )}
+      {!showLevel && !showMvmtDetail && Object.keys(workout).length !== 0 && (
         <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
           <main className="px-4 pb-32">
             <div className="flex items-center justify-between">
@@ -197,14 +218,17 @@ const SectionDetail = () => {
             )}
 
             <div className="scrolling-wrapper">
-              {movements.map((movement) => (
-                <Movement
-                  movement={movement}
-                  key={movement._id}
-                  sectionCode={code}
-                  movementLength={movementLength}
-                />
-              ))}
+              {movements.map((movement) => {
+                return (
+                  <Movement
+                    movement={movement}
+                    key={movement._id}
+                    sectionCode={code}
+                    movementLength={movementLength}
+                    openMovementDetail={openMovementDetail}
+                  />
+                );
+              })}
             </div>
 
             <div>
