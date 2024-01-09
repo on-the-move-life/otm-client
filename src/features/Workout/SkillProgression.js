@@ -70,7 +70,11 @@ const SkillProgression = ({ setShowLevel }) => {
             <p className="text-center text-base text-lightGray"></p>
           </section>
           <section className="flex flex-col items-center justify-center ">
-            <div className="my-4 text-3xl text-floYellow">
+            <div
+              className={`${
+                index > currentInfo.level ? 'opacity-25' : 'opacity-100'
+              } my-8 text-3xl text-floYellow `}
+            >
               {levelArray[index - 1].name}
             </div>
 
@@ -94,7 +98,7 @@ const SkillProgression = ({ setShowLevel }) => {
               </p>
             )}
 
-            <div className="my-4 flex h-32 w-full items-center justify-between">
+            <div className="my-8 flex h-32 w-full items-center justify-between">
               <span>
                 <HiOutlineChevronDoubleLeft
                   size={25}
@@ -107,12 +111,20 @@ const SkillProgression = ({ setShowLevel }) => {
                   }}
                 />
               </span>
-              <span className="flex h-full flex-grow items-center justify-center">
-                <img
-                  className="h-full w-auto"
-                  src={levelArray[index - 1].link}
-                  alt={levelArray[index - 1].name}
-                />
+              <span className="flex h-full items-center justify-center ">
+                {index > currentInfo.level ? (
+                  <img
+                    className="h-full w-fit"
+                    src="./assets/locked.svg"
+                    alt={levelArray[index - 1].name}
+                  />
+                ) : (
+                  <img
+                    className="h-full w-fit"
+                    src={levelArray[index - 1].link}
+                    alt={levelArray[index - 1].name}
+                  />
+                )}
               </span>
 
               <span>

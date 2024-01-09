@@ -159,13 +159,16 @@ const SectionDetail = () => {
 
             {code === 'GYM' && (
               <div
-                className="my-4 flex items-center justify-center"
+                className="my-4 py-2 border-[0.5px] rounded-xl border-[#383838] flex items-center justify-center bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)]"
                 onClick={() => {
                   setShowLevel(true);
                 }}
               >
-                <span className=" workout-gradient-button w-fit rounded border bg-white p-1 text-center text-xs font-bold tracking-wider text-black">
+                <span className=" text-sm text-center tracking-wider">
                   Check Skill Progression
+                </span>
+                <span className='mx-1'>
+                  <img src="./assets/sparkle.svg" alt="" />
                 </span>
               </div>
             )}
