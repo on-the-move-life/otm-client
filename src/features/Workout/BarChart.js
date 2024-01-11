@@ -13,7 +13,8 @@ export const BarChart = ({ chartData, maxValue }) => {
         },
         grid: {
           display: true, // Show gridlines
-          color: 'rgba(255, 255, 255, 0.1)', 
+          color: 'rgba(255, 255, 255, 0.1)',
+
         },
         suggstedMin: 0,
         suggestedMax: maxValue+2, // Set the dynamic maximum value for the y-axis
@@ -29,7 +30,7 @@ export const BarChart = ({ chartData, maxValue }) => {
           title: function (tooltipItem, data) {
             if (tooltipItem[0]) {
               const dataIndex = tooltipItem[0].dataIndex;
-              const barHeader = getBarHeader(dataIndex); 
+              const barHeader = getBarHeader(dataIndex);
               return barHeader;
             }
             return '';
