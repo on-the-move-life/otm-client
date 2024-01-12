@@ -45,7 +45,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               </p>
             </div>
           )}
-        <img className='my-4' src={selectedImage} alt="Movement" />
+        <img className="my-4" src={selectedImage} alt="Movement" />
 
         <button
           onClick={closeMovementDetail}
