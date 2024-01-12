@@ -136,13 +136,13 @@ const WorkoutSummary = () => {
           <div>
             <span className=" rounded-lg border border-lightGray bg-[#1B1B1B] p-2 text-sm text-white">
               Total Workouts{' '}
-              <span className="text-lg text-[#5ECC7B]">
+              <span className="text-lg font-bold text-[#5ECC7B]">
                 {workoutSummary.consistency?.total}
               </span>
             </span>
           </div>
 
-          {countToEarnPerfectWeek !== null && countToEarnPerfectWeek > 0 && (
+          {countToEarnPerfectWeek !== null && countToEarnPerfectWeek > 0 ? (
             <p className="my-4 ">
               Complete{' '}
               <span className="text-[#F5C563]">
@@ -158,6 +158,20 @@ const WorkoutSummary = () => {
                 </span>
               </div>{' '}
               badge
+            </p>
+          ) : (
+            <p className="my-4 ">
+              Fitness Pro Alert! You've surpassed the
+              <div className="inline-flex w-fit items-center justify-center rounded bg-[#F5C563] px-2 py-0.5 text-xs font-bold text-black">
+                <span className="pb-0.3">
+                  <FaStar color="black" size={14} />{' '}
+                </span>
+                <span className="mx-0.5 text-xs -tracking-[0.36px]">
+                  Perfect Week
+                </span>
+              </div>{' '}
+              with <strong>{+workoutCountInfo?.frequency}</strong> workouts. <br />Keep
+              crushing it🔥
             </p>
           )}
 
@@ -176,15 +190,17 @@ const WorkoutSummary = () => {
                     }}
                   />
                 </span>
-                <div className="flex h-full w-full items-center justify-center px-2">
+                <div className="flex h-full w-full items-center justify-center px-2 ">
                   <p className="basis-2/3  text-xs">
                     {achievements[achievementsIndex].description}
                   </p>
-                  <img
-                    className="h-20 w-20 basis-1/3 "
-                    src="/assets/achievements-dummy.svg"
-                    alt=""
-                  />
+                  <div className="h-30 w-30 pt-2">
+                    <img
+                      className="mt-16"
+                      src="/assets/badge.svg"
+                      alt="badge"
+                    />
+                  </div>
                 </div>
 
                 <span>
@@ -272,8 +288,8 @@ const WorkoutSummary = () => {
                                 ) : (
                                   <FaMinus />
                                 )}
-                                <span className="font-bol px-1">
-                                  {scoreDifference}
+                                <span className="px-1 font-bold">
+                                  {Math.abs(scoreDifference)}
                                 </span>
                                 {scoreDifference > 0.0 ? (
                                   <FaArrowUp />
@@ -290,7 +306,7 @@ const WorkoutSummary = () => {
             )}
 
           <div className="mt-8 grid grid-cols-2 grid-rows-5 gap-4">
-          {/* <div className="flex mt-8  flex-col"> */}
+            {/* <div className="flex mt-8  flex-col"> */}
 
             {workoutSummary &&
               workoutSummary.sectionPerformance?.map(
@@ -301,7 +317,7 @@ const WorkoutSummary = () => {
                       key={section.code}
                     >
                       <div className="flex h-full w-full flex-col ">
-                        <div className='mb-2'>
+                        <div className="mb-2">
                           <div className="flex justify-between">
                             <h1 className=" items-center text-lg ">
                               {section.name}
@@ -310,7 +326,7 @@ const WorkoutSummary = () => {
                               <img src="/assets/done.svg" alt="" />
                             )}
                           </div>
-                          <p className="text-[10px] tracking-widest text-lightGray uppercase">
+                          <p className="text-[8px] uppercase tracking-[3px] text-lightGray">
                             {section.round ? section.round : '0 rounds'}
                           </p>
                         </div>
