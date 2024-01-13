@@ -24,7 +24,7 @@ const UpdateWorkout = ({ onClose }) => {
   const { inputValues, workout } = useSelector((store) => store.workoutReducer);
   const dispatch = useDispatch();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const WORKOUT_THEME_OPTIONS = WORKOUT_BASE_THEME_OPTIONS.filter(
     (theme) => theme !== workout.theme,
@@ -43,7 +43,8 @@ const UpdateWorkout = ({ onClose }) => {
       isLite: customDuration,
     };
     try {
-      setIsModalOpen(false);
+      // setIsModalOpen(false);
+      // onClose(false)
       dispatch(updateWorkout(reqBody));
     } catch (error) {
       // Handle errors if needed
@@ -52,26 +53,26 @@ const UpdateWorkout = ({ onClose }) => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden">
-      <div className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4">
+    <div className="overflow-x-auto">
+      <div className="h-screen w-screen flex-shrink-0 bg-[#141414] p-4 ">
         <div className="flex justify-end">
-          <span onClick={() => onClose(false)}>
-            <HiX size={20} />
+          <span onClick={() => onClose(false)} className=' bg-[#202020] rounded-full p-1'>
+            <HiX size={15}/>
           </span>
         </div>
-        <div className="flex h-screen flex-col justify-around">
-          <h3 className="workout-gradient-text text-center text-xl uppercase">
+        <div className="flex flex-col justify-around">
+          <h3 className="relative top-5 workout-gradient-text text-center text-xl uppercase">
             Customize your workout
           </h3>
 
-          <section>
+          <section className='relative top-20'>
             <DataInputComponent
               inputId="customTheme"
               inputType="select"
               inputOptions={WORKOUT_THEME_OPTIONS}
               placeholder="select"
               label="THEME"
-              twClasses="block w-full px-4 py-2 border border-gray-300 bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
+              twClasses="block w-full px-4 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
             />
             <DataInputComponent
               inputId="customEquipments"
@@ -79,7 +80,7 @@ const UpdateWorkout = ({ onClose }) => {
               inputOptions={EQUIPMENT_OPTIONS}
               placeholder="Choose equipment"
               label="EQUIPMENT (OPTIONAL)"
-              twClasses="block w-full px-4 py-2 border border-gray-300 bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
+              twClasses="block w-full px-4 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
             />
             <DataInputComponent
               inputId="customDuration"
@@ -87,11 +88,12 @@ const UpdateWorkout = ({ onClose }) => {
               inputOptions={WORKOUT_DURATION_OPTIONS}
               placeholder="REGULAR"
               label="WORKOUT DURATION"
-              twClasses="block w-full px-4 py-2 border border-gray-300 bg-transparent focus:outline-none rounded-lg border border-[#2A2A2A] gap-[8px]"
+              twClasses="block w-full px-4 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border border-[#2A2A2A] gap-[8px]"
             />
           </section>
+
           <button
-            className="workout-gradient-button h-11 w-full items-center  justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-xl font-bold text-black"
+            className="relative top-60 workout-gradient-button h-11 w-full items-center  justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-xl font-bold text-black"
             onClick={() => handleUpdateWorkout()}
           >
             Update
