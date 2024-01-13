@@ -114,13 +114,13 @@ const SkillProgression = ({ setShowLevel }) => {
               <span className="flex h-full items-center justify-center ">
                 {index > currentInfo.level ? (
                   <img
-                    className="h-full w-fit"
+                    className="h-full"
                     src="./assets/locked.svg"
                     alt={levelArray[index - 1].name}
                   />
                 ) : (
                   <img
-                    className="h-full w-fit"
+                    className="h-full"
                     src={levelArray[index - 1].link}
                     alt={levelArray[index - 1].name}
                   />

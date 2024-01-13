@@ -2,14 +2,21 @@ import React from 'react';
 
 const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP'];
 
-const Movement = ({ movement, sectionCode, movementLength, openMovementDetail }) => {
-
+const Movement = ({
+  movement,
+  sectionCode,
+  movementLength,
+  openMovementDetail,
+}) => {
   return (
-    <div className="card" onClick={() => openMovementDetail(movement)}>
+    <div
+      className={`card ${movementLength > 1 ? 'w-[90%]' : 'w-full'}`}
+      onClick={() => openMovementDetail(movement)}
+    >
       <div
-        className={`mb-8 flex h-[400px] ${
-          movementLength > 1 ? 'w-[300px]' : 'w-[330px]'
-        }  flex-col justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-lg`}
+        className={`mb-8 flex h-[400px]
+           w-full
+          flex-col justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-lg`}
       >
         <div>
           <div className="text-md mb-1 flex justify-start text-lightGray">
