@@ -70,7 +70,7 @@ const SectionDetail = () => {
     }
   }, []);
 
-  console.log('notes', notes, code);
+
   return (
     <>
       {showMvmtDetail && !showLevel && (
