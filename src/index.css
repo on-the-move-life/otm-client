@@ -65,6 +65,18 @@ input:focus::placeholder {
   text-overflow:ellipsis;
 
 }
+.perfect-week {
+  width: 106px;
+  height: 18px;
+  padding: 2px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 0.5px solid #9D8956;
+  background: linear-gradient(107deg, #F4EBB1 4.32%, #CAAB5C 22.9%, #F4EBB2 42.85%, #CBAD5E 62.54%, #F2E8AE 85.59%, #C2982C 115.29%);
+}
 
 .achievements-bg {
   background-image: url('../public/assets/elipse.svg');

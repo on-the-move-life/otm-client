@@ -142,37 +142,48 @@ const WorkoutSummary = () => {
             </span>
           </div>
 
-          {countToEarnPerfectWeek !== null && countToEarnPerfectWeek > 0 ? (
-            <p className="my-4 ">
+          {countToEarnPerfectWeek !== null && countToEarnPerfectWeek > 0 && (
+            <div className="my-4">
               Complete{' '}
               <span className="text-[#F5C563]">
                 {countToEarnPerfectWeek} more
               </span>{' '}
               workout(s) this week to earn the{' '}
-              <div className="inline-flex w-fit items-center justify-center rounded bg-[#F5C563] px-2 py-0.5 text-xs font-bold text-black">
+              {/* <div className="inline-flex w-fit items-center justify-center rounded bg-[#F5C563] px-2 py-0.5 text-xs font-bold text-black">
                 <span className="pb-0.3">
                   <FaStar color="black" size={14} />{' '}
                 </span>
                 <span className="mx-0.5 text-xs -tracking-[0.36px]">
                   Perfect Week
                 </span>
-              </div>{' '}
+              </div>{' '} */}
+              <span className="perfect-week inline-flex  w-fit items-center rounded">
+                <img src="/assets/perfect-week.svg" alt="" />
+              </span>{' '}
               badge
-            </p>
-          ) : (
+            </div>
+          )}
+
+          {countToEarnPerfectWeek !== null && countToEarnPerfectWeek < 0 && (
             <p className="my-4 ">
               Fitness Pro Alert! You've surpassed the
-              <div className="inline-flex w-fit items-center justify-center rounded bg-[#F5C563] px-2 py-0.5 text-xs font-bold text-black">
-                <span className="pb-0.3">
-                  <FaStar color="black" size={14} />{' '}
-                </span>
-                <span className="mx-0.5 text-xs -tracking-[0.36px]">
-                  Perfect Week
-                </span>
-              </div>{' '}
-              with <strong>{+workoutCountInfo?.frequency}</strong> workouts. <br />Keep
-              crushing it🔥
+              <span className="perfect-week inline-flex  w-fit items-center rounded">
+                <img src="/assets/perfect-week.svg" alt="" />
+              </span>{' '}
+              goal with <strong>{Math.abs(countToEarnPerfectWeek)}</strong>{' '}
+              workout(s). <br />
+              Keep crushing it🔥
             </p>
+          )}
+
+          {countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
+            <div className="my-4">
+            <span className="perfect-week inline-flex  w-fit items-center rounded">
+                <img src="/assets/perfect-week.svg" alt="" />
+              </span>{' '}
+              Unlocked! 💪 Crushed {+workoutCountInfo?.frequency} workouts this
+              week. You're unstoppable!
+            </div>
           )}
 
           {achievements.length > 0 && (
