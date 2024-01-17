@@ -75,16 +75,20 @@ const Home = () => {
                 <AiOutlinePoweroff size={22} />
               </button>
             </div>
-            <div className="my-2  flex text-xs tracking-[1px]">
+            <>
               {parseInt(homeStats.streak) > 0 && (
-                <div className="flex w-fit items-center rounded bg-[#F5C563] px-2 py-0.5 font-bold text-black">
-                  <span className="pb-0.5">
+                <div className="flex items-center ">
+                  <div className="perfect-week my-2 flex w-fit items-center rounded">
+                    {/* <span className="pb-0.5">
                     <FaStar color="black" size={14} />{' '}
                   </span>
 
                   <span className="mx-0.5 text-xs -tracking-[0.36px]">
                     Perfect Week x{homeStats.streak}
-                  </span>
+                  </span> */}
+                    <img src="/assets/perfect-week.svg" alt="" />{' '}
+                  </div>
+                  {/* <span className="mx-1 text-xs text-[#F1E7AC]">x{homeStats.streak}</span> */}
                 </div>
               )}
               {homeStats.avgIntensity > 75 && (
@@ -92,7 +96,7 @@ const Home = () => {
                   {showElite ? 'Elite' : 'Advanced'}
                 </span>
               )}
-            </div>
+            </>
             <p className="w-11/12 font-extralight text-lightGray">
               Fitness is not a destination. It's a journey of self-improvement,
               one workout at a time.
