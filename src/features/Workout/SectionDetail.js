@@ -246,22 +246,6 @@ const SectionDetail = () => {
               </div>
             )}
 
-            {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
-              <div className="rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 mb-4">
-                <p className="mb-2 text-xs tracking-widest">NOTES</p>
-                <ul>
-                  {notes.map((note, idx) => (
-                    <li
-                      className="text-xs font-light tracking-wider text-lightGray"
-                      key={idx}
-                    >
-                      - {note}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
             <div className="scrolling-wrapper">
               {movements.map((movement) => {
                 return (
@@ -275,6 +259,21 @@ const SectionDetail = () => {
                 );
               })}
             </div>
+            {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
+              <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+                <p className="mb-2 text-xs tracking-widest">NOTES</p>
+                <ul>
+                  {notes.map((note, idx) => (
+                    <li
+                      className="text-xs font-light tracking-wider text-lightGray"
+                      key={idx}
+                    >
+                      - {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div>
               <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
                 Data Inputs
