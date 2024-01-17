@@ -70,7 +70,6 @@ const SectionDetail = () => {
     }
   }, []);
 
-
   return (
     <>
       {showMvmtDetail && !showLevel && (
@@ -248,7 +247,7 @@ const SectionDetail = () => {
             )}
 
             {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
-              <div className="rounded-xl bg-[#0E0E0E] p-4">
+              <div className="rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 mb-4">
                 <p className="mb-2 text-xs tracking-widest">NOTES</p>
                 <ul>
                   {notes.map((note, idx) => (
