@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, Home, PageNotFound } from './pages';
 import Questionnaire from './features/Questionnaire/Questionnaire';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
-import SkillProgression from './features/Workout/SkillProgression';
+import { Leaderboard } from './features/Leaderboard';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -33,6 +33,7 @@ function App() {
         <Route path="/section-details" element={<SectionDetail />} />
         <Route path="/workout" element={<Workout />} />
         <Route path="/workout-summary" element={<WorkoutSummary />} />
+        <Route path='/leaderboard' element={<Leaderboard/>} />
         <Route path="*" element={<PageNotFound />} />
 
         {/* <Route path="/test" element={<SkillProgression />} /> */}

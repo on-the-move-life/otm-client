@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const axiosClient = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_BASE_URL}/api/v1/workout/hyper`,
+  baseURL: `localhost:5000/workout/leaderboard`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
