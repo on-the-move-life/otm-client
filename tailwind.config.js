@@ -23,6 +23,8 @@ module.exports = withMT({
         icon: "url('../public/assets/icon.svg')",
         'workout-cover': "url('../public/assets/workout-cover.svg')",
         'bullet-points': "url('../public/assets/bullet-points.svg')",
+        'lb-up-arrow': "url('../public/assests/upArrow.svg)",
+        'lb-down-arrow': "url('../public/assests/downArrow.svg)",
         elipse: "url('../public/assets/elipse.svg')",
       },
       fontFamily: {

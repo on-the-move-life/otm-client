@@ -1,7 +1,7 @@
 import React from 'react';
 import Arrow from './Arrow';
 
-const LeaderboardItem = ({ rank, imgUrl, code, name, count, isLoggedInUser }) => {
+const LeaderboardItem = ({ rank, imgUrl, code, name, count, isLoggedInUser, rankChange }) => {
 
   const defaultClassName = ` h-[70px] mix-blend-screen bg-neutral-700 bg-opacity-10 ${
     isLoggedInUser
@@ -24,7 +24,7 @@ const LeaderboardItem = ({ rank, imgUrl, code, name, count, isLoggedInUser }) =>
 
         <div className="flex flex-row items-center justify-around px-4 ">
           <span className="mr-4">{count}</span>
-          <Arrow value={5} direction='up'/>
+          <Arrow value={rankChange}/>
         </div>
       </div>
       {!isLoggedInUser && (

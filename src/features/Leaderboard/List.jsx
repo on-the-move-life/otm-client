@@ -33,7 +33,7 @@ const Leaderboard = () => {
     // API call for workoutCountData
     try {
       const res = await axios.get(
-        `http://localhost:5000/workout/leaderboard/wo`,
+        `http://localhost:5000/workout/leaderboard/monthlyWorkout`,
       );
       if (res.data) {
         const data = res.data;
@@ -87,6 +87,7 @@ const Leaderboard = () => {
             ? matchingUser.workout
             : matchingUser.totalScore
         }
+        rankChange={matchingUser.rankChange}
       />
     ) : null;
 
@@ -146,7 +147,7 @@ const Leaderboard = () => {
       </div>
 
       <div className="flex flex-row justify-between p-2">
-        <span className="text-zinc-400 text-[8px] uppercase tracking-[3px]">
+        <span className="text-zinc-400 text-[8px] uppercase tracking-[3px] ml-4">
           RANK
         </span>
         <span className="text-zinc-400 text-[8px] uppercase tracking-[3px]">
@@ -172,6 +173,7 @@ const Leaderboard = () => {
             }
             rank={entry.rank}
             isLoggedInUser={false}
+            rankChange={entry.rankChange}
           />
         ))}
     </div>
