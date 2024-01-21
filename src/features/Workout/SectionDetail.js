@@ -261,14 +261,14 @@ const SectionDetail = () => {
             </div>
             {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
               <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-                <p className="mb-2 text-xs tracking-widest">NOTES</p>
-                <ul>
+                <p className="mb-2 text-xs tracking-[3px]">NOTES</p>
+                <ul className="list-disc pl-3">
                   {notes.map((note, idx) => (
                     <li
-                      className="text-xs font-light tracking-wider text-lightGray"
+                      className="my-2 text-xs font-light tracking-wider text-lightGray"
                       key={idx}
                     >
-                      - {note}
+                      {note}
                     </li>
                   ))}
                 </ul>
