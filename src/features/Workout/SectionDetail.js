@@ -57,6 +57,7 @@ const SectionDetail = () => {
     rounds = 0,
     description = '',
     formatInfo = {},
+    notes = [],
   } = currentSection;
 
   const movementLength = movements.length;
@@ -126,7 +127,6 @@ const SectionDetail = () => {
                 <HiX size={20} />
               </Link>
             </div>
-
             <div className="h-0 w-screen border-b-[0.5px] border-[#2E2E2E]"></div>
             {code === 'METCON' && (
               <div className="my-6 flex flex-col">
@@ -151,7 +151,6 @@ const SectionDetail = () => {
                 </div>
               </div>
             )}
-
             <div className="max-w-10/12 my-12 flex max-h-20 rounded-lg">
               <div className="flex items-center justify-center">
                 {movements && movementLength > 1 && (
@@ -188,7 +187,6 @@ const SectionDetail = () => {
                 </div>
               )}
             </div>
-
             {code === 'GYM' && (
               <div
                 className="my-4 flex items-center justify-center rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] py-2"
@@ -204,7 +202,6 @@ const SectionDetail = () => {
                 </span>
               </div>
             )}
-
             {code === 'METCON' && (
               <div className="my-6 flex justify-around">
                 <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
@@ -262,7 +259,21 @@ const SectionDetail = () => {
                 );
               })}
             </div>
-
+            {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
+              <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+                <p className="mb-2 text-xs tracking-[3px]">NOTES</p>
+                <ul className="list-disc pl-3">
+                  {notes.map((note, idx) => (
+                    <li
+                      className="my-2 text-xs font-light tracking-wider text-lightGray"
+                      key={idx}
+                    >
+                      {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div>
               <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
                 Data Inputs
@@ -277,7 +288,6 @@ const SectionDetail = () => {
                 />
               ))}
             </div>
-
             {/* {!lastPage && (
               <div
                 className="mt-4 flex items-center justify-center"
