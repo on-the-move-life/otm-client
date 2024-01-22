@@ -327,7 +327,7 @@ button:active {
 .countdown__seconds .countdown__box:first-child .countdown__inner {
   animation-name: a-countdown-6;
   animation-duration: 60s;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 1;
   animation-direction: forwards;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
@@ -336,7 +336,7 @@ button:active {
 .countdown__seconds .countdown__box:last-child .countdown__inner {
   animation-name: a-countdown-10;
   animation-duration: 10s;
-  animation-iteration-count: infinite;
+  animation-iteration-count: 1;
   animation-direction: forwards;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
