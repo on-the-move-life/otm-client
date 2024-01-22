@@ -29,7 +29,7 @@ const AchievementPage = () => {
           <h4 className="text-[10px] uppercase  tracking-[3px]">
             total workouts
           </h4>
-            <Counter currentValue={57} />
+            <Counter currentValue={69} />
 
         </div>
 

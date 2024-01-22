@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Counter = ({ currentValue = 59 }) => {
+const Counter = ({ currentValue = 56 }) => {
   const [animationDuration, setAnimationDuration] = useState('10s');
   const [secondIndicator, setSecondIndicator] = useState([]);
   const [minuteIndicator, setMinuteIndicator] = useState([]);
@@ -30,20 +30,14 @@ const Counter = ({ currentValue = 59 }) => {
         <div className="countdown__inner">
           {
             index === 1 ?
-              secondIndicator.map((second, i) => {
-                console.log(i, index)
-                return <span key={i}>{second}</span>
-              })
+              secondIndicator.map((second, i) => (
+                <span key={i}>{second}</span>
+              ))
               :
-              minuteIndicator.map((minute, i) => {
-                console.log(i, index)
-                return <span key={i}>{minute}</span>
-              })
+              minuteIndicator.map((minute, i) => (
+                <span key={i}>{minute}</span>
+              ))
           }
-          {/* {[...Array(2)].map((_, i) => {
-            console.log(i, index)
-            return <span key={i}>{(digit + i) % 10}</span>
-          })} */}
         </div>
       </div>
     ));
