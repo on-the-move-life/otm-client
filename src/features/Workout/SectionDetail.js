@@ -58,6 +58,7 @@ const SectionDetail = () => {
     rounds = 0,
     description = '',
     formatInfo = {},
+    notes = [],
   } = currentSection;
 
   const movementLength = movements.length;
@@ -260,6 +261,49 @@ const SectionDetail = () => {
                 </div>
               )}
 
+            <div className="scrolling-wrapper">
+              {movements.map((movement) => {
+                return (
+                  <Movement
+                    movement={movement}
+                    key={movement._id}
+                    sectionCode={code}
+                    movementLength={movementLength}
+                    openMovementDetail={openMovementDetail}
+                  />
+                );
+              })}
+            </div>
+            {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
+              <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+                <p className="mb-2 text-xs tracking-[3px]">NOTES</p>
+                <ul className="list-disc pl-3">
+                  {notes.map((note, idx) => (
+                    <li
+                      className="my-2 text-xs font-light tracking-wider text-lightGray"
+                      key={idx}
+                    >
+                      {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div>
+              <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
+                Data Inputs
+              </h2>
+              {dataInput.map((input, index) => (
+                <DataInputComponent
+                  key={index}
+                  inputId={input.id}
+                  inputType={input.type}
+                  inputOptions={input.options}
+                  placeholder={input.label}
+                />
+              ))}
+            </div>
+            {/* {!lastPage && (
               <div className="scrolling-wrapper">
                 {movements.map((movement) => {
                   return (
