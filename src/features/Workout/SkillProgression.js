@@ -39,7 +39,7 @@ const SkillProgression = ({ setShowLevel }) => {
       //api call
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_BACKEND_BASE_URL}/api/v1/skill`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/skill`,
           { params: { theme: workout?.theme, user: workout?.memberCode } },
         );
         if (res.data) {

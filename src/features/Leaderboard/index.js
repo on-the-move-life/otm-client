@@ -1,1 +1,1 @@
-export { default as Leaderboard } from './List';
+export { default as List } from './List';

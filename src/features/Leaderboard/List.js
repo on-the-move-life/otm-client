@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import { fitnessScoreLb, consistencyLeaderboard } from './data';
+
 import LeaderboardItem from './ListItem'; // Assuming the file path is correct
 import { useAuth } from '../../contexts/AuthContext';
 
-const Leaderboard = () => {
+
+const List = () => {
+  console.log((fitnessScoreLb));
   const [fitnessScoreData, setFitnessScoreData] = useState([]);
   const [workoutCountData, setWorkoutCountData] = useState([]);
   const [selectedDataType, setSelectedDataType] = useState('workout'); // Default to 'workout'
@@ -15,13 +19,15 @@ const Leaderboard = () => {
   async function getFitnessScoreData() {
     // API call for fitnessScoreData
     try {
-      const res = await axios.get(
-        `http://localhost:5000/workout/leaderboard/fitnessScore`,
-      );
-      if (res.data) {
-        const data = res.data;
-        setFitnessScoreData(data);
-      }
+      // const res = await axios.get(
+      //   `http://localhost:5000/workout/leaderboard/fitnessScore`,
+      // );
+      // if (res.data) {
+      //   const data = res.data;
+      //   setFitnessScoreData(data);
+      // }
+      console.log(consistencyLeaderboard);
+      setFitnessScoreData(fitnessScoreLb);
     } catch (error) {
       console.error('Error fetching fitnessScoreData:', error);
     } finally {
@@ -32,19 +38,23 @@ const Leaderboard = () => {
   async function getWorkoutCountData() {
     // API call for workoutCountData
     try {
-      const res = await axios.get(
-        `http://localhost:5000/workout/leaderboard/monthlyWorkout`,
-      );
-      if (res.data) {
-        const data = res.data;
-        setWorkoutCountData(data);
-      }
+      // const res = await axios.get(
+      //   `http://localhost:5000/workout/leaderboard/monthlyWorkout`,
+      // );
+      // if (res.data) {
+      //   const data = res.data;
+      //   setWorkoutCountData(data);
+      // }
+      console.log(consistencyLeaderboard);
+      setWorkoutCountData(consistencyLeaderboard);
     } catch (error) {
       console.error('Error fetching workoutCountData:', error);
     } finally {
       setLoading(false);
     }
   }
+
+  console.log(consistencyLeaderboard);
 
   useEffect(() => {
     getUserFromStorage();
@@ -57,6 +67,8 @@ const Leaderboard = () => {
       getWorkoutCountData();
     }
   }, [user]);
+
+  console.log(consistencyLeaderboard);
 
   const imgUrl =
     'https://s3-alpha-sig.figma.com/img/2e7c/0b19/b615cd1f932cd1924a9842e4132a9d6b?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gQvc8JF1x29HbTnGuCgaANyI7U~ir15x1Sjg1BupyF226FJDdePjFFCYGlCcW8tIN8lRYSeivLlmxj1CVEFYhacRVmH981d2TVM5wXnF5c57bpqY9VbzC8ADm73fPexawZBLSSeeAQbF-nzq7k61qKZg2qCkbL8cD0~mTPG-eZroJy1jJg7UIrSdeOL5dNDp~DDENprbNDdlKWWEw9vImWRWxr5-DX1Gkvh30E2LX7eacZ-hIStbA3qguSDeAbq419DHEMdt8raO~Vm8T3AMO6tLpzxs-wDapxETIZBHVbSzpN6I3W8hJTjR8wCEF9zvYbUbUhVtTQ4~DdAGGTrYiA__';
@@ -78,16 +90,9 @@ const Leaderboard = () => {
       <LeaderboardItem
         key={-1} // Assign a unique key for the matching user
         isLoggedInUser={true}
-        rank={matchingUser.rank}
         imgUrl={imgUrl}
-        name={matchingUser.name}
-        code={matchingUser.code}
-        count={
-          selectedDataType === 'workout'
-            ? matchingUser.workout
-            : matchingUser.totalScore
-        }
-        rankChange={matchingUser.rankChange}
+        user={matchingUser}
+        mode={selectedDataType}
       />
     ) : null;
 
@@ -147,7 +152,7 @@ const Leaderboard = () => {
       </div>
 
       <div className="flex flex-row justify-between p-2">
-        <span className="text-zinc-400 text-[8px] uppercase tracking-[3px] ml-4">
+        <span className="text-zinc-400 ml-4 text-[8px] uppercase tracking-[3px]">
           RANK
         </span>
         <span className="text-zinc-400 text-[8px] uppercase tracking-[3px]">
@@ -166,18 +171,13 @@ const Leaderboard = () => {
           <LeaderboardItem
             key={idx}
             imgUrl={imgUrl}
-            name={entry.name}
-            code={entry.code}
-            count={
-              selectedDataType === 'workout' ? entry.workout : entry.totalScore
-            }
-            rank={entry.rank}
+            mode={selectedDataType}
+            user={entry}
             isLoggedInUser={false}
-            rankChange={entry.rankChange}
           />
         ))}
     </div>
   );
 };
 
-export default Leaderboard;
+export default List;
