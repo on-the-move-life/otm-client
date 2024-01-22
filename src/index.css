@@ -326,7 +326,7 @@ button:active {
 
 .countdown__seconds .countdown__box:first-child .countdown__inner {
   animation-name: a-countdown-6;
-  animation-duration: 60s;
+  animation-duration: 2s;
   animation-iteration-count: 1;
   animation-direction: forwards;
   animation-timing-function: ease;
@@ -335,15 +335,23 @@ button:active {
 
 .countdown__seconds .countdown__box:last-child .countdown__inner {
   animation-name: a-countdown-10;
-  animation-duration: 10s;
+  animation-duration: 2s;
   animation-iteration-count: 1;
   animation-direction: forwards;
-  animation-timing-function: ease;
+  animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 }
 
 /* The animation logic was borrowed from Hugo Giraudel and tweaked, unfortunately lost the link to the article :( */
 @keyframes a-countdown-6 {
+  0%, 5% {
+    transform: translateY(0);
+  }
+  95%, 100% {
+    transform: translateY(-8rem);
+  }
+}
+/* @keyframes a-countdown-6 {
   0%, 8.33% {
     transform: translateY(0);
   }
@@ -362,9 +370,17 @@ button:active {
   83.33%, 100% {
     transform: translateY(-40rem);
   }
-}
+} */
 
 @keyframes a-countdown-10 {
+  0%, 5% {
+    transform: translateY(0);
+  }
+  95%, 100% {
+    transform: translateY(-8rem);
+  }
+}
+/* @keyframes a-countdown-10 {
   0%, 5% {
     transform: translateY(0);
   }
@@ -395,4 +411,4 @@ button:active {
   90%, 100% {
     transform: translateY(-72rem);
   }
-}
+} */
