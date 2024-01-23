@@ -26,7 +26,11 @@ const Counter = ({ currentValue = 56 }) => {
         setDigits(prev => [...prev, ['', incrementedDigitsValue[index]]])
       }
       else {
-        setDigits(prev => [...prev, [inputDigitsValue[index], incrementedDigitsValue[index]]])
+        if(inputDigitsValue[index] === incrementedDigitsValue[index]){
+          setDigits(prev => [...prev, [inputDigitsValue[index]]])
+        }
+        else
+          setDigits(prev => [...prev, [inputDigitsValue[index], incrementedDigitsValue[index]]])
       }
     })
   };
