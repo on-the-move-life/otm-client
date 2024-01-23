@@ -324,7 +324,7 @@ button:active {
   /* background-image: linear-gradient(to bottom, rgba(white, 0.2), black); */
 }
 
-.countdown__seconds .countdown__box:first-child .countdown__inner > :not(:only-child) {
+.countdown__seconds .countdown__box:not(:last-child) .countdown__inner > :not(:only-child) {
   animation-name: a-countdown-6;
   animation-duration: 1.5s;
   animation-iteration-count: 1;
