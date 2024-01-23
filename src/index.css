@@ -271,7 +271,7 @@ button:active {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  width: 200px;
+  width: 300px;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -324,13 +324,71 @@ button:active {
   /* background-image: linear-gradient(to bottom, rgba(white, 0.2), black); */
 }
 
-.countdown__seconds .countdown__box:not(:last-child) .countdown__inner > :not(:only-child) {
+.countdown__seconds .countdown__box:not(:last-child):nth-child(1) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 0;
   animation-name: a-countdown-6;
-  animation-duration: 1.5s;
   animation-iteration-count: 1;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(2) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 1;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(3) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 2;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(4) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 3;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(5) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 4;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(6) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 5;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
 }
 
 .countdown__seconds .countdown__box:last-child .countdown__inner {
