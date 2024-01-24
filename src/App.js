@@ -38,7 +38,7 @@ function App() {
 
         <Route path="*" element={<PageNotFound />} />
 
-        <Route path="/test" element={<AchievementPage />} />
+        {/* <Route path="/test" element={<AchievementPage />} /> */}
 
 
       </Routes>

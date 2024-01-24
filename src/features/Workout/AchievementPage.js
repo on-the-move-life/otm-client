@@ -4,15 +4,19 @@ import Counter from '../../components/Counter';
 
 const AchievementPage = () => {
   const navigate = useNavigate();
+  let totalWorkouts;
 
-  //   useEffect(() => {
-
-  //   }, []);
+  useEffect(() => {
+    let totalWorkouts = localStorage.getItem('workouts');
+    if (totalWorkouts && !totalWorkouts.includes('undefined')) {
+      totalWorkouts = JSON.parse(totalWorkouts);
+    }
+  }, []);
 
   return (
     <div className="hero bg-no-repeat">
       <div
-        //   onClick={() => navigate('/workout-summary')}
+        onClick={() => navigate('/workout-summary')}
         className="relative  flex h-full flex-col  items-center justify-around"
       >
         {/* heading */}
@@ -29,12 +33,12 @@ const AchievementPage = () => {
           <h4 className="text-[10px] uppercase  tracking-[3px]">
             total workouts
           </h4>
-            <Counter currentValue={6} />
-
+          <Counter currentValue={totalWorkouts} />
         </div>
 
         {/* achievements */}
-        <h3 className="text-md text-lightGray">Achievements Unlocked</h3>
+        {/* <h3 className="text-md text-lightGray">Achievements Unlocked</h3> */}
+        <h3></h3>
         <div></div>
       </div>
     </div>

@@ -43,9 +43,13 @@ const Home = () => {
         })
         .then((res) => {
           console.log(res.data);
-          setHomeStats(res.data);
-          setLoader(false);
-          setError(null);
+          if(res.data) {
+            setHomeStats(res.data);
+            setLoader(false);
+            setError(null);
+            localStorage.setItem('workouts', JSON.stringify(res.data.totalWorkoutsDone));
+          }
+
         })
         .catch((err) => {
           console.log(err.message);
