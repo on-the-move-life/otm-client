@@ -126,17 +126,15 @@ const Leaderboard = () => {
           <p className="text-xs">Fitness Score</p>
         </div>
       </div>
-      <div className="pb-2 text-sm font-medium text-lightGray">
+      <div className="pb-2 text-[14px] font-medium text-lightGray">
         {selectedDataType === 'workout'
           ? 'Ranked by the number of workouts done this month'
           : 'Ranked by fitness scores this month'}
       </div>
 
-      <div className="flex flex-row justify-between p-2">
-        <span className="text-zinc-400 ml-4 text-xs uppercase tracking-[1px]">
-          RANK
-        </span>
-        <span className="text-zinc-400 text-xs uppercase tracking-[1px]">
+      <div className="flex flex-row justify-between p-2 text-[8px] uppercase tracking-[3px] text-lightGray">
+        <span className="">RANK</span>
+        <span>
           {' '}
           {selectedDataType === 'workout' ? 'TOTAL WORKOUTS' : 'FITNESS SCORE'}
         </span>
