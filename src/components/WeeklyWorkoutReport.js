@@ -45,7 +45,7 @@ function WeeklyWorkoutReport({currentScore, suggestedWorkoutPerWeek, lastEightWe
             <section className='w-full flex flex-row justify-between items-center'>
                 <div className='w-fit flex flex-col justify-center items-center gap-1'>
                     <div className='wwc-score'>{currentScore}</div>
-                    <p className='wwc-suggestion-text'>suggested workout per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
+                    <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
                 </div>
                 <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
                     {
