@@ -65,7 +65,7 @@ const Home = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex h-screen w-screen flex-col px-4">
+        <div className="flex h-screen w-screen flex-col px-4 gap-5">
           <section className="pb-6 pt-10">
             <div className="flex items-center justify-between">
               <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-3xl font-semibold text-transparent">
@@ -107,54 +107,6 @@ const Home = () => {
           </section>
           <section>
             <FitnessScore score={homeStats?.score} percentile={homeStats?.fitnessPercentileScore}/>
-          </section>
-          <section>
-            <p className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">
-              At a glance
-            </p>
-            <div className="flex items-center justify-between">
-              <span className="text-xs tracking-widest text-lightGray">
-                EVOLVE CYCLE {homeStats.evolveCycleDetails?.count || 0}
-              </span>
-              <div>
-                {homeStats.evolveCycleDetails?.duration && (
-                  <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
-                    {homeStats.evolveCycleDetails?.duration}
-                  </span>
-                )}
-
-                <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
-                  Week {homeStats.evolveCycleDetails.currentWeek}/
-                  {homeStats.evolveCycleDetails?.totalWeeks}
-                </span>
-              </div>
-            </div>
-            <div className="mt-2 grid grid-cols-2 rounded-xl border-[0.5px] border-[#383838] bg-gradient-to-b">
-              <div className="main-stat">
-                <h4>Workouts Done</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {homeStats.totalWorkoutsDone}
-                </span>
-              </div>
-              <div className="main-stat">
-                <h4>level</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {Math.ceil(homeStats.totalWorkoutsDone / 11)}
-                </span>
-              </div>
-              <div className="main-stat">
-                <h4>Points</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {homeStats.points}
-                </span>
-              </div>
-              <div className="main-stat">
-                <h4>Community Rank</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {homeStats.rank}
-                </span>
-              </div>
-            </div>
           </section>
           <Link to="/workout" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
