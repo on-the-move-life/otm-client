@@ -2,25 +2,59 @@ import React, { useState, useEffect } from 'react';
 
 const Counter = ({ currentValue = 56 }) => {
   const [animationDuration, setAnimationDuration] = useState('10s');
+  const [digits, setDigits] = useState([]);
+  // const [secondIndicator, setSecondIndicator] = useState([]);
+  // const [minuteIndicator, setMinuteIndicator] = useState([]);
 
   useEffect(() => {
     const numberOfDigits = currentValue.toString().length;
     setAnimationDuration(`${numberOfDigits * 10}s`);
-  }, [currentValue]);
+    getCounterDigits(currentValue);
+  }, []);
 
   const getCounterDigits = (value) => {
-    return value.toString().split('').map(Number);
+    const incrementedValue = String(Number(value) + 1)
+
+    // splitting the number into array of it's digits
+    const inputDigitsValue = value.toString().split('').map(Number)
+    const incrementedDigitsValue = incrementedValue.toString().split('').map(Number);
+
+    // single digit number prefixed with 0
+    if(inputDigitsValue.length === 1){
+      inputDigitsValue.unshift(0);
+    }
+    if(incrementedDigitsValue.length === 1){
+      incrementedDigitsValue.unshift(0);
+    }
+
+    // reverse the arrys to start iteration from unit place digit
+    inputDigitsValue.reverse();
+    incrementedDigitsValue.reverse();
+
+    // creating a mapping between the original and incremented values
+    incrementedDigitsValue.map((value, index) => {
+      if (index === inputDigitsValue.length) {
+        setDigits(prev => [...prev, ['', incrementedDigitsValue[index]]])
+      }
+      else {
+        if(inputDigitsValue[index] === incrementedDigitsValue[index]){
+          setDigits(prev => [...prev, [inputDigitsValue[index]]])
+        }
+        else
+          setDigits(prev => [...prev, [inputDigitsValue[index], incrementedDigitsValue[index]]])
+      }
+    })
   };
 
   const renderCounterBoxes = () => {
-    const digits = getCounterDigits(currentValue);
-
-    return digits.map((digit, index) => (
+    return digits.reverse().map((digit, index) => (
       <div key={index} className="countdown__box">
         <div className="countdown__inner">
-          {[...Array(10)].map((_, i) => (
-            <span key={i}>{(digit + i) % 10}</span>
-          ))}
+          {
+            digit.map((value, i) => {
+              return <span key={index + '' + i}>{value}</span>
+            })
+          }
         </div>
       </div>
     ));
