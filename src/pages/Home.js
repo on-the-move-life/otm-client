@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { FitnessScore, Loader, Error } from '../components';
+import { Loader, Error, WeeklyWorkoutReport } from '../components';
 import { FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
-import WeeklyWorkoutReport from '../components/WeeklyWorkoutReport';
 
 const Home = () => {
   const { logout } = useAuth();
