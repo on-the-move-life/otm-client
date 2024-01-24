@@ -5,6 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
+import WeeklyWorkoutReport from '../components/WeeklyWorkoutReport';
 
 const Home = () => {
   const { logout } = useAuth();
@@ -102,11 +103,8 @@ const Home = () => {
               one workout at a time.
             </p>
           </section>
-          <section className="mb-4 rounded-xl border-[0.5px] border-[#323232] bg-darkGray">
-            <p className="m-4 text-center text-xs tracking-widest text-lightGray">
-              FITNESS SCORE
-            </p>
-            <FitnessScore progress={homeStats.score} total={10} />
+          <section>
+            <WeeklyWorkoutReport currentScore={homeStats?.consistency} suggestedWorkoutPerWeek={homeStats?.frequency} lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}/>
           </section>
           <section>
             <p className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">

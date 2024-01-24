@@ -10,11 +10,11 @@
 }
 
 body {
-background-color: #050505;
-color: white;
+  background-color: #050505;
+  color: white;
 }
 
-.textbox{
+.textbox {
   background: none;
   border-bottom: 1px solid;
   padding-top: 20px;
@@ -28,7 +28,7 @@ textarea,
 button,
 select,
 a {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .textbox::placeholder {
@@ -41,9 +41,10 @@ a {
   box-shadow: 0px 14px 14px 0px rgba(0, 0, 0, 0.09), 0px 2.5px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
-input:focus{
+input:focus {
   outline: none;
 }
+
 input:focus::placeholder {
   color: transparent;
 }
@@ -59,12 +60,13 @@ input:focus::placeholder {
 }
 
 .comments {
-  overflow:hidden;
-  white-space:nowrap;
-  display:inline-block;
-  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  text-overflow: ellipsis;
 
 }
+
 .perfect-week {
   width: 106px;
   height: 18px;
@@ -154,7 +156,7 @@ button:active {
   height: 0px;
 }
 
-.multichoice{
+.multichoice {
   border-radius: 12px;
   background: rgba(61, 61, 61, 0.30);
   padding: 1em 0;
@@ -182,6 +184,7 @@ button:active {
   flex-wrap: nowrap;
   overflow-x: auto;
 }
+
 .card {
   flex: 0 0 auto;
   margin-right: 10px;
@@ -193,13 +196,15 @@ button:active {
   padding: 0.5em;
   text-align: center;
 }
+
 .tags span {
   border-radius: 6px;
   /* font-size: 0.75rem; */
   line-height: 1rem;
   font-weight: 600;
 }
-.main-stat h4{
+
+.main-stat h4 {
   color: var(--Light-gray, #B1B1B1);
   font-size: 8px;
   letter-spacing: 3px;
@@ -224,3 +229,93 @@ button:active {
   margin: 1em 0;
 }
 
+/* Components -> WeeklyWorkoutReport.js */
+.weekly-workout-consistency {
+  width: auto;
+  height: 104px;
+  border-radius: 12px;
+  border: 0.5px solid #383838;
+  background: linear-gradient(180deg, #171717 0%, #0F0F0F 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 10px;
+}
+
+.weekly-workout-consistency-heading {
+  color: var(--Light-gray, #B1B1B1);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 510;
+  line-height: normal;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.wwc-weeks {
+  color: #545454;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 9.333px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.wwc-report-indicator {
+  display: inline-flex;
+  padding: 1.512px 6.049px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3.024px;
+  border: 0.378px solid var(--Red, #FA5757);
+}
+
+.wwc-report-text {
+  color: var(--Red, #FA5757);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 9.073px;
+  font-style: normal;
+  font-weight: 590;
+  line-height: normal;
+  letter-spacing: -0.272px;
+  text-transform: capitalize;
+}
+
+.wwc-score {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 40px;
+  /* 125% */
+  background: var(--Green-purple-gradient, linear-gradient(96deg, #9BF2C0 1.49%, #91BDF6 103.49%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wwc-suggestion-text {
+  color: #545454;
+
+  /* Card body */
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 9.333px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.wwc-suggested-count {
+  background: var(--Green-purple-gradient, linear-gradient(96deg, #9BF2C0 1.49%, #91BDF6 103.49%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.wwc-chart-container {
+  width: 102px;
+  height: 47px;
+}
