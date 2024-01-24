@@ -319,3 +319,20 @@ button:active {
   width: 102px;
   height: 47px;
 }
+
+@keyframes barstyle{
+  from{
+    height: 0px;
+  }
+  to{
+    height: var(--calculated-height);
+  }
+}
+.barStyle{
+  animation-name: barstyle;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
