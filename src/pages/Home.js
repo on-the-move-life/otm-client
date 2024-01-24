@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Loader, Error, WeeklyWorkoutReport } from '../components';
+import { Loader, Error, WeeklyWorkoutReport, FitnessScore } from '../components';
 import { FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -104,6 +104,9 @@ const Home = () => {
           </section>
           <section>
             <WeeklyWorkoutReport currentScore={homeStats?.consistency} suggestedWorkoutPerWeek={homeStats?.frequency} lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}/>
+          </section>
+          <section>
+            <FitnessScore score={homeStats?.score} percentile={homeStats?.fitnessPercentileScore}/>
           </section>
           <section>
             <p className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">
