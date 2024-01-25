@@ -10,11 +10,11 @@
 }
 
 body {
-background-color: #050505;
-color: white;
+  background-color: #050505;
+  color: white;
 }
 
-.textbox{
+.textbox {
   background: none;
   border-bottom: 1px solid;
   padding-top: 20px;
@@ -28,7 +28,7 @@ textarea,
 button,
 select,
 a {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .textbox::placeholder {
@@ -41,9 +41,10 @@ a {
   box-shadow: 0px 14px 14px 0px rgba(0, 0, 0, 0.09), 0px 2.5px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
-input:focus{
+input:focus {
   outline: none;
 }
+
 input:focus::placeholder {
   color: transparent;
 }
@@ -59,12 +60,13 @@ input:focus::placeholder {
 }
 
 .comments {
-  overflow:hidden;
-  white-space:nowrap;
-  display:inline-block;
-  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  text-overflow: ellipsis;
 
 }
+
 .perfect-week {
   width: 106px;
   height: 18px;
@@ -154,7 +156,7 @@ button:active {
   height: 0px;
 }
 
-.multichoice{
+.multichoice {
   border-radius: 12px;
   background: rgba(61, 61, 61, 0.30);
   padding: 1em 0;
@@ -182,6 +184,7 @@ button:active {
   flex-wrap: nowrap;
   overflow-x: auto;
 }
+
 .card {
   flex: 0 0 auto;
   margin-right: 10px;
@@ -193,13 +196,15 @@ button:active {
   padding: 0.5em;
   text-align: center;
 }
+
 .tags span {
   border-radius: 6px;
   /* font-size: 0.75rem; */
   line-height: 1rem;
   font-weight: 600;
 }
-.main-stat h4{
+
+.main-stat h4 {
   color: var(--Light-gray, #B1B1B1);
   font-size: 8px;
   letter-spacing: 3px;
@@ -224,3 +229,10 @@ button:active {
   margin: 1em 0;
 }
 
+.payment-history {
+  border-radius: 24px;
+  border: 0.5px solid rgba(255, 255, 255, 0.40);
+  background: rgba(95, 95, 95, 0.30);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(37.5px);
+}
