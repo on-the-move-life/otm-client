@@ -75,10 +75,15 @@ letter-spacing: -0.36px;
 text-transform: capitalize;
 `
 
-function FitnessScore({score, percentile}) {
+function FitnessScore({ score, percentile }) {
     const Indicator = ({ className, style }) => {
         return (
-            <div style={style} className='w-[1px] h-[8px] bg-white relative'></div>
+            <div style={style} className='relative'>
+                <div className='w-[1px] h-[8px] bg-white'></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="5" height="5" viewBox="0 0 2 2" className='absolute bottom-0 left-[-2px]'>
+                    <polygon points="0,2 1,0 2,2" fill="white" />
+                </svg>
+            </div>
         )
     }
     const ScoreIndicator = ({ score }) => {
@@ -126,7 +131,7 @@ function FitnessScore({score, percentile}) {
                 <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
                     <TagText>{tag}</TagText>
                 </div>
-                
+
                 <div className='w-fit relative'>
                     <Indicator style={{ position: 'absolute', left: `${indicatorPosition}px` }} />
                     <div className='w-fit flex flex-row justify-center items-center gap-[1px]'>
