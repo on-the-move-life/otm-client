@@ -45,7 +45,7 @@ function MoveCoins({ coins }) {
     }
     const formattedCoins = useMemo(() => formatNumberWithCommas(coins), [coins]);
     return (
-        <div className="w-6/12 h-[104px] flex flex-col items-center justify-center gap-2 rounded-[12px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${BGMoveCoins})` }}>
+        <div className="w-[174px] h-[104px] flex flex-col items-center justify-center gap-2 rounded-[12px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${BGMoveCoins})` }}>
             <Heading>Movecoins</Heading>
             <Coins>{formattedCoins}</Coins>
             <Description>Use at OTM marketplace</Description>
