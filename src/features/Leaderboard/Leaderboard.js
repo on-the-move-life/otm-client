@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import ListItem from './ListItem';
 import Loader from '../../components/Loader';
 import { useAuth } from '../../contexts/AuthContext';
 import List from './List';
@@ -12,7 +11,7 @@ const imgUrl =
 const Leaderboard = () => {
   const [fitnessScoreData, setFitnessScoreData] = useState([]);
   const [workoutCountData, setWorkoutCountData] = useState([]);
-  const [selectedDataType, setSelectedDataType] = useState('workout'); // Default to 'workout'
+  const [selectedDataType, setSelectedDataType] = useState('fitnessScore'); // Default to 'fitness score'
   const [loadingFitnessScore, setLoadingFitnessScore] = useState(true);
   const [loadingWorkoutCount, setLoadingWorkoutCount] = useState(true);
 
@@ -80,6 +79,18 @@ const Leaderboard = () => {
       <h2 className="leaderboard-gradient-text mb-3 text-3xl">
         Top Performers
       </h2>
+      {selectedDataType === 'fitnessScore' &&
+        fitnessScoreData &&
+        matchingUser && (
+          <div>
+            <span className="leaderboard-gradient-text mr-1 text-4xl">
+              #{matchingUser.rank}
+            </span>
+            <span className="text-sm font-medium text-lightGray">
+              of {fitnessScoreData.total} participants
+            </span>
+          </div>
+        )}
       {selectedDataType === 'workout' && workoutCountData && matchingUser && (
         <div>
           <span className="leaderboard-gradient-text mr-2 text-4xl">
@@ -91,30 +102,7 @@ const Leaderboard = () => {
         </div>
       )}
 
-      {selectedDataType === 'fitnessScore' &&
-        fitnessScoreData &&
-        matchingUser && (
-          <div>
-            <span className="leaderboard-gradient-text mr-1 text-4xl">
-              #{matchingUser.rank}
-            </span>
-            <span className="text-lightgrey text-sm font-medium">
-              of {fitnessScoreData.total} participants
-            </span>
-          </div>
-        )}
-
       <div className="flex flex-row py-2">
-        <div
-          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
-            selectedDataType === 'workout'
-              ? 'bg-white font-bold text-black'
-              : 'text-white'
-          } cursor-pointer px-2 py-0.5`}
-          onClick={() => setSelectedDataType('workout')}
-        >
-          <p className="text-xs">Workout</p>
-        </div>
         <div
           className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
             selectedDataType === 'fitnessScore'
@@ -124,6 +112,16 @@ const Leaderboard = () => {
           onClick={() => setSelectedDataType('fitnessScore')}
         >
           <p className="text-xs">Fitness Score</p>
+        </div>
+        <div
+          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
+            selectedDataType === 'workout'
+              ? 'bg-white font-bold text-black'
+              : 'text-white'
+          } cursor-pointer px-2 py-0.5`}
+          onClick={() => setSelectedDataType('workout')}
+        >
+          <p className="text-xs">Workout</p>
         </div>
       </div>
       <div className="pb-2 text-[14px] font-medium text-lightGray">

@@ -7,7 +7,7 @@ const ListItem = ({ imgUrl, isCurrentUser, user, mode }) => {
 
   const defaultClassName = ` h-70  ${
     isCurrentUser
-      ? 'mix-blend-screen bg-[#3C3C3C] bg-opacity-10 border border-purple-300 border-opacity-80 rounded-xl'
+      ? 'mix-blend-screen bg-[#3C3C3C] bg-opacity-10 leaderboard-user-list-item border-opacity-80 rounded-xl'
       : ''
   } flex flex-row justify-between py-3 px-auto`;
 
@@ -29,7 +29,7 @@ const ListItem = ({ imgUrl, isCurrentUser, user, mode }) => {
         </div>
 
         <div className="flex flex-row items-center justify-around px-4">
-          <span className="mr-4 flex w-5 flex-row items-center justify-center text-[21.47px] font-bold">
+          <span className="mr-4 flex w-5 h-5 flex-row items-center justify-center text-[21.47px] font-bold">
             {count}
           </span>
           <Arrow value={rankChange} />

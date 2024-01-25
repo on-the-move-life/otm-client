@@ -66,6 +66,7 @@ input:focus::placeholder {
   text-overflow: ellipsis;
 
 }
+
 .perfect-week {
   width: 106px;
   height: 18px;
@@ -233,4 +234,11 @@ button:active {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.leaderboard-user-list-item {
+  border-radius: 12px;
+  border: 1.5px solid var(--Light-purple, #D6B6F0);
+  background: rgba(61, 61, 61, 0.30);
+  mix-blend-mode: screen;
 }

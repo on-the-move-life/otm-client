@@ -15,11 +15,11 @@ const Arrow = ({ value }) => {
 
   return (
     <div className="mr-2 mr-3 inline-flex h-7 w-4 flex-col items-center justify-start">
-      <div className="relative origin-top-left">{arrowImage}</div>
+      <div className="relative origin-top-left w-3 h-3">{arrowImage}</div>
       <div
         className={`text-${
-          isPositive ? 'rose' : 'green'
-        }-500 text-sm font-bold lowercase tracking-tight`}
+          isPositive ? 'green' : 'red'
+        } text-[10px] font-bold lowercase tracking-tight`}
       >
         {arrowText}
       </div>
