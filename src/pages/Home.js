@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Loader, Error, WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator } from '../components';
+import { Loader, Error, WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '../components';
 import { FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -108,8 +108,9 @@ const Home = () => {
           <section>
             <FitnessScore score={homeStats?.score} percentile={homeStats?.fitnessPercentileScore} />
           </section>
-          <section>
+          <section className='w-full flex flex-row justify-center items-center gap-3'>
             <LeaderBoard rank={homeStats?.rank} />
+            <MoveCoins coins={homeStats?.points}/>
           </section>
           {
             homeStats?.isPaymentDue &&
