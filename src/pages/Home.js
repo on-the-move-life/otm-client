@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Loader, Error, WeeklyWorkoutReport, FitnessScore } from '../components';
+import { Loader, Error, WeeklyWorkoutReport, FitnessScore, LeaderBoard } from '../components';
 import { FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -107,6 +107,9 @@ const Home = () => {
           </section>
           <section>
             <FitnessScore score={homeStats?.score} percentile={homeStats?.fitnessPercentileScore}/>
+          </section>
+          <section>
+            <LeaderBoard rank={homeStats?.rank}/>
           </section>
           <Link to="/workout" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">

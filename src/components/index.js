@@ -4,3 +4,4 @@ export { default as LoginInput } from './LoginInput';
 export { default as Button } from './Button';
 export { default as WeeklyWorkoutReport } from './WeeklyWorkoutReport';
 export { default as FitnessScore } from './FitnessScore';
+export { default as LeaderBoard } from './LeaderBoard';
