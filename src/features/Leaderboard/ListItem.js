@@ -29,7 +29,7 @@ const ListItem = ({ imgUrl, isCurrentUser, user, mode }) => {
         </div>
 
         <div className="flex flex-row items-center justify-around px-4">
-          <span className="mr-4 flex w-5 h-5 flex-row items-center justify-center text-[21.47px] font-bold">
+          <span className="mr-4 flex w-5 h-5 flex-row items-center justify-center text-[21.47px]">
             {count}
           </span>
           <Arrow value={rankChange} />
