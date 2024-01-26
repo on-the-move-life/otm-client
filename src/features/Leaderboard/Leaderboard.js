@@ -102,13 +102,13 @@ const Leaderboard = () => {
         </div>
       )}
 
-      <div className="flex flex-row py-2">
+      <div className="flex flex-start py-2 space-x-2">
         <div
           className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
             selectedDataType === 'fitnessScore'
               ? 'bg-white font-bold text-black'
               : 'text-white'
-          } mx-2 cursor-pointer px-2 py-0.5`}
+          } cursor-pointer px-2 py-0.5`}
           onClick={() => setSelectedDataType('fitnessScore')}
         >
           <p className="text-xs">Fitness Score</p>
