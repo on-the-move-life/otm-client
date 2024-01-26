@@ -2,4 +2,8 @@ export { default as Loader } from './Loader';
 export { default as Error } from './Error';
 export { default as LoginInput } from './LoginInput';
 export { default as Button } from './Button';
+export { default as WeeklyWorkoutReport } from './WeeklyWorkoutReport';
 export { default as FitnessScore } from './FitnessScore';
+export { default as LeaderBoard } from './LeaderBoard';
+export { default as DuePaymentIndicator } from './DuePaymentIndicator';
+export { default as MoveCoins } from './MoveCoins';
