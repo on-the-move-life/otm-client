@@ -103,7 +103,7 @@ const Home = () => {
             </p>
           </section>
           <section>
-            <WeeklyWorkoutReport currentScore={homeStats?.consistency} suggestedWorkoutPerWeek={homeStats?.frequency} lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout} />
+            <WeeklyWorkoutReport suggestedWorkoutPerWeek={homeStats?.frequency} lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout} />
           </section>
           <section>
             <FitnessScore score={homeStats?.score} percentile={homeStats?.fitnessPercentileScore} />
