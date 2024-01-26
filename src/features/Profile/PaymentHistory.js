@@ -12,15 +12,15 @@ const PaymentHistory = () => {
 
   useEffect(() => {
     // Check if user is null
-    if (!user) {
-      console.error('User is null. Handle this case accordingly.');
-      setIsLoading(false);
-      return;
-    }
+    // if (!user) {
+    //   console.error('User is null. Handle this case accordingly.');
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     // Fetch payment history only when user is available
     getPaymentHistory();
-  }, [user]); // Dependency on user to trigger when user changes
+  }, []); // Dependency on user to trigger when user changes
 
   useEffect(() => {
     getUserFromStorage();
@@ -29,7 +29,9 @@ const PaymentHistory = () => {
   async function getPaymentHistory() {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_BASE_URL}/api/v1/profile/payment/history?code=CHAN&withFormat=${true}`,
+        `${
+          process.env.REACT_APP_BACKEND_BASE_URL
+        }/api/v1/profile/payment/history?code=CHAN&withFormat=${true}`,
       );
 
       if (res.data) {
@@ -51,7 +53,7 @@ const PaymentHistory = () => {
   return (
     <div className="payment-history h-[559px] w-[358px] rounded-3xl border border-white bg-opacity-30 p-4 backdrop-blur-[75px]">
       <div className="flex justify-end">
-        <span className="rounded-full bg-[#202020] p-1">
+        <span className="rounded-full bg-[#5E5E5E] p-1">
           <HiX size={15} />
         </span>
       </div>
@@ -59,12 +61,17 @@ const PaymentHistory = () => {
         <div className="text-neutral-400 px-auto my-2 flex items-center justify-center text-3xl font-medium leading-10">
           Payment History
         </div>
-        <div className="border-white-500 flex w-8 flex-row justify-between border px-4">
-          <span className="border-red-500 w-[200px] border">Date</span>
-          <span className="border-red-500 border">Amount</span>
-          <span className="border-red-500 border">Membership Duration</span>
+        <div className="text-lightGray flex flex-row justify-between px-4 uppercase tracking-[3px] text-lightGray text-opacity-20">
+          <span className="w-8"></span>
+          <span className=" w-20 text-[8px]">Date</span>
+          <span className=" w-20 text-[8px]">Amount</span>
+          <span className=" w-20 text-[8px]">
+            Membership Duration
+          </span>
         </div>
-        <List data={paymentHistory} />
+        {paymentHistory && paymentHistory.length !== 0 && (
+          <List data={paymentHistory} />
+        )}
       </div>
     </div>
   );

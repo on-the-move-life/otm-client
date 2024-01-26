@@ -1,21 +1,25 @@
 import React from 'react';
 
-const ListItem = (paymentData) => {
-  const { amount, paymentDate, membershipStartDate, membershipEndDate } =
-    paymentData;
+const ListItem = ({ item }) => {
+  const { amount, paymentDate, membershipStartDate, membershipEndDate } = item;
   return (
-    <div className="my-2 flex flex-row justify-between">
-      <div class="bg-neutral-600 h-4 w-4 rounded-full"></div>
-      <div className="text-neutral-600">8 Mar 23</div>
-      <div className="text-neutral-600">₹5,000</div>
+    <div className="my-2 flex flex-row justify-between text-sm p-3">
+      <div className="bg-neutral-600 h-4 w-4 rounded-full pt-1">
+        <img src="./assets/payment-history-ellipse.svg" />
+      </div>
+      <div className="text-neutral-600">{paymentDate}</div>
+      <div className="text-neutral-600">₹{amount}</div>
       <div className="flex flex-col">
-        <span className="text-green-400 ">
-          21 Jan 24
+        <span className="text-green">
+          {membershipStartDate}
           <br />
         </span>
-        <span className="text-rose-500 ">21 Apr 24</span>
+        <span className="text-red">{membershipEndDate}</span>
       </div>
-      <img src='/assets/link-external.svg' />
+
+      <div className="bg-neutral-600 h-4 w-4 rounded-full pt-1">
+        <img src="/assets/link-external.svg" />
+      </div>
     </div>
   );
 };
