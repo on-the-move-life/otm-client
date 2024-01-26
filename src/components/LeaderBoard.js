@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
-width: 171px;
 height: 104px;
 border-radius: 12px;
 border: 0.5px solid #383838;
@@ -50,7 +49,7 @@ line-height: normal;
 `
 function LeaderBoard({rank, totalParticipants=69}) {
   return (
-    <Container className='flex flex-col justify-center items-center gap-2'>
+    <Container className='w-6/12 flex flex-col justify-center items-center gap-2'>
         <Heading>LeaderBoard</Heading>
         <Rank>{rank}</Rank>
         <TotalParticipants>Of <TotalParticipantsHighlighted>{totalParticipants}</TotalParticipantsHighlighted> participants</TotalParticipants>
