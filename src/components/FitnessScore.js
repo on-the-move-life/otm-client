@@ -149,9 +149,9 @@ function FitnessScore({ score, percentile }) {
     }
     return (
         <Container>
-            <Heading>Fitness Score</Heading>
             <div className='w-full flex flex-row justify-between items-center'>
                 <div className='w-6/12 flex flex-col justify-center items-center gap-2'>
+                    <Heading>Fitness Score</Heading>
                     <Score>{score}</Score>
                     <ScoreDetail>Top <Percentile>{percentile}%</Percentile> of the community</ScoreDetail>
                 </div>
