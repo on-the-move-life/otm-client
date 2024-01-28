@@ -43,9 +43,13 @@ const Home = () => {
         })
         .then((res) => {
           console.log(res.data);
-          setHomeStats(res.data);
-          setLoader(false);
-          setError(null);
+          if(res.data) {
+            setHomeStats(res.data);
+            setLoader(false);
+            setError(null);
+            localStorage.setItem('workouts', JSON.stringify(res.data.totalWorkoutsDone));
+          }
+
         })
         .catch((err) => {
           console.log(err.message);
@@ -75,28 +79,27 @@ const Home = () => {
                 <AiOutlinePoweroff size={22} />
               </button>
             </div>
-            <>
+            <div className="flex items-center">
               {parseInt(homeStats.streak) > 0 && (
                 <div className="flex items-center ">
                   <div className="perfect-week my-2 flex w-fit items-center rounded">
-                    {/* <span className="pb-0.5">
-                    <FaStar color="black" size={14} />{' '}
-                  </span>
-
-                  <span className="mx-0.5 text-xs -tracking-[0.36px]">
-                    Perfect Week x{homeStats.streak}
-                  </span> */}
-                    <img src="/assets/perfect-week.svg" alt="" />{' '}
+                    <img src="assets/star.svg" alt="" />
+                    <span className="mx-0.5  text-xs font-[900] -tracking-[0.36px] text-[#4a3e1d]">
+                      Perfect Week x{homeStats.streak}
+                    </span>
                   </div>
-                  {/* <span className="mx-1 text-xs text-[#F1E7AC]">x{homeStats.streak}</span> */}
                 </div>
               )}
               {homeStats.avgIntensity > 75 && (
-                <span className="mx-2 rounded bg-[#7CDCF6] px-2 py-0.5 font-bold text-black">
+                <span
+                  className={`mx-2 rounded  ${
+                    showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
+                  } px-2  py-0.5 text-[10px] font-extrabold text-black`}
+                >
                   {showElite ? 'Elite' : 'Advanced'}
                 </span>
               )}
-            </>
+            </div>
             <p className="w-11/12 font-extralight text-lightGray">
               Fitness is not a destination. It's a journey of self-improvement,
               one workout at a time.
