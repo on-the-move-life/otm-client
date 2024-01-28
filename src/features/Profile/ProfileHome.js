@@ -56,11 +56,11 @@ const ProfileHome = () => {
             </div>
           </div>
         </div>
-        <div class="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-[41px] w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5 backdrop-blur-xl">
-          <div class="relative h-[18.50px] w-[18.50px] origin-top-left">
+        <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-[41px] w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5 backdrop-blur-xl">
+          <div className="relative h-[18.50px] w-[18.50px] origin-top-left">
             <img src='./assets/logout.svg' />
           </div>
-          <div class="text-lightGray font-['SF Pro Display'] text-lg font-medium">
+          <div className="text-lightGray font-['SF Pro Display'] text-lg font-medium">
             Log Out
           </div>
         </div>
