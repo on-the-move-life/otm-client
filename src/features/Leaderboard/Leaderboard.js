@@ -11,7 +11,7 @@ const imgUrl =
 const Leaderboard = () => {
   const [fitnessScoreData, setFitnessScoreData] = useState([]);
   const [workoutCountData, setWorkoutCountData] = useState([]);
-  const [selectedDataType, setSelectedDataType] = useState('fitnessScore'); // Default to 'fitness score'
+  const [selectedDataType, setSelectedDataType] = useState('workout'); // Default to 'fitness score'
   const [loadingFitnessScore, setLoadingFitnessScore] = useState(true);
   const [loadingWorkoutCount, setLoadingWorkoutCount] = useState(true);
 
@@ -79,6 +79,18 @@ const Leaderboard = () => {
       <h2 className="leaderboard-gradient-text mb-3 text-3xl">
         Top Performers
       </h2>
+
+      {selectedDataType === 'workout' && workoutCountData && matchingUser && (
+        <div>
+          <span className="leaderboard-gradient-text mr-2 text-4xl">
+            #{matchingUser.rank}
+          </span>
+          <span className="text-sm font-medium text-lightGray">
+            of {workoutCountData.total} participants
+          </span>
+        </div>
+      )}
+
       {selectedDataType === 'fitnessScore' &&
         fitnessScoreData &&
         matchingUser && (
@@ -91,28 +103,8 @@ const Leaderboard = () => {
             </span>
           </div>
         )}
-      {selectedDataType === 'workout' && workoutCountData && matchingUser && (
-        <div>
-          <span className="leaderboard-gradient-text mr-2 text-4xl">
-            #{matchingUser.rank}
-          </span>
-          <span className="text-sm font-medium text-lightGray">
-            of {workoutCountData.total} participants
-          </span>
-        </div>
-      )}
 
-      <div className="flex flex-start py-2 space-x-2">
-        <div
-          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
-            selectedDataType === 'fitnessScore'
-              ? 'bg-white font-bold text-black'
-              : 'text-white'
-          } cursor-pointer px-2 py-0.5`}
-          onClick={() => setSelectedDataType('fitnessScore')}
-        >
-          <p className="text-xs">Fitness Score</p>
-        </div>
+      <div className="flex-start flex space-x-2 py-2">
         <div
           className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
             selectedDataType === 'workout'
@@ -122,6 +114,16 @@ const Leaderboard = () => {
           onClick={() => setSelectedDataType('workout')}
         >
           <p className="text-xs">Workout</p>
+        </div>
+        <div
+          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
+            selectedDataType === 'fitnessScore'
+              ? 'bg-white font-bold text-black'
+              : 'text-white'
+          } cursor-pointer px-2 py-0.5`}
+          onClick={() => setSelectedDataType('fitnessScore')}
+        >
+          <p className="text-xs">Fitness Score</p>
         </div>
       </div>
       <div className="pb-2 text-[14px] font-medium text-lightGray">
