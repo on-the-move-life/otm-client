@@ -51,7 +51,7 @@ const PaymentHistory = () => {
   }
 
   return (
-    <div className="payment-history h-[559px] w-[358px] rounded-3xl border border-white bg-opacity-30 p-4 backdrop-blur-[75px]">
+    <div className="bg-neutral-900 border border-red-500 h-[783px] w-screen rounded-xl">
       <div className="flex justify-end">
         <span className="rounded-full bg-[#5E5E5E] p-1">
           <HiX size={15} />
@@ -61,13 +61,11 @@ const PaymentHistory = () => {
         <div className="text-neutral-400 px-auto my-2 flex items-center justify-center text-3xl font-medium leading-10">
           Payment History
         </div>
-        <div className="text-lightGray flex flex-row justify-between px-4 uppercase tracking-[3px] text-lightGray text-opacity-20">
+        <div className="flex flex-row justify-between px-4 uppercase tracking-[3px] text-lightGray text-lightGray text-opacity-20">
           <span className="w-8"></span>
           <span className=" w-20 text-[8px]">Date</span>
           <span className=" w-20 text-[8px]">Amount</span>
-          <span className=" w-20 text-[8px]">
-            Membership Duration
-          </span>
+          <span className=" w-20 text-[8px]">Membership Duration</span>
         </div>
         {paymentHistory && paymentHistory.length !== 0 && (
           <List data={paymentHistory} />

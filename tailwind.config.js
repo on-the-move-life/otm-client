@@ -24,6 +24,7 @@ module.exports = withMT({
         'workout-cover': "url('../public/assets/workout-cover.svg')",
         'bullet-points': "url('../public/assets/bullet-points.svg')",
         elipse: "url('../public/assets/elipse.svg')",
+        'profile-bg': "url('../public/assets/profile-bg.png')"
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],
