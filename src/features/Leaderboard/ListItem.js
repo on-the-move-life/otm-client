@@ -1,7 +1,7 @@
 import React from 'react';
 import Arrow from './Arrow';
 
-const ListItem = ({ imgUrl, isCurrentUser, user, mode }) => {
+const ListItem = ({ isCurrentUser, user, mode }) => {
   const { rank, name, code, rankChange } = user;
   const count = mode === 'workout' ? user.workout : user.totalScore;
 
@@ -19,13 +19,13 @@ const ListItem = ({ imgUrl, isCurrentUser, user, mode }) => {
             {rank}
           </span>
           <div className="flex flex-row items-center justify-center">
-            <img
+            {/* <img
               className="mx-4 h-8 rounded-full bg-blue"
-              src={imgUrl}
+              src="/assets/lb-ph.png"
               alt={name}
-            />
+            /> */}
           </div>
-          <span className="text-lg font-normal">{name}</span>
+          <span className="text-lg font-normal pl-4">{name}</span>
         </div>
 
         <div className="flex flex-row items-center justify-around px-4">
