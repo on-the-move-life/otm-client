@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Counter from '../../components/Counter';
+import { HiOutlineChevronDoubleRight } from 'react-icons/hi';
 
 const AchievementPage = () => {
   const navigate = useNavigate();
-  let totalWorkouts;
-
-  useEffect(() => {
-    let totalWorkouts = localStorage.getItem('workouts');
-    if (totalWorkouts && !totalWorkouts.includes('undefined')) {
-      totalWorkouts = JSON.parse(totalWorkouts);
-    }
-  }, []);
 
   return (
     <div className="hero bg-no-repeat">
@@ -33,12 +26,15 @@ const AchievementPage = () => {
           <h4 className="text-[10px] uppercase  tracking-[3px]">
             total workouts
           </h4>
-          <Counter currentValue={totalWorkouts} />
+          <Counter />
         </div>
 
         {/* achievements */}
         {/* <h3 className="text-md text-lightGray">Achievements Unlocked</h3> */}
-        <h3></h3>
+        <div></div>
+        <div className="flex items-center">
+          <span className="mx-2">Continue</span> <HiOutlineChevronDoubleRight />
+        </div>
         <div></div>
       </div>
     </div>
