@@ -48,7 +48,6 @@ const WorkoutSummary = () => {
 
   function setData() {
     if (Object.keys(workoutSummary).length > 0) {
-
       setAchievements([...workoutSummary.generalAchievements]);
       setCoachNotes([...workoutSummary.coachNotes]);
       setIndexes(0, 0);
@@ -86,7 +85,6 @@ const WorkoutSummary = () => {
   }
 
   useEffect(() => {
-
     setData();
   }, [workoutSummary]);
 
@@ -146,19 +144,7 @@ const WorkoutSummary = () => {
               <span className="text-[#F5C563]">
                 {countToEarnPerfectWeek} more
               </span>{' '}
-              workout(s) this week to earn the{' '}
-              {/* <div className="inline-flex w-fit items-center justify-center rounded bg-[#F5C563] px-2 py-0.5 text-xs font-bold text-black">
-                <span className="pb-0.3">
-                  <FaStar color="black" size={14} />{' '}
-                </span>
-                <span className="mx-0.5 text-xs -tracking-[0.36px]">
-                  Perfect Week
-                </span>
-              </div>{' '} */}
-              <span className="perfect-week inline-flex  w-fit items-center rounded">
-                <img src="/assets/perfect-week.svg" alt="" />
-              </span>{' '}
-              badge
+              workout(s) this week to earn the perfect week badge
             </div>
           )}
 
@@ -176,11 +162,12 @@ const WorkoutSummary = () => {
 
           {countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
             <div className="my-4">
-            <span className="perfect-week inline-flex  w-fit items-center rounded">
+              Whoa! You just unlocked the{' '}
+              <span className="perfect-week inline-flex  w-fit items-center rounded">
                 <img src="/assets/perfect-week.svg" alt="" />
               </span>{' '}
-              Unlocked! 💪 Crushed {+workoutCountInfo?.frequency} workouts this
-              week. You're unstoppable!
+              badge by crushing {+workoutCountInfo?.frequency} workouts this week.
+              You're unstoppable 🔥
             </div>
           )}
 
