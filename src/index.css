@@ -260,7 +260,19 @@ button:active {
   margin: 1em 0;
 }
 
-/* Just a little test for a project */
+.leaderboard-gradient-text {
+  background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #7E87EF 96.92%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.leaderboard-user-list-item {
+  border-radius: 12px;
+  border: 1.5px solid var(--Light-purple, #D6B6F0);
+  background: rgba(61, 61, 61, 0.30);
+  mix-blend-mode: screen;
+}/* Just a little test for a project */
 .countdown__wrapper {
   box-sizing: border-box;
   display: flex;
