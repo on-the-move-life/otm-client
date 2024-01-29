@@ -5,8 +5,10 @@ import { WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, Mo
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
+import { useUserContext } from '../contexts/UserContext';
 
 const Home = () => {
+  const { setUserData } = useUserContext();
   const { logout } = useAuth();
   // const [user, getUserFromStorage] = useState({});
   const [loader, setLoader] = useState(false);
@@ -44,10 +46,10 @@ const Home = () => {
         .then((res) => {
           console.log(res.data);
           if(res.data) {
+            setUserData(res.data);
             setHomeStats(res.data);
             setLoader(false);
             setError(null);
-            localStorage.setItem('workouts', JSON.stringify(res.data.totalWorkoutsDone));
           }
 
         })
