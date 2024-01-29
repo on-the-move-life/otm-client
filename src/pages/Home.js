@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Loader, Error, WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '../components';
-import { FaStar } from 'react-icons/fa';
+import { Loader, Error } from '../components';
+import { WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '../features/Home';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
