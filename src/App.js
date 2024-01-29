@@ -34,8 +34,8 @@ function App() {
         <Route path="/section-details" element={<SectionDetail />} />
         <Route path="/workout" element={<Workout />} />
         <Route path="/workout-summary" element={<WorkoutSummary />} />
-        <Route path="/profile" element={<ProfileHome />} />
-        <Route path="/profile/payment-history" element={<Profile/>} />
+        <Route path="/profile" element={<Profile />} />
+        {/* <Route path="/profile/payment-history" element={<Profile/>} /> */}
         <Route path="*" element={<PageNotFound />} />
 
         {/* <Route path="/test" element={<SkillProgression />} /> */}
