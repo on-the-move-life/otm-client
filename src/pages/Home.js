@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { FitnessScore, Loader, Error } from '../components';
+import { Loader, Error, WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '../components';
 import { FaStar } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -43,9 +43,13 @@ const Home = () => {
         })
         .then((res) => {
           console.log(res.data);
-          setHomeStats(res.data);
-          setLoader(false);
-          setError(null);
+          if(res.data) {
+            setHomeStats(res.data);
+            setLoader(false);
+            setError(null);
+            localStorage.setItem('workouts', JSON.stringify(res.data.totalWorkoutsDone));
+          }
+
         })
         .catch((err) => {
           console.log(err.message);
@@ -65,8 +69,8 @@ const Home = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex h-screen w-screen flex-col px-4">
-          <section className="pb-6 pt-10">
+        <div className="flex h-screen w-screen flex-col px-4 gap-5 pb-8 ">
+          <section className="pb-0 pt-10">
             <div className="flex items-center justify-between">
               <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-3xl font-semibold text-transparent">
                 {homeStats.name}
@@ -75,87 +79,48 @@ const Home = () => {
                 <AiOutlinePoweroff size={22} />
               </button>
             </div>
-            <>
+            <div className="flex items-center">
               {parseInt(homeStats.streak) > 0 && (
                 <div className="flex items-center ">
                   <div className="perfect-week my-2 flex w-fit items-center rounded">
-                    {/* <span className="pb-0.5">
-                    <FaStar color="black" size={14} />{' '}
-                  </span>
-
-                  <span className="mx-0.5 text-xs -tracking-[0.36px]">
-                    Perfect Week x{homeStats.streak}
-                  </span> */}
-                    <img src="/assets/perfect-week.svg" alt="" />{' '}
+                    <img src="assets/star.svg" alt="" />
+                    <span className="mx-0.5  text-xs font-[900] -tracking-[0.36px] text-[#4a3e1d]">
+                      Perfect Week x{homeStats.streak}
+                    </span>
                   </div>
-                  {/* <span className="mx-1 text-xs text-[#F1E7AC]">x{homeStats.streak}</span> */}
                 </div>
               )}
               {homeStats.avgIntensity > 75 && (
-                <span className="mx-2 rounded bg-[#7CDCF6] px-2 py-0.5 font-bold text-black">
+                <span
+                  className={`mx-2 rounded  ${
+                    showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
+                  } px-2  py-0.5 text-[10px] font-extrabold text-black`}
+                >
                   {showElite ? 'Elite' : 'Advanced'}
                 </span>
               )}
-            </>
+            </div>
             <p className="w-11/12 font-extralight text-lightGray">
               Fitness is not a destination. It's a journey of self-improvement,
               one workout at a time.
             </p>
           </section>
-          <section className="mb-4 rounded-xl border-[0.5px] border-[#323232] bg-darkGray">
-            <p className="m-4 text-center text-xs tracking-widest text-lightGray">
-              FITNESS SCORE
-            </p>
-            <FitnessScore progress={homeStats.score} total={10} />
+          <section>
+            <WeeklyWorkoutReport currentScore={homeStats?.consistency} suggestedWorkoutPerWeek={homeStats?.frequency} lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout} />
           </section>
           <section>
-            <p className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">
-              At a glance
-            </p>
-            <div className="flex items-center justify-between">
-              <span className="text-xs tracking-widest text-lightGray">
-                EVOLVE CYCLE {homeStats.evolveCycleDetails?.count || 0}
-              </span>
-              <div>
-                {homeStats.evolveCycleDetails?.duration && (
-                  <span className="py-py rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
-                    {homeStats.evolveCycleDetails?.duration}
-                  </span>
-                )}
-
-                <span className="py-py ml-2 rounded border-[0.5px] border-[#323232] px-2 text-xs text-lightGray">
-                  Week {homeStats.evolveCycleDetails.currentWeek}/
-                  {homeStats.evolveCycleDetails?.totalWeeks}
-                </span>
-              </div>
-            </div>
-            <div className="mt-2 grid grid-cols-2 rounded-xl border-[0.5px] border-[#383838] bg-gradient-to-b">
-              <div className="main-stat">
-                <h4>Workouts Done</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {homeStats.totalWorkoutsDone}
-                </span>
-              </div>
-              <div className="main-stat">
-                <h4>level</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {Math.ceil(homeStats.totalWorkoutsDone / 11)}
-                </span>
-              </div>
-              <div className="main-stat">
-                <h4>Points</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {homeStats.points}
-                </span>
-              </div>
-              <div className="main-stat">
-                <h4>Community Rank</h4>
-                <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                  {homeStats.rank}
-                </span>
-              </div>
-            </div>
+            <FitnessScore score={homeStats?.score} percentile={homeStats?.fitnessPercentileScore} />
           </section>
+          <section className='w-full flex flex-row justify-center items-center gap-3'>
+            <LeaderBoard rank={homeStats?.rank} />
+            <MoveCoins coins={homeStats?.points}/>
+          </section>
+          {
+            homeStats?.isPaymentDue &&
+            <section>
+              <DuePaymentIndicator />
+            </section>
+          }
           <Link to="/workout" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
               Workouts

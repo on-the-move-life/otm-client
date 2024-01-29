@@ -47,9 +47,7 @@ const WorkoutSummary = () => {
   }
 
   function setData() {
-    console.log('set data called');
     if (Object.keys(workoutSummary).length > 0) {
-      console.log('inside if statement');
 
       setAchievements([...workoutSummary.generalAchievements]);
       setCoachNotes([...workoutSummary.coachNotes]);
@@ -88,7 +86,7 @@ const WorkoutSummary = () => {
   }
 
   useEffect(() => {
-    // This will run whenever workoutSummary changes
+
     setData();
   }, [workoutSummary]);
 

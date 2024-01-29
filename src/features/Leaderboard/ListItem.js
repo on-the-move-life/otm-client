@@ -25,7 +25,7 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
               alt={name}
             /> */}
           </div>
-          <span className="text-lg font-normal pl-4">{name}</span>
+          <span className="text-lg font-normal pl-6">{name}</span>
         </div>
 
         <div className="flex flex-row items-center justify-around px-4">
