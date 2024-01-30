@@ -16,7 +16,7 @@ root.render(
     <ThemeProvider>
       <AuthProvider>
         <UserContextProvider>
-        <App />
+          <App />
         </UserContextProvider>
       </AuthProvider>
     </ThemeProvider>

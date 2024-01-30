@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { Loader, Error } from '../components';
-import { WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '../features/Home';
+import { useAuth } from '../../contexts/AuthContext';
+import { Loader, Error } from '../../components';
+import { WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '.';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
-import { useUserContext } from '../contexts/UserContext';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Home = () => {
   const { setUserData } = useUserContext();

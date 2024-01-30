@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Login, Home, PageNotFound } from './pages';
+import { Login, PageNotFound } from './pages';
+import { Home } from './features/Home';
 import Questionnaire from './features/Questionnaire/Questionnaire';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
