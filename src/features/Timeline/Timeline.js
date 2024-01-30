@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import TimelineTile from './TimelineTile';
+import PersonalTimeline from './PersonalTimeline';
+import CommunityTimeline from './CommunityTimeline';
 import styled from 'styled-components';
 
 const Heading = styled.h1`
@@ -13,8 +15,7 @@ line-height: 40px; /* 125% */
 `
 
 const Timeline = () => {
-  const [showCommunity, setShowCommunity] = useState(true);
-  const [showPersonal, setShowPersonal] = useState(false);
+  const [timeline, setTimeline] = useState('community');
 
   return (
     <div className="flex h-screen w-screen  flex-col px-4 py-8 ">
@@ -22,34 +23,30 @@ const Timeline = () => {
         <Heading>Timeline</Heading>
         <div className="space-x-2 py-2">
           <button
-            className={`${showCommunity
+            className={`${timeline === 'community'
                 ? 'bg-white font-bold text-black '
                 : 'border-[0.5px] border-lightGray text-white'
               } rounded-md px-3 py-0.5 text-xs`}
             onClick={() => {
-              setShowCommunity(true);
-              setShowPersonal(false);
+              setTimeline('community');
             }}
           >
             Community
           </button>
           <button
-            className={`${showPersonal
+            className={`${timeline === 'personal'
                 ? 'bg-white font-bold text-black'
                 : 'border-[0.5px] border-lightGray text-white'
               } rounded-md px-3 py-0.5 text-xs`}
             onClick={() => {
-              setShowPersonal(true);
-              setShowCommunity(false);
+              setTimeline('personal')
             }}
           >
             Personal
           </button>
         </div>
       </heading>
-      <div className='flex flex-col justify-start itmes-center'>
-        <TimelineTile />
-      </div>
+      {timeline === 'community' ? <CommunityTimeline/> : <PersonalTimeline/>}
     </div>
   );
 };
