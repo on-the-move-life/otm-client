@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter&family=Lato:ital,wght@1,300&family=Nunito:wght@400;700&display=swap');
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -67,8 +70,32 @@ input:focus::placeholder {
 
 }
 
+
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../public/assets/achievements-bg.png');
+  background-size: cover;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.75);
+    backdrop-filter: blur(2px);
+
+  }
+}
+
+
 .perfect-week {
-  width: 106px;
   height: 18px;
   padding: 2px 8px;
   justify-content: center;
@@ -90,6 +117,10 @@ input:focus::placeholder {
 
 button:active {
   background-color: rgba(61, 61, 61, 0.30);
+}
+
+.counter {
+  font-family: 'Anton', sans-serif;
 }
 
 .gradient-text {
@@ -229,7 +260,186 @@ button:active {
   margin: 1em 0;
 }
 
-/* Components -> WeeklyWorkoutReport.js */
+.leaderboard-gradient-text {
+  background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #7E87EF 96.92%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.leaderboard-user-list-item {
+  border-radius: 12px;
+  border: 1.5px solid var(--Light-purple, #D6B6F0);
+  background: rgba(61, 61, 61, 0.30);
+  mix-blend-mode: screen;
+}/* Just a little test for a project */
+.countdown__wrapper {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: content-fit;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 300px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex: 0 0 auto;
+  text-align: center;
+
+  &:after {
+    display: block;
+    width: 100%;
+    text-align: center;
+    content: "";
+    padding: 1rem;
+  }
+}
+
+.countdown .countdown__box {
+  box-sizing: border-box;
+  overflow: hidden;
+  height: 8rem;
+
+  /* border-radius: 0.2rem; */
+  /* border: 1px solid black; */
+  /* width: calc(50% - 1px); */
+  color: white;
+  /* background-color: black; */
+  /* box-shadow: 0 5px 10px 2px rgba(black, 0.1); */
+
+  /* &:first-child {
+    margin-left: 40px;
+  } */
+
+  /* &:last-child {
+    margin-right: 35px;
+  } */
+}
+
+.countdown__inner span{
+  display: block;
+  width: 100%;
+  height: 8rem;
+  font-size: 4rem;
+  font-family: 'Anton', sans-serif;
+  background: linear-gradient(180deg, #FFF 0%, #D6B6F0 100%);
+  -webkit-background-clip: text; /* WebKit/Blink browsers */
+  background-clip: text;
+  color: transparent; /* Make the text transparent so that the gradient shows through */
+  line-height: 1;
+  padding: 2rem 0.5rem;
+  /* background-image: linear-gradient(to bottom, rgba(white, 0.2), black); */
+}
+
+.countdown__seconds .countdown__box:not(:last-child):nth-child(1) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 0;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(2) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 1;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(3) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 2;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(4) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 3;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(5) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 4;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+.countdown__seconds .countdown__box:not(:last-child):nth-child(6) .countdown__inner > :not(:only-child) {
+  --base-duration: 3s;
+  --index: 5;
+  animation-name: a-countdown-6;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+  /* Calculate animation duration based on child index */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+}
+
+.countdown__seconds .countdown__box:last-child .countdown__inner {
+  animation-name: a-countdown-10;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+}
+
+/* The animation logic is created by SaurabhSahu01 :_D */
+@keyframes a-countdown-6 {
+  0%, 5% {
+    transform: translateY(0);
+  }
+  95%, 100% {
+    transform: translateY(-8rem);
+  }
+}
+
+@keyframes a-countdown-10 {
+  0%, 5% {
+    transform: translateY(0);
+  }
+  95%, 100% {
+    transform: translateY(-8rem);
+  }
+}/* Components -> WeeklyWorkoutReport.js */
 .weekly-workout-consistency {
   width: auto;
   height: 104px;
