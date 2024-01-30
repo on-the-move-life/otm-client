@@ -192,7 +192,7 @@ const WorkoutSummary = () => {
                   />
                 </span>
                 <div className="flex h-full w-full items-center justify-center px-2 ">
-                  <p className="basis-2/3  text-xs">
+                  <p className="basis-2/3  text-[10px]">
                     {achievements[achievementsIndex].description}
                   </p>
                   <div className="h-30 w-30 pt-2">
@@ -222,7 +222,7 @@ const WorkoutSummary = () => {
 
           {coachNotes.length > 0 && (
             <section className="my-4 flex flex-col items-start justify-center ">
-              <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
+              <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                 coach notes
               </h4>
 
@@ -277,7 +277,7 @@ const WorkoutSummary = () => {
 
                         {scoreDifference !== null &&
                           scoreDifference !== undefined &&
-                          scoreDifference != 0.0 && (
+                          scoreDifference !== 0.0 && (
                             <div className="flex flex-col justify-between px-2 text-black">
                               <div
                                 className={`flex items-center rounded ${
