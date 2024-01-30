@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Error, Loader } from '../../components';
 import { FaStar } from 'react-icons/fa';
@@ -22,6 +22,7 @@ const today = new Date().toLocaleDateString('en-us', {
 });
 
 const WorkoutSummary = () => {
+  const navigate = useNavigate();
   const [workoutSummary, setWorkoutSummary] = useState({});
   const [achievements, setAchievements] = useState([]);
   const [achievementsIndex, setAchievementsIndex] = useState(0);
@@ -105,10 +106,14 @@ const WorkoutSummary = () => {
     }
   }, []);
 
+  useEffect(() => {
+    status === 'error' && navigate('/home')
+  }, [status])
+  
   return (
     <>
       {status === 'loading' && <Loader />}
-      {status === 'error' && <Error>Oops! Something Went Wrong</Error>}
+      {/* {status === 'error' && <Error>Oops! Something Went Wrong</Error>} */}
 
       {status === 'success' && Object.keys(workoutSummary).length > 0 && (
         <div className="h-full w-full px-4 py-8 ">
