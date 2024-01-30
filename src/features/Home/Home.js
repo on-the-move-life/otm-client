@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { Loader, Error, WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '../components';
-import { FaStar } from 'react-icons/fa';
+import { useAuth } from '../../contexts/AuthContext';
+import { Loader, Error } from '../../components';
+import { WeeklyWorkoutReport, FitnessScore, LeaderBoard, DuePaymentIndicator, MoveCoins } from '.';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlinePoweroff, AiOutlineRight } from 'react-icons/ai';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Home = () => {
+  const { setUserData } = useUserContext();
   const { logout } = useAuth();
   // const [user, getUserFromStorage] = useState({});
   const [loader, setLoader] = useState(false);
@@ -44,10 +46,10 @@ const Home = () => {
         .then((res) => {
           console.log(res.data);
           if(res.data) {
+            setUserData(res.data);
             setHomeStats(res.data);
             setLoader(false);
             setError(null);
-            localStorage.setItem('workouts', JSON.stringify(res.data.totalWorkoutsDone));
           }
 
         })

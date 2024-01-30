@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
-import BGMoveCoins from "../assets/images/bg-movecoins.svg"
+import BGMoveCoins from "../../assets/images/bg-movecoins.svg"
 
 const Heading = styled.div`
 color: var(--Light-gray, #B1B1B1);

@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Counter from '../../components/Counter';
 import { HiOutlineChevronDoubleRight } from 'react-icons/hi';
+import { useUserContext } from '../../contexts/UserContext';
 
 const AchievementPage = () => {
+  const { userData } = useUserContext();
   const navigate = useNavigate();
 
   return (
@@ -26,7 +28,7 @@ const AchievementPage = () => {
           <h4 className="text-[10px] uppercase  tracking-[3px]">
             total workouts
           </h4>
-          <Counter />
+          <Counter currentValue={userData?.totalWorkoutsDone}/>
         </div>
 
         {/* achievements */}
