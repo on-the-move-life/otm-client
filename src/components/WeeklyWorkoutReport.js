@@ -9,7 +9,8 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
         lastEightWeeksWorkout.map((item, index) => {
             return workoutCount += item.count;
         })
-        setCurrentScore(prevValue => workoutCount / lastEightWeeksWorkout?.length);
+        workoutCount = workoutCount / lastEightWeeksWorkout?.length;
+        setCurrentScore(prevValue => workoutCount.toFixed(1));
     }, [lastEightWeeksWorkout])
 
     const Bar = ({ progress }) => {
