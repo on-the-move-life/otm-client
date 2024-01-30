@@ -19,6 +19,6 @@ export function UserContextProvider({ children }) {
 export function useUserContext() {
     const context = useContext(UserContext);
     if (context === undefined)
-        throw new Error('AuthContext was used outside the AuthProvider');
+        throw new Error('UserContext was used outside the UserContextProvider');
     return context;
 }
