@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../../components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileHome = ({ showHistory }) => {
+  // const { logout } = useAuth();
+
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState();
 
-  const { getUserFromStorage } = useAuth();
+  const navigate = useNavigate();
+
+  const { getUserFromStorage, logout } = useAuth();
 
   useEffect(() => {
     const user = getUserFromStorage();
-    console.log(user);
     getMemberData(user);
   }, []);
 
@@ -23,18 +27,18 @@ const ProfileHome = ({ showHistory }) => {
 
       if (res.data) {
         const data = res.data;
-        const memberData = {
-          ...data,
-          ...user,
-        };
-        console.log(data, user, memberData);
-        setMemberData(memberData);
+        setMemberData({ ...data, ...user });
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function handleLogout() {
+    navigate('/login', { replace: true });
+    logout();
   }
 
   if (isLoading) {
@@ -50,18 +54,19 @@ const ProfileHome = ({ showHistory }) => {
         <div className="mt-6 flex flex-col items-center justify-center">
           <img
             src="/assets/profile-temp.png"
-            className=" w-auto rounded-full bg-green"
+            className="w-auto rounded-full bg-green px-1"
           />
           <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
             {memberData.name}
           </div>
-          <div className="flex w-40 flex-row items-center justify-between">
-            <div className="profile-program-pw inline-flex h-5 items-center justify-center gap-0.5 rounded border px-2 py-0.5 text-xs text-black">
+          <div className="flex w-auto flex-row items-center justify-between ">
+            <div className="perfect-week mr-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border px-2 py-0.5 text-xs text-black">
               <img src="/assets/star.svg" />
-              {/* Perfect Week */}
             </div>
-            <div className="inline-flex h-5 w-10 items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
-              <div className=" text-xs capitalize text-black ">Elite</div>
+            <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
+              <div className="text-xs capitalize text-black">
+                {memberData.intensity > 100 ? 'Elite' : 'Advanced'}
+              </div>
             </div>
           </div>
         </div>
@@ -77,13 +82,13 @@ const ProfileHome = ({ showHistory }) => {
               ₹5,000 renewed monthly
             </div>
           </div>
-          <div className='pt-2'>
-            {!memberData.isPaymentDue ? (
-              <div class="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
-                <div class="relative h-3 w-3">
+          <div className="pt-2">
+            {memberData.isPaymentDue ? (
+              <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
+                <div className="relative h-3 w-3">
                   <img src="/assets/alert-triangle.svg" />
                 </div>
-                <div class="text-xs capitalize text-black">Overdue</div>
+                <div className="text-xs capitalize text-black">Overdue</div>
               </div>
             ) : (
               <div className="bg-neutral-700 border-green-400 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
@@ -98,17 +103,17 @@ const ProfileHome = ({ showHistory }) => {
               <div className="text-lg font-medium text-black">Pay now</div>
             </div>
             <div
-              className="border-zinc-400 mt-4 inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg border p-2.5 "
+              className="border-zinc-400 mt-4 inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg border p-2.5"
               onClick={() => showHistory()}
             >
               <div className="text-lg font-medium text-white">
-                Check payment history{' '}
+                Check payment history
               </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col pt-52">
-          <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5 ">
+        <div className="flex flex-col pt-52" onClick={handleLogout}>
+          <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
             <div className="relative h-5 w-5 origin-top-left">
               <img src="./assets/logout.svg" />
             </div>
