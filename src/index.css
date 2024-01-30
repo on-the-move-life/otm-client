@@ -141,7 +141,7 @@ button:active {
   background: rgba(59, 59, 59, 0.06);
   backdrop-filter: blur(17px);
   letter-spacing: -0.36px;
-padding: 2px 8px;
+  padding: 2px 8px;
 
 }
 
