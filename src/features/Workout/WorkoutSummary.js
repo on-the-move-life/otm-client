@@ -47,10 +47,7 @@ const WorkoutSummary = () => {
   }
 
   function setData() {
-    console.log('set data called');
     if (Object.keys(workoutSummary).length > 0) {
-      console.log('inside if statement');
-
       setAchievements([...workoutSummary.generalAchievements]);
       setCoachNotes([...workoutSummary.coachNotes]);
       setIndexes(0, 0);
@@ -88,7 +85,6 @@ const WorkoutSummary = () => {
   }
 
   useEffect(() => {
-    // This will run whenever workoutSummary changes
     setData();
   }, [workoutSummary]);
 
@@ -148,8 +144,7 @@ const WorkoutSummary = () => {
               <span className="text-[#F5C563]">
                 {countToEarnPerfectWeek} more
               </span>{' '}
-              workout(s) this week to earn the{' '}
-              <span className="text-[#F5C563]">perfect week</span> badge
+              workout(s) this week to earn the perfect week badge
             </div>
           )}
 
@@ -167,12 +162,12 @@ const WorkoutSummary = () => {
 
           {countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
             <div className="my-4">
-              Woah! You just unlocked the
+              Whoa! You just unlocked the{' '}
               <span className="perfect-week inline-flex  w-fit items-center rounded">
                 <img src="/assets/perfect-week.svg" alt="" />
               </span>{' '}
-              because you crushed {+workoutCountInfo?.frequency} workouts this
-              week. You're unstoppable!
+              badge by crushing {+workoutCountInfo?.frequency} workouts this week.
+              You're unstoppable 🔥
             </div>
           )}
 
