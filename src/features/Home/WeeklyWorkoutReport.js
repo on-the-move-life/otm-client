@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
-function WeeklyWorkoutReport({currentScore, suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
+function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
+    const [currentScore, setCurrentScore] = useState(0);
+
+    useEffect(() => {
+        // setting the average workout count
+        let workoutCount = 0;
+        lastEightWeeksWorkout.map((item, index) => {
+            return workoutCount += item.count;
+        })
+        workoutCount = workoutCount / lastEightWeeksWorkout?.length;
+        setCurrentScore(prevValue => workoutCount.toFixed(1));
+    }, [lastEightWeeksWorkout])
 
     const Bar = ({ progress }) => {
         const [basicgreen, intermediategreen, advancedgreen, red, yellow, gray] = ['#119832', '#29C344', '#7FE08A', '#FA5757', '#F5C563', '#323232'] // colors of the bar
@@ -8,31 +19,30 @@ function WeeklyWorkoutReport({currentScore, suggestedWorkoutPerWeek, lastEightWe
         const [color, setColor] = useState(gray);
 
         useEffect(() => {
-            if(progress >= suggestedWorkoutPerWeek){
+            if (progress >= suggestedWorkoutPerWeek) {
                 // if workout per week is >= 4 the bar is filled completely
                 setHeight(prev => String(47));
             }
-            else{
+            else {
                 // if the workout < 4 then the bar is filled accordingly (out of <suggestedWorkoutPerWeek> scale)
-                const calculatedHeight = (progress / suggestedWorkoutPerWeek) * 47; 
+                const calculatedHeight = (progress / suggestedWorkoutPerWeek) * 47;
                 setHeight(prev => calculatedHeight.toString());
             }
-            if(progress >= 3 * suggestedWorkoutPerWeek){
+            if (progress >= 3 * suggestedWorkoutPerWeek) {
                 setColor(prev => advancedgreen);
             }
-            else if(progress >= 2 * suggestedWorkoutPerWeek){
+            else if (progress >= 2 * suggestedWorkoutPerWeek) {
                 setColor(prev => intermediategreen);
             }
-            else if(progress >= suggestedWorkoutPerWeek){
+            else if (progress >= suggestedWorkoutPerWeek) {
                 setColor(prev => basicgreen);
             }
-            else if (progress >= suggestedWorkoutPerWeek/2 && progress < suggestedWorkoutPerWeek) {
+            else if (progress >= suggestedWorkoutPerWeek / 2 && progress < suggestedWorkoutPerWeek) {
                 setColor(prev => yellow);
             }
             else {
                 setColor(prev => red);
             }
-
         }, [progress, color, height, basicgreen, intermediategreen, advancedgreen, red, yellow, gray])
 
         const barStyles = {
@@ -62,8 +72,8 @@ function WeeklyWorkoutReport({currentScore, suggestedWorkoutPerWeek, lastEightWe
                 </div>
                 <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
                     {
-                        lastEightWeeksWorkout?.length === 0 ? 
-                            <div className='wwc-score'>-</div> : 
+                        lastEightWeeksWorkout?.length === 0 ?
+                            <div className='wwc-score'>-</div> :
                             lastEightWeeksWorkout?.map((progress, index) => {
                                 return (
                                     <Bar progress={progress?.count} key={index} />
