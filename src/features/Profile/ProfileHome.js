@@ -1,10 +1,50 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { Loader } from '../../components';
+import axios from 'axios';
 
 const ProfileHome = ({ showHistory }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [memberData, setMemberData] = useState();
+
+  const { getUserFromStorage } = useAuth();
+
+  useEffect(() => {
+    const user = getUserFromStorage();
+    console.log(user);
+    getMemberData(user);
+  }, []);
+
+  async function getMemberData(user) {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL_LOCAL}/profile?code=${user.code}`,
+      );
+
+      if (res.data) {
+        const data = res.data;
+        const memberData = {
+          ...data,
+          ...user,
+        };
+        console.log(data, user, memberData);
+        setMemberData(memberData);
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="h-screen w-screen overflow-x-auto pb-20">
       <div className="profile-heading ml-4 mt-4 text-3xl font-medium leading-10">
-        Profile
+        My Profile
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="mt-6 flex flex-col items-center justify-center">
@@ -13,7 +53,7 @@ const ProfileHome = ({ showHistory }) => {
             className=" w-auto rounded-full bg-green"
           />
           <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
-            Rishi Solanki
+            {memberData.name}
           </div>
           <div className="flex w-40 flex-row items-center justify-between">
             <div className="profile-program-pw inline-flex h-5 items-center justify-center gap-0.5 rounded border px-2 py-0.5 text-xs text-black">
@@ -37,10 +77,21 @@ const ProfileHome = ({ showHistory }) => {
               ₹5,000 renewed monthly
             </div>
           </div>
-          <div className="bg-neutral-700 border-green-400 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-            <div className="text-xs capitalize text-green">
-              Next payment due on 31 Jan 2024
-            </div>
+          <div className='pt-2'>
+            {!memberData.isPaymentDue ? (
+              <div class="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
+                <div class="relative h-3 w-3">
+                  <img src="/assets/alert-triangle.svg" />
+                </div>
+                <div class="text-xs capitalize text-black">Overdue</div>
+              </div>
+            ) : (
+              <div className="bg-neutral-700 border-green-400 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                <div className="text-xs capitalize text-green">
+                  Next payment due on {memberData.paymentDueDate}
+                </div>
+              </div>
+            )}
           </div>
           <div className="mt-6 flex flex-col items-center">
             <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
