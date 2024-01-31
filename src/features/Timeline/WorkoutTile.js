@@ -39,7 +39,7 @@ font-style: normal;
 font-weight: 500;
 line-height: normal;
 `
-function WorkoutTile() {
+function WorkoutTile({workoutName, rounds, feedback}) {
     const GreenTick = ({ className }) => {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none" className={className}>
@@ -66,10 +66,10 @@ function WorkoutTile() {
     return (
         <Container className='relative w-full flex flex-col justify-start items-start gap-3 p-2'>
             <div className='flex flex-col justify-center items-center gap-1'>
-                <Heading>Mobility</Heading>
-                <Rounds>2 Rounds</Rounds>
+                <Heading>{workoutName}</Heading>
+                <Rounds>{rounds} Rounds</Rounds>
             </div>
-            <Feedback>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Feedback>
+            {feedback && <Feedback>{feedback}</Feedback>}
             <GreenTick className={'absolute top-[6px] right-[6px]'} />
         </Container>
     )
