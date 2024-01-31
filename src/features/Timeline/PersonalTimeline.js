@@ -6,6 +6,7 @@ function PersonalTimeline() {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
+
     useEffect(() => {
         setLoading(true);
         const user = JSON.parse(localStorage.getItem('user'));

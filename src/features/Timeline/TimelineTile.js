@@ -130,12 +130,12 @@ const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, 
         <InfoTile>700Kcal</InfoTile>
       </div>
       <AssesmentTile currScore={currScore} prevScore={prevScore}/>
-      <div className="mt-8 grid grid-cols-2 gap-4">
+      <div className="mt-8 grid grid-cols-1 gap-4">
         {
           sectionPerformance?.map((workout, index) => {
             if(index !== 0 && workout?.completed){
               return(
-                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo[0]}/>
+                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo}/>
               )
             }
           })

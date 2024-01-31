@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.div`
 width: auto;
-height: 106.271px;
+height: auto;
 flex-shrink: 0;
 border-radius: 10.9px;
 border: 1px solid #3F3F3F;
@@ -39,7 +39,7 @@ font-style: normal;
 font-weight: 500;
 line-height: normal;
 `
-function WorkoutTile({workoutName, rounds, feedback}) {
+function WorkoutTile({ workoutName, rounds, feedback }) {
     const GreenTick = ({ className }) => {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none" className={className}>
@@ -65,11 +65,17 @@ function WorkoutTile({workoutName, rounds, feedback}) {
     }
     return (
         <Container className='relative w-full flex flex-col justify-start items-start gap-3 p-2'>
-            <div className='flex flex-col justify-center items-center gap-1'>
+            <div className='flex flex-col justify-center items-start gap-1'>
                 <Heading>{workoutName}</Heading>
-                <Rounds>{rounds} Rounds</Rounds>
+                <Rounds>{rounds}</Rounds>
             </div>
-            {feedback && <Feedback>{feedback}</Feedback>}
+            <div className='flex flex-col justify-center items-center gap-[1px]'>
+                {feedback && feedback.map((feed, index) => {
+                    return (
+                        <Feedback key={index}>•{feed}</Feedback>
+                    )
+                })}
+            </div>
             <GreenTick className={'absolute top-[6px] right-[6px]'} />
         </Container>
     )
