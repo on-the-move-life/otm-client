@@ -83,7 +83,7 @@ function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
                 <AssesmentText>Assesment</AssesmentText>
                 {
                     assessmentFeedback?.map((feedback, index) => {
-                        return(
+                        return (
                             <AssesmentPara key={index}>•{feedback}</AssesmentPara>
                         )
                     })
@@ -92,24 +92,26 @@ function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
             <div className='w-6/12 flex flex-col justify-center items-center gap-1'>
                 <FitnessScore>Fitness Score</FitnessScore>
                 <div className='flex flex-row items-center justify-center gap-[3px]'>
-                    <Score style={{color: color}}>{currScore}</Score>
-                    <div className='flex flex-col items-center justify-center'>
-                        {
-                            isPostiveChange ?
-                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                                    <path d="M8.70718 0.0652837L1.69513 8.17854C1.48107 8.57691 1.84328 9.04061 2.2819 8.92862L5.01217 8.23162L6.49193 12.9263C7.16618 15.0646 10.1916 15.064 10.8653 12.9263L12.3456 8.23104L15.1371 8.93329C15.5752 9.04353 15.9362 8.581 15.7221 8.18263L8.70718 0.0652837Z" fill="#5ECC7B" />
-                                </svg> :
-                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                                    <path d="M8.71079 15.7179L15.7228 7.60466C15.9369 7.20629 15.5747 6.74259 15.1361 6.85458L12.4058 7.55158L10.926 2.85686C10.2518 0.718598 7.22637 0.71918 6.5527 2.85686L5.07237 7.55217L2.28084 6.84991C1.84281 6.73967 1.48177 7.2022 1.69583 7.60058L8.71079 15.7179Z" fill="#FA5757" />
-                                </svg>
-                        }
-                        <PercentChangeText style={{color: color}}>{percentChange}</PercentChangeText>
-                    </div>
+                    <Score style={{ color: color }}>{currScore}</Score>
+                    {currScore !== prevScore &&
+                        <div className='flex flex-col items-center justify-center'>
+                            {
+                                isPostiveChange ?
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                        <path d="M8.70718 0.0652837L1.69513 8.17854C1.48107 8.57691 1.84328 9.04061 2.2819 8.92862L5.01217 8.23162L6.49193 12.9263C7.16618 15.0646 10.1916 15.064 10.8653 12.9263L12.3456 8.23104L15.1371 8.93329C15.5752 9.04353 15.9362 8.581 15.7221 8.18263L8.70718 0.0652837Z" fill="#5ECC7B" />
+                                    </svg> :
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                        <path d="M8.71079 15.7179L15.7228 7.60466C15.9369 7.20629 15.5747 6.74259 15.1361 6.85458L12.4058 7.55158L10.926 2.85686C10.2518 0.718598 7.22637 0.71918 6.5527 2.85686L5.07237 7.55217L2.28084 6.84991C1.84281 6.73967 1.48177 7.2022 1.69583 7.60058L8.71079 15.7179Z" fill="#FA5757" />
+                                    </svg>
+                            }
+                            <PercentChangeText style={{ color: color }}>{percentChange}</PercentChangeText>
+                        </div>
+                    }
                 </div>
                 <ScorePara>since last month</ScorePara>
             </div>
         </div>
-   )
+    )
 }
 
 export default AssesmentTile
