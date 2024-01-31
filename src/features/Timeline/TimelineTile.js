@@ -45,7 +45,7 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
-const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, currScore, prevScore, sectionPerformance }) => {
+const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, currScore, prevScore, sectionPerformance, ref }) => {
   const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
   const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
@@ -115,7 +115,7 @@ const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, 
   }, [currScore, colors, tags, dateTime])
 
   return (
-    <div className="flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+    <div className="flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" ref={ref}>
       <div className='w-full flex flex-row items-center justify-between'>
         <Name>{name}</Name>
         <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
@@ -125,17 +125,25 @@ const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, 
 
       <Date>{date}</Date>
       <div className="timeline-tags flex flex-row space-x-3 text-xs my-2">
-        <InfoTile>Horizontal Pull</InfoTile>
+        {/* <InfoTile>Horizontal Pull</InfoTile> */}
         <InfoTile>{time}</InfoTile>
-        <InfoTile>700Kcal</InfoTile>
+        {/* <InfoTile>700Kcal</InfoTile> */}
       </div>
-      <AssesmentTile currScore={currScore} prevScore={prevScore}/>
+      {
+        sectionPerformance?.map((workout, index) => {
+          if(workout?.name === 'Assessment'){
+            return(
+              <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo}/>
+            )
+          }
+        })
+      }
       <div className="mt-8 grid grid-cols-1 gap-4">
         {
           sectionPerformance?.map((workout, index) => {
-            if(index !== 0 && workout?.completed){
+            if(index !== 0){
               return(
-                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo}/>
+                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={index}/>
               )
             }
           })

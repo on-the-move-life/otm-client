@@ -55,7 +55,7 @@ line-height: normal;
 letter-spacing: 0.196px;
 text-transform: lowercase;
 `
-function AssesmentTile({ currScore, prevScore }) {
+function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
     const colors = useMemo(() => ['#5ECC7B', '#FA5757'], [])
     const [color, setColor] = useState(colors[0])
     const [isPostiveChange, setPositiveChange] = useState(true);
@@ -81,7 +81,13 @@ function AssesmentTile({ currScore, prevScore }) {
         <div className='w-full h-[88px] flex flex-row items-center justify-around rounded-[10.9px] border-[1px] border-[#3F3F3F] backdrop-blur-xl mt-1'>
             <div className='w-6/12 flex flex-col justify-center items-start p-2 gap-1'>
                 <AssesmentText>Assesment</AssesmentText>
-                <AssesmentPara>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</AssesmentPara>
+                {
+                    assessmentFeedback?.map((feedback, index) => {
+                        return(
+                            <AssesmentPara key={index}>•{feedback}</AssesmentPara>
+                        )
+                    })
+                }
             </div>
             <div className='w-6/12 flex flex-col justify-center items-center gap-1'>
                 <FitnessScore>Fitness Score</FitnessScore>
