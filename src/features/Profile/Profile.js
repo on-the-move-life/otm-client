@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import PaymentHistory from './PaymentHistory';
-import ProfileHome from './ProfileHome';
+import UserDetails from './UserDetails';
 
-const Main = () => {
+const Profile = () => {
   const [showPaymentHistory, setShowPaymentHistory] = useState(false);
 
-  const handleShowPaymentHistory = () => {
-    setShowPaymentHistory(!showPaymentHistory);
+  const togglePaymentHistory = () => {
+    setShowPaymentHistory((prevShowPaymentHistory) => !prevShowPaymentHistory);
   };
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center">
       {!showPaymentHistory && (
-        <ProfileHome  showHistory={handleShowPaymentHistory} />
+        <UserDetails  showHistory={togglePaymentHistory} />
       )}
 
       {showPaymentHistory && (
-        <PaymentHistory onClose={handleShowPaymentHistory} />
+        <PaymentHistory onClose={togglePaymentHistory} />
       )}
     </div>
   );
 };
 
-export default Main;
+export default Profile;

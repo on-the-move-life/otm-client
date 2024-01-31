@@ -22,7 +22,7 @@ const PaymentHistory = ({ onClose }) => {
       const res = await axios.get(
         `${
           process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL_LOCAL
-        }/profile/payment/history?code=${user.code}&withFormat=${true}`,
+        }/client/payment/history?code=${user.code}&withFormat=${true}`,
       );
 
       if (res.data) {

@@ -4,9 +4,8 @@ import { Loader } from '../../components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const ProfileHome = ({ showHistory }) => {
-  // const { logout } = useAuth();
-
+const UserDetails = ({ showHistory }) => {
+  
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState();
 
@@ -22,7 +21,7 @@ const ProfileHome = ({ showHistory }) => {
   async function getMemberData(user) {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL_LOCAL}/profile?code=${user.code}`,
+        `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL_LOCAL}/client/profile?code=${user.code}`,
       );
 
       if (res.data) {
@@ -125,4 +124,4 @@ const ProfileHome = ({ showHistory }) => {
   );
 };
 
-export default ProfileHome;
+export default UserDetails;
