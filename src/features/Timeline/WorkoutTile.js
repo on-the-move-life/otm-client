@@ -30,8 +30,8 @@ line-height: normal;
 letter-spacing: 2.725px;
 text-transform: uppercase;
 `
-const Feedback = styled.div`
-width: 128.978px;
+const Feedback = styled.p`
+width: auto;
 color: var(--Light-gray, #B1B1B1);
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 font-size: 8.477px;
@@ -69,7 +69,7 @@ function WorkoutTile({ workoutName, rounds, feedback }) {
                 <Heading>{workoutName}</Heading>
                 <Rounds>{rounds}</Rounds>
             </div>
-            <div className='flex flex-col justify-center items-center gap-[1px]'>
+            <div className='flex flex-col justify-center items-start gap-[1px]'>
                 {feedback && feedback.map((feed, index) => {
                     return (
                         <Feedback key={index}>•{feed}</Feedback>
