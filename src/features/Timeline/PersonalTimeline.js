@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import TimelineTile from './TimelineTile'
 import Loader from '../../components/Loader';
 
@@ -6,6 +6,11 @@ function PersonalTimeline() {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
+    const timelineTopRef = useRef();
+
+    function scrollToTop(){
+        timelineTopRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -15,6 +20,7 @@ function PersonalTimeline() {
             .then(data => {
                 setUserData(prev => data);
                 setLoading(false);
+                scrollToTop()
             })
             .catch(err => {
                 setLoading(false);
@@ -32,6 +38,13 @@ function PersonalTimeline() {
 
             {
                 userData?.data && userData?.data.map((data, index) => {
+                    if(index === 0){
+                        return(
+                            <div ref={timelineTopRef}>
+                                <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} key={index}/>
+                            </div>
+                        )
+                    }
                     return (
                         <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} key={index} />
                     )
