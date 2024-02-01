@@ -360,8 +360,8 @@ const SectionDetail = () => {
               {lastPage ? (
                 <div
                   className="flex h-full w-3/4 flex-col items-center justify-center bg-theme"
-                  // onClick={() => navigate('/workout-summary')}
-                  onClick={() => setShowAchievemntsPage(true)}
+                  onClick={() => navigate('/workout-summary')}
+                  // onClick={() => setShowAchievemntsPage(true)}
                 >
                   <span className="text-2xl tracking-widest text-green">
                     FINISH
