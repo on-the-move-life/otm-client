@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Home } from './features/Home';
 import Questionnaire from './features/Questionnaire/Questionnaire';
+import Timeline from './features/Timeline/Timeline';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
 
@@ -36,8 +37,7 @@ function App() {
         <Route path="/workout-summary" element={<WorkoutSummary />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<PageNotFound />} />
-
-        {/* <Route path="/test" element={<SkillProgression />} /> */}
+        <Route path="/timeline" element={<Timeline />} />
       </Routes>
     </BrowserRouter>
   );

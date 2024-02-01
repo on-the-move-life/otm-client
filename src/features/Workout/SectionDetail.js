@@ -7,10 +7,8 @@ import { useSelector } from 'react-redux';
 import SkillProgression from './SkillProgression.js';
 import MovementDetail from './MovementDetail.js';
 import { Tooltip, Typography } from '@material-tailwind/react';
-import AchievementPage from './AchievementPage.js';
 
 const SectionDetail = () => {
-  const [showAchievemntsPage, setShowAchievemntsPage] = useState(false);
   const navigate = useNavigate();
 
   const { workout, index } = useSelector((store) => store.workoutReducer);
@@ -83,7 +81,6 @@ const SectionDetail = () => {
       {showLevel && <SkillProgression setShowLevel={setShowLevel} />}
       {!showLevel &&
         !showMvmtDetail &&
-        !showAchievemntsPage &&
         Object.keys(workout).length !== 0 && (
           <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
             <main className="px-4 pb-32">
@@ -396,7 +393,6 @@ const SectionDetail = () => {
             </footer>
           </div>
         )}
-      {showAchievemntsPage && <AchievementPage />}
     </>
   );
 };

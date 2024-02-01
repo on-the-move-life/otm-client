@@ -1,16 +1,16 @@
 <svg width="127" height="140" viewBox="0 0 127 140" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Group 512">
 <g id="Vector" filter="url(#filter0_ii_1384_8030)">
-<path d="M30.1426 58.1897V36.9138C30.1426 25.7429 30.1426 20.1575 32.3166 15.8908C34.2289 12.1377 37.2802 9.0863 41.0334 7.174C45.3001 5 50.8855 5 62.0564 5H64.7158C75.8867 5 81.4722 5 85.7389 7.174C89.492 9.0863 92.5434 12.1377 94.4557 15.8908C96.6297 20.1575 96.6297 25.7429 96.6297 36.9138V58.1897" stroke="#D8D8D8" stroke-width="9.97306" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30.1426 58.1897V36.9138C30.1426 25.7429 30.1426 20.1575 32.3166 15.8908C34.2289 12.1377 37.2802 9.0863 41.0334 7.174C45.3001 5 50.8855 5 62.0564 5H64.7158C75.8867 5 81.4722 5 85.7389 7.174C89.492 9.0863 92.5434 12.1377 94.4557 15.8908C96.6297 20.1575 96.6297 25.7429 96.6297 36.9138V58.1897" stroke="#D8D8D8" strokeWidth="9.97306" strokeLinecap="round" strokeLinejoin="round"/>
 </g>
 <g id="Stroke" filter="url(#filter1_iiii_1384_8030)">
 <rect y="41.4023" width="126.769" height="98.5979" rx="28.1708" fill="#D8D8D8"/>
 </g>
-<path id="Vector_2" d="M63.3848 83.1777V96.4752" stroke="#22272F" stroke-width="9.97306" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M63.3848 83.1777V96.4752" stroke="#22272F" strokeWidth="9.97306" strokeLinecap="round" strokeLinejoin="round"/>
 </g>
 <defs>
-<filter id="filter0_ii_1384_8030" x="25.1562" y="-2.86744" width="76.459" height="68.9243" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_ii_1384_8030" x="25.1562" y="-2.86744" width="76.459" height="68.9243" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4.32166"/>
@@ -25,8 +25,8 @@
 <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.32 0"/>
 <feBlend mode="normal" in2="effect1_innerShadow_1384_8030" result="effect2_innerShadow_1384_8030"/>
 </filter>
-<filter id="filter1_iiii_1384_8030" x="-5.76221" y="35.6401" width="138.294" height="110.122" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter1_iiii_1384_8030" x="-5.76221" y="35.6401" width="138.294" height="110.122" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="5.76221"/>

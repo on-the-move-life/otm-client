@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React from 'react';
 import Counter from '../../components/Counter';
 import { HiOutlineChevronDoubleRight } from 'react-icons/hi';
-import { useUserContext } from '../../contexts/UserContext';
 
-const AchievementPage = () => {
-  const { userData } = useUserContext();
-  const navigate = useNavigate();
-
+const AchievementPage = ({setShowAchievemntsPage, totalWorkouts}) => {
+  
   return (
     <div className="hero bg-no-repeat">
       <div
-        onClick={() => navigate('/workout-summary')}
+        onClick={() => setShowAchievemntsPage(false)}
         className="relative  flex h-full flex-col  items-center justify-around"
       >
         {/* heading */}
@@ -28,7 +24,7 @@ const AchievementPage = () => {
           <h4 className="text-[10px] uppercase  tracking-[3px]">
             total workouts
           </h4>
-          <Counter currentValue={userData?.totalWorkoutsDone}/>
+          <Counter currentValue={totalWorkouts}/>
         </div>
 
         {/* achievements */}
