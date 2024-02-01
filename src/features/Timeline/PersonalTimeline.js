@@ -45,8 +45,8 @@ function PersonalTimeline() {
                 userData?.data && userData?.data.map((data, index) => {
                     if (index === 0) {
                         return (
-                            <div ref={timelineTopRef}>
-                                <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} key={index} />
+                            <div ref={timelineTopRef} key={index}>
+                                <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} />
                             </div>
                         )
                     }
