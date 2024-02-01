@@ -364,7 +364,7 @@ background-clip: text;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-delay: 2s;
+  animation-delay: 1s;
   /* Calculate animation duration based on child index */
   animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
 }
@@ -376,7 +376,7 @@ background-clip: text;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-delay: 2s;
+  animation-delay: 1s;
   /* Calculate animation duration based on child index */
   animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
 }
@@ -388,7 +388,7 @@ background-clip: text;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-delay: 2s;
+  animation-delay: 1s;
   /* Calculate animation duration based on child index */
   animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
 }
@@ -400,7 +400,7 @@ background-clip: text;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-delay: 2s;
+  animation-delay: 1s;
   /* Calculate animation duration based on child index */
   animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
 }
@@ -412,7 +412,7 @@ background-clip: text;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-delay: 2s;
+  animation-delay: 1s;
   /* Calculate animation duration based on child index */
   animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
 }
@@ -424,7 +424,7 @@ background-clip: text;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-delay: 2s;
+  animation-delay: 1s;
   /* Calculate animation duration based on child index */
   animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
 }
@@ -436,7 +436,7 @@ background-clip: text;
   animation-direction: forwards;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-delay: 2s;
+  animation-delay: 1s;
 }
 
 /* The animation logic is created by SaurabhSahu01 :_D */

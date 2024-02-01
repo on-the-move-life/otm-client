@@ -133,7 +133,7 @@ const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, 
         sectionPerformance?.map((workout, index) => {
           if(workout?.name === 'Assessment'){
             return(
-              <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo}/>
+              <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo} key={index}/>
             )
           }
         })

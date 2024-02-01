@@ -14,6 +14,7 @@ import { FaArrowUp, FaArrowDown, FaPlus, FaMinus } from 'react-icons/fa';
 
 import { axiosClient } from './apiClient';
 import { setStatus } from './WorkoutSlice';
+import AchievementPage from './AchievementPage.js';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -28,6 +29,7 @@ const WorkoutSummary = () => {
   const [achievementsIndex, setAchievementsIndex] = useState(0);
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
+  const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
 
   // const [section, setSection] = useState(sectionList[index]);
 
@@ -80,7 +82,7 @@ const WorkoutSummary = () => {
       .catch((err) => {
         console.log(err.message, 'ERROR');
         dispatch(setStatus('error'));
-        // Handle errors as needed
+        // Handle error here
       })
       .finally(() => {});
   }
@@ -107,11 +109,15 @@ const WorkoutSummary = () => {
   }, []);
 
   useEffect(() => {
-    status === 'error' && navigate('/home')
+    status === 'error' && setTimeout(() => {
+      navigate('/home')
+    }, 3000)
   }, [status])
   
   return (
     <>
+      {status === 'error' && <Error>Oops! Something went wrong...</Error>}
+      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && <AchievementPage setShowAchievemntsPage={setShowAchievemntsPage} totalWorkouts={Number(workoutSummary?.consistency?.total) - 1}/>}
       {status === 'loading' && <Loader />}
       {/* {status === 'error' && <Error>Oops! Something Went Wrong</Error>} */}
 
@@ -257,9 +263,9 @@ const WorkoutSummary = () => {
 
           {workoutSummary &&
             workoutSummary.sectionPerformance?.map(
-              (section) =>
+              (section, index) =>
                 section.code === 'ASMT' && (
-                  <div className="my-4 flex h-24 w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs">
+                  <div className="my-4 flex h-24 w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs" key={index}>
                     <div className="flex basis-1/2 flex-col">
                       <h4 className="text-lg">Assessment</h4>
                       <p className="overflow-y-auto break-words text-xs text-lightGray">
@@ -311,11 +317,11 @@ const WorkoutSummary = () => {
 
             {workoutSummary &&
               workoutSummary.sectionPerformance?.map(
-                (section) =>
+                (section, index) =>
                   section.code !== 'ASMT' && (
                     <div
                       className="flex h-28 w-full items-center justify-between overflow-y-auto rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-2"
-                      key={section.code}
+                      key={index}
                     >
                       <div className="flex h-full w-full flex-col ">
                         <div className="mb-2">
@@ -334,8 +340,8 @@ const WorkoutSummary = () => {
                         <div className="overflow-y-auto text-xs text-lightGray">
                           <ul className="list-disc pl-3">
                             {/* {section?.displayInfo.join(', ')} */}
-                            {section?.displayInfo?.map((i) => {
-                              return <li>{i}</li>;
+                            {section?.displayInfo?.map((i, idx) => {
+                              return <li key={idx}>{i}</li>;
                             })}
                           </ul>
                         </div>

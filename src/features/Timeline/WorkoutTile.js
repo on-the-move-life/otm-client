@@ -45,12 +45,12 @@ function WorkoutTile({ workoutName, rounds, feedback, workoutCompleted }) {
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none" className={className}>
                 <g filter="url(#filter0_d_2413_3554)">
                     <circle cx="12.701" cy="10.4403" r="7.72052" fill="#5ECC7B" />
-                    <circle cx="12.7012" cy="10.4404" r="9.08297" stroke="#5ECC7B" stroke-width="0.908297" />
-                    <path d="M15.8815 8.16992L11.1398 12.9385L9.52344 11.313" stroke="black" stroke-width="1.3246" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="12.7012" cy="10.4404" r="9.08297" stroke="#5ECC7B" strokeWidth="0.908297" />
+                    <path d="M15.8815 8.16992L11.1398 12.9385L9.52344 11.313" stroke="black" strokeWidth="1.3246" strokeLinecap="round" strokeLinejoin="round" />
                 </g>
                 <defs>
-                    <filter id="filter0_d_2413_3554" x="0.439172" y="0.90332" width="24.524" height="24.524" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <filter id="filter0_d_2413_3554" x="0.439172" y="0.90332" width="24.524" height="24.524" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                         <feOffset dy="2.72489" />
                         <feGaussianBlur stdDeviation="1.36245" />

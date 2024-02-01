@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import TimelineTile from './TimelineTile';
 import PersonalTimeline from './PersonalTimeline';
 import CommunityTimeline from './CommunityTimeline';
 import styled from 'styled-components';
+import { HiHome } from 'react-icons/hi';
 
 const Heading = styled.h1`
 color: var(--White, #FFF);
@@ -19,13 +21,17 @@ const Timeline = () => {
 
   return (
     <div className="flex h-screen w-screen  flex-col px-4 py-8 ">
-      <heading>
+        <div className='w-full flex flex-row justify-between items-center'>
         <Heading>Timeline</Heading>
+        <Link to="/home">
+          <HiHome size={40} color="#5ECC7B" />
+        </Link>
+        </div>
         <div className="space-x-2 py-2">
           <button
             className={`${timeline === 'community'
-                ? 'bg-white font-bold text-black '
-                : 'border-[0.5px] border-lightGray text-white'
+              ? 'bg-white font-bold text-black '
+              : 'border-[0.5px] border-lightGray text-white'
               } rounded-md px-3 py-0.5 text-xs`}
             onClick={() => {
               setTimeline('community');
@@ -35,8 +41,8 @@ const Timeline = () => {
           </button>
           <button
             className={`${timeline === 'personal'
-                ? 'bg-white font-bold text-black'
-                : 'border-[0.5px] border-lightGray text-white'
+              ? 'bg-white font-bold text-black'
+              : 'border-[0.5px] border-lightGray text-white'
               } rounded-md px-3 py-0.5 text-xs`}
             onClick={() => {
               setTimeline('personal')
@@ -45,8 +51,7 @@ const Timeline = () => {
             Personal
           </button>
         </div>
-      </heading>
-      {timeline === 'community' ? <CommunityTimeline/> : <PersonalTimeline/>}
+      {timeline === 'community' ? <CommunityTimeline /> : <PersonalTimeline />}
     </div>
   );
 };
