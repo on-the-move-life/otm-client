@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import PaymentHistory from './PaymentHistory';
-import UserDetails from './UserDetails';
+import {PaymentHistory, UserDetails} from '../Profile';
+
+
 
 const Profile = () => {
   const [showPaymentHistory, setShowPaymentHistory] = useState(false);
