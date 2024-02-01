@@ -23,8 +23,11 @@ module.exports = withMT({
         icon: "url('../public/assets/icon.svg')",
         'workout-cover': "url('../public/assets/workout-cover.svg')",
         'bullet-points': "url('../public/assets/bullet-points.svg')",
+        'lb-up-arrow': "url('../public/assests/upArrow.svg)",
+        'lb-down-arrow': "url('../public/assests/downArrow.svg)",
         elipse: "url('../public/assets/elipse.svg')",
-        'profile-bg': "url('../public/assets/profile-bg.png')"
+        'profile-bg': "url('../public/assets/profile-bg.png')",
+        'achievements-cover': "url('../public/assets/achievements-bg.png')"
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],

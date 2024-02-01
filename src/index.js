@@ -7,6 +7,7 @@ import './index.css';
 import App from './App';
 import { ThemeProvider } from '@material-tailwind/react';
 import { AuthProvider } from './contexts/AuthContext';
+import { UserContextProvider } from './contexts/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -14,7 +15,9 @@ root.render(
   <Provider store={store}>
     <ThemeProvider>
       <AuthProvider>
-        <App />
+        <UserContextProvider>
+          <App />
+        </UserContextProvider>
       </AuthProvider>
     </ThemeProvider>
   </Provider>,
