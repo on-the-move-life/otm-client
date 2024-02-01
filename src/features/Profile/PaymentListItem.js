@@ -1,14 +1,15 @@
 import React from 'react';
 
-const ListItem = ({ item }) => {
+const PaymentListItem = ({ item }) => {
   const { amount, paymentDate, membershipStartDate, membershipEndDate } = item;
   return (
-    <div className="my-2 flex flex-row justify-between text-sm p-3">
+    <div className="my-2 flex flex-row justify-between text-sm p-3
+    ">
       <div className="bg-neutral-600 h-4 w-4 rounded-full pt-1">
         <img src="/assets/pay-history-dot.svg" />
       </div>
-      <div className="text-neutral-600">{paymentDate}</div>
-      <div className="text-neutral-600">₹{amount}</div>
+      <div className="text-lightGray">{paymentDate}</div>
+      <div className="text-lightGray">₹{amount}</div>
       <div className="flex flex-col">
         <span className="text-green">
           {membershipStartDate}
@@ -24,4 +25,4 @@ const ListItem = ({ item }) => {
   );
 };
 
-export default ListItem;
+export default PaymentListItem;

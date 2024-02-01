@@ -3,9 +3,9 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../../components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from '../../utils';
 
 const UserDetails = ({ showHistory }) => {
-  
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState();
 
@@ -15,7 +15,9 @@ const UserDetails = ({ showHistory }) => {
 
   useEffect(() => {
     const user = getUserFromStorage();
-    getMemberData(user);
+    if (user) {
+      getMemberData(user);
+    }
   }, []);
 
   async function getMemberData(user) {
@@ -76,11 +78,11 @@ const UserDetails = ({ showHistory }) => {
           <div className="text-[8px] uppercase tracking-[3px] text-lightGray">
             lighter & agile
           </div>
-          <div className="bg-neutral-700 border-neutral-600 mt-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+          {/* <div className="bg-neutral-700 border-neutral-600 mt-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
             <div className="text-neutral-400 text-xs capitalize">
               ₹5,000 renewed monthly
             </div>
-          </div>
+          </div> */}
           <div className="pt-2">
             {memberData.isPaymentDue ? (
               <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
@@ -92,7 +94,7 @@ const UserDetails = ({ showHistory }) => {
             ) : (
               <div className="bg-neutral-700 border-green-400 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
                 <div className="text-xs capitalize text-green">
-                  Next payment due on {memberData.paymentDueDate}
+                  Next payment due on {formatDate(memberData.paymentDueDate)}
                 </div>
               </div>
             )}
@@ -101,11 +103,11 @@ const UserDetails = ({ showHistory }) => {
             <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
               <div className="text-lg font-medium text-black">Pay now</div>
             </div>
-            <div
-              className="border-zinc-400 mt-4 inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg border p-2.5"
-              onClick={() => showHistory()}
-            >
-              <div className="text-lg font-medium text-white">
+            <div className="border-zinc-400 mt-4 inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg border p-2.5">
+              <div
+                className="text-lg font-medium text-white"
+                onClick={() => showHistory()}
+              >
                 Check payment history
               </div>
             </div>

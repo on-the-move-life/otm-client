@@ -1,7 +1,8 @@
 import React from 'react';
-import ListItem from './ListItem';
+import { PaymentListItem } from '../Profile';
 
-const List = ({ data }) => {
+
+const PaymentList = ({ data }) => {
   return (
     <div className='pt-8'>
       <div className="flex flex-row justify-between text-[8px] uppercase tracking-[3px] text-opacity-20">
@@ -13,10 +14,10 @@ const List = ({ data }) => {
       </div>
       
       {data.map((d, index) => (
-        <ListItem key={index} item={d} />
+        <PaymentListItem key={index} item={d} />
       ))}
     </div>
   );
 };
 
-export default List;
+export default PaymentList;
