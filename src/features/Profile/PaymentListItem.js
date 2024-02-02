@@ -18,9 +18,9 @@ const PaymentListItem = ({ item }) => {
         <span className="text-red">{membershipEndDate}</span>
       </div>
 
-      <div className=" bg-neutral-600 h-4 w-4 pt-1">
+      {/* <div className=" bg-neutral-600 h-4 w-4 pt-1">
         <img src="/assets/link-external.svg" alt='' />
-      </div>
+      </div> */}
     </div>
   );
 };
