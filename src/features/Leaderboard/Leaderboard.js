@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import { useAuth } from '../../contexts/AuthContext';
 import List from './List';
+import { HiArrowNarrowLeft } from 'react-icons/hi';
 
 const imgUrl =
   'https://s3-alpha-sig.figma.com/img/2e7c/0b19/b615cd1f932cd1924a9842e4132a9d6b?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gQvc8JF1x29HbTnGuCgaANyI7U~ir15x1Sjg1BupyF226FJDdePjFFCYGlCcW8tIN8lRYSeivLlmxj1CVEFYhacRVmH981d2TVM5wXnF5c57bpqY9VbzC8ADm73fPexawZBLSSeeAQbF-nzq7k61qKZg2qCkbL8cD0~mTPG-eZroJy1jJg7UIrSdeOL5dNDp~DDENprbNDdlKWWEw9vImWRWxr5-DX1Gkvh30E2LX7eacZ-hIStbA3qguSDeAbq419DHEMdt8raO~Vm8T3AMO6tLpzxs-wDapxETIZBHVbSzpN6I3W8hJTjR8wCEF9zvYbUbUhVtTQ4~DdAGGTrYiA__';
@@ -16,6 +17,7 @@ const Leaderboard = () => {
   const [loadingWorkoutCount, setLoadingWorkoutCount] = useState(true);
 
   const { getUserFromStorage, user } = useAuth();
+  const navigate = useNavigate();
 
   async function getFitnessScoreData() {
     // API call for fitnessScoreData
@@ -76,6 +78,14 @@ const Leaderboard = () => {
 
   return (
     <div className="w-screen rounded-3xl px-4 py-8">
+      <div className="mb-4">
+        <HiArrowNarrowLeft
+          size={20}
+          onClick={() => {
+            navigate('/home');
+          }}
+        />
+      </div>
       <h2 className="leaderboard-gradient-text mb-3 text-3xl">
         Top Performers
       </h2>
