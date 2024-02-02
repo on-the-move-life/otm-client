@@ -47,11 +47,11 @@ font-style: normal;
 font-weight: 500;
 line-height: normal;
 `
-function LeaderBoard({rank, totalParticipants=69}) {
+function LeaderBoard({rank, totalParticipants}) {
   return (
     <Container className='w-6/12 flex flex-col justify-center items-center gap-2'>
         <Heading>LeaderBoard</Heading>
-        <Rank>{rank}</Rank>
+        <Rank># {rank}</Rank>
         <TotalParticipants>Of <TotalParticipantsHighlighted>{totalParticipants}</TotalParticipantsHighlighted> participants</TotalParticipants>
     </Container>
   )

@@ -114,7 +114,7 @@ const Home = () => {
             <FitnessScore score={homeStats?.score} percentile={homeStats?.fitnessPercentileScore} />
           </section>
           <section className='w-full flex flex-row justify-center items-center gap-3'>
-            <LeaderBoard rank={homeStats?.rank} />
+            <LeaderBoard rank={homeStats?.workoutRank?.rank} totalParticipants={homeStats?.workoutRank?.totalMembers} />
             <MoveCoins coins={homeStats?.points}/>
           </section>
           {
