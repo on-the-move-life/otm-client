@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -48,8 +49,14 @@ font-weight: 500;
 line-height: normal;
 `
 function LeaderBoard({rank, totalParticipants=69}) {
+  const navigate = useNavigate();
+
+  function navigateToLeaderboard() {
+    navigate('/leaderboard', { replace: true });
+  }
+
   return (
-    <Container className='w-6/12 flex flex-col justify-center items-center gap-2'>
+    <Container className='w-6/12 flex flex-col justify-center items-center gap-2' onClick={navigateToLeaderboard}>
         <Heading>LeaderBoard</Heading>
         <Rank>{rank}</Rank>
         <TotalParticipants>Of <TotalParticipantsHighlighted>{totalParticipants}</TotalParticipantsHighlighted> participants</TotalParticipants>
