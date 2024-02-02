@@ -77,9 +77,9 @@ const UserDetails = ({ showHistory }) => {
 
               </div> */}
               <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
-                <div className="text-xs font-bold capitalize text-black">
+                {/* <div className="text-xs font-bold capitalize text-black">
                   {memberData.intensity > 100 ? 'Elite' : 'Advanced'}
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4">
