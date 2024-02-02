@@ -88,7 +88,7 @@ const Home = () => {
               </button>
             </div>
             <div className="flex items-center">
-              {parseInt(homeStats.streak) > 0 && (
+            {parseInt(homeStats.streak) > 0 && (
                 <div className="flex items-center ">
                   <div className="perfect-week my-2 flex w-fit items-center rounded">
                     <img src="assets/star.svg" alt="" />
@@ -98,7 +98,7 @@ const Home = () => {
                   </div>
                 </div>
               )}
-              {homeStats.avgIntensity > 75 && (
+              {/* {homeStats.avgIntensity > 75 && (
                 <span
                   className={`mx-2 rounded  ${
                     showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
@@ -106,7 +106,7 @@ const Home = () => {
                 >
                   {showElite ? 'Elite' : 'Advanced'}
                 </span>
-              )}
+              )} */}
             </div>
             <p className="w-11/12 font-extralight text-lightGray">
               Fitness is not a destination. It's a journey of self-improvement,

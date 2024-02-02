@@ -4,9 +4,8 @@ import { Loader } from '../../components';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../../utils';
 import { axiosClient } from './apiClient';
-import { FaUser } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
-
 
 const UserDetails = ({ showHistory }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,21 +51,21 @@ const UserDetails = ({ showHistory }) => {
   return (
     <>
       {memberData && (
-        <div className="h-screen w-screen overflow-x-auto pt-8 px-4 pb-32">
-        <div className='mb-4'>
-        <HiArrowNarrowLeft
-                  size={20}
-                  onClick={() => {
-                    navigate('/home');
-                  }}
-                />
-        </div>
+        <div className="h-screen w-screen overflow-x-auto px-4 pb-32 pt-8">
+          <div className="mb-4">
+            <HiArrowNarrowLeft
+              size={20}
+              onClick={() => {
+                navigate('/home');
+              }}
+            />
+          </div>
           <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-3xl font-semibold text-transparent">
             My Profile
           </h1>
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center">
-              <FaUser size={30} />
+              <FaUserCircle size={40} color={'#91BDF6'} />
               <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
                 {memberData.name}
               </div>
