@@ -86,7 +86,7 @@ const UserDetails = ({ showHistory }) => {
               <div className=" flex h-full flex-col justify-around">
                 <section>
                   <div className="workout-gradient-text text-3xl font-medium leading-10">
-                    Shred
+                    Membership
                   </div>
                   {/* <div className="text-[8px] uppercase tracking-[3px] text-lightGray">
                     lighter & agile
