@@ -5,6 +5,7 @@ import Questionnaire from './features/Questionnaire/Questionnaire';
 import Timeline from './features/Timeline/Timeline';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
+import { Profile } from './features/Profile';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/section-details" element={<SectionDetail />} />
         <Route path="/workout" element={<Workout />} />
         <Route path="/workout-summary" element={<WorkoutSummary />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<Timeline />} />

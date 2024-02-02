@@ -26,6 +26,7 @@ module.exports = withMT({
         'lb-up-arrow': "url('../public/assests/upArrow.svg)",
         'lb-down-arrow': "url('../public/assests/downArrow.svg)",
         elipse: "url('../public/assets/elipse.svg')",
+        'profile-bg': "url('../public/assets/profile-bg.png')",
         'achievements-cover': "url('../public/assets/achievements-bg.png')"
       },
       fontFamily: {
