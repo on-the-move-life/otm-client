@@ -58,7 +58,7 @@ function LeaderBoard({rank, totalParticipants=69}) {
   return (
     <Container className='w-6/12 flex flex-col justify-center items-center gap-2' onClick={navigateToLeaderboard}>
         <Heading>LeaderBoard</Heading>
-        <Rank>{rank}</Rank>
+        <Rank># {rank}</Rank>
         <TotalParticipants>Of <TotalParticipantsHighlighted>{totalParticipants}</TotalParticipantsHighlighted> participants</TotalParticipants>
     </Container>
   )

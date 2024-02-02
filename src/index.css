@@ -322,6 +322,8 @@ background-clip: text;
   border: 1.5px solid var(--Light-purple, #D6B6F0);
   background: rgba(61, 61, 61, 0.30);
   mix-blend-mode: screen;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }/* Just a little test for a project */
 .countdown__wrapper {
   box-sizing: border-box;

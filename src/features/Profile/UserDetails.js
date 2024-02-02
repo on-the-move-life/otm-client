@@ -75,21 +75,21 @@ const UserDetails = ({ showHistory }) => {
                 </div>
 
               </div> */}
-              <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
+              {/* <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
                 <div className="text-xs font-bold capitalize text-black">
                   {memberData.intensity > 100 ? 'Elite' : 'Advanced'}
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4">
               <div className=" flex h-full flex-col justify-around">
                 <section>
                   <div className="workout-gradient-text text-3xl font-medium leading-10">
-                    Shred
+                    Membership
                   </div>
-                  <div className="text-[8px] uppercase tracking-[3px] text-lightGray">
+                  {/* <div className="text-[8px] uppercase tracking-[3px] text-lightGray">
                     lighter & agile
-                  </div>
+                  </div> */}
                   {/* <div className="bg-neutral-700 border-neutral-600 mt-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
             <div className="text-neutral-400 text-xs capitalize">
               ₹5,000 renewed monthly

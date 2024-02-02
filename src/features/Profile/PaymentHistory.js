@@ -23,7 +23,7 @@ const PaymentHistory = ({ onClose }) => {
   async function getPaymentHistory(code) {
     try {
       const res = await axiosClient.get(`/payment/history`, {
-        params: { code: 'CHAN' },
+        params: { code: code },
       });
 
       if (res.data) {

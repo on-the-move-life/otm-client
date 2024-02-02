@@ -125,9 +125,9 @@ const Home = () => {
               percentile={homeStats?.fitnessPercentileScore}
             />
           </section>
-          <section className="flex w-full flex-row items-center justify-center gap-3">
-            <LeaderBoard rank={homeStats?.rank} />
-            <MoveCoins coins={homeStats?.points} />
+          <section className='w-full flex flex-row justify-center items-center gap-3'>
+            <LeaderBoard rank={homeStats?.workoutRank?.rank} totalParticipants={homeStats?.workoutRank?.totalMembers} />
+            <MoveCoins coins={homeStats?.points}/>
           </section>
           {homeStats?.isPaymentDue && (
             <section>

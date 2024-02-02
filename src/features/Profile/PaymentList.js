@@ -4,12 +4,12 @@ import { PaymentListItem } from '../Profile';
 const PaymentList = ({ data }) => {
   return (
     <>
-      <div className="mt-12  flex flex-row items-start justify-between text-[8px] uppercase tracking-[3px] ">
-        <span className="w-2"></span>
-        <span className="w-12 px-2">Date</span>
-        <span className="w-12 px-2">Amount</span>
-        <span className="w-12">Membership Duration</span>
-        <span className="w-8"></span>
+      <div className="mt-12  flex flex-row items-start justify-center gap-2 text-[8px] uppercase tracking-[3px] ">
+        <span className="basis-1/6"></span>
+        <span className="basis-2/6 pl-6">Date</span>
+        <span className="basis-2/6 pl-4">Amount</span>
+        <span className="basis-1/6">Membership Duration</span>
+        {/* <span className="w-8"></span> */}
       </div>
 
       {data.map((d, index) => (

@@ -5,27 +5,27 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
   const { rank, name, code, rankChange } = user;
   const count = mode === 'workout' ? user.workout : user.totalScore;
 
-  const defaultClassName = ` h-70  ${
+  const defaultClassName = ` h-[75px]  ${
     isCurrentUser
       ? 'mix-blend-screen bg-[#3C3C3C] bg-opacity-10 leaderboard-user-list-item border-opacity-80 rounded-xl'
       : ''
-  } flex flex-row justify-between py-3 px-auto`;
+  } w-full flex flex-row justify-between px-auto`;
 
   return (
-    <>
+    <div className='w-full border-b-[0.5px] border-gray-600'>
       <div className={defaultClassName}>
-        <div className="flex flex-row items-center justify-between px-3">
-          <span className="flex w-5 flex-row items-center justify-center leaderboard-gradient-text">
+        <div className="w-full flex flex-row items-center justify-start px-3">
+          <div className="basis-1/6 flex flex-row items-center justify-start leaderboard-gradient-text">
             {rank}
-          </span>
-          <div className="flex flex-row items-center justify-center">
-            {/* <img
+          </div>
+          {/* <div className="flex flex-row items-center justify-center">
+            <img
               className="mx-4 h-8 rounded-full bg-blue"
               src="/assets/lb-ph.png"
               alt={name}
-            /> */}
-          </div>
-          <span className="text-lg font-normal pl-6">{name}</span>
+            />
+          </div> */}
+          <div className="basis-5/6 text-lg font-normal">{name}</div>
         </div>
 
         <div className="flex flex-row items-center justify-around px-4">
@@ -36,7 +36,8 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
         </div>
       </div>
       {!isCurrentUser && <div className="w-7/8 h-[0.5] bg-gray-700"></div>}
-    </>
+      
+    </div>
   );
 };
 
