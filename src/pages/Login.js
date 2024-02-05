@@ -16,6 +16,7 @@ const Login = () => {
   } = useAuth();
   const [showLoginInput, setShowLoginInput] = useState(false);
   const [showSignUpInput, setShowSignUpInput] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -40,6 +41,7 @@ const Login = () => {
   }
 
   const handleEmailAuth = (e) => {
+    setButtonClicked(true);
     e.preventDefault();
 
     if (email && password) {
@@ -187,10 +189,10 @@ const Login = () => {
               </div>
             </div>
             <button
-              disabled={!email || !password}
+              disabled={!email || !password || buttonClicked}
               type="submit"
               className={`continueButton w-full ${
-                !email || !password ? 'bg-darkGray' : 'bg-green'
+                !email || !password || buttonClicked ? 'bg-darkGray' : 'bg-green'
               }`}
             >
               Continue
