@@ -222,7 +222,7 @@ const Login = () => {
                 }}
               >
                 <HiOutlineMail size={25} />
-                <p className="ml-16 text-base">Login with email</p>
+                <p className="w-full text-base text-center">Login with email</p>
               </button>
               <p className="my-2 text-center">or</p>
               <div
