@@ -297,6 +297,7 @@ const SectionDetail = () => {
                   inputType={input.type}
                   inputOptions={input.options}
                   placeholder={input.label}
+                  label={input.label}
                 />
               ))}
             </div>
