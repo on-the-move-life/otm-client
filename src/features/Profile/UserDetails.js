@@ -90,6 +90,7 @@ const UserDetails = ({ showHistory }) => {
       };
       reader.readAsDataURL(file);
       e.target.value = null;
+      setShowProfilePicPopup(false);
     }
 
     // make the api call to update the profile pic
@@ -116,7 +117,9 @@ const UserDetails = ({ showHistory }) => {
               <IconLabel>Gallery</IconLabel>
             </div>
             <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
-              setChosenPic(null)
+              setChosenPic(null);
+              setProfilePicFile(null); // reset the file object
+              setShowProfilePicPopup(false); // close the popup after deleting the pic
             }}>
               <div className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                 <IoMdTrash size={30} color='gray' />
@@ -144,7 +147,7 @@ const UserDetails = ({ showHistory }) => {
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <div className='w-[100px] h-[100px] rounded-full relative'>
-                {chosenPic ? <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full' /> : <FaUserCircle size={100} color={'#91BDF6'} />}
+                {chosenPic ? <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> : <FaUserCircle size={100} color={'#91BDF6'} />}
                 <div className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
                   setShowProfilePicPopup(true);
                 }}>
