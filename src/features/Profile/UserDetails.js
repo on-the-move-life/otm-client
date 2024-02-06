@@ -11,7 +11,6 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { BsImageFill } from "react-icons/bs";
 import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
-import { current } from '@reduxjs/toolkit';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -139,7 +138,7 @@ const UserDetails = ({ showHistory }) => {
 
           {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
-            <div className="mt-6 flex flex-col items-center justify-center">
+            <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <div className='w-[100px] h-[100px] rounded-full relative'>
                 {currentPic ? <img src={currentPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full' /> : <FaUserCircle size={100} color={'#91BDF6'} />}
                 <div className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
