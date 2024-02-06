@@ -11,11 +11,14 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                 return workoutCount += item.count;
             })
             workoutCount = workoutCount / lastEightWeeksWorkout?.length;
+            if(isNaN(workoutCount)){
+                workoutCount = 0;
+            }
             setCurrentScore(prevValue => workoutCount.toFixed(1));
         }
         catch(e){
             // expected exception when lastEightWeeksWorkout is empty array or undefined or null
-            setCurrentScore(prevValue => 0);
+            setCurrentScore(prevValue => Number(0).toFixed(1));
         }
     }, [lastEightWeeksWorkout])
 
@@ -76,7 +79,7 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                     <div className='wwc-score'>{currentScore}</div>
                     <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
                 </div>
-                <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
+                {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
                     {
                         lastEightWeeksWorkout?.length === 0 ?
                             <div className='wwc-score'>-</div> :
@@ -86,7 +89,7 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                                 )
                             })
                     }
-                </div>
+                </div> : <div className='wwc-score wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>-</div>}
             </section>
         </div>
     )

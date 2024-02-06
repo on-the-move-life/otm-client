@@ -76,7 +76,7 @@ text-transform: capitalize;
 `
 
 function FitnessScore({ score, percentile }) {
-    const Indicator = ({ className, style }) => {
+    const Indicator = ({ style }) => {
         return (
             <div style={style} className='relative'>
                 <div className='w-[1px] h-[8px] bg-white'></div>
@@ -162,7 +162,7 @@ function FitnessScore({ score, percentile }) {
             <div className='w-full flex flex-row justify-between items-center'>
                 <div className='w-6/12 flex flex-col justify-center items-center gap-2'>
                     <Heading>Fitness Score</Heading>
-                    <Score>{score}</Score>
+                    {score ? <Score>{score}</Score> : <Score>-</Score>}
                     <ScoreDetail>Top <Percentile>{percentile}%</Percentile> of the community</ScoreDetail>
                 </div>
                 <div className='w-6/12 flex flex-col justify-center items-center gap-2'>
