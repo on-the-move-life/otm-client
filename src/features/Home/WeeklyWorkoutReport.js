@@ -5,12 +5,18 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
 
     useEffect(() => {
         // setting the average workout count
-        let workoutCount = 0;
-        lastEightWeeksWorkout.map((item, index) => {
-            return workoutCount += item.count;
-        })
-        workoutCount = workoutCount / lastEightWeeksWorkout?.length;
-        setCurrentScore(prevValue => workoutCount.toFixed(1));
+        try{
+            let workoutCount = 0;
+            lastEightWeeksWorkout.map((item, index) => {
+                return workoutCount += item.count;
+            })
+            workoutCount = workoutCount / lastEightWeeksWorkout?.length;
+            setCurrentScore(prevValue => workoutCount.toFixed(1));
+        }
+        catch(e){
+            // expected exception when lastEightWeeksWorkout is empty array or undefined or null
+            setCurrentScore(prevValue => 0);
+        }
     }, [lastEightWeeksWorkout])
 
     const Bar = ({ progress }) => {
