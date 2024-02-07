@@ -51,6 +51,7 @@ const DataInputComponent = ({
             name={inputId}
             value={value}
             onChange={handleInputChange}
+            label={label}
           >
             {inputOptions.map((option) => (
               <option key={option} value={option} style={inputDropdownStyle}>
