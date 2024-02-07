@@ -221,14 +221,14 @@ const UserDetails = ({ showHistory }) => {
                 </section>
               </div>
             </div>
-            <div className="flex flex-col pt-52" onClick={handleLogout}>
+            <div className="flex flex-col pt-52">
               <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
                 </div>
-                <div className="text-lg font-medium text-lightGray">
+                <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
                   Log Out
-                </div>
+                </button>
               </div>
             </div>
           </div>
