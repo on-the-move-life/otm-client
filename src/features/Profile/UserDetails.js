@@ -100,20 +100,20 @@ const UserDetails = ({ showHistory }) => {
     <>
       {/* profile pic update popup */}
       {showProfilePicPopup && <div className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'>
-        <div className='absolute top-0 left-[47%] cursor-pointer' onClick={() => {
+        <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => {
           setShowProfilePicPopup(false);
         }}>
           <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
-        </div>
+        </button>
         <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
           <ProfilePicHeading>Profile photo</ProfilePicHeading>
           <div className='w-full flex flex-row justify-start gap-[40px] items-ceter'>
             <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
               profilePicRef.current.click();
             }}>
-              <div className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                 <BsImageFill size={30} color='#5ECC7B' />
-              </div>
+              </button>
               <IconLabel>Gallery</IconLabel>
             </div>
             <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
@@ -121,9 +121,9 @@ const UserDetails = ({ showHistory }) => {
               setProfilePicFile(null); // reset the file object
               setShowProfilePicPopup(false); // close the popup after deleting the pic
             }}>
-              <div className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                 <IoMdTrash size={30} color='gray' />
-              </div>
+              </button>
               <IconLabel>Delete</IconLabel>
             </div>
           </div>
@@ -148,11 +148,11 @@ const UserDetails = ({ showHistory }) => {
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <div className='w-[100px] h-[100px] rounded-full relative'>
                 {chosenPic ? <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> : <FaUserCircle size={100} color={'#91BDF6'} />}
-                <div className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
+                <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
                   setShowProfilePicPopup(true);
                 }}>
                   <IoCamera size={25} color="black" />
-                </div>
+                </button>
                 <input ref={profilePicRef} type='file' accept='image/png, image/jpg, image/jpeg' name="profile image" hidden onInput={handlePicChange}></input>
               </div>
               <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
