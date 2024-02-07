@@ -1,3 +1,4 @@
+import { last } from 'lodash';
 import React, { useEffect, useState } from 'react'
 
 function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
@@ -81,11 +82,10 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                 </div>
                 {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
                     {
-                        lastEightWeeksWorkout?.length === 0 ?
-                            <div className='wwc-score'>-</div> :
-                            lastEightWeeksWorkout?.map((progress, index) => {
+                            [...Array(8).keys()]?.map((item, index) => {
+                                const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
                                 return (
-                                    <Bar progress={progress?.count} key={index} />
+                                    <Bar progress={progressCount} key={Math.random() * 1000} />
                                 )
                             })
                     }
