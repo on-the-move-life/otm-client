@@ -151,7 +151,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
         <InfoTile>{time}</InfoTile>
         {/* <InfoTile>700Kcal</InfoTile> */}
       </div>
-      {achievements.length > 0 && (
+      {achievements?.length > 0 && (
         <section className="my-8 flex flex-col justify-center backdrop-blur-sm border-[0.5px] border-gray-600 rounded-lg p-2">
           <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
             achievements unlocked
@@ -257,7 +257,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           })
         }
       </div>}
-      {collapsed ? <button className='flex flex-row justify-end items-center gap-1 p-3 text-green' onClick={() => {
+      {collapsed ? <button className='flex flex-row justify-end items-center gap-1 pt-5 text-green' onClick={() => {
         setCollapsed(false);
       }}>
         <p className='text-sm'>show more</p>
