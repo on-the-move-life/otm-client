@@ -2,6 +2,7 @@ import React, { useMemo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AssesmentTile from './AssesmentTile';
 import WorkoutTile from './WorkoutTile'
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -45,24 +46,25 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
-const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, currScore, prevScore, sectionPerformance, ref }) => {
+const TimelineTile = ({ name, dateTime = '1/30/2024 02:23 PM', kcal, workoutName, currScore, prevScore, sectionPerformance, ref }) => {
   const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
   const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
   const [color, setColor] = useState(colors[0]);
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
+  const [collapsed, setCollapsed] = useState(true);
 
   function formatDateTime(inputDateTime) {
     const [datePart, timePart, ampm] = inputDateTime.split(' ');
     const [month, day, year] = datePart.split('/');
-    
+
     const formattedDate = `${addOrdinalSuffix(parseInt(day))} ${getMonthName(parseInt(month))}`;
     const formattedTime = `${timePart} ${ampm}`;
-  
+
     return [formattedDate, formattedTime]
   }
-  
+
   function getMonthName(month) {
     const monthNames = [
       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -86,7 +88,7 @@ const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, 
         return `${day}th`;
     }
   }
-  
+
 
   useEffect(() => {
     const formattedDateTime = formatDateTime(dateTime);
@@ -131,24 +133,36 @@ const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, 
       </div>
       {
         sectionPerformance?.map((workout, index) => {
-          if(workout?.name === 'Assessment'){
-            return(
-              <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo} key={index}/>
+          if (workout?.name === 'Assessment') {
+            return (
+              <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo} key={index} />
             )
           }
         })
       }
-      <div className="mt-8 grid grid-cols-1 gap-4">
+      {!collapsed && <div className="mt-8 grid grid-cols-1 gap-4">
         {
           sectionPerformance?.map((workout, index) => {
-            if(index !== 0 && workout?.name !== 'Assessment'){
-              return(
-                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={index}/>
+            if (index !== 0 && workout?.name !== 'Assessment') {
+              return (
+                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={index} />
               )
             }
           })
         }
-      </div>
+      </div>}
+      {collapsed ? <button className='flex flex-row justify-end items-center gap-1 p-3 text-green' onClick={() => {
+        setCollapsed(false);
+      }}>
+        <p className='text-sm'>show more</p>
+        <IoIosArrowDropdownCircle size={20}/>
+      </button> :
+      <button className='flex flex-row justify-end items-center gap-1 pt-2 text-green' onClick={() => {
+        setCollapsed(true);
+      }}>
+        <p className='text-sm'>show less</p>
+        <IoIosArrowDropupCircle size={20}/>
+      </button>}
     </div>
   );
 };
