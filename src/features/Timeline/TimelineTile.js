@@ -91,7 +91,6 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
 
   useEffect(() => {
-    console.log(dateTime)
     const formattedDateTime = formatDateTime(dateTime);
     setDate(formattedDateTime[0]);
     setTime(formattedDateTime[1]);
@@ -146,7 +145,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           sectionPerformance?.map((workout, index) => {
             if (index !== 0 && workout?.name !== 'Assessment') {
               return (
-                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={index} />
+                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={Math.random() * 1000} />
               )
             }
           })

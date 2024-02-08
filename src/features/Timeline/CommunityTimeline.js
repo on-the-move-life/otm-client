@@ -44,13 +44,13 @@ function CommunityTimeline() {
                 data?.data && data?.data.map((data, index) => {
                     if(index === 0){
                         return(
-                            <div ref={timelineTopRef} key={index}>
-                                <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} key={index}/>
+                            <div ref={timelineTopRef} key={Math.random() * 1000}>
+                                <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} />
                             </div>
                         )
                     }
                     return (
-                        <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} key={index} />
+                        <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} key={Math.random() * 1000} />
                     )
                 })
             }
