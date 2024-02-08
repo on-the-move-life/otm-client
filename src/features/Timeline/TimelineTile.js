@@ -141,7 +141,7 @@ const TimelineTile = ({ name, dateTime='1/30/2024 02:23 PM', kcal, workoutName, 
       <div className="mt-8 grid grid-cols-1 gap-4">
         {
           sectionPerformance?.map((workout, index) => {
-            if(index !== 0){
+            if(index !== 0 && workout?.name !== 'Assessment'){
               return(
                 <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={index}/>
               )
