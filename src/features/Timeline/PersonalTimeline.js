@@ -46,12 +46,29 @@ function PersonalTimeline() {
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>
-                                <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} />
+                                <TimelineTile
+                                    name={data?.name}
+                                    dateTime={data?.time}
+                                    currScore={data?.fitnessScoreUpdates?.newScore}
+                                    prevScore={data?.fitnessScoreUpdates?.oldScore}
+                                    sectionPerformance={data?.sectionPerformance}
+                                    coachNotes={data?.coachNotes}
+                                    achievement={data?.achievement}
+                                />
                             </div>
                         )
                     }
                     return (
-                        <TimelineTile name={data?.name} dateTime={data?.time} currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} sectionPerformance={data?.sectionPerformance} key={Math.random() * 1000} />
+                        <TimelineTile
+                            name={data?.name}
+                            dateTime={data?.time}
+                            currScore={data?.fitnessScoreUpdates?.newScore}
+                            prevScore={data?.fitnessScoreUpdates?.oldScore}
+                            sectionPerformance={data?.sectionPerformance}
+                            key={Math.random() * 1000}
+                            coachNotes={data?.coachNotes}
+                            achievement={data?.achievement}
+                        />
                     )
                 })
             }
