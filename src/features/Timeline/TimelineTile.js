@@ -78,7 +78,11 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
   const [liked, setLiked] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const typedCommentRef = useRef(null);
-  const [isTyping, setIsTyping] = useState(false);
+  const [comments, setComments] = useState([
+    { name: 'saurabh', comment: 'this is my first comment' },
+    { name: 'saurabh', comment: 'this is my second comment' },
+    { name: 'saurabh', comment: 'this is my third comment' }
+  ]);
 
   function formatDateTime(inputDateTime) {
     const [datePart, timePart, ampm] = inputDateTime.split(' ');
@@ -140,6 +144,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
       setColor(colors[4]);
     }
   }, [currScore, colors, tags, dateTime])
+
   const IndividualComment = ({ name, comment }) => {
     return (
       <div className='w-full flex flex-row justify-start items-start gap-1'>
@@ -152,7 +157,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
     )
   }
 
-  const CommentsContainer = () => {
+  const CommentsContainer = ({comments}) => {
     return (
       <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
         {/* Closing Icon */}
@@ -164,16 +169,25 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
         {/* Comments */}
         <div className='w-full mt-6 flex flex-col justify-start items-start gap-3 px-1'>
-          <IndividualComment name={'saurabh'} comment={'this is my first comment'}/>
-          <IndividualComment name={'saurabh'} comment={'this is my first comment'}/>
-          <IndividualComment name={'saurabh'} comment={'this is my first comment lasdjlkasdjflasdjflasdf alsdfjal lasdf alsf ela fa aldsfja lefj alskdf'}/>
+          {
+            comments?.map((comment, index) => {
+              return (
+                <IndividualComment name={comment.name} comment={comment.comment} key={Math.random() * 1000}/>
+              )
+            })
+          }
         </div>
 
         {/* Comment Input */}
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-1 border-t-gray-600 border-t-[0.8px]'>
           <FaUserCircle size={50}/>
           <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef}/>
-          <button className='px-3 py-1 rounded-full bg-light-blue-600'>
+          <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => {
+            console.log(typedCommentRef.current.value)
+            const comment = typedCommentRef.current.value;
+            setComments(prev => [...prev, { name: 'saurabh', comment: comment }]);
+            typedCommentRef.current.value = '';
+          }}>
             <IoMdArrowRoundUp size={20} color={'white'}/>
           </button>
         </div>
@@ -183,7 +197,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
   return (
     <div className='w-full flex flex-col justify-center items-center gap-1'>
-      {showComment && <CommentsContainer />}
+      {showComment && <CommentsContainer comments={comments}/>}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
           <Name>{name}</Name>
@@ -326,9 +340,9 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           }} />}
           <p>12 likes</p>
         </div>
-        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 px-2'>
-          <IoChatbubbleOutline size={30} color={"white"} onClick={() => setShowComment(prev => true)} />
-          <p>5 comments</p>
+        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 px-2' onClick={() => setShowComment(prev => true)}>
+          <IoChatbubbleOutline size={30} color={"white"} />
+          <p>{comments?.length} comments</p>
         </div>
       </div>
     </div>
