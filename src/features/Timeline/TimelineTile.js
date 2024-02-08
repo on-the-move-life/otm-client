@@ -1,13 +1,14 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import AssesmentTile from './AssesmentTile';
 import WorkoutTile from './WorkoutTile'
-import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle, IoIosHeartEmpty, IoIosHeart, IoIosArrowDown, IoMdArrowRoundUp } from "react-icons/io";
 import {
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
 } from 'react-icons/hi';
-import { set } from 'lodash';
+import { IoChatbubbleOutline } from "react-icons/io5";
+import { FaUserCircle } from "react-icons/fa";
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -74,6 +75,10 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
   const [collapsed, setCollapsed] = useState(true);
   const [coachNoteIndex, setCoachNoteIndex] = useState(0);
   const [achievementsIndex, setAchievementsIndex] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const typedCommentRef = useRef(null);
+  const [isTyping, setIsTyping] = useState(false);
 
   function formatDateTime(inputDateTime) {
     const [datePart, timePart, ampm] = inputDateTime.split(' ');
@@ -135,140 +140,197 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
       setColor(colors[4]);
     }
   }, [currScore, colors, tags, dateTime])
-
-  return (
-    <div className="flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
-      <div className='w-full flex flex-row items-center justify-between'>
-        <Name>{name}</Name>
-        <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
-          <TagText>{tag}</TagText>
+  const IndividualComment = ({ name, comment }) => {
+    return (
+      <div className='w-full flex flex-row justify-start items-start gap-1'>
+        <FaUserCircle size={35} />
+        <div className='w-full flex flex-col justify-start items-start gap-1'>
+            <div className='text-sm text-gray-300'>{name}</div>
+            <div className='text-xs text-gray-200'>{comment}</div>
         </div>
       </div>
+    )
+  }
 
-      <Date>{date}</Date>
-      <div className="timeline-tags flex flex-row space-x-3 text-xs my-2">
-        {/* <InfoTile>Horizontal Pull</InfoTile> */}
-        <InfoTile>{time}</InfoTile>
-        {/* <InfoTile>700Kcal</InfoTile> */}
+  const CommentsContainer = () => {
+    return (
+      <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
+        {/* Closing Icon */}
+        <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 bg-green/80 rounded-b-xl' onClick={() => {
+          setShowComment(prev => !prev)
+        }}>
+          <IoIosArrowDown size={20} />
+        </div>
+
+        {/* Comments */}
+        <div className='w-full mt-6 flex flex-col justify-start items-start gap-3 px-1'>
+          <IndividualComment name={'saurabh'} comment={'this is my first comment'}/>
+          <IndividualComment name={'saurabh'} comment={'this is my first comment'}/>
+          <IndividualComment name={'saurabh'} comment={'this is my first comment lasdjlkasdjflasdjflasdf alsdfjal lasdf alsf ela fa aldsfja lefj alskdf'}/>
+        </div>
+
+        {/* Comment Input */}
+        <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-1 border-t-gray-600 border-t-[0.8px]'>
+          <FaUserCircle size={50}/>
+          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef}/>
+          <button className='px-3 py-1 rounded-full bg-light-blue-600'>
+            <IoMdArrowRoundUp size={20} color={'white'}/>
+          </button>
+        </div>
       </div>
-      {achievements?.length > 0 && (
-        <section className="my-8 flex flex-col justify-center backdrop-blur-sm border-[0.5px] border-gray-600 rounded-lg p-2">
-          <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
-            achievements unlocked
-          </h4>
+    )
+  }
 
-          <div className="my-2 flex h-fit w-full items-center justify-between">
-            <span>
-              <HiOutlineChevronLeft
-                size={25}
-                onClick={() => {
-                  try {
-                    setAchievementsIndex(prev => (prev - 1 + achievements?.length) % achievements?.length);
-                  }
-                  catch (err) {
-                    setAchievementsIndex(0);
-                  }
-                }}
-              />
-            </span>
-            <div className="flex h-full w-full items-center justify-center px-2 ">
-              <p className="basis-2/3  text-[10px]">
-                {achievements[achievementsIndex]?.description}
-              </p>
-              <div className="h-[7rem] w-[7rem] flex flex-row justify-center items-center">
-                <img
-                  className="h-[7rem] w-[7rem]"
-                  src="/assets/badge.svg"
-                  alt="badge"
-                />
-              </div>
-            </div>
-
-            <span>
-              <HiOutlineChevronRight
-                size={25}
-                onClick={() => {
-                  setAchievementsIndex(prev => (prev + 1) % achievements?.length);
-                }}
-              />
-            </span>
+  return (
+    <div className='w-full flex flex-col justify-center items-center gap-1'>
+      {showComment && <CommentsContainer />}
+      <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
+        <div className='w-full flex flex-row items-center justify-between'>
+          <Name>{name}</Name>
+          <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
+            <TagText>{tag}</TagText>
           </div>
-        </section>
-      )}
-      {
-        coachNotes?.length > 0 && (
-          <section className="my-4 flex flex-col items-start justify-center backdrop-blur-sm rounded-lg p-2">
-            <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
-              coach notes
+        </div>
+
+        <Date>{date}</Date>
+        <div className="timeline-tags flex flex-row space-x-3 text-xs my-2">
+          {/* <InfoTile>Horizontal Pull</InfoTile> */}
+          <InfoTile>{time}</InfoTile>
+          {/* <InfoTile>700Kcal</InfoTile> */}
+        </div>
+        {achievements?.length > 0 && (
+          <section className="my-8 flex flex-col justify-center backdrop-blur-sm border-[0.5px] border-gray-600 rounded-lg p-2">
+            <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
+              achievements unlocked
             </h4>
 
-            <div className="my-4 flex h-20 w-full items-center justify-between">
+            <div className="my-2 flex h-fit w-full items-center justify-between">
               <span>
                 <HiOutlineChevronLeft
                   size={25}
                   onClick={() => {
                     try {
-                      setCoachNoteIndex(prev => (prev - 1 + coachNotes?.length) % coachNotes?.length);
+                      setAchievementsIndex(prev => (prev - 1 + achievements?.length) % achievements?.length);
                     }
                     catch (err) {
-                      setCoachNoteIndex(0);
+                      setAchievementsIndex(0);
                     }
                   }}
                 />
               </span>
-              <div className="h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs">
-                <p>{coachNotes[coachNoteIndex]?.description}</p>
+              <div className="flex h-full w-full items-center justify-center px-2 ">
+                <p className="basis-2/3  text-[10px]">
+                  {achievements[achievementsIndex]?.description}
+                </p>
+                <div className="h-[7rem] w-[7rem] flex flex-row justify-center items-center">
+                  <img
+                    className="h-[7rem] w-[7rem]"
+                    src="/assets/badge.svg"
+                    alt="badge"
+                  />
+                </div>
               </div>
 
               <span>
                 <HiOutlineChevronRight
                   size={25}
                   onClick={() => {
-                    try {
-                      setCoachNoteIndex(prev => (prev + 1) % coachNotes?.length);
-                    }
-                    catch (err) {
-                      setCoachNoteIndex(0);
-                    }
+                    setAchievementsIndex(prev => (prev + 1) % achievements?.length);
                   }}
                 />
               </span>
             </div>
           </section>
-        )
-      }
-      {
-        sectionPerformance?.map((workout, index) => {
-          if (workout?.name === 'Assessment') {
-            return (
-              <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo} key={index} />
-            )
-          }
-        })
-      }
-      {!collapsed && <div className="mt-8 grid grid-cols-1 gap-4">
+        )}
+        {
+          coachNotes?.length > 0 && (
+            <section className="my-4 flex flex-col items-start justify-center backdrop-blur-sm rounded-lg p-2">
+              <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
+                coach notes
+              </h4>
+
+              <div className="my-4 flex h-20 w-full items-center justify-between">
+                <span>
+                  <HiOutlineChevronLeft
+                    size={25}
+                    onClick={() => {
+                      try {
+                        setCoachNoteIndex(prev => (prev - 1 + coachNotes?.length) % coachNotes?.length);
+                      }
+                      catch (err) {
+                        setCoachNoteIndex(0);
+                      }
+                    }}
+                  />
+                </span>
+                <div className="h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs">
+                  <p>{coachNotes[coachNoteIndex]?.description}</p>
+                </div>
+
+                <span>
+                  <HiOutlineChevronRight
+                    size={25}
+                    onClick={() => {
+                      try {
+                        setCoachNoteIndex(prev => (prev + 1) % coachNotes?.length);
+                      }
+                      catch (err) {
+                        setCoachNoteIndex(0);
+                      }
+                    }}
+                  />
+                </span>
+              </div>
+            </section>
+          )
+        }
         {
           sectionPerformance?.map((workout, index) => {
-            if (index !== 0 && workout?.name !== 'Assessment') {
+            if (workout?.name === 'Assessment') {
               return (
-                <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={Math.random() * 1000} />
+                <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo} key={index} />
               )
             }
           })
         }
-      </div>}
-      {collapsed ? <button className='flex flex-row justify-end items-center gap-1 pt-5 text-green' onClick={() => {
-        setCollapsed(false);
-      }}>
-        <p className='text-sm'>show more</p>
-        <IoIosArrowDropdownCircle size={20} />
-      </button> :
-        <button className='flex flex-row justify-end items-center gap-1 pt-2 text-green' onClick={() => {
-          setCollapsed(true);
+        {!collapsed && <div className="mt-8 grid grid-cols-1 gap-4">
+          {
+            sectionPerformance?.map((workout, index) => {
+              if (index !== 0 && workout?.name !== 'Assessment') {
+                return (
+                  <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={Math.random() * 1000} />
+                )
+              }
+            })
+          }
+        </div>}
+        {collapsed ? <button className='flex flex-row justify-end items-center gap-1 pt-5 text-green' onClick={() => {
+          setCollapsed(false);
         }}>
-          <p className='text-sm'>show less</p>
-          <IoIosArrowDropupCircle size={20} />
-        </button>}
+          <p className='text-sm'>show more</p>
+          <IoIosArrowDropdownCircle size={20} />
+        </button> :
+          <button className='flex flex-row justify-end items-center gap-1 pt-2 text-green' onClick={() => {
+            setCollapsed(true);
+          }}>
+            <p className='text-sm'>show less</p>
+            <IoIosArrowDropupCircle size={20} />
+          </button>}
+      </div>
+      <div className='w-full flex felx-row items-center justify-around'>
+        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 px-2'>
+          {liked ? <IoIosHeart size={30} color={"red"} onClick={() => {
+            setLiked(prev => !prev);
+          }} /> : <IoIosHeartEmpty size={30} color={"white"} onClick={() => {
+            setLiked(prev => !prev);
+          }} />}
+          <p>12 likes</p>
+        </div>
+        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 px-2'>
+          <IoChatbubbleOutline size={30} color={"white"} onClick={() => setShowComment(prev => true)} />
+          <p>5 comments</p>
+        </div>
+      </div>
     </div>
   );
 };
