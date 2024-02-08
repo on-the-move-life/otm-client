@@ -46,7 +46,7 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
-const TimelineTile = ({ name, dateTime = '1/30/2024 02:23 PM', kcal, workoutName, currScore, prevScore, sectionPerformance, ref }) => {
+const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, ref }) => {
   const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
   const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
@@ -91,6 +91,7 @@ const TimelineTile = ({ name, dateTime = '1/30/2024 02:23 PM', kcal, workoutName
 
 
   useEffect(() => {
+    console.log(dateTime)
     const formattedDateTime = formatDateTime(dateTime);
     setDate(formattedDateTime[0]);
     setTime(formattedDateTime[1]);
