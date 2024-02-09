@@ -11,6 +11,8 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { BsImageFill } from "react-icons/bs";
 import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
+import useLocalStorage from '../../hooks/useLocalStorage';
+import axios from 'axios';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -46,8 +48,10 @@ const UserDetails = ({ showHistory }) => {
   const navigate = useNavigate();
 
   const { getUserFromStorage, logout } = useAuth();
+  const [userData, setUserData, getUserData] = useLocalStorage('user', {});
 
   useEffect(() => {
+    console.log(userData)
     const user = getUserFromStorage();
     if (user) {
       getMemberData(user);
@@ -91,9 +95,16 @@ const UserDetails = ({ showHistory }) => {
       reader.readAsDataURL(file);
       e.target.value = null;
       setShowProfilePicPopup(false);
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+      formData.append('email', JSON.parse(localStorage.getItem('user')).email);
+      axios
+        .post(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
+        .then(res => {
+          console.log(res)
+        })
     }
 
-    // make the api call to update the profile pic
   }
 
   return (
@@ -120,6 +131,7 @@ const UserDetails = ({ showHistory }) => {
               setChosenPic(null);
               setProfilePicFile(null); // reset the file object
               setShowProfilePicPopup(false); // close the popup after deleting the pic
+              setUserData({ ...userData, profilePicture: null });
             }}>
               <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                 <IoMdTrash size={30} color='gray' />
@@ -147,7 +159,11 @@ const UserDetails = ({ showHistory }) => {
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <div className='w-[100px] h-[100px] rounded-full relative'>
-                {chosenPic ? <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> : <FaUserCircle size={100} color={'#91BDF6'} />}
+                {chosenPic ?
+                  <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
+                  userData?.profilePicture ?
+                    <img src={userData?.profilePicture} alt="profilePicture" className='h-[100px] w-[100px] rounded-full' /> :
+                    <FaUserCircle size={100} color={'#91BDF6'} />}
                 <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
                   setShowProfilePicPopup(true);
                 }}>
