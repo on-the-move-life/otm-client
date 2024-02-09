@@ -162,7 +162,7 @@ const UserDetails = ({ showHistory }) => {
                 {chosenPic ?
                   <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
                   userData?.profilePicture ?
-                    <img src={userData?.profilePicture} alt="profilePicture" className='h-[100px] w-[100px] rounded-full' /> :
+                    <img src={userData?.profilePicture} alt="profilePicture" className='h-[100px] w-[100px] rounded-full object-cover' /> :
                     <FaUserCircle size={100} color={'#91BDF6'} />}
                 <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
                   setShowProfilePicPopup(true);

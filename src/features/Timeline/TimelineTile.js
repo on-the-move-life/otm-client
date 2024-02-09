@@ -147,11 +147,13 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
   const IndividualComment = ({ name, comment }) => {
     return (
-      <div className='w-full flex flex-row justify-start items-start gap-1'>
+      <div className='w-full flex flex-row justify-start items-start gap-2'>
         <FaUserCircle size={35} />
         <div className='w-full flex flex-col justify-start items-start gap-1'>
             <div className='text-sm text-gray-300'>{name}</div>
-            <div className='text-xs text-gray-200'>{comment}</div>
+            <div className='text-xs text-gray-200 text-pretty'>
+              <p>{comment}</p>
+            </div>
         </div>
       </div>
     )
@@ -161,14 +163,14 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
     return (
       <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
         {/* Closing Icon */}
-        <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 bg-green/80 rounded-b-xl' onClick={() => {
+        <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 rounded-b-xl' onClick={() => {
           setShowComment(prev => !prev)
         }}>
-          <IoIosArrowDown size={20} />
+          <IoIosArrowDown size={30} />
         </div>
 
         {/* Comments */}
-        <div className='w-full mt-6 flex flex-col justify-start items-start gap-3 px-1'>
+        <div className='w-full mt-12 flex flex-col justify-start items-start gap-3 px-4'>
           {
             comments?.map((comment, index) => {
               return (
@@ -179,7 +181,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
         </div>
 
         {/* Comment Input */}
-        <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-1 border-t-gray-600 border-t-[0.8px]'>
+        <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px]'>
           <FaUserCircle size={50}/>
           <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef}/>
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => {
@@ -331,18 +333,18 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
             <IoIosArrowDropupCircle size={20} />
           </button>}
       </div>
-      <div className='w-full flex felx-row items-center justify-around'>
-        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 px-2'>
+      <div className='w-full flex felx-row items-center justify-between'>
+        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 p-2'>
           {liked ? <IoIosHeart size={30} color={"red"} onClick={() => {
             setLiked(prev => !prev);
-          }} /> : <IoIosHeartEmpty size={30} color={"white"} onClick={() => {
+          }} /> : <IoIosHeartEmpty size={25} color={"white"} onClick={() => {
             setLiked(prev => !prev);
           }} />}
           <p>12 likes</p>
         </div>
-        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 px-2' onClick={() => setShowComment(prev => true)}>
-          <IoChatbubbleOutline size={30} color={"white"} />
-          <p>{comments?.length} comments</p>
+        <div className='basis-1/2 w-full flex flex-row justify-end items-center gap-2 p-2' onClick={() => setShowComment(prev => true)}>
+          <IoChatbubbleOutline size={25} color={"white"} />
+          <p>{comments?.length} </p>
         </div>
       </div>
     </div>
