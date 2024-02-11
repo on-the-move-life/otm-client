@@ -54,18 +54,18 @@ text-transform: capitalize;
 `
 const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements }) => {
   // Testing purpose
-  // achievements = [
-  //   { description: 'achievement 1' },
-  //   { description: 'achievement 2' },
-  //   { description: 'achievement 3' },
-  //   { description: 'achievement 4' },
-  // ]
-  // coachNotes = [
-  //   { description: 'Note 1' },
-  //   { description: 'Note 2' },
-  //   { description: 'Note 3' },
-  //   { description: 'Note 4' },
-  // ]
+  achievements = [
+    { description: 'achievement 1' },
+    { description: 'achievement 2' },
+    { description: 'achievement 3' },
+    { description: 'achievement 4' },
+  ]
+  coachNotes = [
+    { description: 'Note 1' },
+    { description: 'Note 2' },
+    { description: 'Note 3' },
+    { description: 'Note 4' },
+  ]
   const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
   const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
@@ -215,7 +215,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           {/* <InfoTile>700Kcal</InfoTile> */}
         </div>
         {achievements?.length > 0 && (
-          <section className="my-8 flex flex-col justify-center backdrop-blur-sm border-[0.5px] border-gray-600 rounded-lg p-2">
+          <section className="my-4 flex flex-col justify-center backdrop-blur-sm rounded-lg p-2">
             <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
               achievements unlocked
             </h4>
@@ -234,7 +234,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
                   }}
                 />
               </span>
-              <div className="flex h-full w-full items-center justify-center px-2 ">
+              <div className="flex h-full w-full items-center justify-center px-2 rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] ">
                 <p className="basis-2/3  text-[10px]">
                   {achievements[achievementsIndex]?.description}
                 </p>
@@ -260,12 +260,12 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
         )}
         {
           coachNotes?.length > 0 && (
-            <section className="my-4 flex flex-col items-start justify-center backdrop-blur-sm rounded-lg p-2">
+            <section className=" flex flex-col items-start justify-center backdrop-blur-sm rounded-lg p-2">
               <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                 coach notes
               </h4>
 
-              <div className="my-4 flex h-20 w-full items-center justify-between">
+              <div className="mt-2 mb-4 flex h-20 w-full items-center justify-between">
                 <span>
                   <HiOutlineChevronLeft
                     size={25}
@@ -309,7 +309,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
             }
           })
         }
-        {!collapsed && <div className="mt-8 grid grid-cols-1 gap-4">
+        {!collapsed && <div className="mt-4 grid grid-cols-1 gap-4">
           {
             sectionPerformance?.map((workout, index) => {
               if (index !== 0 && workout?.name !== 'Assessment') {
