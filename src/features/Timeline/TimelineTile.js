@@ -53,19 +53,6 @@ letter-spacing: -0.36px;
 text-transform: capitalize;
 `
 const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements }) => {
-  // Testing purpose
-  // achievements = [
-  //   { description: 'achievement 1' },
-  //   { description: 'achievement 2' },
-  //   { description: 'achievement 3' },
-  //   { description: 'achievement 4' },
-  // ]
-  // coachNotes = [
-  //   { description: 'Note 1' },
-  //   { description: 'Note 2' },
-  //   { description: 'Note 3' },
-  //   { description: 'Note 4' },
-  // ]
   const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
   const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
@@ -75,14 +62,6 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
   const [collapsed, setCollapsed] = useState(true);
   const [coachNoteIndex, setCoachNoteIndex] = useState(0);
   const [achievementsIndex, setAchievementsIndex] = useState(0);
-  const [liked, setLiked] = useState(false);
-  const [showComment, setShowComment] = useState(false);
-  const typedCommentRef = useRef(null);
-  const [comments, setComments] = useState([
-    { name: 'saurabh', comment: 'this is my first comment' },
-    { name: 'saurabh', comment: 'this is my second comment' },
-    { name: 'saurabh', comment: 'this is my third comment' }
-  ]);
 
   function formatDateTime(inputDateTime) {
     const [datePart, timePart, ampm] = inputDateTime.split(' ');
@@ -159,47 +138,8 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
     )
   }
 
-  const CommentsContainer = ({comments}) => {
-    return (
-      <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
-        {/* Closing Icon */}
-        <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 rounded-b-xl' onClick={() => {
-          setShowComment(prev => !prev)
-        }}>
-          <IoIosArrowDown size={30} />
-        </div>
-
-        {/* Comments */}
-        <div className='w-full mt-12 flex flex-col justify-start items-start gap-3 px-4'>
-          {
-            comments?.map((comment, index) => {
-              return (
-                <IndividualComment name={comment.name} comment={comment.comment} key={Math.random() * 1000}/>
-              )
-            })
-          }
-        </div>
-
-        {/* Comment Input */}
-        <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px]'>
-          <FaUserCircle size={50}/>
-          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef}/>
-          <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => {
-            console.log(typedCommentRef.current.value)
-            const comment = typedCommentRef.current.value;
-            setComments(prev => [...prev, { name: 'saurabh', comment: comment }]);
-            typedCommentRef.current.value = '';
-          }}>
-            <IoMdArrowRoundUp size={20} color={'white'}/>
-          </button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className='w-full flex flex-col justify-center items-center gap-1'>
-      {showComment && <CommentsContainer comments={comments}/>}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
           <Name>{name}</Name>
@@ -332,20 +272,6 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
             <p className='text-sm'>show less</p>
             <IoIosArrowDropupCircle size={20} />
           </button>}
-      </div>
-      <div className='w-full flex felx-row items-center justify-between'>
-        <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 p-2'>
-          {liked ? <IoIosHeart size={30} color={"red"} onClick={() => {
-            setLiked(prev => !prev);
-          }} /> : <IoIosHeartEmpty size={25} color={"white"} onClick={() => {
-            setLiked(prev => !prev);
-          }} />}
-          <p>12 likes</p>
-        </div>
-        <div className='basis-1/2 w-full flex flex-row justify-end items-center gap-2 p-2' onClick={() => setShowComment(prev => true)}>
-          <IoChatbubbleOutline size={25} color={"white"} />
-          <p>{comments?.length} </p>
-        </div>
       </div>
     </div>
   );
