@@ -38,6 +38,7 @@ const UserDetails = ({ showHistory }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState();
   const profilePicRef = useRef(null);
+  const profilePicCameraRef = useRef(null);
   const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
   // state to store the chosen profile pic
   const [chosenPic, setChosenPic] = useState(null);
@@ -121,6 +122,14 @@ const UserDetails = ({ showHistory }) => {
           <ProfilePicHeading>Profile photo</ProfilePicHeading>
           <div className='w-full flex flex-row justify-start gap-[40px] items-ceter'>
             <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
+              profilePicCameraRef.current.click();
+            }}>
+              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                <IoCamera size={30} color='#5ECC7B' />
+              </button>
+              <IconLabel>Camera</IconLabel>
+            </div>
+            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
               profilePicRef.current.click();
             }}>
               <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
@@ -170,6 +179,7 @@ const UserDetails = ({ showHistory }) => {
                   <IoCamera size={25} color="black" />
                 </button>
                 <input ref={profilePicRef} type='file' accept='image/png, image/jpg, image/jpeg' name="profile image" hidden onInput={handlePicChange}></input>
+                <input ref={profilePicCameraRef} type='file' capture="user" accept='image/png, image/jpg, image/jpeg' name="profile image camera" hidden onInput={handlePicChange}></input>
               </div>
               <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
                 {memberData.name}
