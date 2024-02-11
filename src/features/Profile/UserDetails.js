@@ -11,7 +11,6 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { BsImageFill } from "react-icons/bs";
 import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
-import useLocalStorage from '../../hooks/useLocalStorage';
 import axios from 'axios';
 
 const ProfilePicHeading = styled.div`
@@ -44,14 +43,13 @@ const UserDetails = ({ showHistory }) => {
   const [chosenPic, setChosenPic] = useState(null);
   // state to store the file object to send to the server
   const [profilePicFile, setProfilePicFile] = useState(null);
+  const [uniqueImageURLKey, setUniqueImageURLKey] = useState(null);
 
   const navigate = useNavigate();
 
   const { getUserFromStorage, logout } = useAuth();
-  const [userData, setUserData, getUserData] = useLocalStorage('user', {});
 
   useEffect(() => {
-    console.log(userData)
     const user = getUserFromStorage();
     if (user) {
       getMemberData(user);
@@ -66,6 +64,9 @@ const UserDetails = ({ showHistory }) => {
 
       if (res.data) {
         const data = res.data;
+        // Trick to avoid the memory caching by the browser, so that the updated profile pic is displayed
+        const uniqueKey = Date.now();
+        setUniqueImageURLKey(`${data?.profilePicture}?key=${uniqueKey}`);
         setMemberData({ ...data, ...user });
       }
     } catch (error) {
@@ -131,7 +132,6 @@ const UserDetails = ({ showHistory }) => {
               setChosenPic(null);
               setProfilePicFile(null); // reset the file object
               setShowProfilePicPopup(false); // close the popup after deleting the pic
-              setUserData({ ...userData, profilePicture: null });
             }}>
               <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                 <IoMdTrash size={30} color='gray' />
@@ -161,8 +161,8 @@ const UserDetails = ({ showHistory }) => {
               <div className='w-[100px] h-[100px] rounded-full relative'>
                 {chosenPic ?
                   <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
-                  userData?.profilePicture ?
-                    <img src={userData?.profilePicture} alt="profilePicture" className='h-[100px] w-[100px] rounded-full object-cover' /> :
+                  memberData && memberData?.profilePicture ?
+                    <img src={uniqueImageURLKey} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
                     <FaUserCircle size={100} color={'#91BDF6'} />}
                 <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
                   setShowProfilePicPopup(true);
