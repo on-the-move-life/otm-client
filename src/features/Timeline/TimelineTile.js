@@ -182,7 +182,6 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
         {/* Comment Input */}
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px]'>
-          <FaUserCircle size={50}/>
           <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef}/>
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => {
             console.log(typedCommentRef.current.value)
