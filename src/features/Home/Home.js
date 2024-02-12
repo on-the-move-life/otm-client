@@ -84,7 +84,7 @@ const Home = () => {
                 {homeStats.name}
               </h1>
               <button className='mr-4 mt-4' onClick={navigateToProfile}>
-              {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover'/>: <FaUser size={30}/>}
+                <FaUser size={30}/>
               </button>
             </div>
             <div className="flex items-center">
