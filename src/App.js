@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
-import { Home } from './features/Home';
+import { Home, LeaderBoard } from './features/Home';
 import Questionnaire from './features/Questionnaire/Questionnaire';
 import Timeline from './features/Timeline/Timeline';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
@@ -32,14 +32,56 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/questionnaire" element={<Questionnaire />} />
-        <Route path="/section-details" element={<SectionDetail />} />
-        <Route path="/workout" element={<Workout />} />
-        <Route path="/workout-summary" element={<WorkoutSummary />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/questionnaire" element={
+            user && user.email ? (
+              <Questionnaire />
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
+        <Route path="/section-details" element={
+            user && user.email ? (
+              <SectionDetail />
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
+        <Route path="/workout" element={
+            user && user.email ? (
+              <Workout />
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
+        <Route path="/workout-summary" element={
+            user && user.email ? (
+              <WorkoutSummary />
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
+        <Route path="/profile" element={
+            user && user.email ? (
+              <Profile />
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
+        <Route path="/leaderboard" element={
+            user && user.email ? (
+              <LeaderBoard />
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
         <Route path="*" element={<PageNotFound />} />
-        <Route path="/timeline" element={<Timeline />} />
+        <Route path="/timeline" element={
+            user && user.email ? (
+              <Timeline />
+            ) : (
+              <Navigate to="/login" />
+            )
+          } />
       </Routes>
     </BrowserRouter>
   );

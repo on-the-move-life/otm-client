@@ -13,9 +13,11 @@ import axios from 'axios';
 import { AiOutlineRight } from 'react-icons/ai';
 import { FaUser } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 
 const Home = () => {
+  const [value, setValue, getValue] = useLocalStorage('user', {});
   const { setUserData } = useUserContext();
   const { logout } = useAuth();
   // const [user, getUserFromStorage] = useState({});
@@ -55,6 +57,7 @@ const Home = () => {
           if (res.data) {
             setUserData(res.data);
             setHomeStats(res.data);
+            setValue({...value, profilePicture: res?.data?.profilePicture});
             setLoader(false);
             setError(null);
           }
@@ -84,7 +87,7 @@ const Home = () => {
                 {homeStats.name}
               </h1>
               <button className='mr-4 mt-4' onClick={navigateToProfile}>
-              <FaUser size={25}/>
+              {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover'/>:<FaUser size={30}/>}
               </button>
             </div>
             <div className="flex items-center">

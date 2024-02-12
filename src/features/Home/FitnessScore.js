@@ -76,7 +76,7 @@ text-transform: capitalize;
 `
 
 function FitnessScore({ score, percentile }) {
-    const Indicator = ({ className, style }) => {
+    const Indicator = ({ style }) => {
         return (
             <div style={style} className='relative'>
                 <div className='w-[1px] h-[8px] bg-white'></div>
@@ -94,35 +94,45 @@ function FitnessScore({ score, percentile }) {
         const [indicatorPosition, setIndicatorPosition] = useState(0)
 
         useEffect(() => {
-            if (score >= 0 && score < 2) {
-                const position = (score / 10) * 100;
+            try{
+                if (score >= 0 && score < 2) {
+                    const position = (score / 10) * 100;
+                    setIndicatorPosition(position);
+                    setTag(tags[0]);
+                    setColor(colors[0]);
+                }
+                else if (score >= 2 && score < 4) {
+                    const position = (score / 10) * 100 + 1;
+                    setIndicatorPosition(position);
+                    setTag(tags[1]);
+                    setColor(colors[1]);
+                }
+                else if (score >= 4 && score < 6) {
+                    const position = (score / 10) * 100 + 2;
+                    setIndicatorPosition(position);
+                    setTag(tags[2]);
+                    setColor(colors[2]);
+                }
+                else if (score >= 6 && score < 8) {
+                    const position = (score / 10) * 100 + 3;
+                    setIndicatorPosition(position);
+                    setTag(tags[3]);
+                    setColor(colors[3]);
+                }
+                else {
+                    const position = (score / 10) * 100 + 4;
+                    setIndicatorPosition(position);
+                    setTag(tags[4]);
+                    setColor(colors[4]);
+                }
+            }
+            catch(e){
+                console.log("fitness score : ", score);
+                console.log("error : ", e);
+                const position = 0;
                 setIndicatorPosition(position);
                 setTag(tags[0]);
                 setColor(colors[0]);
-            }
-            else if (score >= 2 && score < 4) {
-                const position = (score / 10) * 100 + 1;
-                setIndicatorPosition(position);
-                setTag(tags[1]);
-                setColor(colors[1]);
-            }
-            else if (score >= 4 && score < 6) {
-                const position = (score / 10) * 100 + 2;
-                setIndicatorPosition(position);
-                setTag(tags[2]);
-                setColor(colors[2]);
-            }
-            else if (score >= 6 && score < 8) {
-                const position = (score / 10) * 100 + 3;
-                setIndicatorPosition(position);
-                setTag(tags[3]);
-                setColor(colors[3]);
-            }
-            else {
-                const position = (score / 10) * 100 + 4;
-                setIndicatorPosition(position);
-                setTag(tags[4]);
-                setColor(colors[4]);
             }
         }, [score, colors, tags])
 
@@ -152,7 +162,7 @@ function FitnessScore({ score, percentile }) {
             <div className='w-full flex flex-row justify-between items-center'>
                 <div className='w-6/12 flex flex-col justify-center items-center gap-2'>
                     <Heading>Fitness Score</Heading>
-                    <Score>{score}</Score>
+                    {score ? <Score>{score}</Score> : <Score>-</Score>}
                     <ScoreDetail>Top <Percentile>{percentile}%</Percentile> of the community</ScoreDetail>
                 </div>
                 <div className='w-6/12 flex flex-col justify-center items-center gap-2'>

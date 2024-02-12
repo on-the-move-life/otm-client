@@ -1,3 +1,4 @@
+import { last } from 'lodash';
 import React, { useEffect, useState } from 'react'
 
 function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
@@ -5,12 +6,21 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
 
     useEffect(() => {
         // setting the average workout count
-        let workoutCount = 0;
-        lastEightWeeksWorkout.map((item, index) => {
-            return workoutCount += item.count;
-        })
-        workoutCount = workoutCount / lastEightWeeksWorkout?.length;
-        setCurrentScore(prevValue => workoutCount.toFixed(1));
+        try{
+            let workoutCount = 0;
+            lastEightWeeksWorkout.map((item, index) => {
+                return workoutCount += item.count;
+            })
+            workoutCount = workoutCount / lastEightWeeksWorkout?.length;
+            if(isNaN(workoutCount)){
+                workoutCount = 0;
+            }
+            setCurrentScore(prevValue => workoutCount.toFixed(1));
+        }
+        catch(e){
+            // expected exception when lastEightWeeksWorkout is empty array or undefined or null
+            setCurrentScore(prevValue => Number(0).toFixed(1));
+        }
     }, [lastEightWeeksWorkout])
 
     const Bar = ({ progress }) => {
@@ -70,17 +80,16 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                     <div className='wwc-score'>{currentScore}</div>
                     <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
                 </div>
-                <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
+                {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
                     {
-                        lastEightWeeksWorkout?.length === 0 ?
-                            <div className='wwc-score'>-</div> :
-                            lastEightWeeksWorkout?.map((progress, index) => {
+                            [...Array(8).keys()]?.map((item, index) => {
+                                const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
                                 return (
-                                    <Bar progress={progress?.count} key={index} />
+                                    <Bar progress={progressCount} key={Math.random() * 1000} />
                                 )
                             })
                     }
-                </div>
+                </div> : <div className='wwc-score wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>-</div>}
             </section>
         </div>
     )
