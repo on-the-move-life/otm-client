@@ -41,7 +41,7 @@ function CommunityTimeline() {
             }
 
             {
-                data?.data && data?.data.map((data, index) => {
+                data?.data && data?.data?.length !== 0 ? data?.data.map((data, index) => {
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>
@@ -69,10 +69,13 @@ function CommunityTimeline() {
                             key={Math.random() * 1000}
                         />
                     )
-                })
+                }) :
+                    <div className='h-screen'>
+                        <h1 className='text-white/90 text-center text-2xl mt-10'>No workout data yet</h1>
+                    </div>
             }
 
-            <div className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'>
+            {data?.data && data?.data?.length !== 0 && <div className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'>
                 <div className={`w-full flex flex-row justify-start items-center ${page > 1 ? 'text-green' : 'text-green/50'}`} onClick={() => {
                     page > 1 && setPage(prev => prev - 1);
                 }}><HiOutlineChevronDoubleLeft size={30} /></div>
@@ -80,7 +83,7 @@ function CommunityTimeline() {
                 <div className={`w-full flex flex-row justify-end items-center ${data?.hasNextPage ? 'text-green' : 'text-green/50'}`} onClick={() => {
                     data?.hasNextPage && setPage(prev => prev + 1);
                 }}><HiOutlineChevronDoubleRight size={30} /></div>
-            </div>
+            </div>}
         </div>
     )
 }
