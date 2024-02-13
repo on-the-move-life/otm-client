@@ -196,21 +196,13 @@ const UserDetails = ({ showHistory }) => {
                 </div>
               </div> */}
             </div>
-            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4">
+            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
               <div className=" flex h-full flex-col justify-around">
                 <section>
                   <div className="workout-gradient-text text-3xl font-medium leading-10">
                     Membership
                   </div>
-                  {/* <div className="text-[8px] uppercase tracking-[3px] text-lightGray">
-                    lighter & agile
-                  </div> */}
-                  {/* <div className="bg-neutral-700 border-neutral-600 mt-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-            <div className="text-neutral-400 text-xs capitalize">
-              ₹5,000 renewed monthly
-            </div>
-          </div> */}
-                  <div className="pt-2 ">
+                  <div className="pt-2 " onClick={() => setShowProfilePicPopup(false)}>
                     {memberData.isPaymentDue ? (
                       <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
                         <div className="relative h-3 w-3">
@@ -247,7 +239,7 @@ const UserDetails = ({ showHistory }) => {
                 </section>
               </div>
             </div>
-            <div className="flex flex-col pt-52">
+            <div className="flex flex-col pt-52" onClick={() => setShowProfilePicPopup(false)}>
               <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
