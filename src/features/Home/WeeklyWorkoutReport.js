@@ -84,7 +84,6 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                     {
                             [...Array(8).keys()]?.map((item, index) => {
                                 const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
-                                console.log(progressCount)
                                 return (
                                     <Bar progress={progressCount} key={Math.random() * 1000} />
                                 )

@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Leaderboard } from './features/Leaderboard';
@@ -10,12 +11,15 @@ import { Profile } from './features/Profile';
 function App() {
   // const { user, getUserFromStorage } = useAuth();
 
-  let user = localStorage.getItem('user');
-  if (user && !user.includes('undefined')) {
-    user = JSON.parse(user);
-  }
+  const retrievedUser = localStorage.getItem('user');
+  const user = useMemo(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser && !storedUser.includes('undefined') ? JSON.parse(storedUser) : null;
+  }, [retrievedUser]);
 
-  console.log(user, 'USER');
+  useEffect(() => {
+    console.log(user, 'USER');
+  }, []);
 
   return (
     <BrowserRouter>
