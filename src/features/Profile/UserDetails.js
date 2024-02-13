@@ -106,7 +106,20 @@ const UserDetails = ({ showHistory }) => {
           console.log(res)
         })
     }
+  }
 
+  function handlePicDelete() {
+    setChosenPic(null);
+    setProfilePicFile(null); // reset the file object
+    setShowProfilePicPopup(false); // close the popup after deleting the pic
+    const formData = new FormData();
+    formData.append('email', JSON.parse(localStorage.getItem('user')).email);
+    axios
+      .delete(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
+      .then(res => {
+        console.log(res)
+        window.location.reload();
+      })
   }
 
   return (
@@ -137,11 +150,7 @@ const UserDetails = ({ showHistory }) => {
               </button>
               <IconLabel>Gallery</IconLabel>
             </div>
-            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
-              setChosenPic(null);
-              setProfilePicFile(null); // reset the file object
-              setShowProfilePicPopup(false); // close the popup after deleting the pic
-            }}>
+            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handlePicDelete}>
               <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                 <IoMdTrash size={30} color='gray' />
               </button>
