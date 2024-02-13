@@ -2,13 +2,14 @@ import React, { useMemo, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import AssesmentTile from './AssesmentTile';
 import WorkoutTile from './WorkoutTile'
-import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle, IoIosHeartEmpty, IoIosHeart, IoIosArrowDown, IoMdArrowRoundUp } from "react-icons/io";
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle, IoIosArrowDown, IoMdArrowRoundUp } from "react-icons/io";
 import {
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
 } from 'react-icons/hi';
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
+import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -334,12 +335,12 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
       </div>
       <div className='w-full flex felx-row items-center justify-between'>
         <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 p-2'>
-          {liked ? <IoIosHeart size={30} color={"red"} onClick={() => {
+          {liked ? <AiOutlineLike size={25} color={"white"} onClick={() => {
             setLiked(prev => !prev);
-          }} /> : <IoIosHeartEmpty size={25} color={"white"} onClick={() => {
+          }} /> : <AiTwotoneLike size={25} color={"white"} onClick={() => {
             setLiked(prev => !prev);
           }} />}
-          <p>12 likes</p>
+          <p>12 kudos</p>
         </div>
         <div className='basis-1/2 w-full flex flex-row justify-end items-center gap-2 p-2' onClick={() => setShowComment(prev => true)}>
           <IoChatbubbleOutline size={25} color={"white"} />
