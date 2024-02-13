@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../../components';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +7,32 @@ import { formatDate } from '../../utils';
 import { axiosClient } from './apiClient';
 import { FaUserCircle } from 'react-icons/fa';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { BsImageFill } from "react-icons/bs";
+import { IoMdTrash } from "react-icons/io";
+import { IoCamera } from "react-icons/io5";
+import axios from 'axios';
+
+const ProfilePicHeading = styled.div`
+color: #D7D7D7;
+text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 20px;
+font-style: normal;
+line-height: 29.066px; /* 160% */
+text-transform: capitalize;
+letter-spacing: 1px;
+`
+const IconLabel = styled.div`
+color: #D7D7D7;
+text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 15px;
+font-style: normal;
+line-height: 29.066px; /* 160% */
+text-transform: capitalize;
+letter-spacing: 1px;
+`
 
 const UserDetails = ({ showHistory }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -63,9 +90,11 @@ const UserDetails = ({ showHistory }) => {
           <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-3xl font-semibold text-transparent">
             My Profile
           </h1>
+
+          {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
-            <div className="mt-6 flex flex-col items-center justify-center">
-              <FaUserCircle size={40} color={'#91BDF6'} />
+            <div className="mt-6 flex flex-col items-center justify-center gap-1">
+                <FaUserCircle size={100} color={'#91BDF6'} />
               <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
                 {memberData.name}
               </div>
@@ -132,14 +161,14 @@ const UserDetails = ({ showHistory }) => {
                 </section>
               </div>
             </div>
-            <div className="flex flex-col pt-52" onClick={handleLogout}>
+            <div className="flex flex-col pt-52">
               <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
                 </div>
-                <div className="text-lg font-medium text-lightGray">
+                <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
                   Log Out
-                </div>
+                </button>
               </div>
             </div>
           </div>

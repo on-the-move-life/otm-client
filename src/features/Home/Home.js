@@ -84,7 +84,7 @@ const Home = () => {
                 {homeStats.name}
               </h1>
               <button className='mr-4 mt-4' onClick={navigateToProfile}>
-              <FaUser size={25}/>
+                <FaUser size={30}/>
               </button>
             </div>
             <div className="flex items-center">
