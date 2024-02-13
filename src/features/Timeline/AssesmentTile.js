@@ -108,7 +108,6 @@ function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
                         </div>
                     }
                 </div>
-                <ScorePara>since last month</ScorePara>
             </div>
         </div>
     )

@@ -16,6 +16,7 @@ const Login = () => {
   } = useAuth();
   const [showLoginInput, setShowLoginInput] = useState(false);
   const [showSignUpInput, setShowSignUpInput] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -40,6 +41,7 @@ const Login = () => {
   }
 
   const handleEmailAuth = (e) => {
+    setButtonClicked(true);
     e.preventDefault();
 
     if (email && password) {
@@ -187,10 +189,10 @@ const Login = () => {
               </div>
             </div>
             <button
-              disabled={!email || !password}
+              disabled={!email || !password || buttonClicked}
               type="submit"
               className={`continueButton w-full ${
-                !email || !password ? 'bg-darkGray' : 'bg-green'
+                !email || !password || buttonClicked ? 'bg-darkGray' : 'bg-green'
               }`}
             >
               Continue
@@ -220,7 +222,7 @@ const Login = () => {
                 }}
               >
                 <HiOutlineMail size={25} />
-                <p className="ml-16 text-base">Login with email</p>
+                <p className="w-full text-base text-center">Login with email</p>
               </button>
               <p className="my-2 text-center">or</p>
               <div

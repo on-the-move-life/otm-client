@@ -40,8 +40,8 @@ const WorkoutSummary = () => {
   );
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
-    console.log(newAchievementIndex, 'newAchievementIndex');
-    console.log(newCoachIndex, 'newCoachIndex');
+    // console.log(newAchievementIndex, 'newAchievementIndex');
+    // console.log(newCoachIndex, 'newCoachIndex');
 
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
       setAchievementsIndex((index) => newAchievementIndex);
@@ -98,9 +98,9 @@ const WorkoutSummary = () => {
 
   const fitnessScoreUpdates =
     workoutSummary && workoutSummary.fitnessScoreUpdates;
-  const scoreDifference = (
+  const scoreDifference = Number((
     +fitnessScoreUpdates?.newScore - +fitnessScoreUpdates?.oldScore
-  ).toFixed(1);
+  ).toFixed(1));
 
   useEffect(() => {
     if (inputValues && workout) {

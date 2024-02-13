@@ -165,6 +165,8 @@ const UserDetails = ({ showHistory }) => {
           </h1>
 
           {/* User Profile Pic and Name */}
+
+          {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <div className='w-[100px] h-[100px] rounded-full relative'>
@@ -245,7 +247,9 @@ const UserDetails = ({ showHistory }) => {
                   <img src="./assets/logout.svg" alt="" />
                 </div>
                 <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
+                <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
                   Log Out
+                </button>
                 </button>
               </div>
             </div>
