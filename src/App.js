@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
-import { Home, LeaderBoard } from './features/Home';
+import { Leaderboard } from './features/Leaderboard';
+import { Home } from './features/Home';
 import Questionnaire from './features/Questionnaire/Questionnaire';
 import Timeline from './features/Timeline/Timeline';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
-import { Leaderboard } from './features/Leaderboard';
 import { Profile } from './features/Profile';
 
 function App() {
@@ -69,7 +69,7 @@ function App() {
           } />
         <Route path="/leaderboard" element={
             user && user.email ? (
-              <LeaderBoard />
+              <Leaderboard />
             ) : (
               <Navigate to="/login" />
             )
