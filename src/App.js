@@ -11,16 +11,13 @@ import { Profile } from './features/Profile';
 function App() {
   // const { user, getUserFromStorage } = useAuth();
 
-  const retrievedUser = localStorage.getItem('user');
-  const user = useMemo(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser && !storedUser.includes('undefined') ? JSON.parse(storedUser) : null;
-  }, [retrievedUser]);
+  let user = localStorage.getItem('user');
+  if (user && !user.includes('undefined')) {
+    user = JSON.parse(user);
+  }
 
-  useEffect(() => {
-    console.log(user, 'USER');
-  }, []);
-
+  console.log(user, 'USER');
+  
   return (
     <BrowserRouter>
       <Routes>
