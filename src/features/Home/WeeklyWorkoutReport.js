@@ -29,7 +29,7 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
         const [color, setColor] = useState(gray);
 
         useEffect(() => {
-            if (progress >= suggestedWorkoutPerWeek) {
+            if (progress >= suggestedWorkoutPerWeek && suggestedWorkoutPerWeek !== 0) {
                 // if workout per week is >= 4 the bar is filled completely
                 setHeight(prev => String(47));
             }
@@ -84,6 +84,7 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                     {
                             [...Array(8).keys()]?.map((item, index) => {
                                 const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
+                                console.log(progressCount)
                                 return (
                                     <Bar progress={progressCount} key={Math.random() * 1000} />
                                 )
