@@ -151,16 +151,16 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
       <div className='w-full flex flex-row justify-start items-start gap-2'>
         <FaUserCircle size={35} />
         <div className='w-full flex flex-col justify-start items-start gap-1'>
-            <div className='text-sm text-gray-300'>{name}</div>
-            <div className='text-xs text-gray-200 text-pretty'>
-              <p>{comment}</p>
-            </div>
+          <div className='text-sm text-gray-300'>{name}</div>
+          <div className='text-xs text-gray-200 text-pretty'>
+            <p>{comment}</p>
+          </div>
         </div>
       </div>
     )
   }
 
-  const CommentsContainer = ({comments}) => {
+  const CommentsContainer = ({ comments }) => {
     return (
       <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
         {/* Closing Icon */}
@@ -175,7 +175,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           {
             comments?.map((comment, index) => {
               return (
-                <IndividualComment name={comment.name} comment={comment.comment} key={Math.random() * 1000}/>
+                <IndividualComment name={comment.name} comment={comment.comment} key={Math.random() * 1000} />
               )
             })
           }
@@ -183,14 +183,14 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
         {/* Comment Input */}
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px]'>
-          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef}/>
+          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} />
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => {
             console.log(typedCommentRef.current.value)
             const comment = typedCommentRef.current.value;
             setComments(prev => [...prev, { name: 'saurabh', comment: comment }]);
             typedCommentRef.current.value = '';
           }}>
-            <IoMdArrowRoundUp size={20} color={'white'}/>
+            <IoMdArrowRoundUp size={20} color={'white'} />
           </button>
         </div>
       </div>
@@ -199,7 +199,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
   return (
     <div className='w-full flex flex-col justify-center items-center gap-1'>
-      {showComment && <CommentsContainer comments={comments}/>}
+      {showComment && <CommentsContainer comments={comments} />}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
           <Name>{name}</Name>
@@ -216,7 +216,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
         </div>
         {achievements?.length > 0 && (
           <section className="my-4 flex flex-col justify-center backdrop-blur-sm rounded-lg p-2">
-            <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
+            <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray mb-4">
               achievements unlocked
             </h4>
 
@@ -234,8 +234,8 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
                   }}
                 />
               </span>
-              <div className="flex h-full w-full items-center justify-center px-2 rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] ">
-                <p className="basis-2/3  text-[10px]">
+              {/* <div className="flex h-full w-full items-center justify-center px-2 rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] ">
+                <p className=" text-[10px]">
                   {achievements[achievementsIndex]?.description}
                 </p>
                 <div className="h-[7rem] w-[7rem] flex flex-row justify-center items-center">
@@ -245,6 +245,10 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
                     alt="badge"
                   />
                 </div>
+              </div> */}
+
+              <div className="h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs">
+                <p>{achievements[achievementsIndex]?.description}</p>
               </div>
 
               <span>
@@ -320,13 +324,13 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
             })
           }
         </div>}
-        {collapsed ? <button className='flex flex-row justify-end items-center gap-1 pt-5 text-green' onClick={() => {
+        {collapsed ? <button className='flex flex-row justify-end items-center gap-1 pt-5 text-green select-none' onClick={() => {
           setCollapsed(false);
         }}>
           <p className='text-sm'>show more</p>
           <IoIosArrowDropdownCircle size={20} />
         </button> :
-          <button className='flex flex-row justify-end items-center gap-1 pt-2 text-green' onClick={() => {
+          <button className='flex flex-row justify-end items-center gap-1 pt-2 text-green select-none' onClick={() => {
             setCollapsed(true);
           }}>
             <p className='text-sm'>show less</p>
@@ -335,9 +339,9 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
       </div>
       <div className='w-full flex felx-row items-center justify-between'>
         <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 p-2'>
-          {liked ? <AiOutlineLike size={25} color={"white"} onClick={() => {
+          {liked ? <AiTwotoneLike size={25} color={"white"} onClick={() => {
             setLiked(prev => !prev);
-          }} /> : <AiTwotoneLike size={25} color={"white"} onClick={() => {
+          }} /> : <AiOutlineLike size={25} color={"white"} onClick={() => {
             setLiked(prev => !prev);
           }} />}
           <p>12 kudos</p>
