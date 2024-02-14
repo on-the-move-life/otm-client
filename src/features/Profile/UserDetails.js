@@ -99,7 +99,9 @@ const UserDetails = ({ showHistory }) => {
       setShowProfilePicPopup(false);
       const formData = new FormData();
       formData.append('profilePicture', file);
+      console.log('step 1', formData)
       formData.append('email', JSON.parse(localStorage.getItem('user')).email);
+      console.log(formData, 'step 2')
       axios
         .post(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
         .then(res => {
@@ -112,10 +114,13 @@ const UserDetails = ({ showHistory }) => {
     setChosenPic(null);
     setProfilePicFile(null); // reset the file object
     setShowProfilePicPopup(false); // close the popup after deleting the pic
-    const formData = new FormData();
-    formData.append('email', JSON.parse(localStorage.getItem('user')).email);
+    const email = JSON.parse(localStorage.getItem('user'))?.email;
     axios
-      .delete(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
+      .delete(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, {
+        data: {
+          email: email
+        }
+      })
       .then(res => {
         console.log(res)
         window.location.reload();
