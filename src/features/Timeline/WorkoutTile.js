@@ -7,7 +7,6 @@ height: auto;
 flex-shrink: 0;
 border-radius: 10.9px;
 border: 1px solid #3F3F3F;
-backdrop-filter: blur(34.061134338378906px);
 `
 const Heading = styled.div`
 color: var(--White, #FFF);
