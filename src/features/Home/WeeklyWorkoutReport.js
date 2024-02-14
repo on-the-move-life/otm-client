@@ -1,4 +1,3 @@
-import { last } from 'lodash';
 import React, { useEffect, useState } from 'react'
 
 function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
