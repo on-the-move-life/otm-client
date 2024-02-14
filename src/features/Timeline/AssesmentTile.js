@@ -64,15 +64,17 @@ function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
     useEffect(() => {
         if (currScore >= prevScore) {
             const diff = currScore - prevScore;
-            const percentage = (diff / prevScore) * 100;
-            setPercentChange(prev => `+${percentage.toFixed(1)}%`);
+            // const percentage = (diff / prevScore) * 100;
+            // setPercentChange(prev => `+${percentage.toFixed(1)}%`);
+            setPercentChange(prev => `+${diff.toFixed(1)}`);
             setPositiveChange(true);
             setColor(colors[0]);
         }
         else {
             const diff = prevScore - currScore;
-            const percentage = (diff / prevScore) * 100;
-            setPercentChange(prev => `-${percentage.toFixed(1)}%`);
+            // const percentage = (diff / prevScore) * 100;
+            // setPercentChange(prev => `-${percentage.toFixed(1)}%`);
+            setPercentChange(prev => `-${diff.toFixed(1)}`);
             setPositiveChange(false);
             setColor(colors[1]);
         }
