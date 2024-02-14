@@ -10,7 +10,11 @@ import { Profile } from './features/Profile';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
-
+  let user = localStorage.getItem('user');
+  if (user && !user.includes('undefined')) {
+    user = JSON.parse(user);
+  }
+  console.log("Global level user : ", user)
 
   function RouteMiddleware({ children }) {
     let user = localStorage.getItem('user');
@@ -18,7 +22,7 @@ function App() {
       user = JSON.parse(user);
     }
 
-    console.log(user, 'USER');
+    console.log('user inside middleware : ', user);
 
     if(user && user.email) {
       return children;
@@ -33,9 +37,11 @@ function App() {
         <Route
           path="/"
           element={
-            <RouteMiddleware>
-              <Home />
-            </RouteMiddleware>
+            user && user.email ? (
+              <Navigate to="/home" />
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
         <Route path="/login" element={<Login />} />
