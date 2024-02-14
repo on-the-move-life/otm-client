@@ -12,6 +12,7 @@ import { BsImageFill } from "react-icons/bs";
 import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
 import axios from 'axios';
+import { Error } from '../../components';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -45,6 +46,7 @@ const UserDetails = ({ showHistory }) => {
   // state to store the file object to send to the server
   const [profilePicFile, setProfilePicFile] = useState(null);
   const [uniqueImageURLKey, setUniqueImageURLKey] = useState(null);
+  const [profilePicError, setProfilePicError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -107,6 +109,10 @@ const UserDetails = ({ showHistory }) => {
         .then(res => {
           console.log(res)
         })
+        .catch(err => {
+          console.log(err);
+          setProfilePicError(true);
+        })
     }
   }
 
@@ -124,6 +130,10 @@ const UserDetails = ({ showHistory }) => {
       .then(res => {
         console.log(res)
         window.location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+        setProfilePicError(true);
       })
   }
 
@@ -166,6 +176,7 @@ const UserDetails = ({ showHistory }) => {
       </div>}
       {memberData && (
         <div className="h-screen w-screen overflow-x-auto px-4 pb-32 pt-8">
+          {profilePicError && <div className='h-full w-full fixed top-0 z-50 bg-black'><Error>Oops! Something went wrong...</Error></div>}
           <div className="mb-4">
             <HiArrowNarrowLeft
               size={20}
@@ -261,9 +272,9 @@ const UserDetails = ({ showHistory }) => {
                   <img src="./assets/logout.svg" alt="" />
                 </div>
                 <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
-                <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
-                  Log Out
-                </button>
+                  <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
+                    Log Out
+                  </button>
                 </button>
               </div>
             </div>
