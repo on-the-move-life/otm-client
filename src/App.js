@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Leaderboard } from './features/Leaderboard';
@@ -16,7 +17,7 @@ function App() {
   }
 
   console.log(user, 'USER');
-
+  
   return (
     <BrowserRouter>
       <Routes>
