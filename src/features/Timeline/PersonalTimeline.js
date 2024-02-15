@@ -43,7 +43,6 @@ function PersonalTimeline() {
 
             {
                 userData?.data && userData?.data?.map((data, index) => {
-                    console.log(data);
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>

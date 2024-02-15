@@ -68,10 +68,9 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
   const [kudos, setKudos] = useState(postKudos);
   const [showComment, setShowComment] = useState(false);
   const typedCommentRef = useRef(null);
+  const typeOfCommentRef = useRef(null);
 
   function formatDateTime(inputDateTime) {
-    console.log("id : ", _id);
-    console.log("isliked ", isLiked);
     const [datePart, timePart, ampm] = inputDateTime.split(' ');
     const [month, day, year] = datePart.split('/');
 
@@ -140,7 +139,6 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         "eventBy": JSON.parse(localStorage.getItem('user'))?.email
       })
         .then(res => {
-          console.log(res);
           setLiked(prev => !prev);
           setKudos(prev => prev + 1);
         })
@@ -155,7 +153,6 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         "eventBy": JSON.parse(localStorage.getItem('user'))?.email
       })
         .then(res => {
-          console.log(res);
           setLiked(prev => !prev);
           setKudos(prev => prev - 1);
         })
@@ -165,9 +162,45 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
     }
   }
 
+  function handleComment() {
+    const comment = typedCommentRef.current.value;
+    if (typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
+        postId: _id,
+        event: 'comment',
+        comment: comment,
+        eventBy: JSON.parse(localStorage.getItem('user'))?.email,
+        isParentComment: true,
+        parentCommentId: null
+      })
+        .then(res => {
+          typedCommentRef.current.value = '';
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    else if (typeOfCommentRef.current?.entity === 'child' && typeOfCommentRef.current?.parentCommentId !== null) {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
+        postId: _id,
+        event: 'comment',
+        comment: comment,
+        eventBy: JSON.parse(localStorage.getItem('user'))?.email,
+        isParentComment: false,
+        parentCommentId: typeOfCommentRef.current?.parentCommentId
+      })
+        .then(res => {
+          typedCommentRef.current.value = '';
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }
+
   const CommentsContainer = ({ comments }) => {
     return (
-      <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
+      <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-black z-50'>
         {/* Closing Icon */}
         <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 rounded-b-xl' onClick={() => {
           setShowComment(prev => !prev)
@@ -178,9 +211,9 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         {/* Comments */}
         <div className='w-full mt-12 flex flex-col justify-start items-start gap-3 px-4'>
           {
-            postComments?.map((comment, index) => {
+            comments?.map((comment, index) => {
               return (
-                <IndividualComment name={comment?.eventBy} comment={comment?.comment} replies={comment?.replies} profilePicture={comment?.profilePicture} key={Math.random() * 1000} />
+                <IndividualComment commentId={comment?._id} name={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={postComments} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
               )
             })
           }
@@ -188,12 +221,8 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
         {/* Comment Input */}
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px]'>
-          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} />
-          <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => {
-            console.log(typedCommentRef.current.value)
-            const comment = typedCommentRef.current.value;
-            typedCommentRef.current.value = '';
-          }}>
+          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} onClick={() => typeOfCommentRef.current = {entity: 'parent', parentCommentId: null}}/>
+          <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => handleComment()}>
             <IoMdArrowRoundUp size={20} color={'white'} />
           </button>
         </div>
@@ -348,7 +377,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         </div>
         <div className='basis-1/2 w-full flex flex-row justify-end items-center gap-2 p-2' onClick={() => setShowComment(prev => true)}>
           <IoChatbubbleOutline size={25} color={"white"} />
-          <p>{postComments?.length} </p>
+          <p>{(postComments?.filter(comment => comment?.isParentComment)?.length)} </p>
         </div>
       </div>
     </div>

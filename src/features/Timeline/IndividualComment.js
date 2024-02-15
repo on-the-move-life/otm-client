@@ -1,8 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState, forwardRef } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 
-const IndividualComment = ({ name, comment, profilePicture, replies }) => {
+const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParentComment, commentId, createdAt, allComments }, ref) => {
     const [showReplies, setShowReplies] = useState(false);
+    const [hasReplies, setHasReplies] = useState(false);
+    const [replies, setReplies] = useState([]);
+
+    function handleReply() {
+        ref.typeOfCommentRef.current = {entity: 'child', parentCommentId: commentId}
+
+        ref.typedCommentRef.current.focus();
+        ref.typedCommentRef.current.value = `@${name} `;
+    }
+
+    useEffect(() => {
+        allComments && allComments?.map(comment => {
+            if(!comment?.isParentComment && comment?.parentCommentId === commentId){
+                setHasReplies(true);
+                setReplies(prev => [...prev, comment]);
+            }
+        })
+    }, []) 
 
     const IndividualCommentBody = ({ name, comment, profilePicture, children }) => {
         return (
@@ -11,7 +29,7 @@ const IndividualComment = ({ name, comment, profilePicture, replies }) => {
                 <div className='w-full overflow-x-hidden flex flex-col justify-start items-start gap-2'>
                     <div className='w-full flex flex-col items-start justify-start gap-1'>
                         <h4 className='text-sm text-gray-300 font-bold tracking-wide'>{name}</h4>
-                        <div className='w-full text-xs text-gray-200 text-wrap break-all'>
+                        <div className='w-full text-xs text-gray-200 text-wrap break-words'>
                             {comment}
                         </div>
                     </div>
@@ -21,23 +39,24 @@ const IndividualComment = ({ name, comment, profilePicture, replies }) => {
         )
     }
     return (
-        <IndividualCommentBody name={name} comment={comment} profilePicture={profilePicture}>
+        isParentComment && 
+        <IndividualCommentBody name={name} comment={comment} >
             <div className='w-full flex flex-row justify-start items-center gap-5'>
-                <div className='text-gray-600 text-sm'>Reply</div>
-                {replies && replies?.length > 0 && !showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(true)}>View {replies?.length} more replies</div>}
-                {replies && replies?.length > 0 && showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(false)}>Hide replies</div>}
+                <div className='text-gray-600 text-sm' onClick={handleReply}>Reply</div>
+                {hasReplies && !showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(true)}>View {replies?.length} more replies</div>}
+                {hasReplies && showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(false)}>Hide replies</div>}
             </div>
             <div className='w-full flex flex-col justify-start items-start gap-2'>
                 {
                     showReplies && replies && replies?.length > 0 && replies.map((reply, index) => {
                         return (
-                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.name} comment={reply?.comment} profilePicture={reply?.profilePicture} />
+                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.eventBy} comment={reply?.comment} />
                         )
                     })
                 }
             </div>
         </IndividualCommentBody>
     )
-}
+})
 
 export default IndividualComment;
