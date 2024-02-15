@@ -1,65 +1,65 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState, useMemo } from 'react'
+import styled from 'styled-components'
 
 const AssesmentText = styled.div`
-  color: var(--White, #fff);
-  text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 18.166px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 29.066px; /* 160% */
-  text-transform: capitalize;
-`;
+color: var(--White, #FFF);
+text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 18.166px;
+font-style: normal;
+font-weight: 500;
+line-height: 29.066px; /* 160% */
+text-transform: capitalize;
+`
 const AssesmentPara = styled.div`
-  width: 131.703px;
-  color: var(--Light-gray, #b1b1b1);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 8.477px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-`;
+width: 131.703px;
+color: var(--Light-gray, #B1B1B1);
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 8.477px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+`
 const FitnessScore = styled.div`
-  color: var(--Light-gray, #b1b1b1);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 7.266px;
-  font-style: normal;
-  font-weight: 510;
-  line-height: normal;
-  letter-spacing: 2.725px;
-  text-transform: uppercase;
-`;
+color: var(--Light-gray, #B1B1B1);
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 7.266px;
+font-style: normal;
+font-weight: 510;
+line-height: normal;
+letter-spacing: 2.725px;
+text-transform: uppercase;
+`
 const Score = styled.div`
-  text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 29.066px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 36.332px; /* 125% */
-`;
+text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 29.066px;
+font-style: normal;
+font-weight: 500;
+line-height: 36.332px; /* 125% */
+`
 const ScorePara = styled.div`
-  color: var(--Light-gray, #b1b1b1);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 8.477px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-`;
+color: var(--Light-gray, #B1B1B1);
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 8.477px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+`
 const PercentChangeText = styled.div`
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 9.817px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 0.196px;
-  text-transform: lowercase;
-`;
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 9.817px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: 0.196px;
+text-transform: lowercase;
+`
 function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
-  const colors = useMemo(() => ['#5ECC7B', '#FA5757'], []);
-  const [color, setColor] = useState(colors[0]);
-  const [isPostiveChange, setPositiveChange] = useState(true);
-  const [percentChange, setPercentChange] = useState('0%');
+    const colors = useMemo(() => ['#5ECC7B', '#FA5757'], [])
+    const [color, setColor] = useState(colors[0])
+    const [isPostiveChange, setPositiveChange] = useState(true);
+    const [percentChange, setPercentChange] = useState('0%');
 
     useEffect(() => {
         if (currScore >= prevScore) {
@@ -111,11 +111,8 @@ function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
                     }
                 </div>
             </div>
-          )}
         </div>
-      </div>
-    </div>
-  );
+    )
 }
 
-export default AssesmentTile;
+export default AssesmentTile
