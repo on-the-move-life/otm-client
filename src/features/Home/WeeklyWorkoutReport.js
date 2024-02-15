@@ -1,4 +1,3 @@
-import { last } from 'lodash';
 import React, { useEffect, useState } from 'react'
 
 function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
@@ -29,7 +28,7 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
         const [color, setColor] = useState(gray);
 
         useEffect(() => {
-            if (progress >= suggestedWorkoutPerWeek) {
+            if (progress >= suggestedWorkoutPerWeek && suggestedWorkoutPerWeek !== 0) {
                 // if workout per week is >= 4 the bar is filled completely
                 setHeight(prev => String(47));
             }

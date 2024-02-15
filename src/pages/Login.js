@@ -189,10 +189,10 @@ const Login = () => {
               </div>
             </div>
             <button
-              disabled={!email || !password || buttonClicked}
+              disabled={!error && (!email || !password || buttonClicked)}
               type="submit"
               className={`continueButton w-full ${
-                !email || !password || buttonClicked ? 'bg-darkGray' : 'bg-green'
+                !error && (!email || !password || buttonClicked) ? 'bg-darkGray' : 'bg-green'
               }`}
             >
               Continue

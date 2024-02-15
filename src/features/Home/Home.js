@@ -13,11 +13,9 @@ import axios from 'axios';
 import { AiOutlineRight } from 'react-icons/ai';
 import { FaUser } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
-import useLocalStorage from '../../hooks/useLocalStorage';
 
 
 const Home = () => {
-  const [value, setValue, getValue] = useLocalStorage('user', {});
   const { setUserData } = useUserContext();
   const { logout } = useAuth();
   // const [user, getUserFromStorage] = useState({});
@@ -57,7 +55,6 @@ const Home = () => {
           if (res.data) {
             setUserData(res.data);
             setHomeStats(res.data);
-            setValue({...value, profilePicture: res?.data?.profilePicture});
             setLoader(false);
             setError(null);
           }
@@ -80,14 +77,14 @@ const Home = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex h-screen w-screen flex-col gap-5 px-4 pb-8 ">
+        <div className="flex min-h-screen w-screen flex-col gap-5 px-4 pb-8 ">
           <section className="pb-0 pt-10">
             <div className="flex items-center justify-between">
               <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-3xl font-semibold text-transparent">
                 {homeStats.name}
               </h1>
               <button className='mr-4 mt-4' onClick={navigateToProfile}>
-              {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover'/>:<FaUser size={30}/>}
+              {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover'/>: <FaUser size={30}/>}
               </button>
             </div>
             <div className="flex items-center">
