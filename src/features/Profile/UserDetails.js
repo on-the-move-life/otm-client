@@ -12,6 +12,7 @@ import { BsImageFill } from "react-icons/bs";
 import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
 import axios from 'axios';
+import { Error } from '../../components';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -37,6 +38,15 @@ letter-spacing: 1px;
 const UserDetails = ({ showHistory }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [memberData, setMemberData] = useState();
+  const profilePicRef = useRef(null);
+  const profilePicCameraRef = useRef(null);
+  const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
+  // state to store the chosen profile pic
+  const [chosenPic, setChosenPic] = useState(null);
+  // state to store the file object to send to the server
+  const [profilePicFile, setProfilePicFile] = useState(null);
+  const [uniqueImageURLKey, setUniqueImageURLKey] = useState(null);
+  const [profilePicError, setProfilePicError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -57,6 +67,9 @@ const UserDetails = ({ showHistory }) => {
 
       if (res.data) {
         const data = res.data;
+        // Trick to avoid the memory caching by the browser, so that the updated profile pic is displayed
+        const uniqueKey = Date.now();
+        setUniqueImageURLKey(`${data?.profilePicture}?key=${uniqueKey}`);
         setMemberData({ ...data, ...user });
       }
     } catch (error) {
@@ -75,10 +88,95 @@ const UserDetails = ({ showHistory }) => {
     return <Loader />;
   }
 
+  function handlePicChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePicFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setChosenPic(reader.result);
+      };
+      reader.readAsDataURL(file);
+      e.target.value = null;
+      setShowProfilePicPopup(false);
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+      console.log('step 1', formData)
+      formData.append('email', JSON.parse(localStorage.getItem('user')).email);
+      console.log(formData, 'step 2')
+      axios
+        .post(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err);
+          setProfilePicError(true);
+        })
+    }
+  }
+
+  function handlePicDelete() {
+    setChosenPic(null);
+    setProfilePicFile(null); // reset the file object
+    setShowProfilePicPopup(false); // close the popup after deleting the pic
+    const email = JSON.parse(localStorage.getItem('user'))?.email;
+    axios
+      .delete(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, {
+        data: {
+          email: email
+        }
+      })
+      .then(res => {
+        console.log(res)
+        window.location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+        setProfilePicError(true);
+      })
+  }
+
   return (
     <>
+      {/* profile pic update popup */}
+      {showProfilePicPopup && <div className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'>
+        <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => {
+          setShowProfilePicPopup(false);
+        }}>
+          <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
+        </button>
+        <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
+          <ProfilePicHeading>Profile photo</ProfilePicHeading>
+          <div className='w-full flex flex-row justify-start gap-[40px] items-ceter'>
+            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
+              profilePicCameraRef.current.click();
+            }}>
+              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                <IoCamera size={30} color='#5ECC7B' />
+              </button>
+              <IconLabel>Camera</IconLabel>
+            </div>
+            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
+              profilePicRef.current.click();
+            }}>
+              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                <BsImageFill size={30} color='#5ECC7B' />
+              </button>
+              <IconLabel>Gallery</IconLabel>
+            </div>
+            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handlePicDelete}>
+              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                <IoMdTrash size={30} color='gray' />
+              </button>
+              <IconLabel>Delete</IconLabel>
+            </div>
+          </div>
+        </div>
+      </div>}
       {memberData && (
         <div className="h-screen w-screen overflow-x-auto px-4 pb-32 pt-8">
+          {profilePicError && <div className='h-full w-full fixed top-0 z-50 bg-black'><Error>Oops! Something went wrong...</Error></div>}
           <div className="mb-4">
             <HiArrowNarrowLeft
               size={20}
@@ -92,9 +190,24 @@ const UserDetails = ({ showHistory }) => {
           </h1>
 
           {/* User Profile Pic and Name */}
+
+          {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
-                <FaUserCircle size={100} color={'#91BDF6'} />
+              <div className='w-[100px] h-[100px] rounded-full relative'>
+                {chosenPic ?
+                  <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
+                  memberData && memberData?.profilePicture ?
+                    <img src={uniqueImageURLKey} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
+                    <FaUserCircle size={100} color={'#91BDF6'} />}
+                <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
+                  setShowProfilePicPopup(true);
+                }}>
+                  <IoCamera size={25} color="black" />
+                </button>
+                <input ref={profilePicRef} type='file' accept='image/png, image/jpg, image/jpeg' name="profile image" hidden onInput={handlePicChange}></input>
+                <input ref={profilePicCameraRef} type='file' capture="user" accept='image/png, image/jpg, image/jpeg' name="profile image camera" hidden onInput={handlePicChange}></input>
+              </div>
               <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
                 {memberData.name}
               </div>
@@ -110,21 +223,13 @@ const UserDetails = ({ showHistory }) => {
                 </div>
               </div> */}
             </div>
-            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4">
+            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
               <div className=" flex h-full flex-col justify-around">
                 <section>
                   <div className="workout-gradient-text text-3xl font-medium leading-10">
                     Membership
                   </div>
-                  {/* <div className="text-[8px] uppercase tracking-[3px] text-lightGray">
-                    lighter & agile
-                  </div> */}
-                  {/* <div className="bg-neutral-700 border-neutral-600 mt-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-            <div className="text-neutral-400 text-xs capitalize">
-              ₹5,000 renewed monthly
-            </div>
-          </div> */}
-                  <div className="pt-2 ">
+                  <div className="pt-2 " onClick={() => setShowProfilePicPopup(false)}>
                     {memberData.isPaymentDue ? (
                       <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
                         <div className="relative h-3 w-3">
@@ -161,13 +266,15 @@ const UserDetails = ({ showHistory }) => {
                 </section>
               </div>
             </div>
-            <div className="flex flex-col pt-52">
+            <div className="flex flex-col pt-52" onClick={() => setShowProfilePicPopup(false)}>
               <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
                 </div>
                 <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
-                  Log Out
+                  <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
+                    Log Out
+                  </button>
                 </button>
               </div>
             </div>
