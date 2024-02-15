@@ -211,7 +211,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         {/* Comments */}
         <div className='w-full mt-12 flex flex-col justify-start items-start gap-3 px-4'>
           {
-            comments?.map((comment, index) => {
+            comments && comments?.length > 0 && comments?.reverse()?.map((comment, index) => {
               return (
                 <IndividualComment commentId={comment?._id} name={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={postComments} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
               )
@@ -220,7 +220,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         </div>
 
         {/* Comment Input */}
-        <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px]'>
+        <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px] bg-black z-50'>
           <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} onClick={() => typeOfCommentRef.current = {entity: 'parent', parentCommentId: null}}/>
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => handleComment()}>
             <IoMdArrowRoundUp size={20} color={'white'} />

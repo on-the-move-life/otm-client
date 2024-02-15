@@ -6,21 +6,21 @@ const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParent
     const [hasReplies, setHasReplies] = useState(false);
     const [replies, setReplies] = useState([]);
 
-    function handleReply() {
-        ref.typeOfCommentRef.current = {entity: 'child', parentCommentId: commentId}
+    function handleReply(repliedTo) {
+        ref.typeOfCommentRef.current = { entity: 'child', parentCommentId: commentId }
 
         ref.typedCommentRef.current.focus();
-        ref.typedCommentRef.current.value = `@${name} `;
+        ref.typedCommentRef.current.value = `@${repliedTo} `;
     }
 
     useEffect(() => {
         allComments && allComments?.map(comment => {
-            if(!comment?.isParentComment && comment?.parentCommentId === commentId){
+            if (!comment?.isParentComment && comment?.parentCommentId === commentId) {
                 setHasReplies(true);
                 setReplies(prev => [...prev, comment]);
             }
         })
-    }, []) 
+    }, [])
 
     const IndividualCommentBody = ({ name, comment, profilePicture, children }) => {
         return (
@@ -39,10 +39,10 @@ const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParent
         )
     }
     return (
-        isParentComment && 
+        isParentComment &&
         <IndividualCommentBody name={name} comment={comment} >
             <div className='w-full flex flex-row justify-start items-center gap-5'>
-                <div className='text-gray-600 text-sm' onClick={handleReply}>Reply</div>
+                <div className='text-gray-600 text-sm' onClick={() => handleReply(name)}>Reply</div>
                 {hasReplies && !showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(true)}>View {replies?.length} more replies</div>}
                 {hasReplies && showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(false)}>Hide replies</div>}
             </div>
@@ -50,7 +50,11 @@ const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParent
                 {
                     showReplies && replies && replies?.length > 0 && replies.map((reply, index) => {
                         return (
-                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.eventBy} comment={reply?.comment} />
+                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.eventBy} comment={reply?.comment} >
+                                <div className='w-full flex flex-row justify-start items-center gap-5'>
+                                    <div className='text-gray-600 text-sm' onClick={() => handleReply(reply?.eventBy)}>Reply</div>
+                                </div>
+                            </IndividualCommentBody>
                         )
                     })
                 }
