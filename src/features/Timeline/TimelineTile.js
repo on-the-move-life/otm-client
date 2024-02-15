@@ -10,6 +10,7 @@ import {
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import IndividualComment from './IndividualComment';
+import axios from 'axios'
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -53,20 +54,7 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
-const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postLikes }) => {
-  // Testing purpose
-  achievements = [
-    { description: 'achievement 1' },
-    { description: 'achievement 2' },
-    { description: 'achievement 3' },
-    { description: 'achievement 4' },
-  ]
-  coachNotes = [
-    { description: 'Note 1' },
-    { description: 'Note 2' },
-    { description: 'Note 3' },
-    { description: 'Note 4' },
-  ]
+const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postKudos, isLiked }) => {
   const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
   const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
@@ -76,16 +64,14 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
   const [collapsed, setCollapsed] = useState(true);
   const [coachNoteIndex, setCoachNoteIndex] = useState(0);
   const [achievementsIndex, setAchievementsIndex] = useState(0);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(isLiked);
+  const [kudos, setKudos] = useState(postKudos);
   const [showComment, setShowComment] = useState(false);
   const typedCommentRef = useRef(null);
-  const [comments, setComments] = useState([
-    { name: 'saurabh', comment: 'this is my first comment' },
-    { name: 'saurabh', comment: 'this is my second comment' },
-    { name: 'saurabh', comment: 'this is my third comment' }
-  ]);
 
   function formatDateTime(inputDateTime) {
+    console.log("id : ", _id);
+    console.log("isliked ", isLiked);
     const [datePart, timePart, ampm] = inputDateTime.split(' ');
     const [month, day, year] = datePart.split('/');
 
@@ -146,6 +132,39 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
     }
   }, [currScore, colors, tags, dateTime])
 
+  function handleLike(action) {
+    if (action === 'like') {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
+        "postId": _id,
+        "event": "kudos",
+        "eventBy": JSON.parse(localStorage.getItem('user'))?.email
+      })
+        .then(res => {
+          console.log(res);
+          setLiked(prev => !prev);
+          setKudos(prev => prev + 1);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+    else if (action === 'unlike') {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
+        "postId": _id,
+        "event": "kudosRemoved",
+        "eventBy": JSON.parse(localStorage.getItem('user'))?.email
+      })
+        .then(res => {
+          console.log(res);
+          setLiked(prev => !prev);
+          setKudos(prev => prev - 1);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
+
   const CommentsContainer = ({ comments }) => {
     return (
       <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
@@ -161,7 +180,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           {
             postComments?.map((comment, index) => {
               return (
-                <IndividualComment name={comment.name} comment={comment?.comment} replies={comment?.replies} profilePicture={comment?.profilePicture} key={Math.random() * 1000} />
+                <IndividualComment name={comment?.eventBy} comment={comment?.comment} replies={comment?.replies} profilePicture={comment?.profilePicture} key={Math.random() * 1000} />
               )
             })
           }
@@ -173,7 +192,6 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => {
             console.log(typedCommentRef.current.value)
             const comment = typedCommentRef.current.value;
-            setComments(prev => [...prev, { name: 'saurabh', comment: comment }]);
             typedCommentRef.current.value = '';
           }}>
             <IoMdArrowRoundUp size={20} color={'white'} />
@@ -185,7 +203,7 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
 
   return (
     <div className='w-full flex flex-col justify-center items-center gap-1'>
-      {showComment && <CommentsContainer comments={comments} />}
+      {showComment && <CommentsContainer comments={postComments} />}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
           <Name>{name}</Name>
@@ -325,12 +343,8 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
       </div>
       <div className='w-full flex felx-row items-center justify-between'>
         <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 p-2'>
-          {liked ? <AiTwotoneLike size={25} color={"white"} onClick={() => {
-            setLiked(prev => !prev);
-          }} /> : <AiOutlineLike size={25} color={"white"} onClick={() => {
-            setLiked(prev => !prev);
-          }} />}
-          <p>{postLikes?.length} kudos</p>
+          {liked ? <AiTwotoneLike size={25} color={"white"} onClick={() => handleLike('unlike')} /> : <AiOutlineLike size={25} color={"white"} onClick={() => handleLike('like')} />}
+          <p>{kudos} kudos</p>
         </div>
         <div className='basis-1/2 w-full flex flex-row justify-end items-center gap-2 p-2' onClick={() => setShowComment(prev => true)}>
           <IoChatbubbleOutline size={25} color={"white"} />

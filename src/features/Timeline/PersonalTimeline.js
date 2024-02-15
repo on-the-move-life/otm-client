@@ -4,7 +4,6 @@ import Loader from '../../components/Loader';
 import axios from 'axios';
 import Error from '../../components/Error';
 import { HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight } from "react-icons/hi";
-import TimelineData from '../../db/TimelineData';
 
 function PersonalTimeline() {
     const [userData, setUserData] = useState(null);
@@ -20,7 +19,7 @@ function PersonalTimeline() {
     useEffect(() => {
         setLoading(true);
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=personal&name=${user?.name}&page=${page}`)
+        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`)
             .then(res => {
                 setUserData(prev => res?.data);
                 setLoading(false);
@@ -43,11 +42,13 @@ function PersonalTimeline() {
             }
 
             {
-                TimelineData && TimelineData.map((data, index) => {
+                userData?.data && userData?.data?.map((data, index) => {
+                    console.log(data);
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>
                                 <TimelineTile
+                                    _id={data?._id}
                                     name={data?.name}
                                     dateTime={data?.time}
                                     currScore={data?.fitnessScoreUpdates?.newScore}
@@ -56,13 +57,15 @@ function PersonalTimeline() {
                                     coachNotes={data?.coachNotes}
                                     achievement={data?.achievement}
                                     postComments={data?.comments}
-                                    postLikes={data?.likes}
+                                    postKudos={data?.kudos}
+                                    isLiked={data?.isLiked}
                                 />
                             </div>
                         )
                     }
                     return (
                         <TimelineTile
+                            _id={data?._id}
                             name={data?.name}
                             dateTime={data?.time}
                             currScore={data?.fitnessScoreUpdates?.newScore}
@@ -71,6 +74,9 @@ function PersonalTimeline() {
                             key={Math.random() * 1000}
                             coachNotes={data?.coachNotes}
                             achievement={data?.achievement}
+                            postComments={data?.comments}
+                            postKudos={data?.kudos}
+                            isLiked={data?.isLiked}
                         />
                     )
                 })
