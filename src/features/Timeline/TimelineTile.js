@@ -8,8 +8,8 @@ import {
   HiOutlineChevronRight,
 } from 'react-icons/hi';
 import { IoChatbubbleOutline } from "react-icons/io5";
-import { FaUserCircle } from "react-icons/fa";
 import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
+import IndividualComment from './IndividualComment';
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -53,7 +53,7 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
-const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements }) => {
+const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postLikes }) => {
   // Testing purpose
   achievements = [
     { description: 'achievement 1' },
@@ -146,20 +146,6 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
     }
   }, [currScore, colors, tags, dateTime])
 
-  const IndividualComment = ({ name, comment }) => {
-    return (
-      <div className='w-full flex flex-row justify-start items-start gap-2'>
-        <FaUserCircle size={35} />
-        <div className='w-full flex flex-col justify-start items-start gap-1'>
-          <div className='text-sm text-gray-300'>{name}</div>
-          <div className='text-xs text-gray-200 text-pretty'>
-            <p>{comment}</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   const CommentsContainer = ({ comments }) => {
     return (
       <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-gray-900 z-50'>
@@ -173,9 +159,9 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
         {/* Comments */}
         <div className='w-full mt-12 flex flex-col justify-start items-start gap-3 px-4'>
           {
-            comments?.map((comment, index) => {
+            postComments?.map((comment, index) => {
               return (
-                <IndividualComment name={comment.name} comment={comment.comment} key={Math.random() * 1000} />
+                <IndividualComment name={comment.name} comment={comment?.comment} replies={comment?.replies} profilePicture={comment?.profilePicture} key={Math.random() * 1000} />
               )
             })
           }
@@ -344,11 +330,11 @@ const TimelineTile = ({ name, dateTime, kcal, workoutName, currScore, prevScore,
           }} /> : <AiOutlineLike size={25} color={"white"} onClick={() => {
             setLiked(prev => !prev);
           }} />}
-          <p>12 kudos</p>
+          <p>{postLikes?.length} kudos</p>
         </div>
         <div className='basis-1/2 w-full flex flex-row justify-end items-center gap-2 p-2' onClick={() => setShowComment(prev => true)}>
           <IoChatbubbleOutline size={25} color={"white"} />
-          <p>{comments?.length} </p>
+          <p>{postComments?.length} </p>
         </div>
       </div>
     </div>

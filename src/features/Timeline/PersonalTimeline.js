@@ -4,6 +4,7 @@ import Loader from '../../components/Loader';
 import axios from 'axios';
 import Error from '../../components/Error';
 import { HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight } from "react-icons/hi";
+import TimelineData from '../../db/TimelineData';
 
 function PersonalTimeline() {
     const [userData, setUserData] = useState(null);
@@ -42,7 +43,7 @@ function PersonalTimeline() {
             }
 
             {
-                userData?.data && userData?.data.map((data, index) => {
+                TimelineData && TimelineData.map((data, index) => {
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>
@@ -54,6 +55,8 @@ function PersonalTimeline() {
                                     sectionPerformance={data?.sectionPerformance}
                                     coachNotes={data?.coachNotes}
                                     achievement={data?.achievement}
+                                    postComments={data?.comments}
+                                    postLikes={data?.likes}
                                 />
                             </div>
                         )
