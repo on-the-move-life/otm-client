@@ -66,6 +66,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
   const [achievementsIndex, setAchievementsIndex] = useState(0);
   const [liked, setLiked] = useState(isLiked);
   const [kudos, setKudos] = useState(postKudos);
+  const [isLiking, setIsLiking] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const typedCommentRef = useRef(null);
   const typeOfCommentRef = useRef(null);
@@ -132,35 +133,28 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
   }, [currScore, colors, tags, dateTime])
 
   function handleLike(action) {
-    if (action === 'like') {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
+    if (isLiking) return; // If a request is in progress, ignore additional clicks
+
+    setIsLiking(true); // Set isLiking to true when a request starts
+
+    const event = action === 'like' ? 'kudos' : 'kudosRemoved';
+
+    axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
         "postId": _id,
-        "event": "kudos",
+        "event": event,
         "eventBy": JSON.parse(localStorage.getItem('user'))?.email
-      })
-        .then(res => {
-          setLiked(prev => !prev);
-          setKudos(prev => prev + 1);
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-    else if (action === 'unlike') {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
-        "postId": _id,
-        "event": "kudosRemoved",
-        "eventBy": JSON.parse(localStorage.getItem('user'))?.email
-      })
-        .then(res => {
-          setLiked(prev => !prev);
-          setKudos(prev => prev - 1);
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-  }
+    })
+    .then(res => {
+        setLiked(prev => !prev);
+        setKudos(prev => action === 'like' ? prev + 1 : prev - 1);
+    })
+    .catch(err => {
+        console.log(err)
+    })
+    .finally(() => {
+        setIsLiking(false); // Set isLiking to false when a request finishes
+    });
+}
 
   function handleComment() {
     const comment = typedCommentRef.current.value;
