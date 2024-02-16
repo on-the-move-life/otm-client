@@ -213,7 +213,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           {
             comments && comments?.length > 0 && comments?.reverse()?.map((comment, index) => {
               return (
-                <IndividualComment commentId={comment?._id} name={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={postComments} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
+                <IndividualComment commentId={comment?._id} name={comment?.name} eventBy={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={postComments} profilePicture={comment?.profilePicture} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
               )
             })
           }

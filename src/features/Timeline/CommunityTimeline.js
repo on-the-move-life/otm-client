@@ -43,6 +43,7 @@ function CommunityTimeline() {
 
             {
                 data?.data && data?.data?.length !== 0 ? data?.data.map((data, index) => {
+                    console.log(data);
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>

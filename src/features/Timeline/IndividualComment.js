@@ -1,7 +1,7 @@
 import { useEffect, useState, forwardRef } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 
-const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParentComment, commentId, createdAt, allComments }, ref) => {
+const IndividualComment = forwardRef(({ name, eventBy, comment, parentCommentId, isParentComment, commentId, createdAt, allComments, profilePicture }, ref) => {
     const [showReplies, setShowReplies] = useState(false);
     const [hasReplies, setHasReplies] = useState(false);
     const [replies, setReplies] = useState([]);
@@ -10,7 +10,7 @@ const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParent
         ref.typeOfCommentRef.current = { entity: 'child', parentCommentId: commentId }
 
         ref.typedCommentRef.current.focus();
-        ref.typedCommentRef.current.value = `@${repliedTo} `;
+        // ref.typedCommentRef.current.value = `@${repliedTo} `;
     }
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParent
         })
     }, [])
 
-    const IndividualCommentBody = ({ name, comment, profilePicture, children }) => {
+    const IndividualCommentBody = ({ name, eventBy, comment, profilePicture, children }) => {
         return (
             <div className='w-full flex flex-row justify-start items-start gap-2'>
                 {profilePicture ? <img src={profilePicture} alt={`${name}`} className='w-[20px] h-[20px] rounded-full object-cover' /> : <FaUserCircle size={20} />}
@@ -40,7 +40,7 @@ const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParent
     }
     return (
         isParentComment &&
-        <IndividualCommentBody name={name} comment={comment} >
+        <IndividualCommentBody name={name} comment={comment} profilePicture={profilePicture} >
             <div className='w-full flex flex-row justify-start items-center gap-5'>
                 <div className='text-gray-600 text-sm' onClick={() => handleReply(name)}>Reply</div>
                 {hasReplies && !showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(true)}>View {replies?.length} more replies</div>}
@@ -50,10 +50,10 @@ const IndividualComment = forwardRef(({ name, comment, parentCommentId, isParent
                 {
                     showReplies && replies && replies?.length > 0 && replies.map((reply, index) => {
                         return (
-                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.eventBy} comment={reply?.comment} >
-                                <div className='w-full flex flex-row justify-start items-center gap-5'>
+                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.name} eventBy={reply?.eventBy} comment={reply?.comment} profilePicture={profilePicture} >
+                                {/* <div className='w-full flex flex-row justify-start items-center gap-5'>
                                     <div className='text-gray-600 text-sm' onClick={() => handleReply(reply?.eventBy)}>Reply</div>
-                                </div>
+                                </div> */}
                             </IndividualCommentBody>
                         )
                     })
