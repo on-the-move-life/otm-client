@@ -10,14 +10,27 @@ import { Profile } from './features/Profile';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
-
   let user = localStorage.getItem('user');
   if (user && !user.includes('undefined')) {
     user = JSON.parse(user);
   }
+  // console.log("Global level user : ", user)
 
-  console.log(user, 'USER');
-  
+  function RouteMiddleware({ children }) {
+    let user = localStorage.getItem('user');
+    if (user && !user.includes('undefined')) {
+      user = JSON.parse(user);
+    }
+
+    // console.log('user inside middleware : ', user);
+
+    if(user && user.email) {
+      return children;
+    } else {    
+      return <Navigate to="/login" />;
+    }
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -32,15 +45,15 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/questionnaire" element={<Questionnaire />} />
-        <Route path="/section-details" element={<SectionDetail />} />
-        <Route path="/workout" element={<Workout />} />
-        <Route path="/workout-summary" element={<WorkoutSummary />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/home" element={<RouteMiddleware><Home/></RouteMiddleware>} />
+        <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />
+        <Route path="/section-details" element={<RouteMiddleware><SectionDetail /></RouteMiddleware>} />
+        <Route path="/workout" element={<RouteMiddleware><Workout /></RouteMiddleware>} />
+        <Route path="/workout-summary" element={<RouteMiddleware><WorkoutSummary /></RouteMiddleware>} />
+        <Route path="/profile" element={<RouteMiddleware><Profile /></RouteMiddleware>} />
+        <Route path="/leaderboard" element={<RouteMiddleware><Leaderboard /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
-        <Route path="/timeline" element={<Timeline />} />
+        <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
       </Routes>
     </BrowserRouter>
   );
