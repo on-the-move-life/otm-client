@@ -211,11 +211,14 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         {/* Comments */}
         <div className='w-full mt-12 flex flex-col justify-start items-start gap-3 px-4'>
           {
-            comments && comments?.length > 0 && comments?.reverse()?.map((comment, index) => {
+            comments && comments?.length > 0 ? comments?.reverse()?.map((comment, index) => {
               return (
                 <IndividualComment commentId={comment?._id} name={comment?.name} eventBy={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={postComments} profilePicture={comment?.profilePicture} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
               )
-            })
+            }) :
+            <div className='w-full h-screen flex flex-col items-center justify-center text-xl text-green'>
+              No comments yet
+            </div>
           }
         </div>
 
@@ -357,18 +360,18 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
             })
           }
         </div>}
-        {collapsed ? <button className='flex flex-row justify-end items-center gap-1 pt-5 text-green select-none' onClick={() => {
+        {collapsed ? <div className='flex flex-row justify-end items-center gap-1 pt-5 text-green select-none' onClick={() => {
           setCollapsed(false);
         }}>
           <p className='text-sm'>show more</p>
           <IoIosArrowDropdownCircle size={20} />
-        </button> :
-          <button className='flex flex-row justify-end items-center gap-1 pt-2 text-green select-none' onClick={() => {
+        </div> :
+          <div className='flex flex-row justify-end items-center gap-1 pt-2 text-green select-none' onClick={() => {
             setCollapsed(true);
           }}>
             <p className='text-sm'>show less</p>
             <IoIosArrowDropupCircle size={20} />
-          </button>}
+          </div>}
       </div>
       <div className='w-full flex felx-row items-center justify-between'>
         <div className='basis-1/2 w-full flex flex-row justify-start items-center gap-2 p-2'>

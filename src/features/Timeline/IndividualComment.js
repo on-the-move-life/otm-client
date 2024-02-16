@@ -43,7 +43,7 @@ const IndividualComment = forwardRef(({ name, eventBy, comment, parentCommentId,
         <IndividualCommentBody name={name} comment={comment} profilePicture={profilePicture} >
             <div className='w-full flex flex-row justify-start items-center gap-5'>
                 <div className='text-gray-600 text-sm' onClick={() => handleReply(name)}>Reply</div>
-                {hasReplies && !showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(true)}>View {replies?.length} more replies</div>}
+                {hasReplies && !showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(true)}>View {replies?.length} more {replies?.length > 1 ? 'replies' : 'reply'}</div>}
                 {hasReplies && showReplies && <div className='text-gray-600 text-sm' onClick={() => setShowReplies(false)}>Hide replies</div>}
             </div>
             <div className='w-full flex flex-col justify-start items-start gap-2'>
