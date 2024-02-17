@@ -148,7 +148,6 @@ button:active {
 .workout-gradient-text {
   background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
   background-clip: text;
-  -webkit-background-clip: text;
   display: inline-block;
   color: transparent;
 }
@@ -170,14 +169,6 @@ background-clip: text;
 
 .workout-gradient-button {
   background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
-}
-
-.workout-gradient-text {
-  background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  display: inline-block;
-  color: transparent;
 }
 
 .main-gradient-text {
