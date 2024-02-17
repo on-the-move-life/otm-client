@@ -188,7 +188,7 @@ const WorkoutSummary = () => {
                 achievements unlocked
               </h4>
 
-              <div className="my-2 flex h-20 w-full items-center justify-between">
+              <div className="my-2 flex h-fit w-full items-center justify-between">
                 <span>
                   <HiOutlineChevronLeft
                     size={25}
@@ -197,17 +197,17 @@ const WorkoutSummary = () => {
                     }}
                   />
                 </span>
-                <div className="flex h-full w-full items-center justify-center px-2 ">
-                  <p className="basis-2/3  text-[10px]">
-                    {achievements[achievementsIndex].description}
-                  </p>
-                  <div className="h-30 w-30 pt-2">
+                <div className="flex flex-row h-full w-full items-center justify-center px-2 ">
+                  <div className="h-[60px] w-[60px]">
                     <img
-                      className="mt-16"
+                      className="h-[60px] w-[60px] rounded-full"
                       src="/assets/badge.svg"
                       alt="badge"
                     />
                   </div>
+                  <p className="basis-3/4 text-[10px]">
+                    {achievements[achievementsIndex].description}
+                  </p>
                 </div>
 
                 <span>
