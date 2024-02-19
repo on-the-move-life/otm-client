@@ -1,10 +1,15 @@
 import React from 'react';
 
-const Loader = () => {
+const Loader = ({ className }) => {
+  console.log('className', className);
   return (
-    <div className="text-green flex h-screen w-screen items-center justify-center text-2xl">
-      LOADING...
-    </div>
+    className !== undefined ?
+      <div className={"text-green flex w-screen items-center justify-center text-2xl " + className}>
+        LOADING...
+      </div> :
+      <div className="text-green flex h-screen w-screen items-center justify-center text-2xl ">
+        LOADING...
+      </div>
   );
 };
 

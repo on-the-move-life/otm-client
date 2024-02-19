@@ -37,8 +37,8 @@ function PersonalTimeline() {
             {isError && <Error>Oops! Something went wrong...</Error>}
             {
                 loading &&
-                <div className="h-full fixed z-50 bg-black">
-                    <Loader />
+                <div className="w-full h-[80%] fixed left-0 z-50 bg-black">
+                    <Loader className={'h-full'}/>
                 </div>
             }
 
