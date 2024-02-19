@@ -66,6 +66,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
   const [achievementsIndex, setAchievementsIndex] = useState(0);
   const [liked, setLiked] = useState(isLiked);
   const [kudos, setKudos] = useState(postKudos);
+  const [commentsState, setCommentsState] = useState(postComments);
   const [isLiking, setIsLiking] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const typedCommentRef = useRef(null);
@@ -169,6 +170,9 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
       })
         .then(res => {
           typedCommentRef.current.value = '';
+          const newComment = res.data.data;
+          newComment['name'] = JSON.parse(localStorage.getItem('user'))?.name;
+          setCommentsState(prev => [newComment, ...prev])
         })
         .catch(err => {
           console.log(err);
@@ -185,6 +189,9 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
       })
         .then(res => {
           typedCommentRef.current.value = '';
+          const newComment = res.data.data;
+          newComment['name'] = JSON.parse(localStorage.getItem('user'))?.name;
+          setCommentsState(prev => [newComment, ...prev])
         })
         .catch(err => {
           console.log(err);
@@ -194,7 +201,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   const CommentsContainer = ({ comments }) => {
     return (
-      <div className='w-full h-screen fixed top-0 left-0 overflow-y-scroll bg-black z-50'>
+      <div className='w-full h-screen fixed top-0 left-0 bg-black z-50'>
         {/* Closing Icon */}
         <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 rounded-b-xl' onClick={() => {
           setShowComment(prev => !prev)
@@ -203,11 +210,11 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         </div>
 
         {/* Comments */}
-        <div className='w-full mt-12 flex flex-col justify-start items-start gap-3 px-4'>
+        <div className='w-full h-screen mb-[200px] mt-10 flex flex-col justify-start items-start gap-4 px-4 overflow-y-scroll'>
           {
-            comments && comments?.length > 0 ? comments?.reverse()?.map((comment, index) => {
+            comments && comments?.length > 0 ? comments?.map((comment, index) => {
               return (
-                <IndividualComment commentId={comment?._id} name={comment?.name} eventBy={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={postComments} profilePicture={comment?.profilePicture} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
+                <IndividualComment commentId={comment?._id} name={comment?.name} eventBy={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={commentsState} profilePicture={comment?.profilePicture} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
               )
             }) :
             <div className='w-full h-screen flex flex-col items-center justify-center text-xl text-green'>
@@ -229,7 +236,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   return (
     <div className='w-full flex flex-col justify-center items-center gap-1'>
-      {showComment && <CommentsContainer comments={postComments} />}
+      {showComment && <CommentsContainer comments={commentsState} />}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
           <Name>{name}</Name>
@@ -374,7 +381,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         </div>
         <div className='basis-1/2 w-full flex flex-row justify-end items-center gap-2 p-2' onClick={() => setShowComment(prev => true)}>
           <IoChatbubbleOutline size={25} color={"white"} />
-          <p>{(postComments?.filter(comment => comment?.isParentComment)?.length)} </p>
+          <p>{(commentsState?.filter(comment => comment?.isParentComment)?.length)} </p>
         </div>
       </div>
     </div>
