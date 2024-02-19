@@ -28,7 +28,7 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
             </div> :
             <FaUserCircle size={40} color={'#91BDF6'} />
           }
-          <div className="basis-5/6 text-lg font-normal">{name}</div>
+          <div className="basis-5/6 text-lg font-normal ml-[5px]">{name}</div>
         </div>
 
         <div className="flex flex-row items-center justify-around px-4">
