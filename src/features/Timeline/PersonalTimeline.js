@@ -55,6 +55,7 @@ function PersonalTimeline() {
                                     sectionPerformance={data?.sectionPerformance}
                                     coachNotes={data?.coachNotes}
                                     achievement={data?.achievement}
+                                    profilePicture={data?.profilePicture}
                                 />
                             </div>
                         )
@@ -69,6 +70,7 @@ function PersonalTimeline() {
                             key={Math.random() * 1000}
                             coachNotes={data?.coachNotes}
                             achievement={data?.achievement}
+                            profilePicture={data?.profilePicture}
                         />
                     )
                 }) :

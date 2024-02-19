@@ -21,8 +21,8 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
           {
             profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
               <img
-                className="mx-4 h-[40px] w-[40px] rounded-full bg-blue"
-                src="/assets/lb-ph.png"
+                className="h-[40px] w-[40px] rounded-full object-cover"
+                src={profilePicture}
                 alt={name}
               />
             </div> :

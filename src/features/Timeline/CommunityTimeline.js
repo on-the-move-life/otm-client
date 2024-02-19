@@ -53,6 +53,7 @@ function CommunityTimeline() {
                                     sectionPerformance={data?.sectionPerformance}
                                     coachNotes={data?.coachNotes}
                                     achievement={data?.achievement}
+                                    profilePicture={data?.profilePicture}
                                 />
                             </div>
                         )
@@ -66,6 +67,7 @@ function CommunityTimeline() {
                             sectionPerformance={data?.sectionPerformance}
                             coachNotes={data?.coachNotes}
                             achievement={data?.achievement}
+                            profilePicture={data?.profilePicture}
                             key={Math.random() * 1000}
                         />
                     )
