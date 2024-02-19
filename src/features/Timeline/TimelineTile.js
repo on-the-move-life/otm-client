@@ -175,7 +175,7 @@ const TimelineTile = ({
             {
               profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
                 <img
-                  className="h-[20px] w-[20px] rounded-full object-cover"
+                  className="h-[40px] w-[40px] rounded-full object-cover"
                   src={profilePicture}
                   alt={name}
                 />
