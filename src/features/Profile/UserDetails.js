@@ -255,7 +255,7 @@ const UserDetails = ({ showHistory }) => {
                   {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
                   <div className="text-lg font-medium text-black">Pay now</div>
                 </div> */}
-                  <div className="border-zinc-400 mt-4 inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg border p-2.5">
+                  <div className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5">
                     <button
                       className="text-lg font-medium text-white"
                       onClick={() => showHistory()}
@@ -266,13 +266,16 @@ const UserDetails = ({ showHistory }) => {
                 </section>
               </div>
             </div>
-            <div className="flex flex-col pt-52" onClick={() => setShowProfilePicPopup(false)}>
-              <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-[358px] items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
+            <div className="w-full flex flex-col pt-52" onClick={() => {
+              setShowProfilePicPopup(false);
+              handleLogout();
+            }}>
+              <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
                 </div>
-                <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
-                  <button className="text-lg font-medium text-lightGray" onClick={handleLogout}>
+                <button className="text-lg font-medium text-lightGray">
+                  <button className="text-lg font-medium text-lightGray">
                     Log Out
                   </button>
                 </button>
