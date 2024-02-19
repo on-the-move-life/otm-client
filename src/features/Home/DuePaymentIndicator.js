@@ -43,7 +43,7 @@ function DuePaymentIndicator() {
         <Container className='w-full'>
             <div className='flex flex-row justify-center items-center gap-3'>
                 <Warning/>
-                <WarningText>Your payment for Shred is overdue</WarningText>
+                <WarningText>Action required: Your subscription is due for renewal</WarningText>
                 <RightArrow>{'→'}</RightArrow>
             </div>
         </Container>
