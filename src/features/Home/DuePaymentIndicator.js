@@ -16,11 +16,11 @@ background: #160606;
 const WarningText = styled.p`
 color: var(--Red, #FA5757);
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 12px;
+font-size: 11px;
 font-style: normal;
 font-weight: 590;
 line-height: normal;
-letter-spacing: -0.36px;
+letter-spacing: 1px;
 `
 const RightArrow = styled.p`
 color: var(--Red, #FA5757);
