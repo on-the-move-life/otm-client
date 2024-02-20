@@ -202,7 +202,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   const CommentsContainer = ({ comments }) => {
     return (
-      <div className='w-full h-screen fixed top-0 left-0 bg-black z-50'>
+      <div className='w-full h-screen fixed top-0 left-0 bg-black z-50 overflow-y-scroll'>
         {/* Closing Icon */}
         <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 rounded-b-xl' onClick={() => {
           setShowComment(prev => !prev)
