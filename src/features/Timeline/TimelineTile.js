@@ -9,6 +9,7 @@ import {
 } from 'react-icons/hi';
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
+import { FaUserCircle } from 'react-icons/fa';
 import IndividualComment from './IndividualComment';
 import axios from 'axios'
 
@@ -54,7 +55,7 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
-const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postKudos, isLiked }) => {
+const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postKudos, isLiked, profilePicture }) => {
   const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
   const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
@@ -141,21 +142,21 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
     const event = action === 'like' ? 'kudos' : 'kudosRemoved';
 
     axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
-        "postId": _id,
-        "event": event,
-        "eventBy": JSON.parse(localStorage.getItem('user'))?.email
+      "postId": _id,
+      "event": event,
+      "eventBy": JSON.parse(localStorage.getItem('user'))?.email
     })
-    .then(res => {
+      .then(res => {
         setLiked(prev => !prev);
         setKudos(prev => action === 'like' ? prev + 1 : prev - 1);
-    })
-    .catch(err => {
+      })
+      .catch(err => {
         console.log(err)
-    })
-    .finally(() => {
+      })
+      .finally(() => {
         setIsLiking(false); // Set isLiking to false when a request finishes
-    });
-}
+      });
+  }
 
   function handleComment() {
     const comment = typedCommentRef.current.value;
@@ -214,18 +215,18 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           {
             comments && comments?.length > 0 ? comments?.map((comment, index) => {
               return (
-                <IndividualComment commentId={comment?._id} name={comment?.name} eventBy={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={commentsState} profilePicture={comment?.profilePicture} ref={{typeOfCommentRef, typedCommentRef}} key={Math.random() * 1000} />
+                <IndividualComment commentId={comment?._id} name={comment?.name} eventBy={comment?.eventBy} comment={comment?.comment} isParentComment={comment?.isParentComment} parentCommentId={comment?.parentCommentId} createdAt={comment?.createdAt} allComments={commentsState} profilePicture={comment?.profilePicture} ref={{ typeOfCommentRef, typedCommentRef }} key={Math.random() * 1000} />
               )
             }) :
-            <div className='w-full h-screen flex flex-col items-center justify-center text-xl text-green'>
-              No comments yet
-            </div>
+              <div className='w-full h-screen flex flex-col items-center justify-center text-xl text-green'>
+                No comments yet
+              </div>
           }
         </div>
 
         {/* Comment Input */}
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px] bg-black z-50'>
-          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} onClick={() => typeOfCommentRef.current = {entity: 'parent', parentCommentId: null}}/>
+          <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} onClick={() => typeOfCommentRef.current = { entity: 'parent', parentCommentId: null }} />
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => handleComment()}>
             <IoMdArrowRoundUp size={20} color={'white'} />
           </button>
@@ -239,7 +240,19 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
       {showComment && <CommentsContainer comments={commentsState} />}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
-          <Name>{name}</Name>
+          <div className='flex flex-row items-center justify-center gap-2 mb-2'>
+            {
+              profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
+                <img
+                  className="h-[40px] w-[40px] rounded-full object-cover"
+                  src={profilePicture}
+                  alt={name}
+                />
+              </div> :
+                <FaUserCircle size={40} color={'#91BDF6'} />
+            }
+            <Name>{name}</Name>
+          </div>
           <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
             <TagText>{tag}</TagText>
           </div>
