@@ -78,7 +78,7 @@ text-transform: capitalize;
 export const setTagAndColor = (score, tags, colors) => {
     let index;
     let position;
-    
+
     if (score >= 0 && score < 2) {
         index = 0;
     } else if (score >= 2 && score < 4) {
@@ -92,7 +92,6 @@ export const setTagAndColor = (score, tags, colors) => {
     }
 
     position = (score / 10) * 100 + index;
-    console.log("score : ", score, "tags : ", tags[index], "colors : ", colors[index]);
 
     return [tags[index], colors[index], position];
 }
@@ -116,14 +115,13 @@ function FitnessScore({ score, percentile }) {
         const [indicatorPosition, setIndicatorPosition] = useState(0)
 
         useEffect(() => {
-            try{
+            try {
                 const [tag, color, position] = setTagAndColor(score, tags, colors);
-                console.log("tag : ", tag, "color : ", color, "position : ", position)
                 setIndicatorPosition(position);
                 setTag(tag);
                 setColor(color);
             }
-            catch(e){
+            catch (e) {
                 console.log("error : ", e);
                 const position = 0;
                 setIndicatorPosition(position);
