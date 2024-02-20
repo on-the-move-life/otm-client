@@ -45,7 +45,7 @@ function PersonalTimeline() {
                 userData?.data && userData?.data?.length !== 0 && userData?.data?.map((data, index) => {
                     if (index === 0) {
                         return (
-                            <div ref={timelineTopRef} key={Math.random() * 1000}>
+                            <div ref={timelineTopRef} key={data?._id}>
                                 <TimelineTile
                                     _id={data?._id}
                                     name={data?.name}
@@ -71,7 +71,7 @@ function PersonalTimeline() {
                             currScore={data?.fitnessScoreUpdates?.newScore}
                             prevScore={data?.fitnessScoreUpdates?.oldScore}
                             sectionPerformance={data?.sectionPerformance}
-                            key={Math.random() * 1000}
+                            key={data?._id}
                             coachNotes={data?.coachNotes}
                             achievement={data?.achievement}
                             profilePicture={data?.profilePicture}
