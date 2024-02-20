@@ -33,16 +33,16 @@ function CommunityTimeline() {
     }, [page])
     return (
         <div className='w-full h-screen flex flex-col justify-start itmes-center gap-12 mt-3 overflow-y-scroll pb-[50px]'>
-            {isError && <Error>Oops! Something went wrong...</Error>}
+            {isError && <Error className={'w-full'}>Oops! Something went wrong...</Error>}
             {
                 loading &&
                 <div className="w-full h-[83%] fixed left-0 z-50 bg-black">
-                    <Loader className={'h-full'}/>
+                    <Loader className={'h-full'} />
                 </div>
             }
 
             {
-                data?.data && data?.data?.length !== 0 ? data?.data.map((data, index) => {
+                data?.data && data?.data?.length !== 0 && data?.data.map((data, index) => {
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>
@@ -80,13 +80,16 @@ function CommunityTimeline() {
                             isLiked={data?.isLiked}
                         />
                     )
-                }) :
-                    <div className='h-screen'>
-                        <h1 className='text-white/90 text-center text-2xl mt-10'>No workout data yet</h1>
-                    </div>
+                })
+            }
+            {
+                !loading && !isError && data?.data && data?.data?.length === 0 &&
+                <div className='h-screen'>
+                    <h1 className='text-white/90 text-center text-2xl mt-10'>No workout data yet</h1>
+                </div>
             }
 
-            {data?.data && data?.data?.length !== 0 && <div className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'>
+            {!loading && !isError && data?.data && data?.data?.length !== 0 && <div className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'>
                 <div className={`w-full flex flex-row justify-start items-center ${page > 1 ? 'text-green' : 'text-green/50'}`} onClick={() => {
                     page > 1 && setPage(prev => prev - 1);
                 }}><HiOutlineChevronDoubleLeft size={30} /></div>

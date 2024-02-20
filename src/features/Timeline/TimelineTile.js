@@ -224,7 +224,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         </div>
 
         {/* Comments */}
-        <div className='w-full h-[90%] mt-10 flex flex-col justify-start items-start gap-4 px-4 overflow-y-scroll'>
+        <div className='w-full h-[90%] mt-10 flex flex-col justify-start items-start gap-4 px-4 pb-7 overflow-y-scroll'>
           {
             comments && comments?.length > 0 ? comments?.map((comment, index) => {
               return (
