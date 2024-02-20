@@ -30,7 +30,7 @@ const IndividualComment = forwardRef(({ name, eventBy, comment, parentCommentId,
             return `${differenceInHours}h ago`
         } else if (differenceInMinutes > 0) {
             return `${differenceInMinutes}m ago`
-        } else {
+        } else if(differenceInSeconds > 0) {
             return `${differenceInSeconds}s ago`
         }
     }
