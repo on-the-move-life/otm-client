@@ -17,8 +17,9 @@ function CommunityTimeline() {
     }
 
     useEffect(() => {
+        const email = JSON.parse(localStorage.getItem('user'))?.email;
         setLoading(true);
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=community&page=${page}`)
+        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=community&page=${page}&email=${email}`)
             .then(res => {
                 setData(prev => res?.data);
                 setLoading(false);
@@ -46,6 +47,7 @@ function CommunityTimeline() {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>
                                 <TimelineTile
+                                    _id={data?._id}
                                     name={data?.name}
                                     dateTime={data?.time}
                                     currScore={data?.fitnessScoreUpdates?.newScore}
@@ -54,12 +56,16 @@ function CommunityTimeline() {
                                     coachNotes={data?.coachNotes}
                                     achievement={data?.achievement}
                                     profilePicture={data?.profilePicture}
+                                    postComments={data?.comments}
+                                    postKudos={data?.kudos}
+                                    isLiked={data?.isLiked}
                                 />
                             </div>
                         )
                     }
                     return (
                         <TimelineTile
+                            _id={data?._id}
                             name={data?.name}
                             dateTime={data?.time}
                             currScore={data?.fitnessScoreUpdates?.newScore}
@@ -69,6 +75,9 @@ function CommunityTimeline() {
                             achievement={data?.achievement}
                             profilePicture={data?.profilePicture}
                             key={Math.random() * 1000}
+                            postComments={data?.comments}
+                            postKudos={data?.kudos}
+                            isLiked={data?.isLiked}
                         />
                     )
                 }) :
