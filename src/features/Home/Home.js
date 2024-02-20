@@ -11,7 +11,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlineRight } from 'react-icons/ai';
-import { FaUser } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
 
 
@@ -84,7 +84,7 @@ const Home = () => {
                 {homeStats.name}
               </h1>
               <button className='mr-4 mt-4' onClick={navigateToProfile}>
-              {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover'/>: <FaUser size={30}/>}
+              {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover'/>: <FaUserCircle size={50} color={'#91BDF6'} />}
               </button>
             </div>
             <div className="flex items-center">
