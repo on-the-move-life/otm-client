@@ -74,6 +74,28 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
+// function to return the tag, color, and position based on the current score
+export const setTagAndColor = (score, tags, colors) => {
+    let index;
+    let position;
+    
+    if (score >= 0 && score < 2) {
+        index = 0;
+    } else if (score >= 2 && score < 4) {
+        index = 1;
+    } else if (score >= 4 && score < 6) {
+        index = 2;
+    } else if (score >= 6 && score < 8) {
+        index = 3;
+    } else {
+        index = 4;
+    }
+
+    position = (score / 10) * 100 + index;
+    console.log("score : ", score, "tags : ", tags[index], "colors : ", colors[index]);
+
+    return [tags[index], colors[index], position];
+}
 
 function FitnessScore({ score, percentile }) {
     const Indicator = ({ style }) => {
@@ -95,36 +117,11 @@ function FitnessScore({ score, percentile }) {
 
         useEffect(() => {
             try{
-                if (score >= 0 && score < 2) {
-                    const position = (score / 10) * 100;
-                    setIndicatorPosition(position);
-                    setTag(tags[0]);
-                    setColor(colors[0]);
-                }
-                else if (score >= 2 && score < 4) {
-                    const position = (score / 10) * 100 + 1;
-                    setIndicatorPosition(position);
-                    setTag(tags[1]);
-                    setColor(colors[1]);
-                }
-                else if (score >= 4 && score < 6) {
-                    const position = (score / 10) * 100 + 2;
-                    setIndicatorPosition(position);
-                    setTag(tags[2]);
-                    setColor(colors[2]);
-                }
-                else if (score >= 6 && score < 8) {
-                    const position = (score / 10) * 100 + 3;
-                    setIndicatorPosition(position);
-                    setTag(tags[3]);
-                    setColor(colors[3]);
-                }
-                else {
-                    const position = (score / 10) * 100 + 4;
-                    setIndicatorPosition(position);
-                    setTag(tags[4]);
-                    setColor(colors[4]);
-                }
+                const [tag, color, position] = setTagAndColor(score, tags, colors);
+                console.log("tag : ", tag, "color : ", color, "position : ", position)
+                setIndicatorPosition(position);
+                setTag(tag);
+                setColor(color);
             }
             catch(e){
                 console.log("error : ", e);

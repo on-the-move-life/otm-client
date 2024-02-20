@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState, useRef } from 'react';
+import React, { useMemo, useEffect, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import AssesmentTile from './AssesmentTile';
 import WorkoutTile from './WorkoutTile'
@@ -12,7 +12,7 @@ import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import { FaUserCircle } from 'react-icons/fa';
 import IndividualComment from './IndividualComment';
 import axios from 'axios'
-import { type } from '@testing-library/user-event/dist/type';
+import { setTagAndColor } from '../Home/FitnessScore';
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -74,7 +74,8 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
   const typedCommentRef = useRef(null);
   const typeOfCommentRef = useRef(null);
 
-  function formatDateTime(inputDateTime) {
+  // function to get the formatted date and time - e.g. [21st Feb, 08:39 PM]
+  const formatDateTime = useCallback((inputDateTime) => {
     const [datePart, timePart, ampm] = inputDateTime.split(' ');
     const [month, day, year] = datePart.split('/');
 
@@ -82,8 +83,9 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
     const formattedTime = `${timePart} ${ampm}`;
 
     return [formattedDate, formattedTime]
-  }
+  }, [])
 
+  // fuction to get the month name if the month number is passed as an argument
   function getMonthName(month) {
     const monthNames = [
       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -92,6 +94,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
     return monthNames[month - 1];
   }
 
+  // function to add the ordinal suffix to the day, e.g 1st, 22nd, 3rd, 4th
   function addOrdinalSuffix(day) {
     if (day >= 11 && day <= 13) {
       return `${day}th`;
@@ -111,29 +114,17 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   useEffect(() => {
     const formattedDateTime = formatDateTime(dateTime);
+
+    // extracting the date and time from the formatted date time
     setDate(formattedDateTime[0]);
     setTime(formattedDateTime[1]);
-    if (currScore >= 0 && currScore < 2) {
-      setTag(tags[0]);
-      setColor(colors[0]);
-    }
-    else if (currScore >= 2 && currScore < 4) {
-      setTag(tags[1]);
-      setColor(colors[1]);
-    }
-    else if (currScore >= 4 && currScore < 6) {
-      setTag(tags[2]);
-      setColor(colors[2]);
-    }
-    else if (currScore >= 6 && currScore < 8) {
-      setTag(tags[3]);
-      setColor(colors[3]);
-    }
-    else {
-      setTag(tags[4]);
-      setColor(colors[4]);
-    }
-  }, [currScore, colors, tags, dateTime])
+
+    // setting the tag and color based on the current score
+    const [tag, color, position] = setTagAndColor(currScore, tags, colors);
+    setTag(tag);
+    setColor(color);
+
+  }, [currScore, colors, tags, dateTime, formatDateTime])
 
   function handleLike(action) {
     if (isLiking) return; // If a request is in progress, ignore additional clicks
@@ -161,7 +152,9 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   function handleComment() {
     const comment = typedCommentRef.current.value;
+    // If the comment is not empty and the comment is a parent comment
     if (comment !== "" && typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) {
+      // API call to post the comment
       axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
         postId: _id,
         event: 'comment',
@@ -186,6 +179,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           console.log(err);
         })
     }
+    // If the comment is not empty and the comment is a reply to a comment
     else if (comment !== "" && typeOfCommentRef.current?.entity === 'child' && typeOfCommentRef.current?.parentCommentId !== null) {
       axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
         postId: _id,
@@ -241,7 +235,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px] bg-black z-50'>
           <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} onClick={() => typeOfCommentRef.current = { entity: 'parent', parentCommentId: null }} />
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => handleComment()}>
-            <IoMdArrowRoundUp size={20} color={'white'}/>
+            <IoMdArrowRoundUp size={20} color={'white'} />
           </button>
         </div>
       </div>
