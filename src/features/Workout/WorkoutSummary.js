@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Error, Loader } from '../../components';
-import { FaStar } from 'react-icons/fa';
 import {
   HiHome,
   HiOutlineChevronLeft,
@@ -30,8 +29,6 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
-
-  // const [section, setSection] = useState(sectionList[index]);
 
   const dispatch = useDispatch();
 
