@@ -12,7 +12,8 @@ import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import { FaUserCircle } from 'react-icons/fa';
 import IndividualComment from './IndividualComment';
 import axios from 'axios'
-import { setTagAndColor } from '../Home/FitnessScore';
+import { useFormattedDateTime } from '../../hooks/useFormattedDateTime';
+import { useTagAndColor } from '../../hooks/useTagAndColor';
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -57,12 +58,6 @@ letter-spacing: -0.36px;
 text-transform: capitalize;
 `
 const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postKudos, isLiked, profilePicture }) => {
-  const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
-  const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
-  const [tag, setTag] = useState(tags[0]);
-  const [color, setColor] = useState(colors[0]);
-  const [date, setDate] = useState(null);
-  const [time, setTime] = useState(null);
   const [collapsed, setCollapsed] = useState(true);
   const [coachNoteIndex, setCoachNoteIndex] = useState(0);
   const [achievementsIndex, setAchievementsIndex] = useState(0);
@@ -71,140 +66,77 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
   const [commentsState, setCommentsState] = useState(postComments);
   const [isLiking, setIsLiking] = useState(false);
   const [showComment, setShowComment] = useState(false);
+
+  // refs
   const typedCommentRef = useRef(null);
   const typeOfCommentRef = useRef(null);
 
-  // function to get the formatted date and time - e.g. [21st Feb, 08:39 PM]
-  const formatDateTime = useCallback((inputDateTime) => {
-    const [datePart, timePart, ampm] = inputDateTime.split(' ');
-    const [month, day, year] = datePart.split('/');
+  // custom hooks
+  const [formattedDate, formattedTime] = useFormattedDateTime(dateTime);
+  const [tag, color, position] = useTagAndColor(currScore);
 
-    const formattedDate = `${addOrdinalSuffix(parseInt(day))} ${getMonthName(parseInt(month))}`;
-    const formattedTime = `${timePart} ${ampm}`;
-
-    return [formattedDate, formattedTime]
-  }, [])
-
-  // fuction to get the month name if the month number is passed as an argument
-  function getMonthName(month) {
-    const monthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    return monthNames[month - 1];
-  }
-
-  // function to add the ordinal suffix to the day, e.g 1st, 22nd, 3rd, 4th
-  function addOrdinalSuffix(day) {
-    if (day >= 11 && day <= 13) {
-      return `${day}th`;
-    }
-    switch (day % 10) {
-      case 1:
-        return `${day}st`;
-      case 2:
-        return `${day}nd`;
-      case 3:
-        return `${day}rd`;
-      default:
-        return `${day}th`;
-    }
-  }
-
-
-  useEffect(() => {
-    const formattedDateTime = formatDateTime(dateTime);
-
-    // extracting the date and time from the formatted date time
-    setDate(formattedDateTime[0]);
-    setTime(formattedDateTime[1]);
-
-    // setting the tag and color based on the current score
-    const [tag, color, position] = setTagAndColor(currScore, tags, colors);
-    setTag(tag);
-    setColor(color);
-
-  }, [currScore, colors, tags, dateTime, formatDateTime])
-
-  function handleLike(action) {
+  async function handleLike(action) {
     if (isLiking) return; // If a request is in progress, ignore additional clicks
-
     setIsLiking(true); // Set isLiking to true when a request starts
-
     const event = action === 'like' ? 'kudos' : 'kudosRemoved';
+    
+    const payload = {
+      postId: _id,
+      event,
+      eventBy: JSON.parse(localStorage.getItem('user'))?.email
+    }
 
-    axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
-      "postId": _id,
-      "event": event,
-      "eventBy": JSON.parse(localStorage.getItem('user'))?.email
-    })
-      .then(res => {
-        setLiked(prev => !prev);
-        setKudos(prev => action === 'like' ? prev + 1 : prev - 1);
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        setIsLiking(false); // Set isLiking to false when a request finishes
-      });
+    try{
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, payload);
+      setLiked(prev => !prev);
+      setKudos(prev => action === 'like' ? prev + 1 : prev - 1);
+    }
+    catch(err){
+      console.log(err);
+    }
+    finally{
+      setIsLiking(false); // Set isLiking to false when a request finishes
+    }
   }
 
   function handleComment() {
     const comment = typedCommentRef.current.value;
-    // If the comment is not empty and the comment is a parent comment
-    if (comment !== "" && typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) {
-      // API call to post the comment
-      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
-        postId: _id,
-        event: 'comment',
-        comment: comment,
-        eventBy: JSON.parse(localStorage.getItem('user'))?.email,
-        isParentComment: true,
-        parentCommentId: null
-      })
-        .then(res => {
+    const APICall = async (payload) => {
+      try{
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, payload);
+        typedCommentRef.current.value = '';
+        const newComment = response.data.data;
+        newComment['name'] = JSON.parse(localStorage.getItem('user'))?.name;
+        setCommentsState(prev => [newComment, ...prev])
+      }
+      catch(err){
+        typedCommentRef.current.value = typedCommentRef.current.value + ' (failed to post)';
+        typedCommentRef.current.style.color = 'red';
+        setTimeout(() => {
           typedCommentRef.current.value = '';
-          const newComment = res.data.data;
-          newComment['name'] = JSON.parse(localStorage.getItem('user'))?.name;
-          setCommentsState(prev => [newComment, ...prev])
-        })
-        .catch(err => {
-          typedCommentRef.current.value = typedCommentRef.current.value + ' (failed to post)';
-          typedCommentRef.current.style.color = 'red';
-          setTimeout(() => {
-            typedCommentRef.current.value = '';
-            typedCommentRef.current.style.color = 'rgb(189,189,189)';
-          }, 2000)
-          console.log(err);
-        })
+          typedCommentRef.current.style.color = 'rgb(189,189,189)';
+        }, 2000)
+        console.log(err);
+      }
     }
-    // If the comment is not empty and the comment is a reply to a comment
-    else if (comment !== "" && typeOfCommentRef.current?.entity === 'child' && typeOfCommentRef.current?.parentCommentId !== null) {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
-        postId: _id,
-        event: 'comment',
-        comment: comment,
-        eventBy: JSON.parse(localStorage.getItem('user'))?.email,
-        isParentComment: false,
-        parentCommentId: typeOfCommentRef.current?.parentCommentId
-      })
-        .then(res => {
-          typedCommentRef.current.value = '';
-          const newComment = res.data.data;
-          newComment['name'] = JSON.parse(localStorage.getItem('user'))?.name;
-          setCommentsState(prev => [newComment, ...prev])
-        })
-        .catch(err => {
-          typedCommentRef.current.value = typedCommentRef.current.value + ' (failed to post)';
-          typedCommentRef.current.style.color = 'red';
-          setTimeout(() => {
-            typedCommentRef.current.value = '';
-            typedCommentRef.current.style.color = 'rgb(189,189,189)';
-          }, 2000)
-          console.log(err);
-        })
+    // payload for the API call
+    const payload =( comment !== "" && typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) ? {
+      postId: _id,
+      event: 'comment',
+      comment: comment,
+      eventBy: JSON.parse(localStorage.getItem('user'))?.email,
+      isParentComment: true,
+      parentCommentId: null
+    } : {
+      postId: _id,
+      event: 'comment',
+      comment: comment,
+      eventBy: JSON.parse(localStorage.getItem('user'))?.email,
+      isParentComment: false,
+      parentCommentId: typeOfCommentRef.current?.parentCommentId
     }
+    // final API call
+    APICall(payload);
   }
 
   const CommentsContainer = ({ comments }) => {
@@ -265,10 +197,10 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           </div>
         </div>
 
-        <Date>{date}</Date>
+        <Date>{formattedDate}</Date>
         <div className="timeline-tags flex flex-row space-x-3 text-xs my-2">
           {/* <InfoTile>Horizontal Pull</InfoTile> */}
-          <InfoTile>{time}</InfoTile>
+          <InfoTile>{formattedTime}</InfoTile>
           {/* <InfoTile>700Kcal</InfoTile> */}
         </div>
         {achievements?.length > 0 && (

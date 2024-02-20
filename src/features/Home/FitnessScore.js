@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
+import { useTagAndColor } from '../../hooks/useTagAndColor'
 
 const Container = styled.div`
 width: auto;
@@ -74,29 +75,11 @@ line-height: normal;
 letter-spacing: -0.36px;
 text-transform: capitalize;
 `
-// function to return the tag, color, and position based on the current score
-export const setTagAndColor = (score, tags, colors) => {
-    let index;
-    let position;
-
-    if (score >= 0 && score < 2) {
-        index = 0;
-    } else if (score >= 2 && score < 4) {
-        index = 1;
-    } else if (score >= 4 && score < 6) {
-        index = 2;
-    } else if (score >= 6 && score < 8) {
-        index = 3;
-    } else {
-        index = 4;
-    }
-
-    position = (score / 10) * 100 + index;
-
-    return [tags[index], colors[index], position];
-}
 
 function FitnessScore({ score, percentile }) {
+    const [tag, color, position] = useTagAndColor(score);
+
+    // Indicator component
     const Indicator = ({ style }) => {
         return (
             <div style={style} className='relative'>
@@ -107,29 +90,10 @@ function FitnessScore({ score, percentile }) {
             </div>
         )
     }
-    const ScoreIndicator = ({ score }) => {
-        const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
-        const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
-        const [tag, setTag] = useState(tags[0]);
-        const [color, setColor] = useState(colors[0]);
-        const [indicatorPosition, setIndicatorPosition] = useState(0)
 
-        useEffect(() => {
-            try {
-                const [tag, color, position] = setTagAndColor(score, tags, colors);
-                setIndicatorPosition(position);
-                setTag(tag);
-                setColor(color);
-            }
-            catch (e) {
-                console.log("error : ", e);
-                const position = 0;
-                setIndicatorPosition(position);
-                setTag(tags[0]);
-                setColor(colors[0]);
-            }
-        }, [score, colors, tags])
-
+    // Score Indicator component
+    const ScoreIndicator = () => {
+        const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], []);
         return (
             <div className='w-full flex flex-col items-center justify-center gap-4'>
                 <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
@@ -137,12 +101,12 @@ function FitnessScore({ score, percentile }) {
                 </div>
 
                 <div className='w-fit relative'>
-                    <Indicator style={{ position: 'absolute', left: `${indicatorPosition}px` }} />
+                    <Indicator style={{ position: 'absolute', left: `${position}px` }} />
                     <div className='w-fit flex flex-row justify-center items-center gap-[1px]'>
                         {
                             [...Array(5)].map((_, index) => {
                                 return (
-                                    <HorizontalBar color={colors[index]} key={index} />
+                                    <HorizontalBar color={colors[index]} key={Math.random() * 1000} />
                                 )
                             })
                         }
@@ -160,7 +124,7 @@ function FitnessScore({ score, percentile }) {
                     <ScoreDetail>Top <Percentile>{percentile}%</Percentile> of the community</ScoreDetail>
                 </div>
                 <div className='w-6/12 flex flex-col justify-center items-center gap-2'>
-                    <ScoreIndicator score={score}></ScoreIndicator>
+                    <ScoreIndicator />
                 </div>
             </div>
         </Container>
