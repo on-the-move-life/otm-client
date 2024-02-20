@@ -65,6 +65,7 @@ const TimelineTile = ({
   sectionPerformance,
   coachNotes,
   achievements,
+  profilePicture
 }) => {
   const tags = useMemo(
     () => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'],
@@ -169,7 +170,19 @@ const TimelineTile = ({
     <div className="flex w-full flex-col items-center justify-center gap-1">
       <div className="flex w-full flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
         <div className="flex w-full flex-row items-center justify-between">
-          <Name>{name}</Name>
+          <div className='flex flex-row items-center justify-center gap-2 mb-2'>
+            {
+              profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
+                <img
+                  className="h-[40px] w-[40px] rounded-full object-cover"
+                  src={profilePicture}
+                  alt={name}
+                />
+              </div> :
+                <FaUserCircle size={40} color={'#91BDF6'} />
+            }
+            <Name>{name}</Name>
+          </div>
           <div
             style={{ backgroundColor: color }}
             className="flex h-fit w-fit flex-row items-center justify-center rounded-[4px] px-[5px] py-[1px]"
