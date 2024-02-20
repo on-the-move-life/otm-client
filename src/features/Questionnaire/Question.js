@@ -33,10 +33,8 @@ const Question = () => {
     setError(null);
 
     if (sectionCode) {
-      console.log(sectionCode, 'sectionCode');
       dispatch(getQuestions(sectionCode))
         .then(({ questions }) => {
-          console.log(questions, 'questions');
           setQuestions(questions);
         })
         .catch((err) => {
@@ -67,8 +65,6 @@ const Question = () => {
       (answer) => answer.response !== '',
     );
 
-    console.log(answersRef.current, 'answersRef.current');
-
     if (questions && answersRef.current.length !== questions.length) {
       setDisableButton(true);
     } else {
@@ -97,7 +93,6 @@ const Question = () => {
   }
 
   function submitResponse(sectionCode) {
-    console.log('ANSWERS', answersRef.current);
     if (!sectionCode) {
       console.log('Section code is missing.');
     }

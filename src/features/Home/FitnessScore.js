@@ -127,7 +127,6 @@ function FitnessScore({ score, percentile }) {
                 }
             }
             catch(e){
-                console.log("fitness score : ", score);
                 console.log("error : ", e);
                 const position = 0;
                 setIndicatorPosition(position);

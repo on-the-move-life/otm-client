@@ -99,7 +99,6 @@ export function getWorkout(code) {
       .catch((err) => {
         console.log(err.message, 'ERROR');
         dispatch(setStatus('error'));
-        console.log(err.message, 'ERRORRRRRRRR');
       });
   };
 }
@@ -110,7 +109,6 @@ export function updateWorkout(reqBody) {
     axiosClient
       .put('/', reqBody)
       .then((res) => {
-        console.log('workout', res.data);
         dispatch({ type: 'workout/updateWorkout', payload: res.data });
         dispatch(setStatus('success'));
       })

@@ -40,9 +40,6 @@ const WorkoutSummary = () => {
   );
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
-    // console.log(newAchievementIndex, 'newAchievementIndex');
-    // console.log(newCoachIndex, 'newCoachIndex');
-
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
       setAchievementsIndex((index) => newAchievementIndex);
     if (newCoachIndex >= 0 && newCoachIndex < notesIndex.length)

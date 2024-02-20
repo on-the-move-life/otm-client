@@ -14,15 +14,12 @@ function App() {
   if (user && !user.includes('undefined')) {
     user = JSON.parse(user);
   }
-  // console.log("Global level user : ", user)
-
+  
   function RouteMiddleware({ children }) {
     let user = localStorage.getItem('user');
     if (user && !user.includes('undefined')) {
       user = JSON.parse(user);
     }
-
-    // console.log('user inside middleware : ', user);
 
     if(user && user.email) {
       return children;

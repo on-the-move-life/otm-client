@@ -4,8 +4,8 @@ import ListItem from './ListItem';
 const List = ({ data, mode, code }) => {
   // Find the user with the matching code
   const matchingUser = data?.find((entry) => entry.code === code);
+  
   // Create a LeaderboardItem for the matching user
-
   const matchingUserItem =
     matchingUser ? (
       <ListItem

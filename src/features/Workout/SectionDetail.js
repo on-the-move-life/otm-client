@@ -31,7 +31,6 @@ const SectionDetail = () => {
 
   const handlePrevious = () => {
     const newIndex = currentIndex - 1;
-    console.log(newIndex);
     if (newIndex === -1) {
       return;
     }
