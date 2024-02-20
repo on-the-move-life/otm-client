@@ -12,6 +12,7 @@ import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import { FaUserCircle } from 'react-icons/fa';
 import IndividualComment from './IndividualComment';
 import axios from 'axios'
+import { type } from '@testing-library/user-event/dist/type';
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -160,7 +161,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   function handleComment() {
     const comment = typedCommentRef.current.value;
-    if (typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) {
+    if (comment !== "" && typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) {
       axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
         postId: _id,
         event: 'comment',
@@ -176,10 +177,16 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           setCommentsState(prev => [newComment, ...prev])
         })
         .catch(err => {
+          typedCommentRef.current.value = typedCommentRef.current.value + ' (failed to post)';
+          typedCommentRef.current.style.color = 'red';
+          setTimeout(() => {
+            typedCommentRef.current.value = '';
+            typedCommentRef.current.style.color = 'rgb(189,189,189)';
+          }, 2000)
           console.log(err);
         })
     }
-    else if (typeOfCommentRef.current?.entity === 'child' && typeOfCommentRef.current?.parentCommentId !== null) {
+    else if (comment !== "" && typeOfCommentRef.current?.entity === 'child' && typeOfCommentRef.current?.parentCommentId !== null) {
       axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, {
         postId: _id,
         event: 'comment',
@@ -195,6 +202,12 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           setCommentsState(prev => [newComment, ...prev])
         })
         .catch(err => {
+          typedCommentRef.current.value = typedCommentRef.current.value + ' (failed to post)';
+          typedCommentRef.current.style.color = 'red';
+          setTimeout(() => {
+            typedCommentRef.current.value = '';
+            typedCommentRef.current.style.color = 'rgb(189,189,189)';
+          }, 2000)
           console.log(err);
         })
     }
@@ -202,7 +215,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   const CommentsContainer = ({ comments }) => {
     return (
-      <div className='w-full h-screen fixed top-0 left-0 bg-black z-50 overflow-y-scroll'>
+      <div className='w-full h-screen fixed top-0 left-0 bg-black z-50'>
         {/* Closing Icon */}
         <div className='w-full h-fit flex flex-row items-center justify-center absolute top-0 rounded-b-xl' onClick={() => {
           setShowComment(prev => !prev)
@@ -211,7 +224,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         </div>
 
         {/* Comments */}
-        <div className='w-full h-screen mb-[200px] mt-10 flex flex-col justify-start items-start gap-4 px-4 overflow-y-scroll'>
+        <div className='w-full h-[90%] mt-10 flex flex-col justify-start items-start gap-4 px-4 overflow-y-scroll'>
           {
             comments && comments?.length > 0 ? comments?.map((comment, index) => {
               return (
@@ -228,7 +241,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px] bg-black z-50'>
           <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} onClick={() => typeOfCommentRef.current = { entity: 'parent', parentCommentId: null }} />
           <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => handleComment()}>
-            <IoMdArrowRoundUp size={20} color={'white'} />
+            <IoMdArrowRoundUp size={20} color={'white'}/>
           </button>
         </div>
       </div>

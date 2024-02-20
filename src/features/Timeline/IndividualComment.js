@@ -45,7 +45,7 @@ const IndividualComment = forwardRef(({ name, eventBy, comment, parentCommentId,
         setDateTime(getDateTime(new Date(createdAt)));
     }, [])
 
-    const IndividualCommentBody = ({ name, eventBy, comment, profilePicture, children }) => {
+    const IndividualCommentBody = ({ name, eventBy, comment, profilePicture, children, isReply=false }) => {
         return (
             <div className='w-full flex flex-row justify-start items-start gap-2'>
                 {profilePicture ? <img src={profilePicture} alt={`${name}`} className='w-[20px] h-[20px] rounded-full object-cover' /> : <FaUserCircle size={20} />}
@@ -53,7 +53,7 @@ const IndividualComment = forwardRef(({ name, eventBy, comment, parentCommentId,
                     <div className='w-full flex flex-col items-start justify-start gap-1'>
                         <div className='w-full flex flex-row justify-between items-center'>
                             <h4 className='text-sm text-gray-400 font-bold tracking-wide'>{name}</h4>
-                            <p className='text-[10px] text-gray-600'>{dateTime}</p>
+                            {!isReply && <p className='text-[10px] text-gray-600'>{dateTime}</p>}
                         </div>
                         <div className='w-full text-xs text-gray-300 text-wrap break-words'>
                             {comment}
@@ -76,7 +76,7 @@ const IndividualComment = forwardRef(({ name, eventBy, comment, parentCommentId,
                 {
                     showReplies && replies && replies?.length > 0 && replies.map((reply, index) => {
                         return (
-                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.name} eventBy={reply?.eventBy} comment={reply?.comment} profilePicture={profilePicture} >
+                            <IndividualCommentBody key={Math.random() * 1000} name={reply?.name} eventBy={reply?.eventBy} comment={reply?.comment} profilePicture={profilePicture} isReply={true} >
                                 {/* <div className='w-full flex flex-row justify-start items-center gap-5'>
                                     <div className='text-gray-600 text-sm' onClick={() => handleReply(reply?.eventBy)}>Reply</div>
                                 </div> */}
