@@ -23,15 +23,16 @@ line-height: 32px; /* 160% */
 text-transform: capitalize;
 `
 const InfoTile = styled.p`
-  display: flex;
-  padding: 2px 8px;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.23);
-  background: rgba(59, 59, 59, 0.06);
-`;
+display: flex;
+padding: 2px 8px;
+justify-content: center;
+align-items: center;
+gap: 2px;
+border-radius: 4px;
+border: 1px solid rgba(255, 255, 255, 0.23);
+background: rgba(59, 59, 59, 0.06);
+backdrop-filter: blur(17px);
+`
 
 const Date = styled.div`
 color: var(--New-White, var(--White, #FFF));
@@ -44,35 +45,18 @@ line-height: 24.11px; /* 160% */
 text-transform: capitalize;
 `
 const TagText = styled.p`
-  color: #000;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 590;
-  line-height: normal;
-  letter-spacing: -0.36px;
-  text-transform: capitalize;
-`;
-const TimelineTile = ({
-  name,
-  dateTime,
-  kcal,
-  workoutName,
-  currScore,
-  prevScore,
-  sectionPerformance,
-  coachNotes,
-  achievements,
-  profilePicture
-}) => {
-  const tags = useMemo(
-    () => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'],
-    [],
-  );
-  const colors = useMemo(
-    () => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'],
-    [],
-  );
+color: #000;
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-weight: 590;
+line-height: normal;
+letter-spacing: -0.36px;
+text-transform: capitalize;
+`
+const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postKudos, isLiked }) => {
+  const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], [])
+  const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], [])
   const [tag, setTag] = useState(tags[0]);
   const [color, setColor] = useState(colors[0]);
   const [date, setDate] = useState(null);
