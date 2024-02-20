@@ -17,10 +17,9 @@ function PersonalTimeline() {
     }
 
     useEffect(() => {
-        console.log(userData?.data)
         setLoading(true);
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=personal&name=${user?.name}&page=${page}`)
+        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`)
             .then(res => {
                 setUserData(prev => res?.data);
                 setLoading(false);
@@ -37,17 +36,18 @@ function PersonalTimeline() {
             {isError && <Error>Oops! Something went wrong...</Error>}
             {
                 loading &&
-                <div className="w-full h-[80%] fixed left-0 z-50 bg-black">
+                <div className="w-full h-[83%] fixed left-0 z-50 bg-black">
                     <Loader className={'h-full'}/>
                 </div>
             }
 
             {
-                userData?.data && userData?.data?.length !== 0 ? userData?.data.map((data, index) => {
+                userData?.data && userData?.data?.map((data, index) => {
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={Math.random() * 1000}>
                                 <TimelineTile
+                                    _id={data?._id}
                                     name={data?.name}
                                     dateTime={data?.time}
                                     currScore={data?.fitnessScoreUpdates?.newScore}
@@ -56,12 +56,16 @@ function PersonalTimeline() {
                                     coachNotes={data?.coachNotes}
                                     achievement={data?.achievement}
                                     profilePicture={data?.profilePicture}
+                                    postComments={data?.comments}
+                                    postKudos={data?.kudos}
+                                    isLiked={data?.isLiked}
                                 />
                             </div>
                         )
                     }
                     return (
                         <TimelineTile
+                            _id={data?._id}
                             name={data?.name}
                             dateTime={data?.time}
                             currScore={data?.fitnessScoreUpdates?.newScore}
@@ -71,15 +75,15 @@ function PersonalTimeline() {
                             coachNotes={data?.coachNotes}
                             achievement={data?.achievement}
                             profilePicture={data?.profilePicture}
+                            postComments={data?.comments}
+                            postKudos={data?.kudos}
+                            isLiked={data?.isLiked}
                         />
                     )
-                }) :
-                    <div className='h-screen'>
-                        <h1 className='text-white/90 text-center text-2xl mt-10'>No workout data yet</h1>
-                    </div>
+                })
             }
 
-            {userData?.data && userData?.data.length !== 0 && <div className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'>
+            <div className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'>
                 <div className={`w-full flex flex-row justify-start items-center ${page > 1 ? 'text-green' : 'text-green/50'}`} onClick={() => {
                     page > 1 && setPage(prev => prev - 1);
                 }}><HiOutlineChevronDoubleLeft size={30} /></div>
@@ -87,7 +91,7 @@ function PersonalTimeline() {
                 <div className={`w-full flex flex-row justify-end items-center ${userData?.hasNextPage ? 'text-green' : 'text-green/50'}`} onClick={() => {
                     userData?.hasNextPage && setPage(prev => prev + 1);
                 }}><HiOutlineChevronDoubleRight size={30} /></div>
-            </div>}
+            </div>
         </div>
     )
 }
