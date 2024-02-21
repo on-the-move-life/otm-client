@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
 import AssesmentTile from './AssesmentTile';
 import WorkoutTile from './WorkoutTile'
+import IndividualComment from './IndividualComment';
+import { Name, Date, TagText, InfoTile } from './StyledComponents'
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle, IoIosArrowDown, IoMdArrowRoundUp } from "react-icons/io";
 import {
   HiOutlineChevronLeft,
@@ -10,60 +11,18 @@ import {
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import { FaUserCircle } from 'react-icons/fa';
-import IndividualComment from './IndividualComment';
-import axios from 'axios'
 import { useFormattedDateTime } from '../../hooks/useFormattedDateTime';
 import { useTagAndColor } from '../../hooks/useTagAndColor';
+import axios from 'axios'
 
-const Name = styled.div`
-color: var(--New-purple, #A680DD);
-text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 20px;
-font-style: normal;
-font-weight: 500;
-line-height: 32px; /* 160% */
-text-transform: capitalize;
-`
-const InfoTile = styled.p`
-display: flex;
-padding: 2px 8px;
-justify-content: center;
-align-items: center;
-gap: 2px;
-border-radius: 4px;
-border: 1px solid rgba(255, 255, 255, 0.23);
-background: rgba(59, 59, 59, 0.06);
-backdrop-filter: blur(17px);
-`
 
-const Date = styled.div`
-color: var(--New-White, var(--White, #FFF));
-text-shadow: 0px 2.26px 2.26px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 15.068px;
-font-style: normal;
-font-weight: 500;
-line-height: 24.11px; /* 160% */
-text-transform: capitalize;
-`
-const TagText = styled.p`
-color: #000;
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 12px;
-font-style: normal;
-font-weight: 590;
-line-height: normal;
-letter-spacing: -0.36px;
-text-transform: capitalize;
-`
-const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevScore, sectionPerformance, coachNotes, achievements, postComments, postKudos, isLiked, profilePicture }) => {
+const TimelineTile = ({ data }) => {
   const [collapsed, setCollapsed] = useState(true);
   const [coachNoteIndex, setCoachNoteIndex] = useState(0);
   const [achievementsIndex, setAchievementsIndex] = useState(0);
-  const [liked, setLiked] = useState(isLiked);
-  const [kudos, setKudos] = useState(postKudos);
-  const [commentsState, setCommentsState] = useState(postComments);
+  const [liked, setLiked] = useState(data?.isLiked);
+  const [kudos, setKudos] = useState(data?.kudos);
+  const [commentsState, setCommentsState] = useState(data?.comments);
   const [isLiking, setIsLiking] = useState(false);
   const [showComment, setShowComment] = useState(false);
 
@@ -72,8 +31,8 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
   const typeOfCommentRef = useRef(null);
 
   // custom hooks
-  const [formattedDate, formattedTime] = useFormattedDateTime(dateTime);
-  const [tag, color, position, tags, colors] = useTagAndColor(currScore);
+  const [formattedDate, formattedTime] = useFormattedDateTime(data?.time);
+  const [tag, color, position, tags, colors] = useTagAndColor(data?.fitnessScoreUpdates?.newScore);
 
   async function handleLike(action) {
     if (isLiking) return; // If a request is in progress, ignore additional clicks
@@ -81,7 +40,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
     const event = action === 'like' ? 'kudos' : 'kudosRemoved';
     
     const payload = {
-      postId: _id,
+      postId: data?._id,
       event,
       eventBy: JSON.parse(localStorage.getItem('user'))?.email
     }
@@ -121,14 +80,14 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
     }
     // payload for the API call
     const payload =( comment !== "" && typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) ? {
-      postId: _id,
+      postId: data?._id,
       event: 'comment',
       comment: comment,
       eventBy: JSON.parse(localStorage.getItem('user'))?.email,
       isParentComment: true,
       parentCommentId: null
     } : {
-      postId: _id,
+      postId: data?._id,
       event: 'comment',
       comment: comment,
       eventBy: JSON.parse(localStorage.getItem('user'))?.email,
@@ -181,16 +140,16 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         <div className='w-full flex flex-row items-center justify-between'>
           <div className='flex flex-row items-center justify-center gap-2 mb-2'>
             {
-              profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
+              data?.profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
                 <img
                   className="h-[40px] w-[40px] rounded-full object-cover"
-                  src={profilePicture}
-                  alt={name}
+                  src={data?.profilePicture}
+                  alt={data?.name}
                 />
               </div> :
                 <FaUserCircle size={40} color={'#91BDF6'} />
             }
-            <Name>{name}</Name>
+            <Name>{data?.name}</Name>
           </div>
           <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
             <TagText>{tag}</TagText>
@@ -203,7 +162,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           <InfoTile>{formattedTime}</InfoTile>
           {/* <InfoTile>700Kcal</InfoTile> */}
         </div>
-        {achievements?.length > 0 && (
+        {data?.achievement?.length > 0 && (
           <section className="my-4 flex flex-col justify-center backdrop-blur-sm rounded-lg p-2">
             <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray mb-4">
               achievements unlocked
@@ -215,7 +174,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
                   size={25}
                   onClick={() => {
                     try {
-                      setAchievementsIndex(prev => (prev - 1 + achievements?.length) % achievements?.length);
+                      setAchievementsIndex(prev => (prev - 1 + data?.achievement?.length) % data?.achievement?.length);
                     }
                     catch (err) {
                       setAchievementsIndex(0);
@@ -237,14 +196,14 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
               </div> */}
 
               <div className="h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs">
-                <p>{achievements[achievementsIndex]?.description}</p>
+                <p>{data?.achievement[achievementsIndex]?.description}</p>
               </div>
 
               <span>
                 <HiOutlineChevronRight
                   size={25}
                   onClick={() => {
-                    setAchievementsIndex(prev => (prev + 1) % achievements?.length);
+                    setAchievementsIndex(prev => (prev + 1) % data?.achievement?.length);
                   }}
                 />
               </span>
@@ -252,7 +211,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           </section>
         )}
         {
-          coachNotes?.length > 0 && (
+          data?.coachNotes?.length > 0 && (
             <section className=" flex flex-col items-start justify-center backdrop-blur-sm rounded-lg p-2">
               <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                 coach notes
@@ -264,7 +223,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
                     size={25}
                     onClick={() => {
                       try {
-                        setCoachNoteIndex(prev => (prev - 1 + coachNotes?.length) % coachNotes?.length);
+                        setCoachNoteIndex(prev => (prev - 1 + data?.coachNotes?.length) % data?.coachNotes?.length);
                       }
                       catch (err) {
                         setCoachNoteIndex(0);
@@ -273,7 +232,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
                   />
                 </span>
                 <div className="h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs">
-                  <p>{coachNotes[coachNoteIndex]?.description}</p>
+                  <p>{data?.coachNotes[coachNoteIndex]?.description}</p>
                 </div>
 
                 <span>
@@ -281,7 +240,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
                     size={25}
                     onClick={() => {
                       try {
-                        setCoachNoteIndex(prev => (prev + 1) % coachNotes?.length);
+                        setCoachNoteIndex(prev => (prev + 1) % data?.coachNotes?.length);
                       }
                       catch (err) {
                         setCoachNoteIndex(0);
@@ -294,17 +253,17 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
           )
         }
         {
-          sectionPerformance?.map((workout, index) => {
+          data?.sectionPerformance?.map((workout, index) => {
             if (workout?.name === 'Assessment') {
               return (
-                <AssesmentTile currScore={currScore} prevScore={prevScore} assessmentFeedback={workout?.displayInfo} key={index} />
+                <AssesmentTile currScore={data?.fitnessScoreUpdates?.newScore} prevScore={data?.fitnessScoreUpdates?.oldScore} assessmentFeedback={workout?.displayInfo} key={index} />
               )
             }
           })
         }
         {!collapsed && <div className="mt-4 grid grid-cols-1 gap-4">
           {
-            sectionPerformance?.map((workout, index) => {
+            data?.sectionPerformance?.map((workout, index) => {
               if (index !== 0 && workout?.name !== 'Assessment') {
                 return (
                   <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={Math.random() * 1000} />

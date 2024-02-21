@@ -52,39 +52,12 @@ function CommunityTimeline() {
                     if (index === 0) {
                         return (
                             <div ref={timelineTopRef} key={data?._id}>
-                                <TimelineTile
-                                    _id={data?._id}
-                                    name={data?.name}
-                                    dateTime={data?.time}
-                                    currScore={data?.fitnessScoreUpdates?.newScore}
-                                    prevScore={data?.fitnessScoreUpdates?.oldScore}
-                                    sectionPerformance={data?.sectionPerformance}
-                                    coachNotes={data?.coachNotes}
-                                    achievement={data?.achievement}
-                                    profilePicture={data?.profilePicture}
-                                    postComments={data?.comments}
-                                    postKudos={data?.kudos}
-                                    isLiked={data?.isLiked}
-                                />
+                                <TimelineTile data={data} />
                             </div>
                         )
                     }
                     return (
-                        <TimelineTile
-                            _id={data?._id}
-                            name={data?.name}
-                            dateTime={data?.time}
-                            currScore={data?.fitnessScoreUpdates?.newScore}
-                            prevScore={data?.fitnessScoreUpdates?.oldScore}
-                            sectionPerformance={data?.sectionPerformance}
-                            coachNotes={data?.coachNotes}
-                            achievement={data?.achievement}
-                            profilePicture={data?.profilePicture}
-                            key={data?._id}
-                            postComments={data?.comments}
-                            postKudos={data?.kudos}
-                            isLiked={data?.isLiked}
-                        />
+                        <TimelineTile data={data} />
                     )
                 })
             }
