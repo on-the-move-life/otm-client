@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import AssesmentTile from './AssesmentTile';
 import WorkoutTile from './WorkoutTile'
@@ -73,7 +73,7 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
 
   // custom hooks
   const [formattedDate, formattedTime] = useFormattedDateTime(dateTime);
-  const [tag, color, position] = useTagAndColor(currScore);
+  const [tag, color, position, tags, colors] = useTagAndColor(currScore);
 
   async function handleLike(action) {
     if (isLiking) return; // If a request is in progress, ignore additional clicks

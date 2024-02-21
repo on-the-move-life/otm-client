@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useTagAndColor } from '../../hooks/useTagAndColor'
 
@@ -77,7 +77,7 @@ text-transform: capitalize;
 `
 
 function FitnessScore({ score, percentile }) {
-    const [tag, color, position] = useTagAndColor(score);
+    const [tag, color, position, colors, tags] = useTagAndColor(score);
 
     // Indicator component
     const Indicator = ({ style }) => {
@@ -93,7 +93,6 @@ function FitnessScore({ score, percentile }) {
 
     // Score Indicator component
     const ScoreIndicator = () => {
-        const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], []);
         return (
             <div className='w-full flex flex-col items-center justify-center gap-4'>
                 <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
