@@ -25,6 +25,7 @@ const TimelineTile = ({ data }) => {
   const [commentsState, setCommentsState] = useState(data?.comments);
   const [isLiking, setIsLiking] = useState(false);
   const [showComment, setShowComment] = useState(false);
+  const [isCommenting, setIsCommenting] = useState(false);
 
   // refs
   const typedCommentRef = useRef(null);
@@ -38,48 +39,51 @@ const TimelineTile = ({ data }) => {
     if (isLiking) return; // If a request is in progress, ignore additional clicks
     setIsLiking(true); // Set isLiking to true when a request starts
     const event = action === 'like' ? 'kudos' : 'kudosRemoved';
-    
+
     const payload = {
       postId: data?._id,
       event,
       eventBy: JSON.parse(localStorage.getItem('user'))?.email
     }
 
-    try{
+    try {
       const response = await axiosClient.post('/', payload);
       setLiked(prev => !prev);
       setKudos(prev => action === 'like' ? prev + 1 : prev - 1);
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
-    finally{
+    finally {
       setIsLiking(false); // Set isLiking to false when a request finishes
     }
   }
 
   function handleComment() {
+    setIsCommenting(true);
     const comment = typedCommentRef.current.value;
     const APICall = async (payload) => {
-      try{
+      try {
         const response = await axiosClient.post('/', payload);
         typedCommentRef.current.value = '';
         const newComment = response.data.data;
         newComment['name'] = JSON.parse(localStorage.getItem('user'))?.name;
         setCommentsState(prev => [newComment, ...prev])
+        setIsCommenting(false);
       }
-      catch(err){
+      catch (err) {
         typedCommentRef.current.value = typedCommentRef.current.value + ' (failed to post)';
         typedCommentRef.current.style.color = 'red';
         setTimeout(() => {
           typedCommentRef.current.value = '';
           typedCommentRef.current.style.color = 'rgb(189,189,189)';
+          setIsCommenting(false);
         }, 2000)
         console.log(err);
       }
     }
     // payload for the API call
-    const payload =( comment !== "" && typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) ? {
+    const payload = (comment !== "" && typeOfCommentRef.current?.entity === 'parent' && typeOfCommentRef.current?.parentCommentId === null) ? {
       postId: data?._id,
       event: 'comment',
       comment: comment,
@@ -125,7 +129,7 @@ const TimelineTile = ({ data }) => {
         {/* Comment Input */}
         <div className='w-full h-fit flex flex-row items-center justify-between gap-1 fixed bottom-0 px-2 border-t-gray-600 border-t-[0.8px] bg-black z-50'>
           <input type="text" placeholder="Add a comment" className='outline-none w-full h-[50px] px-2 bg-transparent text-gray-400' ref={typedCommentRef} onClick={() => typeOfCommentRef.current = { entity: 'parent', parentCommentId: null }} />
-          <button className='px-3 py-1 rounded-full bg-light-blue-600' onClick={(e) => handleComment()}>
+          <button className='px-3 py-1 rounded-full bg-light-blue-600' disabled={isCommenting} onClick={(e) => handleComment()}>
             <IoMdArrowRoundUp size={20} color={'white'} />
           </button>
         </div>
@@ -169,19 +173,20 @@ const TimelineTile = ({ data }) => {
             </h4>
 
             <div className="my-2 flex h-fit w-full items-center justify-between">
-              <span>
-                <HiOutlineChevronLeft
-                  size={25}
-                  onClick={() => {
-                    try {
-                      setAchievementsIndex(prev => (prev - 1 + data?.achievement?.length) % data?.achievement?.length);
-                    }
-                    catch (err) {
-                      setAchievementsIndex(0);
-                    }
-                  }}
-                />
-              </span>
+              {data?.achievement?.length > 1 &&
+                <span>
+                  <HiOutlineChevronLeft
+                    size={25}
+                    onClick={() => {
+                      try {
+                        setAchievementsIndex(prev => (prev - 1 + data?.achievement?.length) % data?.achievement?.length);
+                      }
+                      catch (err) {
+                        setAchievementsIndex(0);
+                      }
+                    }}
+                  />
+                </span>}
               {/* <div className="flex h-full w-full items-center justify-center px-2 rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] ">
                 <p className=" text-[10px]">
                   {achievements[achievementsIndex]?.description}
@@ -195,18 +200,19 @@ const TimelineTile = ({ data }) => {
                 </div>
               </div> */}
 
-              <div className="h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs">
-                <p>{data?.achievement[achievementsIndex]?.description}</p>
+              <div className='h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs'>
+                <p className='w-full text-center tracking-widest'>{data?.achievement[achievementsIndex]?.medal} {data?.achievement[achievementsIndex]?.type} : {data?.achievement[achievementsIndex]?.weight}</p>
               </div>
 
-              <span>
-                <HiOutlineChevronRight
-                  size={25}
-                  onClick={() => {
-                    setAchievementsIndex(prev => (prev + 1) % data?.achievement?.length);
-                  }}
-                />
-              </span>
+              {data?.achievement?.length > 1 &&
+                <span>
+                  <HiOutlineChevronRight
+                    size={25}
+                    onClick={() => {
+                      setAchievementsIndex(prev => (prev + 1) % data?.achievement?.length);
+                    }}
+                  />
+                </span>}
             </div>
           </section>
         )}
