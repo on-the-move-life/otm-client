@@ -7,6 +7,13 @@ import { useSelector } from 'react-redux';
 import SkillProgression from './SkillProgression.js';
 import MovementDetail from './MovementDetail.js';
 import { Tooltip, Typography } from '@material-tailwind/react';
+import Slider from "react-touch-drag-slider";
+import styled from 'styled-components';
+
+const AppStyles = styled.main`
+  height: 430px;
+  width: 400px;
+`;
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -20,6 +27,10 @@ const SectionDetail = () => {
   const [showLevel, setShowLevel] = useState(false);
   const [showMvmtDetail, setShowMvmtDetail] = useState(false);
   const [selectedMovement, setSelectedMovement] = useState({});
+  const [slideIndex, setSlideIndex] = useState(0);
+  const setFinishedIndex = (i) => {
+    setSlideIndex(i);
+  };
 
   const lastPage = currentIndex === sectionList.length - 1;
 
@@ -140,7 +151,7 @@ const SectionDetail = () => {
                       {formatInfo?.name}
                     </span>
                     {formatInfo?.name !== 'EMOM' &&
-                    formatInfo?.name !== 'AMRAP' ? (
+                      formatInfo?.name !== 'AMRAP' ? (
                       <span className="text-sm text-lightGray">
                         Rounds:{' '}
                         <span className="text-green">{formatInfo?.rounds}</span>
@@ -258,50 +269,80 @@ const SectionDetail = () => {
                 </div>
               )}
 
-            <div className="scrolling-wrapper">
-              {movements.map((movement) => {
-                return (
-                  <Movement
-                    movement={movement}
-                    key={movement._id}
-                    sectionCode={code}
-                    movementLength={movementLength}
-                    openMovementDetail={openMovementDetail}
+              {/* <div className="scrolling-wrapper">
+                {movements.map((movement) => {
+                  return (
+                    <Movement
+                      movement={movement}
+                      key={movement._id}
+                      sectionCode={code}
+                      movementLength={movementLength}
+                      openMovementDetail={openMovementDetail}
+                    />
+                  );
+                })}
+              </div> */}
+              <AppStyles>
+                <Slider
+                  onSlideComplete={setFinishedIndex}
+                  activeIndex={slideIndex}
+                  threshHold={100}
+                  transition={0.2}
+                  scaleOnDrag={true}
+                >
+                  {movements.map((movement) => {
+                    return (
+                      <Movement
+                        movement={movement}
+                        key={movement._id}
+                        sectionCode={code}
+                        movementLength={movementLength}
+                        openMovementDetail={openMovementDetail}
+                      />
+                    );
+                  })}
+                </Slider>
+                <div className='w-full flex flex-row justify-center items-center gap-2'>
+                  {
+                    movements.map((movement, index) => {
+                      return(
+                        <div className={`h-[5px] rounded-[5px] ${index === slideIndex ? 'bg-white w-[20px]' : 'bg-[#474747] w-[8px]'}`} key={Math.random() * 1000}></div>
+                      )
+                    })
+                  }
+                </div>
+              </AppStyles>
+              {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
+                <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+                  <p className="mb-2 text-xs tracking-[3px]">NOTES</p>
+                  <ul className="list-disc pl-3">
+                    {notes.map((note, idx) => (
+                      <li
+                        className="my-2 text-xs font-light tracking-wider text-lightGray"
+                        key={idx}
+                      >
+                        {note}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div>
+                <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
+                  Data Inputs
+                </h2>
+                {dataInput.map((input, index) => (
+                  <DataInputComponent
+                    key={index}
+                    inputId={input.id}
+                    inputType={input.type}
+                    inputOptions={input.options}
+                    placeholder={input.label}
+                    label={input.label}
                   />
-                );
-              })}
-            </div>
-            {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
-              <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-                <p className="mb-2 text-xs tracking-[3px]">NOTES</p>
-                <ul className="list-disc pl-3">
-                  {notes.map((note, idx) => (
-                    <li
-                      className="my-2 text-xs font-light tracking-wider text-lightGray"
-                      key={idx}
-                    >
-                      {note}
-                    </li>
-                  ))}
-                </ul>
+                ))}
               </div>
-            )}
-            <div>
-              <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
-                Data Inputs
-              </h2>
-              {dataInput.map((input, index) => (
-                <DataInputComponent
-                  key={index}
-                  inputId={input.id}
-                  inputType={input.type}
-                  inputOptions={input.options}
-                  placeholder={input.label}
-                  label={input.label}
-                />
-              ))}
-            </div>
-            {/* {!lastPage && (
+              {/* {!lastPage && (
               <div className="scrolling-wrapper">
                 {movements.map((movement) => {
                   return (
@@ -359,7 +400,7 @@ const SectionDetail = () => {
                 <div
                   className="flex h-full w-3/4 flex-col items-center justify-center bg-theme"
                   onClick={() => navigate('/workout-summary')}
-                  // onClick={() => setShowAchievemntsPage(true)}
+                // onClick={() => setShowAchievemntsPage(true)}
                 >
                   <span className="text-2xl tracking-widest text-green">
                     FINISH
