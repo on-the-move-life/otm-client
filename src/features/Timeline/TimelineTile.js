@@ -12,7 +12,7 @@ import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import { FaUserCircle } from 'react-icons/fa';
 import IndividualComment from './IndividualComment';
 import axios from 'axios'
-import { type } from '@testing-library/user-event/dist/type';
+import ProfilePicture from '../Profile/ProfilePicture';
 
 const Name = styled.div`
 color: var(--New-purple, #A680DD);
@@ -255,12 +255,9 @@ const TimelineTile = ({ _id, name, dateTime, kcal, workoutName, currScore, prevS
         <div className='w-full flex flex-row items-center justify-between'>
           <div className='flex flex-row items-center justify-center gap-2 mb-2'>
             {
-              profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
-                <img
-                  className="h-[40px] w-[40px] rounded-full object-cover"
-                  src={profilePicture}
-                  alt={name}
-                />
+              profilePicture !== '' ? 
+              <div className="flex flex-row items-center justify-center">
+                <ProfilePicture inputPic={profilePicture} altText={name} width={"40px"} height={"40px"}/>
               </div> :
                 <FaUserCircle size={40} color={'#91BDF6'} />
             }

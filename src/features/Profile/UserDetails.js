@@ -13,6 +13,7 @@ import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
 import axios from 'axios';
 import { Error } from '../../components';
+import ProfilePicture from './ProfilePicture';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -190,16 +191,16 @@ const UserDetails = ({ showHistory }) => {
           </h1>
 
           {/* User Profile Pic and Name */}
-
-          {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <div className='w-[100px] h-[100px] rounded-full relative'>
-                {chosenPic ?
-                  <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
-                  memberData && memberData?.profilePicture ?
-                    <img src={uniqueImageURLKey} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
-                    <FaUserCircle size={100} color={'#91BDF6'} />}
+                {
+                  chosenPic ?
+                    <ProfilePicture inputPic={chosenPic} altText={'profile picture'} height={"100px"} width={"100px"}/> :
+                    memberData && memberData?.profilePicture ?
+                      <ProfilePicture inputPic={uniqueImageURLKey} altText={'profile picture'} height={"100px"} width={"100px"}/>:
+                      <FaUserCircle size={100} color={'#91BDF6'} />
+                }
                 <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
                   setShowProfilePicPopup(true);
                 }}>

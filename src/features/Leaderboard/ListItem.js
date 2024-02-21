@@ -1,6 +1,7 @@
 import React from 'react';
 import Arrow from './Arrow';
 import { FaUserCircle } from 'react-icons/fa';
+import ProfilePicture from '../Profile/ProfilePicture';
 
 const ListItem = ({ isCurrentUser, user, mode }) => {
   const { rank, name, code, rankChange, profilePicture } = user;
@@ -19,16 +20,13 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
             {rank}
           </div>
           {
-            profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
-              <img
-                className="h-[40px] w-[40px] rounded-full object-cover"
-                src={profilePicture}
-                alt={name}
-              />
+            profilePicture !== '' ?
+            <div className="w-fit h-fit flex flex-row items-center justify-center">
+              <ProfilePicture inputPic={profilePicture} altText={name} height={'40px'} width={'40px'}/>
             </div> :
             <FaUserCircle size={40} color={'#91BDF6'} />
           }
-          <div className="basis-5/6 text-lg font-normal ml-[5px]">{name}</div>
+          <div className="basis-4/6 text-lg font-normal ml-[5px]">{name}</div>
         </div>
 
         <div className="flex flex-row items-center justify-around px-4">
