@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import TimelineTile from './TimelineTile'
 import Loader from '../../components/Loader';
-import axios from 'axios'
 import Error from '../../components/Error';
 import { HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight } from "react-icons/hi";
+import { axiosClient } from './apiClient';
 
 function CommunityTimeline() {
     const [data, setData] = useState(null);
@@ -22,7 +22,7 @@ function CommunityTimeline() {
         const email = JSON.parse(localStorage.getItem('user'))?.email;
         setLoading(prev => true);
         try {
-            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=community&page=${page}&email=${email}`);
+            const res = await axiosClient.get(`?type=community&page=${page}&email=${email}`);
             setData(prev => res?.data);
             setLoading(false);
             scrollToTop()
@@ -57,7 +57,7 @@ function CommunityTimeline() {
                         )
                     }
                     return (
-                        <TimelineTile data={data} />
+                        <TimelineTile data={data} key={data?._id}/>
                     )
                 })
             }

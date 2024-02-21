@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import TimelineTile from './TimelineTile'
 import Loader from '../../components/Loader';
-import axios from 'axios';
+import { axiosClient } from './apiClient';
 import Error from '../../components/Error';
 import { HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight } from "react-icons/hi";
 
@@ -19,7 +19,7 @@ function PersonalTimeline() {
     useEffect(() => {
         setLoading(true);
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`)
+        axiosClient.get(`?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`)
             .then(res => {
                 setUserData(prev => res?.data);
                 setLoading(false);
@@ -51,7 +51,7 @@ function PersonalTimeline() {
                         )
                     }
                     return (
-                        <TimelineTile data={data} />
+                        <TimelineTile data={data} key={data?._id}/>
                     )
                 })
             }

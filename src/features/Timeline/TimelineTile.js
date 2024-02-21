@@ -13,7 +13,7 @@ import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import { FaUserCircle } from 'react-icons/fa';
 import { useFormattedDateTime } from '../../hooks/useFormattedDateTime';
 import { useTagAndColor } from '../../hooks/useTagAndColor';
-import axios from 'axios'
+import { axiosClient } from './apiClient';
 
 
 const TimelineTile = ({ data }) => {
@@ -46,7 +46,7 @@ const TimelineTile = ({ data }) => {
     }
 
     try{
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, payload);
+      const response = await axiosClient.post('/', payload);
       setLiked(prev => !prev);
       setKudos(prev => action === 'like' ? prev + 1 : prev - 1);
     }
@@ -62,7 +62,7 @@ const TimelineTile = ({ data }) => {
     const comment = typedCommentRef.current.value;
     const APICall = async (payload) => {
       try{
-        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline`, payload);
+        const response = await axiosClient.post('/', payload);
         typedCommentRef.current.value = '';
         const newComment = response.data.data;
         newComment['name'] = JSON.parse(localStorage.getItem('user'))?.name;

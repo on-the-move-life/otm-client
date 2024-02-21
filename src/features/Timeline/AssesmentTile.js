@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { AssesmentPara, AssesmentText, FitnessScore, Score, PercentChangeText } from './StyledComponents';
+import { AssesmentPara, AssesmentText, FitnessScore, Score } from './StyledComponents';
 import Arrow from '../Leaderboard/Arrow';
 
 
