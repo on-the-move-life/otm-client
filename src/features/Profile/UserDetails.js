@@ -264,7 +264,7 @@ const UserDetails = ({ showHistory }) => {
                 </section>
               </div>
             </div>
-            <div className="w-full flex flex-col pt-52" onClick={() => {
+            <div className="w-full flex flex-col mt-52" onClick={() => {
               setShowProfilePicPopup(false);
               handleLogout();
             }}>

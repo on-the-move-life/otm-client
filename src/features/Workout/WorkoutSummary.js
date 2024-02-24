@@ -115,7 +115,7 @@ const WorkoutSummary = () => {
       {status === 'loading' && <Loader />}
       {/* {status === 'error' && <Error>Oops! Something Went Wrong</Error>} */}
 
-      {status === 'success' && Object.keys(workoutSummary).length > 0 && (
+      {status === 'success' && Object.keys(workoutSummary).length > 0 && !showAchievemntsPage && (
         <div className="h-full w-full px-4 py-8 ">
           <div className="mb-4">
             <p className="text-xs tracking-widest text-lightGray">{today}</p>
