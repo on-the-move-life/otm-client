@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Error, Loader } from '../../components';
-import { FaStar } from 'react-icons/fa';
 import {
   HiHome,
   HiOutlineChevronLeft,
@@ -31,8 +30,6 @@ const WorkoutSummary = () => {
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
 
-  // const [section, setSection] = useState(sectionList[index]);
-
   const dispatch = useDispatch();
 
   const { inputValues, workout, status } = useSelector(
@@ -40,9 +37,6 @@ const WorkoutSummary = () => {
   );
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
-    // console.log(newAchievementIndex, 'newAchievementIndex');
-    // console.log(newCoachIndex, 'newCoachIndex');
-
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
       setAchievementsIndex((index) => newAchievementIndex);
     if (newCoachIndex >= 0 && newCoachIndex < notesIndex.length)

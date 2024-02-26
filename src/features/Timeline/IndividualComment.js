@@ -7,7 +7,8 @@ const IndividualComment = forwardRef(({ name, eventBy, comment, parentCommentId,
     const [replies, setReplies] = useState([]);
     const [dateTime, setDateTime] = useState('');
 
-    function handleReply(repliedTo) {
+    // function to handle reply to a comment
+    function handleReply(repliedTo='') {
         ref.typeOfCommentRef.current = { entity: 'child', parentCommentId: commentId }
 
         ref.typedCommentRef.current.focus();

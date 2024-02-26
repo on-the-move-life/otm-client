@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import TimelineTile from './TimelineTile'
 import Loader from '../../components/Loader';
-import axios from 'axios';
+import { axiosClient } from './apiClient';
 import Error from '../../components/Error';
 import { HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight } from "react-icons/hi";
 
@@ -19,7 +19,7 @@ function PersonalTimeline() {
     useEffect(() => {
         setLoading(true);
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`)
+        axiosClient.get(`?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`)
             .then(res => {
                 setUserData(prev => res?.data);
                 setLoading(false);
@@ -45,40 +45,13 @@ function PersonalTimeline() {
                 userData?.data && userData?.data?.length !== 0 && userData?.data?.map((data, index) => {
                     if (index === 0) {
                         return (
-                            <div ref={timelineTopRef} key={Math.random() * 1000}>
-                                <TimelineTile
-                                    _id={data?._id}
-                                    name={data?.name}
-                                    dateTime={data?.time}
-                                    currScore={data?.fitnessScoreUpdates?.newScore}
-                                    prevScore={data?.fitnessScoreUpdates?.oldScore}
-                                    sectionPerformance={data?.sectionPerformance}
-                                    coachNotes={data?.coachNotes}
-                                    achievement={data?.achievement}
-                                    profilePicture={data?.profilePicture}
-                                    postComments={data?.comments}
-                                    postKudos={data?.kudos}
-                                    isLiked={data?.isLiked}
-                                />
+                            <div ref={timelineTopRef} key={data?._id}>
+                                <TimelineTile data={data} />
                             </div>
                         )
                     }
                     return (
-                        <TimelineTile
-                            _id={data?._id}
-                            name={data?.name}
-                            dateTime={data?.time}
-                            currScore={data?.fitnessScoreUpdates?.newScore}
-                            prevScore={data?.fitnessScoreUpdates?.oldScore}
-                            sectionPerformance={data?.sectionPerformance}
-                            key={Math.random() * 1000}
-                            coachNotes={data?.coachNotes}
-                            achievement={data?.achievement}
-                            profilePicture={data?.profilePicture}
-                            postComments={data?.comments}
-                            postKudos={data?.kudos}
-                            isLiked={data?.isLiked}
-                        />
+                        <TimelineTile data={data} key={data?._id}/>
                     )
                 })
             }

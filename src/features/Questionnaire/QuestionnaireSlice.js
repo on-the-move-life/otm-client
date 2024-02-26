@@ -67,20 +67,11 @@ export default function questionnaireReducer(state = initialState, action) {
 
 export function getQuestions(code) {
   return async function (dispatch) {
-    // axiosClient.get('/', { params: { section: code } }).then((res) => {
-    //   console.log('QUESTIONS', res.data);
-    //   dispatch({ type: 'questionnaire/getQuestions', payload: res.data });
-    // })
-    // .catch((err)=> {
-    //   console.log(err, "ERROR");
-    // })
-
     try {
       const res = await axiosClient.get('/', { params: { section: code } });
-      // const res = await axiosClient.get('/questions');
 
-      console.log('QUESTIONS', res.data);
       dispatch({ type: 'questionnaire/getQuestions', payload: res.data });
+
       return res.data; // return the data so you can use it in the .then() block
     } catch (err) {
       console.log(err, 'ERROR');
@@ -95,9 +86,7 @@ export function getSections() {
     axiosClient
       .get('/section')
       .then((res) => {
-        console.log('SECTIONS', res.data);
         dispatch({ type: 'questionnaire/getSections', payload: res.data.data });
-        // dispatch({ type: 'questionnaire/getSections', payload: res.data });
       })
       .catch((err) => {
         console.log(err.message, 'ERROR');

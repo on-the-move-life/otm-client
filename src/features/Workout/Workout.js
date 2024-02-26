@@ -21,7 +21,6 @@ const Workout = () => {
     } else {
       dispatch(setStatus('error'));
     }
-    console.log('got workout');
   }, [dispatch, memberCode]);
 
   if (user === null || undefined) {

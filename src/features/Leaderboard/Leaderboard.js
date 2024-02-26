@@ -6,9 +6,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import List from './List';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 
-const imgUrl =
-  'https://s3-alpha-sig.figma.com/img/2e7c/0b19/b615cd1f932cd1924a9842e4132a9d6b?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gQvc8JF1x29HbTnGuCgaANyI7U~ir15x1Sjg1BupyF226FJDdePjFFCYGlCcW8tIN8lRYSeivLlmxj1CVEFYhacRVmH981d2TVM5wXnF5c57bpqY9VbzC8ADm73fPexawZBLSSeeAQbF-nzq7k61qKZg2qCkbL8cD0~mTPG-eZroJy1jJg7UIrSdeOL5dNDp~DDENprbNDdlKWWEw9vImWRWxr5-DX1Gkvh30E2LX7eacZ-hIStbA3qguSDeAbq419DHEMdt8raO~Vm8T3AMO6tLpzxs-wDapxETIZBHVbSzpN6I3W8hJTjR8wCEF9zvYbUbUhVtTQ4~DdAGGTrYiA__';
-
 const Leaderboard = () => {
   const [fitnessScoreData, setFitnessScoreData] = useState([]);
   const [workoutCountData, setWorkoutCountData] = useState([]);
@@ -116,21 +113,19 @@ const Leaderboard = () => {
 
       <div className="flex-start flex space-x-2 py-2">
         <div
-          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
-            selectedDataType === 'workout'
+          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'workout'
               ? 'bg-white font-bold text-black'
               : 'text-white'
-          } cursor-pointer px-2 py-0.5`}
+            } cursor-pointer px-2 py-0.5`}
           onClick={() => setSelectedDataType('workout')}
         >
           <p className="text-xs">Workout</p>
         </div>
         <div
-          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
-            selectedDataType === 'fitnessScore'
+          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'fitnessScore'
               ? 'bg-white font-bold text-black'
               : 'text-white'
-          } cursor-pointer px-2 py-0.5`}
+            } cursor-pointer px-2 py-0.5`}
           onClick={() => setSelectedDataType('fitnessScore')}
         >
           <p className="text-xs">Fitness Score</p>
