@@ -4,12 +4,12 @@ import { FaUserCircle } from 'react-icons/fa';
 import ProfilePicture from '../Profile/ProfilePicture';
 
 const ListItem = ({ isCurrentUser, user, mode }) => {
-  const { rank, name, code, rankChange, profilePicture } = user;
+  const { rank, name, rankChange, profilePicture } = user;
   const count = mode === 'workout' ? user.workout : user.totalScore;
 
   const defaultClassName = ` h-[75px]  ${isCurrentUser
-      ? 'mix-blend-screen bg-[#3C3C3C] bg-opacity-10 leaderboard-user-list-item border-opacity-80 rounded-xl'
-      : ''
+    ? 'mix-blend-screen bg-[#3C3C3C] bg-opacity-10 leaderboard-user-list-item border-opacity-80 rounded-xl'
+    : ''
     } w-full flex flex-row justify-between px-auto`;
 
   return (
@@ -24,7 +24,7 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
             <div className="w-fit h-fit flex flex-row items-center justify-center">
               <ProfilePicture inputPic={profilePicture} altText={name} height={'40px'} width={'40px'}/>
             </div> :
-            <FaUserCircle size={40} color={'#91BDF6'} />
+              <FaUserCircle size={40} color={'#91BDF6'} />
           }
           <div className="basis-4/6 text-lg font-normal ml-[5px]">{name}</div>
         </div>
@@ -37,7 +37,6 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
         </div>
       </div>
       {!isCurrentUser && <div className="w-7/8 h-[0.5] bg-gray-700"></div>}
-
     </div>
   );
 };

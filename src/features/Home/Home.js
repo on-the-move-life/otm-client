@@ -51,7 +51,6 @@ const Home = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data) {
             setUserData(res.data);
             setHomeStats(res.data);

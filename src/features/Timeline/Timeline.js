@@ -2,18 +2,9 @@ import React, { useState } from 'react';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import PersonalTimeline from './PersonalTimeline';
 import CommunityTimeline from './CommunityTimeline';
-import styled from 'styled-components';
+import { TimelineHeading } from './StyledComponents';
 import { useNavigate } from 'react-router-dom';
 
-const Heading = styled.h1`
-color: var(--White, #FFF);
-text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 32px;
-font-style: normal;
-font-weight: 500;
-line-height: 40px; /* 125% */
-`
 
 const Timeline = () => {
   const [timeline, setTimeline] = useState('community');
@@ -30,7 +21,7 @@ const Timeline = () => {
         />
       </div>
       <div className='w-full flex flex-row justify-between items-center'>
-        <Heading>Timeline</Heading>
+        <TimelineHeading>Timeline</TimelineHeading>
       </div>
       <div className="space-x-2 py-2">
         <button

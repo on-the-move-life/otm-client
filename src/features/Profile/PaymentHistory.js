@@ -14,7 +14,6 @@ const PaymentHistory = ({ onClose }) => {
 
   useEffect(() => {
     const user = getUserFromStorage();
-    console.log(user);
     if (user && user.code) {
       getPaymentHistory(user.code);
     }

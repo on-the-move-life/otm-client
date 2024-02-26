@@ -94,7 +94,6 @@ function AuthProvider({ children }) {
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, body)
       .then((res) => {
-        console.log(res.data, 'RES DATA');
         const user = res.data?.user;
 
         if (user.email) {
@@ -115,7 +114,6 @@ function AuthProvider({ children }) {
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/auth/signup`, body)
       .then((res) => {
-        console.log(res.data, 'RES DATA');
         const user = res.data?.user;
 
         if (user.email) {

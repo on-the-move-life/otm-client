@@ -102,13 +102,11 @@ const UserDetails = ({ showHistory }) => {
       setShowProfilePicPopup(false);
       const formData = new FormData();
       formData.append('profilePicture', file);
-      console.log('step 1', formData)
       formData.append('email', JSON.parse(localStorage.getItem('user')).email);
-      console.log(formData, 'step 2')
       axios
         .post(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
         .then(res => {
-          console.log(res)
+          console.log('profile picture updated!');
         })
         .catch(err => {
           console.log(err);
@@ -129,7 +127,7 @@ const UserDetails = ({ showHistory }) => {
         }
       })
       .then(res => {
-        console.log(res)
+        console.log('profile picture deleted!')
         window.location.reload();
       })
       .catch(err => {
@@ -275,11 +273,11 @@ const UserDetails = ({ showHistory }) => {
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
                 </div>
-                <button className="text-lg font-medium text-lightGray">
+                <div className="text-lg font-medium text-lightGray">
                   <button className="text-lg font-medium text-lightGray">
                     Log Out
                   </button>
-                </button>
+                </div>
               </div>
             </div>
           </div>

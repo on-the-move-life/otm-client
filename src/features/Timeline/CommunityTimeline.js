@@ -1,36 +1,42 @@
 import React, { useEffect, useState, useRef } from 'react'
 import TimelineTile from './TimelineTile'
 import Loader from '../../components/Loader';
-import axios from 'axios'
 import Error from '../../components/Error';
 import { HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight } from "react-icons/hi";
+import { axiosClient } from './apiClient';
 
 function CommunityTimeline() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const timelineTopRef = useRef();
     const [isError, setError] = useState(false);
+    const timelineTopRef = useRef();
 
+    // function to always take the user to the top of the page after a new page is loaded
     function scrollToTop() {
         timelineTopRef.current?.scrollIntoView({ behavior: "smooth" });
     }
 
-    useEffect(() => {
+    // function to fetch the data from the server
+    const fetchData = async () => {
         const email = JSON.parse(localStorage.getItem('user'))?.email;
-        setLoading(true);
-        axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/timeline?type=community&page=${page}&email=${email}`)
-            .then(res => {
-                setData(prev => res?.data);
-                setLoading(false);
-                scrollToTop()
-            })
-            .catch(err => {
-                setError(true);
-                setLoading(false);
-                console.log(err);
-            })
+        setLoading(prev => true);
+        try {
+            const res = await axiosClient.get(`?type=community&page=${page}&email=${email}`);
+            setData(prev => res?.data);
+            setLoading(false);
+            scrollToTop()
+        } catch (err) {
+            setError(true);
+            setLoading(false);
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
     }, [page])
+
     return (
         <div className='w-full h-screen flex flex-col justify-start itmes-center gap-12 mt-3 overflow-y-scroll pb-[50px]'>
             {isError && <Error className={'w-full'}>Oops! Something went wrong...</Error>}
@@ -45,40 +51,13 @@ function CommunityTimeline() {
                 data?.data && data?.data?.length !== 0 && data?.data.map((data, index) => {
                     if (index === 0) {
                         return (
-                            <div ref={timelineTopRef} key={Math.random() * 1000}>
-                                <TimelineTile
-                                    _id={data?._id}
-                                    name={data?.name}
-                                    dateTime={data?.time}
-                                    currScore={data?.fitnessScoreUpdates?.newScore}
-                                    prevScore={data?.fitnessScoreUpdates?.oldScore}
-                                    sectionPerformance={data?.sectionPerformance}
-                                    coachNotes={data?.coachNotes}
-                                    achievement={data?.achievement}
-                                    profilePicture={data?.profilePicture}
-                                    postComments={data?.comments}
-                                    postKudos={data?.kudos}
-                                    isLiked={data?.isLiked}
-                                />
+                            <div ref={timelineTopRef} key={data?._id}>
+                                <TimelineTile data={data} />
                             </div>
                         )
                     }
                     return (
-                        <TimelineTile
-                            _id={data?._id}
-                            name={data?.name}
-                            dateTime={data?.time}
-                            currScore={data?.fitnessScoreUpdates?.newScore}
-                            prevScore={data?.fitnessScoreUpdates?.oldScore}
-                            sectionPerformance={data?.sectionPerformance}
-                            coachNotes={data?.coachNotes}
-                            achievement={data?.achievement}
-                            profilePicture={data?.profilePicture}
-                            key={Math.random() * 1000}
-                            postComments={data?.comments}
-                            postKudos={data?.kudos}
-                            isLiked={data?.isLiked}
-                        />
+                        <TimelineTile data={data} key={data?._id}/>
                     )
                 })
             }

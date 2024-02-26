@@ -17,8 +17,6 @@ const SkillProgression = ({ setShowLevel }) => {
 
   const { workout } = useSelector((store) => store.workoutReducer);
 
-  console.log(workout, 'workout object');
-
   function setLevelData(data) {
     if (data && data.currentLevelInfo && data.levelArray) {
       setCurrentInfo(data.currentLevelInfo);
