@@ -94,7 +94,7 @@ const SectionDetail = () => {
         !showMvmtDetail &&
         Object.keys(workout).length !== 0 && (
           <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
-            <main className="px-4 pb-32">
+            <main className="w-full px-4 pb-32">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="pr-2">
@@ -268,7 +268,7 @@ const SectionDetail = () => {
                   </div>
                 </div>
               )}
-              <div className='w-full flex flex-row items-center justify-center'>
+              <div className='w-full h-fit flex flex-row items-center justify-center'>
                 <AppStyles>
                   <Slider
                     onSlideComplete={setFinishedIndex}
