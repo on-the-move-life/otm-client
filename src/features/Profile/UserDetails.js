@@ -13,6 +13,7 @@ import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
 import axios from 'axios';
 import { Error } from '../../components';
+import ProfilePicture from './ProfilePicture';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -101,13 +102,11 @@ const UserDetails = ({ showHistory }) => {
       setShowProfilePicPopup(false);
       const formData = new FormData();
       formData.append('profilePicture', file);
-      console.log('step 1', formData)
       formData.append('email', JSON.parse(localStorage.getItem('user')).email);
-      console.log(formData, 'step 2')
       axios
         .post(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
         .then(res => {
-          console.log(res)
+          console.log('profile picture updated!');
         })
         .catch(err => {
           console.log(err);
@@ -128,7 +127,7 @@ const UserDetails = ({ showHistory }) => {
         }
       })
       .then(res => {
-        console.log(res)
+        console.log('profile picture deleted!')
         window.location.reload();
       })
       .catch(err => {
@@ -190,16 +189,16 @@ const UserDetails = ({ showHistory }) => {
           </h1>
 
           {/* User Profile Pic and Name */}
-
-          {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
               <div className='w-[100px] h-[100px] rounded-full relative'>
-                {chosenPic ?
-                  <img src={chosenPic} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
-                  memberData && memberData?.profilePicture ?
-                    <img src={uniqueImageURLKey} alt="user Profile pic" className='w-[100px] h-[100px] rounded-full object-cover' /> :
-                    <FaUserCircle size={100} color={'#91BDF6'} />}
+                {
+                  chosenPic ?
+                    <ProfilePicture inputPic={chosenPic} altText={'profile picture'} height={"100px"} width={"100px"}/> :
+                    memberData && memberData?.profilePicture ?
+                      <ProfilePicture inputPic={uniqueImageURLKey} altText={'profile picture'} height={"100px"} width={"100px"}/>:
+                      <FaUserCircle size={100} color={'#91BDF6'} />
+                }
                 <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
                   setShowProfilePicPopup(true);
                 }}>
@@ -274,11 +273,11 @@ const UserDetails = ({ showHistory }) => {
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
                 </div>
-                <button className="text-lg font-medium text-lightGray">
+                <div className="text-lg font-medium text-lightGray">
                   <button className="text-lg font-medium text-lightGray">
                     Log Out
                   </button>
-                </button>
+                </div>
               </div>
             </div>
           </div>

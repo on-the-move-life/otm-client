@@ -11,10 +11,10 @@ const Arrow = ({ value }) => {
     ) : (
       <div className="bg-white-300 h-7 w-4" />
     );
-  const arrowText = value !== 0 ? (isPositive ? `+${value}` : `${value}`) : '';
+  const arrowText = value !== 0 ? (isPositive ? `+${value?.toFixed(1)}` : `${value?.toFixed(1)}`) : '';
 
   return (
-    <div className="mr-2 mr-3 inline-flex h-7 w-4 flex-col items-center justify-start">
+    <div className="mr-2 inline-flex h-7 w-4 flex-col items-center justify-start">
       <div className="relative origin-top-left w-3 h-3">{arrowImage}</div>
       <div
         className={`text-${

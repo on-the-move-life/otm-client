@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DataInputComponent from './DataInputComponent';
-import { setLoading, updateWorkout } from './WorkoutSlice';
+import { updateWorkout } from './WorkoutSlice';
 import { HiX } from 'react-icons/hi';
 
 const WORKOUT_BASE_THEME_OPTIONS = [

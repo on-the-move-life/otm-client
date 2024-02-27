@@ -92,8 +92,6 @@ const Login = () => {
   useEffect(() => {
     if (isSignUp === null) navigate('/login');
     else if (isSignUp) {
-      // updateName();
-      console.log('username', username);
       navigate('/questionnaire');
     } else {
       navigate('/home');

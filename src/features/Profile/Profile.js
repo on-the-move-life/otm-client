@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {PaymentHistory, UserDetails} from '../Profile';
+import { PaymentHistory, UserDetails } from '../Profile';
 
 
 
