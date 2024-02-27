@@ -11,6 +11,7 @@ import {
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { AiTwotoneLike, AiOutlineLike } from "react-icons/ai";
 import { FaUserCircle } from 'react-icons/fa';
+import ProfilePicture from '../Profile/ProfilePicture';
 import { useFormattedDateTime } from '../../hooks/useFormattedDateTime';
 import { useTagAndColor } from '../../hooks/useTagAndColor';
 import { axiosClient } from './apiClient';
@@ -144,12 +145,9 @@ const TimelineTile = ({ data }) => {
         <div className='w-full flex flex-row items-center justify-between'>
           <div className='flex flex-row items-center justify-center gap-2 mb-2'>
             {
-              data?.profilePicture !== '' ? <div className="flex flex-row items-center justify-center">
-                <img
-                  className="h-[40px] w-[40px] rounded-full object-cover"
-                  src={data?.profilePicture}
-                  alt={data?.name}
-                />
+              data?.profilePicture !== '' ? 
+              <div className="flex flex-row items-center justify-center">
+                <ProfilePicture inputPic={data?.profilePicture} altText={data?.name} width={"40px"} height={"40px"}/>
               </div> :
                 <FaUserCircle size={40} color={'#91BDF6'} />
             }
