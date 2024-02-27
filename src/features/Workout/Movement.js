@@ -10,7 +10,7 @@ const Movement = ({
 }) => {
   return (
     <div
-      className={`card ${movementLength > 1 ? 'w-[100%]' : 'w-full'}`}
+      className={`card w-full`}
       onClick={() => openMovementDetail(movement)}
     >
       <div

@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 const AppStyles = styled.main`
   height: 430px;
-  width: 400px;
+  width: 100%;
 `;
 
 const SectionDetail = () => {
