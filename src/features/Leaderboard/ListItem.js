@@ -33,7 +33,7 @@ const ListItem = ({ isCurrentUser, user, mode }) => {
           <span className="mr-4 flex w-5 h-5 flex-row items-center justify-center text-[21.47px]">
             {count}
           </span>
-          <Arrow value={rankChange} />
+          <Arrow value={rankChange} showDecimalValue={false}/>
         </div>
       </div>
       {!isCurrentUser && <div className="w-7/8 h-[0.5] bg-gray-700"></div>}
