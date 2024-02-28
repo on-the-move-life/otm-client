@@ -592,7 +592,7 @@ background-clip: text;
 .card-container {
   border-radius: 13px;
   border: 1px solid #383838;
-  background: linear-gradient(to right, #171717, #767676) 90%;
+  background: linear-gradient(to right, #171717, #484848) 90%;
   cursor: pointer;
 }
 
@@ -601,10 +601,18 @@ background-clip: text;
     width: 350px;
     height: 400px;
   }
+  .card-box{
+    width: 400px;
+    height: 400px;
+  }
 }
 @media screen and (min-width: 500px){
   .card-container{
     width: 400px;
+    height: 550px;
+  }
+  .card-box{
+    width: 500px;
     height: 550px;
   }
 }
@@ -616,7 +624,7 @@ background-clip: text;
   justify-content: space-between;
   border-radius: 13px;
   background: transparent;
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(50px);
   padding: 16px;
 }
 
@@ -634,5 +642,25 @@ background-clip: text;
 @media  screen and (min-width: 500px){
   .image-container{
     height: 350px;
+  }
+}
+
+.movement-detail-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media  screen and (min-width: 350px){
+  .movement-detail-image-container{
+    width: auto;
+    height: auto;
+    scale: 1.2;
+  }
+}
+@media  screen and (min-width: 500px){
+  .movement-detail-image-container{
+    width: auto;
+    height: auto;
+    scale: 1.5;
   }
 }

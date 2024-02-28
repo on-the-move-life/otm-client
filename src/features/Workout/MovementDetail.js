@@ -25,7 +25,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
           <HiX size={20} />
         </span>
       </div>
-      <div className="my-4 flex min-h-[80vh] flex-col justify-around px-8">
+      <div className="my-4 flex min-h-[80vh] flex-col justify-around gap-2 px-2">
         <h3 className="text-center text-3xl text-white ">{selectedMvmtName}</h3>
         {sectionWithLoadArray.includes(sectionCode) &&
           movement.totalTimesPerformed > 0 && (
@@ -46,9 +46,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               </p>
             </div>
           )}
-        <div className="flex h-fit w-full items-center justify-center">
+        <div className='movement-detail-image-container mx-auto'>
           <img
-            className="my-4 h-full rounded-2xl"
+            className="w-full h-full rounded-[13.2px] object-cover"
             src={selectedImage}
             alt="Movement"
           />

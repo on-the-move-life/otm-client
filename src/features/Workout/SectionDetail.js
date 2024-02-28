@@ -7,13 +7,6 @@ import { useSelector } from 'react-redux';
 import SkillProgression from './SkillProgression.js';
 import MovementDetail from './MovementDetail.js';
 import { Tooltip, Typography } from '@material-tailwind/react';
-import Slider from "react-touch-drag-slider";
-import styled from 'styled-components';
-
-const AppStyles = styled.main`
-  height: 430px;
-  width: 100%;
-`;
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -27,10 +20,6 @@ const SectionDetail = () => {
   const [showLevel, setShowLevel] = useState(false);
   const [showMvmtDetail, setShowMvmtDetail] = useState(false);
   const [selectedMovement, setSelectedMovement] = useState({});
-  const [slideIndex, setSlideIndex] = useState(0);
-  const setFinishedIndex = (i) => {
-    setSlideIndex(i);
-  };
 
   const lastPage = currentIndex === sectionList.length - 1;
 
@@ -42,6 +31,7 @@ const SectionDetail = () => {
 
   const handlePrevious = () => {
     const newIndex = currentIndex - 1;
+    console.log(newIndex);
     if (newIndex === -1) {
       return;
     }
@@ -93,7 +83,7 @@ const SectionDetail = () => {
         !showMvmtDetail &&
         Object.keys(workout).length !== 0 && (
           <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
-            <main className="w-full px-4 pb-32">
+            <main className="px-4 pb-32">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="pr-2">
@@ -267,17 +257,12 @@ const SectionDetail = () => {
                   </div>
                 </div>
               )}
-              <div className='w-full h-fit flex flex-row items-center justify-center'>
-                <AppStyles>
-                  <Slider
-                    onSlideComplete={setFinishedIndex}
-                    activeIndex={slideIndex}
-                    threshHold={100}
-                    transition={0.2}
-                    scaleOnDrag={true}
-                  >
-                    {movements.map((movement) => {
-                      return (
+
+              <div className='w-full h-fit flex flex-row justify-center items-center'>
+                <div className={`card-box flex flex-row justify-start items-center overflow-x-scroll gap-5`}>
+                  {movements.map((movement) => {
+                    return (
+                      <div className={`w-full ${movements.length === 1 ? 'flex flex-row justify-center items-center' : ' '}`}>
                         <Movement
                           movement={movement}
                           key={movement._id}
@@ -285,19 +270,10 @@ const SectionDetail = () => {
                           movementLength={movementLength}
                           openMovementDetail={openMovementDetail}
                         />
-                      );
-                    })}
-                  </Slider>
-                  <div className='w-full flex flex-row justify-center items-center gap-2'>
-                    {
-                      movements.map((movement, index) => {
-                        return (
-                          <div className={`h-[5px] rounded-[5px] ${index === slideIndex ? 'bg-white w-[20px]' : 'bg-[#474747] w-[8px]'}`} key={Math.random() * 1000}></div>
-                        )
-                      })
-                    }
-                  </div>
-                </AppStyles>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
               {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
                 <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
@@ -329,6 +305,49 @@ const SectionDetail = () => {
                   />
                 ))}
               </div>
+              {/* {!lastPage && (
+              <div className="scrolling-wrapper">
+                {movements.map((movement) => {
+                  return (
+                    <Movement
+                      movement={movement}
+                      key={movement._id}
+                      sectionCode={code}
+                      movementLength={movementLength}
+                      openMovementDetail={openMovementDetail}
+                    />
+                  );
+                })}
+              </div>
+
+              <div>
+                <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
+                  Data Inputs
+                </h2>
+                {dataInput.map((input, index) => (
+                  <DataInputComponent
+                    key={index}
+                    inputId={input.id}
+                    inputType={input.type}
+                    inputOptions={input.options}
+                    placeholder={input.label}
+                  />
+                ))}
+              </div>
+
+              {/* {!lastPage && (
+              <div
+                className="mt-4 flex items-center justify-center"
+                onClick={() => navigate('/workout')}
+              >
+                <div className="flex items-center rounded bg-red p-1 font-bold text-black">
+                  <span>EXIT WORKOUT</span>
+                  <span className="ml-2">
+                    <HiX color="black" size={20} />
+                  </span>
+                </div>
+              </div>
+            )} */}
             </main>
 
             <footer className="fixed bottom-0 flex h-20 w-screen items-center justify-around rounded-xl border-t-[0.5px] border-[#383838]">
