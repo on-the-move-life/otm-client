@@ -65,7 +65,6 @@ gap: 2px;
 border-radius: 4px;
 border: 1px solid rgba(255, 255, 255, 0.23);
 background: rgba(59, 59, 59, 0.06);
-backdrop-filter: blur(17px);
 `
 
 const Date = styled.div`

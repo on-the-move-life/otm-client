@@ -17,7 +17,7 @@ function AssesmentTile({ currScore, prevScore, assessmentFeedback }) {
     }, [currScore, prevScore, colors])
 
     return (
-        <div className='w-full h-[88px] flex flex-row items-center justify-around rounded-[10.9px] border-[1px] border-[#3F3F3F] backdrop-blur-xl mt-1'>
+        <div className='w-full h-[88px] flex flex-row items-center justify-around rounded-[10.9px] border-[1px] border-[#3F3F3F] mt-1'>
             <div className='w-6/12 flex flex-col justify-center items-start p-2 gap-1'>
                 <AssesmentText>Assesment</AssesmentText>
                 {
