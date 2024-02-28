@@ -46,32 +46,28 @@ const MainPage = () => {
       {!showUpdateWorkout && (
         <>
           {' '}
-          <div className="mb-4 flex h-1/4 bg-workout-cover bg-cover bg-blend-soft-light bg-black/70 py-6">
+          <div className="mb-4 flex h-fit bg-workout-cover bg-cover bg-blend-soft-light bg-black/70 py-6">
             <div className="flex w-full justify-between px-4">
-              <div className="flex flex-col">
+              <div className="h-full w-full flex flex-col justify-between items-start gap-4">
                 <HiArrowNarrowLeft
                   size={20}
                   onClick={() => {
                     navigate('/home');
                   }}
                 />
-                <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
-                  {memberName}
-                </h1>
-                <span className="text-xs font-extralight tracking-wider text-lightGray">
-                  Let's crush this workout
-                </span>
-                <span className="mt-6 text-xs tracking-widest text-lightGray">
-                  TODAY'S FOCUS
-                </span>
-                <h2 className="text-xl">{workoutData.theme}</h2>
+                <div className='w-full flex flex-col justify-center items-start mt-2'>
+                  <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
+                    {memberName}
+                  </h1>
+                  <span className="text-xs font-extralight tracking-wider text-lightGray">
+                    Let's crush this workout
+                  </span>
+                  <span className="mt-4 text-xs tracking-widest text-lightGray">
+                    TODAY'S FOCUS
+                  </span>
+                  <h2 className="text-xl">{workoutData.theme}</h2>
+                </div>
               </div>
-
-              {/* <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">
-            <p>{workoutData.day.split(' ')[0]} </p>
-            <p>Day </p>
-            <p className="text-base">{workoutData.day.split(' ')[2]}</p>
-          </div> */}
             </div>
           </div>
           <div className="pb-32">
