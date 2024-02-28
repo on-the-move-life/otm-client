@@ -588,3 +588,51 @@ background-clip: text;
   animation-iteration-count: 1;
   animation-fill-mode: both;
 }
+
+.card-container {
+  border-radius: 13px;
+  border: 1px solid #383838;
+  background: linear-gradient(to right, #171717, #767676) 90%;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 350px){
+  .card-container{
+    width: 350px;
+    height: 400px;
+  }
+}
+@media screen and (min-width: 500px){
+  .card-container{
+    width: 400px;
+    height: 550px;
+  }
+}
+
+.card-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 13px;
+  background: transparent;
+  backdrop-filter: blur(18px);
+  padding: 16px;
+}
+
+.image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media  screen and (min-width: 350px){
+  .image-container{
+    height: 250px;
+  }
+}
+@media  screen and (min-width: 500px){
+  .image-container{
+    height: 350px;
+  }
+}
