@@ -653,14 +653,12 @@ background-clip: text;
 @media  screen and (min-width: 350px){
   .movement-detail-image-container{
     width: auto;
-    height: auto;
-    scale: 1.2;
+    height: 400px;
   }
 }
 @media  screen and (min-width: 500px){
   .movement-detail-image-container{
     width: auto;
-    height: auto;
-    scale: 1.5;
+    height: 400px;
   }
 }
