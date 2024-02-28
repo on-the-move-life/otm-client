@@ -46,7 +46,7 @@ const MainPage = () => {
       {!showUpdateWorkout && (
         <>
           {' '}
-          <div className="mb-4 flex h-1/4 bg-workout-cover bg-cover py-6">
+          <div className="mb-4 flex h-1/4 bg-workout-cover bg-cover bg-blend-soft-light bg-black/70 py-6">
             <div className="flex w-full justify-between px-4">
               <div className="flex flex-col">
                 <HiArrowNarrowLeft

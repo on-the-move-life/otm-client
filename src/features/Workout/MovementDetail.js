@@ -14,7 +14,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
 
   return (
     <div
-      className="flex h-screen w-screen flex-col overflow-x-hidden bg-[#141414] px-4 pb-32 pt-8"
+      className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll bg-[#141414] px-4 pb-32 pt-8"
       style={{ maxHeight: 'content-fit' }}
     >
       <div className=" flex justify-end">
@@ -25,7 +25,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
           <HiX size={20} />
         </span>
       </div>
-      <div className="my-4 flex h-full flex-col justify-around px-8 ">
+      <div className="my-4 flex min-h-[80vh] flex-col justify-around px-8">
         <h3 className="text-center text-3xl text-white ">{selectedMvmtName}</h3>
         {sectionWithLoadArray.includes(sectionCode) &&
           movement.totalTimesPerformed > 0 && (
@@ -46,9 +46,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               </p>
             </div>
           )}
-        <div className="flex h-[216px] w-full items-center justify-center ">
+        <div className="flex h-fit w-full items-center justify-center">
           <img
-            className="my-4  h-full rounded-2xl"
+            className="my-4 h-full rounded-2xl"
             src={selectedImage}
             alt="Movement"
           />
@@ -56,7 +56,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
 
         <button
           onClick={closeMovementDetail}
-          className="workout-gradient-button mt-10 h-10 w-full rounded-xl border-[rgba(209,209,209,0.70)] font-bold text-black"
+          className="workout-gradient-button mt-10 h-10  w-full rounded-xl border-[rgba(209,209,209,0.70)] font-bold text-black"
         >
           CLOSE
         </button>
