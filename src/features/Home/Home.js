@@ -108,8 +108,9 @@ const Home = () => {
               )} */}
             </div>
             <p className="w-11/12 font-extralight text-lightGray">
-              Fitness is not a destination. It's a journey of self-improvement,
-              one workout at a time.
+              {/* homeStats?.quote check is based on the type of empty data received from the API, needed to be modified later */}
+              {homeStats.quote && homeStats?.quote !== null && homeStats?.quote !== '' ? homeStats?.quote : `Fitness is not a destination. It's a journey of self-improvement,
+              one workout at a time.`}
             </p>
           </section>
           <section>
