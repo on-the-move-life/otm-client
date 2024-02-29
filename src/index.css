@@ -589,6 +589,16 @@ background-clip: text;
   animation-fill-mode: both;
 }
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 /* loader css */
 .loading svg polyline {
   fill: none;

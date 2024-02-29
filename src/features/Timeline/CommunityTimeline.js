@@ -38,7 +38,7 @@ function CommunityTimeline() {
     }, [page])
 
     return (
-        <div className='w-full h-screen flex flex-col justify-start itmes-center gap-12 mt-3 overflow-y-scroll pb-[50px]'>
+        <div className='w-full h-screen flex flex-col justify-start itmes-center gap-12 mt-3 overflow-y-scroll pb-[50px] hide-scrollbar'>
             {isError && <Error className={'w-full'}>Oops! Something went wrong...</Error>}
             {
                 loading &&

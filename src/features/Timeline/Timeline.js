@@ -11,7 +11,7 @@ const Timeline = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-screen w-screen  flex-col px-4 py-8 ">
+    <div className="flex h-screen w-screen flex-col px-4 py-8 hide-scrollbar">
       <div className="mb-4">
         <HiArrowNarrowLeft
           size={20}
