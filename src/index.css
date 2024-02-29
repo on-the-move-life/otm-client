@@ -592,7 +592,6 @@ background-clip: text;
 .card-container {
   border-radius: 13px;
   border: 1px solid #383838;
-  background: linear-gradient(to right, #171717, #484848) 90%;
   cursor: pointer;
 }
 

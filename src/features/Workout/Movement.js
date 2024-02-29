@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-function Movement2({
+function Movement({
     movement,
     sectionCode,
     movementLength,
@@ -8,7 +8,7 @@ function Movement2({
 }) {
     const sectionWithLoadArray = useMemo(() => ['ISO', 'MR', 'STR', 'HYP'], []);
     return (
-        <div className='card-container' onClick={() => openMovementDetail(movement)}>
+        <div className='card-container bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)]' onClick={() => openMovementDetail(movement)}>
             <div className='card-content'>
                 <div className="text-md mb-1 flex flex-col gap-1 justify-start text-lightGray">
                     <span>{movement.fullName}</span>
@@ -50,4 +50,4 @@ function Movement2({
     );
 }
 
-export default Movement2;
+export default Movement;
