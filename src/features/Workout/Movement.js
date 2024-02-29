@@ -10,7 +10,7 @@ const Movement = ({
 }) => {
   return (
     <div
-      className={`card ${movementLength > 1 ? 'w-[90%]' : 'w-full'}`}
+      className={`card w-full`}
       onClick={() => openMovementDetail(movement)}
     >
       <div
@@ -40,14 +40,9 @@ const Movement = ({
             </div>
           )}
         </div>
-        <div
-          className="flex h-fit w-full items-center justify-center p-2"
-          style={{ maxHeight: '240px' }}
-          onClick={() => openMovementDetail(movement)}
-        >
+        <div className='w-full h-auto flex flex-row items-center justify-center'>
           <img
-            className="h-auto w-auto rounded-lg"
-            style={{ maxHeight: '240px', maxWidth: '250px' }}
+            className="w-[297px] h-[237.963px] rounded-[13.2px] object-cover"
             src={movement.link[0]}
             alt="Movement"
           />
