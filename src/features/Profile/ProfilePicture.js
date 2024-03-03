@@ -30,7 +30,7 @@ function ProfilePicture({ inputPic, altText, width, height }) {
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.3,
+        duration: 0.5,
         ease: "easeInOut",
       },
     },
@@ -47,23 +47,22 @@ function ProfilePicture({ inputPic, altText, width, height }) {
         initial="hidden"
         animate="visible"
       />
-        <motion.div
+      {isZoomed &&
+        <div
           className='fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50'
           onClick={handleClose}
-          initial="hidden"
-          animate={isZoomed ? 'visible' : 'hidden'}
-          exit="hidden"
-          variants={modalVariants}
+
         >
           <motion.img
             src={inputPic}
             alt={altText}
             className='sm:w-[300px] sm:h-[300px] md:w-[600px] md:h-[600px] aspect-auto object-contain'
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
+            initial="hidden"
+            animate={isZoomed ? 'visible' : 'hidden'}
+            exit="hidden"
+            variants={modalVariants}
           />
-        </motion.div>
+        </div>}
     </>
   );
 }
