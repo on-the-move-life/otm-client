@@ -157,39 +157,40 @@ const UserDetails = ({ showHistory }) => {
   return (
     <AnimatedComponent>
       {/* profile pic update popup */}
-     <motion.div
-      className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'
-      initial="hidden"
-      animate={showProfilePicPopup ? "visible" : "hidden"}
-      variants={modalVariants}
-    >
-      <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => setShowProfilePicPopup(false)}>
-        <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
-      </button>
-      <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
-        <ProfilePicHeading>Profile photo</ProfilePicHeading>
-        <div className='w-full flex flex-row justify-start gap-[40px] items-center'>
-          <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicCameraRef.current.click()}>
-            <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-              <IoCamera size={30} color='#5ECC7B' />
-            </button>
-            <IconLabel>Camera</IconLabel>
+      {showProfilePicPopup &&
+        <motion.div
+          className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'
+          initial="hidden"
+          animate={showProfilePicPopup ? "visible" : "hidden"}
+          variants={modalVariants}
+        >
+          <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => setShowProfilePicPopup(false)}>
+            <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
+          </button>
+          <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
+            <ProfilePicHeading>Profile photo</ProfilePicHeading>
+            <div className='w-full flex flex-row justify-start gap-[40px] items-center'>
+              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicCameraRef.current.click()}>
+                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                  <IoCamera size={30} color='#5ECC7B' />
+                </button>
+                <IconLabel>Camera</IconLabel>
+              </div>
+              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicRef.current.click()}>
+                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                  <BsImageFill size={30} color='#5ECC7B' />
+                </button>
+                <IconLabel>Gallery</IconLabel>
+              </div>
+              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handlePicDelete}>
+                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                  <IoMdTrash size={30} color='gray' />
+                </button>
+                <IconLabel>Delete</IconLabel>
+              </div>
+            </div>
           </div>
-          <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicRef.current.click()}>
-            <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-              <BsImageFill size={30} color='#5ECC7B' />
-            </button>
-            <IconLabel>Gallery</IconLabel>
-          </div>
-          <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handlePicDelete}>
-            <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-              <IoMdTrash size={30} color='gray' />
-            </button>
-            <IconLabel>Delete</IconLabel>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+        </motion.div>}
       {memberData && (
         <div className="h-screen w-screen overflow-x-auto px-4 pb-32 pt-8">
           {profilePicError && <div className='h-full w-full fixed top-0 z-50 bg-black'><Error>Oops! Something went wrong...</Error></div>}
