@@ -15,6 +15,7 @@ import ProfilePicture from '../Profile/ProfilePicture';
 import { useFormattedDateTime } from '../../hooks/useFormattedDateTime';
 import { useTagAndColor } from '../../hooks/useTagAndColor';
 import { axiosClient } from './apiClient';
+import { motion } from 'framer-motion';
 
 
 const TimelineTile = ({ data }) => {
@@ -137,10 +138,32 @@ const TimelineTile = ({ data }) => {
       </div>
     )
   }
-
+  const commentAnimations = {
+    hidden: {
+      opacity: 0,
+      y: '100%',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'tween',
+        duration: 0.5,
+        ease: 'easeInOut',
+      },
+    },
+  }
   return (
     <div className='w-full flex flex-col justify-center items-center gap-1'>
-      {showComment && <CommentsContainer comments={commentsState} />}
+      {showComment && <motion.div
+        className='w-full h-screen fixed top-0 left-0 bg-black z-50'
+        variants={commentAnimations}
+        initial="hidden"
+        animate={showComment ? 'visible' : 'hidden'}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
+      >
+        <CommentsContainer comments={commentsState} />
+      </motion.div>}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
           <div className='flex flex-row items-center justify-center gap-2 mb-2'>
