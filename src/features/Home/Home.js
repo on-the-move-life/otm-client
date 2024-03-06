@@ -13,6 +13,7 @@ import axios from 'axios';
 import { AiOutlineRight } from 'react-icons/ai';
 import { FaUserCircle } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
+import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
 
 
 const Home = () => {
@@ -73,6 +74,7 @@ const Home = () => {
 
   return (
     <>
+      {!loader && !error && <FeatureUpdatePopup />}
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
