@@ -52,11 +52,15 @@ const Leaderboard = () => {
   }
 
   useEffect(() => {
-    getUserFromStorage();
+    if(user === null){
+      getUserFromStorage();
+    }
   }, []);
 
   useEffect(() => {
+    console.log('user : ', user)
     if (user) {
+      console.log('user : ', user)
       setLoadingFitnessScore(true);
       setLoadingWorkoutCount(true);
       getFitnessScoreData();
