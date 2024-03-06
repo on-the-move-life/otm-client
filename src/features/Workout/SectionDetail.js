@@ -71,17 +71,17 @@ const SectionDetail = () => {
   const sectionPageAnimation = {
     initial: {
       opacity: 0,
-      x: "30%",
+      y: "30%",
       scale: "90%"
     },
     animate: {
       opacity: 1,
-      x: "0%",
+      y: "0%",
       scale: "100%",
     },
     exit: {
       opacity: 0,
-      x: "-20%",
+      y: "-20%",
       scale: "90%",
     }
   }

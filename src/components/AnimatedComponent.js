@@ -20,7 +20,7 @@ const defaultAnimation = {
     }
 }
 
-const defaultTransition = {duration: 0.5, ease: "easeInOut"}
+const defaultTransition = {duration: 0.3, ease: "easeInOut"}
 
 function AnimatedComponent({ children, animation=defaultAnimation, transition=defaultTransition }) {
   return (
