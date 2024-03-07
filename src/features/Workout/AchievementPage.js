@@ -1,10 +1,12 @@
 import React from 'react';
 import Counter from '../../components/Counter';
 import { HiOutlineChevronDoubleRight } from 'react-icons/hi';
+import AnimatedComponent from '../../components/AnimatedComponent';
 
 const AchievementPage = ({setShowAchievemntsPage, totalWorkouts}) => {
   
   return (
+    <AnimatedComponent>
     <div className="hero bg-no-repeat">
       <div
         onClick={() => setShowAchievemntsPage(false)}
@@ -36,6 +38,7 @@ const AchievementPage = ({setShowAchievemntsPage, totalWorkouts}) => {
         <div></div>
       </div>
     </div>
+    </AnimatedComponent>
   );
 };
 
