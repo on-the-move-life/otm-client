@@ -168,10 +168,10 @@ const TimelineTile = ({ data }) => {
         <div className='w-full flex flex-row items-center justify-between'>
           <div className='flex flex-row items-center justify-center gap-2 mb-2'>
             {
-              data?.profilePicture !== '' ? 
-              <div className="flex flex-row items-center justify-center">
-                <ProfilePicture inputPic={data?.profilePicture} altText={data?.name} width={"40px"} height={"40px"}/>
-              </div> :
+              data?.profilePicture !== '' ?
+                <div className="flex flex-row items-center justify-center">
+                  <ProfilePicture inputPic={data?.profilePicture} altText={data?.name} width={"40px"} height={"40px"} />
+                </div> :
                 <FaUserCircle size={40} color={'#91BDF6'} />
             }
             <Name>{data?.name}</Name>
@@ -288,17 +288,38 @@ const TimelineTile = ({ data }) => {
             }
           })
         }
-        {!collapsed && <div className="mt-4 grid grid-cols-1 gap-4">
-          {
-            data?.sectionPerformance?.map((workout, index) => {
-              if (index !== 0 && workout?.name !== 'Assessment') {
-                return (
-                  <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={Math.random() * 1000} />
-                )
-              }
-            })
-          }
-        </div>}
+        {!collapsed &&
+          <motion.div
+            className="mt-4 grid grid-cols-1 gap-4"
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {
+              data?.sectionPerformance?.map((workout, index) => {
+                if (index !== 0 && workout?.name !== 'Assessment') {
+                  return (
+                    <motion.div
+                      key={Math.random() * 1000}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <WorkoutTile
+                        workoutName={workout?.name}
+                        rounds={workout?.round}
+                        feedback={workout?.displayInfo}
+                        workoutCompleted={workout?.completed}
+                        key={Math.random() * 1000}
+                      />
+                    </motion.div>
+                  )
+                }
+              })
+            }
+          </motion.div>
+        }
         {collapsed ? <div className='flex flex-row justify-end items-center gap-1 pt-5 text-green select-none' onClick={() => {
           setCollapsed(false);
         }}>
