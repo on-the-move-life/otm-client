@@ -153,7 +153,7 @@ const SectionDetail = () => {
                 </div>
               )}
 
-              <div className="max-w-10/12 my-12 flex max-h-20 rounded-lg">
+              <div className="max-w-10/12 mt-6 mb-12 flex max-h-20 rounded-lg">
                 <div className="flex items-center justify-center">
                   {movements && movementLength > 1 && (
                     <div className="h-fit w-fit">
