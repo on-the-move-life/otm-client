@@ -6,6 +6,7 @@ import UpdateWorkout from './UpdateWorkout';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { setIndex } from './WorkoutSlice';
 import { useState } from 'react';
+import AnimatedComponent from '../../components/AnimatedComponent';
 
 const MainPage = () => {
   const [showUpdateWorkout, setShowUpdateWorkout] = useState(false);
@@ -46,6 +47,7 @@ const MainPage = () => {
       {!showUpdateWorkout && (
         <>
           {' '}
+          <AnimatedComponent>
           <div className="mb-4 flex h-fit bg-workout-cover bg-cover bg-blend-soft-light bg-black/70 py-6">
             <div className="flex w-full justify-between px-4">
               <div className="h-full w-full flex flex-col justify-between items-start gap-4">
@@ -69,21 +71,24 @@ const MainPage = () => {
                 </div>
               </div>
 
-              {/* <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">
+                {/* <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">
             <p>{workoutData.day.split(' ')[0]} </p>
             <p>Day </p>
             <p className="text-base">{workoutData.day.split(' ')[2]}</p>
           </div> */}
+              </div>
             </div>
-          </div>
+          </AnimatedComponent>
           <div className="pb-32">
-            {workoutData.program.map((data, index) => (
-              <SectionItem
-                sectionList={workoutData.program}
-                index={index}
-                key={index}
-              />
-            ))}
+            <AnimatedComponent transition={{ duration: 0.8, ease: 'easeInOut' }}>
+              {workoutData.program.map((data, index) => (
+                <SectionItem
+                  sectionList={workoutData.program}
+                  index={index}
+                  key={index}
+                />
+              ))}
+            </AnimatedComponent>
           </div>
           <footer className="fixed bottom-4 w-full px-4">
             <button
