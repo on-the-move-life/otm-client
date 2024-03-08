@@ -15,6 +15,7 @@ import ProfilePicture from '../Profile/ProfilePicture';
 import { useFormattedDateTime } from '../../hooks/useFormattedDateTime';
 import { useTagAndColor } from '../../hooks/useTagAndColor';
 import { axiosClient } from './apiClient';
+import { motion } from 'framer-motion';
 
 
 const TimelineTile = ({ data }) => {
@@ -137,18 +138,40 @@ const TimelineTile = ({ data }) => {
       </div>
     )
   }
-
+  const commentAnimations = {
+    hidden: {
+      opacity: 0,
+      y: '100%',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'tween',
+        duration: 0.5,
+        ease: 'easeInOut',
+      },
+    },
+  }
   return (
     <div className='w-full flex flex-col justify-center items-center gap-1'>
-      {showComment && <CommentsContainer comments={commentsState} />}
+      {showComment && <motion.div
+        className='w-full h-screen fixed top-0 left-0 bg-black z-50'
+        variants={commentAnimations}
+        initial="hidden"
+        animate={showComment ? 'visible' : 'hidden'}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
+      >
+        <CommentsContainer comments={commentsState} />
+      </motion.div>}
       <div className="w-full flex flex-col rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4" >
         <div className='w-full flex flex-row items-center justify-between'>
           <div className='flex flex-row items-center justify-center gap-2 mb-2'>
             {
-              data?.profilePicture !== '' ? 
-              <div className="flex flex-row items-center justify-center">
-                <ProfilePicture inputPic={data?.profilePicture} altText={data?.name} width={"40px"} height={"40px"}/>
-              </div> :
+              data?.profilePicture !== '' ?
+                <div className="flex flex-row items-center justify-center">
+                  <ProfilePicture inputPic={data?.profilePicture} altText={data?.name} width={"40px"} height={"40px"} />
+                </div> :
                 <FaUserCircle size={40} color={'#91BDF6'} />
             }
             <Name>{data?.name}</Name>
@@ -265,17 +288,38 @@ const TimelineTile = ({ data }) => {
             }
           })
         }
-        {!collapsed && <div className="mt-4 grid grid-cols-1 gap-4">
-          {
-            data?.sectionPerformance?.map((workout, index) => {
-              if (index !== 0 && workout?.name !== 'Assessment') {
-                return (
-                  <WorkoutTile workoutName={workout?.name} rounds={workout?.round} feedback={workout?.displayInfo} workoutCompleted={workout?.completed} key={Math.random() * 1000} />
-                )
-              }
-            })
-          }
-        </div>}
+        {!collapsed &&
+          <motion.div
+            className="mt-4 grid grid-cols-1 gap-4"
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {
+              data?.sectionPerformance?.map((workout, index) => {
+                if (index !== 0 && workout?.name !== 'Assessment') {
+                  return (
+                    <motion.div
+                      key={Math.random() * 1000}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <WorkoutTile
+                        workoutName={workout?.name}
+                        rounds={workout?.round}
+                        feedback={workout?.displayInfo}
+                        workoutCompleted={workout?.completed}
+                        key={Math.random() * 1000}
+                      />
+                    </motion.div>
+                  )
+                }
+              })
+            }
+          </motion.div>
+        }
         {collapsed ? <div className='flex flex-row justify-end items-center gap-1 pt-5 text-green select-none' onClick={() => {
           setCollapsed(false);
         }}>
