@@ -14,6 +14,8 @@ import { IoCamera } from "react-icons/io5";
 import { Error } from '../../components';
 import ProfilePicture from './ProfilePicture';
 import axios from 'axios';
+import AnimatedComponent from '../../components/AnimatedComponent';
+import { motion } from 'framer-motion';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -136,43 +138,59 @@ const UserDetails = ({ showHistory }) => {
       })
   }
 
+  const modalVariants = {
+    hidden: {
+      opacity: 0,
+      y: '100%',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'tween',
+        duration: 0.5,
+        ease: 'easeInOut',
+      },
+    },
+  };
+
   return (
-    <>
+    <AnimatedComponent>
       {/* profile pic update popup */}
-      {showProfilePicPopup && <div className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'>
-        <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => {
-          setShowProfilePicPopup(false);
-        }}>
-          <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
-        </button>
-        <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
-          <ProfilePicHeading>Profile photo</ProfilePicHeading>
-          <div className='w-full flex flex-row justify-start gap-[40px] items-ceter'>
-            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
-              profilePicCameraRef.current.click();
-            }}>
-              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                <IoCamera size={30} color='#5ECC7B' />
-              </button>
-              <IconLabel>Camera</IconLabel>
-            </div>
-            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => {
-              profilePicRef.current.click();
-            }}>
-              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                <BsImageFill size={30} color='#5ECC7B' />
-              </button>
-              <IconLabel>Gallery</IconLabel>
-            </div>
-            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handlePicDelete}>
-              <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                <IoMdTrash size={30} color='gray' />
-              </button>
-              <IconLabel>Delete</IconLabel>
+      {showProfilePicPopup &&
+        <motion.div
+          className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'
+          initial="hidden"
+          animate={showProfilePicPopup ? "visible" : "hidden"}
+          variants={modalVariants}
+        >
+          <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => setShowProfilePicPopup(false)}>
+            <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
+          </button>
+          <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
+            <ProfilePicHeading>Profile photo</ProfilePicHeading>
+            <div className='w-full flex flex-row justify-start gap-[40px] items-center'>
+              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicCameraRef.current.click()}>
+                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                  <IoCamera size={30} color='#5ECC7B' />
+                </button>
+                <IconLabel>Camera</IconLabel>
+              </div>
+              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicRef.current.click()}>
+                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                  <BsImageFill size={30} color='#5ECC7B' />
+                </button>
+                <IconLabel>Gallery</IconLabel>
+              </div>
+              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handlePicDelete}>
+                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                  <IoMdTrash size={30} color='gray' />
+                </button>
+                <IconLabel>Delete</IconLabel>
+              </div>
             </div>
           </div>
-        </div>
-      </div>}
+        </motion.div>}
       {memberData && (
         <div className="h-screen w-screen overflow-x-auto px-4 pb-32 pt-8">
           {profilePicError && <div className='h-full w-full fixed top-0 z-50 bg-black'><Error>Oops! Something went wrong...</Error></div>}
@@ -194,9 +212,9 @@ const UserDetails = ({ showHistory }) => {
               <div className='w-[100px] h-[100px] rounded-full relative'>
                 {
                   chosenPic ?
-                    <ProfilePicture inputPic={chosenPic} altText={'profile picture'} height={"100px"} width={"100px"}/> :
+                    <ProfilePicture inputPic={chosenPic} altText={'profile picture'} height={"100px"} width={"100px"} /> :
                     memberData && memberData?.profilePicture ?
-                      <ProfilePicture inputPic={uniqueImageURLKey} altText={'profile picture'} height={"100px"} width={"100px"}/>:
+                      <ProfilePicture inputPic={uniqueImageURLKey} altText={'profile picture'} height={"100px"} width={"100px"} /> :
                       <FaUserCircle size={100} color={'#91BDF6'} />
                 }
                 <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
@@ -283,7 +301,7 @@ const UserDetails = ({ showHistory }) => {
           </div>
         </div>
       )}
-    </>
+    </AnimatedComponent>
   );
 };
 

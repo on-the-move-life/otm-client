@@ -13,6 +13,7 @@ import axios from 'axios';
 import { AiOutlineRight } from 'react-icons/ai';
 import { FaUserCircle } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
+import AnimatedComponent from '../../components/AnimatedComponent';
 
 
 const Home = () => {
@@ -83,11 +84,11 @@ const Home = () => {
                 {homeStats.name}
               </h1>
               <button className='mr-2' onClick={navigateToProfile}>
-              {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover'/>: <FaUserCircle size={50} color={'#91BDF6'} />}
+                {homeStats && homeStats?.profilePicture ? <img src={homeStats?.profilePicture} alt="profilePic" className='h-[50px] w-[50px] rounded-full object-cover' /> : <FaUserCircle size={50} color={'#91BDF6'} />}
               </button>
             </div>
             <div className="flex items-center">
-            {parseInt(homeStats.streak) > 0 && (
+              {parseInt(homeStats.streak) > 0 && (
                 <div className="flex items-center ">
                   <div className="perfect-week my-2 flex w-fit items-center rounded">
                     <img src="assets/star.svg" alt="" />
@@ -127,7 +128,7 @@ const Home = () => {
           </section>
           <section className='w-full flex flex-row justify-center items-center gap-3'>
             <LeaderBoard rank={homeStats?.workoutRank?.rank} totalParticipants={homeStats?.workoutRank?.totalMembers} />
-            <MoveCoins coins={homeStats?.points}/>
+            <MoveCoins coins={homeStats?.points} />
           </section>
           {homeStats?.isPaymentDue && (
             <section>
