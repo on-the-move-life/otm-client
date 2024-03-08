@@ -52,7 +52,7 @@ function CommunityTimeline() {
                 data?.data && data?.data?.length !== 0 && data?.data.map((data, index) => {
                     if (index === 0) {
                         return (
-                            <motion.div 
+                            <motion.div
                                 key={data?._id}
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ function CommunityTimeline() {
                         )
                     }
                     return (
-                        <motion.div 
+                        <motion.div
                             key={data?._id}
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -83,9 +83,9 @@ function CommunityTimeline() {
                 </div>
             }
 
-            {!loading && !isError && data?.data && data?.data?.length !== 0 && 
-                <motion.div 
-                    className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'
+            {!loading && !isError && data?.data && data?.data?.length !== 0 &&
+                <motion.div
+                    className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 flex flex-row justify-center items-center gap-5 p-2'
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}

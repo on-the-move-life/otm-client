@@ -65,7 +65,7 @@ function PersonalTimeline() {
             }
             {!loading && !isError && userData?.data?.length !== 0 &&
                 <motion.div
-                    className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 backdrop-blur-sm flex flex-row justify-center items-center gap-5 p-2'
+                    className='fixed bottom-0 left-0 w-full h-[50px] bg-white/10 flex flex-row justify-center items-center gap-5 p-2'
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}

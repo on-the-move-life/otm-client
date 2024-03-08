@@ -188,7 +188,7 @@ const TimelineTile = ({ data }) => {
           {/* <InfoTile>700Kcal</InfoTile> */}
         </div>
         {data?.achievement?.length > 0 && (
-          <section className="my-4 flex flex-col justify-center backdrop-blur-sm rounded-lg p-2">
+          <section className="my-4 flex flex-col justify-center rounded-lg p-2">
             <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray mb-4">
               achievements unlocked
             </h4>
@@ -239,7 +239,7 @@ const TimelineTile = ({ data }) => {
         )}
         {
           data?.coachNotes?.length > 0 && (
-            <section className=" flex flex-col items-start justify-center backdrop-blur-sm rounded-lg p-2">
+            <section className=" flex flex-col items-start justify-center rounded-lg p-2">
               <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                 coach notes
               </h4>
@@ -291,8 +291,8 @@ const TimelineTile = ({ data }) => {
         {!collapsed &&
           <motion.div
             className="mt-4 grid grid-cols-1 gap-4"
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
