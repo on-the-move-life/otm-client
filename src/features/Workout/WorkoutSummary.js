@@ -15,6 +15,7 @@ import { axiosClient } from './apiClient';
 import { setStatus } from './WorkoutSlice';
 import AchievementPage from './AchievementPage.js';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
+import useLocalStorage from '../../hooks/useLocalStorage.js';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -23,6 +24,7 @@ const today = new Date().toLocaleDateString('en-us', {
 });
 
 const WorkoutSummary = () => {
+  const [inputIds, setInputIds, getStoredInputIds] = useLocalStorage('inputIds', []);
   const navigate = useNavigate();
   const [workoutSummary, setWorkoutSummary] = useState({});
   const [achievements, setAchievements] = useState([]);
@@ -33,9 +35,23 @@ const WorkoutSummary = () => {
 
   const dispatch = useDispatch();
 
-  const { inputValues, workout, status } = useSelector(
+  const { workout, status } = useSelector(
     (store) => store.workoutReducer,
   );
+  
+  const getInputValuesFromLocalStorage = () => {
+    if (inputIds !== undefined && inputIds.length > 0) {
+      const storedInputValues = {};
+      inputIds.forEach((id) => {
+        const value = JSON.parse(localStorage.getItem(id));
+        storedInputValues[id] = value;
+      });
+      return storedInputValues;
+    }
+  }
+
+  const inputValues = getInputValuesFromLocalStorage();
+
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
@@ -79,7 +95,18 @@ const WorkoutSummary = () => {
         dispatch(setStatus('error'));
         // Handle error here
       })
-      .finally(() => { });
+      .finally(() => {
+        // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
+        const storedInputIds = getStoredInputIds();
+        if (storedInputIds !== null) {
+          storedInputIds.forEach((id) => {
+            window.localStorage.removeItem(id);
+          });
+
+          // then finally delete the key 'inputIds' from local storage
+          window.localStorage.removeItem('inputIds');
+        }
+      });
   }
 
   useEffect(() => {

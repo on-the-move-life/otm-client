@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import DataInputComponent from './DataInputComponent';
+import DataInputComponent2 from './DataInputComponent2';
 import Movement from './Movement.js';
 import { HiX } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
@@ -308,7 +308,7 @@ const SectionDetail = () => {
                     Data Inputs
                   </h2>
                   {dataInput.map((input, index) => (
-                    <DataInputComponent
+                    <DataInputComponent2
                       key={index}
                       inputId={input.id}
                       inputType={input.type}
