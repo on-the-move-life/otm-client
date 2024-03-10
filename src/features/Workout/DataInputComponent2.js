@@ -1,10 +1,3 @@
-/*
-    This code solves the following problems:
-        1.) Animation re-rendering on input change
-        2.) The input values not being persisted on reload
-    
-    The solution is to use the useLocalStorage hook to store the input values in local storage.
-*/
 import React, { useRef } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
