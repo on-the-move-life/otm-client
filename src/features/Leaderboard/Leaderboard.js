@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import { useAuth } from '../../contexts/AuthContext';
 import List from './List';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
+import { axiosClient } from './apiClient';
 import AnimatedComponent from '../../components/AnimatedComponent';
 
 const Leaderboard = () => {
@@ -20,9 +20,7 @@ const Leaderboard = () => {
   async function getFitnessScoreData() {
     // API call for fitnessScoreData
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/leaderboard/fitnessScore`,
-      );
+      const res = await axiosClient.get('/fitnessScore');
       if (res.data) {
         const data = res.data;
         setFitnessScoreData(data);
@@ -37,9 +35,7 @@ const Leaderboard = () => {
   async function getWorkoutCountData() {
     // API call for workoutCountData
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/leaderboard/consistency`,
-      );
+      const res = await axiosClient.get('/consistency');
       if (res.data) {
         const data = res.data;
         setWorkoutCountData(data);

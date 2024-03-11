@@ -11,9 +11,9 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { BsImageFill } from "react-icons/bs";
 import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
-import axios from 'axios';
 import { Error } from '../../components';
 import ProfilePicture from './ProfilePicture';
+import axios from 'axios';
 import AnimatedComponent from '../../components/AnimatedComponent';
 import { motion } from 'framer-motion';
 
@@ -122,8 +122,8 @@ const UserDetails = ({ showHistory }) => {
     setProfilePicFile(null); // reset the file object
     setShowProfilePicPopup(false); // close the popup after deleting the pic
     const email = JSON.parse(localStorage.getItem('user'))?.email;
-    axios
-      .delete(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, {
+    axiosClient
+      .delete('/profile-picture', {
         data: {
           email: email
         }
