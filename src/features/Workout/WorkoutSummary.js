@@ -40,14 +40,14 @@ const WorkoutSummary = () => {
   );
   
   const getInputValuesFromLocalStorage = () => {
+    const storedInputValues = {};
     if (inputIds !== undefined && inputIds.length > 0) {
-      const storedInputValues = {};
       inputIds.forEach((id) => {
         const value = JSON.parse(localStorage.getItem(id));
         storedInputValues[id] = value;
       });
-      return storedInputValues;
     }
+    return storedInputValues;
   }
 
   const inputValues = getInputValuesFromLocalStorage();
@@ -69,6 +69,7 @@ const WorkoutSummary = () => {
   }
 
   function getWorkoutSummary() {
+    console.log("input Values : ", inputValues)
     const payload = {
       ...inputValues,
       code: workout.memberCode,
