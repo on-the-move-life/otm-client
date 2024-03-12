@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const axiosClient = axios.create({
-  baseURL: `localhost:5000/workout/leaderboard`,
+  baseURL: `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/leaderboard`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

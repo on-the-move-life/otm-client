@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import { useAuth } from '../../contexts/AuthContext';
 import List from './List';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
+import { axiosClient } from './apiClient';
+import AnimatedComponent from '../../components/AnimatedComponent';
 
 const Leaderboard = () => {
   const [fitnessScoreData, setFitnessScoreData] = useState([]);
@@ -19,9 +20,7 @@ const Leaderboard = () => {
   async function getFitnessScoreData() {
     // API call for fitnessScoreData
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/leaderboard/fitnessScore`,
-      );
+      const res = await axiosClient.get('/fitnessScore');
       if (res.data) {
         const data = res.data;
         setFitnessScoreData(data);
@@ -36,9 +35,7 @@ const Leaderboard = () => {
   async function getWorkoutCountData() {
     // API call for workoutCountData
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/leaderboard/consistency`,
-      );
+      const res = await axiosClient.get('/consistency');
       if (res.data) {
         const data = res.data;
         setWorkoutCountData(data);
@@ -51,11 +48,15 @@ const Leaderboard = () => {
   }
 
   useEffect(() => {
-    getUserFromStorage();
+    if(user === null){
+      getUserFromStorage();
+    }
   }, []);
 
   useEffect(() => {
+    console.log('user : ', user)
     if (user) {
+      console.log('user : ', user)
       setLoadingFitnessScore(true);
       setLoadingWorkoutCount(true);
       getFitnessScoreData();
@@ -75,87 +76,90 @@ const Leaderboard = () => {
 
   return (
     <div className="w-screen rounded-3xl px-4 py-8">
-      <div className="mb-4">
-        <HiArrowNarrowLeft
-          size={20}
-          onClick={() => {
-            navigate('/home');
-          }}
-        />
-      </div>
-      <h2 className="leaderboard-gradient-text mb-3 text-3xl">
-        Top Performers
-      </h2>
-
-      {selectedDataType === 'workout' && workoutCountData && matchingUser && (
-        <div>
-          <span className="leaderboard-gradient-text mr-2 text-4xl">
-            #{matchingUser.rank}
-          </span>
-          <span className="text-sm font-medium text-lightGray">
-            of {workoutCountData.total} participants
-          </span>
+      <AnimatedComponent>
+        <div className="mb-4">
+          <HiArrowNarrowLeft
+            size={20}
+            onClick={() => {
+              navigate('/home');
+            }}
+          />
         </div>
-      )}
+        <h2 className="leaderboard-gradient-text mb-3 text-3xl">
+          Top Performers
+        </h2>
 
-      {selectedDataType === 'fitnessScore' &&
-        fitnessScoreData &&
-        matchingUser && (
+        {selectedDataType === 'workout' && workoutCountData && matchingUser && (
           <div>
-            <span className="leaderboard-gradient-text mr-1 text-4xl">
+            <span className="leaderboard-gradient-text mr-2 text-4xl">
               #{matchingUser.rank}
             </span>
             <span className="text-sm font-medium text-lightGray">
-              of {fitnessScoreData.total} participants
+              of {workoutCountData.total} participants
             </span>
           </div>
         )}
 
-      <div className="flex-start flex space-x-2 py-2">
-        <div
-          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'workout'
+        {selectedDataType === 'fitnessScore' &&
+          fitnessScoreData &&
+          matchingUser && (
+            <div>
+              <span className="leaderboard-gradient-text mr-1 text-4xl">
+                #{matchingUser.rank}
+              </span>
+              <span className="text-sm font-medium text-lightGray">
+                of {fitnessScoreData.total} participants
+              </span>
+            </div>
+          )}
+
+        <div className="flex-start flex space-x-2 py-2">
+          <div
+            className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'workout'
               ? 'bg-white font-bold text-black'
               : 'text-white'
-            } cursor-pointer px-2 py-0.5`}
-          onClick={() => setSelectedDataType('workout')}
-        >
-          <p className="text-xs">Workout</p>
-        </div>
-        <div
-          className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'fitnessScore'
+              } cursor-pointer px-2 py-0.5`}
+            onClick={() => setSelectedDataType('workout')}
+          >
+            <p className="text-xs">Workout</p>
+          </div>
+          <div
+            className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'fitnessScore'
               ? 'bg-white font-bold text-black'
               : 'text-white'
-            } cursor-pointer px-2 py-0.5`}
-          onClick={() => setSelectedDataType('fitnessScore')}
-        >
-          <p className="text-xs">Fitness Score</p>
+              } cursor-pointer px-2 py-0.5`}
+            onClick={() => setSelectedDataType('fitnessScore')}
+          >
+            <p className="text-xs">Fitness Score</p>
+          </div>
         </div>
-      </div>
-      <div className="pb-2 text-[14px] font-medium text-lightGray">
-        {selectedDataType === 'workout'
-          ? 'Ranked by the number of workouts done this month'
-          : 'Ranked by fitness scores this month'}
-      </div>
+        <div className="pb-2 text-[14px] font-medium text-lightGray">
+          {selectedDataType === 'workout'
+            ? 'Ranked by the number of workouts done this month'
+            : 'Ranked by fitness scores this month'}
+        </div>
 
-      <div className="flex flex-row justify-between p-2 text-[8px] uppercase tracking-[3px] text-lightGray">
-        <span className="">RANK</span>
-        <span>
-          {' '}
-          {selectedDataType === 'workout' ? 'TOTAL WORKOUTS' : 'FITNESS SCORE'}
-        </span>
-      </div>
-
+        <div className="flex flex-row justify-between p-2 text-[8px] uppercase tracking-[3px] text-lightGray">
+          <span className="">RANK</span>
+          <span>
+            {' '}
+            {selectedDataType === 'workout' ? 'TOTAL WORKOUTS' : 'FITNESS SCORE'}
+          </span>
+        </div>
+      </AnimatedComponent>
       {selectedDataType === 'workout' && workoutCountData.rankList ? (
         <List
           code={user.code}
           mode={selectedDataType}
           data={workoutCountData.rankList}
+          key={Math.random()*1000}
         />
       ) : selectedDataType === 'fitnessScore' && fitnessScoreData.rankList ? (
         <List
           code={user.code}
           mode={selectedDataType}
           data={fitnessScoreData.rankList}
+          key={Math.random()*1000}
         />
       ) : null}
     </div>
