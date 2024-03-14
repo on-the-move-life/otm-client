@@ -30,7 +30,7 @@ function AnimatedComponent({ children, animation=defaultAnimation, transition=de
         animate="animate"
         exit="exit"
         transition={transition}
-        exitbeforeEnter
+        eforeEnterexitb
     >
         {children}
     </motion.div>

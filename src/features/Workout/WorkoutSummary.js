@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
+import MoveCoinsPopUp from './MoveCoinsPopUp.js';
 import { Error, Loader } from '../../components';
 import {
   HiHome,
@@ -16,6 +16,7 @@ import { setStatus } from './WorkoutSlice';
 import AchievementPage from './AchievementPage.js';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import useLocalStorage from '../../hooks/useLocalStorage.js';
+import { AnimatePresence } from 'framer-motion';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -32,13 +33,14 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
+  const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(true);
 
   const dispatch = useDispatch();
 
   const { workout, status } = useSelector(
     (store) => store.workoutReducer,
   );
-  
+
   const getInputValuesFromLocalStorage = () => {
     const storedInputValues = {};
     if (inputIds !== undefined && inputIds.length > 0) {
@@ -146,6 +148,9 @@ const WorkoutSummary = () => {
 
       {status === 'success' && Object.keys(workoutSummary).length > 0 && !showAchievemntsPage && (
         <div className="h-full w-full px-4 py-8 ">
+          <AnimatePresence>
+            {showMoveCoinsPopup && <MoveCoinsPopUp setShowPopUp={setShowMoveCoinsPopup} coins={workoutSummary?.points}/>}
+          </AnimatePresence>
           <AnimatedComponent>
             <div className="mb-4">
               <p className="text-xs tracking-widest text-lightGray">{today}</p>
