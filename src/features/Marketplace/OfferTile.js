@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusTagText, DiscountTag, DiscountDescription } from './StyledComponents';
 import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
+import Button from '../../components/Button';
 
 function OfferTile({ offerId='abc123', coins = 5000, coinsRequired = 2500, type = "discount", description = "20% Off on your next Renewal", isAvailable = true, statusTag = "Available", discountValue = "-20%" }) {
     const [showPopUp, setShowPopUp] = useState(false);
@@ -26,9 +27,11 @@ function OfferTile({ offerId='abc123', coins = 5000, coinsRequired = 2500, type 
                 {coins >= coinsRequired && <p className="text-green text-sm">Current Balance : {coins} Movecoins</p>}
                 {coins >= coinsRequired && <p className='text-sm text-[#D6B6F0]'>Once you buy, you cannot reverse this action.</p>}
                 {coins >= coinsRequired &&
-                    <div className="w-full flex flex-row justify-around items-center gap-7">
-                        <div className='bg-green py-1 px-4 rounded-md' onClick={buyOffer}>YES</div>
-                        <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div>
+                    <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
+                        <Button text="Buy" action={buyOffer}/>
+                        <Button text="Cancel" action={() => setShowPopUp(false)}/>
+                        {/* <div className='bg-green py-1 px-4 rounded-md' onClick={buyOffer}>YES</div>
+                        <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
                     </div>}
             </motion.div>
         )

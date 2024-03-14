@@ -33,9 +33,11 @@ function PurchaseTile({ offerId = 'abc123', coinsRequired = 2500, value = "20%",
                 </p>
                 {!isRedeemed && <p className='text-sm text-[#D6B6F0]'>Once you redeem, you cannot reverse this action.</p>}
                 {!isRedeemed &&
-                    <div className="w-full flex flex-row justify-around items-center gap-7">
-                        <div className='bg-green py-1 px-4 rounded-md' onClick={redeemCoupon}>YES</div>
-                        <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div>
+                    <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
+                        <Button text="Redeem" action={redeemCoupon}/>
+                        <Button text="Cancel" action={() => setShowPopUp(false)}/>
+                        {/* <div className='bg-green py-1 px-4 rounded-md' onClick={redeemCoupon}>YES</div>
+                        <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
                     </div>}
                 {isRedeemed && <div className='w-10/12 mx-auto'><Button text="Close" action={() => setShowPopUp(false)} /></div>}
             </motion.div>
