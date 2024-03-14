@@ -7,6 +7,7 @@ const dummyOffers = [
 ];
 
 function CoinsIndicator({ coins = 600, offers = dummyOffers }) {
+    const deviceWidth = window.innerWidth < 400 ? window.innerWidth - 50 : 350;
     const [lastRange, setLastRange] = useState(0);
     const [coinLength, setCoinLength] = useState(0);
     const [offerLength, setOfferLength] = useState(0);
@@ -25,10 +26,10 @@ function CoinsIndicator({ coins = 600, offers = dummyOffers }) {
         if (coins > 0) {
             const range = Math.ceil(maxOffer / 1000) * 1000 > Math.ceil(coins / 1000) * 1000 ? Math.ceil(maxOffer / 1000) * 1000 : Math.ceil(coins / 1000) * 1000;
             setLastRange(range);
-            const lengthOfCoin = (coins / range) * 350;
+            const lengthOfCoin = (coins / range) * deviceWidth;
             setCoinLength(lengthOfCoin);
             
-            const calculatedOfferLength = (maxOffer / range) * 350;
+            const calculatedOfferLength = (maxOffer / range) * deviceWidth;
             const roundedOfferLength = calculatedOfferLength === 0 ? 0 :  Math.floor(calculatedOfferLength);
             setOfferLength(calculatedOfferLength);
             setRoundedOfferLength(roundedOfferLength);
@@ -38,18 +39,17 @@ function CoinsIndicator({ coins = 600, offers = dummyOffers }) {
             setOfferLength(0);
             setRoundedOfferLength(0);
         }
-        console.log(roundedOfferLength)
     }, [coins, offers, lastRange, roundedOfferLength]);
     
 
     return (
         <div className='w-full flex flex-col justify-center items-center gap-7 px-3'>
-            <div className='w-[350px] flex flex-col items-center justify-center gap-1 relative'>
-                <div className='w-[350px] h-[12px] rounded-[24px] bg-gradient-to-r from-blue-gray-800/30 to to-gray-800/100 relative'>
-                    <div className={`bg-green rounded-[24px] h-full absolute flex flex-row items-center z-[100]`} style={{ width: coinLength }}>
+            <div className='flex flex-col items-center justify-center gap-1 relative' style={{width: deviceWidth}}>
+                <div className='h-[12px] rounded-[24px] bg-gradient-to-r from-blue-gray-800/30 to to-gray-800/100 relative' style={{width: deviceWidth}}>
+                    <div className={`bg-green rounded-[24px] h-full absolute flex flex-row items-center z-[10]`} style={{ width: coinLength }}>
                         <div className='bg-white rounded-full w-[8px] h-[8px] absolute right-[4px]'></div>
                     </div>
-                    <div className={`rounded-[24px] h-full absolute flex flex-row items-center z-[50]`} style={{ width: offerLength }}>
+                    <div className={`rounded-[24px] h-full absolute flex flex-row items-center z-[5]`} style={{ width: offerLength }}>
                         {roundedOfferLength !== 0 && [...Array(Number(roundedOfferLength))].map((_, index) => {
                             if (index % 5 === 0 && index !== 0 && index <= roundedOfferLength - 4) {
                                 return <div key={index} className='bg-yellow rounded-full w-[2px] h-[12px] absolute rounded-t-sm rounded-b-sm' style={{ left: index }}></div>;
