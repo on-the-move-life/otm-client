@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import { MarketPlaceHeading, Name, OffersTitle } from './StyledComponents';
@@ -7,15 +7,41 @@ import CoinsIndicator from './CoinsIndicator';
 import OfferTile from './OfferTile';
 import PurchaseTile from './PurchaseTile';
 import AnimatedComponent from '../../components/AnimatedComponent';
+import Error from '../../components/Error';
+import Loader from '../../components/Loader';
+import { axiosClient } from './apiClient';
 
-function MarketPlace({
-    name = "Vrinda",
-    coins = "4,200",
-}) {
+function MarketPlace() {
     const navigate = useNavigate();
+    const [name, setName] = useState('')
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [data, setData] = useState(null);
+
+    function fetchAndStoreData(){
+        setLoading(true);
+        const userData = JSON.parse(localStorage.getItem('user'));
+        axiosClient.get(`/marketplace?member=${userData?.code}`)
+        .then(res => {
+            console.log(res.data.data)
+            setData(res.data.data);
+            setName(userData?.name)
+        })
+        .catch(err => {
+            setError(true);
+            console.log(err);
+        })
+        .finally(() => setLoading(false));
+    }
+
+    useEffect(() => {
+        fetchAndStoreData();
+    }, [])
     return (
         <AnimatedComponent>
-            <div className="flex h-screen w-screen flex-col px-4 py-4 hide-scrollbar">
+            {loading && <Loader className={'h-screen fixed left-0 top-0 z-[200] bg-black'}/>}
+            {error && <Error className={'w-screen fixed left-0 top-0 z-[200] bg-black'}>Something went wrong. Please try again later.</Error>}
+            {data && <div className="flex h-fit w-screen flex-col px-4 py-4 hide-scrollbar">
                 <div className="mb-4">
                     <HiArrowNarrowLeft
                         size={20}
@@ -33,27 +59,57 @@ function MarketPlace({
                         style={{ backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})` }}
                     >
                         <Name>Hello {name},</Name>
-                        <Movecoins fontSize={'26px'} coins={coins} />
+                        <Movecoins fontSize={'26px'} coins={data?.moveCoins} />
                     </div>
                     <div className='w-full mt-2'>
-                        <CoinsIndicator />
+                        <CoinsIndicator coins={data?.moveCoins} offers={data?.offers}/>
                     </div>
                 </div>
                 <div className='w-full my-2'>
                     <OffersTitle>My Offers</OffersTitle>
-                    <div className='w-full flex flex-row justify-start items-center gap-5 my-2' >
-                        <OfferTile />
-                        <OfferTile />
+                    <div className='w-full flex flex-row justify-start items-center gap-5 my-2 overflow-x-scroll hide-scrollbar' >
+                        {
+                            data?.offers && data?.offers.map((offer, index) => {
+                                return (
+                                    <OfferTile
+                                        key={offer?._id}
+                                        offerId={offer._id}
+                                        coins={data.moveCoins}
+                                        coinsRequired={offer.requiredMovecoins}
+                                        type={offer.type}
+                                        description={offer.description}
+                                        isAvailable={offer.isAvailable}
+                                        statusTag={offer.availabilityStatus}
+                                        discountValue={offer.value}
+                                    />
+                                )
+                            })
+                        }
                     </div>
                 </div>
                 <div className='w-full my-2'>
                     <OffersTitle>My Purchases</OffersTitle>
-                    <div className='w-full flex flex-row justify-start items-center gap-5 my-2'>
-                        <PurchaseTile />
-                        <PurchaseTile />
+                    <div className='w-full flex flex-row justify-start items-center gap-5 my-2 overflow-x-scroll hide-scrollbar'>
+                        {
+                            data?.purchases && data?.purchases.map((purchase, index) => {
+                                return (
+                                    <PurchaseTile
+                                        key={purchase?._id}
+                                        purchaseId={purchase._id}
+                                        coinsRequired={purchase.requiredMovecoins}
+                                        description={purchase.description}
+                                        purchaseDate={purchase.purchaseDate}
+                                        expiryDate={purchase.expiryDate}
+                                        isRedeemed={purchase.isRedeemed}
+                                        redeemCode={purchase.redeemCode}
+                                        redeemDate={purchase.redemptionDate}
+                                    />
+                                )
+                            })
+                        }
                     </div>
                 </div>
-            </div>
+            </div>}
         </AnimatedComponent>
     )
 }

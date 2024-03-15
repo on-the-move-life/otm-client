@@ -4,7 +4,7 @@ import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
 import Button from '../../components/Button';
 
-function PurchaseTile({ offerId = 'abc123', coinsRequired = 2500, value = "20%", purchaseDate = "24 June 2024", expiryDate = "24 June 2025", isRedeemed = false, redeemCode = "JSLFHCI", redeemDate = null, description = "20% Off on your next Renewal" }) {
+function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, expiryDate, isRedeemed, redeemCode, redeemDate, description }) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [showRedeemPopUp, setShowRedeemPopUp] = useState(false);
 

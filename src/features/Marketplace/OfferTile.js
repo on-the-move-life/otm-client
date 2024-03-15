@@ -3,13 +3,26 @@ import { StatusTagText, DiscountTag, DiscountDescription } from './StyledCompone
 import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
 import Button from '../../components/Button';
+import { axiosClient } from './apiClient';
 
-function OfferTile({ offerId='abc123', coins = 5000, coinsRequired = 2500, type = "discount", description = "20% Off on your next Renewal", isAvailable = true, statusTag = "Available", discountValue = "-20%" }) {
+function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailable, statusTag, discountValue}) {
     const [showPopUp, setShowPopUp] = useState(false);
 
     function buyOffer(){
+        const userData = JSON.parse(localStorage.getItem('user'));
         // call the API when clicked "YES" on the pop-up
-        setShowPopUp(false);
+        axiosClient.post(`/purchase`, {
+            memeberCode: userData?.code,
+            offerId: offerId,
+            event: 'buy'
+        })
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        .finally(() => setShowPopUp(false));
     }
 
     const PopUp = () => {
