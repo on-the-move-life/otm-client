@@ -11,11 +11,12 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
 
     function buyOffer(){
         const userData = JSON.parse(localStorage.getItem('user'));
+        console.log('offer ID : ', offerId)
         // call the API when clicked "YES" on the pop-up
         axiosClient.post(`/purchase`, {
-            memeberCode: userData?.code,
-            offerId: offerId,
-            event: 'buy'
+            member: userData?.code,
+            offer: offerId,
+            event: 'purchase'
         })
         .then(res => {
             console.log(res)
