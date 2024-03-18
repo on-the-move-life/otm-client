@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StatusTagText, DiscountTag, DiscountDescription } from './StyledComponents';
 import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
@@ -7,6 +7,8 @@ import Button from '../../components/Button';
 function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, expiryDate, isRedeemed, redeemCode, redeemDate, description }) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [showRedeemPopUp, setShowRedeemPopUp] = useState(false);
+    const popUpRef = useRef(null);
+    const redeemPopUpRef = useRef(null);
 
     function redeemCoupon() {
         // call the API when clicked "YES" on the pop-up
@@ -16,6 +18,10 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, 
     function closeRedeemPopUp() {
         setShowRedeemPopUp(false);
     }
+    useEffect(() => {
+        popUpRef.current?.scrollIntoView({ behavior: 'smooth' });
+        redeemPopUpRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [showPopUp, showRedeemPopUp])
 
     const PopUp = () => {
         return (
@@ -39,7 +45,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, 
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={redeemCoupon}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
                     </div>}
-                {isRedeemed && <div className='w-10/12 mx-auto'><Button text="Close" action={() => setShowPopUp(false)} /></div>}
+                {isRedeemed && <div className='w-full px-3 mx-auto'><Button text="Close" action={() => setShowPopUp(false)} /></div>}
             </motion.div>
         )
     }
@@ -90,10 +96,10 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, 
             </div>
             {/* AnimatePresence to handle exit animations */}
             <AnimatePresence>
-                {showPopUp && <div className='h-screen w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]'><PopUp /></div>}
+                {showPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]' ref={popUpRef}><PopUp /></div>}
             </AnimatePresence>
             <AnimatePresence>
-                {showRedeemPopUp && <div className='h-screen w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]'><RedeemPopUp /></div>}
+                {showRedeemPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]' ref={redeemPopUpRef}><RedeemPopUp /></div>}
             </AnimatePresence>
         </div>
     )

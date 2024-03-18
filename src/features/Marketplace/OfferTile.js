@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StatusTagText, DiscountTag, DiscountDescription } from './StyledComponents';
 import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
@@ -7,6 +7,7 @@ import { axiosClient } from './apiClient';
 
 function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailable, statusTag, discountValue}) {
     const [showPopUp, setShowPopUp] = useState(false);
+    const popUpRef = useRef(null);
 
     function buyOffer(){
         const userData = JSON.parse(localStorage.getItem('user'));
@@ -24,6 +25,10 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
         })
         .finally(() => setShowPopUp(false));
     }
+
+    useEffect(() => {
+        popUpRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [showPopUp])
 
     const PopUp = () => {
         return (
@@ -60,7 +65,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
             </div>
             {/* AnimatePresence to handle exit animations */}
             <AnimatePresence>
-                {showPopUp && <div className='h-screen w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]'><PopUp /></div>}
+                {showPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]' ref={popUpRef}><PopUp /></div>}
             </AnimatePresence>
         </div>
     )
