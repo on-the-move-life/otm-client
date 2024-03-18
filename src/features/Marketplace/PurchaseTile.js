@@ -97,7 +97,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate,
             <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${!isRedeemed ? 'opacity-1' : 'opacity-[0.3]'}`} onClick={() => setShowPopUp(true)}>
                 {isRedeemed ? <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Redeemed on {redeemDate}</StatusTagText> : <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Not Redeemed</StatusTagText>}
                 <Movecoins fontSize={'11.483px'} coins={coinsRequired} />
-                <DiscountDescription>Purchased on {purchaseDate}</DiscountDescription>
+                <DiscountDescription>Purchased on {formatDate(purchaseDate)}</DiscountDescription>
                 <DiscountTag>{value}</DiscountTag>
                 <DiscountDescription>{description}</DiscountDescription>
                 <DiscountDescription>Expires on {formatDate(expiryDate)}</DiscountDescription>
