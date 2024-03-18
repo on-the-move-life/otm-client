@@ -38,14 +38,16 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, 
                     }
                 </p>
                 {!isRedeemed && <p className='text-sm text-[#D6B6F0]'>Once you redeem, you cannot reverse this action.</p>}
-                {!isRedeemed &&
+                {!isRedeemed ?
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
                         <Button text="Redeem" action={redeemCoupon}/>
                         <Button text="Cancel" action={() => setShowPopUp(false)}/>
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={redeemCoupon}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
+                    </div> :
+                    <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
+                        <Button text="Close" action={() => setShowPopUp(false)}/>
                     </div>}
-                {isRedeemed && <div className='w-full px-3 mx-auto'><Button text="Close" action={() => setShowPopUp(false)} /></div>}
             </motion.div>
         )
     }

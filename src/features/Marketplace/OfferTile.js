@@ -44,12 +44,15 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
                 }</p>
                 {coins >= coinsRequired && <p className="text-green text-sm">Current Balance : {coins} Movecoins</p>}
                 {coins >= coinsRequired && <p className='text-sm text-[#D6B6F0]'>Once you buy, you cannot reverse this action.</p>}
-                {coins >= coinsRequired &&
+                {coins >= coinsRequired ?
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
                         <Button text="Buy" action={buyOffer}/>
                         <Button text="Cancel" action={() => setShowPopUp(false)}/>
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={buyOffer}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
+                    </div> : 
+                    <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
+                        <Button text="Close" action={() => setShowPopUp(false)}/>
                     </div>}
             </motion.div>
         )

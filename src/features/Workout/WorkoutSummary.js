@@ -33,7 +33,7 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
-  const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(true);
+  const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -137,7 +137,10 @@ const WorkoutSummary = () => {
     status === 'error' && setTimeout(() => {
       navigate('/home')
     }, 3000)
-  }, [status])
+    status === 'success' && !showAchievemntsPage && setTimeout(() => {
+      setShowMoveCoinsPopup(true);
+    }, 1500)
+  }, [status, navigate, showAchievemntsPage])
 
   return (
     <>
@@ -149,7 +152,7 @@ const WorkoutSummary = () => {
       {status === 'success' && Object.keys(workoutSummary).length > 0 && !showAchievemntsPage && (
         <div className="h-full w-full px-4 py-8 ">
           <AnimatePresence>
-            {showMoveCoinsPopup && <MoveCoinsPopUp setShowPopUp={setShowMoveCoinsPopup} coins={workoutSummary?.points}/>}
+            {showMoveCoinsPopup && <MoveCoinsPopUp setShowPopUp={setShowMoveCoinsPopup} coins={workoutSummary?.points} />}
           </AnimatePresence>
           <AnimatedComponent>
             <div className="mb-4">

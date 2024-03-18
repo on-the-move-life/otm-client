@@ -20,6 +20,7 @@ function CoinsIndicator({ coins, offers }) {
             if (offer?.requiredMovecoins - coins >= 0 && offer?.requiredMovecoins - coins <= maxOffer) {
                 console.log("hello")
                 maxOffer = offer.requiredMovecoins;
+                console.log("maxOffer: ", maxOffer);
                 setNearestOffer(offer.requiredMovecoins);
             }
         });
@@ -43,7 +44,7 @@ function CoinsIndicator({ coins, offers }) {
             setRoundedOfferLength(0);
         }
         console.log('nearest',nearestOffer)
-    }, [coins, offers, lastRange, roundedOfferLength, deviceWidth]);
+    }, [coins, offers, lastRange, roundedOfferLength, deviceWidth, nearestOffer]);
 
 
     return (
@@ -51,9 +52,9 @@ function CoinsIndicator({ coins, offers }) {
             <div className='flex flex-col items-center justify-center gap-1 relative' style={{ width: deviceWidth }}>
                 <div className='h-[12px] rounded-[24px] bg-gradient-to-r from-blue-gray-800/30 to to-gray-800/100 relative' style={{ width: deviceWidth }}>
                     <div className={`bg-green rounded-[24px] h-full absolute flex flex-row items-center z-[10]`} style={{ width: coinLength }}>
-                        <div className='bg-white rounded-full w-[8px] h-[8px] absolute right-[4px]'></div>
+                        {/* {coinLength > 0 && <div className='bg-white rounded-full w-[8px] h-[8px] absolute right-[4px]'></div>} */}
                     </div>
-                    {nearestOffer > 0 &&
+                    {nearestOffer > 0 && nearestOffer <= lastRange &&
                         <div className={`rounded-[24px] h-full absolute flex flex-row items-center z-[5]`} style={{ width: offerLength }}>
                             {roundedOfferLength !== 0 && [...Array(Number(roundedOfferLength))].map((_, index) => {
                                 if (index % 5 === 0 && index !== 0 && index <= roundedOfferLength - 4) {
@@ -70,7 +71,7 @@ function CoinsIndicator({ coins, offers }) {
                 <div className='text-[12px] text-[#545454] absolute left-0 top-[100%]'>0</div>
                 <div className='text-[12px] text-[#545454] absolute right-0 top-[100%]'>{formatThousandValues(lastRange)}</div>
                 <div className={`text-[12px] text-[#545454] absolute top-[100%]`} style={{ left: coinLength - 15 }}>{formatThousandValues(coins)}</div>
-                {nearestOffer > 0 &&
+                {nearestOffer > 0 && nearestOffer <= lastRange &&
                     <div className={`w-[100px] h-[50px] text-[12px] text-black font-bold absolute top-[-35px] bg-no-repeat bg-cover flex flex-row justify-center items-start`} style={{ left: offerLength - 58, backgroundImage: `url(${'/assets/offer_dialogue.svg'})` }}>
                         <div className='pt-1'>New Offer</div>
                     </div>
@@ -78,7 +79,7 @@ function CoinsIndicator({ coins, offers }) {
             </div>
             
                 <div className='text-white/50 text-[14px] font-light'>
-                    {nearestOffer > 0 ? `You are just ${nearestOffer - coins} Movecoins away from unlocking a new offer!` : `No milestone for new offers yet.`}
+                    {nearestOffer > 0 && nearestOffer <= lastRange? `You are just ${nearestOffer - coins} Movecoins away from unlocking a new offer!` : `No milestone for new offers yet.`}
                 </div>
             
         </div>
