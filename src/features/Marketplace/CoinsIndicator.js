@@ -21,10 +21,10 @@ function CoinsIndicator({ coins, offers }) {
         }
     }
 
-    function calculateIndicatorValues(range=1000, totalCoins=2100, offersArray=offers){
+    function calculateIndicatorValues(range=1000, totalCoins=coins, offersArray=offers){
         // range of the bar [lowerLimit, upperLimit] such that upperLimit - lowerLimit = range
         const lowerLimit = Math.floor(totalCoins/range) * range;
-        const upperLimit = Math.ceil(totalCoins/range) * range;
+        const upperLimit = (Math.floor(totalCoins/range) + 1) * range;
         // length of the moveCoin bar calculated as per the total coins
         const moveCoinBarLength = ((totalCoins - lowerLimit) / range) * deviceWidth;
 
@@ -40,7 +40,8 @@ function CoinsIndicator({ coins, offers }) {
         // setting the values to their respective states
         setLastRange(upperLimit);
         setStartRange(lowerLimit);
-        setCoinLength(moveCoinBarLength);
+        // case handled when the moveCoinBarLength is 0, i.e. moveCoins = lowerLimit
+        setCoinLength(prev => moveCoinBarLength === 0 ? deviceWidth/200 : moveCoinBarLength);
 
         if(nearestOffer > 0 && nearestOffer <= upperLimit && nearestOffer >= lowerLimit){
             const calculatedOfferLength = ((nearestOffer - lowerLimit) / range) * deviceWidth;
@@ -49,6 +50,7 @@ function CoinsIndicator({ coins, offers }) {
             // rounded offer length is needed to make an array of this size(integer) and to render the yellow bars
             setRoundedOfferLength(roundedOfferLength);
         }
+       console.log('nearesOffer', nearestOffer)
     }
     useEffect(() => {
         calculateIndicatorValues();
@@ -60,7 +62,7 @@ function CoinsIndicator({ coins, offers }) {
             <div className='flex flex-col items-center justify-center gap-1 relative' style={{ width: deviceWidth }}>
                 <div className='h-[12px] rounded-[24px] bg-gradient-to-r from-blue-gray-800/30 to to-gray-800/100 relative' style={{ width: deviceWidth }}>
                     <div className={`bg-green rounded-[24px] h-full absolute flex flex-row items-center z-[10]`} style={{ width: coinLength }}>
-                        {coinLength > 0 && <div className='bg-white rounded-full w-[8px] h-[8px] absolute right-[2px]'></div>}
+                        {coinLength >= 8 && <div className='bg-white rounded-full w-[8px] h-[8px] absolute right-[2px]'></div>}
                     </div>
                     {nearestOffer > 0 && nearestOffer <= lastRange &&
                         <div className={`rounded-[24px] h-full absolute flex flex-row items-center z-[5]`} style={{ width: offerLength }}>
@@ -78,8 +80,8 @@ function CoinsIndicator({ coins, offers }) {
                 </div>
                 <div className='text-[12px] text-[#545454] absolute left-0 top-[-20px]'>{formatThousandValues(startRange)}</div>
                 <div className='text-[12px] text-[#545454] absolute right-0 top-[-20px]'>{formatThousandValues(lastRange)}</div>
-                <div className={`text-[12px] text-[#545454] absolute top-[100%]`} style={{ left: coinLength - 15 }}>{formatThousandValues(coins)}</div>
-                <div className={`text-[12px] text-[#545454] absolute top-[100%]`} style={{ left: offerLength - 15 }}>{formatThousandValues(nearestOffer)}</div>
+                <div className={`text-[12px] text-[#545454] absolute top-[100%]`} style={{ left: coinLength - 10}}>{formatThousandValues(coins)}</div>
+                {offerLength > 15 && <div className={`text-[12px] text-[#545454] absolute top-[100%]`} style={{ left: offerLength - 15 }}>{formatThousandValues(nearestOffer)}</div>}
                 {nearestOffer > 0 && nearestOffer <= lastRange &&
                     <div className={`w-[100px] h-[50px] text-[12px] text-black font-bold absolute top-[-35px] bg-no-repeat bg-cover flex flex-row justify-center items-start`} style={{ left: offerLength - 58, backgroundImage: `url(${'/assets/offer_dialogue.svg'})` }}>
                         <div className='pt-1'>New Offer</div>

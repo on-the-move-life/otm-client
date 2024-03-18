@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresen
 import Button from '../../components/Button';
 import { axiosClient } from './apiClient';
 
-function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailable, statusTag, discountValue}) {
+function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailable, statusTag, discountValue }) {
     const [showPopUp, setShowPopUp] = useState(false);
     const popUpRef = useRef(null);
 
-    function buyOffer(){
+    function buyOffer() {
         const userData = JSON.parse(localStorage.getItem('user'));
         console.log('offer ID : ', offerId)
         // call the API when clicked "YES" on the pop-up
@@ -18,13 +18,13 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
             offer: offerId,
             event: 'purchase'
         })
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-        .finally(() => setShowPopUp(false));
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            .finally(() => setShowPopUp(false));
     }
 
     useEffect(() => {
@@ -33,7 +33,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
 
     const PopUp = () => {
         return (
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, y: -20 }} // Initial animation properties
                 animate={{ opacity: 1, y: 0 }} // Animation properties when pop-up is visible
                 exit={{ opacity: 0, y: -20 }} // Animation properties when pop-up is hidden
@@ -47,13 +47,13 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
                 {coins >= coinsRequired && <p className='text-sm text-[#D6B6F0]'>Once you buy, you cannot reverse this action.</p>}
                 {coins >= coinsRequired ?
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Buy" action={buyOffer}/>
-                        <Button text="Cancel" action={() => setShowPopUp(false)}/>
+                        <Button text="Buy" action={buyOffer} />
+                        <Button text="Cancel" action={() => setShowPopUp(false)} />
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={buyOffer}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
-                    </div> : 
+                    </div> :
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Close" action={() => setShowPopUp(false)}/>
+                        <Button text="Close" action={() => setShowPopUp(false)} />
                     </div>}
             </motion.div>
         )

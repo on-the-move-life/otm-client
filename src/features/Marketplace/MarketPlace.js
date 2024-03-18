@@ -18,20 +18,20 @@ function MarketPlace() {
     const [error, setError] = useState(false);
     const [data, setData] = useState(null);
 
-    function fetchAndStoreData(){
+    function fetchAndStoreData() {
         setLoading(true);
         const userData = JSON.parse(localStorage.getItem('user'));
         axiosClient.get(`/marketplace?member=${userData?.code}`)
-        .then(res => {
-            console.log(res.data.data)
-            setData(res.data.data);
-            setName(userData?.name)
-        })
-        .catch(err => {
-            setError(true);
-            console.log(err);
-        })
-        .finally(() => setLoading(false));
+            .then(res => {
+                console.log(res.data.data)
+                setData(res.data.data);
+                setName(userData?.name)
+            })
+            .catch(err => {
+                setError(true);
+                console.log(err);
+            })
+            .finally(() => setLoading(false));
     }
 
     useEffect(() => {
@@ -39,7 +39,7 @@ function MarketPlace() {
     }, [])
     return (
         <AnimatedComponent>
-            {loading && <Loader className={'h-screen fixed left-0 top-0 z-[200] bg-black'}/>}
+            {loading && <Loader className={'h-screen fixed left-0 top-0 z-[200] bg-black'} />}
             {error && <Error className={'w-screen fixed left-0 top-0 z-[200] bg-black'}>Something went wrong. Please try again later.</Error>}
             {data && <div className="flex h-fit w-screen flex-col px-4 py-4 hide-scrollbar">
                 <div className="mb-4">
@@ -62,7 +62,7 @@ function MarketPlace() {
                         <Movecoins fontSize={'26px'} coins={data?.moveCoins} />
                     </div>
                     <div className='w-full mt-2'>
-                        <CoinsIndicator coins={data?.moveCoins} offers={data?.offers}/>
+                        <CoinsIndicator coins={data?.moveCoins} offers={data?.offers} />
                     </div>
                 </div>
                 <div className='w-full my-2'>

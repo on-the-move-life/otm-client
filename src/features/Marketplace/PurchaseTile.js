@@ -4,7 +4,7 @@ import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
 import Button from '../../components/Button';
 
-function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, expiryDate, isRedeemed, redeemCode, redeemDate, description }) {
+function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate, expiryDate, isRedeemed, redeemCode, redeemDate, description }) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [showRedeemPopUp, setShowRedeemPopUp] = useState(false);
     const popUpRef = useRef(null);
@@ -17,6 +17,12 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, 
     }
     function closeRedeemPopUp() {
         setShowRedeemPopUp(false);
+    }
+    // this function changes the date-time format received from API to more readable format
+    function formatDate(isoDateString) {
+        const date = new Date(isoDateString);
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return date.toLocaleDateString(undefined, options);
     }
     useEffect(() => {
         popUpRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -40,13 +46,13 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, 
                 {!isRedeemed && <p className='text-sm text-[#D6B6F0]'>Once you redeem, you cannot reverse this action.</p>}
                 {!isRedeemed ?
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Redeem" action={redeemCoupon}/>
-                        <Button text="Cancel" action={() => setShowPopUp(false)}/>
+                        <Button text="Redeem" action={redeemCoupon} />
+                        <Button text="Cancel" action={() => setShowPopUp(false)} />
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={redeemCoupon}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
                     </div> :
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Close" action={() => setShowPopUp(false)}/>
+                        <Button text="Close" action={() => setShowPopUp(false)} />
                     </div>}
             </motion.div>
         )
@@ -92,9 +98,9 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "50%", purchaseDate, 
                 {isRedeemed ? <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Redeemed on {redeemDate}</StatusTagText> : <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Not Redeemed</StatusTagText>}
                 <Movecoins fontSize={'11.483px'} coins={coinsRequired} />
                 <DiscountDescription>Purchased on {purchaseDate}</DiscountDescription>
-                <DiscountTag>-{value}</DiscountTag>
+                <DiscountTag>{value}</DiscountTag>
                 <DiscountDescription>{description}</DiscountDescription>
-                <DiscountDescription>Expires on {expiryDate}</DiscountDescription>
+                <DiscountDescription>Expires on {formatDate(expiryDate)}</DiscountDescription>
             </div>
             {/* AnimatePresence to handle exit animations */}
             <AnimatePresence>
