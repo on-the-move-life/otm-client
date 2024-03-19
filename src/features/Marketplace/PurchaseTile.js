@@ -3,6 +3,7 @@ import { StatusTagText, DiscountTag, DiscountDescription } from './StyledCompone
 import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
 import Button from '../../components/Button';
+import { formatDate } from './utils';
 
 function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate, expiryDate, isRedeemed, redeemCode, redeemDate, description }) {
     const [showPopUp, setShowPopUp] = useState(false);
@@ -18,12 +19,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate,
     function closeRedeemPopUp() {
         setShowRedeemPopUp(false);
     }
-    // this function changes the date-time format received from API to more readable format
-    function formatDate(isoDateString) {
-        const date = new Date(isoDateString);
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        return date.toLocaleDateString(undefined, options);
-    }
+
     useEffect(() => {
         popUpRef.current?.scrollIntoView({ behavior: 'smooth' });
         redeemPopUpRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -36,7 +32,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate,
                 animate={{ opacity: 1, y: 0 }} // Animation properties when pop-up is visible
                 exit={{ opacity: 0, y: -20 }} // Animation properties when pop-up is hidden
                 transition={{ duration: 0.3 }} // Animation duration
-                className='w-full h-fit py-5 rounded-b-md bg-black/60 backdrop-blur-sm flex flex-col justify-center items-center gap-3'
+                className='w-full h-fit py-5 rounded-b-md bg-black/60 backdrop-blur-sm flex flex-col justify-center items-center gap-3 fixed bottom-0 left-0'
             >
                 <p className='text-xl font-medium text-center text-gray-500'>
                     {
@@ -54,6 +50,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate,
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
                         <Button text="Close" action={() => setShowPopUp(false)} />
                     </div>}
+                <div ref={popUpRef}></div>
             </motion.div>
         )
     }
@@ -67,8 +64,8 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate,
                 exit={{ opacity: 0 }} // Fade out on exit
                 transition={{ duration: 0.3 }} // Optional: Set the duration of the animation
             >
-                <div className='w-full h-full bg-black/60 backdrop-blur-sm flex flex-col justify-around items-start px-3 pt-[50px] pb-[30px]'>
-                    <div className='h-full flex flex-col justify-start items-start gap-[9rem]'>
+                <div className='w-full h-full bg-black/60 backdrop-blur-sm flex flex-col justify-around items-center px-3 pt-[50px] pb-[30px]'>
+                    <div className='h-full flex flex-col justify-start items-start gap-[5rem]'>
                         <div className='flex flex-col justify-center items-start gap-5'>
                             <h3 className='text-3xl text-[#7E87EF] font-semibold'>Congratulations!</h3>
                             <p className='text-sm text-gray-500'>You just unlocked "{description}" coupon</p>
@@ -82,7 +79,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate,
                                 <div className='border-green border-[1px] rounded-[4px] px-3 py-1'>
                                     <p className='text-[#caceff] font-semibold'>{redeemCode}</p>
                                 </div>
-                                <p className='text-sm text-gray-500'>Expires on {expiryDate}</p>
+                                <p className='text-sm text-gray-500'>Expires on {formatDate(expiryDate)}</p>
                             </div>
                         </div>
                     </div>
@@ -100,11 +97,11 @@ function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate,
                 <DiscountDescription>Purchased on {formatDate(purchaseDate)}</DiscountDescription>
                 <DiscountTag>{value}</DiscountTag>
                 <DiscountDescription>{description}</DiscountDescription>
-                <DiscountDescription>Expires on {formatDate(expiryDate)}</DiscountDescription>
+                <DiscountDescription>Expires on {formatDate(expiryDate, false)}</DiscountDescription>
             </div>
             {/* AnimatePresence to handle exit animations */}
             <AnimatePresence>
-                {showPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]' ref={popUpRef}><PopUp /></div>}
+                {showPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]'><PopUp /></div>}
             </AnimatePresence>
             <AnimatePresence>
                 {showRedeemPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]' ref={redeemPopUpRef}><RedeemPopUp /></div>}

@@ -33,7 +33,7 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
-  const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
+  // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -137,23 +137,25 @@ const WorkoutSummary = () => {
     status === 'error' && setTimeout(() => {
       navigate('/home')
     }, 3000)
-    status === 'success' && !showAchievemntsPage && setTimeout(() => {
-      setShowMoveCoinsPopup(true);
-    }, 1500)
+    // code to show the MoveCoinsPopUp after 1.5 seconds of the workout summary page
+    // status === 'success' && !showAchievemntsPage && setTimeout(() => {
+    //   setShowMoveCoinsPopup(true);
+    // }, 1500)
   }, [status, navigate, showAchievemntsPage])
 
   return (
     <>
       {status === 'error' && <Error>Oops! Something went wrong...</Error>}
-      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && <AchievementPage setShowAchievemntsPage={setShowAchievemntsPage} totalWorkouts={Number(workoutSummary?.consistency?.total) - 1} />}
+      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && <AchievementPage setShowAchievemntsPage={setShowAchievemntsPage} totalWorkouts={Number(workoutSummary?.consistency?.total) - 1} coinsEarned={workoutSummary?.points}/>}
       {status === 'loading' && <Loader />}
       {/* {status === 'error' && <Error>Oops! Something Went Wrong</Error>} */}
 
       {status === 'success' && Object.keys(workoutSummary).length > 0 && !showAchievemntsPage && (
         <div className="h-full w-full px-4 py-8 ">
-          <AnimatePresence>
+          {/* Movecoins Earned pop-up - Initial Idea */}
+          {/* <AnimatePresence>
             {showMoveCoinsPopup && <MoveCoinsPopUp setShowPopUp={setShowMoveCoinsPopup} coins={workoutSummary?.points} />}
-          </AnimatePresence>
+          </AnimatePresence> */}
           <AnimatedComponent>
             <div className="mb-4">
               <p className="text-xs tracking-widest text-lightGray">{today}</p>

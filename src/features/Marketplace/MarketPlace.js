@@ -17,6 +17,7 @@ function MarketPlace() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [data, setData] = useState(null);
+    const [purchaseData, setPurchaseData] = useState(null);
 
     function fetchAndStoreData() {
         setLoading(true);
@@ -25,6 +26,7 @@ function MarketPlace() {
             .then(res => {
                 console.log(res.data.data)
                 setData(res.data.data);
+                setPurchaseData(res.data.data.purchases);
                 setName(userData?.name)
             })
             .catch(err => {
@@ -41,7 +43,7 @@ function MarketPlace() {
         <AnimatedComponent>
             {loading && <Loader className={'h-screen fixed left-0 top-0 z-[200] bg-black'} />}
             {error && <Error className={'w-screen fixed left-0 top-0 z-[200] bg-black'}>Something went wrong. Please try again later.</Error>}
-            {data && <div className="flex h-fit w-screen flex-col px-4 py-4 hide-scrollbar">
+            {data && <div className="flex min-h-screen w-screen flex-col px-4 py-4 hide-scrollbar">
                 <div className="mb-4">
                     <HiArrowNarrowLeft
                         size={20}
@@ -81,6 +83,7 @@ function MarketPlace() {
                                         isAvailable={offer.isAvailable}
                                         statusTag={offer.availabilityStatus}
                                         discountValue={offer.value}
+                                        setTotalPurchaseData={setPurchaseData}
                                     />
                                 )
                             })
@@ -91,7 +94,7 @@ function MarketPlace() {
                     <OffersTitle>My Purchases</OffersTitle>
                     <div className='w-full flex flex-row justify-start items-center gap-5 my-2 overflow-x-scroll hide-scrollbar'>
                         {
-                            data?.purchases && data?.purchases.map((purchase, index) => {
+                            purchaseData && purchaseData?.map((purchase, index) => {
                                 return (
                                     <PurchaseTile
                                         key={purchase?._id}

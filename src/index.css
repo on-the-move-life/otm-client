@@ -88,7 +88,7 @@ input:focus::placeholder {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0,0,0,0.60);
     backdrop-filter: blur(2px);
 
   }
