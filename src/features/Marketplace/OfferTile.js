@@ -63,7 +63,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
                                 </> :
                                 <>
                                     <h3 className='text-3xl text-red font-semibold'>Some Error Occured!</h3>
-                                    <p className='text-sm text-gray-500'>Don't worry you movecoins has not been deducted</p>
+                                    <p className='text-sm text-gray-500'>Don't worry your movecoins has not been deducted</p>
                                 </>
                             }
                         </div>
