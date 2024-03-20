@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresen
 import Button from '../../components/Button';
 import { formatDate } from './utils';
 
-function PurchaseTile({ purchaseId, coinsRequired, value = "-50%", purchaseDate, expiryDate, isRedeemed, redeemCode, redeemDate, description }) {
+function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDate, isRedeemed, redeemCode, redeemDate, description }) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [showRedeemPopUp, setShowRedeemPopUp] = useState(false);
     const popUpRef = useRef(null);

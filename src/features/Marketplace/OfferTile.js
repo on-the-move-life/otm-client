@@ -50,7 +50,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
     const CongratulationsScreen = () => {
         return (
             <div
-                className='w-full h-screen bg-no-repeat bg-bottom bg-contain flex flex-col justify-start items-center'
+                className='w-full min-h-screen bg-no-repeat bg-bottom bg-contain flex flex-col justify-start items-center'
                 style={{ backgroundImage: `url(${'/assets/redeem_popup_background.svg'})` }}
             >
                 <div className='w-full h-full bg-black/60 backdrop-blur-sm flex flex-col justify-around items-center px-3 pt-[50px] pb-[30px]'>

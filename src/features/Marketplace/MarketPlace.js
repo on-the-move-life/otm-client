@@ -106,6 +106,7 @@ function MarketPlace() {
                                         isRedeemed={purchase.isRedeemed}
                                         redeemCode={purchase.redeemCode}
                                         redeemDate={purchase.redemptionDate}
+                                        value={purchase.value}
                                     />
                                 )
                             })
