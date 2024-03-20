@@ -92,7 +92,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
 
                                 <p className='text-md text-gray-300'>Keep crushing your workouts to unlock more offers and discounts</p>
                             </>}
-                        <Button text="Close" action={() => setShowCongratulationsScreen(false)} />
+                        <Button text="Close" action={() => setShowCongratulationsScreen('')} />
                     </div>
                 </div>
             </div>
