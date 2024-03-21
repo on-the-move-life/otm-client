@@ -1,31 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Button from './Button';
+import axios from 'axios';
+
+// function to compare versions "1.0.0" of this format and return true if the first version is greater than the second
+function compareVersions(uiVersion, backendVersion) {
+    try{
+        const uiParts = uiVersion.split('.');
+        const backendParts = backendVersion.split('.');
+        let isGreater = false;
+    
+        for(let i = 0; i < uiParts.length; i++) {
+            if(uiParts[i] > backendParts[i]) {
+                isGreater = true;
+                break;
+            }
+        }
+        return isGreater;
+    }
+    catch(err){
+        // if anything goes wrong return false
+        console.log(err);
+        return false;
+    }
+}
 
 // This component shows a popup whenever a new feature is added
-const FeatureUpdatePopup = () => {
+const FeatureUpdatePopup = ({ backendVersion }) => {
     // isOpen state determines whether the popup is visible or not
     const [isOpen, setIsOpen] = useState(false);
-    // currentVersion should be updated whenever new features are added
-    const currentVersion = 1;
 
-    // useEffect hook runs when the component mounts and whenever currentVersion changes
+    // uiVersion must be updated whenever a new feature is added
+    const uiVersion = "0.0.0";
+
     useEffect(() => {
-        // Get the last seen version from local storage and parse it to integer value
-        const lastSeenVersion = parseInt(localStorage.getItem('lastSeenVersion'), 10);
-
-        // If the user hasn't seen the latest version, show the popup and update the last seen version in local storage
-        if (isNaN(lastSeenVersion) || lastSeenVersion < currentVersion) {
+        // If the UI version is greater than the backend version, show the popup
+        if(compareVersions(uiVersion, backendVersion)) {
             setIsOpen(true);
-            setTimeout(() => {
-                localStorage.setItem('lastSeenVersion', currentVersion.toString());
-            }, 4000)
+        }    
+        else{
+            // for debugging purpose
+            console.log("feature pop-up not opened")
         }
-    }, [currentVersion]);
+    }, [backendVersion, uiVersion]);
 
     // Function to close the popup
     const handleClose = () => {
-        setIsOpen(false);
+        // call the API to update the backendVersion with the current uiVersion
+        const memberCode = JSON.parse(localStorage.getItem('user'))['code'];
+        const payload = {
+            lastSeenUiVersion: uiVersion
+        }
+        axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/member/${memberCode}`, payload)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(() => {
+                setIsOpen(false);
+            });
     };
 
     // Animation variants for the backdrop

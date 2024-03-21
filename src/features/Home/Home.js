@@ -74,7 +74,7 @@ const Home = () => {
 
   return (
     <>
-      {!loader && !error && <FeatureUpdatePopup />}
+      {!loader && !error && <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion}/>}
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
