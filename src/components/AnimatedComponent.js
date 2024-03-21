@@ -22,7 +22,7 @@ const defaultAnimation = {
 
 const defaultTransition = {duration: 0.3, ease: "easeInOut"}
 
-function AnimatedComponent({ children, animation=defaultAnimation, transition=defaultTransition }) {
+function AnimatedComponent({ children, animation=defaultAnimation, transition=defaultTransition, className }) {
   return (
     <motion.div
         variants={animation}
@@ -31,6 +31,7 @@ function AnimatedComponent({ children, animation=defaultAnimation, transition=de
         exit="exit"
         transition={transition}
         eforeEnterexitb
+        className={className}
     >
         {children}
     </motion.div>

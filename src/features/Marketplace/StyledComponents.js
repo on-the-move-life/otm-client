@@ -48,7 +48,7 @@ letter-spacing: -0.237px;
 text-transform: capitalize;
 `
 export const DiscountTag = styled.div`
-color: var(--Red, #FA5757);
+color: var(--Green, #5ECC7B);
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 font-size: 38.959px;
 font-style: normal;
@@ -61,10 +61,11 @@ color: #545454;
 
 /* Card body */
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 9.333px;
+font-size: 11.333px;
 font-style: normal;
 font-weight: 500;
 line-height: normal;
+color: #727272;
 `
 
 export const OffersTitle = styled.div`

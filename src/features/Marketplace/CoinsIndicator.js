@@ -77,7 +77,7 @@ function CoinsIndicator({ coins, offers }) {
             </div>
 
             <div className='text-white/50 text-[14px] font-light'>
-                {nearestOffer > startRange && nearestOffer <= lastRange ? `You are just ${nearestOffer - coins} Movecoins away from unlocking a new offer!` : `No milestone for new offers yet.`}
+                {nearestOffer > startRange && nearestOffer <= lastRange ? <p>Earn <span className='text-green'>{nearestOffer - coins}</span> more to unlock a new offer!</p> : <p>No milestone for new offers yet.</p>}
             </div>
 
         </div>

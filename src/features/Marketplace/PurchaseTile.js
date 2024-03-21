@@ -64,13 +64,13 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
                 exit={{ opacity: 0 }} // Fade out on exit
                 transition={{ duration: 0.3 }} // Optional: Set the duration of the animation
             >
-                <div className='w-full h-full bg-black/60 backdrop-blur-sm flex flex-col justify-around items-center px-3 pt-[50px] pb-[30px]'>
+                <div className='w-full h-full bg-black/60 backdrop-blur-sm flex flex-col justify-around items-center px-3 pt-[30px] pb-[30px]'>
                     <div className='h-full flex flex-col justify-start items-start gap-[5rem]'>
                         <div className='flex flex-col justify-center items-start gap-5'>
-                            <h3 className='text-3xl text-[#7E87EF] font-semibold'>Congratulations!</h3>
-                            <p className='text-sm text-gray-500'>You just unlocked "{description}" coupon</p>
+                            {/* <h3 className='text-3xl text-[#7E87EF] font-semibold'>Congratulations!</h3> */}
+                            <p className='text-xl font-semibold text-[#7E87EF] tracking-wider text-center uppercase'>{description}</p>
                         </div>
-                        <div className="h-full flex flex-col justify-start items-start gap-[5rem]">
+                        <div className="h-full flex flex-col justify-start items-start gap-[9rem]">
                             <div className='flex flex-col justify-center items-start gap-2'>
                                 <h3 className='text-2xl text-[#7E87EF] font-semibold'>Next Step</h3>
                                 <p className='text-md text-gray-500'>Present this code to the team to avail this offer</p>
@@ -91,10 +91,10 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
     }
     return (
         <div>
-            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${!isRedeemed ? 'opacity-1' : 'opacity-[0.3]'}`} onClick={() => setShowPopUp(true)}>
+            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${!isRedeemed ? 'opacity-1' : 'opacity-[0.3]'}`} onClick={() => setShowRedeemPopUp(true)}>
                 {isRedeemed ? <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Redeemed on {formatDate(redeemDate)}</StatusTagText> : <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Not Redeemed</StatusTagText>}
                 <Movecoins fontSize={'11.483px'} coins={coinsRequired} />
-                <DiscountDescription>Purchased on {formatDate(purchaseDate)}</DiscountDescription>
+                <DiscountDescription>Purchased on {formatDate(purchaseDate, false)}</DiscountDescription>
                 <DiscountTag>{value}</DiscountTag>
                 <DiscountDescription>{description}</DiscountDescription>
                 <DiscountDescription>Expires on {formatDate(expiryDate, false)}</DiscountDescription>

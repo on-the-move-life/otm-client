@@ -8,14 +8,14 @@ const MovecoinHeading = styled.div`
 color: var(--Light-purple, #D6B6F0);
 text-shadow: 0px 3.9px 3.9px rgba(0, 0, 0, 0.15);
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 26px;
+font-size: 22px;
 font-style: normal;
 font-weight: 500;
 line-height: 41.6px; /* 160% */
 text-transform: capitalize;
 `
 const Description = styled.p`
-color: var(--New-White, rgba(255, 255, 255, 0.56));
+color: var(--New-White, rgba(255, 255, 255, 0.86));
 
 /* Body condensed bold */
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -25,13 +25,26 @@ font-weight: 500;
 line-height: normal;
 `
 const Instruction = styled.p`
-color: rgba(255, 255, 255, 0.56);
+color: rgba(255, 255, 255, 0.86);
 text-align: center;
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 font-size: 14px;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
+`
+const GradientText = styled.span`
+/* Small shadow */
+text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+
+/* H1 */
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-style: normal;
+font-weight: 500;
+background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #7E87EF 96.92%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 `
 
 const AchievementPage = ({ setShowAchievemntsPage, totalWorkouts, coinsEarned }) => {
@@ -63,17 +76,19 @@ const AchievementPage = ({ setShowAchievemntsPage, totalWorkouts, coinsEarned })
           {/* achievements */}
           {/* <h3 className="text-md text-lightGray">Achievements Unlocked</h3> */}
           <div className='w-full h-fit flex flex-col justify-center items-start gap-5'>
-            <div className='w-full flex flex-row justify-start items-center gap-5'>
-              <img src={'/assets/movecoin.svg'} alt="movecoin" className='w-[50px] h-[50px]' />
+            <div className='w-full flex flex-row justify-start items-center gap-3'>
+              <img src={'/assets/movecoin.svg'} alt="movecoin" className='w-[40px] h-[40px]' />
               <MovecoinHeading>Movecoins Earned</MovecoinHeading>
             </div>
             <div
-              className='w-full min-h-[100px] flex flex-row justify-center items-center bg-center rounded-[20px]'
-              style={{ backgroundImage: `url('/assets/coins_popup_bg.svg')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}
+              className='w-full min-h-[100px] flex flex-row justify-center items-center rounded-[20px] bg-black'
             >
-              <div className='w-full h-full bg-black/40 backdrop-blur-[1px] p-5 flex flex-col justify-center items-center rounded-[20px] border-[0.5px] border-white'>
-                <Description className='flex flex-row gap-1'>You earned <span className='flex flex-row gap-1 bg-gradient-to-tr from-[#D6B6F0] to-[#7E87EF] text-black font-extrabold px-2 rounded-sm'><img src={"/assets/otm-logo.svg"} alt="logo" />{coinsEarned}</span> Movecoins!</Description>
-                <Instruction>Redeem your coins on your next purchase and save</Instruction>
+              <div 
+                className='w-full h-full backdrop-blur-[1px] p-5 flex flex-col justify-center items-center rounded-[20px] border-[0.5px] border-white bg-center'
+                style={{ backgroundImage: `url('/assets/coins_popup_bg.svg')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}
+              >
+                <Description className='flex flex-row gap-1'>You earned <span className='flex flex-row gap-1 bg-gradient-to-tr from-[#D6B6F0] to-[#7E87EF] text-black font-extrabold px-2 rounded-sm border-[0.3px]'><img src={"/assets/otm-logo.svg"} alt="logo" />{coinsEarned}</span> Movecoins!</Description>
+                <Instruction>Redeem your coins on your next purchase and <GradientText>save</GradientText></Instruction>
               </div>
             </div>
           </div>
