@@ -30,7 +30,6 @@ function AnimatedComponent({ children, animation=defaultAnimation, transition=de
         animate="animate"
         exit="exit"
         transition={transition}
-        eforeEnterexitb
         className={className}
     >
         {children}

@@ -65,10 +65,10 @@ function CoinsIndicator({ coins, offers }) {
                         {
                             offersLength.length !== 0 && offersLength?.map((offerLength, index) => {
                                 return (
-                                    <>
+                                    <div key={index}>
                                         <div className={`w-[18px] h-[18px] rounded-full ${offerLength <= coinLength ? 'bg-green' : 'bg-white/20'} backdrop-blur-lg absolute`} style={{ left: offerLength - 9 }} />
                                         {/* <div className={`text-[13px] font-extrabold  ${offerLength <= coinLength ? 'text-green' : 'text-[#545454]'} absolute top-[-25px]`} style={{ left: offerLength }}>{formatThousandValues(offersArray[index])}</div> */}
-                                    </>
+                                    </div>
                                 )
                             })
                         }
