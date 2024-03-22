@@ -30,11 +30,11 @@ const FeatureUpdatePopup = ({ backendVersion }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // uiVersion must be updated whenever a new feature is added
-  const uiVersion = '1.0.0';
+  const uiVersion = '1.0.2';
   const heading = 'Introducing: The OTM Marketplace';
   const featureBody =
     'Earn Movecoins with every workout and unlock exclusive offers';
-  const featureImage = '/assets/feature.png';
+  const featureImage = 'assets/movecoins-feature.png';
 
   useEffect(() => {
     // If the UI version is greater than the backend version, show the popup
