@@ -516,6 +516,13 @@ background-clip: text;
   line-height: normal;
 }
 
+.purple-text-gradient {
+  background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
 .wwc-report-indicator {
   display: inline-flex;
   padding: 1.512px 6.049px;
