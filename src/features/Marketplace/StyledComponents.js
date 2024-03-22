@@ -48,7 +48,7 @@ letter-spacing: -0.237px;
 text-transform: capitalize;
 `
 export const DiscountTag = styled.div`
-color: var(--Green, #5ECC7B);
+color: var(--Red, #FA5757);
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 font-size: 38.959px;
 font-style: normal;
@@ -57,15 +57,22 @@ line-height: 30px; /* 160% */
 text-transform: capitalize;
 `
 export const DiscountDescription = styled.div`
-color: #545454;
-
+/* Card body */
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 13.333px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+color: #828282;
+`
+export const ExpiryDescription = styled.div`
 /* Card body */
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 font-size: 11.333px;
 font-style: normal;
 font-weight: 500;
 line-height: normal;
-color: #727272;
+color: #626262;
 `
 
 export const OffersTitle = styled.div`

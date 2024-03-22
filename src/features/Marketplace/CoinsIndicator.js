@@ -8,7 +8,9 @@ function CoinsIndicator({ coins, offers }) {
     const [offersLength, setOffersLength] = useState([]);
     const [offersArray, setOffersArray] = useState([]);
     const [nearestOffer, setNearestOffer] = useState(0);
+    const [nearestOfferLength, setNearestOfferLength] = useState(0);
     const coinsRef = useRef(null);
+    const nearestOfferTagRef = useRef(null);
 
     function formatThousandValues(value) {
         if (value >= 1000) {
@@ -29,7 +31,7 @@ function CoinsIndicator({ coins, offers }) {
         const upperLimit = lowerLimit + range;
 
         // length of the moveCoin bar calculated as per the total coins
-        const moveCoinBarLength = totalCoins - lowerLimit < 500 && totalCoins !== 0 ? (500/range) * deviceWidth : (totalCoins > 6000) ? (6000 / range) * deviceWidth : ((totalCoins - lowerLimit) / range) * deviceWidth;
+        const moveCoinBarLength = totalCoins - lowerLimit < 500 && totalCoins !== 0 ? (500 / range) * deviceWidth : (totalCoins > 6000) ? (6000 / range) * deviceWidth : ((totalCoins - lowerLimit) / range) * deviceWidth;
 
         // calculation of the nearest offer as per the movecoins user has
         let maxOffer = Infinity;
@@ -50,10 +52,14 @@ function CoinsIndicator({ coins, offers }) {
         setStartRange(lowerLimit);
         // case handled when the moveCoinBarLength is 0, i.e. moveCoins = lowerLimit
         setCoinLength(prev => moveCoinBarLength === 0 ? deviceWidth / range : moveCoinBarLength);
+
+        // legth of nearest offer
+        setNearestOfferLength(prev => nearestOffer/range * deviceWidth)
     }
     useEffect(() => {
         calculateIndicatorValues();
-    }, []);
+        console.log('nearest offer', nearestOffer)
+    }, [nearestOffer]);
 
 
     return (
@@ -65,16 +71,22 @@ function CoinsIndicator({ coins, offers }) {
                         {
                             offersLength.length !== 0 && offersLength?.map((offerLength, index) => {
                                 return (
-                                    <div key={index}>
-                                        <div className={`w-[18px] h-[18px] rounded-full ${offerLength <= coinLength ? 'bg-green' : 'bg-white/20'} backdrop-blur-lg absolute`} style={{ left: offerLength - 9 }} />
-                                        {/* <div className={`text-[13px] font-extrabold  ${offerLength <= coinLength ? 'text-green' : 'text-[#545454]'} absolute top-[-25px]`} style={{ left: offerLength }}>{formatThousandValues(offersArray[index])}</div> */}
-                                    </div>
+                                    <>
+                                        <div className={`w-[16px] h-[16px] rounded-full ${offerLength <= coinLength ? 'bg-green' : 'bg-yellow/80'} backdrop-blur-lg absolute`} style={{ left: offerLength - 8 }} key={index} />
+                                        <div className={`text-[13px] font-extrabold  ${offerLength <= coinLength ? 'text-green' : 'text-[#828282]'} absolute top-[140%]`} style={{ left: offerLength - 10 }}>{offersArray[index]}</div>
+                                    </>
                                 )
                             })
                         }
+                        {nearestOffer > 0 && nearestOffer <= lastRange &&
+                            <div className={`w-[100px] h-[50px] text-[12px] text-black font-bold absolute top-[-37px] bg-no-repeat bg-cover flex flex-row justify-center items-start`} style={{ left: nearestOfferLength - nearestOfferTagRef.current?.offsetWidth/2, backgroundImage: `url(${'/assets/offer_dialogue.svg'})` }} ref={nearestOfferTagRef}>
+                                <div className='pt-1'>New Offer</div>
+                            </div>
+                        }
                     </div>
                 </div>
-                <div className={`text-[12px] text-green absolute top-[100%]`} style={{ left: coinLength - (coinsRef.current?.offsetWidth)/2 - 5}} ref={coinsRef}>{coins}</div>
+                {/* coin label */}
+                {/* <div className={`text-[12px] text-green absolute top-[100%]`} style={{ left: coinLength - (coinsRef.current?.offsetWidth)/2 - 5}} ref={coinsRef}>{coins}</div> */}
             </div>
 
             <div className='text-white/50 text-[14px] font-light'>

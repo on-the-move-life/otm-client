@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StatusTagText, DiscountTag, DiscountDescription } from './StyledComponents';
+import { StatusTagText, DiscountTag, DiscountDescription, ExpiryDescription } from './StyledComponents';
 import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
 import Button from '../../components/Button';
@@ -79,7 +79,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
                                 <div className='border-green border-[1px] rounded-[4px] px-3 py-1'>
                                     <p className='text-[#caceff] font-semibold'>{redeemCode}</p>
                                 </div>
-                                <p className='text-sm text-gray-500'>Expires on {formatDate(expiryDate)}</p>
+                                <p className='text-sm text-gray-500'>Expires on {formatDate(expiryDate, false)}</p>
                             </div>
                         </div>
                     </div>
@@ -94,10 +94,10 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
             <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${!isRedeemed ? 'opacity-1' : 'opacity-[0.3]'}`} onClick={() => setShowRedeemPopUp(true)}>
                 {isRedeemed ? <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Redeemed on {formatDate(redeemDate)}</StatusTagText> : <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Not Redeemed</StatusTagText>}
                 <Movecoins fontSize={'11.483px'} coins={coinsRequired} />
-                <DiscountDescription>Purchased on {formatDate(purchaseDate, false)}</DiscountDescription>
+                <ExpiryDescription>Purchased on {formatDate(purchaseDate, false)}</ExpiryDescription>
                 <DiscountTag>{value}</DiscountTag>
                 <DiscountDescription>{description}</DiscountDescription>
-                <DiscountDescription>Expires on {formatDate(expiryDate, false)}</DiscountDescription>
+                <ExpiryDescription>Expires on {formatDate(expiryDate, false)}</ExpiryDescription>
             </div>
             {/* AnimatePresence to handle exit animations */}
             <AnimatePresence>

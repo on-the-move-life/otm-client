@@ -129,7 +129,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
 
     return (
         <div>
-            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${isAvailable ? 'opacity-1' : 'opacity-[0.5]'}`} onClick={() => setShowPopUp(true)}>
+            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${isAvailable ? 'opacity-1' : 'opacity-[0.7]'}`} onClick={() => setShowPopUp(true)}>
                 <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>{statusTag}</StatusTagText>
                 <Movecoins fontSize={'11.483px'} coins={coinsRequired} />
                 <DiscountTag>{discountValue}</DiscountTag>
