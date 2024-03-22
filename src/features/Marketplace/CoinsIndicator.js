@@ -24,14 +24,14 @@ function CoinsIndicator({ coins, offers }) {
         }
     }
 
-    function calculateIndicatorValues(range = 6000, totalCoins = coins, offersArray = offers) {
+    function calculateIndicatorValues(range = 5000, totalCoins = coins, offersArray = offers) {
         // range of the bar [lowerLimit, upperLimit] such that upperLimit - lowerLimit = range
         // const lowerLimit = Math.floor(totalCoins / range) * range;
         const lowerLimit = 0;
         const upperLimit = lowerLimit + range;
 
         // length of the moveCoin bar calculated as per the total coins
-        const moveCoinBarLength = totalCoins - lowerLimit < 500 && totalCoins !== 0 ? (500 / range) * deviceWidth : (totalCoins > 6000) ? (6000 / range) * deviceWidth : ((totalCoins - lowerLimit) / range) * deviceWidth;
+        const moveCoinBarLength = totalCoins - lowerLimit < 50 && totalCoins !== 0 ? (50 / range) * deviceWidth : (totalCoins > range) ? (range / range) * deviceWidth : ((totalCoins - lowerLimit) / range) * deviceWidth;
 
         // calculation of the nearest offer as per the movecoins user has
         let maxOffer = Infinity;
@@ -59,7 +59,7 @@ function CoinsIndicator({ coins, offers }) {
     useEffect(() => {
         calculateIndicatorValues();
         console.log('nearest offer', nearestOffer)
-    }, [nearestOffer]);
+    }, [nearestOffer, coins, offers]);
 
 
     return (
@@ -90,7 +90,7 @@ function CoinsIndicator({ coins, offers }) {
             </div>
 
             <div className='text-white/50 text-[14px] font-light'>
-                {nearestOffer > startRange && nearestOffer <= lastRange && coins < nearestOffer ? <p>Earn <span className='text-green'>{nearestOffer - coins}</span> more to unlock a new offer!</p> : <p>No milestone for new offers yet.</p>}
+                {nearestOffer > startRange && nearestOffer <= lastRange && coins < nearestOffer ? <p>Earn <span className='text-green'>{nearestOffer - coins}</span> more to unlock a new offer!</p> : <p>You've reached the top! Treat yourself and unlock some amazing rewards</p>}
             </div>
 
         </div>

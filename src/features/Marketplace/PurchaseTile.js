@@ -58,7 +58,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
         return (
             <motion.div
                 className='w-full h-screen bg-no-repeat bg-bottom bg-contain'
-                style={{ backgroundImage: `url(${'/assets/redeem_popup_background.svg'})` }}
+                style={{ backgroundImage: `url(${'/assets/achievements-bg.png'})` }}
                 initial={{ opacity: 0, scale: 0.9 }} // Start with reduced scale and opacity
                 animate={{ opacity: 1, scale: 1 }} // Animate to full scale and opacity
                 exit={{ opacity: 0 }} // Fade out on exit
@@ -71,13 +71,13 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
                             <p className='text-xl font-semibold text-[#7E87EF] tracking-wider text-center uppercase'>{description}</p>
                         </div>
                         <div className="h-full flex flex-col justify-start items-start gap-[9rem]">
-                            <div className='flex flex-col justify-center items-start gap-2'>
+                            <div className='flex flex-col justify-center items-center gap-2'>
                                 <h3 className='text-2xl text-[#7E87EF] font-semibold'>Next Step</h3>
                                 <p className='text-md text-gray-500'>Present this code to the team to avail this offer</p>
                             </div>
                             <div className='w-full flex flex-col justify-center items-center gap-3'>
-                                <div className='border-green border-[1px] rounded-[4px] px-3 py-1'>
-                                    <p className='text-[#caceff] font-semibold'>{redeemCode}</p>
+                                <div className='border-green border-[1px] rounded-[4px] px-5 py-2'>
+                                    <p className='text-[#caceff] font-semibold text-xl'>{redeemCode}</p>
                                 </div>
                                 <p className='text-sm text-gray-500'>Expires on {formatDate(expiryDate, false)}</p>
                             </div>
@@ -91,7 +91,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
     }
     return (
         <div>
-            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${!isRedeemed ? 'opacity-1' : 'opacity-[0.3]'}`} onClick={() => setShowRedeemPopUp(true)}>
+            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${!isRedeemed ? 'opacity-1' : 'opacity-[0.5]'}`} onClick={() => setShowRedeemPopUp(true)}>
                 {isRedeemed ? <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Redeemed on {formatDate(redeemDate)}</StatusTagText> : <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>Not Redeemed</StatusTagText>}
                 <Movecoins fontSize={'11.483px'} coins={coinsRequired} />
                 <ExpiryDescription>Purchased on {formatDate(purchaseDate, false)}</ExpiryDescription>

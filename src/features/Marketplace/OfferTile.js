@@ -6,11 +6,13 @@ import Button from '../../components/Button';
 import { axiosClient } from './apiClient';
 import { formatDate } from './utils';
 
-function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailable, statusTag, discountValue, setTotalPurchaseData }) {
+function OfferTile({ offerId, coins, coinsRequired, type, description, discountValue, setTotalPurchaseData, setData }) {
     const [showPopUp, setShowPopUp] = useState(false);
     const popUpRef = useRef(null);
     const [showCongratulationsScreen, setShowCongratulationsScreen] = useState('');
     const [purchaseData, setPurchaseData] = useState(null);
+    const [isAvailable, setIsAvailable] = useState(false);
+    const [statusTag, setStatusTag] = useState('');
 
     function buyOffer() {
         const userData = JSON.parse(localStorage.getItem('user'));
@@ -24,7 +26,18 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
             .then(res => {
                 console.log(res.data)
                 setPurchaseData(res.data);
-                setTotalPurchaseData(purchaseData => [res.data, ...purchaseData]);
+                setData(prev => {
+                    const tempObj = {};
+                    Object.keys(prev).map((key, index) => {
+                        tempObj[key] = prev[key];
+                    })
+                    tempObj["moveCoins"] = res.data?.moveCoins;
+                    return tempObj;
+                })
+                // newPurchaseData is introduced to store the requiredMovecoins on the res.data response
+                const newPurchaseData = res.data;
+                newPurchaseData["requiredMovecoins"] = coinsRequired;
+                setTotalPurchaseData(purchaseData => [newPurchaseData, ...purchaseData]);
                 setShowCongratulationsScreen('purchaseSuccess');
             })
             .catch(err => {
@@ -36,7 +49,14 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
 
     useEffect(() => {
         popUpRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [showPopUp])
+        setIsAvailable(coins >= coinsRequired);
+        if(coins < coinsRequired){
+            setStatusTag(`Earn ${coinsRequired - coins} more to unlock`)
+        }
+        else{
+            setStatusTag('Available')
+        }
+    }, [showPopUp, coins, coinsRequired, statusTag])
 
     const AnimatedTile = () => {
         return (
@@ -50,8 +70,8 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
     const CongratulationsScreen = () => {
         return (
             <div
-                className='w-full min-h-screen bg-no-repeat bg-bottom bg-contain flex flex-col justify-start items-center'
-                style={{ backgroundImage: `url(${'/assets/redeem_popup_background.svg'})` }}
+                className='w-full h-fit bg-no-repeat bg-bottom bg-contain flex flex-col justify-start items-center'
+                style={{ backgroundImage: `url(${'/assets/achievements-bg.png'})` }}
             >
                 <div className='w-full h-full bg-black/60 backdrop-blur-sm flex flex-col justify-around items-center px-3 pt-[50px] pb-[30px]'>
                     <div className={`h-full flex flex-col ${showCongratulationsScreen === 'purchaseSuccess' ? 'justify-start' : 'justify-between'} items-start gap-[5rem]`}>
@@ -59,19 +79,19 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
                             {showCongratulationsScreen === 'purchaseSuccess' ?
                                 <>
                                     <h3 className='text-3xl text-[#7E87EF] font-semibold'>Congratulations!</h3>
-                                    <p className='text-sm text-gray-500'>You just purchased "{description}" coupon</p>
+                                    <p className='text-sm text-gray-200'>You just purchased "{description}" coupon</p>
                                 </> :
                                 <>
-                                    <h3 className='text-3xl text-red font-semibold'>Some Error Occured!</h3>
-                                    <p className='text-sm text-gray-500'>Don't worry your movecoins has not been deducted</p>
+                                    <h3 className='text-3xl text-[#FA5757]font-semibold'>Some Error Occured!</h3>
+                                    <p className='text-sm text-gray-200'>Don't worry your movecoins has not been deducted</p>
                                 </>
                             }
                         </div>
                         {showCongratulationsScreen === 'purchaseSuccess' &&
                             <>
                                 <motion.div
-                                    initial={{ opacity: 0, y: 500 }} // Initial animation properties
-                                    animate={{ opacity: 1, y: 0, rotate: -360 }} // Animation properties when pop-up is visible
+                                    initial={{ opacity: 0, scale: 0 }} // Initial animation properties
+                                    animate={{ opacity: 1, scale: 1 }} // Animation properties when pop-up is visible
                                     exit={{ opacity: 0, y: -20 }} // Animation properties when pop-up is hidden
                                     transition={{ duration: 0.5 }} // Animation duration
                                     className='w-full flex flex-row justify-center items-center bg-no-repeat bg-contain bg-center'
@@ -80,13 +100,13 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
                                     <AnimatedTile />
                                 </motion.div>
                                 <div className="h-full flex flex-col justify-start items-start gap-[5rem]">
-                                    <div className='flex flex-col justify-center items-start gap-2'>
+                                    <div className='flex flex-col justify-center items-center gap-2'>
                                         <h3 className='text-2xl text-[#7E87EF] font-semibold'>Next Step</h3>
-                                        <p className='text-md text-gray-500'>Go to purchases section and redeem this coupon to avail the offer!</p>
+                                        <p className='text-md text-gray-200'>Go to purchases section and redeem this coupon to avail the offer!</p>
                                     </div>
                                     <div className='w-full flex flex-col justify-center items-start gap-3'>
-                                        <p className='text-md text-gray-500'>Available Movecoins : <span className='text-green'>{purchaseData?.moveCoins}</span></p>
-                                        <p className='text-sm text-gray-500'>This Coupon expires on <span className="text-red">{formatDate(purchaseData?.expiryDate, false)}</span>. Redeem it before it expires.</p>
+                                        <p className='text-md text-gray-200'>Available Movecoins : <span className='text-green'>{purchaseData?.moveCoins}</span></p>
+                                        <p className='text-sm text-gray-200'>This Coupon expires on <span className="text-[#FA5757]">{formatDate(purchaseData?.expiryDate, false)}</span>. Redeem it before it expires.</p>
                                     </div>
                                 </div>
 
@@ -129,7 +149,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
 
     return (
         <div>
-            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${isAvailable ? 'opacity-1' : 'opacity-[0.7]'}`} onClick={() => setShowPopUp(true)}>
+            <div className={`w-[171px] min-h-[133px] border-[0.5px] border-[#383838] rounded-[12px] bg-gradient-to-r from-[#171717]/10 to-[#0F0F0F] p-2 flex flex-col justify-start items-start gap-2 ${isAvailable ? 'opacity-1' : 'opacity-[0.5]'}`} onClick={() => setShowPopUp(true)}>
                 <StatusTagText className='bg-[#F5C563] w-fit p-[2px] rounded-sm'>{statusTag}</StatusTagText>
                 <Movecoins fontSize={'11.483px'} coins={coinsRequired} />
                 <DiscountTag>{discountValue}</DiscountTag>
@@ -140,7 +160,7 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, isAvailab
                 {showPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]'><PopUp /></div>}
             </AnimatePresence>
             <AnimatePresence>
-                {showCongratulationsScreen !== '' && purchaseData && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]'><CongratulationsScreen /></div>}
+                {showCongratulationsScreen !== '' && purchaseData && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50] overflow-y-scroll'><CongratulationsScreen /></div>}
             </AnimatePresence>
         </div>
     )

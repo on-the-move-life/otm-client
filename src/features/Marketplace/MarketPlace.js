@@ -110,6 +110,7 @@ function MarketPlace() {
                                                 statusTag={offer.availabilityStatus}
                                                 discountValue={offer.value}
                                                 setTotalPurchaseData={setPurchaseData}
+                                                setData={setData}
                                             />
                                         </motion.div>
                                     )
