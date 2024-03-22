@@ -6,4 +6,4 @@ export { default as SectionDetail } from './SectionDetail';
 export { default as Section } from './Section';
 export { default as WorkoutSummary } from './WorkoutSummary';
 export { default as Movement } from './Movement';
-        
+export { default as MoveCoinsPopUp } from './MoveCoinsPopUp';

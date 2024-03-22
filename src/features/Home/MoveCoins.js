@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import BGMoveCoins from "../../assets/images/bg-movecoins.svg"
+import { useNavigate } from 'react-router-dom'
 
 const Heading = styled.div`
 color: var(--Light-gray, #B1B1B1);
@@ -34,6 +35,10 @@ line-height: normal;
 mix-blend-mode: plus-lighter;
 `
 function MoveCoins({ coins }) {
+    const navigate = useNavigate();
+    function navigateToMarketPlace(){
+        navigate('/marketplace', { replace: true });
+    }
     function formatNumberWithCommas(number) {
         // Convert the number to a string
         const numberString = number.toString();
@@ -45,11 +50,11 @@ function MoveCoins({ coins }) {
     }
     const formattedCoins = useMemo(() => formatNumberWithCommas(coins), [coins]);
     return (
-        <div className="w-6/12 h-[104px] flex flex-col items-center justify-center gap-2 rounded-[12px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${BGMoveCoins})` }}>
+        <div className="w-6/12 h-[104px] flex flex-col items-center justify-center gap-2 rounded-[12px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${BGMoveCoins})` }} onClick={navigateToMarketPlace}>
             <Heading>Movecoins</Heading>
             <Coins>{formattedCoins}</Coins>
-            {/* <Description>Use at OTM marketplace</Description> */}
-            <Description>Coming Soon...</Description>
+            <Description>Use at OTM marketplace</Description>
+            {/* <Description>Coming Soon...</Description> */}
         </div>
     )
 }

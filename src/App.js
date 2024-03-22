@@ -6,6 +6,7 @@ import Timeline from './features/Timeline/Timeline';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
 import { Profile } from './features/Profile';
+import { MarketPlace } from './features/Marketplace';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -48,6 +49,7 @@ function App() {
         <Route path="/workout-summary" element={<RouteMiddleware><WorkoutSummary /></RouteMiddleware>} />
         <Route path="/profile" element={<RouteMiddleware><Profile /></RouteMiddleware>} />
         <Route path="/leaderboard" element={<RouteMiddleware><Leaderboard /></RouteMiddleware>} />
+        <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
       </Routes>
