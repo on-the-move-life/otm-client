@@ -81,13 +81,13 @@ const AchievementPage = ({ setShowAchievemntsPage, totalWorkouts, coinsEarned })
               <MovecoinHeading>Movecoins Earned</MovecoinHeading>
             </div>
             <div
-              className='w-full min-h-[100px] flex flex-row justify-center items-center rounded-[20px] bg-black'
+              className='w-full min-h-[100px] flex flex-row justify-center items-center rounded-[20px] bg-[#121212]'
             >
               <div 
-                className='w-full h-full backdrop-blur-[1px] p-5 flex flex-col justify-center items-center rounded-[20px] border-[0.5px] border-white bg-center'
+                className='w-full h-full backdrop-blur-[1px] p-5 flex flex-col justify-center items-center rounded-[20px] border-[0.5px] border-[#383838] bg-center'
                 style={{ backgroundImage: `url('/assets/coins_popup_bg.svg')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}
               >
-                <Description className='flex flex-row gap-1'>You earned <span className='flex flex-row gap-1 bg-gradient-to-tr from-[#D6B6F0] to-[#7E87EF] text-black font-extrabold px-2 rounded-sm border-[0.3px]'><img src={"/assets/otm-logo.svg"} alt="logo" />{coinsEarned}</span> Movecoins!</Description>
+                <Description className='flex flex-row gap-1'>You earned <span className='flex flex-row gap-1 bg-gradient-to-tr from-[#D6B6F0] to-[#7E87EF] text-black font-extrabold px-2 rounded-sm'><img src={"/assets/otm-logo.svg"} alt="logo" />{coinsEarned}</span> Movecoins!</Description>
                 <Instruction>Redeem your coins on your next purchase and <GradientText>save</GradientText></Instruction>
               </div>
             </div>
