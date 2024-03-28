@@ -89,3 +89,35 @@ font-weight: 500;
 line-height: 32px; /* 160% */
 text-transform: capitalize;
 `
+
+export const NextSteps = styled.div`
+
+/* Small shadow */
+text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+
+/* H1 */
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 32px;
+font-style: normal;
+font-weight: 500;
+line-height: 40px; /* 125% */
+background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+`
+
+export const GradientText = styled.div`
+
+/* H2 */
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: 32px; /* 160% */
+text-transform: capitalize;
+background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+`
