@@ -129,7 +129,7 @@ const Home = () => {
           </section>
           <section className='w-full flex flex-row justify-center items-center gap-3'>
             <LeaderBoard rank={homeStats?.workoutRank?.rank} totalParticipants={homeStats?.workoutRank?.totalMembers} />
-            <MoveCoins coins={homeStats?.points} />
+            <MoveCoins coins={homeStats?.moveCoins} />
           </section>
           {homeStats?.isPaymentDue && (
             <section>
