@@ -42,13 +42,13 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
                 {!isRedeemed && <p className='text-sm text-[#D6B6F0]'>Once you redeem, you cannot reverse this action.</p>}
                 {!isRedeemed ?
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Redeem" action={redeemCoupon} />
-                        <Button text="Cancel" action={() => setShowPopUp(false)} />
+                        <Button text="Redeem" type="marketplace" action={redeemCoupon} />
+                        <Button text="Cancel" type="marketplace" action={() => setShowPopUp(false)} />
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={redeemCoupon}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
                     </div> :
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Close" action={() => setShowPopUp(false)} />
+                        <Button text="Close" type="marketplace" action={() => setShowPopUp(false)} />
                     </div>}
                 <div ref={popUpRef}></div>
             </motion.div>
@@ -76,16 +76,16 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
                                 <p className='text-md text-[#B1B1B1] font-light'>Present this code to the team to avail this offer</p>
                             </div>
                             <div className='w-full flex flex-col justify-center items-center gap-1'>
-                                <div className='w-full h-fit flex flex-row justify-center items-center py-3 rounded-lg border-[1px] border-[#7E87EF87]'>
-                                    <p className='text-xl font-extrabold'>{redeemCode}</p>
+                                <div className='w-full h-fit flex flex-row justify-center items-center py-5 rounded-lg border-[1px] border-[#7E87EF87]'>
+                                    <p className='text-3xl font-black'>{redeemCode}</p>
                                 </div>
-                                <p className='text-xs text-[#B1B1B1] font-light'>This code will expire on {formatDate(expiryDate, false)}</p>
+                                <p className='text-xs text-[#B1B1B1] font-light tracking-wider'>This code will expire on {formatDate(expiryDate, false)}</p>
                             </div>
                         </div>
                     </div>
                     <div className='w-full grow flex flex-col items-center justify-end gap-3'>
                         <GradientText>Keep crushing your workouts to unlock more offers and discounts</GradientText>
-                        <Button text="Close" action={closeRedeemPopUp} />
+                        <Button text="Close" type="marketplace" action={closeRedeemPopUp} />
                     </div>
                 </div>
             </motion.div>

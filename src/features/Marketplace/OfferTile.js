@@ -69,7 +69,13 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, discountV
     }
     const CongratulationsScreen = () => {
         return (
-            <div className={`min-h-screen px-3 py-2 flex flex-col ${showCongratulationsScreen === 'purchaseSuccess' ? 'justify-start' : 'justify-between'} items-start gap-[5rem]`}>
+            <motion.div 
+                className={`min-h-screen px-3 py-5 flex flex-col ${showCongratulationsScreen === 'purchaseSuccess' ? 'justify-start' : 'justify-between'} items-start gap-[5rem]`}
+                initial={{ opacity: 0, scale: 0.9 }} // Start with reduced scale and opacity
+                animate={{ opacity: 1, scale: 1 }} // Animate to full scale and opacity
+                exit={{ opacity: 0 }} // Fade out on exit
+                transition={{ duration: 0.3 }} // Optional: Set the duration of the animation
+            >
                 <div className='w-full h-full flex flex-col justify-center items-center gap-2'>
                     {showCongratulationsScreen === 'purchaseSuccess' ?
                         <>
@@ -89,17 +95,17 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, discountV
                             <p className='text-md text-[#B1B1B1] font-extralight'>Present this code to the team to avail your discount</p>
                         </div>
                         <div className='w-full flex flex-col justify-center items-center gap-1'>
-                            <div className='w-full h-fit flex flex-row justify-center items-center py-3 rounded-lg border-[1px] border-[#7E87EF87]'>
-                                <p className='text-xl font-extrabold'>{purchaseData?.redeemCode}</p>
+                            <div className='w-full h-fit flex flex-row justify-center items-center py-5 rounded-lg border-[1px] border-[#7E87EF87]'>
+                                <p className='text-3xl font-black tracking-wider'>{purchaseData?.redeemCode}</p>
                             </div>
                             <p className='text-xs text-[#B1B1B1] font-light'>This code will expire on {formatDate(purchaseData?.expiryDate, false)}</p>
                         </div>
                     </>}
                 <div className='w-full h-fit grow flex flex-col justify-end items-center gap-5'>
                     {showCongratulationsScreen === 'purchaseSuccess' && <GradientText>Keep crushing your workouts to unlock more offers and discounts</GradientText>}
-                    <Button text="Done" action={() => setShowCongratulationsScreen('')} />
+                    <Button text="Done" type="marketplace" action={() => setShowCongratulationsScreen('')} />
                 </div>
-            </div>
+            </motion.div>
         )
     }
     const PopUp = () => {
@@ -118,13 +124,13 @@ function OfferTile({ offerId, coins, coinsRequired, type, description, discountV
                 {coins >= coinsRequired && <p className='text-sm text-[#D6B6F0]'>Once you buy, you cannot reverse this action.</p>}
                 {coins >= coinsRequired ?
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Buy" action={buyOffer} />
-                        <Button text="Cancel" action={() => setShowPopUp(false)} />
+                        <Button text="Buy" type="marketplace" action={buyOffer} />
+                        <Button text="Cancel" type="marketplace" action={() => setShowPopUp(false)} />
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={buyOffer}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
                     </div> :
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Close" action={() => setShowPopUp(false)} />
+                        <Button text="Close" type="marketplace" action={() => setShowPopUp(false)} />
                     </div>}
                 <div ref={popUpRef}></div>
             </motion.div>

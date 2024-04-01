@@ -171,6 +171,10 @@ background-clip: text;
   background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
 }
 
+.marketplace-gradient-button {
+  background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
+}
+
 .main-gradient-text {
   display: inline-block;
   color: transparent;
