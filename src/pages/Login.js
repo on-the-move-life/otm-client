@@ -102,11 +102,20 @@ const Login = () => {
   function handleBack() {
     setEmail('');
     setPassword('');
+    getUserFromStoragename('');
     reset();
     setShowLoginInput(false);
     setResetPassword(false);
     setShowSignUpInput(false);
   }
+
+  useEffect(() => {
+    if(error !== null && buttonClicked === true){
+      setButtonClicked(false);
+    }
+    console.log("error", error);
+    console.log("button Clicked", buttonClicked);
+  }, [buttonClicked, error])
 
   return (
     <>

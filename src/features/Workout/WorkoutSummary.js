@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
+import MoveCoinsPopUp from './MoveCoinsPopUp.js';
 import { Error, Loader } from '../../components';
 import {
   HiHome,
@@ -16,6 +16,7 @@ import { setStatus } from './WorkoutSlice';
 import AchievementPage from './AchievementPage.js';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import useLocalStorage from '../../hooks/useLocalStorage.js';
+import { AnimatePresence } from 'framer-motion';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -32,13 +33,14 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
+  // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
 
   const dispatch = useDispatch();
 
   const { workout, status } = useSelector(
     (store) => store.workoutReducer,
   );
-  
+
   const getInputValuesFromLocalStorage = () => {
     const storedInputValues = {};
     if (inputIds !== undefined && inputIds.length > 0) {
@@ -135,17 +137,25 @@ const WorkoutSummary = () => {
     status === 'error' && setTimeout(() => {
       navigate('/home')
     }, 3000)
-  }, [status])
+    // code to show the MoveCoinsPopUp after 1.5 seconds of the workout summary page
+    // status === 'success' && !showAchievemntsPage && setTimeout(() => {
+    //   setShowMoveCoinsPopup(true);
+    // }, 1500)
+  }, [status, navigate, showAchievemntsPage])
 
   return (
     <>
       {status === 'error' && <Error>Oops! Something went wrong...</Error>}
-      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && <AchievementPage setShowAchievemntsPage={setShowAchievemntsPage} totalWorkouts={Number(workoutSummary?.consistency?.total) - 1} />}
+      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && <AchievementPage setShowAchievemntsPage={setShowAchievemntsPage} totalWorkouts={Number(workoutSummary?.consistency?.total) - 1} coinsEarned={workoutSummary?.points}/>}
       {status === 'loading' && <Loader />}
       {/* {status === 'error' && <Error>Oops! Something Went Wrong</Error>} */}
 
       {status === 'success' && Object.keys(workoutSummary).length > 0 && !showAchievemntsPage && (
         <div className="h-full w-full px-4 py-8 ">
+          {/* Movecoins Earned pop-up - Initial Idea */}
+          {/* <AnimatePresence>
+            {showMoveCoinsPopup && <MoveCoinsPopUp setShowPopUp={setShowMoveCoinsPopup} coins={workoutSummary?.points} />}
+          </AnimatePresence> */}
           <AnimatedComponent>
             <div className="mb-4">
               <p className="text-xs tracking-widest text-lightGray">{today}</p>
@@ -307,7 +317,7 @@ const WorkoutSummary = () => {
 
                           {scoreDifference !== null &&
                             scoreDifference !== undefined &&
-                            scoreDifference !== 0.0 && (
+                            Math.abs(scoreDifference) !== 0.0 && (
                               <div className="flex flex-col justify-between px-2 text-black">
                                 <div
                                   className={`flex items-center rounded ${scoreDifference > 0.0 ? 'bg-green' : 'bg-red'
