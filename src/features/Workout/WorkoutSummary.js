@@ -317,7 +317,7 @@ const WorkoutSummary = () => {
 
                           {scoreDifference !== null &&
                             scoreDifference !== undefined &&
-                            scoreDifference !== 0.0 && (
+                            Math.abs(scoreDifference) !== 0.0 && (
                               <div className="flex flex-col justify-between px-2 text-black">
                                 <div
                                   className={`flex items-center rounded ${scoreDifference > 0.0 ? 'bg-green' : 'bg-red'

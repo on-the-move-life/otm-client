@@ -13,7 +13,7 @@ import axios from 'axios';
 import { AiOutlineRight } from 'react-icons/ai';
 import { FaUserCircle } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
-import AnimatedComponent from '../../components/AnimatedComponent';
+import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
 
 
 const Home = () => {
@@ -74,6 +74,7 @@ const Home = () => {
 
   return (
     <>
+      {!loader && !error && <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion}/>}
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
@@ -128,7 +129,7 @@ const Home = () => {
           </section>
           <section className='w-full flex flex-row justify-center items-center gap-3'>
             <LeaderBoard rank={homeStats?.workoutRank?.rank} totalParticipants={homeStats?.workoutRank?.totalMembers} />
-            <MoveCoins coins={homeStats?.points} />
+            <MoveCoins coins={homeStats?.moveCoins} />
           </section>
           {homeStats?.isPaymentDue && (
             <section>
