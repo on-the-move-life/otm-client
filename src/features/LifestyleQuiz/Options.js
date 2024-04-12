@@ -36,7 +36,7 @@ function Options({ options, isMCQ, response, setResponse }) {
             {
                 options && options?.map((option, idx) => {
                     return (
-                        <Option isMCQ={isMCQ} response={response} setResponse={setResponse} optionID={option?.id} optionValue={option?.value} />
+                        <Option isMCQ={isMCQ} response={response} setResponse={setResponse} optionID={option?.id} optionValue={option?.value} key={option?.id}/>
                     )
                 })
             }
