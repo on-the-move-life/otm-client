@@ -7,6 +7,7 @@ import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
 import { Profile } from './features/Profile';
 import { MarketPlace } from './features/Marketplace';
+import { LifeStyle } from './features/LifestyleQuiz';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -44,6 +45,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<RouteMiddleware><Home/></RouteMiddleware>} />
         <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />
+        <Route path="/questionnaire/lifestyle" element={<LifeStyle/>} />
         <Route path="/section-details" element={<RouteMiddleware><SectionDetail /></RouteMiddleware>} />
         <Route path="/workout" element={<RouteMiddleware><Workout /></RouteMiddleware>} />
         <Route path="/workout-summary" element={<RouteMiddleware><WorkoutSummary /></RouteMiddleware>} />
