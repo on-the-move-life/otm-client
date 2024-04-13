@@ -8,22 +8,26 @@ import { getScreenCounts } from './utils/getScreenStats'
 import InputText from './InputText'
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { Error } from '../../components';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LandingPage() {
     const [questions, setQuestions] = useState(null);
-    const [response, setResponse] = useState([""]);
+    const [response, setResponse] = useState({});
     const [counter, setCounter] = useState(0);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [screen, setScreen] = useState(1);
     const [rank, setRank] = useState(1);
     const [maxScreenCount, maxRankCount] = getScreenCounts(questions);
     const [sessionID, setSessionID] = useState(null);
+    const [pageError, setPageError] = useState(false);
     const navigate = useNavigate();
 
     // function to increment the screen and rank when the next button is clicked
     function increaseScreenAndRank() {
         setCounter(prev => {
-            if(questions && prev < questions?.length){
+            if (questions && prev < questions?.length) {
                 return prev + 1;
             }
             return prev;
@@ -43,7 +47,7 @@ function LandingPage() {
     // function to decrement the screen and rank when the back button is clicked
     function decreaseScreenAndRank() {
         setCounter(prev => {
-            if(prev > 1){
+            if (prev > 1) {
                 return prev - 1;
             }
             return prev;
@@ -69,37 +73,71 @@ function LandingPage() {
     }
 
     // sending response to the backend
-    function submitResponse(){
+    function submitResponse() {
         axiosClient.post('/', {
             email: JSON.parse(localStorage.getItem('user'))?.email,
             questionnaireName: "lifestyle",
             response: [{
                 code: currentQuestion && currentQuestion?.code,
-                answer: response
+                answer: response[currentQuestion?.code]
             }]
         })
             .then(res => {
                 console.log(res);
-                setResponse([""]);
-                if(screen === maxScreenCount && rank === maxRankCount){
+                toast.success("Submission Sucessfull!")
+                // this code is commented to maintain the response in the input field, if the fields are needed to be empty after submission of response, uncomment it
+                /* setResponse(prev => {
+                    return(
+                         {
+                             ...prev,
+                             [currentQuestion?.code] : [""]
+                         }
+                     )
+                 }); */
+
+                // if the user is on the last question(screen and rank), submit the question and redirect to the report page
+                if (screen === maxScreenCount && rank === maxRankCount) {
                     sessionID && navigate(`/questionnaire/lifestyle/result/${sessionID}`);
                 }
+
+                // after successful submission, let the user proceed to the next question
+                // possible error - network breakdown
+                // delay in increaseSreenAndRank to simulate the network delay and toast
+                setTimeout(() => {
+                    increaseScreenAndRank();
+                }, 800)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                toast.error('Submission Failed! Please Try Again.');
+            })
     }
 
     useEffect(() => {
+        // fetch the lifestyle quiz data
         axiosClient.get('?name=lifestyle')
             .then(res => {
                 // set the questions to the state
                 setQuestions(res.data.questions)
+
+                // Update the response state using a callback
+                setResponse(prev => {
+                    const newResponse = {};
+                    res.data.questions.forEach(ques => {
+                        newResponse[ques.code] = [""];
+                    });
+                    return newResponse;
+                });
 
                 // generate the session ID
                 const UUID = uuidv4();
                 console.log("session ID : ", UUID);
                 setSessionID(UUID);
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+                setPageError(true);
+            })
     }, [])
 
     useEffect(() => {
@@ -108,11 +146,31 @@ function LandingPage() {
     }, [rank, screen, questions, counter])
 
     useEffect(() => {
-        console.log("RESPONSE : ", response);
+        if (Object.keys(response)?.length > 0) {
+            console.log("RESPONSE : ", response);
+        }
+        else {
+            console.log("RESPONSE : ", response);
+        }
     }, [response]);
 
     return (
         <div className='py-3 px-2 min-h-screen flex flex-col justify-between' style={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
+            {pageError && <Error>Some Error Occured</Error>}
+            <div className='fixed top-0'>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={1500}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
+            </div>
             <div className='flex flex-col justify-center gap-5'>
                 <div className='flex flex-col justify-center gap-7'>
                     <div>
@@ -134,18 +192,17 @@ function LandingPage() {
                         </p>
                     </div>
                 </div>
-                {currentQuestion && currentQuestion[0]?.inputType === "text" ? <InputText response={response} setResponse={setResponse} key={currentQuestion && currentQuestion?.code}/> : <Options options={currentQuestion && currentQuestion[0]?.options} isMCQ={currentQuestion && currentQuestion[0]?.inputType !== "singleChoice"} response={response} setResponse={setResponse} />}
+                {currentQuestion && currentQuestion[0]?.inputType === "text" ? <InputText questionCode={currentQuestion && currentQuestion[0]?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={currentQuestion && currentQuestion[0]?.code} /> : <Options questionCode={currentQuestion && currentQuestion[0]?.code} options={currentQuestion && currentQuestion[0]?.options} isMCQ={currentQuestion && currentQuestion[0]?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} />}
             </div>
 
 
             <div>
                 <Button text={screen === maxScreenCount && rank === maxRankCount ? "Submit" : "Next"} type="lifestyle" action={() => {
-                    
+
                     // checking for empty response
-                    if(response[0] !== ""){
+                    if (currentQuestion && Object.keys(response)?.length > 0 && (response[currentQuestion[0]?.code])[0] !== "") {
                         // API function call for submittin response on every next/submit button press
                         submitResponse();
-                        increaseScreenAndRank();
                     }
                 }} />
             </div>

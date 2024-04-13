@@ -1,33 +1,69 @@
 import React from 'react'
 
-function Options({ options, isMCQ, response, setResponse }) {
-
-    const Option = ({ optionID, optionValue, isMCQ, response, setResponse }) => {
+function Options({ questionCode, options, isMCQ, response, setResponse }) {
+    console.log("Question code : ", questionCode)
+    const Option = ({ questionCode, optionID, optionValue, isMCQ, response, setResponse }) => {
+        console.log('questioncode : ', questionCode)
         return (
-            <div className={`w-full py-4 px-3 bg-[#3d3d3d]/30 rounded-[12px] ${response.find(elem => elem === optionID) ? 'border border-1 border-[#7e87ef]' : ''}`} onClick={() => {
+            <div className={`w-full py-4 px-3 bg-[#3d3d3d]/30 rounded-[12px] ${response[questionCode]?.find(elem => elem === optionID) ? 'border border-1 border-[#7e87ef]' : ''}`} onClick={() => {
                 // If an optionID is present, remove the empty string from the list
                 // If no optionID is present in the list, keep the response as [""]
                 if (isMCQ) {
-                    if (response.find(elem => elem === optionID)) {
-                        setResponse(prev => prev.filter(elem => elem !== optionID));
+                    if (response[questionCode]?.find(elem => elem === optionID)) {
+                        setResponse(prev => {
+                            return(
+                                {
+                                    ...prev,
+                                    [questionCode]: prev.filter(elem => elem !== optionID)
+                                }
+                            )
+                        });
                         if(response.length === 0){
-                            setResponse([""]);
+                            setResponse(prev => {
+                                return(
+                                    {
+                                        ...prev,
+                                        [questionCode] : [""]
+                                    }
+                                )
+                            });
                         }
                     }
                     else {
-                        if(response.length === 1 && response[0] === ""){
-                            setResponse(prev => [optionID]);
+                        if(response[questionCode]?.length === 1 && (response[questionCode])[0] === ""){
+                            setResponse(prev => {
+                                return(
+                                    {
+                                        ...prev,
+                                        [questionCode]: [optionID]
+                                    }
+                                )
+                            });
                         }
                         else{
-                            setResponse(prev => [...prev, optionID])
+                            setResponse(prev => {
+                                return(
+                                    {
+                                        ...prev,
+                                        [questionCode]: [...response[questionCode], optionID]
+                                    }
+                                )
+                            })
                         }
                     }
                 }
                 else {
-                    setResponse(prev => [optionID])
+                    setResponse(prev => {
+                        return(
+                            {
+                                ...prev,
+                                [questionCode]: [optionID]
+                            }
+                        )
+                    })
                 }
             }}>
-                <p className={`text-[18px] ${response.find(elem => elem === optionID) ? 'text-[#7e87ef]' : 'text-[#b1b1b1]'}`}>{optionValue}</p>
+                <p className={`text-[18px] ${response[questionCode]?.find(elem => elem === optionID) ? 'text-[#7e87ef]' : 'text-[#b1b1b1]'}`}>{optionValue}</p>
             </div>
         )
     }
@@ -36,7 +72,7 @@ function Options({ options, isMCQ, response, setResponse }) {
             {
                 options && options?.map((option, idx) => {
                     return (
-                        <Option isMCQ={isMCQ} response={response} setResponse={setResponse} optionID={option?.id} optionValue={option?.value} key={option?.id}/>
+                        <Option isMCQ={isMCQ} response={response} setResponse={setResponse} optionID={option?.id} optionValue={option?.value} questionCode={questionCode} key={option?.id}/>
                     )
                 })
             }

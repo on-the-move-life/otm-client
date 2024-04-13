@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-function InputText({response, setResponse}) {
+function InputText({questionCode, response, setResponse}) {
+
+  useEffect(() => {
+    console.log("input text :", response, questionCode)
+  }, [questionCode, response])
+
   return (
     <div className='w-full text-white'>
         <textarea 
@@ -8,9 +13,16 @@ function InputText({response, setResponse}) {
             rows={8}
             placeholder='Type your answer here...'
             onChange={(e) => {
-              setResponse([e.target.value]);
+              setResponse(prev => {
+                return(
+                  {
+                    ...prev,
+                    [questionCode]: [e.target.value]
+                  }
+                )
+              });
             }}
-            value={response[0]}
+            value={questionCode && Object.keys(response)?.length > 0 && (response[questionCode])[0]}
         />
     </div>
   )
