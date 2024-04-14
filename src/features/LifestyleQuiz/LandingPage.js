@@ -8,7 +8,7 @@ import { getScreenCounts } from './utils/getScreenStats'
 import InputText from './InputText'
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { Error } from '../../components';
+import { Error, Loader } from '../../components';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,6 +22,7 @@ function LandingPage() {
     const [maxScreenCount, maxRankCount] = getScreenCounts(questions);
     const [sessionID, setSessionID] = useState(null);
     const [pageError, setPageError] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
     const navigate = useNavigate();
 
     // function to increment the screen and rank when the next button is clicked
@@ -113,6 +114,7 @@ function LandingPage() {
     }
 
     useEffect(() => {
+        setPageLoading(true);
         // fetch the lifestyle quiz data
         axiosClient.get('?name=lifestyle')
             .then(res => {
@@ -137,6 +139,12 @@ function LandingPage() {
                 console.log(err);
                 setPageError(true);
             })
+            .finally(() =>{
+                // delay is introduced to increase the time for loading screen (UX improvement)
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, 1000)
+            })
     }, [])
 
     useEffect(() => {
@@ -155,7 +163,8 @@ function LandingPage() {
 
     return (
         <div className='py-3 px-2 min-h-screen flex flex-col justify-between' style={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
-            {pageError && <Error>Some Error Occured</Error>}
+            {pageError && !pageLoading && <Error>Some Error Occured</Error>}
+            {pageLoading && <div className='w-full bg-black fixed top-0'><Loader className={'h-screen w-full'}/></div>}
             <div className='fixed top-0'>
                 <ToastContainer
                     position="top-center"
