@@ -1,7 +1,9 @@
 import React from 'react'
 
 function Options({ questionCode, options, isMCQ, response, setResponse }) {
+
     console.log("Question code : ", questionCode)
+
     const Option = ({ questionCode, optionID, optionValue, isMCQ, response, setResponse }) => {
         console.log('questioncode : ', questionCode)
         return (

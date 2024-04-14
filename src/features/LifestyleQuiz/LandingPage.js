@@ -179,13 +179,11 @@ function LandingPage() {
                     theme="light"
                 />
             </div>
-            <div className='flex flex-col justify-center gap-5'>
+            <div className='flex flex-col justify-center gap-5 overflow-y-scroll hide-scrollbar'>
                 <div className='flex flex-col justify-center gap-7'>
                     <div>
-                        <div onClick={decreaseScreenAndRank}>
-                            <BackButton size={30} />
-                        </div>
-                        <div className='w-7/12 mx-auto'>
+                        {!(screen === 1 && rank === 1) && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit'/>}
+                        <div className='w-[250px] mx-auto'>
                             <ProgressBar currValue={counter} totalValue={questions && questions?.length} />
                         </div>
                     </div>
