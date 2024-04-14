@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function LandingPage() {
     const [questions, setQuestions] = useState(null);
     const [response, setResponse] = useState({});
-    const [counter, setCounter] = useState(0);
+    const [counter, setCounter] = useState(1);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [screen, setScreen] = useState(1);
     const [rank, setRank] = useState(1);
@@ -84,7 +84,6 @@ function LandingPage() {
         })
             .then(res => {
                 console.log(res);
-                toast.success("Submission Sucessfull!")
                 // this code is commented to maintain the response in the input field, if the fields are needed to be empty after submission of response, uncomment it
                 /* setResponse(prev => {
                     return(
@@ -160,7 +159,7 @@ function LandingPage() {
             <div className='fixed top-0'>
                 <ToastContainer
                     position="top-center"
-                    autoClose={1500}
+                    autoClose={1000}
                     hideProgressBar={true}
                     newestOnTop={false}
                     closeOnClick
@@ -168,7 +167,7 @@ function LandingPage() {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                    theme="dark"
+                    theme="light"
                 />
             </div>
             <div className='flex flex-col justify-center gap-5'>
@@ -203,6 +202,9 @@ function LandingPage() {
                     if (currentQuestion && Object.keys(response)?.length > 0 && (response[currentQuestion[0]?.code])[0] !== "") {
                         // API function call for submittin response on every next/submit button press
                         submitResponse();
+                    }
+                    else{
+                        toast.warn("Please fill in the answer")
                     }
                 }} />
             </div>
