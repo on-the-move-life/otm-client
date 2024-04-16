@@ -18,8 +18,7 @@ function LandingPage() {
     const [counter, setCounter] = useState(1);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [screen, setScreen] = useState(1);
-    const [rank, setRank] = useState(1);
-    const [maxScreenCount, maxRankCount] = getScreenCounts(questions);
+    const maxScreenCount = getScreenCounts(questions);
     const [sessionID, setSessionID] = useState(null);
     const [pageError, setPageError] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
@@ -33,16 +32,10 @@ function LandingPage() {
             }
             return prev;
         })
-        if (questions.find(ques => ques?.screen === screen && ques?.rank === rank + 1)) {
-            setRank(prev => prev + 1);
+        if (screen < maxScreenCount) {
+            setScreen(prev => prev + 1);
         }
-        else {
-            if (screen !== maxScreenCount) {
-                setScreen(prev => prev + 1);
-                setRank(1);
-            }
-        }
-        console.log("screen rank", screen, rank)
+        console.log("screen", screen)
     }
 
     // function to decrement the screen and rank when the back button is clicked
@@ -53,50 +46,61 @@ function LandingPage() {
             }
             return prev;
         })
-        if (questions.find(ques => ques?.screen === screen && ques?.rank === rank - 1)) {
-            setRank(prev => prev - 1);
+        if (screen > 1) {
+            setScreen(prev => prev - 1);
         }
-        else {
-            if (screen !== 1) {
-                setScreen(prev => prev - 1);
-                // set the highest rank of the updated screen
-                const screenRankArray = questions.filter(elem => elem?.screen === screen - 1);
-                console.log((screenRankArray.map(elem => elem?.rank)))
-                setRank(Math.max(...screenRankArray.map(elem => elem?.rank)));
-            }
-        }
-        console.log("screen rank", screen, rank)
+        console.log("screen", screen)
     }
 
     // function to update currentQuestion based on current screen and rank values
     function updateCurrentQuestion() {
-        setCurrentQuestion(questions.filter(ques => ques?.screen === screen && ques?.rank === rank)); // using [0] to store the question as an object, not as an array
+        const filteredQuestions = questions.filter(ques => ques?.screen === screen) // array of all the questions belonging to the same screen
+        // sorting the questions based on their ranks
+        setCurrentQuestion(filteredQuestions?.sort((a, b) => {
+            return a?.rank - b?.rank;
+        }));
+    }
+
+    // function to check for empty response in the current screen
+    function isAnyEmptyResponse() {
+        let isEmpty = false;
+        if (currentQuestion) {
+            isEmpty = currentQuestion.some((ques, idx) => {
+                return response[ques?.code][0] === "";
+            });
+        }
+        return isEmpty;
+    }
+
+    // function to retrieve email from the response
+    function getEmail(){
+        const emailQuestion = questions && questions.find((ques, idx) => {
+            return ques?.content === "email"
+        })
+        return emailQuestion && response && response[emailQuestion?.code][0];
     }
 
     // sending response to the backend
     function submitResponse() {
+        // preparing a response for the current screen questions
+        const responseBody = [];
+        currentQuestion && response && currentQuestion.map((ques, idx) => {
+            responseBody.push({
+                code: ques?.code,
+                answer: response[ques?.code]
+            })
+        })
         axiosClient.post('/', {
-            email: JSON.parse(localStorage.getItem('user'))?.email,
+            email: getEmail(),
+            sessionId: sessionID,
             questionnaireName: "lifestyle",
-            response: [{
-                code: currentQuestion && currentQuestion?.code,
-                answer: response[currentQuestion?.code]
-            }]
+            response: responseBody
         })
             .then(res => {
                 console.log(res);
-                // this code is commented to maintain the response in the input field, if the fields are needed to be empty after submission of response, uncomment it
-                /* setResponse(prev => {
-                    return(
-                         {
-                             ...prev,
-                             [currentQuestion?.code] : [""]
-                         }
-                     )
-                 }); */
 
-                // if the user is on the last question(screen and rank), submit the question and redirect to the report page
-                if (screen === maxScreenCount && rank === maxRankCount) {
+                // if the user is on the last screen, submit the question and redirect to the report page
+                if (screen === maxScreenCount) {
                     sessionID && navigate(`/questionnaire/lifestyle/result/${sessionID}`);
                 }
 
@@ -133,13 +137,13 @@ function LandingPage() {
                 // generate the session ID
                 const UUID = uuidv4();
                 console.log("session ID : ", UUID);
-                setSessionID(UUID);
+                setSessionID(`otm_${UUID.replace(/-/g, "")}`);
             })
             .catch(err => {
                 console.log(err);
                 setPageError(true);
             })
-            .finally(() =>{
+            .finally(() => {
                 // delay is introduced to increase the time for loading screen (UX improvement)
                 setTimeout(() => {
                     setPageLoading(false);
@@ -150,7 +154,7 @@ function LandingPage() {
     useEffect(() => {
         questions && updateCurrentQuestion();
         console.log("counter : ", counter)
-    }, [rank, screen, questions, counter])
+    }, [screen, questions, counter])
 
     useEffect(() => {
         if (Object.keys(response)?.length > 0) {
@@ -164,7 +168,7 @@ function LandingPage() {
     return (
         <div className='py-3 px-2 min-h-screen flex flex-col justify-between' style={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
             {pageError && !pageLoading && <Error>Some Error Occured</Error>}
-            {pageLoading && <div className='w-full bg-black fixed top-0'><Loader className={'h-screen w-full'}/></div>}
+            {pageLoading && <div className='w-full bg-black fixed top-0'><Loader className={'h-screen w-full'} /></div>}
             <div className='fixed top-0'>
                 <ToastContainer
                     position="top-center"
@@ -176,41 +180,51 @@ function LandingPage() {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                    theme="light"
+                    theme="dark"
                 />
             </div>
             <div className='flex flex-col justify-center gap-5 overflow-y-scroll hide-scrollbar'>
-                <div className='flex flex-col justify-center gap-7'>
-                    <div>
-                        {!(screen === 1 && rank === 1) && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit'/>}
-                        <div className='w-[250px] mx-auto'>
-                            <ProgressBar currValue={counter} totalValue={questions && questions?.length} />
-                        </div>
-                    </div>
-                    <div className='my-3'>
-                        {/* Question */}
-                        <h1 className='text-[24px] text-[#7e87ef]'>
-                            {currentQuestion && currentQuestion[0]?.content?.toUpperCase()}
-                        </h1>
-                        {/* Description */}
-                        <p className='text-[12px] space-x-2 uppercase text-[#b1b1b1]'>
-                            {currentQuestion && currentQuestion[0]?.description?.toUpperCase()}
-                        </p>
+                <div>
+                    {screen !== 1 && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit' />}
+                    <div className='w-[250px] mx-auto'>
+                        <ProgressBar currValue={counter} totalValue={questions && questions?.length} />
                     </div>
                 </div>
-                {currentQuestion && currentQuestion[0]?.inputType === "text" ? <InputText questionCode={currentQuestion && currentQuestion[0]?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={currentQuestion && currentQuestion[0]?.code} /> : <Options questionCode={currentQuestion && currentQuestion[0]?.code} options={currentQuestion && currentQuestion[0]?.options} isMCQ={currentQuestion && currentQuestion[0]?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} />}
+                <div className='w-full flex flex-col justify-center gap-[4.5rem]'>
+                    {
+                        currentQuestion && currentQuestion?.map((ques, idx) => {
+                            return (
+                                <>
+                                    <div className='flex flex-col justify-center'>
+                                        <div className='my-3'>
+                                            {/* Question */}
+                                            <h1 className='text-[24px] text-[#7e87ef]'>
+                                                {ques?.content?.toUpperCase()}
+                                            </h1>
+                                            {/* Description */}
+                                            <p className='text-[12px] space-x-2 uppercase text-[#b1b1b1]'>
+                                                {ques?.description?.toUpperCase()}
+                                            </p>
+                                        </div>
+                                        {ques?.inputType === "text" ? <InputText questionCode={ques?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={ques?.code} /> : <Options questionCode={ques?.code} options={ques?.options} isMCQ={ques?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} />}
+                                    </div>
+                                </>
+                            )
+                        })
+                    }
+                </div>
             </div>
 
 
             <div>
-                <Button text={screen === maxScreenCount && rank === maxRankCount ? "Submit" : "Next"} type="lifestyle" action={() => {
+                <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
 
                     // checking for empty response
-                    if (currentQuestion && Object.keys(response)?.length > 0 && (response[currentQuestion[0]?.code])[0] !== "") {
+                    if (currentQuestion && Object.keys(response)?.length > 0 && !isAnyEmptyResponse()) {
                         // API function call for submittin response on every next/submit button press
                         submitResponse();
                     }
-                    else{
+                    else {
                         toast.warn("Please fill in the answer")
                     }
                 }} />

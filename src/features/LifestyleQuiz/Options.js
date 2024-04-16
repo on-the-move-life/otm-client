@@ -16,7 +16,7 @@ function Options({ questionCode, options, isMCQ, response, setResponse }) {
                             return(
                                 {
                                     ...prev,
-                                    [questionCode]: prev.filter(elem => elem !== optionID)
+                                    [questionCode]: response[questionCode]?.filter(elem => elem !== optionID)
                                 }
                             )
                         });
