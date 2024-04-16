@@ -177,6 +177,10 @@ button:active {
   box-shadow: 0px 2.5px 4px 0px rgba(0, 0, 0, 0.15), 0px 14px 14px 0px rgba(0, 0, 0, 0.09);
 }
 
+.marketplace-gradient-button {
+  background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
+}
+
 .main-gradient-text {
   display: inline-block;
   color: transparent;
