@@ -8,9 +8,10 @@ import { getScreenCounts } from './utils/getScreenStats'
 import InputText from './InputText'
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { Error, Loader } from '../../components';
+import { Error } from '../../components';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from './Components/Loader'
 
 function LandingPage() {
     const [questions, setQuestions] = useState(null);
@@ -66,14 +67,14 @@ function LandingPage() {
         let isEmpty = false;
         if (currentQuestion) {
             isEmpty = currentQuestion.some((ques, idx) => {
-                return response[ques?.code][0] === "";
+                return ques?.isRequired === true && response[ques?.code][0] === ""
             });
         }
         return isEmpty;
     }
 
     // function to retrieve email from the response
-    function getEmail(){
+    function getEmail() {
         const emailQuestion = questions && questions.find((ques, idx) => {
             return ques?.content === "email"
         })
@@ -82,6 +83,8 @@ function LandingPage() {
 
     // sending response to the backend
     function submitResponse() {
+        // set the state to loading
+        setPageLoading(true);
         // preparing a response for the current screen questions
         const responseBody = [];
         currentQuestion && response && currentQuestion.map((ques, idx) => {
@@ -114,6 +117,12 @@ function LandingPage() {
             .catch(err => {
                 console.log(err);
                 toast.error('Submission Failed! Please Try Again.');
+            })
+            .finally(() => {
+                // a delay of 500ms is introduced bcz to old page was appearing for a moment after the loading was stopped
+                setTimeout(() => {
+                    setPageLoading(false);
+                }, 500)
             })
     }
 
@@ -166,9 +175,9 @@ function LandingPage() {
     }, [response]);
 
     return (
-        <div className='py-3 px-2 min-h-screen flex flex-col justify-between' style={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
+        <div className='py-4 px-3 min-h-screen flex flex-col justify-between' style={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
             {pageError && !pageLoading && <Error>Some Error Occured</Error>}
-            {pageLoading && <div className='w-full bg-black fixed top-0'><Loader className={'h-screen w-full'} /></div>}
+            {pageLoading && <div className='w-full bg-black fixed top-0 z-50'><Loader className={'h-screen w-full'} /></div>}
             <div className='fixed top-0'>
                 <ToastContainer
                     position="top-center"
@@ -183,14 +192,21 @@ function LandingPage() {
                     theme="dark"
                 />
             </div>
-            <div className='flex flex-col justify-center gap-5 overflow-y-scroll hide-scrollbar'>
-                <div>
+            <div className='flex flex-col justify-center gap-3 overflow-y-scroll hide-scrollbar'>
+                <div className='flex flex-row justify-start items-center gap-2'>
                     {screen !== 1 && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit' />}
-                    <div className='w-[250px] mx-auto'>
+                    <div className='w-[250px] mx-auto my-1'>
                         <ProgressBar currValue={counter} totalValue={questions && questions?.length} />
                     </div>
                 </div>
-                <div className='w-full flex flex-col justify-center gap-[4.5rem]'>
+                {/* Section Name */}
+                {
+                    screen === 1 &&
+                    <h1 className='text-[24px] text-[#7e87ef] uppercase font-semibold my-2'>
+                        General Information
+                    </h1>
+                }
+                <div className='w-full flex flex-col justify-center gap-[2.5rem]'>
                     {
                         currentQuestion && currentQuestion?.map((ques, idx) => {
                             return (
@@ -198,15 +214,17 @@ function LandingPage() {
                                     <div className='flex flex-col justify-center'>
                                         <div className='my-3'>
                                             {/* Question */}
-                                            <h1 className='text-[24px] text-[#7e87ef]'>
-                                                {ques?.content?.toUpperCase()}
+                                            <h1 className='text-[24px] text-[#7e87ef] capitalize'>
+                                                {ques?.content}
                                             </h1>
                                             {/* Description */}
-                                            <p className='text-[12px] space-x-2 uppercase text-[#b1b1b1]'>
-                                                {ques?.description?.toUpperCase()}
+                                            <p className='text-[12px] space-x-2 text-[#b1b1b1] capitalize'>
+                                                {ques?.description}
                                             </p>
                                         </div>
-                                        {ques?.inputType === "text" ? <InputText questionCode={ques?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={ques?.code} /> : <Options questionCode={ques?.code} options={ques?.options} isMCQ={ques?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} />}
+                                        {ques?.inputType?.toUpperCase() === "SINGLECHOICE" || ques?.inputType?.toUpperCase() === "MULTICHOICE" ?
+                                            <Options questionCode={ques?.code} options={ques?.options} isMCQ={ques?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} /> :
+                                            <InputText questionCode={ques?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={ques?.code} inputType={ques?.inputType} placeholder={ques?.placeholder} isRequired={ques?.isRequired} />}
                                     </div>
                                 </>
                             )

@@ -11,8 +11,8 @@ function Report() {
             .catch(err => console.log(err))
     }, [])
   return (
-    <div>
-        {sessionID}
+    <div className='bg-white min-h-screen overflow-y-scroll text-black flex flex-col justify-start items-start py-5 px-2'>
+        <img src={'/assets/otm-logo-report.svg'} alt="otm-logo"/>
     </div>
   )
 }
