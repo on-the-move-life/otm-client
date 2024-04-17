@@ -12,28 +12,36 @@ import { Error } from '../../components';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './Components/Loader'
+import styled from 'styled-components'
 
 function LandingPage() {
     const [questions, setQuestions] = useState(null);
     const [response, setResponse] = useState({});
     const [validation, setValidation] = useState({});
-    const [counter, setCounter] = useState(1);
     const [currentQuestion, setCurrentQuestion] = useState(null);
-    const [screen, setScreen] = useState(1);
+    const [screen, setScreen] = useState(-1);
     const maxScreenCount = getScreenCounts(questions);
     const [sessionID, setSessionID] = useState(null);
     const [pageError, setPageError] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
     const navigate = useNavigate();
 
+    const StarterText = styled.div`
+    color: var(--New-White, rgba(255, 255, 255, 0.26));
+    /* H1 */
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 40px; /* 125% */
+    background: var(--Gradient-silver, linear-gradient(95deg, #8c8c8c 0.94%, #ffffff 84.36%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    `
+
     // function to increment the screen and rank when the next button is clicked
     function increaseScreenAndRank() {
-        setCounter(prev => {
-            if (questions && prev < questions?.length) {
-                return prev + 1;
-            }
-            return prev;
-        })
         if (screen < maxScreenCount) {
             setScreen(prev => prev + 1);
         }
@@ -42,12 +50,6 @@ function LandingPage() {
 
     // function to decrement the screen and rank when the back button is clicked
     function decreaseScreenAndRank() {
-        setCounter(prev => {
-            if (prev > 1) {
-                return prev - 1;
-            }
-            return prev;
-        })
         if (screen > 1) {
             setScreen(prev => prev - 1);
         }
@@ -75,10 +77,10 @@ function LandingPage() {
     }
 
     // function to check for the validation
-    function validResponses(){
+    function validResponses() {
         let isValid = true;
         Object.values(validation).map((val, idx) => {
-            if(val === false){
+            if (val === false) {
                 isValid = false;
             }
         })
@@ -174,8 +176,7 @@ function LandingPage() {
 
     useEffect(() => {
         questions && updateCurrentQuestion();
-        console.log("counter : ", counter)
-    }, [screen, questions, counter])
+    }, [screen, questions])
 
     useEffect(() => {
         if (Object.keys(response)?.length > 0) {
@@ -187,9 +188,14 @@ function LandingPage() {
     }, [response]);
 
     return (
-        <div className='py-4 px-3 min-h-screen flex flex-col justify-between' style={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
+        <div
+            className={`min-h-screen flex flex-col justify-between ${(screen === 0 || screen === -1) ? '' : 'py-4 px-3'}`}
+            style={{
+                fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+            }}
+        >
             {pageError && !pageLoading && <Error>Some Error Occured</Error>}
-            {pageLoading && <div className='w-full bg-black fixed top-0 z-50'><Loader className={'h-screen w-full'} /></div>}
+            {pageLoading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} /></div>}
             <div className='fixed top-0'>
                 <ToastContainer
                     position="top-center"
@@ -205,12 +211,13 @@ function LandingPage() {
                 />
             </div>
             <div className='flex flex-col justify-center gap-3 overflow-y-scroll hide-scrollbar'>
-                <div className='flex flex-row justify-start items-center gap-2'>
-                    {screen !== 1 && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit' />}
-                    <div className='w-[250px] mx-auto my-1'>
-                        <ProgressBar currValue={counter} totalValue={questions && questions?.length} />
-                    </div>
-                </div>
+                {screen >= 1 &&
+                    <div className='flex flex-row justify-start items-center gap-2'>
+                        {screen > 1 && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit' />}
+                        {screen >= 1 && <div className='w-[250px] mx-auto my-1'>
+                            <ProgressBar currValue={screen} totalValue={questions && questions?.length} />
+                        </div>}
+                    </div>}
                 {/* Section Name */}
                 {
                     screen === 1 &&
@@ -220,7 +227,7 @@ function LandingPage() {
                 }
                 <div className='w-full flex flex-col justify-center gap-[2.5rem]'>
                     {
-                        currentQuestion && currentQuestion?.map((ques, idx) => {
+                        screen >= 1 && currentQuestion && currentQuestion?.map((ques, idx) => {
                             return (
                                 <>
                                     <div className='flex flex-col justify-center'>
@@ -242,27 +249,68 @@ function LandingPage() {
                             )
                         })
                     }
+                    {
+                        (screen === -1 || screen === 0) &&
+                        <div
+                            className='h-screen w-full bg-black/50 backdrop-blur-sm'
+                            style={{
+                                backgroundImage: `url(${"/assets/bg_report.png"})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                            }}
+                        >
+                            <div className="w-full h-full bg-black/30 backdrop-blur-sm px-3 py-4 flex flex-col justify-between items-start">
+                                <div className='flex flex-col justify-start items-start gap-12'>
+                                    <img src={"/assets/otm-logo-report.svg"} alt="otm logo" />
+                                    {screen === -1 ? <StarterText>
+                                        You will be shown a series of questions that pertain to your current <span style={{
+                                            background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                                            backgroundClip: 'text',
+                                        }}>lifestyle</span>. We will examine factors such as your
+                                        fitness, nutrition, sleep, mental hygiene, mindset and much more.
+                                    </StarterText> :
+                                        <StarterText>
+                                            When you are finished with the assessment, we will present you with a detailed Report of Findings, where you’ll discover:<br />
+                                            - Your <span style={{
+                                                background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                                                backgroundClip: 'text',
+                                            }}>Lifestyle Score</span>, a single number, personal to you, which objectively quantifies your overall quality of life<br />
+                                            - A detailed <span style={{
+                                                background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                                                backgroundClip: 'text',
+                                            }}>Lifestyle Analysis</span>
+                                        </StarterText>
+                                    }
+                                </div>
+                                <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
+                                    // increase the screen value
+                                    setScreen(prev => prev + 1);
+                                }} />
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
 
 
             <div>
-                <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
+                {screen >= 1 &&
+                    <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
 
-                    // checking for empty response
-                    if (currentQuestion && Object.keys(response)?.length > 0 && !isAnyEmptyResponse() && validResponses()) {
-                        // API function call for submittin response on every next/submit button press
-                        submitResponse();
-                    }
-                    else {
-                        if(isAnyEmptyResponse()){
-                            toast.warn("Please fill in the required fields!")
+                        // checking for empty response
+                        if (currentQuestion && Object.keys(response)?.length > 0 && !isAnyEmptyResponse() && validResponses()) {
+                            // API function call for submittin response on every next/submit button press
+                            submitResponse();
                         }
-                        else if(!validResponses()){
-                            toast.warn("Please fill in the valid answer!");
+                        else {
+                            if (isAnyEmptyResponse()) {
+                                toast.warn("Please fill in the required fields!")
+                            }
+                            else if (!validResponses()) {
+                                toast.warn("Please fill in the valid answer!");
+                            }
                         }
-                    }
-                }} />
+                    }} />}
             </div>
         </div>
     )
