@@ -40,6 +40,15 @@ function LandingPage() {
     -webkit-text-fill-color: transparent;
     `
 
+    // funtion to return capitalize string
+    function capitalizeFirstLetter(str) {
+        // Check if the string is empty
+        if (str.length === 0) return str;
+
+        // Capitalize the first letter and concatenate it with the rest of the string
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
     // function to increment the screen and rank when the next button is clicked
     function increaseScreenAndRank() {
         if (screen < maxScreenCount) {
@@ -189,7 +198,7 @@ function LandingPage() {
 
     return (
         <div
-            className={`min-h-screen flex flex-col justify-between ${(screen === 0 || screen === -1) ? '' : 'py-4 px-3'}`}
+            className={`min-h-screen flex flex-col justify-between ${(screen === 0 || screen === -1) ? '' : 'py-2 px-6'}`}
             style={{
                 fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
             }}
@@ -212,88 +221,91 @@ function LandingPage() {
             </div>
             <div className='flex flex-col justify-center gap-3 overflow-y-scroll hide-scrollbar'>
                 {screen >= 1 &&
-                    <div className='flex flex-row justify-start items-center gap-2'>
-                        {screen > 1 && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit' />}
+                    <div className='flex flex-col justify-start items-start gap-5'>
                         {screen >= 1 && <div className='w-[250px] mx-auto my-1'>
                             <ProgressBar currValue={screen} totalValue={questions && questions?.length} />
                         </div>}
+                        {screen > 1 && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit' />}
                     </div>}
-                {/* Section Name */}
-                {
-                    screen === 1 &&
-                    <h1 className='text-[24px] text-[#7e87ef] uppercase font-semibold my-2'>
-                        General Information
-                    </h1>
-                }
-                <div className='w-full flex flex-col justify-center gap-[2.5rem]'>
-                    {
-                        screen >= 1 && currentQuestion && currentQuestion?.map((ques, idx) => {
-                            return (
-                                <>
-                                    <div className='flex flex-col justify-center'>
-                                        <div className='my-3'>
-                                            {/* Question */}
-                                            <h1 className='text-[24px] text-[#7e87ef] capitalize'>
-                                                {ques?.content}
-                                            </h1>
-                                            {/* Description */}
-                                            <p className='text-[12px] space-x-2 text-[#b1b1b1] capitalize'>
-                                                {ques?.description}
-                                            </p>
-                                        </div>
-                                        {ques?.inputType?.toUpperCase() === "SINGLECHOICE" || ques?.inputType?.toUpperCase() === "MULTICHOICE" ?
-                                            <Options questionCode={ques?.code} options={ques?.options} isMCQ={ques?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} /> :
-                                            <InputText questionCode={ques?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={ques?.code} inputType={ques?.inputType} placeholder={ques?.placeholder} isRequired={ques?.isRequired} validation={validation} setValidation={setValidation} />}
-                                    </div>
-                                </>
-                            )
-                        })
-                    }
-                    {
-                        (screen === -1 || screen === 0) &&
-                        <div
-                            className='h-screen w-full bg-black/50 backdrop-blur-sm'
-                            style={{
-                                backgroundImage: `url(${"/assets/bg_report.png"})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                            }}
-                        >
-                            <div className="w-full h-full bg-black/30 backdrop-blur-sm px-3 py-4 flex flex-col justify-between items-start">
-                                <div className='flex flex-col justify-start items-start gap-12'>
-                                    <img src={"/assets/otm-logo-report.svg"} alt="otm logo" />
-                                    {screen === -1 ? <StarterText>
-                                        You will be shown a series of questions that pertain to your current <span style={{
-                                            background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                                            backgroundClip: 'text',
-                                        }}>lifestyle</span>. We will examine factors such as your
-                                        fitness, nutrition, sleep, mental hygiene, mindset and much more.
-                                    </StarterText> :
-                                        <StarterText>
-                                            When you are finished with the assessment, we will present you with a detailed Report of Findings, where you’ll discover:<br />
-                                            - Your <span style={{
-                                                background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                                                backgroundClip: 'text',
-                                            }}>Lifestyle Score</span>, a single number, personal to you, which objectively quantifies your overall quality of life<br />
-                                            - A detailed <span style={{
-                                                background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                                                backgroundClip: 'text',
-                                            }}>Lifestyle Analysis</span>
-                                        </StarterText>
-                                    }
-                                </div>
-                                <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
-                                    // increase the screen value
-                                    setScreen(prev => prev + 1);
-                                }} />
-                            </div>
-                        </div>
-                    }
-                </div>
             </div>
-
-
-            <div>
+            <div className='flex-1 flex flex-col justify-between items-start'>
+                <div className='w-full flex flex-col justify-center gap-5'>
+                    {/* Section Name */}
+                    {
+                        screen === 1 &&
+                        <h1 className='text-[24px] text-[#7e87ef] font-semibold my-2'>
+                            General Information
+                        </h1>
+                    }
+                    <div>
+                        {
+                            screen >= 1 && currentQuestion && currentQuestion?.map((ques, idx) => {
+                                return (
+                                    <>
+                                        <div className='flex flex-col justify-center mb-8'>
+                                            <div className='w-full my-3'>
+                                                {/* Question */}
+                                                <h1 className='text-[24px] text-[#7e87ef]'>
+                                                    {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''}`}
+                                                </h1>
+                                                {/* Description */}
+                                                <p className='text-[12px] space-x-2 text-[#b1b1b1]'>
+                                                    {capitalizeFirstLetter(ques?.description)}
+                                                </p>
+                                            </div>
+                                            {ques?.inputType?.toUpperCase() === "SINGLECHOICE" || ques?.inputType?.toUpperCase() === "MULTICHOICE" ?
+                                                <Options questionCode={ques?.code} options={ques?.options} isMCQ={ques?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} /> :
+                                                <InputText questionCode={ques?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={ques?.code} inputType={ques?.inputType} placeholder={ques?.placeholder} isRequired={ques?.isRequired} validation={validation} setValidation={setValidation} />}
+                                        </div>
+                                    </>
+                                )
+                            })
+                        }
+                        {
+                            (screen === -1 || screen === 0) &&
+                            <div
+                                className='h-screen w-full'
+                                style={{
+                                    backgroundImage: `url(${"/assets/bg_report.png"})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                }}
+                            >
+                                <div className="w-full h-full bg-black/70 backdrop-blur-[8.5px] px-6 py-4 flex flex-col justify-between items-start">
+                                    <div className={`${screen === -1 ? 'mt-[8rem]' : 'mt-[2rem]'}`}>
+                                        <img src={"/assets/otm_logo_lifestyle.svg"} alt="otm logo" />
+                                    </div>
+                                    <div className='flex flex-col justify-center items-center gap-9'>
+                                        {screen === -1 ?
+                                            <StarterText>
+                                                You will be shown a series of questions that pertain to your current <span style={{
+                                                    background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                                                    backgroundClip: 'text',
+                                                }}>lifestyle</span>. We will examine factors such as your
+                                                fitness, nutrition, sleep, mental hygiene, mindset and much more.
+                                            </StarterText> :
+                                            <StarterText>
+                                                When you are finished with the assessment, we will present you with a detailed Report of Findings, where you’ll discover:<br />
+                                                - Your <span style={{
+                                                    background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                                                    backgroundClip: 'text',
+                                                }}>Lifestyle Score</span>, a single number, personal to you, which objectively quantifies your overall quality of life<br />
+                                                - A detailed <span style={{
+                                                    background: 'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                                                    backgroundClip: 'text',
+                                                }}>Lifestyle Analysis</span>
+                                            </StarterText>
+                                        }
+                                        <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
+                                            // increase the screen value
+                                            setScreen(prev => prev + 1);
+                                        }} />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
                 {screen >= 1 &&
                     <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
 
