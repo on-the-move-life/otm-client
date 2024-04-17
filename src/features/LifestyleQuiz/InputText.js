@@ -71,6 +71,9 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
           label={placeholder}
           className='w-full'
           value={questionCode && Object.keys(response)?.length > 0 && (response[questionCode])[0]}
+          InputProps={{
+            style: {fontSize: '18.5px'}
+          }}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -112,6 +115,9 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
           maxRows={4}
           className='w-full'
           value={questionCode && Object.keys(response)?.length > 0 && (response[questionCode])[0]}
+          InputProps={{
+            style: {fontSize: '18.5px'}
+          }}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
