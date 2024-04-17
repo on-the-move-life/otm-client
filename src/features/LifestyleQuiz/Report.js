@@ -4,10 +4,11 @@ import { axiosClient } from './apiClient';
 import { Button } from '../../components';
 import styled from 'styled-components';
 import Loader from './Components/Loader';
-
+import { Error } from '../../components';
 function Report() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const { sessionID } = useParams();
 
   const FeatureHeading = styled.div`
@@ -26,7 +27,10 @@ function Report() {
     console.log("session ID in the report page : ", sessionID)
     axiosClient.get(`/lifestyle/snapshot?session_id=${sessionID}`)
       .then(res => setData(res.data))
-      .catch(err => console.log(err))
+      .catch(err => {
+        setError(true);
+        console.log(err);
+      })
       .finally(() => {
         setLoading(false);
       })
@@ -89,6 +93,7 @@ function Report() {
   return (
     <div className='bg-[#f5f5f5] min-h-screen overflow-y-scroll text-black flex flex-col justify-start items-start py-5 px-2'>
       {loading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} /></div>}
+      {error && !loading && <Error>Some Error Occured</Error>}
       <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" />
       <div className='flex flex-col justify-start items-start gap-9 mt-5'>
         {/* Top Section */}
