@@ -1,16 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField';
 
-function InputText({ questionCode, response, setResponse, inputType, placeholder, isRequired }) {
-  const [isValidated, setValidated] = useState(true);
-
+function InputText({ questionCode, response, setResponse, inputType, placeholder, isRequired, validation, setValidation }) {
   useEffect(() => {
-    if (inputType === "email")
-      setValidated(validateEmail(response[questionCode][0]));
-    else if (inputType === "tel")
-      setValidated(validatePhoneNumber(response[questionCode][0]));
-    else if(inputType === "number")
-      setValidated(validatePositiveInteger(response[questionCode][0]));
+    if (inputType === "email"){
+      setValidation(prev => {
+        return(
+          {
+            ...prev, 
+            [questionCode] : validateEmail(response[questionCode][0])
+          }
+        )
+      })
+    }
+      
+    else if (inputType === "tel"){
+      setValidation(prev => {
+        return(
+          {
+            ...prev, 
+            [questionCode] : validatePhoneNumber(response[questionCode][0])
+          }
+        )
+      })
+    }
+    else if(inputType === "number"){
+      setValidation(prev => {
+        return(
+          {
+            ...prev, 
+            [questionCode] : validatePositiveInteger(response[questionCode][0])
+          }
+        )
+      })
+    }
   }, [questionCode, response])
 
   // function to validate email
@@ -51,19 +74,19 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
-                borderColor: isValidated ? '#b1b1b1' : '#fa493c', // Outline color
+                borderColor: validation[questionCode] ? '#b1b1b1' : '#fa493c', // Outline color
               },
               '& input': {
                 color: '#b1b1b1', // Text color
               },
               '&.Mui-focused': {
                 '& fieldset': {
-                  borderColor: isValidated ? '#7e87ef' : '#fa493c', // Focused outline color
+                  borderColor: validation[questionCode] ? '#7e87ef' : '#fa493c', // Focused outline color
                 },
               }
             },
             '& .MuiInputLabel-outlined': {
-              color: isValidated ? 'gray' : '#fa493c', // Label color
+              color: validation[questionCode] ? 'gray' : '#fa493c', // Label color
             },
           }}
           onChange={(e) => {

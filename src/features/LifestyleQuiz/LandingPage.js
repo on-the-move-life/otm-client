@@ -16,6 +16,7 @@ import Loader from './Components/Loader'
 function LandingPage() {
     const [questions, setQuestions] = useState(null);
     const [response, setResponse] = useState({});
+    const [validation, setValidation] = useState({});
     const [counter, setCounter] = useState(1);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [screen, setScreen] = useState(1);
@@ -71,6 +72,17 @@ function LandingPage() {
             });
         }
         return isEmpty;
+    }
+
+    // function to check for the validation
+    function validResponses(){
+        let isValid = true;
+        Object.values(validation).map((val, idx) => {
+            if(val === false){
+                isValid = false;
+            }
+        })
+        return isValid;
     }
 
     // function to retrieve email from the response
@@ -224,7 +236,7 @@ function LandingPage() {
                                         </div>
                                         {ques?.inputType?.toUpperCase() === "SINGLECHOICE" || ques?.inputType?.toUpperCase() === "MULTICHOICE" ?
                                             <Options questionCode={ques?.code} options={ques?.options} isMCQ={ques?.inputType !== "singleChoice"} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} /> :
-                                            <InputText questionCode={ques?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={ques?.code} inputType={ques?.inputType} placeholder={ques?.placeholder} isRequired={ques?.isRequired} />}
+                                            <InputText questionCode={ques?.code} response={Object.keys(response)?.length > 0 && response} setResponse={setResponse} key={ques?.code} inputType={ques?.inputType} placeholder={ques?.placeholder} isRequired={ques?.isRequired} validation={validation} setValidation={setValidation} />}
                                     </div>
                                 </>
                             )
@@ -238,12 +250,17 @@ function LandingPage() {
                 <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
 
                     // checking for empty response
-                    if (currentQuestion && Object.keys(response)?.length > 0 && !isAnyEmptyResponse()) {
+                    if (currentQuestion && Object.keys(response)?.length > 0 && !isAnyEmptyResponse() && validResponses()) {
                         // API function call for submittin response on every next/submit button press
                         submitResponse();
                     }
                     else {
-                        toast.warn("Please fill in the answer")
+                        if(isAnyEmptyResponse()){
+                            toast.warn("Please fill in the required fields!")
+                        }
+                        else if(!validResponses()){
+                            toast.warn("Please fill in the valid answer!");
+                        }
                     }
                 }} />
             </div>
