@@ -1,16 +1,16 @@
-.loading svg polyline {
+.loading-lifestyle svg polyline {
     fill: none;
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
   
-  .loading svg polyline#back {
+  .loading-lifestyle svg polyline#back {
     fill: none;
     stroke: #7e87ef33;
   }
   
-  .loading svg polyline#front {
+  .loading-lifestyle svg polyline#front {
     fill: none;
     stroke: #7e87ef;
     stroke-dasharray: 48, 144;
