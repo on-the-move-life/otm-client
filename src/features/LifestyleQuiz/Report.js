@@ -92,7 +92,7 @@ function Report() {
   }
   return (
     <div className='bg-[#f5f5f5] min-h-screen overflow-y-scroll text-black flex flex-col justify-start items-start py-5 px-2'>
-      {loading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} message={'We are fetching your result...Have patience!'}/></div>}
+      {loading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} message={'Hang tight as we create a personalized snapshot based on your choices'}/></div>}
       {error && !loading && <Error>Some Error Occured</Error>}
       <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" />
       <div className='flex flex-col justify-start items-start gap-9 mt-5'>

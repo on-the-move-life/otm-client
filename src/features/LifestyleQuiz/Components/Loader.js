@@ -10,7 +10,7 @@ function Loader({ className, message }) {
             <div>
                 {
                     message !== undefined &&
-                    <p className='text-md font-semibold text-[#7e87ef]'>{message}</p>
+                    <p className='px-2 text-center text-lg font-semibold text-[#7e87ef] tracking-wide'>{message}</p>
                 }
             </div>
         </div>

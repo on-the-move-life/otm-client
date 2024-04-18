@@ -30,7 +30,7 @@ function LandingPage() {
     color: var(--New-White, rgba(255, 255, 255, 0.26));
     /* H1 */
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 32px;
+    font-size: 26px;
     font-style: normal;
     font-weight: 500;
     line-height: 40px; /* 125% */
