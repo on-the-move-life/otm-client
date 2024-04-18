@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StatusTagText, DiscountTag, DiscountDescription, ExpiryDescription } from './StyledComponents';
+import { StatusTagText, DiscountTag, DiscountDescription, ExpiryDescription, NextSteps, GradientText } from './StyledComponents';
 import Movecoins from './Movecoins';
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence for exit animations
 import Button from '../../components/Button';
@@ -42,13 +42,13 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
                 {!isRedeemed && <p className='text-sm text-[#D6B6F0]'>Once you redeem, you cannot reverse this action.</p>}
                 {!isRedeemed ?
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Redeem" action={redeemCoupon} />
-                        <Button text="Cancel" action={() => setShowPopUp(false)} />
+                        <Button text="Redeem" type="marketplace" action={redeemCoupon} />
+                        <Button text="Cancel" type="marketplace" action={() => setShowPopUp(false)} />
                         {/* <div className='bg-green py-1 px-4 rounded-md' onClick={redeemCoupon}>YES</div>
                         <div className='bg-red py-1 px-4 rounded-md' onClick={() => setShowPopUp(false)}>NO</div> */}
                     </div> :
                     <div className="w-full px-3 flex flex-col justify-around items-center gap-2">
-                        <Button text="Close" action={() => setShowPopUp(false)} />
+                        <Button text="Close" type="marketplace" action={() => setShowPopUp(false)} />
                     </div>}
                 <div ref={popUpRef}></div>
             </motion.div>
@@ -57,34 +57,36 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
     const RedeemPopUp = () => {
         return (
             <motion.div
-                className='w-full h-screen bg-no-repeat bg-bottom bg-contain'
+                className='w-full min-h-screen bg-no-repeat bg-bottom bg-contain overflow-y-scroll'
                 style={{ backgroundImage: `url(${'/assets/achievements-bg.png'})` }}
                 initial={{ opacity: 0, scale: 0.9 }} // Start with reduced scale and opacity
                 animate={{ opacity: 1, scale: 1 }} // Animate to full scale and opacity
                 exit={{ opacity: 0 }} // Fade out on exit
                 transition={{ duration: 0.3 }} // Optional: Set the duration of the animation
             >
-                <div className='w-full h-full bg-black/60 backdrop-blur-sm flex flex-col justify-around items-center px-3 pt-[30px] pb-[30px]'>
+                <div className='w-full min-h-screen bg-black/60 backdrop-blur-sm flex flex-col justify-around items-center gap-[5rem] px-3 pt-[30px] pb-[30px]'>
                     <div className='h-full flex flex-col justify-start items-start gap-[5rem]'>
-                        <div className='flex flex-col justify-center items-start gap-5'>
-                            {/* <h3 className='text-3xl text-[#7E87EF] font-semibold'>Congratulations!</h3> */}
+                        <div className='flex flex-col justify-center items-center gap-2'>
+                            <img src="/assets/congratulations2.svg" alt="" />
                             <p className='text-xl font-semibold text-[#7E87EF] tracking-wider text-center uppercase'>{description}</p>
                         </div>
-                        <div className="h-full flex flex-col justify-start items-start gap-[9rem]">
-                            <div className='flex flex-col justify-center items-center gap-2'>
-                                <h3 className='text-2xl text-[#7E87EF] font-semibold'>Next Step</h3>
-                                <p className='text-md text-gray-500'>Present this code to the team to avail this offer</p>
+                        <div className="h-full flex flex-col justify-center items-start gap-[7rem]">
+                            <div className='flex flex-col justify-center items-start gap-2'>
+                                <NextSteps>Next Steps..</NextSteps>
+                                <p className='text-md text-[#B1B1B1] font-light'>Present this code to the team to avail this offer</p>
                             </div>
-                            <div className='w-full flex flex-col justify-center items-center gap-3'>
-                                <div className='border-green border-[1px] rounded-[4px] px-5 py-2'>
-                                    <p className='text-[#caceff] font-semibold text-xl'>{redeemCode}</p>
+                            <div className='w-full flex flex-col justify-center items-center gap-1'>
+                                <div className='w-full h-fit flex flex-row justify-center items-center py-5 rounded-lg border-[1px] border-[#7E87EF87]'>
+                                    <p className='text-3xl font-black'>{redeemCode}</p>
                                 </div>
-                                <p className='text-sm text-gray-500'>Expires on {formatDate(expiryDate, false)}</p>
+                                <p className='text-xs text-[#B1B1B1] font-light tracking-wider'>This code will expire on {formatDate(expiryDate, false)}</p>
                             </div>
                         </div>
                     </div>
-                    <p className='text-md text-gray-300'>Keep crushing your workouts to unlock more offers and discounts</p>
-                    <Button text="Close" action={closeRedeemPopUp} />
+                    <div className='w-full grow flex flex-col items-center justify-end gap-3'>
+                        <GradientText>Keep crushing your workouts to unlock more offers and discounts</GradientText>
+                        <Button text="Close" type="marketplace" action={closeRedeemPopUp} />
+                    </div>
                 </div>
             </motion.div>
         )
@@ -104,7 +106,7 @@ function PurchaseTile({ purchaseId, coinsRequired, value, purchaseDate, expiryDa
                 {showPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]'><PopUp /></div>}
             </AnimatePresence>
             <AnimatePresence>
-                {showRedeemPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50]' ref={redeemPopUpRef}><RedeemPopUp /></div>}
+                {showRedeemPopUp && <div className='h-full w-full bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-[50] overflow-y-scroll' ref={redeemPopUpRef}><RedeemPopUp /></div>}
             </AnimatePresence>
         </div>
     )
