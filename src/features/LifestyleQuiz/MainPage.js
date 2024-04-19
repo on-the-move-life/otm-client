@@ -4,7 +4,16 @@ import BackButton from '../../components/BackButton'
 import { Button } from '../../components'
 import Options from './Options'
 import { axiosClient } from './apiClient'
-import { getScreenCounts } from './utils/getScreenStats'
+import {
+    getScreenCounts,
+    capitalizeFirstLetter,
+    increaseScreenAndRank,
+    decreaseScreenAndRank,
+    updateCurrentQuestion,
+    isAnyEmptyResponse,
+    validResponses,
+    getEmail
+} from './utils/utils'
 import InputText from './InputText'
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -40,70 +49,6 @@ function LandingPage() {
     -webkit-text-fill-color: transparent;
     `
 
-    // funtion to return capitalize string
-    function capitalizeFirstLetter(str) {
-        // Check if the string is empty
-        if (str.length === 0) return str;
-
-        // Capitalize the first letter and concatenate it with the rest of the string
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    // function to increment the screen and rank when the next button is clicked
-    function increaseScreenAndRank() {
-        if (screen < maxScreenCount) {
-            setScreen(prev => prev + 1);
-        }
-        console.log("screen", screen)
-    }
-
-    // function to decrement the screen and rank when the back button is clicked
-    function decreaseScreenAndRank() {
-        if (screen > 1) {
-            setScreen(prev => prev - 1);
-        }
-        console.log("screen", screen)
-    }
-
-    // function to update currentQuestion based on current screen and rank values
-    function updateCurrentQuestion() {
-        const filteredQuestions = questions.filter(ques => ques?.screen === screen) // array of all the questions belonging to the same screen
-        // sorting the questions based on their ranks
-        setCurrentQuestion(filteredQuestions?.sort((a, b) => {
-            return a?.rank - b?.rank;
-        }));
-    }
-
-    // function to check for empty response in the current screen
-    function isAnyEmptyResponse() {
-        let isEmpty = false;
-        if (currentQuestion) {
-            isEmpty = currentQuestion.some((ques, idx) => {
-                return ques?.isRequired === true && response[ques?.code][0] === ""
-            });
-        }
-        return isEmpty;
-    }
-
-    // function to check for the validation
-    function validResponses() {
-        let isValid = true;
-        Object.values(validation).map((val, idx) => {
-            if (val === false) {
-                isValid = false;
-            }
-        })
-        return isValid;
-    }
-
-    // function to retrieve email from the response
-    function getEmail() {
-        const emailQuestion = questions && questions.find((ques, idx) => {
-            return ques?.content === "email"
-        })
-        return emailQuestion && response && response[emailQuestion?.code][0];
-    }
-
     // sending response to the backend
     function submitResponse() {
         // set the state to loading
@@ -117,7 +62,7 @@ function LandingPage() {
             })
         })
         axiosClient.post('/', {
-            email: getEmail(),
+            email: getEmail(questions, response),
             sessionId: sessionID,
             questionnaireName: "lifestyle",
             response: responseBody
@@ -134,7 +79,7 @@ function LandingPage() {
                 // possible error - network breakdown
                 // delay in increaseSreenAndRank to simulate the network delay and toast
                 setTimeout(() => {
-                    increaseScreenAndRank();
+                    increaseScreenAndRank(screen, maxScreenCount, setScreen);
                 }, 800)
             })
             .catch(err => {
@@ -184,7 +129,7 @@ function LandingPage() {
     }, [])
 
     useEffect(() => {
-        questions && updateCurrentQuestion();
+        questions && updateCurrentQuestion(questions, screen, setCurrentQuestion);
     }, [screen, questions])
 
     useEffect(() => {
@@ -220,13 +165,15 @@ function LandingPage() {
                 />
             </div>
             <div className='flex flex-col justify-center gap-3 overflow-y-scroll hide-scrollbar'>
-                {screen >= 1 &&
+                {
+                    screen >= 1 &&
                     <div className='flex flex-col justify-start items-start gap-5'>
                         {screen >= 1 && <div className='w-[250px] mx-auto my-1'>
                             <ProgressBar currValue={screen} totalValue={questions && questions?.length} />
                         </div>}
-                        {screen > 1 && <BackButton size={30} action={decreaseScreenAndRank} className='cursor-pointer w-fit' />}
-                    </div>}
+                        {screen > 1 && <BackButton size={30} action={() => decreaseScreenAndRank(screen, setScreen)} className='cursor-pointer w-fit' />}
+                    </div>
+                }
             </div>
             <div className='flex-1 flex flex-col justify-between items-start'>
                 <div className='w-full flex flex-col justify-center gap-5'>
@@ -310,15 +257,15 @@ function LandingPage() {
                     <Button text={screen === maxScreenCount ? "Submit" : "Next"} type="lifestyle" action={() => {
 
                         // checking for empty response
-                        if (currentQuestion && Object.keys(response)?.length > 0 && !isAnyEmptyResponse() && validResponses()) {
+                        if (currentQuestion && Object.keys(response)?.length > 0 && !isAnyEmptyResponse(currentQuestion, response) && validResponses(validation)) {
                             // API function call for submittin response on every next/submit button press
                             submitResponse();
                         }
                         else {
-                            if (isAnyEmptyResponse()) {
+                            if (isAnyEmptyResponse(currentQuestion, response)) {
                                 toast.warn("Please fill in the required fields!")
                             }
-                            else if (!validResponses()) {
+                            else if (!validResponses(validation)) {
                                 toast.warn("Please fill in the valid answer!");
                             }
                         }

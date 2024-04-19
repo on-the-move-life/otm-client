@@ -13,28 +13,28 @@ function Options({ questionCode, options, isMCQ, response, setResponse }) {
                 if (isMCQ) {
                     if (response[questionCode]?.find(elem => elem === optionID)) {
                         setResponse(prev => {
-                            return(
+                            return (
                                 {
                                     ...prev,
                                     [questionCode]: response[questionCode]?.filter(elem => elem !== optionID)
                                 }
                             )
                         });
-                        if(response.length === 0){
+                        if (response.length === 0) {
                             setResponse(prev => {
-                                return(
+                                return (
                                     {
                                         ...prev,
-                                        [questionCode] : [""]
+                                        [questionCode]: [""]
                                     }
                                 )
                             });
                         }
                     }
                     else {
-                        if(response[questionCode]?.length === 1 && (response[questionCode])[0] === ""){
+                        if (response[questionCode]?.length === 1 && (response[questionCode])[0] === "") {
                             setResponse(prev => {
-                                return(
+                                return (
                                     {
                                         ...prev,
                                         [questionCode]: [optionID]
@@ -42,9 +42,9 @@ function Options({ questionCode, options, isMCQ, response, setResponse }) {
                                 )
                             });
                         }
-                        else{
+                        else {
                             setResponse(prev => {
-                                return(
+                                return (
                                     {
                                         ...prev,
                                         [questionCode]: [...response[questionCode], optionID]
@@ -56,7 +56,7 @@ function Options({ questionCode, options, isMCQ, response, setResponse }) {
                 }
                 else {
                     setResponse(prev => {
-                        return(
+                        return (
                             {
                                 ...prev,
                                 [questionCode]: [optionID]
@@ -74,7 +74,7 @@ function Options({ questionCode, options, isMCQ, response, setResponse }) {
             {
                 options && options?.map((option, idx) => {
                     return (
-                        <Option isMCQ={isMCQ} response={response} setResponse={setResponse} optionID={option?.id} optionValue={option?.value} questionCode={questionCode} key={option?.id}/>
+                        <Option isMCQ={isMCQ} response={response} setResponse={setResponse} optionID={option?.id} optionValue={option?.value} questionCode={questionCode} key={option?.id} />
                     )
                 })
             }

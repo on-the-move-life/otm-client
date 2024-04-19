@@ -5,6 +5,7 @@ import { Button } from '../../components';
 import styled from 'styled-components';
 import Loader from './Components/Loader';
 import { Error } from '../../components';
+
 function Report() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -92,10 +93,14 @@ function Report() {
   }
   return (
     <div className='bg-[#f5f5f5] min-h-screen overflow-y-scroll text-black flex flex-col justify-start items-start py-5 px-2'>
-      {loading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} message={'Hang tight as we create a personalized snapshot based on your choices'}/></div>}
+
+      {loading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} message={'Hang tight as we create a personalized snapshot based on your choices'} /></div>}
       {error && !loading && <Error>Some Error Occured</Error>}
+
       <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" />
+
       <div className='flex flex-col justify-start items-start gap-9 mt-5'>
+        
         {/* Top Section */}
         <div className='flex flex-col justify-center items-start'>
           <h1 className='text-[36px] font-semibold text-[#1f1f1f]'>Hi {data && data?.name},</h1>
@@ -112,6 +117,7 @@ function Report() {
             <p className='text-[56px] uppercase text-white font-bold'>{data && data?.lifestyleScore}/10</p>
           </div>
         </div>
+
         {/* Lifestyle Analysis */}
         <div className='flex flex-col justify-center items-start gap-4'>
           <div>
@@ -130,6 +136,7 @@ function Report() {
             ))}
           </div>
         </div>
+
         {/* Focus Area */}
         <div className='w-full flex flex-col justify-center items-center gap-7 p-4' style={{
           borderRadius: '11.782px',
@@ -158,10 +165,12 @@ function Report() {
             <p>{data?.focusArea[0]?.takeAction}</p>
           </div>
         </div>
+
         {/* Plan */}
         <p className='text-[17px] font-medium tracking-wide'>
           {data?.plan}
         </p>
+
         {/* Plan Features */}
         <div className='flex flex-col justify-start items-center gap-4 bg-white rounded-[12px] px-2 py-4'>
           <FeatureHeading>Your Plan Features</FeatureHeading>
@@ -184,6 +193,7 @@ function Report() {
             </div>
           </div>
         </div>
+
         {/* Book a Call */}
         <div className='w-full flex flex-col justify-center items-start gap-2'>
           <h2 className='text-[24px] font-semibold'>Ready to turn these insights into action?</h2>
@@ -193,6 +203,7 @@ function Report() {
             console.log("call booked");
           }} />
         </div>
+
       </div>
     </div >
   )
