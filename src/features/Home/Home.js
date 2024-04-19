@@ -24,7 +24,7 @@ const Home = () => {
   const [error, setError] = useState(false);
 
   const [homeStats, setHomeStats] = useState(null);
-  const { getUserFromStorage, user, isSignUp } = useAuth();
+  const { getUserFromStorage, user } = useAuth();
 
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
@@ -74,7 +74,7 @@ const Home = () => {
 
   return (
     <>
-      {!loader && !error && !isSignUp && <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion}/>}
+      {!loader && !error && <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion}/>}
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
