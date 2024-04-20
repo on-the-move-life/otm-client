@@ -2,7 +2,17 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { axiosClient } from './apiClient';
 import { Button } from '../../components';
-import styled from 'styled-components';
+import { 
+  BookCallHeading, 
+  BookCallContainer, 
+  BookCallInnerText, 
+  FeatureHeading, 
+  LifestyleHeading, 
+  Name, 
+  PlanText, 
+  PlanFeatureText,
+  ActionText
+} from "./SytledComponents"
 import Loader from './Components/Loader';
 import { Error } from '../../components';
 
@@ -12,17 +22,7 @@ function Report() {
   const [error, setError] = useState(false);
   const { sessionID } = useParams();
 
-  const FeatureHeading = styled.div`
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 31.5px; /* 131.25% */
-  background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  `
+
   useEffect(() => {
     setLoading(true);
     console.log("session ID in the report page : ", sessionID)
@@ -77,33 +77,25 @@ function Report() {
             <p className='text-[28px] font-bold text-white'>{score}/10</p>
           </div>
         </div>
-        <p style={{
-          color: '#1F1F1F',
-          fontFamily: "'SF Pro Rounded', sans-serif",
-          fontSize: '14px',
-          fontStyle: 'normal',
-          fontWeight: '400',
-          lineHeight: '18px',
-          letterSpacing: '0.28px',
-        }}>
+        <ActionText>
           {description}
-        </p>
+        </ActionText>
       </div >
     )
   }
   return (
-    <div className='bg-[#f5f5f5] min-h-screen overflow-y-scroll text-black flex flex-col justify-start items-start py-5 px-2'>
+    <div className='bg-[#f5f5f5] min-h-screen overflow-y-scroll text-black flex flex-col justify-start items-start py-7'>
 
       {loading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} message={'Hang tight as we create a personalized snapshot based on your choices'} /></div>}
       {error && !loading && <Error>Some Error Occured</Error>}
 
-      <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" />
+      <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" className='px-2 mb-9' />
 
-      <div className='flex flex-col justify-start items-start gap-9 mt-5'>
-        
+      <div className='flex flex-col justify-start items-start gap-9 mt-5 px-2 mb-10'>
+
         {/* Top Section */}
         <div className='flex flex-col justify-center items-start'>
-          <h1 className='text-[36px] font-semibold text-[#1f1f1f]'>Hi {data && data?.name},</h1>
+          <Name>Hi {data && data?.name},</Name>
           <p className='font-light text-[16px] text-[#929292]'>Based on your results, you have a <span className='font-bold text-black'>lifestyle rating</span> of...</p>
           <div
             className='px-5 py-1 mt-3'
@@ -119,9 +111,9 @@ function Report() {
         </div>
 
         {/* Lifestyle Analysis */}
-        <div className='flex flex-col justify-center items-start gap-4'>
+        <div className='flex flex-col justify-center items-start gap-4 mb-3'>
           <div>
-            <h2 className='text-[28px] text-[#1f1f1f] font-semibold'>Lifestyle Analysis</h2>
+            <LifestyleHeading>Lifestyle Analysis</LifestyleHeading>
             <p className='text-[#929292] text-[12px] font-semibold'>Let's dive into your results to uncover areas where you truly shine and where you have a fantastic opportunity to grow!</p>
           </div>
           <div className="w-full flex flex-col">
@@ -138,7 +130,7 @@ function Report() {
         </div>
 
         {/* Focus Area */}
-        <div className='w-full flex flex-col justify-center items-center gap-7 p-4' style={{
+        <div className='w-full flex flex-col justify-center items-center gap-7 p-4 mb-4' style={{
           borderRadius: '11.782px',
           border: '0.736px solid rgba(126, 135, 239, 0.27)',
           background: '#FFF'
@@ -148,55 +140,27 @@ function Report() {
               <h2 className='text-[44px]'>🚨</h2>
               <h2 className='text-[24px] font-semibold text-[#1f1f1f]'>Focus Area</h2>
             </div>
-            <p>{data?.focusArea[0]?.description}</p>
+            <ActionText>{data?.focusArea[0]?.description}</ActionText>
           </div>
           <div className='w-full flex flex-col justify-center items-center gap-1'>
             <div className='w-full flex flex-row justify-start items-center gap-2'>
               <h2 className='text-[44px]'>💡</h2>
               <h2 className='text-[24px] font-semibold text-[#1f1f1f]'>Did You Know</h2>
             </div>
-            <p>{data?.focusArea[0]?.didYouKnow} </p>
+            <ActionText>{data?.focusArea[0]?.didYouKnow} </ActionText>
           </div>
           <div className='w-full flex flex-col justify-center items-center gap-1'>
             <div className='w-full flex flex-row justify-start items-center gap-2'>
               <h2 className='text-[44px]'>💪🏻</h2>
               <h2 className='text-[24px] font-semibold text-[#1f1f1f]'>Take Action</h2>
             </div>
-            <p>{data?.focusArea[0]?.takeAction}</p>
-          </div>
-        </div>
-
-        {/* Plan */}
-        <p className='text-[17px] font-medium tracking-wide'>
-          {data?.plan}
-        </p>
-
-        {/* Plan Features */}
-        <div className='flex flex-col justify-start items-center gap-4 bg-white rounded-[12px] px-2 py-4'>
-          <FeatureHeading>Your Plan Features</FeatureHeading>
-          <div className='w-full grid grid-cols-4 place-items-start'>
-            <div className='flex flex-col justify-center items-center'>
-              <img src={'/assets/coaches.svg'} alt="coaches" />
-              <p className='text-center'>Personal Team of Coaches</p>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
-              <img src={'/assets/fitnessprogram.svg'} alt="coaches" />
-              <p className='text-center'>Fitness Programm</p>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
-              <img src={'/assets/dietplan.svg'} alt="coaches" />
-              <p className='text-center'>Tailored Diet Plan</p>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
-              <img src={'/assets/habitbuilding.svg'} alt="coaches" />
-              <p className='text-center'>Habit Building</p>
-            </div>
+            <ActionText>{data?.focusArea[0]?.takeAction}</ActionText>
           </div>
         </div>
 
         {/* Book a Call */}
-        <div className='w-full flex flex-col justify-center items-start gap-2'>
-          <h2 className='text-[24px] font-semibold'>Ready to turn these insights into action?</h2>
+        <div className='w-full flex flex-col justify-center items-start gap-2 mb-4'>
+          <BookCallHeading>Ready to turn these insights into action?</BookCallHeading>
           <p className='text-[17px] font-semibold tracking-wide'>Join our mission at</p>
           <img src={'/assets/otm_logo_book_call.svg'} alt="otm logo" />
           <Button text={"Book a Free Call"} type="lifestyle" action={() => {
@@ -204,7 +168,43 @@ function Report() {
           }} />
         </div>
 
+
+        {/* Plan */}
+        <PlanText>
+          {data?.plan}
+        </PlanText>
+
+        {/* Plan Features */}
+        <div className='flex flex-col justify-start items-center gap-4 bg-white rounded-[12px] px-2 py-4 mb-4'>
+          <FeatureHeading>Your Plan Features</FeatureHeading>
+          <div className='w-full grid grid-cols-4 place-items-start'>
+            <div className='flex flex-col justify-center items-center gap-2'>
+              <img src={'/assets/coaches.svg'} alt="coaches" />
+              <PlanFeatureText>Personal Team of Coaches</PlanFeatureText>
+            </div>
+            <div className='flex flex-col justify-center items-center gap-2'>
+              <img src={'/assets/fitnessprogram.svg'} alt="coaches" />
+              <PlanFeatureText>Fitness Programm</PlanFeatureText>
+            </div>
+            <div className='flex flex-col justify-center items-center gap-2'>
+              <img src={'/assets/dietplan.svg'} alt="coaches" />
+              <PlanFeatureText>Tailored Diet Plan</PlanFeatureText>
+            </div>
+            <div className='flex flex-col justify-center items-center gap-2'>
+              <img src={'/assets/habitbuilding.svg'} alt="coaches" />
+              <PlanFeatureText>Habit Building</PlanFeatureText>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Book A Call */}
+      <BookCallContainer className='flex flex-col justify-center items-center gap-2 p-[22px] mb-12'>
+        <BookCallInnerText>Book a call with us to start your journey to glory.</BookCallInnerText>
+        <div className='w-full bg-[#1f1f1f] h-[49px] rounded-[12px] flex flex-row justify-center items-center'>
+          <p className='text-white text-[18px] font-semibold'>Book Now!</p>
+        </div>
+      </BookCallContainer>
     </div >
   )
 }
