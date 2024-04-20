@@ -87,7 +87,7 @@ function Report() {
     <div className='bg-[#f5f5f5] min-h-screen overflow-y-scroll text-black flex flex-col justify-start items-start py-7'>
 
       {loading && <div className='w-full bg-black fixed top-0 left-0 z-50'><Loader className={'h-screen w-full'} message={'Hang tight as we create a personalized snapshot based on your choices'} /></div>}
-      {error && !loading && <Error>Some Error Occured</Error>}
+      {error && !loading && <Error showButton={false}>Some Error Occured</Error>}
 
       <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" className='px-2 mb-9' />
 
