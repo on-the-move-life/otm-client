@@ -12,7 +12,7 @@ function ProgressBar({currValue, totalValue}) {
     }, [currValue, totalValue, totalLength])
 
   return (
-    <div ref={widthRef} className='w-full h-[3px] rounded-[30px] bg-white/20'>
+    <div ref={widthRef} className='w-[250px] h-[3px] rounded-[30px] bg-white/20'>
         <div className='h-[3px] rounded-[30px] bg-white' style={{width: progressLength}}/>
     </div>
   )
