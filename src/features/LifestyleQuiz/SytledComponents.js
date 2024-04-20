@@ -45,7 +45,7 @@ const Name = styled.div`
     line-height: 48.234px; /* 131.25% */
   `
 const PlanText = styled.div`
-color: var(--Black, #1F1F1F);
+color: var(--Grey, #6D6C6C);
 leading-trim: both;
 text-edge: cap;
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
