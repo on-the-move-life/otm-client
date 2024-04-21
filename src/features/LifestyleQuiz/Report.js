@@ -175,7 +175,7 @@ function Report() {
               <div className="flex w-full flex-col items-center justify-center gap-1 ">
                 <div className="flex w-full flex-row items-center justify-around ">
                   <h2 className="text-[54px]">🚨</h2>
-                  <h2 className="pr-12 text-[28px] font-semibold text-[#1f1f1f]">
+                  <h2 className="pr-4 text-[28px] font-semibold text-[#1f1f1f]">
                     Focus Area
                   </h2>
                 </div>
@@ -186,7 +186,7 @@ function Report() {
               <div className="my-6 flex w-full flex-col items-center justify-center gap-1">
                 <div className="flex w-full flex-row items-center justify-around  ">
                   <h2 className="text-[54px]">💡</h2>
-                  <h2 className="pr-6 text-[28px] font-semibold text-[#1f1f1f]">
+                  <h2 className=" text-[28px] font-semibold text-[#1f1f1f]">
                     Did You Know
                   </h2>
                 </div>
@@ -197,7 +197,7 @@ function Report() {
               <div className="flex w-full flex-col items-center justify-center gap-1">
                 <div className="flex w-full flex-row items-center justify-around ">
                   <h2 className="text-[54px]">💪🏻</h2>
-                  <h2 className="pr-12 text-[28px] font-semibold text-[#1f1f1f]">
+                  <h2 className="pr-4 text-[28px] font-semibold text-[#1f1f1f]">
                     Take Action
                   </h2>
                 </div>
