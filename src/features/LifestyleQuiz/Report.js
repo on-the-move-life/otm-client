@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { axiosClient } from './apiClient';
-import { Button } from '../../components';
 import {
   BookCallHeading,
   BookCallContainer,
@@ -106,7 +105,7 @@ function Report() {
       {error && !loading && (
         <Error showButton={false}>Some Error Occured</Error>
       )}
-      <div className="flex flex-col items-start justify-start gap-9 px-4 py-6">
+      <div className="flex flex-col items-start justify-start gap-9 py-6 px-4">
         <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" />
 
         {/* ////// */}
@@ -148,9 +147,8 @@ function Report() {
                 data?.categoryResults.map((item, index) => (
                   <div
                     key={index}
-                    className={`${
-                      index % 2 === 0 ? 'self-start' : 'self-end'
-                    } p-3`}
+                    className={`${index % 2 === 0 ? 'self-start' : 'self-end'
+                      } p-3`}
                   >
                     <LifestyleFitnessCard
                       name={item && item?.name}
@@ -220,7 +218,7 @@ function Report() {
 
             <button
               onClick={() => {
-                console.log('call booked');
+                window.open('https://calendly.com/pranavyadav996/30min', '_blank')
               }}
               className={`lifestyle-gradient-button mt-4 h-[48px] w-full rounded-xl border-[rgba(209,209,209,0.70)] font-semibold uppercase text-white`}
             >
@@ -239,36 +237,37 @@ function Report() {
           <div className="flex flex-col items-center justify-start gap-4 rounded-[12px] bg-white px-2 py-3.5">
             <FeatureHeading>Your Plan Features</FeatureHeading>
             <div className="grid w-full grid-cols-4 place-items-start text-[14px]">
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-1">
                 <img src={'/assets/coaches.svg'} alt="coaches" />
-                <p className="px-4  text-center">Team of coaches</p>
+                <PlanFeatureText>Team of coaches</PlanFeatureText>
               </div>
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-1">
                 <img src={'/assets/fitnessprogram.svg'} alt="coaches" />
-                <p className="px-4  text-center">Fitness programm</p>
+                <PlanFeatureText>Fitness programm</PlanFeatureText>
               </div>
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-1">
                 <img src={'/assets/dietplan.svg'} alt="coaches" />
-                <p className="px-4  text-center">Tailored diet plan</p>
+                <PlanFeatureText>Tailored diet plan</PlanFeatureText>
               </div>
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-1">
                 <img src={'/assets/habitbuilding.svg'} alt="coaches" />
-                <p className="px-4  text-center">Habit building</p>
+                <PlanFeatureText>Habit building</PlanFeatureText>
               </div>
             </div>
           </div>
-
-          {/* Book A Call */}
-          <BookCallContainer className="mb-12 flex flex-col items-center justify-center gap-2 p-[22px]">
-            <BookCallInnerText>
-              Book a call with us to start your journey to glory
-            </BookCallInnerText>
-            <div className="flex h-[49px] w-full flex-row items-center justify-center rounded-[12px] bg-[#1f1f1f]">
-              <p className="text-[18px] font-semibold text-white">Book Now!</p>
-            </div>
-          </BookCallContainer>
         </div>
       </div>
+      {/* Book A Call */}
+      <BookCallContainer className="mb-12 flex flex-col items-center justify-center gap-2 p-[22px]">
+        <BookCallInnerText>
+          Book a call with us to start your journey to glory
+        </BookCallInnerText>
+        <div className="flex h-[49px] w-full flex-row items-center justify-center rounded-[12px] bg-[#1f1f1f]" onClick={() =>{
+          window.open('https://calendly.com/pranavyadav996/30min', '_blank')
+        }}>
+          <p className="text-[18px] font-semibold text-white">Book Now!</p>
+        </div>
+      </BookCallContainer>
     </div>
   );
 }
