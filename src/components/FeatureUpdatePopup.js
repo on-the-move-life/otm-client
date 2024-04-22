@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import Button from './Button';
 import axios from 'axios';
 
+// uiVersion must be updated whenever a new feature is added
+export const uiVersion = '1.0.0';
+
 // function to compare versions "1.0.0" of this format and return true if the first version is greater than the second
 function compareVersions(uiVersion, backendVersion) {
   try {
@@ -29,8 +32,6 @@ const FeatureUpdatePopup = ({ backendVersion }) => {
   // isOpen state determines whether the popup is visible or not
   const [isOpen, setIsOpen] = useState(false);
 
-  // uiVersion must be updated whenever a new feature is added
-  const uiVersion = '1.0.0';
   const heading = 'Introducing: The OTM Marketplace';
   const featureBody =
     'Earn Movecoins with every workout and unlock exclusive offers';

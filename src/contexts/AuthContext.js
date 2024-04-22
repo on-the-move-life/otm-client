@@ -1,4 +1,5 @@
 import { useContext, useReducer, createContext } from 'react';
+import { uiVersion } from '../components/FeatureUpdatePopup';
 
 import axios from 'axios';
 //create a new context
@@ -14,9 +15,9 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case 'login':
-      const isSignUp= action.payload['isSignUp']
+      const isSignUp = action.payload['isSignUp']
       delete action.payload['isSignUp']
-      return {        
+      return {
         ...state,
         user: action.payload,
         isAuthenticated: true,
@@ -99,7 +100,7 @@ function AuthProvider({ children }) {
         if (user.email) {
           localStorage.setItem('user', JSON.stringify(user));
 
-          user['isSignUp']= res.data['isSignUp']
+          user['isSignUp'] = res.data['isSignUp']
           dispatch({ type: 'login', payload: user });
         }
       })
@@ -121,6 +122,23 @@ function AuthProvider({ children }) {
 
           dispatch({ type: 'signup', payload: user });
         }
+        // make an API call to update the lastSeen version -> Feature Update Pop-up
+        const memberCode = JSON.parse(localStorage.getItem('user'))['code'];
+        const payload = {
+          lastSeenUiVersion: uiVersion,
+        };
+        memberCode && uiVersion && 
+        axios
+          .post(
+            `${process.env.REACT_APP_BASE_URL}/api/v1/member/${memberCode}`,
+            payload,
+          )
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
       })
       .catch(({ response }) => {
         console.log(response, 'ERROR');
