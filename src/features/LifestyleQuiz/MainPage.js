@@ -31,7 +31,7 @@ function LandingPage() {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [screen, setScreen] = useState(-1);
   const maxScreenCount = getScreenCounts(questions);
-  const generalScreen = getGeneralScreen(questions);
+  // const generalScreen = getGeneralScreen(questions);
   const [sessionID, setSessionID] = useState(null);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
@@ -201,12 +201,12 @@ function LandingPage() {
       </div>
       <div className="flex flex-1 flex-col items-start justify-between">
         <div className="flex w-full flex-col justify-center gap-5">
-          {/* Section Name */}
-          {screen === generalScreen && (
+          {/* Section Name - Kept for future reference */}
+          {/* {screen === generalScreen && (
             <h1 className="mt-12 text-[26px] text-[#7e87ef]">
               General Information
             </h1>
-          )}
+          )} */}
           <div>
             {screen >= 1 &&
               currentQuestion &&
