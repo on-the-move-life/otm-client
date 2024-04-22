@@ -16,6 +16,24 @@ export function getScreenCounts(questionsArray) {
     }
 }
 
+// function to get the screen number of "target === general"
+export function getGeneralScreen(questionsArray){
+    try{
+        let generalScreen = -1;
+        if(questionsArray){
+            questionsArray.forEach(ques => {
+                if(generalScreen === -1 && ques?.target === "general"){
+                    generalScreen = ques?.screen;
+                }
+            });
+        }
+        return generalScreen;
+    }
+    catch(err){
+        console.log("error in getGeneralScreen function : ", err)
+    }
+}
+
 // funtion to return capitalize string
 export function capitalizeFirstLetter(str) {
     // Check if the string is empty

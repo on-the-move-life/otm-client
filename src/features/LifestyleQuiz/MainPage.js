@@ -13,6 +13,7 @@ import {
   isAnyEmptyResponse,
   validResponses,
   getEmail,
+  getGeneralScreen
 } from './utils/utils';
 import InputText from './InputText';
 import { useNavigate } from 'react-router-dom';
@@ -30,6 +31,7 @@ function LandingPage() {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [screen, setScreen] = useState(-1);
   const maxScreenCount = getScreenCounts(questions);
+  const generalScreen = getGeneralScreen(questions);
   const [sessionID, setSessionID] = useState(null);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
@@ -200,7 +202,7 @@ function LandingPage() {
       <div className="flex flex-1 flex-col items-start justify-between">
         <div className="flex w-full flex-col justify-center gap-5">
           {/* Section Name */}
-          {screen === 1 && (
+          {screen === generalScreen && (
             <h1 className="mt-12 text-[26px] text-[#7e87ef]">
               General Information
             </h1>

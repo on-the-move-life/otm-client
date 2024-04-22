@@ -26,7 +26,14 @@ function Report() {
     console.log('session ID in the report page : ', sessionID);
     axiosClient
       .get(`/lifestyle/snapshot?session_id=${sessionID}`)
-      .then((res) => setData(res.data))
+      .then((res) => {
+        console.log("respnose : ", res)
+        if (res?.data?.error) {
+          return Promise.reject(new Error("invalid session id"));
+        } else {
+          setData(res?.data);
+        }
+      })
       .catch((err) => {
         setError(true);
         console.log(err);
@@ -262,7 +269,7 @@ function Report() {
         <BookCallInnerText>
           Book a call with us to start your journey to glory
         </BookCallInnerText>
-        <div className="flex h-[49px] w-full flex-row items-center justify-center rounded-[12px] bg-[#1f1f1f]" onClick={() =>{
+        <div className="flex h-[49px] w-full flex-row items-center justify-center rounded-[12px] bg-[#1f1f1f]" onClick={() => {
           window.open('https://calendly.com/pranavyadav996/30min', '_blank')
         }}>
           <p className="text-[18px] font-semibold text-white">Book Now!</p>
