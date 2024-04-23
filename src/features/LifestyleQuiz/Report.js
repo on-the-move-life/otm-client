@@ -27,9 +27,9 @@ function Report() {
     axiosClient
       .get(`/lifestyle/snapshot?session_id=${sessionID}`)
       .then((res) => {
-        console.log("respnose : ", res)
+        console.log('respnose : ', res);
         if (res?.data?.error) {
-          return Promise.reject(new Error("invalid session id"));
+          return Promise.reject(new Error('invalid session id'));
         } else {
           setData(res?.data);
         }
@@ -112,7 +112,7 @@ function Report() {
       {error && !loading && (
         <Error showButton={false}>Some Error Occured</Error>
       )}
-      <div className="flex flex-col items-start justify-start gap-9 py-6 px-4">
+      <div className="flex flex-col items-start justify-start gap-9 px-4 py-6">
         <img src={'/assets/otm-logo-report.svg'} alt="otm-logo" />
 
         {/* ////// */}
@@ -141,7 +141,7 @@ function Report() {
             </div>
           </div>
           {/* Lifestyle Analysis */}
-          <div className="mb-3 flex flex-col items-start justify-center gap-4">
+          <div className="mb-2 flex flex-col items-start justify-center gap-4">
             <div>
               <LifestyleHeading>Lifestyle Analysis</LifestyleHeading>
               <p className="text-[12px] font-semibold text-[#929292]">
@@ -154,8 +154,9 @@ function Report() {
                 data?.categoryResults.map((item, index) => (
                   <div
                     key={index}
-                    className={`${index % 2 === 0 ? 'self-start' : 'self-end'
-                      } p-3`}
+                    className={`${
+                      index % 2 === 0 ? 'self-start' : 'self-end'
+                    } py-2`}
                   >
                     <LifestyleFitnessCard
                       name={item && item?.name}
@@ -225,7 +226,10 @@ function Report() {
 
             <button
               onClick={() => {
-                window.open('https://calendly.com/pranavyadav996/30min', '_blank')
+                window.open(
+                  'https://calendly.com/pranavyadav996/30min',
+                  '_blank',
+                );
               }}
               className={`lifestyle-gradient-button mt-4 h-[48px] w-full rounded-xl border-[rgba(209,209,209,0.70)] font-semibold uppercase text-white`}
             >
@@ -269,9 +273,12 @@ function Report() {
         <BookCallInnerText>
           Book a call with us to start your journey to glory
         </BookCallInnerText>
-        <div className="flex h-[49px] w-full flex-row items-center justify-center rounded-[12px] bg-[#1f1f1f]" onClick={() => {
-          window.open('https://calendly.com/pranavyadav996/30min', '_blank')
-        }}>
+        <div
+          className="flex h-[49px] w-full flex-row items-center justify-center rounded-[12px] bg-[#1f1f1f]"
+          onClick={() => {
+            window.open('https://calendly.com/pranavyadav996/30min', '_blank');
+          }}
+        >
           <p className="text-[18px] font-semibold text-white">Book Now!</p>
         </div>
       </BookCallContainer>

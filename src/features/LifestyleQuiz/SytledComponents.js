@@ -68,6 +68,7 @@ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 font-size: 12px;
 font-style: normal;
 font-weight: 500;
+padding-inline: 10px;
 line-height: 14px; /* 116.667% */
 letter-spacing: 0.24px;
 `
