@@ -88,7 +88,7 @@ input:focus::placeholder {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background-color: rgba(0,0,0,0.60);
+    background-color: rgba(0, 0, 0, 0.60);
     backdrop-filter: blur(2px);
 
   }
@@ -135,7 +135,7 @@ button:active {
   background: linear-gradient(92deg, #999 -4.6%, #616161 5.26%, #323232 15.12%, #818181 24.98%, #E7E7E7 34.84%, #848484 44.7%, #474747 54.56%, #C2C2C2 64.42%, #FFF 74.27%, #242424 84.75%, #B7B7B7 93.99%);
 }
 
-.timeline-tags span{
+.timeline-tags span {
   border-radius: 4px;
   border: 0.5px solid var(--New-Gray, rgba(255, 255, 255, 0.23));
   background: rgba(59, 59, 59, 0.06);
@@ -154,9 +154,9 @@ button:active {
 
 .purple-gradient {
   background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #7E87EF 96.92%));
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .main-gradient-text {
@@ -169,6 +169,12 @@ background-clip: text;
 
 .workout-gradient-button {
   background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
+}
+
+.lifestyle-gradient-button {
+  background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
+  /* Button shadow dark */
+  box-shadow: 0px 2.5px 4px 0px rgba(0, 0, 0, 0.15), 0px 14px 14px 0px rgba(0, 0, 0, 0.09);
 }
 
 .marketplace-gradient-button {
@@ -304,6 +310,7 @@ background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .leaderboard-gradient-text {
   background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #7E87EF 96.92%));
   background-clip: text;
@@ -318,7 +325,9 @@ background-clip: text;
   mix-blend-mode: screen;
   padding-top: 3px;
   padding-bottom: 3px;
-}/* Just a little test for a project */
+}
+
+/* Just a little test for a project */
 .countdown__wrapper {
   box-sizing: border-box;
   display: flex;
@@ -370,22 +379,24 @@ background-clip: text;
   } */
 }
 
-.countdown__inner span{
+.countdown__inner span {
   display: block;
   width: 100%;
   height: 8rem;
   font-size: 4rem;
   font-family: 'Anton', sans-serif;
   background: linear-gradient(180deg, #FFF 0%, #D6B6F0 100%);
-  -webkit-background-clip: text; /* WebKit/Blink browsers */
+  -webkit-background-clip: text;
+  /* WebKit/Blink browsers */
   background-clip: text;
-  color: transparent; /* Make the text transparent so that the gradient shows through */
+  color: transparent;
+  /* Make the text transparent so that the gradient shows through */
   line-height: 1;
   padding: 2rem 0.5rem;
   /* background-image: linear-gradient(to bottom, rgba(white, 0.2), black); */
 }
 
-.countdown__seconds .countdown__box:not(:last-child):nth-child(1) .countdown__inner > :not(:only-child) {
+.countdown__seconds .countdown__box:not(:last-child):nth-child(1) .countdown__inner> :not(:only-child) {
   --base-duration: 3s;
   --index: 0;
   animation-name: a-countdown-6;
@@ -395,9 +406,11 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-delay: 1s;
   /* Calculate animation duration based on child index */
-  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s));
+  /* Adjust the factor as needed */
 }
-.countdown__seconds .countdown__box:not(:last-child):nth-child(2) .countdown__inner > :not(:only-child) {
+
+.countdown__seconds .countdown__box:not(:last-child):nth-child(2) .countdown__inner> :not(:only-child) {
   --base-duration: 3s;
   --index: 1;
   animation-name: a-countdown-6;
@@ -407,9 +420,11 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-delay: 1s;
   /* Calculate animation duration based on child index */
-  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s));
+  /* Adjust the factor as needed */
 }
-.countdown__seconds .countdown__box:not(:last-child):nth-child(3) .countdown__inner > :not(:only-child) {
+
+.countdown__seconds .countdown__box:not(:last-child):nth-child(3) .countdown__inner> :not(:only-child) {
   --base-duration: 3s;
   --index: 2;
   animation-name: a-countdown-6;
@@ -419,9 +434,11 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-delay: 1s;
   /* Calculate animation duration based on child index */
-  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s));
+  /* Adjust the factor as needed */
 }
-.countdown__seconds .countdown__box:not(:last-child):nth-child(4) .countdown__inner > :not(:only-child) {
+
+.countdown__seconds .countdown__box:not(:last-child):nth-child(4) .countdown__inner> :not(:only-child) {
   --base-duration: 3s;
   --index: 3;
   animation-name: a-countdown-6;
@@ -431,9 +448,11 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-delay: 1s;
   /* Calculate animation duration based on child index */
-  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s));
+  /* Adjust the factor as needed */
 }
-.countdown__seconds .countdown__box:not(:last-child):nth-child(5) .countdown__inner > :not(:only-child) {
+
+.countdown__seconds .countdown__box:not(:last-child):nth-child(5) .countdown__inner> :not(:only-child) {
   --base-duration: 3s;
   --index: 4;
   animation-name: a-countdown-6;
@@ -443,9 +462,11 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-delay: 1s;
   /* Calculate animation duration based on child index */
-  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s));
+  /* Adjust the factor as needed */
 }
-.countdown__seconds .countdown__box:not(:last-child):nth-child(6) .countdown__inner > :not(:only-child) {
+
+.countdown__seconds .countdown__box:not(:last-child):nth-child(6) .countdown__inner> :not(:only-child) {
   --base-duration: 3s;
   --index: 5;
   animation-name: a-countdown-6;
@@ -455,7 +476,8 @@ background-clip: text;
   animation-fill-mode: forwards;
   animation-delay: 1s;
   /* Calculate animation duration based on child index */
-  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s)); /* Adjust the factor as needed */
+  animation-duration: calc(var(--base-duration) - (var(--index) * 0.5s));
+  /* Adjust the factor as needed */
 }
 
 .countdown__seconds .countdown__box:last-child .countdown__inner {
@@ -470,22 +492,32 @@ background-clip: text;
 
 /* The animation logic is created by SaurabhSahu01 :_D */
 @keyframes a-countdown-6 {
-  0%, 5% {
+
+  0%,
+  5% {
     transform: translateY(0);
   }
-  95%, 100% {
+
+  95%,
+  100% {
     transform: translateY(-8rem);
   }
 }
 
 @keyframes a-countdown-10 {
-  0%, 5% {
+
+  0%,
+  5% {
     transform: translateY(0);
   }
-  95%, 100% {
+
+  95%,
+  100% {
     transform: translateY(-8rem);
   }
-}/* Components -> WeeklyWorkoutReport.js */
+}
+
+/* Components -> WeeklyWorkoutReport.js */
 .weekly-workout-consistency {
   width: auto;
   height: 104px;
@@ -522,9 +554,9 @@ background-clip: text;
 
 .purple-text-gradient {
   background: var(--Gradient-purple, linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%));
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .wwc-report-indicator {
@@ -583,15 +615,17 @@ background-clip: text;
   height: 47px;
 }
 
-@keyframes barstyle{
-  from{
+@keyframes barstyle {
+  from {
     height: 0px;
   }
-  to{
+
+  to {
     height: var(--calculated-height);
   }
 }
-.barStyle{
+
+.barStyle {
   animation-name: barstyle;
   animation-duration: 1s;
   animation-delay: 1s;
@@ -602,14 +636,17 @@ background-clip: text;
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .hide-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 /* loader css */
 .loading svg polyline {
   fill: none;
@@ -639,4 +676,16 @@ background-clip: text;
   to {
     stroke-dashoffset: 0;
   }
+}
+
+.custom-textarea{
+  outline: none;
+  border:  1px solid #7e87ef;
+  box-sizing: border-box;
+}
+.custom-textarea:focus{
+  border: 1px solid #3d3d3d;
+}
+.custom-textarea::placeholder{
+  color: #565656;
 }
