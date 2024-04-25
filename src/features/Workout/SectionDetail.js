@@ -376,7 +376,7 @@ const SectionDetail = () => {
               {lastPage ? (
                 <div
                   className="flex h-full w-3/4 flex-col items-center justify-center bg-theme"
-                  onClick={() => navigate('/workout-summary')}
+                  onClick={() => navigate('/workout-summary', { replace : true })}
                 // onClick={() => setShowAchievemntsPage(true)}
                 >
                   <span className="text-2xl tracking-widest text-green">
