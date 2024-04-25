@@ -83,7 +83,7 @@ const AchievementPage = ({ setShowAchievemntsPage, totalWorkouts, coinsEarned })
             <div
               className='w-full min-h-[100px] flex flex-row justify-center items-center rounded-[20px] bg-[#121212]'
             >
-              <div 
+              <div
                 className='w-full h-full backdrop-blur-[1px] p-5 flex flex-col justify-center items-center rounded-[20px] border-[0.5px] border-[#383838] bg-center'
                 style={{ backgroundImage: `url('/assets/coins_popup_bg.svg')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}
               >
@@ -103,3 +103,7 @@ const AchievementPage = ({ setShowAchievemntsPage, totalWorkouts, coinsEarned })
 };
 
 export default AchievementPage;
+
+
+
+//comment
