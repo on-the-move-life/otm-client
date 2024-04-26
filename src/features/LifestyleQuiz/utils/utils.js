@@ -36,11 +36,17 @@ export function getGeneralScreen(questionsArray){
 
 // funtion to return capitalize string
 export function capitalizeFirstLetter(str) {
-    // Check if the string is empty
-    if (str.length === 0) return str;
-
-    // Capitalize the first letter and concatenate it with the rest of the string
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    try{
+        // Check if the string is empty
+        if (str.length === 0) return str;
+    
+        // Capitalize the first letter and concatenate it with the rest of the string
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    catch(err){
+        console.log("error at capitalizeFirstLetter function : ", err);
+        return str;
+    }
 }
 
 // function to increment the screen and rank when the next button is clicked

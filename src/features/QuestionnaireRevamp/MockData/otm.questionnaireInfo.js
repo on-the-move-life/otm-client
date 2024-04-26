@@ -1,12 +1,12 @@
-[{
+const data = [{
   "_id": {
     "$oid": "6618501a65441b568859053e"
   },
   "name": "signup",
   "questions": [
     {
-      "content": "What is your gender?",
-      "inputType": "multichoice",
+      "content": "Gender",
+      "inputType": "singleChoice",
       "code": "su1",
       "rank": 1,
       "screen": 1,
@@ -24,8 +24,8 @@
       "description": "What is your gender?"
     },
     {
-      "content": "What is your age?",
-      "inputType": "text",
+      "content": "Age",
+      "inputType": "number",
       "code": "su2",
       "questionOrder": 2,
       "rank": 2,
@@ -35,8 +35,8 @@
       "isRequired": true
     },
     {
-      "content": "How much do you weight?",
-      "inputType": "text",
+      "content": "Weight",
+      "inputType": "number",
       "code": "su3",
       "questionOrder": 3,
       "rank": 3,
@@ -46,8 +46,8 @@
       "isRequired": true
     },
     {
-      "content": "What is your height?",
-      "inputType": "text",
+      "content": "Height",
+      "inputType": "number",
       "code": "su4",
       "questionOrder": 4,
       "rank": 4,
@@ -57,8 +57,8 @@
       "isRequired": true
     },
     {
-      "content": "What is your current activity level?",
-      "inputType": "multichoice",
+      "content": "How are your activity levels?",
+      "inputType": "singleChoice",
       "code": "su5",
       "questionOrder": 1,
       "rank": 1,
@@ -67,67 +67,73 @@
       "options": [
         {
           "id": "SED",
-          "value": "sedentary"
+          "value": "Sedentary",
+          "description": "Office job"
         },
         {
           "id": "LIA",
-          "value": "lightly_active"
+          "value": "Light Exercise",
+          "description": "1-2 days a week"
         },
         {
           "id": "MOA",
-          "value": "moderately_active"
+          "value": "Moderate Exercise",
+          "description": "3-5 days a week"
         },
         {
           "id": "VEA",
-          "value": "very_active"
+          "value": "Heavy Exercise",
+          "description": "6-7 days a week"
         },
         {
           "id": "SUA",
-          "value": "super_active"
+          "value": "Athlete",
+          "description": "2 times a day"
         }
       ],
       "description": "What is your current activity level?"
     },
     {
-      "content": "Which aligns with your work lifestyle",
-      "inputType": "multichoice",
+      "content": "Which of the following aligns best with your work lifestyle?",
+      "inputType": "singleChoiceAndOther",
       "code": "su6",
       "rank": 1,
       "screen": 3,
+      "description":  "Which of the following aligns best with your work lifestyle?",
       "options": [
         {
-          "id": "SED",
-          "value": "Sedentary"
+          "id": "STD",
+          "value": "Standard 9-5 office hours"
         },
         {
           "id": "IROR",
-          "value": "Irregular or rotating"
+          "value": "Irregular or rotating shift hours"
         },
         {
           "id": "FLEXIBLE",
-          "value": "Freelance or remote - flexible"
+          "value": "Freelance or remote work with flexible hours"
         },
         {
           "id": "STUD",
-          "value": "Student schedule"
+          "value": "Student schedule with designated study hours"
         },
         {
           "id": "FTPC",
-          "value": "Fulltime parent or caregiver"
+          "value": "Full-time parent or caregiver"
         }
       ]
     },
     {
-      "content": "Time per workout",
-      "inputType": "text",
+      "content": "How much time would you like to dedicate per workout",
+      "inputType": "range",
       "rank": 1,
       "screen": 4,
       "description": "How much time per workout can you give",
       "code": "su7"
     },
     {
-      "content": "What do you aim to achieve?",
-      "inputType": "multichoice",
+      "content": "What is your primary Fitness Goal?",
+      "inputType": "singleChoice",
       "code": "su8",
       "questionOrder": 4,
       "rank": 1,
@@ -136,18 +142,20 @@
       "options": [
         {
           "id": "SHRED",
-          "value": "Shred - lighter, faster and agile (decrease fat"
+          "value": "Shred",
+          "description": "Lighter, Faster & Agile <br/> Decrease fat"
         },
         {
           "id": "SIZE",
-          "value": "Size - bigger & stronger (increase muscle)"
+          "value": "Size",
+          "description": "Bigger & Stronger <br/> Increase muscle"
         }
       ],
       "description": "What do you aim to achieve?"
     },
     {
-      "content": "List the equipments available to you",
-      "inputType": "multichoice",
+      "content": "What type of workout equipment do you have access to?",
+      "inputType": "singleChoice",
       "code": "su9",
       "rank": 1,
       "screen": 6,
@@ -172,8 +180,14 @@
       "description": "List the equipments available to you"
     },
     {
-      "content": "Any past injuries?",
-      "inputType": "text",
+      "content": "Any past or current injuries that might affect your workouts? ",
+      "inputType": "singleChoiceAndOther",
+      "options":  [
+        {
+          "id": "No Injuries",
+          "value": "No Injuries",
+        }
+      ],
       "code": "su10",
       "rank": 1,
       "screen": 7,
@@ -181,17 +195,17 @@
       "description": "Any past injuries?"
     },
     {
-      "content": "Push up",
-      "inputType": "text",
+      "content": "Push ups",
+      "inputType": "number",
       "code": "su11",
       "rank": 1,
       "screen": 8,
       "target": "FITTEST",
-      "description": "Push up"
+      "description": "Push ups"
     },
     {
       "content": "Pull ups",
-      "inputType": "text",
+      "inputType": "number",
       "code": "su12",
       "rank": 2,
       "screen": 8,
@@ -200,7 +214,7 @@
     },
     {
       "content": "Burpes",
-      "inputType": "text",
+      "inputType": "number",
       "code": "su13",
       "rank": 4,
       "screen": 8,
@@ -209,7 +223,7 @@
     },
     {
       "content": "Situps",
-      "inputType": "text",
+      "inputType": "number",
       "code": "su14",
       "rank": 5,
       "screen": 8,
@@ -218,7 +232,7 @@
     },
     {
       "content": "Squats",
-      "inputType": "text",
+      "inputType": "number",
       "code": "su15",
       "rank": 3,
       "screen": 8,
@@ -747,3 +761,4 @@
     }
   ]
 }]
+export default data;
