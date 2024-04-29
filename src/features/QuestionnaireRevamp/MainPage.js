@@ -181,7 +181,7 @@ function LandingPage() {
         {screen >= 1 && (
           <div className="flex flex-col items-center justify-center gap-5">
             <div className="mx-auto my-4 flex w-full items-center justify-center">
-              {screen > 1 && (
+              {screen >= 1 && (
                 <BackButton
                   size={30}
                   action={() => decreaseScreenAndRank(screen, setScreen)}
@@ -192,7 +192,7 @@ function LandingPage() {
               <ProgressBar
                 className="w-[250px]"
                 currValue={screen}
-                totalValue={questions && questions?.length}
+                totalValue={getScreenCounts(questions)}
               />
             </div>
           </div>

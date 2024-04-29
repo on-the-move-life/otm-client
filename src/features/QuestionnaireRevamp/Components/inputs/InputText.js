@@ -3,7 +3,16 @@ import { motion } from 'framer-motion';
 import CircularSlider from '@fseehawer/react-circular-slider';
 import { ReactComponent as DragIcon } from './circularKnob.svg';
 import { ReactComponent as SliderLabel } from './circularSliderLabel.svg';
+import styled from 'styled-components';
 
+const NumericalTime = styled.div`
+    color: var(--green, #5ECC7B);
+    font-family: Anton;
+`
+const TextualTime = styled.div`
+    color: var(--green, #5ECC7B);
+    font-family: Anton;
+`
 function InputText({ questionCode, response, setResponse, inputType, placeholder }) {
     const [isTyping, setTyping] = useState(false);
 
@@ -50,7 +59,7 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                 </div>
             }
             {(inputType === "range") &&
-                <div className='w-full flex flex-row items-center justify-center'>
+                <div className='w-full flex flex-col items-center justify-center'>
                     <CircularSlider
                         width={280}
                         data={[0, 15, 30, 60, 90, 120, 150]}
@@ -76,6 +85,10 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                     >
                         <DragIcon x="0" y="0" width="50px" height="50px" />
                     </CircularSlider>
+                    <div className='h-fit flex flex-row justify-center items-end'>
+                        <NumericalTime className='text-[52px]'>{response[questionCode][0]}</NumericalTime>
+                        <TextualTime className='text-[22px]'>mins</TextualTime>
+                    </div>
                 </div>
             }
         </div>

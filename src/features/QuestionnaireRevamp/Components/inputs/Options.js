@@ -101,7 +101,7 @@ function Options({ questionCode, options, MCQType, response, setResponse }) {
                 }}
             >
                 <div
-                    className={`flex flex-col justify-center items-start ${questionCode === 'su1' ? 'text-center py-3' : 'py-4'}`}
+                    className={`w-full flex flex-col justify-center ${questionCode === 'su1' ? 'py-3 items-center' : 'py-4 items-start'}`}
                 >
                     <p className={`text-[19px]  ${response[questionCode]?.find((elem) => elem === optionID)
                         ? 'text-[#7e87ef]'
