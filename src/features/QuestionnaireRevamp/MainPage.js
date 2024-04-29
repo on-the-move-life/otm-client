@@ -215,14 +215,10 @@ function LandingPage() {
                     <div className="my-8 flex flex-col justify-center">
                       <div className="my-3 w-full">
                         {/* Question */}
-                        <h1 className="text-[20px] text-[#7e87ef]">
+                        {(!['text', 'number'].includes(ques?.inputType)) && <h1 className="text-[20px] text-[#7e87ef]">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
-                        </h1>
-                        {/* Description */}
-                        <p className="my-2 space-x-2 text-[14px] text-[#b1b1b1]">
-                          {capitalizeFirstLetter(ques?.description)}
-                        </p>
+                        </h1>}
                       </div>
                       {(ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
                         ques?.inputType?.toUpperCase() === 'MULTICHOICE' || 
@@ -245,7 +241,7 @@ function LandingPage() {
                           setResponse={setResponse}
                           key={ques?.code}
                           inputType={ques?.inputType}
-                          placeholder={ques?.placeholder}
+                          placeholder={ques?.content}
                           isRequired={ques?.isRequired}
                         />
                       )}
