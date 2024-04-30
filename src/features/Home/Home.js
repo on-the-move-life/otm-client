@@ -74,7 +74,7 @@ const Home = () => {
 
   return (
     <>
-      {!loader && !error && <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion}/>}
+      {!loader && !error && <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion} />}
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
@@ -93,7 +93,7 @@ const Home = () => {
                 <div className="flex items-center ">
                   <div className="perfect-week my-2 flex w-fit items-center rounded">
                     <img src="assets/star.svg" alt="" />
-                    <span className="mx-0.5  text-xs font-[900] -tracking-[0.36px] text-[#4a3e1d]">
+                    <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
                       Perfect Week x{homeStats.streak}
                     </span>
                   </div>
