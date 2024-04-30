@@ -57,12 +57,17 @@ const data = [{
       "isRequired": true
     },
     {
+      "screen": 2,
+      "content": "Discover your BMI",
+      "target": "BMI"
+    },
+    {
       "content": "How are your activity levels?",
       "inputType": "singleChoice",
       "code": "su5",
       "questionOrder": 1,
       "rank": 1,
-      "screen": 2,
+      "screen": 3,
       "target": "FIT",
       "options": [
         {
@@ -98,7 +103,7 @@ const data = [{
       "inputType": "singleChoiceAndOther",
       "code": "su6",
       "rank": 1,
-      "screen": 3,
+      "screen": 4,
       "description":  "Which of the following aligns best with your work lifestyle?",
       "options": [
         {
@@ -127,7 +132,7 @@ const data = [{
       "content": "How much time would you like to dedicate per workout",
       "inputType": "range",
       "rank": 1,
-      "screen": 4,
+      "screen": 5,
       "description": "How much time per workout can you give",
       "code": "su7"
     },
@@ -137,18 +142,18 @@ const data = [{
       "code": "su8",
       "questionOrder": 4,
       "rank": 1,
-      "screen": 5,
+      "screen": 6,
       "target": "FIT",
       "options": [
         {
           "id": "SHRED",
           "value": "Shred",
-          "description": "Lighter, Faster & Agile <br/> Decrease fat"
+          "description": "Lighter, Faster & Agile, Decrease fat"
         },
         {
           "id": "SIZE",
           "value": "Size",
-          "description": "Bigger & Stronger <br/> Increase muscle"
+          "description": "Bigger & Stronger, Increase muscle"
         }
       ],
       "description": "What do you aim to achieve?"
@@ -158,7 +163,7 @@ const data = [{
       "inputType": "singleChoice",
       "code": "su9",
       "rank": 1,
-      "screen": 6,
+      "screen": 7,
       "options": [
         {
           "id": "FULL",
@@ -190,7 +195,7 @@ const data = [{
       ],
       "code": "su10",
       "rank": 1,
-      "screen": 7,
+      "screen": 8,
       "target": "MED",
       "description": "Any past injuries?"
     },
@@ -199,7 +204,7 @@ const data = [{
       "inputType": "number",
       "code": "su11",
       "rank": 1,
-      "screen": 8,
+      "screen": 9,
       "target": "FITTEST",
       "description": "Push ups"
     },
@@ -208,7 +213,7 @@ const data = [{
       "inputType": "number",
       "code": "su12",
       "rank": 2,
-      "screen": 8,
+      "screen": 10,
       "target": "FITTEST",
       "description": "pull ups"
     },
@@ -217,7 +222,7 @@ const data = [{
       "inputType": "number",
       "code": "su13",
       "rank": 4,
-      "screen": 8,
+      "screen": 9,
       "target": "FITTEST",
       "description": "Burpes"
     },
@@ -226,7 +231,7 @@ const data = [{
       "inputType": "number",
       "code": "su14",
       "rank": 5,
-      "screen": 8,
+      "screen": 9,
       "target": "FITTEST",
       "description": "Situps"
     },
@@ -235,7 +240,7 @@ const data = [{
       "inputType": "number",
       "code": "su15",
       "rank": 3,
-      "screen": 8,
+      "screen": 9,
       "target": "FITTEST",
       "description": "Squats"
     }

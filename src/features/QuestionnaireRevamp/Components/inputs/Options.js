@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { HOME, FULL, LIA, MOA, NOEQ, SED, SHRED, SIZE, SUA, VEA } from "../svg"
 
-function Options({ questionCode, options, MCQType, response, setResponse }) {
+function Options({ questionCode, options, MCQType, target, response, setResponse }) {
     console.log('Question code : ', questionCode);
     const [isTextFieldActive, setTextFieldActive] = useState(false);
     const RenderSVG = (name, isSelected) => {
@@ -136,26 +136,29 @@ function Options({ questionCode, options, MCQType, response, setResponse }) {
             }
             {
                 MCQType === "singleChoiceAndOther" && 
-                <input
-                    type={"text"} //text
-                    value={questionCode && Object.keys(response)?.length > 0 && isTextFieldActive ? (response[questionCode])[0] : ''}
-                    style={{ borderColor: '#7e87ef' }}
-                    className="textbox"
-                    onChange={(e) => {
-                        if(!isTextFieldActive){
-                            setTextFieldActive(true);
-                        }
-                        setResponse(prev => {
-                            return (
-                                {
-                                    ...prev,
-                                    [questionCode]: [e.target.value]
-                                }
-                            )
-                        });
-                    }}
-                    placeholder={"Please Specify"}
-                />
+                <div className="w-full flex flex-col justify-center items-start">
+                    <p className='text-[20px] text-[#7e87ef]'>{target === "MED" ? "If any, " : "Other "}</p>
+                    <input
+                        type={"text"} //text
+                        value={questionCode && Object.keys(response)?.length > 0 && isTextFieldActive ? (response[questionCode])[0] : ''}
+                        style={{ borderColor: '#7e87ef' }}
+                        className="textbox"
+                        onChange={(e) => {
+                            if(!isTextFieldActive){
+                                setTextFieldActive(true);
+                            }
+                            setResponse(prev => {
+                                return (
+                                    {
+                                        ...prev,
+                                        [questionCode]: [e.target.value]
+                                    }
+                                )
+                            });
+                        }}
+                        placeholder={"Please Specify"}
+                    />
+                </div>
             }
         </div>
     );

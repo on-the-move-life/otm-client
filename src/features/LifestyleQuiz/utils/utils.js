@@ -22,7 +22,7 @@ export function getGeneralScreen(questionsArray){
         let generalScreen = -1;
         if(questionsArray){
             questionsArray.forEach(ques => {
-                if(generalScreen === -1 && ques?.target === "general"){
+                if(generalScreen === -1 && (ques?.target === "general" || ques?.target === "GEN")){
                     generalScreen = ques?.screen;
                 }
             });
@@ -59,7 +59,7 @@ export function increaseScreenAndRank(screen, maxScreenCount, setScreen) {
 
 // function to decrement the screen and rank when the back button is clicked
 export function decreaseScreenAndRank(screen, setScreen) {
-    if (screen > 1) {
+    if (screen >= 1) {
         setScreen(prev => prev - 1);
     }
     console.log("screen", screen)

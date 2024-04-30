@@ -15,6 +15,7 @@ const TextualTime = styled.div`
 `
 function InputText({ questionCode, response, setResponse, inputType, placeholder }) {
     const [isTyping, setTyping] = useState(false);
+    const [sliderValue, setSliderValue] = useState(0);
 
     const variants = {
         hidden: { opacity: 0, y: 20 },
@@ -59,11 +60,12 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                 </div>
             }
             {(inputType === "range") &&
-                <div className='w-full flex flex-col items-center justify-center'>
+                <div className='w-full flex flex-col items-center justify-center gap-9 mt-9'>
                     <CircularSlider
                         width={280}
-                        data={[0, 15, 30, 60, 90, 120, 150]}
+                        data={[15, 30, 60, 90, 120, 150, 180]}
                         onChange={val => {
+                            setSliderValue(val);
                             setResponse(prev => {
                                 return (
                                     {
@@ -85,9 +87,9 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                     >
                         <DragIcon x="0" y="0" width="50px" height="50px" />
                     </CircularSlider>
-                    <div className='h-fit flex flex-row justify-center items-end'>
-                        <NumericalTime className='text-[52px]'>{response[questionCode][0]}</NumericalTime>
-                        <TextualTime className='text-[22px]'>mins</TextualTime>
+                    <div className='h-fit flex flex-col justify-center items-center'>
+                        <NumericalTime className='text-[52px]'>{sliderValue}</NumericalTime>
+                        <TextualTime className='text-[22px] relative' style={{top: '-15px'}}>mins</TextualTime>
                     </div>
                 </div>
             }

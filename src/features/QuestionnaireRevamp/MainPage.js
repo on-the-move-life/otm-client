@@ -23,6 +23,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from '../LifestyleQuiz';
 import styled from 'styled-components';
+import ScoreIndicator from './Components/ScoreIndicator';
 
 function LandingPage() {
   const [questions, setQuestions] = useState(null);
@@ -30,7 +31,7 @@ function LandingPage() {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [screen, setScreen] = useState(0);
   const maxScreenCount = getScreenCounts(questions);
-  // const generalScreen = getGeneralScreen(questions);
+  const generalScreen = getGeneralScreen(questions);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(false);
   const navigate = useNavigate();
@@ -128,13 +129,13 @@ function LandingPage() {
   useEffect(() => {
     setQuestions(prev => data[0]?.questions);
     // Update the response state using a callback
-        setResponse((prev) => {
-          const newResponse = {};
-          data[0]?.questions.forEach((ques) => {
-            newResponse[ques.code] = [''];
-          });
-          return newResponse;
-        });
+    setResponse((prev) => {
+      const newResponse = {};
+      data[0]?.questions.forEach((ques) => {
+        newResponse[ques.code] = [''];
+      });
+      return newResponse;
+    });
   }, [])
 
   useEffect(() => {
@@ -201,32 +202,37 @@ function LandingPage() {
       <div className="flex flex-1 flex-col items-start justify-between">
         <div className="flex w-full flex-col justify-center gap-5">
           {/* Section Name - Kept for future reference */}
-          {/* {screen === generalScreen && (
-            <h1 className="mt-12 text-[26px] text-[#7e87ef]">
+          {screen === generalScreen && (
+            <h1 className="mt-3 text-[26px] text-[#7e87ef]">
               General Information
             </h1>
-          )} */}
+          )}
           <div>
             {screen >= 1 &&
               currentQuestion &&
               currentQuestion?.map((ques, idx) => {
                 return (
                   <>
-                    <div className="my-8 flex flex-col justify-center">
-                      <div className="my-3 w-full">
+                    <div className="flex flex-col justify-center">
+                      <div className="my-5 w-full">
                         {/* Question */}
-                        {(!['text', 'number'].includes(ques?.inputType)) && <h1 className="text-[20px] text-[#7e87ef]">
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && <h1 className="text-[20px] text-[#7e87ef]">
+                          {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
+                            }`}
+                        </h1>}
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && <h1 className="text-[20px] textbox-text uppercase">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
                         </h1>}
                       </div>
                       {(ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
-                        ques?.inputType?.toUpperCase() === 'MULTICHOICE' || 
+                        ques?.inputType?.toUpperCase() === 'MULTICHOICE' ||
                         ques?.inputType?.toUpperCase() === 'SINGLECHOICEANDOTHER') ? (
                         <Options
                           questionCode={ques?.code}
                           options={ques?.options}
                           MCQType={ques?.inputType}
+                          target={ques?.target}
                           response={
                             Object.keys(response)?.length > 0 && response
                           }
@@ -324,6 +330,20 @@ function LandingPage() {
                 </div>
               </div>
             )}
+            {
+              screen === 2 && (
+                <>
+                  <p className='text-center text-[18px] text-white/25'>Your personal health indicator</p>
+                  <div className='w-full flex flex-col justify-center items-center mt-6'>
+                    <p className='text-[90px] uppercase text-[#5ecc7b]' style={{fontFamily: 'Anton', fontWeight: 400, }}>23</p>
+                    <p className='textbox-text uppercase text-center relative tracking-wider' style={{top: "-20px"}}>current bmi</p>
+                  </div>
+                  <div className="w-full">
+                    <ScoreIndicator/>
+                  </div>
+                </>
+              )
+            }
           </div>
         </div>
         {screen >= 1 && (
