@@ -12,8 +12,6 @@ import {
   decreaseScreenAndRank,
   updateCurrentQuestion,
   isAnyEmptyResponse,
-  validResponses,
-  getEmail,
   getGeneralScreen
 } from '../LifestyleQuiz';
 import InputText from './Components/inputs/InputText';
@@ -24,6 +22,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from '../LifestyleQuiz';
 import styled from 'styled-components';
 import ScoreIndicator from './Components/ScoreIndicator';
+import FitnessScorePage from './FitnessScoreScreen';
+import BMIScreen from './BMIScreen';
+import AssessmentScreen from './AssessmentScreen';
 
 function LandingPage() {
   const [questions, setQuestions] = useState(null);
@@ -34,6 +35,11 @@ function LandingPage() {
   const generalScreen = getGeneralScreen(questions);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(false);
+  const [fitnessScore, setFitnessScore] = useState(null);
+  const [showFitnessScoreLoading, setShowFitnessScoreLoading] = useState(false);
+  const [showAssessmentScreen, setShowAssessmentScreen] = useState(false);
+  const [showBMIScreen, setShowBMIScreen] = useState(false);
+  const [showFitnessScoreScreen, setShowFitnessScoreScreen] = useState(false);
   const navigate = useNavigate();
 
   const StarterText = styled.div`
@@ -56,44 +62,81 @@ function LandingPage() {
   // sending response to the backend
   function submitResponse() {
     // set the state to loading
-    // setPageLoading(true);
-    // preparing a response for the current screen questions
-    // const responseBody = [];
-    // currentQuestion &&
-    //   response &&
-    //   currentQuestion.map((ques, idx) => {
-    //     responseBody.push({
-    //       code: ques?.code,
-    //       answer: response[ques?.code],
-    //     });
-    //   });
-    // axiosClient
-    //   .post('/', {
-    //     email: getEmail(questions, response),
-    //     questionnaireName: 'signup',
-    //     response: responseBody,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
+    screen !== 8 ? setPageLoading(true) : setShowFitnessScoreLoading(true);
 
-    //     // after successful submission, let the user proceed to the next question
-    //     // possible error - network breakdown
-    //     // delay in increaseSreenAndRank to simulate the network delay and toast
-    //     setTimeout(() => {
-    //       increaseScreenAndRank(screen, maxScreenCount, setScreen);
-    //     }, 800);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     toast.error('Submission Failed! Please Try Again.');
-    //   })
-    //   .finally(() => {
-    //     // a delay of 500ms is introduced bcz to old page was appearing for a moment after the loading was stopped
-    //     setTimeout(() => {
-    //       setPageLoading(false);
-    //     }, 500);
-    //   });
-    increaseScreenAndRank(screen, maxScreenCount, setScreen);
+    // close the BMI screen, and the assessment screen if opened
+    // redirect the user to the home page if the finish button is clicked on the FitnessScore screen
+    if (showBMIScreen) {
+      setTimeout(() => {
+        setPageLoading(false);
+        setShowBMIScreen(false);
+      }, 700)
+    }
+    if (showAssessmentScreen) {
+      setTimeout(() => {
+        setPageLoading(false);
+        setShowAssessmentScreen(false);
+      }, 700)
+    }
+    if(showFitnessScoreLoading){
+      setShowFitnessScoreLoading(false);
+    }
+    if (showFitnessScoreScreen) {
+      setTimeout(() => {
+        setShowFitnessScoreScreen(false);
+        navigate('/');
+      }, 700)
+    }
+
+    // preparing a response for the current screen questions
+    const responseBody = [];
+    currentQuestion &&
+      response &&
+      currentQuestion.map((ques, idx) => {
+        responseBody.push({
+          code: ques?.code,
+          answer: response[ques?.code],
+        });
+      });
+    !showAssessmentScreen && !showBMIScreen && !showFitnessScoreScreen &&
+      axiosClient
+        .post('/', {
+          email: JSON.parse(localStorage.getItem('user'))['email'],
+          questionnaireName: 'signup',
+          response: responseBody,
+        })
+        .then((res) => {
+          console.log("POST Response : ", res);
+
+          // open the BMI screen, Assessment screen, or the Fitness Score screen based on the next button clicked on relevant screen
+          if (screen === 1) {
+            setShowBMIScreen(true);
+          }
+          else if (screen === 7) {
+            setShowAssessmentScreen(true);
+          }
+          else if (screen === 8) {
+            setShowFitnessScoreLoading(false);
+            setShowFitnessScoreScreen(true);
+          }
+
+          // after successful submission, let the user proceed to the next question
+          // possible error - network breakdown
+          // delay in increaseSreenAndRank to simulate the network delay and toast
+          setTimeout(() => {
+            increaseScreenAndRank(screen, maxScreenCount, setScreen);
+          }, 800);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error('Submission Failed! Please Try Again.');
+        })
+        .finally(() => {
+          // a delay of 500ms is introduced bcz to old page was appearing for a moment after the loading was stopped
+          setTimeout(() => {
+            setPageLoading(false);
+          }, 500);
+        });
   }
 
   useEffect(() => {
@@ -216,11 +259,11 @@ function LandingPage() {
                     <div className="flex flex-col justify-center">
                       <div className="my-5 w-full">
                         {/* Question */}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && <h1 className="text-[20px] text-[#7e87ef]">
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[20px] text-[#7e87ef]">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
                         </h1>}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && <h1 className="text-[20px] textbox-text uppercase">
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[20px] textbox-text uppercase">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
                         </h1>}
@@ -331,24 +374,41 @@ function LandingPage() {
               </div>
             )}
             {
-              screen === 2 && (
-                <>
-                  <p className='text-center text-[18px] text-white/25'>Your personal health indicator</p>
-                  <div className='w-full flex flex-col justify-center items-center mt-6'>
-                    <p className='text-[90px] uppercase text-[#5ecc7b]' style={{fontFamily: 'Anton', fontWeight: 400, }}>23</p>
-                    <p className='textbox-text uppercase text-center relative tracking-wider' style={{top: "-20px"}}>current bmi</p>
-                  </div>
-                  <div className="w-full">
-                    <ScoreIndicator/>
-                  </div>
-                </>
-              )
+              showBMIScreen &&
+              <BMIScreen
+                response={response}
+                submitResponse={submitResponse}
+                screen={screen}
+                questions={questions}
+                getScreenCounts={getScreenCounts}
+                setScreen={setScreen}
+                decreaseScreenAndRank={decreaseScreenAndRank}
+                setShowBMIScreen={setShowBMIScreen}
+              />
+            }
+            {
+              showAssessmentScreen &&
+              <AssessmentScreen
+                submitResponse={submitResponse}
+                screen={screen}
+                questions={questions}
+                getScreenCounts={getScreenCounts}
+                setScreen={setScreen}
+                decreaseScreenAndRank={decreaseScreenAndRank}
+                setShowAssessmentScreen={setShowAssessmentScreen}
+              />
+            }
+            {
+              showFitnessScoreLoading && <FitnessScorePage submitResponse={submitResponse}/>
+            }
+            {
+              !showFitnessScoreLoading && showFitnessScoreScreen && <FitnessScorePage type="fitnessScore" score={32} submitResponse={submitResponse}/>
             }
           </div>
         </div>
         {screen >= 1 && (
           <Button
-            text={screen === maxScreenCount ? 'Submit' : 'Next'}
+            text={screen === maxScreenCount ? "Finish" : currentQuestion[0]?.target === "ASSESSMENT" ? "Take Assessment" : "Next"}
             type="lifestyle"
             action={() => {
               // checking for empty response
