@@ -89,7 +89,8 @@ input:focus::placeholder {
     bottom: 0px;
     left: 0px;
     background-color: rgba(0, 0, 0, 0.60);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(3px);
+    opacity: 1.9;
 
   }
 }
@@ -678,14 +679,16 @@ button:active {
   }
 }
 
-.custom-textarea{
+.custom-textarea {
   outline: none;
-  border:  1px solid #7e87ef;
+  border: 1px solid #7e87ef;
   box-sizing: border-box;
 }
-.custom-textarea:focus{
+
+.custom-textarea:focus {
   border: 1px solid #3d3d3d;
 }
-.custom-textarea::placeholder{
+
+.custom-textarea::placeholder {
   color: #565656;
 }
