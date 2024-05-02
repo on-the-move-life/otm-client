@@ -111,7 +111,7 @@ const ScoreIndicator = ({ height, weight }) => {
                 <div className='w-full flex flex-col justify-center items-center gap-3'>
                     <div className='relative w-full flex flex-col items-center justify-center gap-4'>
                         <div className={`w-[100px] h-[50px] text-[12px] text-black font-bold absolute top-[-37px] bg-no-repeat bg-cover flex flex-row justify-center items-start`} style={{ left: `${tagColorPosition[2] - 25}px`, backgroundImage: `url(${'/assets/scoreIndicator_dialogue.svg'})` }}>
-                            <TagText className='pt-[5px]'>{tagColorPosition[5]}</TagText>
+                            <TagText className='pt-[5px]'>Your BMI</TagText>
                         </div>
                         <div className='w-fit relative'>
                             <Indicator style={{ position: 'absolute', left: `${tagColorPosition[2]}px`, top: "-3px" }} bgColor={tagColorPosition[1]} />

@@ -2,7 +2,10 @@ import React from 'react'
 import { Button } from '../../components';
 import BackButton from '../../components/BackButton';
 import { ProgressBar } from '../LifestyleQuiz';
+import { useNavigate } from 'react-router-dom';
+
 function AssessmentScreen({ screen, questions, getScreenCounts, decreaseScreenAndRank, setScreen, setShowAssessmentScreen, submitResponse }) {
+    const navigate = useNavigate();
     return (
         <div className='fixed min-h-screen w-full flex flex-col justify-between items-center px-6 py-9 top-0 left-0 z-50 bg-black'>
             <div className="flex flex-col items-center justify-center gap-5">
@@ -20,6 +23,12 @@ function AssessmentScreen({ screen, questions, getScreenCounts, decreaseScreenAn
                         currValue={screen}
                         totalValue={getScreenCounts(questions)}
                     />
+                    <p
+                        className='text-[14px] text-[#848ce9] absolute right-[5%] w-fit cursor-pointer'
+                        onClick={() => navigate('/questionnaire/fitness-score')}
+                    >
+                        Skip
+                    </p>
                 </div>
             </div>
             <div className='w-full h-full flex flex-col items-start justify-center gap-3 mt-[20%]'>

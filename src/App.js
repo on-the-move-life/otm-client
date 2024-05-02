@@ -8,7 +8,8 @@ import { Profile } from './features/Profile';
 import { MarketPlace } from './features/Marketplace';
 import { LifeStyle } from './features/LifestyleQuiz';
 import { Report } from './features/LifestyleQuiz';
-import { QuestionnaireRevamp } from './features/Questionnaire';
+import { Questionnaire } from './features/Questionnaire';
+import { FitnessScoreScreen } from './features/Questionnaire';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -45,7 +46,8 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<RouteMiddleware><Home/></RouteMiddleware>} />
-        <Route path="/questionnaire" element={<RouteMiddleware><QuestionnaireRevamp /></RouteMiddleware>} />
+        <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />
+        <Route path="/questionnaire/fitness-score" element={<RouteMiddleware><FitnessScoreScreen /></RouteMiddleware>} />
         <Route path="/questionnaire/lifestyle" element={<LifeStyle/>} />
         <Route path="/questionnaire/lifestyle/result/:sessionID" element={<Report/>} />
         <Route path="/section-details" element={<RouteMiddleware><SectionDetail /></RouteMiddleware>} />

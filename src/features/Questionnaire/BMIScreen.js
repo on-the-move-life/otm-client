@@ -24,7 +24,7 @@ function BMIScreen({ screen, questions, response, getScreenCounts, decreaseScree
                 </div>
             </div>
             <div>
-                <h1 className="text-[20px] text-[#7e87ef] text-center">
+                <h1 className="text-[22px] text-[#7e87ef] text-center">
                     Discover your BMI
                 </h1>
                 <div className='w-full h-full overflow-x-hidden'>

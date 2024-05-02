@@ -3,7 +3,6 @@ import { ProgressBar } from '../LifestyleQuiz';
 import BackButton from '../../components/BackButton';
 import { Button } from '../../components';
 import Options from './Components/inputs/Options';
-import data from "./MockData/otm.questionnaireInfo"
 import { axiosClient } from '../LifestyleQuiz';
 import {
   getScreenCounts,
@@ -21,8 +20,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from '../LifestyleQuiz';
 import styled from 'styled-components';
-import ScoreIndicator from './Components/ScoreIndicator';
-import FitnessScorePage from './FitnessScoreScreen';
 import BMIScreen from './BMIScreen';
 import AssessmentScreen from './AssessmentScreen';
 
@@ -35,18 +32,15 @@ function LandingPage() {
   const generalScreen = getGeneralScreen(questions);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(false);
-  const [fitnessScore, setFitnessScore] = useState(null);
-  const [showFitnessScoreLoading, setShowFitnessScoreLoading] = useState(false);
   const [showAssessmentScreen, setShowAssessmentScreen] = useState(false);
   const [showBMIScreen, setShowBMIScreen] = useState(false);
-  const [showFitnessScoreScreen, setShowFitnessScoreScreen] = useState(false);
   const navigate = useNavigate();
 
   const StarterText = styled.div`
     color: var(--New-White, rgba(255, 255, 255, 0.26));
     /* H1 */
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 32px;
+    font-size: ${props => props.fontSize !== undefined ? props.fontSize : '32px'};
     font-style: normal;
     font-weight: 500;
     line-height: 40px; /* 125% */
@@ -62,7 +56,7 @@ function LandingPage() {
   // sending response to the backend
   function submitResponse() {
     // set the state to loading
-    screen !== 8 ? setPageLoading(true) : setShowFitnessScoreLoading(true);
+    setPageLoading(true)
 
     // close the BMI screen, and the assessment screen if opened
     // redirect the user to the home page if the finish button is clicked on the FitnessScore screen
@@ -78,15 +72,6 @@ function LandingPage() {
         setShowAssessmentScreen(false);
       }, 700)
     }
-    if(showFitnessScoreLoading){
-      setShowFitnessScoreLoading(false);
-    }
-    if (showFitnessScoreScreen) {
-      setTimeout(() => {
-        setShowFitnessScoreScreen(false);
-        navigate('/');
-      }, 700)
-    }
 
     // preparing a response for the current screen questions
     const responseBody = [];
@@ -98,7 +83,7 @@ function LandingPage() {
           answer: response[ques?.code],
         });
       });
-    !showAssessmentScreen && !showBMIScreen && !showFitnessScoreScreen &&
+    !showAssessmentScreen && !showBMIScreen &&
       axiosClient
         .post('/', {
           email: JSON.parse(localStorage.getItem('user'))['email'],
@@ -115,73 +100,56 @@ function LandingPage() {
           else if (screen === 7) {
             setShowAssessmentScreen(true);
           }
-          else if (screen === 8) {
-            setShowFitnessScoreLoading(false);
-            setShowFitnessScoreScreen(true);
+          else if(screen === 8){
+            // redirect to the fitness score page
+            navigate('/questionnaire/fitness-score');
           }
 
           // after successful submission, let the user proceed to the next question
           // possible error - network breakdown
-          // delay in increaseSreenAndRank to simulate the network delay and toast
-          setTimeout(() => {
-            increaseScreenAndRank(screen, maxScreenCount, setScreen);
-          }, 800);
+          increaseScreenAndRank(screen, maxScreenCount, setScreen);
         })
         .catch((err) => {
           console.log(err);
           toast.error('Submission Failed! Please Try Again.');
         })
         .finally(() => {
-          // a delay of 500ms is introduced bcz to old page was appearing for a moment after the loading was stopped
-          setTimeout(() => {
-            setPageLoading(false);
-          }, 500);
+          setPageLoading(false);
         });
   }
 
   useEffect(() => {
-    // setPageLoading(true);
-    // fetch the lifestyle quiz data
-    // axiosClient
-    //   .get('?name=signup')
-    //   .then((res) => {
-    //     // set the questions to the state
-    //     setQuestions(res.data.questions);
+    setPageLoading(true);
+    // fetch the signup questionnaire data
+    axiosClient
+      .get('?name=signup')
+      .then((res) => {
+        // set the questions to the state
+        setQuestions(res.data.questions);
 
-    //     // Update the response state using a callback
-    //     setResponse((prev) => {
-    //       const newResponse = {};
-    //       res.data.questions.forEach((ques) => {
-    //         newResponse[ques.code] = [''];
-    //       });
-    //       return newResponse;
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setPageError(true);
-    //   })
-    //   .finally(() => {
-    //     // delay is introduced to increase the time for loading screen (UX improvement)
-    //     setTimeout(() => {
-    //       setPageLoading(false);
-    //     }, 1000);
-    //   });
+        // Update the response state using a callback
+        setResponse((prev) => {
+          const newResponse = {};
+          res.data.questions.forEach((ques) => {
+            newResponse[ques.code] = [''];
+          });
+          return newResponse;
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setPageError(true);
+      })
+      .finally(() => {
+        // delay is introduced to increase the time for loading screen (UX improvement)
+        setTimeout(() => {
+          setPageLoading(false);
+        }, 1000);
+      });
   }, []);
 
   useEffect(() => {
-    setQuestions(prev => data[0]?.questions);
-    // Update the response state using a callback
-    setResponse((prev) => {
-      const newResponse = {};
-      data[0]?.questions.forEach((ques) => {
-        newResponse[ques.code] = [''];
-      });
-      return newResponse;
-    });
-  }, [])
-
-  useEffect(() => {
+    // it will update the current question as soon as the screen changes
     questions && updateCurrentQuestion(questions, screen, setCurrentQuestion);
   }, [screen, questions]);
 
@@ -259,11 +227,11 @@ function LandingPage() {
                     <div className="flex flex-col justify-center">
                       <div className="my-5 w-full">
                         {/* Question */}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[20px] text-[#7e87ef]">
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] text-[#7e87ef]">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
                         </h1>}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[20px] textbox-text uppercase">
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] textbox-text uppercase">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
                         </h1>}
@@ -338,7 +306,7 @@ function LandingPage() {
                       >Your account has been created</p>
                     </div>}
                     {screen === 0 && (
-                      <StarterText className='px-[20px] py-[10px]'>
+                      <StarterText className='px-[20px] py-[10px]' fontSize="26px">
                         Shape your  <span
                           style={{
                             background:
@@ -360,6 +328,7 @@ function LandingPage() {
                     )}
                     <div className='w-full flex flex-col justify-center gap-1'>
                       <Button
+                        style={{fontWeight: 500}}
                         text="Craft your journey"
                         type="lifestyle"
                         action={() => {
@@ -398,16 +367,11 @@ function LandingPage() {
                 setShowAssessmentScreen={setShowAssessmentScreen}
               />
             }
-            {
-              showFitnessScoreLoading && <FitnessScorePage submitResponse={submitResponse}/>
-            }
-            {
-              !showFitnessScoreLoading && showFitnessScoreScreen && <FitnessScorePage type="fitnessScore" score={32} submitResponse={submitResponse}/>
-            }
           </div>
         </div>
         {screen >= 1 && (
           <Button
+            style={{fontWeight: 500}}
             text={screen === maxScreenCount ? "Finish" : currentQuestion[0]?.target === "ASSESSMENT" ? "Take Assessment" : "Next"}
             type="lifestyle"
             action={() => {
