@@ -8,6 +8,7 @@ import BackButton from '../../components/BackButton';
 import { useTagAndColor } from '../../hooks/useTagAndColor';
 import FitnessLoader from './FitnessLoader';
 import styled from 'styled-components'
+import { red } from '@mui/material/colors';
 
 const HorizontalBar = styled.div`
     --color: ${props => props.color};
@@ -108,7 +109,7 @@ function FitnessScorePage() {
             {pageLoading && <FitnessLoader />}
             {pageError && !pageLoading && <Error>Some Error Occured</Error>}
             {!pageLoading && !pageError &&
-                <div className='w-full h-screen flex flex-col justify-between px-6 py-9 z-50 bg-black bg-no-repeat bg-auto bg-center' style={{ backgroundImage: `url('/assets/fitness_score_gradient.svg')` }}>
+                <div className='w-full h-screen flex flex-col justify-between px-6 py-9 z-50 bg-black bg-no-repeat bg-auto bg-center bg-fixed' style={{ backgroundImage: `url('/assets/fitness_score_gradient.svg')` }}>
                     <div className='w-full flex flex-col justify-start items-start gap-4'>
                         <div className="flex flex-col items-center justify-center gap-5">
                             <div className="mx-auto my-4 flex w-full items-center justify-center">
@@ -151,15 +152,17 @@ function FitnessScorePage() {
                             {/* Personalised Workout */}
                             <div className="w-full flex flex-col justify-center items-start gap-3 overflow-y-scroll" >
                                 <h1 className='text-[32px] text-[#7e87ef]' style={{ lineHeight: '40px' }}>Your personalised workout</h1>
-                                <ul className='text-[16px] text-[#b1b1b1] flex flex-col gap-2' style={{ lineHeight: '22px', fontWeight: 400, listStyleType: 'disc' }} >
+                                <div className='text-[16px] text-[#b1b1b1] flex flex-col gap-3' style={{ lineHeight: '22px', fontWeight: 400, }} >
                                     {
                                         data?.workout.map((item, index) => {
-                                            return (
-                                                <li key={index}>{item?.name} - {item?.description}</li>
-                                            )
+                                            if(item?.description){
+                                                return (
+                                                    <p key={index} ><span className='text-[#848CE9]' style={{fontWeight: 800}}>{item?.name}</span> - {item?.description}</p>
+                                                )
+                                            }
                                         })
                                     }
-                                </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
