@@ -30,7 +30,7 @@ const TagText = styled.p`
 
 function FitnessScorePage() {
     const [name, setName] = useState(null);
-    const [score, setScore] = useState(null);
+    const [data, setData] = useState(null);
     const [pageLoading, setPageLoading] = useState(true);
     const [pageError, setPageError] = useState(false);
     const navigate = useNavigate();
@@ -40,7 +40,7 @@ function FitnessScorePage() {
         axiosClient.get(`/signup/snapshot?email=${email}`)
             .then(res => {
                 console.log(res);
-                setScore(res?.data?.fitnessScore);
+                setData(res?.data);
             })
             .catch(err => {
                 setPageError(true);
@@ -108,7 +108,7 @@ function FitnessScorePage() {
             {pageLoading && <FitnessLoader />}
             {pageError && !pageLoading && <Error>Some Error Occured</Error>}
             {!pageLoading && !pageError &&
-                <div className='w-full fixed min-h-screen flex flex-col justify-between px-6 py-9 top-0 left-0 z-50 bg-black bg-no-repeat bg-auto bg-center' style={{ backgroundImage: `url('/assets/fitness_score_gradient.svg')` }}>
+                <div className='w-full h-screen flex flex-col justify-between px-6 py-9 z-50 bg-black bg-no-repeat bg-auto bg-center' style={{ backgroundImage: `url('/assets/fitness_score_gradient.svg')` }}>
                     <div className='w-full flex flex-col justify-start items-start gap-4'>
                         <div className="flex flex-col items-center justify-center gap-5">
                             <div className="mx-auto my-4 flex w-full items-center justify-center">
@@ -145,23 +145,25 @@ function FitnessScorePage() {
                             {/* Fitness Score */}
                             <div className='w-full flex flex-col items-start justify-center gap-4'>
                                 <p className="text-[16px] text-[#b1b1b1]" style={{ fontWeight: 400, lineHeight: '22px' }}>your fitness score is</p>
-                                {score && <ScoreIndicator score={score} />}
-                                <p className='text-[16px] text-[#b1b1b1]' style={{ fontWeight: 400, lineHeight: '22px' }}>You are already better than 78% of the OTM community</p>
+                                {data?.fitnessScore && <ScoreIndicator score={data?.fitnessScore} />}
+                                <p className='text-[16px] text-[#b1b1b1]' style={{ fontWeight: 400, lineHeight: '22px' }}>You are already better than {data?.fitnessPercentile}% of the OTM community</p>
                             </div>
                             {/* Personalised Workout */}
-                            <div className="w-full flex flex-col justify-center items-start gap-3" >
+                            <div className="w-full flex flex-col justify-center items-start gap-3 overflow-y-scroll" >
                                 <h1 className='text-[32px] text-[#7e87ef]' style={{ lineHeight: '40px' }}>Your personalised workout</h1>
                                 <ul className='text-[16px] text-[#b1b1b1] flex flex-col gap-2' style={{ lineHeight: '22px', fontWeight: 400, listStyleType: 'disc' }} >
-                                    <li>Mobility & activation work to prevent injuries</li>
-                                    <li>Gym strength for skill building</li>
-                                    <li>Strength training</li>
-                                    <li>Met-Con to cut fat</li>
-                                    <li>Core for better posture</li>
+                                    {
+                                        data?.workout.map((item, index) => {
+                                            return (
+                                                <li key={index}>{item?.name} - {item?.description}</li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div className="w-full flex flex-col justify-start items-center gap-2">
+                    <div className="w-full flex flex-col justify-start items-center gap-2 mt-9 pb-9">
                         <p className='text-[#5ecc7b] text-[14px] '>It’s a journey, we emphasise on longterm lifestyle changes instead of quick fixes</p>
                         <motion.button
                             initial={{ opacity: 0, y: 50 }}
