@@ -31,7 +31,7 @@ function AssessmentScreen({ screen, questions, getScreenCounts, decreaseScreenAn
                     </p>
                 </div>
             </div>
-            <div className='w-full h-full flex flex-col items-start justify-center gap-3 mt-[20%]'>
+            <div className='w-full h-full flex flex-col items-start justify-center gap-3'>
                 <h1 className="text-[32px] text-[#7e87ef] text-center">
                     One Last Thing
                 </h1>

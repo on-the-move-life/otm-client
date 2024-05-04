@@ -11,7 +11,8 @@ import {
   decreaseScreenAndRank,
   updateCurrentQuestion,
   isAnyEmptyResponse,
-  getGeneralScreen
+  getGeneralScreen,
+  getFitnessScreen
 } from '../LifestyleQuiz';
 import InputText from './Components/inputs/InputText';
 import { useNavigate } from 'react-router-dom';
@@ -30,6 +31,7 @@ function LandingPage() {
   const [screen, setScreen] = useState(0);
   const maxScreenCount = getScreenCounts(questions);
   const generalScreen = getGeneralScreen(questions);
+  const fitnessScreen = getFitnessScreen(questions);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(false);
   const [showAssessmentScreen, setShowAssessmentScreen] = useState(false);
@@ -100,7 +102,7 @@ function LandingPage() {
           else if (screen === 7) {
             setShowAssessmentScreen(true);
           }
-          else if(screen === 8){
+          else if (screen === 8) {
             // redirect to the fitness score page
             navigate('/questionnaire/fitness-score');
           }
@@ -212,12 +214,23 @@ function LandingPage() {
       </div>
       <div className="flex flex-1 flex-col items-start justify-between">
         <div className="flex w-full flex-col justify-center gap-5">
-          {/* Section Name - Kept for future reference */}
+          {/* Section Name */}
           {screen === generalScreen && (
             <h1 className="mt-3 text-[26px] text-[#7e87ef]">
               General Information
             </h1>
           )}
+          {
+            screen === fitnessScreen && (
+              <div>
+                <h1 className="mt-3 text-[26px] text-[#7e87ef]">
+                  Fitness Test
+                </h1>
+                <p className='text-[18px] text-[#545454] my-2' style={{fontWeight: 400, lineHeight: '25px'}}>How many max reps of each
+                  movement can you perform in one minute</p>
+              </div>
+            )
+          }
           <div>
             {screen >= 1 &&
               currentQuestion &&
@@ -227,11 +240,11 @@ function LandingPage() {
                     <div className="flex flex-col justify-center">
                       <div className="my-5 w-full">
                         {/* Question */}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] text-[#7e87ef]">
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] text-[#7e87ef] mt-[20px] mb-[10px]">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
                         </h1>}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] textbox-text uppercase">
+                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] textbox-text uppercase mt-[20px] mb-[10px]">
                           {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
                             }`}
                         </h1>}
@@ -266,6 +279,10 @@ function LandingPage() {
                   </>
                 );
               })}
+            {
+              screen === fitnessScreen &&
+              <p className='text-[18px] text-[#545454]' style={{fontWeight: 400, lineHeight: '25px', marginBlock: '20px'}}>We'll use your results to calculate your fitness score on a scale of 1-10.</p>
+            }
             {(screen === 0) && (
               <div
                 className="h-screen w-full"
@@ -275,7 +292,7 @@ function LandingPage() {
                   backgroundPosition: 'center',
                 }}
               >
-                <div className="flex h-full w-full flex-col items-start justify-between bg-black/70 px-6 py-4 backdrop-blur-[8.5px]">
+                <div className="flex h-full w-full flex-col items-start justify-between bg-black/70 px-6 py-8 backdrop-blur-[8.5px]">
                   <div
                     className={`${screen === 0 ? 'mt-[8rem]' : 'mt-[2rem]'}`}
                   >
@@ -328,7 +345,7 @@ function LandingPage() {
                     )}
                     <div className='w-full flex flex-col justify-center gap-1'>
                       <Button
-                        style={{fontWeight: 500}}
+                        style={{ fontWeight: 500 }}
                         text="Craft your journey"
                         type="lifestyle"
                         action={() => {
@@ -336,7 +353,7 @@ function LandingPage() {
                           setScreen((prev) => prev + 1);
                         }}
                       />
-                      <p className='text-[10px] text-center' style={{ color: 'rgba(255,255,255,0.30)', fontWeight: '400' }}>Usually takes ~3mins</p>
+                      {/* <p className='text-[10px] text-center' style={{ color: 'rgba(255,255,255,0.30)', fontWeight: '400' }}>Usually takes ~3mins</p> */}
                     </div>
                   </div>
                 </div>
@@ -371,7 +388,7 @@ function LandingPage() {
         </div>
         {screen >= 1 && (
           <Button
-            style={{fontWeight: 500}}
+            style={{ fontWeight: 500 }}
             text={screen === maxScreenCount ? "Finish" : currentQuestion[0]?.target === "ASSESSMENT" ? "Take Assessment" : "Next"}
             type="lifestyle"
             action={() => {

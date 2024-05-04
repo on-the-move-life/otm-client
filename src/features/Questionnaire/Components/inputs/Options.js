@@ -121,16 +121,18 @@ function Options({ questionCode, options, MCQType, target, response, setResponse
             {options &&
                 options?.map((option, idx) => {
                     return (
-                        <Option
-                            MCQType={MCQType}
-                            response={response}
-                            setResponse={setResponse}
-                            optionID={option?.id}
-                            optionValue={option?.value}
-                            optionDescription={option?.description}
-                            questionCode={questionCode}
-                            key={option?.id}
-                        />
+                        <div className='w-full' style={{marginBlock: target === "MED" ? '20px' : ''}}>
+                            <Option
+                                MCQType={MCQType}
+                                response={response}
+                                setResponse={setResponse}
+                                optionID={option?.id}
+                                optionValue={option?.value}
+                                optionDescription={option?.description}
+                                questionCode={questionCode}
+                                key={option?.id}
+                            />
+                        </div>
                     );
                 })
             }

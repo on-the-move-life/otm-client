@@ -104,7 +104,7 @@ const ScoreIndicator = ({ height, weight }) => {
     return (
         <div className='w-full h-full flex flex-col justify-between items-center gap-[9rem]'>
             <div className='w-full flex flex-col items-center justify-center gap-[3rem]'>
-                <div className='w-full flex flex-col justify-center items-center mt-6'>
+                <div className='w-full flex flex-col justify-center items-center' style={{marginBlock: '3.8em'}}>
                     <p className='text-[90px] uppercase' style={{ fontFamily: 'Anton', fontWeight: 400, color: tagColorPosition[1] }}>{score}</p>
                     <p className='textbox-text uppercase text-center relative tracking-wider' style={{ top: "-20px" }}>current bmi</p>
                 </div>
@@ -126,10 +126,10 @@ const ScoreIndicator = ({ height, weight }) => {
                             </div>
                         </div>
                     </div>
-                    <p className='text-[18px] text-[#545454] text-center' style={{ fontWeight: 400, lineHeight: '25px' }}>Your current BMI according to your height & weight is {score}, which is <span style={{ color: tagColorPosition[1] }}>{tagColorPosition[5]}</span>!!</p>
+                    <p className='text-[18px] text-[#545454] text-center mt-[10px]' style={{ fontWeight: 400, lineHeight: '25px' }}>Your current BMI according to your height & weight is {score}, which is <span style={{ color: tagColorPosition[1] }}>{tagColorPosition[5]}</span>!!</p>
                 </div>
             </div>
-            <div className='text-[20px] text-[#8c8c8c] capitalize'>This is a small congratulatory or encouraging comment!!!</div>
+            {/* <div className='text-[20px] text-[#8c8c8c] capitalize'>This is a small congratulatory or encouraging comment!!!</div> */}
         </div>
     )
 }

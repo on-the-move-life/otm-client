@@ -11,5 +11,7 @@ export { getScreenCounts,
     isAnyEmptyResponse,
     validResponses,
     getEmail,
-    getGeneralScreen} from "./utils/utils"
+    getGeneralScreen,
+    getFitnessScreen
+} from "./utils/utils"
 export { axiosClient } from "./apiClient"

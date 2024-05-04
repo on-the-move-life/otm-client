@@ -34,6 +34,24 @@ export function getGeneralScreen(questionsArray){
     }
 }
 
+// function to get the screen number of "target === FITTEST"
+export function getFitnessScreen(questionsArray){
+    try{
+        let generalScreen = -1;
+        if(questionsArray){
+            questionsArray.forEach(ques => {
+                if(generalScreen === -1 && (ques?.target === "FITTEST")){
+                    generalScreen = ques?.screen;
+                }
+            });
+        }
+        return generalScreen;
+    }
+    catch(err){
+        console.log("error in getGeneralScreen function : ", err)
+    }
+}
+
 // funtion to return capitalize string
 export function capitalizeFirstLetter(str) {
     try{

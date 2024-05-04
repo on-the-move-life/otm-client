@@ -81,7 +81,7 @@ function FitnessScorePage() {
     const ScoreIndicator = ({ score }) => {
         const [tag, color, position, colors, tags] = useTagAndColor(score, 40)
         return (
-            <div className='w-full flex flex-row justify-between items-center px-3'>
+            <div className='w-full flex flex-row justify-between items-center px-3' style={{marginBlock: '8px'}}>
                 <div className='text-[60px]' style={{ fontWeight: 400, lineHeight: '54px', fontFamily: 'Anton', color: color }}>{score}</div>
                 <div className='w-fit flex flex-col items-start justify-center gap-4'>
                     <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
@@ -111,7 +111,7 @@ function FitnessScorePage() {
             {!pageLoading && !pageError &&
                 <div className='w-full h-screen flex flex-col justify-between px-6 py-9 z-50 bg-black bg-no-repeat bg-auto bg-center bg-fixed' style={{ backgroundImage: `url('/assets/fitness_score_gradient.svg')` }}>
                     <div className='w-full flex flex-col justify-start items-start gap-4'>
-                        <div className="flex flex-col items-center justify-center gap-5">
+                        {/* <div className="flex flex-col items-center justify-center gap-5">
                             <div className="mx-auto my-4 flex w-full items-center justify-center">
                                 <BackButton
                                     size={30}
@@ -121,7 +121,7 @@ function FitnessScorePage() {
                                     className="absolute left-[5%] w-fit cursor-pointer"
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div className='w-full flex flex-col justify-start items-start gap-9'>
                             {/* Name */}
                             <div className='w-full flex flex-row justify-start items-center gap-3'>
@@ -150,14 +150,14 @@ function FitnessScorePage() {
                                 <p className='text-[16px] text-[#b1b1b1]' style={{ fontWeight: 400, lineHeight: '22px' }}>You are already better than {data?.fitnessPercentile}% of the OTM community</p>
                             </div>
                             {/* Personalised Workout */}
-                            <div className="w-full flex flex-col justify-center items-start gap-3 overflow-y-scroll" >
-                                <h1 className='text-[32px] text-[#7e87ef]' style={{ lineHeight: '40px' }}>Your personalised workout</h1>
+                            <div className="w-full flex flex-col justify-center items-start gap-5 overflow-y-scroll" >
+                                <h1 className='text-[32px] text-[#7e87ef]' style={{ lineHeight: '40px', marginBlock: '10px' }}>Your personalised workout</h1>
                                 <div className='text-[16px] text-[#b1b1b1] flex flex-col gap-3' style={{ lineHeight: '22px', fontWeight: 400, }} >
                                     {
                                         data?.workout.map((item, index) => {
                                             if(item?.description){
                                                 return (
-                                                    <p key={index} ><span className='text-[#848CE9]' style={{fontWeight: 800}}>{item?.name}</span> - {item?.description}</p>
+                                                    <p key={index} ><span className='text-[#848CE9]' style={{fontWeight: 600}}>{item?.name}</span> - {item?.description}</p>
                                                 )
                                             }
                                         })
@@ -167,7 +167,7 @@ function FitnessScorePage() {
                         </div>
                     </div>
                     <div className="w-full flex flex-col justify-start items-center gap-2 mt-9 pb-9">
-                        <p className='text-[#5ecc7b] text-[14px] '>It’s a journey, we emphasise on longterm lifestyle changes instead of quick fixes</p>
+                        {/* <p className='text-[#5ecc7b] text-[14px] '>It’s a journey, we emphasise on longterm lifestyle changes instead of quick fixes</p> */}
                         <motion.button
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}

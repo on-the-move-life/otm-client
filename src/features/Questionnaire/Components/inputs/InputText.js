@@ -30,7 +30,7 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                         type={inputType} //text
                         value={questionCode && Object.keys(response)?.length > 0 && (response[questionCode])[0]}
                         style={{ borderColor: '#7e87ef' }}
-                        className="textbox uppercase"
+                        className="textbox-questionnaire uppercase"
                         onClickCapture={() => {
                             setTyping(true);
                         }}
@@ -50,7 +50,7 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                         placeholder={placeholder}
                     />
                     <motion.p
-                        className='textbox-text uppercase'
+                        className='textbox-text-questionnaire uppercase'
                         variants={variants}
                         initial="hidden"
                         animate={isTyping || response[questionCode][0] !== '' ? "visible" : "hidden"}
@@ -63,7 +63,7 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                 <div className='w-full flex flex-col items-center justify-center gap-9 mt-9'>
                     <CircularSlider
                         width={280}
-                        data={[15, 30, 60, 90, 120, 150, 180]}
+                        data={[15, 20, 30, 45, 60, 90, 120]}
                         onChange={val => {
                             setSliderValue(val);
                             setResponse(prev => {
