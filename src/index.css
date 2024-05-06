@@ -26,6 +26,34 @@ body {
   width: 100%;
 }
 
+.textbox-text {
+  padding-top: 10px;
+  color: #B1B1B1;
+  width: 100%;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+}
+
+.textbox-questionnaire{
+  padding-top: 10px;
+  background: none;
+  border-bottom: 1px solid;
+  color: #B1B1B1;
+  font-size: 1em;
+  width: 100%;
+}
+.textbox-text-questionnaire{
+  color: #B1B1B1;
+  width: 100%;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+}
+
+.textbox-questionnaire::placeholder {
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+}
+
 input,
 textarea,
 button,
@@ -678,14 +706,16 @@ button:active {
   }
 }
 
-.custom-textarea{
+.custom-textarea {
   outline: none;
-  border:  1px solid #7e87ef;
+  border: 1px solid #7e87ef;
   box-sizing: border-box;
 }
-.custom-textarea:focus{
+
+.custom-textarea:focus {
   border: 1px solid #3d3d3d;
 }
-.custom-textarea::placeholder{
+
+.custom-textarea::placeholder {
   color: #565656;
 }

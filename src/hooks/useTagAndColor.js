@@ -1,13 +1,13 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 
-export const useTagAndColor = (inputScore) => {
+export const useTagAndColor = (inputScore, barWidth = 20) => {
     const tags = useMemo(() => ['Newbie', 'Beginner', 'Intermediate', 'Advanced', 'Elite'], []);
     const colors = useMemo(() => ['#FA5757', '#F5C563', '#DDF988', '#5ECC7B', '#7E87EF'], []);
     const [tagColorPosition, setTagAndColorPosition] = useState([tags[0], colors[0], 0, colors, tags]);
 
     const setTagAndColorAndPosition = useCallback((score) => {
         const index = Math.floor(score / 2);
-        const position = (score / 10) * 100 + index;
+        const position = (index * barWidth) + ((score - (index * 2)) / 2 * barWidth);
 
         return [tags[index], colors[index], position];
         

@@ -1,4 +1,3 @@
-import questionnaireReducer from './features/Questionnaire/QuestionnaireSlice';
 import workoutReducer from './features/Workout/WorkoutSlice';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -7,7 +6,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 const { createStore, combineReducers, applyMiddleware } = require('redux');
 
 const rootReducer = combineReducers({
-  questionnaireReducer,
   workoutReducer,
 });
 

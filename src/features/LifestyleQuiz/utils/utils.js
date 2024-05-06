@@ -22,7 +22,25 @@ export function getGeneralScreen(questionsArray){
         let generalScreen = -1;
         if(questionsArray){
             questionsArray.forEach(ques => {
-                if(generalScreen === -1 && ques?.target === "general"){
+                if(generalScreen === -1 && (ques?.target === "general" || ques?.target === "GEN")){
+                    generalScreen = ques?.screen;
+                }
+            });
+        }
+        return generalScreen;
+    }
+    catch(err){
+        console.log("error in getGeneralScreen function : ", err)
+    }
+}
+
+// function to get the screen number of "target === FITTEST"
+export function getFitnessScreen(questionsArray){
+    try{
+        let generalScreen = -1;
+        if(questionsArray){
+            questionsArray.forEach(ques => {
+                if(generalScreen === -1 && (ques?.target === "FITTEST")){
                     generalScreen = ques?.screen;
                 }
             });
@@ -36,11 +54,17 @@ export function getGeneralScreen(questionsArray){
 
 // funtion to return capitalize string
 export function capitalizeFirstLetter(str) {
-    // Check if the string is empty
-    if (str.length === 0) return str;
-
-    // Capitalize the first letter and concatenate it with the rest of the string
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    try{
+        // Check if the string is empty
+        if (str.length === 0) return str;
+    
+        // Capitalize the first letter and concatenate it with the rest of the string
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    catch(err){
+        console.log("error at capitalizeFirstLetter function : ", err);
+        return str;
+    }
 }
 
 // function to increment the screen and rank when the next button is clicked
@@ -53,7 +77,7 @@ export function increaseScreenAndRank(screen, maxScreenCount, setScreen) {
 
 // function to decrement the screen and rank when the back button is clicked
 export function decreaseScreenAndRank(screen, setScreen) {
-    if (screen > 1) {
+    if (screen >= 1) {
         setScreen(prev => prev - 1);
     }
     console.log("screen", screen)
