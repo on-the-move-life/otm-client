@@ -26,6 +26,34 @@ body {
   width: 100%;
 }
 
+.textbox-text {
+  padding-top: 10px;
+  color: #B1B1B1;
+  width: 100%;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+}
+
+.textbox-questionnaire{
+  padding-top: 10px;
+  background: none;
+  border-bottom: 1px solid;
+  color: #B1B1B1;
+  font-size: 1em;
+  width: 100%;
+}
+.textbox-text-questionnaire{
+  color: #B1B1B1;
+  width: 100%;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+}
+
+.textbox-questionnaire::placeholder {
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+}
+
 input,
 textarea,
 button,
