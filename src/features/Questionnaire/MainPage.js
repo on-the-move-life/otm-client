@@ -192,7 +192,32 @@ function LandingPage() {
         />
       </div>
       <div className="hide-scrollbar flex flex-col justify-center gap-3 overflow-y-scroll">
-        {screen >= 1 && (
+        {
+          showBMIScreen &&
+          <BMIScreen
+            response={response}
+            submitResponse={submitResponse}
+            screen={screen}
+            questions={questions}
+            getScreenCounts={getScreenCounts}
+            setScreen={setScreen}
+            decreaseScreenAndRank={decreaseScreenAndRank}
+            setShowBMIScreen={setShowBMIScreen}
+          />
+        }
+        {
+          showAssessmentScreen &&
+          <AssessmentScreen
+            submitResponse={submitResponse}
+            screen={screen}
+            questions={questions}
+            getScreenCounts={getScreenCounts}
+            setScreen={setScreen}
+            decreaseScreenAndRank={decreaseScreenAndRank}
+            setShowAssessmentScreen={setShowAssessmentScreen}
+          />
+        }
+        {screen >= 1 && !showBMIScreen && !showAssessmentScreen && (
           <div className="flex flex-col items-center justify-center gap-5">
             <div className="mx-auto my-4 flex w-full items-center justify-center">
               {screen >= 1 && (
@@ -226,7 +251,7 @@ function LandingPage() {
                 <h1 className="mt-3 text-[26px] text-[#7e87ef]">
                   Fitness Test
                 </h1>
-                <p className='text-[18px] text-[#545454] my-2' style={{fontWeight: 400, lineHeight: '25px'}}>How many max reps of each
+                <p className='text-[18px] text-[#545454] my-2' style={{ fontWeight: 400, lineHeight: '25px' }}>How many max reps of each
                   movement can you perform in one minute</p>
               </div>
             )
@@ -234,6 +259,8 @@ function LandingPage() {
           <div>
             {screen >= 1 &&
               currentQuestion &&
+              !showBMIScreen && 
+              !showAssessmentScreen &&
               currentQuestion?.map((ques, idx) => {
                 return (
                   <>
@@ -281,7 +308,7 @@ function LandingPage() {
               })}
             {
               screen === fitnessScreen &&
-              <p className='text-[18px] text-[#545454]' style={{fontWeight: 400, lineHeight: '25px', marginBlock: '20px'}}>We'll use your results to calculate your fitness score on a scale of 1-10.</p>
+              <p className='text-[18px] text-[#545454]' style={{ fontWeight: 400, lineHeight: '25px', marginBlock: '20px' }}>We'll use your results to calculate your fitness score on a scale of 1-10.</p>
             }
             {(screen === 0) && (
               <div
@@ -359,55 +386,30 @@ function LandingPage() {
                 </div>
               </div>
             )}
-            {
-              showBMIScreen &&
-              <BMIScreen
-                response={response}
-                submitResponse={submitResponse}
-                screen={screen}
-                questions={questions}
-                getScreenCounts={getScreenCounts}
-                setScreen={setScreen}
-                decreaseScreenAndRank={decreaseScreenAndRank}
-                setShowBMIScreen={setShowBMIScreen}
-              />
-            }
-            {
-              showAssessmentScreen &&
-              <AssessmentScreen
-                submitResponse={submitResponse}
-                screen={screen}
-                questions={questions}
-                getScreenCounts={getScreenCounts}
-                setScreen={setScreen}
-                decreaseScreenAndRank={decreaseScreenAndRank}
-                setShowAssessmentScreen={setShowAssessmentScreen}
-              />
-            }
           </div>
         </div>
         {screen >= 1 && (
-          <Button
-            style={{ fontWeight: 500 }}
-            text={screen === maxScreenCount ? "Finish" : currentQuestion[0]?.target === "ASSESSMENT" ? "Take Assessment" : "Next"}
-            type="lifestyle"
-            action={() => {
-              // checking for empty response
-              if (
-                currentQuestion &&
-                Object.keys(response)?.length > 0 &&
-                !isAnyEmptyResponse(currentQuestion, response)
-              ) {
-                // API function call for submittin response on every next/submit button press
-                submitResponse();
-              }
-              else {
-                if (isAnyEmptyResponse(currentQuestion, response)) {
-                  toast.warn('Please fill in the required fields!');
+            <Button
+              style={{ fontWeight: 500 }}
+              text={screen === maxScreenCount ? "Finish" : currentQuestion[0]?.target === "ASSESSMENT" ? "Take Assessment" : "Next"}
+              type="lifestyle"
+              action={() => {
+                // checking for empty response
+                if (
+                  currentQuestion &&
+                  Object.keys(response)?.length > 0 &&
+                  !isAnyEmptyResponse(currentQuestion, response)
+                ) {
+                  // API function call for submittin response on every next/submit button press
+                  submitResponse();
                 }
-              }
-            }}
-          />
+                else {
+                  if (isAnyEmptyResponse(currentQuestion, response)) {
+                    toast.warn('Please fill in the required fields!');
+                  }
+                }
+              }}
+            />
         )}
       </div>
     </div>

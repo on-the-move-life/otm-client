@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function AssessmentScreen({ screen, questions, getScreenCounts, decreaseScreenAndRank, setScreen, setShowAssessmentScreen, submitResponse }) {
     const navigate = useNavigate();
     return (
-        <div className='fixed min-h-screen w-full flex flex-col justify-between items-center px-6 py-9 top-0 left-0 z-50 bg-black'>
+        <div className='absolute min-h-screen w-full flex flex-col justify-between items-center px-6 py-9 top-0 left-0 z-50 bg-black'>
             <div className="flex flex-col items-center justify-center gap-5">
                 <div className="mx-auto my-4 flex w-full items-center justify-center">
                     <BackButton
