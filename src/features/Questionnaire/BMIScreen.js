@@ -32,15 +32,13 @@ function BMIScreen({ screen, questions, response, getScreenCounts, decreaseScree
                     <ScoreIndicator height={Number(response['su4'][0])} weight={Number(response['su3'][0])} />
                 </div>
             </div>
-            <div className="w-full mb-[44px]">
-                <Button
-                    text={"Next"}
-                    type="lifestyle"
-                    action={() => {
-                        setShowBMIScreen(false);
-                    }}
-                />
-            </div>
+            <Button
+                text={"Next"}
+                type="lifestyle"
+                action={() => {
+                    setShowBMIScreen(false);
+                }}
+            />
         </div>
     )
 }

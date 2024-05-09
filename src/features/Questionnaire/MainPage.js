@@ -370,7 +370,7 @@ function LandingPage() {
                         </span>
                       </StarterText>
                     )}
-                    <div className='w-full flex flex-col justify-center gap-1 mb-[44px]'>
+                    <div className='w-full flex flex-col justify-center gap-1'>
                       <Button
                         style={{ fontWeight: 500 }}
                         text="Craft your journey"
@@ -389,7 +389,6 @@ function LandingPage() {
           </div>
         </div>
         {screen >= 1 && (
-          <div className='w-full mb-[44px]'>
             <Button
               style={{ fontWeight: 500 }}
               text={screen === maxScreenCount ? "Finish" : currentQuestion[0]?.target === "ASSESSMENT" ? "Take Assessment" : "Next"}
@@ -411,7 +410,6 @@ function LandingPage() {
                 }
               }}
             />
-          </div>
         )}
       </div>
     </div>

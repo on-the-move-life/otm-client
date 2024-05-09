@@ -37,15 +37,13 @@ function AssessmentScreen({ screen, questions, getScreenCounts, decreaseScreenAn
                 </h1>
                 <p className='text-[24px] text-[#b1b1b1]' style={{ lineHeight: '38px' }}>Take a mini-assessment that will help us tailor a program suited to your current level.</p>
             </div>
-            <div className='w-full mb-[44px]'>
-                <Button
-                    text={"Take Assessment"}
-                    type="lifestyle"
-                    action={() => {
-                        setShowAssessmentScreen(false);
-                    }}
-                />
-            </div>
+            <Button
+                text={"Take Assessment"}
+                type="lifestyle"
+                action={() => {
+                    setShowAssessmentScreen(false);
+                }}
+            />
         </div>
     )
 }
