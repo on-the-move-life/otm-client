@@ -13,7 +13,7 @@ import {
   isAnyEmptyResponse,
   validResponses,
   getEmail,
-  getGeneralScreen
+  getGeneralScreen,
 } from './utils/utils';
 import InputText from './InputText';
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +23,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './Components/Loader';
 import styled from 'styled-components';
+import { useExitIntent } from 'use-exit-intent'
+import ExitIntentModal from './Components/ExitIntentModal';
 
 function LandingPage() {
   const [questions, setQuestions] = useState(null);
@@ -33,9 +35,58 @@ function LandingPage() {
   const maxScreenCount = getScreenCounts(questions);
   // const generalScreen = getGeneralScreen(questions);
   const [sessionID, setSessionID] = useState(null);
+  const [exitModalOpen, setExitModalOpen] = useState(false);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const navigate = useNavigate();
+  const {
+    registerHandler,
+  } = useExitIntent({
+    cookie: {
+      key: 'use-exit-intent',
+    },
+
+    desktop: {
+      delayInSecondsToTrigger: 0,
+      triggerOnMouseLeave: false,
+      triggerOnIdle: false,
+      useBeforeUnload: true
+    },
+
+    mobile: {
+      delayInSecondsToTrigger: 5,
+      triggerOnIdle: true,
+    },
+  })
+
+  registerHandler({
+    id: 'openModal',
+    handler: () => {
+      console.log('event: trigger')
+      // open the exit modal
+      setExitModalOpen(true)
+    },
+  })
+
+  registerHandler({
+    id: 'anotherHandler',
+    handler: () => {
+      console.log('Another handler');
+      // open the exit modal
+      setExitModalOpen(true);
+    },
+    context: ['onDesktop'],
+  })
+
+  registerHandler({
+    id: 'onUnsubscription',
+    handler: () => {
+      console.log('Unsubscription handler');
+      // open the exit modal
+      setExitModalOpen(true)
+    },
+    context: ['onMobile'],
+  })
 
   const StarterText = styled.div`
     color: var(--New-White, rgba(255, 255, 255, 0.26));
@@ -85,20 +136,14 @@ function LandingPage() {
 
         // after successful submission, let the user proceed to the next question
         // possible error - network breakdown
-        // delay in increaseSreenAndRank to simulate the network delay and toast
-        setTimeout(() => {
-          increaseScreenAndRank(screen, maxScreenCount, setScreen);
-        }, 800);
+        increaseScreenAndRank(screen, maxScreenCount, setScreen);
       })
       .catch((err) => {
         console.log(err);
         toast.error('Submission Failed! Please Try Again.');
       })
       .finally(() => {
-        // a delay of 500ms is introduced bcz to old page was appearing for a moment after the loading was stopped
-        setTimeout(() => {
           setPageLoading(false);
-        }, 500);
       });
   }
 
@@ -151,13 +196,16 @@ function LandingPage() {
 
   return (
     <div
-      className={`flex min-h-screen flex-col justify-between ${
-        screen === 0 || screen === -1 ? '' : 'px-6 py-8'
-      }`}
+      className={`flex min-h-screen flex-col justify-between ${screen === 0 || screen === -1 ? '' : 'px-6 py-8'
+        }`}
       style={{
         fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
       }}
     >
+      {
+        exitModalOpen &&
+        <ExitIntentModal response={response} open={exitModalOpen} setOpen={setExitModalOpen} />
+      }
       {pageError && !pageLoading && <Error>Some Error Occured</Error>}
       {pageLoading && (
         <div className="fixed left-0 top-0 z-50 w-full bg-black">
@@ -217,9 +265,8 @@ function LandingPage() {
                       <div className="my-3 w-full">
                         {/* Question */}
                         <h1 className="text-[20px] text-[#7e87ef]">
-                          {`${capitalizeFirstLetter(ques?.content)}${
-                            ques?.isRequired ? ' *' : ''
-                          }`}
+                          {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
+                            }`}
                         </h1>
                         {/* Description */}
                         <p className="my-2 space-x-2 text-[14px] text-[#b1b1b1]">
@@ -227,7 +274,7 @@ function LandingPage() {
                         </p>
                       </div>
                       {ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
-                      ques?.inputType?.toUpperCase() === 'MULTICHOICE' ? (
+                        ques?.inputType?.toUpperCase() === 'MULTICHOICE' ? (
                         <Options
                           questionCode={ques?.code}
                           options={ques?.options}

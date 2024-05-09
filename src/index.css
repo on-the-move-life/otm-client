@@ -34,6 +34,26 @@ body {
   letter-spacing: 0.2em;
 }
 
+.custom-phone-input{
+  background: none;
+  border-bottom: 1px solid;
+  padding-top: 20px;
+  color: #B1B1B1;
+  font-size: 1em;
+  width: 100%;
+}
+
+.custom-phone-input input[type="tel"]{
+  outline: none;
+  background: none;
+}
+
+
+.custom-phone-input input[type="tel"]::placeholder{
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+}
+
 .textbox-questionnaire{
   padding-top: 10px;
   background: none;
