@@ -76,10 +76,7 @@ const AchievementPage = ({ setShowAchievemntsPage, totalWorkouts, coinsEarned })
           {/* achievements */}
           {/* <h3 className="text-md text-lightGray">Achievements Unlocked</h3> */}
           <div className='w-full h-fit flex flex-col justify-center items-start gap-5'>
-            <div className='w-full flex flex-row justify-start items-center gap-3 pl-5'>
-              {/* <img src={'/assets/movecoin.svg'} alt="movecoin" className='w-[40px] h-[40px]' /> */}
-              <MovecoinHeading> <p className='bg-gradient-to-r from-gray-200 to-gray-500 text-transparent bg-clip-text font-extrabold'>Movecoins Earned </p></MovecoinHeading>
-            </div>
+
             <div
               className='w-full min-h-[100px] flex flex-row justify-center items-center rounded-[20px] bg-[#121212]'
             >
