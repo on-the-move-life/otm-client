@@ -15,7 +15,7 @@ line-height: 41.6px; /* 160% */
 text-transform: capitalize;
 `
 const Description = styled.p`
-color: var(--New-White, rgba(255, 255, 255, 0.86));
+// color: var(--New-White, rgba(255, 255, 255, 0.86));
 
 /* Body condensed bold */
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -75,23 +75,27 @@ const AchievementPage = ({ setShowAchievemntsPage, totalWorkouts, coinsEarned })
 
           {/* achievements */}
           {/* <h3 className="text-md text-lightGray">Achievements Unlocked</h3> */}
-          <div className='w-full h-fit flex flex-col justify-center items-start gap-5'>
+          <div className='w-full h-fit flex flex-col justify-center items-center gap-5'>
 
             <div
-              className='w-full min-h-[100px] flex flex-row justify-center items-center rounded-[20px] bg-[#121212]'
+              className='w-5/6 min-h-[100px]  flex flex-row justify-center items-center rounded-[20px] bg-[#121212]'
             >
               <div
                 className='w-full h-full bg-contain backdrop-blur-[1px] p-5  rounded-[20px] border-[0.5px] border-[#383838] bg-right bg-no-repeat bg-25%'
                 style={{ backgroundImage: `url('/assets/coins_popup_bg.svg')` }}
-              >
-                <Description className='flex flex-row gap-1'><span className='text-[#D6B6F0]'>•Movecoins</span> <br></br> </Description>
-                <div >
-                  <Description className='text-lightGray '>You earned  <span className=' font-extrabold px-2 rounded-sm'>   {coinsEarned}</span> MoveCoins! </Description>
 
+              >
+                <Description className='flex '><span className='text-[#D6B6F0]'>• Movecoins</span> <br></br> </Description>
+
+                <div className="earnings flex items-center">
+                  You earned <img className="w-5 ml-1 " src="/assets/movecoinslogo.svg" alt="MoveCoins Logo" />
+                  <span className=" font-extrabold pl-1 pr-2 rounded-sm">
+                    <GradientText>{coinsEarned}</GradientText>
+                  </span>   MoveCoins!
                 </div>
 
 
-                <Description> < p className='break-words font-normal text-slate-400 leading-normal '> Redeem your coins on your next purchase and<GradientText> SAVE</GradientText></p> </Description>
+                < p className='break-words font-normal leading-normal text-slate-500'> Redeem your coins on your next purchase and<GradientText> SAVE</GradientText></p>
               </div>
             </div>
           </div>
