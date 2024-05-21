@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Button } from '../../components';
 import { motion } from 'framer-motion';
 import { axiosClient } from '../LifestyleQuiz';
@@ -8,12 +8,11 @@ import BackButton from '../../components/BackButton';
 import { useTagAndColor } from '../../hooks/useTagAndColor';
 import FitnessLoader from './FitnessLoader';
 import styled from 'styled-components'
-import { red } from '@mui/material/colors';
 
 const HorizontalBar = styled.div`
     --color: ${props => props.color};
     width: 40px;
-    height: 15px;
+    height: 7.7px;
     border-radius: 5px;
     background: var(--color);
 `;
@@ -35,6 +34,13 @@ function FitnessScorePage() {
     const [pageLoading, setPageLoading] = useState(true);
     const [pageError, setPageError] = useState(false);
     const navigate = useNavigate();
+
+    // function to determine if the devive is iPhone or not
+    const isIPhone = () => {
+        const userAgent = navigator.userAgent;
+        console.log("user agent : ", userAgent.includes('iPhone'));
+        return userAgent.includes('iPhone');
+      };
 
     function getFitnessScore(email) {
         setPageLoading(true);
@@ -69,7 +75,7 @@ function FitnessScorePage() {
     const Indicator = ({ style }) => {
         return (
             <div style={style} className='relative'>
-                <div className='w-[2px] h-[15px] bg-white'></div>
+                <div className='w-[2px] h-[12px] bg-white'></div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 2 2" className='absolute bottom-0 left-[-3px]'>
                     <polygon points="0,2 1,0 2,2" fill="white" />
                 </svg>
@@ -81,25 +87,51 @@ function FitnessScorePage() {
     const ScoreIndicator = ({ score }) => {
         const [tag, color, position, colors, tags] = useTagAndColor(score, 40)
         return (
-            <div className='w-full flex flex-row justify-between items-center px-3' style={{marginBlock: '8px'}}>
-                <div className='text-[60px]' style={{ fontWeight: 400, lineHeight: '54px', fontFamily: 'Anton', color: color }}>{score}</div>
-                <div className='w-fit flex flex-col items-start justify-center gap-4'>
-                    <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
-                        <TagText>{tag}</TagText>
+            <div className='w-full flex flex-col justify-start items-center gap-2 rounded-t-[12px] bg-[#1c1c1e]'>
+                <div className='w-full rounded-t-[12px] bg-[#7e87ef]'>
+                    <p className='text-[15px] text-[#1f1f1f] ml-3' style={{fontWeight: 600}}>Your Fitness Insights</p>
+                </div>
+                <div className='w-full flex flex-row justify-between items-center px-3' style={{ marginBlock: '8px' }}>
+                    <div className='flex flex-col justify-center items-start gap-1'>
+                        <p className='text-[#929292] text-[9.3px] uppercase' style={{ fontWeight: 500 }}>Score</p>
+                        <div className='text-[60px]' style={{ fontWeight: 400, lineHeight: '54px', fontFamily: 'Anton', color: color }}>{score}</div>
                     </div>
+                    <div className='w-fit flex flex-col items-start justify-center gap-4'>
+                        <div className='flex flex-col justify-center items-start gap-1'>
+                            <p className='text-[#929292] text-[9.3px] uppercase' style={{ fontWeight: 500 }}>Fitness Level</p>
+                            <div style={{ backgroundColor: color }} className='h-fit w-fit px-[5px] py-[1px] flex flex-row justify-center items-center rounded-[4px]'>
+                                <TagText>{tag}</TagText>
+                            </div>
+                        </div>
 
-                    <div className='w-fit relative'>
-                        <Indicator style={{ position: 'absolute', left: `${position}px`, top: '10px' }} />
-                        <div className='w-fit flex flex-row justify-center items-center gap-[1px]'>
-                            {
-                                [...Array(5)].map((_, index) => {
-                                    return (
-                                        <HorizontalBar color={colors[index]} key={Math.random() * 1000} />
-                                    )
-                                })
-                            }
+                        <div className='w-fit relative'>
+                            <Indicator style={{ position: 'absolute', left: `${position}px`, top: '3px' }} />
+                            <div className='w-fit flex flex-row justify-center items-center gap-[1px]'>
+                                {
+                                    [...Array(5)].map((_, index) => {
+                                        return (
+                                            <HorizontalBar color={colors[index]} key={Math.random() * 1000} />
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        )
+    }
+    // personalised workout component
+    const PersonalisedWorkout = ({heading, detail, index}) => {
+        const colors = useMemo(() => ['#7E87EF', '#F5C563', '#DDF988', '#5ECC7B'], []);
+        const headingColor = colors[(index % colors.length)];
+        return(
+            <div className='min-w-[300px] flex flex-col justify-start items-start gap-[2px]'>
+                <div className='w-full bg-[#1c1c1e] px-3 py-2 rounded-t-[12px]'>
+                    <h1 className='text-[15px]' style={{fontWeight: 600, color: headingColor}}>{heading}</h1>
+                </div>
+                <div className='w-full bg-[#1c1c1e] p-3 rounded-b-[12px]'>
+                    <p className='text-[14px] text-[#fff]' style={{fontWeight: 500}}>{detail}</p>
                 </div>
             </div>
         )
@@ -144,20 +176,21 @@ function FitnessScorePage() {
                                 </h1>
                             </div>
                             {/* Fitness Score */}
-                            <div className='w-full flex flex-col items-start justify-center gap-4'>
-                                <p className="text-[16px] text-[#b1b1b1]" style={{ fontWeight: 400, lineHeight: '22px' }}>your fitness score is</p>
+                            <div className='w-full flex flex-col items-start justify-center gap-[3px]'>
                                 {data?.fitnessScore && <ScoreIndicator score={data?.fitnessScore} />}
-                                <p className='text-[16px] text-[#b1b1b1]' style={{ fontWeight: 400, lineHeight: '22px' }}>You are already better than {data?.fitnessPercentile}% of the OTM community</p>
+                                <div className='bg-[#1c1c1e] py-2 px-3 rounded-b-[12px]'>
+                                    <p className='text-[16px] text-[#fff]' style={{ fontWeight: 400, lineHeight: '22px' }}>You are already better than {data?.fitnessPercentile}% of the OTM community</p>
+                                </div>
                             </div>
                             {/* Personalised Workout */}
-                            <div className="w-full flex flex-col justify-center items-start gap-5 overflow-y-scroll" >
-                                <h1 className='text-[32px] text-[#7e87ef]' style={{ lineHeight: '40px', marginBlock: '10px' }}>Your personalised workout</h1>
-                                <div className='text-[16px] text-[#b1b1b1] flex flex-col gap-3' style={{ lineHeight: '22px', fontWeight: 400, }} >
+                            <div className="w-full flex flex-col justify-center items-start" >
+                                <h1 className='text-[25.33px] text-[#7e87ef]' style={{ lineHeight: '40px', marginBlock: '10px' }}>Your personalised workout</h1>
+                                <div className='w-full flex flex-row gap-5 overflow-x-scroll hide-scrollbar'>
                                     {
                                         data?.workout.map((item, index) => {
-                                            if(item?.description){
+                                            if (item?.description) {
                                                 return (
-                                                    <p key={index} ><span className='text-[#848CE9]' style={{fontWeight: 600}}>{item?.name}</span> - {item?.description}</p>
+                                                    <PersonalisedWorkout heading={item?.name} detail={item?.description} index={index} key={item?.name}/>
                                                 )
                                             }
                                         })
@@ -166,8 +199,8 @@ function FitnessScorePage() {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full flex flex-col justify-start items-center gap-2 mt-9 pb-9">
-                        {/* <p className='text-[#5ecc7b] text-[14px] '>It’s a journey, we emphasise on longterm lifestyle changes instead of quick fixes</p> */}
+                    <div className="w-full flex flex-col justify-start items-center gap-2 mt-9" style={{paddingBottom: isIPhone() ? '100px' : '20px'}}>
+                        <p className='text-[#5ecc7b] text-[16px] ' style={{fontWeight: 500, lineHeight: '22px', textShadow: '0px 3px 3px rgba(0,0,0,0.15)'}}>It’s a journey, we emphasise on longterm lifestyle changes instead of quick fixes</p>
                         <motion.button
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}

@@ -59,7 +59,7 @@ body {
   letter-spacing: 0.2em;
 }
 
-.textbox-questionnaire{
+.textbox-questionnaire {
   padding-top: 10px;
   background: none;
   border-bottom: 1px solid;
@@ -67,7 +67,8 @@ body {
   font-size: 1em;
   width: 100%;
 }
-.textbox-text-questionnaire{
+
+.textbox-text-questionnaire {
   color: #B1B1B1;
   width: 100%;
   font-size: 0.7em;
@@ -141,11 +142,14 @@ input:focus::placeholder {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background-color: rgba(0, 0, 0, 0.60);
-    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.70);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    opacity: 1;
 
   }
 }
+
 
 
 .perfect-week {
