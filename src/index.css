@@ -117,7 +117,7 @@ input:focus::placeholder {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background-color: rgba(0, 0, 0, 0.60);
+    background-color: rgba(0, 0, 0, 0.70);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     opacity: 1;
