@@ -40,7 +40,7 @@ export function getFitnessScreen(questionsArray){
         let generalScreen = -1;
         if(questionsArray){
             questionsArray.forEach(ques => {
-                if(generalScreen === -1 && (ques?.target === "FITTEST")){
+                if(generalScreen === -1 && (ques?.target === "fit_test")){
                     generalScreen = ques?.screen;
                 }
             });
