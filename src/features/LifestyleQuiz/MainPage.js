@@ -23,8 +23,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './Components/Loader';
 import styled from 'styled-components';
-import { useExitIntent } from 'use-exit-intent'
-import ExitIntentModal from './Components/ExitIntentModal';
 
 function LandingPage() {
   const [questions, setQuestions] = useState(null);
@@ -39,54 +37,6 @@ function LandingPage() {
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const navigate = useNavigate();
-  const {
-    registerHandler,
-  } = useExitIntent({
-    cookie: {
-      key: 'use-exit-intent',
-    },
-
-    desktop: {
-      delayInSecondsToTrigger: 0,
-      triggerOnMouseLeave: false,
-      triggerOnIdle: false,
-      useBeforeUnload: true
-    },
-
-    mobile: {
-      delayInSecondsToTrigger: 5,
-      triggerOnIdle: true,
-    },
-  })
-
-  registerHandler({
-    id: 'openModal',
-    handler: () => {
-      console.log('event: trigger')
-      // open the exit modal
-      setExitModalOpen(true)
-    },
-  })
-
-  registerHandler({
-    id: 'anotherHandler',
-    handler: () => {
-      console.log('Another handler');
-      // open the exit modal
-      setExitModalOpen(true);
-    },
-    context: ['onDesktop'],
-  })
-
-  registerHandler({
-    id: 'onUnsubscription',
-    handler: () => {
-      console.log('Unsubscription handler');
-      // open the exit modal
-      setExitModalOpen(true)
-    },
-    context: ['onMobile'],
-  })
 
   const StarterText = styled.div`
     color: var(--New-White, rgba(255, 255, 255, 0.26));
@@ -202,10 +152,6 @@ function LandingPage() {
         fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
       }}
     >
-      {
-        exitModalOpen &&
-        <ExitIntentModal response={response} open={exitModalOpen} setOpen={setExitModalOpen} />
-      }
       {pageError && !pageLoading && <Error>Some Error Occured</Error>}
       {pageLoading && (
         <div className="fixed left-0 top-0 z-50 w-full bg-black">
@@ -341,7 +287,7 @@ function LandingPage() {
                     ) : (
                       <StarterText>
                         When you are finished with the assessment, we will
-                        present you with a detailed Report of Findings, where
+                        present you with a detailed report of findings, where
                         you’ll discover:
                         <br />
                         <div className="mt-8 py-4 text-[18px]">

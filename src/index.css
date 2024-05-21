@@ -48,6 +48,11 @@ body {
   background: none;
 }
 
+.custom-phone-input>div{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 
 .custom-phone-input input[type="tel"]::placeholder{
   font-size: 0.7em;
