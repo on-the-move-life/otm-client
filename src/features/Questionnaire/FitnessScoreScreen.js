@@ -12,7 +12,7 @@ import styled from 'styled-components'
 const HorizontalBar = styled.div`
     --color: ${props => props.color};
     width: 40px;
-    height: 15px;
+    height: 7.7px;
     border-radius: 5px;
     background: var(--color);
 `;
@@ -38,6 +38,7 @@ function FitnessScorePage() {
     // function to determine if the devive is iPhone or not
     const isIPhone = () => {
         const userAgent = navigator.userAgent;
+        console.log("user agent : ", userAgent.includes('iPhone'));
         return userAgent.includes('iPhone');
       };
 
@@ -74,7 +75,7 @@ function FitnessScorePage() {
     const Indicator = ({ style }) => {
         return (
             <div style={style} className='relative'>
-                <div className='w-[2px] h-[15px] bg-white'></div>
+                <div className='w-[2px] h-[12px] bg-white'></div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 2 2" className='absolute bottom-0 left-[-3px]'>
                     <polygon points="0,2 1,0 2,2" fill="white" />
                 </svg>
@@ -104,7 +105,7 @@ function FitnessScorePage() {
                         </div>
 
                         <div className='w-fit relative'>
-                            <Indicator style={{ position: 'absolute', left: `${position}px`, top: '10px' }} />
+                            <Indicator style={{ position: 'absolute', left: `${position}px`, top: '3px' }} />
                             <div className='w-fit flex flex-row justify-center items-center gap-[1px]'>
                                 {
                                     [...Array(5)].map((_, index) => {
@@ -125,9 +126,13 @@ function FitnessScorePage() {
         const colors = useMemo(() => ['#7E87EF', '#F5C563', '#DDF988', '#5ECC7B'], []);
         const headingColor = colors[(index % colors.length)];
         return(
-            <div className='min-w-[300px] py-3  px-5 bg-[#1c1c1e] flex flex-col justify-start items-start gap-3'>
-                <h1 className='text-[15px]' style={{fontWeight: 600, color: headingColor}}>{heading}</h1>
-                <p className='text-[14px] text-[#fff]' style={{fontWeight: 500}}>{detail}</p>
+            <div className='min-w-[300px] flex flex-col justify-start items-start gap-[2px]'>
+                <div className='w-full bg-[#1c1c1e] px-3 py-2 rounded-t-[12px]'>
+                    <h1 className='text-[15px]' style={{fontWeight: 600, color: headingColor}}>{heading}</h1>
+                </div>
+                <div className='w-full bg-[#1c1c1e] p-3 rounded-b-[12px]'>
+                    <p className='text-[14px] text-[#fff]' style={{fontWeight: 500}}>{detail}</p>
+                </div>
             </div>
         )
     }
@@ -171,9 +176,9 @@ function FitnessScorePage() {
                                 </h1>
                             </div>
                             {/* Fitness Score */}
-                            <div className='w-full flex flex-col items-start justify-center gap-4'>
+                            <div className='w-full flex flex-col items-start justify-center gap-[3px]'>
                                 {data?.fitnessScore && <ScoreIndicator score={data?.fitnessScore} />}
-                                <div className='bg-[#1c1c1e] py-2 px-1'>
+                                <div className='bg-[#1c1c1e] py-2 px-3 rounded-b-[12px]'>
                                     <p className='text-[16px] text-[#fff]' style={{ fontWeight: 400, lineHeight: '22px' }}>You are already better than {data?.fitnessPercentile}% of the OTM community</p>
                                 </div>
                             </div>
