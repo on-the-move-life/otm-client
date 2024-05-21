@@ -14,9 +14,8 @@ const DataInputComponent = ({
     const textInputRef = useRef('');
     const [storedValue, setValue, getItem] = useLocalStorage(inputId, '');
     const [storedInputValues, setStoredInputValues, getStoredInputValues] = useLocalStorage('inputIds', []);
-    const handleInputChange = (event) => {
-        const newValue = event.target.value;
-        setValue(newValue);
+    const handleInputChange = (value) => {
+        setValue(value);
 
         // add the inputId to the storedInputValues array if it's not already there
         const inputIds = getStoredInputValues();
@@ -27,6 +26,9 @@ const DataInputComponent = ({
             setStoredInputValues([inputId]);
         }
     };
+    const validateInput = (number) => {
+        return number.replace(/[^0-9]/g, '');
+    }
 
     const inputDropdownStyle = {
         backgroundColor: '#0F0F0F',
@@ -58,7 +60,7 @@ const DataInputComponent = ({
                         id={inputId}
                         name={inputId}
                         value={value}
-                        onChange={handleInputChange}
+                        onChange={(e) => handleInputChange(e.target.value)}
                         label={label}
                         ref={selectInputRef}
                     >
@@ -72,13 +74,29 @@ const DataInputComponent = ({
             ) : inputType === 'textarea' ? (
                 <textarea
                     className="textbox outline-none"
+                    rows={1}
                     id={inputId}
                     name={inputId}
                     value={value}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e.target.value)}
                     placeholder={placeholder}
                     ref={textInputRef}
                 ></textarea>
+            ) : (inputType === "number" && label.includes('kg')) ? (
+                <div className='w-full'>
+                    <label className="text-gray-600 text-sm">
+                        {label}
+                    </label>
+                    <div className="w-full relative mt-2 text-gray-500">
+                        <div className="absolute inset-y-0 left-3 my-auto h-6 flex items-center border-r pr-2">
+                            <select className="text-sm outline-none rounded-lg h-full bg-transparent">
+                                <option>kg</option>
+                                <option>lbs</option>
+                            </select>
+                        </div>
+                        <input type="number" placeholder={placeholder} pattern={"[0-9.+-e]"} className="textbox-kginput w-full pl-[4.5rem] pr-3 py-2 text-[#b1b1b1] appearance-none bg-transparent outline-none border focus:border-slate-600 shadow-sm rounded-lg" onChange={(e) => handleInputChange(validateInput(e.target.value))}/>
+                    </div>
+                </div>
             ) : (
                 <input
                     className="textbox outline-none"
@@ -86,7 +104,7 @@ const DataInputComponent = ({
                     id={inputId}
                     name={inputId}
                     value={value}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e.target.value)}
                     placeholder={placeholder}
                 />
             )}
