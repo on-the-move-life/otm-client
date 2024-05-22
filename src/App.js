@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Home } from './features/Home';
 import Timeline from './features/Timeline/Timeline';
-import Morningcircle from './features/Routines/Morningcircle';
 import WakeUp from './features/Routines/wakeUp';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
@@ -60,7 +59,7 @@ function App() {
         <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
-        <Route path="/testmorningcircle" element={<RouteMiddleware><Morningcircle /></RouteMiddleware>} />
+
         <Route path="/testwakeup" element={<RouteMiddleware><WakeUp /></RouteMiddleware>} />
       </Routes>
     </BrowserRouter>
