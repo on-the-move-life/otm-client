@@ -33,11 +33,6 @@ body {
   font-size: 0.7em;
   letter-spacing: 0.2em;
 }
-.textbox-kginput::placeholder{
-  font-size: 1em;
-  letter-spacing: 0.2em;
-  color: #565656;
-}
 
 .textbox-questionnaire{
   padding-top: 10px;
