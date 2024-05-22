@@ -104,16 +104,16 @@ const ScoreIndicator = ({ height, weight }) => {
     return (
         <div className='w-full h-full flex flex-col justify-between items-center gap-[9rem]'>
             <div className='w-full flex flex-col items-center justify-center gap-[3rem]'>
-                <div className='w-full flex flex-col justify-center items-center' style={{marginBlock: '3.8em'}}>
+                <div className='w-full flex flex-col justify-center items-center' style={{ marginBlock: '3.8em' }}>
                     <p className='text-[90px] uppercase' style={{ fontFamily: 'Anton', fontWeight: 400, color: tagColorPosition[1] }}>{score}</p>
                     <p className='textbox-text uppercase text-center relative tracking-wider' style={{ top: "-20px" }}>current bmi</p>
                 </div>
                 <div className='w-full flex flex-col justify-center items-center gap-3'>
                     <div className='relative w-full flex flex-col items-center justify-center gap-4'>
-                        <div className={`w-[100px] h-[50px] text-[12px] text-black font-bold absolute top-[-37px] bg-no-repeat bg-cover flex flex-row justify-center items-start`} style={{ left: `${tagColorPosition[2] - 25}px`, backgroundImage: `url(${'/assets/scoreIndicator_dialogue.svg'})` }}>
-                            <TagText className='pt-[5px]'>Your BMI</TagText>
-                        </div>
                         <div className='w-fit relative'>
+                            <div className={`w-[100px] h-[50px] text-[12px] text-black font-bold absolute top-[-37px] bg-no-repeat bg-cover flex flex-row justify-center items-start`} style={{ left: `${tagColorPosition[2] - 41}px`, backgroundImage: `url(${'/assets/scoreIndicator_dialogue.svg'})` }}>
+                                <TagText className='pt-[5px]'>Your BMI</TagText>
+                            </div>
                             <Indicator style={{ position: 'absolute', left: `${tagColorPosition[2]}px`, top: "-3px" }} bgColor={tagColorPosition[1]} />
                             <div className='w-fit flex flex-row justify-center items-center gap-[1px]'>
                                 {

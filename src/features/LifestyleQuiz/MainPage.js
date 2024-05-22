@@ -13,7 +13,7 @@ import {
   isAnyEmptyResponse,
   validResponses,
   getEmail,
-  getGeneralScreen
+  getGeneralScreen,
 } from './utils/utils';
 import InputText from './InputText';
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +33,7 @@ function LandingPage() {
   const maxScreenCount = getScreenCounts(questions);
   // const generalScreen = getGeneralScreen(questions);
   const [sessionID, setSessionID] = useState(null);
+  const [exitModalOpen, setExitModalOpen] = useState(false);
   const [pageError, setPageError] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const navigate = useNavigate();
@@ -85,20 +86,14 @@ function LandingPage() {
 
         // after successful submission, let the user proceed to the next question
         // possible error - network breakdown
-        // delay in increaseSreenAndRank to simulate the network delay and toast
-        setTimeout(() => {
-          increaseScreenAndRank(screen, maxScreenCount, setScreen);
-        }, 800);
+        increaseScreenAndRank(screen, maxScreenCount, setScreen);
       })
       .catch((err) => {
         console.log(err);
         toast.error('Submission Failed! Please Try Again.');
       })
       .finally(() => {
-        // a delay of 500ms is introduced bcz to old page was appearing for a moment after the loading was stopped
-        setTimeout(() => {
           setPageLoading(false);
-        }, 500);
       });
   }
 
@@ -151,9 +146,8 @@ function LandingPage() {
 
   return (
     <div
-      className={`flex min-h-screen flex-col justify-between ${
-        screen === 0 || screen === -1 ? '' : 'px-6 py-8'
-      }`}
+      className={`flex min-h-screen flex-col justify-between ${screen === 0 || screen === -1 ? '' : 'px-6 py-8'
+        }`}
       style={{
         fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
       }}
@@ -217,9 +211,8 @@ function LandingPage() {
                       <div className="my-3 w-full">
                         {/* Question */}
                         <h1 className="text-[20px] text-[#7e87ef]">
-                          {`${capitalizeFirstLetter(ques?.content)}${
-                            ques?.isRequired ? ' *' : ''
-                          }`}
+                          {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
+                            }`}
                         </h1>
                         {/* Description */}
                         <p className="my-2 space-x-2 text-[14px] text-[#b1b1b1]">
@@ -227,7 +220,7 @@ function LandingPage() {
                         </p>
                       </div>
                       {ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
-                      ques?.inputType?.toUpperCase() === 'MULTICHOICE' ? (
+                        ques?.inputType?.toUpperCase() === 'MULTICHOICE' ? (
                         <Options
                           questionCode={ques?.code}
                           options={ques?.options}
@@ -294,7 +287,7 @@ function LandingPage() {
                     ) : (
                       <StarterText>
                         When you are finished with the assessment, we will
-                        present you with a detailed Report of Findings, where
+                        present you with a detailed report of findings, where
                         you’ll discover:
                         <br />
                         <div className="mt-8 py-4 text-[18px]">
