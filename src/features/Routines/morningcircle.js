@@ -1,7 +1,7 @@
 import React from 'react'
 import Circle from './components/circle.js'
 
-const morningCircle = () => {
+const Morningcircle = () => {
     return (
         <div className='h-screen w-screen  bg-black p-2' >
             <Circle />
@@ -9,4 +9,4 @@ const morningCircle = () => {
     )
 }
 
-export default morningCircle
+export default Morningcircle
