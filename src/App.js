@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Home } from './features/Home';
 import Timeline from './features/Timeline/Timeline';
-import WakeUp from './features/Routines/wakeUp';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
 import { Profile } from './features/Profile';
@@ -18,16 +17,16 @@ function App() {
   if (user && !user.includes('undefined')) {
     user = JSON.parse(user);
   }
-
+  
   function RouteMiddleware({ children }) {
     let user = localStorage.getItem('user');
     if (user && !user.includes('undefined')) {
       user = JSON.parse(user);
     }
 
-    if (user && user.email) {
+    if(user && user.email) {
       return children;
-    } else {
+    } else {    
       return <Navigate to="/login" />;
     }
   }
@@ -46,11 +45,11 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<RouteMiddleware><Home /></RouteMiddleware>} />
+        <Route path="/home" element={<RouteMiddleware><Home/></RouteMiddleware>} />
         <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />
         <Route path="/questionnaire/fitness-score" element={<RouteMiddleware><FitnessScoreScreen /></RouteMiddleware>} />
-        <Route path="/questionnaire/lifestyle" element={<LifeStyle />} />
-        <Route path="/questionnaire/lifestyle/result/:sessionID" element={<Report />} />
+        <Route path="/questionnaire/lifestyle" element={<LifeStyle/>} />
+        <Route path="/questionnaire/lifestyle/result/:sessionID" element={<Report/>} />
         <Route path="/section-details" element={<RouteMiddleware><SectionDetail /></RouteMiddleware>} />
         <Route path="/workout" element={<RouteMiddleware><Workout /></RouteMiddleware>} />
         <Route path="/workout-summary" element={<RouteMiddleware><WorkoutSummary /></RouteMiddleware>} />
@@ -59,8 +58,6 @@ function App() {
         <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
-
-        <Route path="/testwakeup" element={<RouteMiddleware><WakeUp /></RouteMiddleware>} />
       </Routes>
     </BrowserRouter>
   );
