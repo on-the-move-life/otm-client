@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskItem from './taskitem.js';
+import TaskItem from './taskItem.js';
 import { FaArrowLeft } from 'react-icons/fa';
 
 
