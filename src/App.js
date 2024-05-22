@@ -10,6 +10,7 @@ import { LifeStyle } from './features/LifestyleQuiz';
 import { Report } from './features/LifestyleQuiz';
 import { Questionnaire } from './features/Questionnaire';
 import { FitnessScoreScreen } from './features/Questionnaire';
+import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -58,6 +59,7 @@ function App() {
         <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
+        <Route path="/lifestyle-routine" element={<RouteMiddleware><LifeStyleRoutine /></RouteMiddleware>} />
       </Routes>
     </BrowserRouter>
   );
