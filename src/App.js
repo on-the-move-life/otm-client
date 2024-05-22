@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Home } from './features/Home';
 import Timeline from './features/Timeline/Timeline';
-import WakeUp from './features/Routines/wakeUp';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
 import { Leaderboard } from './features/Leaderboard';
 import { Profile } from './features/Profile';
@@ -11,6 +10,7 @@ import { LifeStyle } from './features/LifestyleQuiz';
 import { Report } from './features/LifestyleQuiz';
 import { Questionnaire } from './features/Questionnaire';
 import { FitnessScoreScreen } from './features/Questionnaire';
+import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -60,7 +60,7 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
 
-        <Route path="/testwakeup" element={<RouteMiddleware><WakeUp /></RouteMiddleware>} />
+        <Route path="/testwakeup" element={<RouteMiddleware><LifeStyleRoutine /></RouteMiddleware>} />
       </Routes>
     </BrowserRouter>
   );
