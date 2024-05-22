@@ -12,7 +12,7 @@ const WakeUp = () => {
                 </svg>
 
                 <div className="w-full flex flex-col justify-center items-center text-center">
-                    <span className="text-lightGray font-sfpro text-sm font-medium ">  <img src='../assets/small_sun.svg' alt="" /> 🔆 Morning Circle</span>
+                    <span className="text-lightGray font-sfpro text-sm font-medium ">   <img src="/assets/small_sun.svg" alt="" /> </span>
                     <span className="text-custompurple font-sfpro text-lg block mt-1">8 AM</span>
 
                 </div>
@@ -29,14 +29,15 @@ const WakeUp = () => {
                 <div className="mb-6">
                     <div className="">
                         <div className='bg-mediumGray rounded-xl'>
-
-                            <div className="p-4 rounded-md">
-                                <h3 className="text-xl text-custompurple font-sfpro">Go In Sunlight</h3>
+                            <div className="p-4 pb-1 rounded-md flex items-center space-x-2">
+                                <h3 className="text-xl text-custompurple font-sfpro ">Go In Sunlight</h3>
                                 <p className="text-customGray text-sm font-sfpro">8-10 Mins</p>
                             </div>
-                            <div className="p-4 rounded-md">
-                                <h3 className="text-xl text-custompurple font-sfpro">Do Boxed Breathing</h3>
-                                <p className="text-customGray text-sm font-sfpro">5 Mins</p>
+                            <div className="p-4 rounded-md ">
+                                <div className='flex items-center space-x-2'>
+                                    <h3 className="text-xl text-custompurple font-sfpro">Do Boxed Breathing</h3>
+                                    <p className="text-customGray text-sm font-sfpro">5 Mins</p>
+                                </div>
                                 <p className="text-lightGray text-sm font-sfpro">Details of the breathing</p>
                                 <p className="text-lightGray text-sm font-sfpro">Links to resource</p>
                             </div>
@@ -47,14 +48,24 @@ const WakeUp = () => {
                     </div>
                 </div>
                 <div className="mb-6">
-                    <h3 className="text-lg mb-2">Reflect</h3>
-                    <textarea
-                        className="w-full p-2 rounded-md bg-gray-800 text-white"
-                        placeholder="How did you feel performing this habit today? Any insights you’d like to note?"
-                    />
+                    <h3 className="text-xl text-white font-sfpro mb-2 leading-8">Reflect</h3>
+                    <div className='bg-mediumGray rounded-xl p-2'>
+
+
+                        <p className="text-lightGray mb-2 text-sm">
+                            How did you feel performing this habit today?
+                            <br />
+                            Any insights you’d like to note?
+                        </p>
+                        <textarea
+                            className="w-full p-2 bg-black rounded-xl text-mediumGray font-sfpro"
+                            placeholder="Type your answer here..."
+                        />
+                    </div>
+
                 </div>
                 <div className="mb-6">
-                    <h3 className="text-lg mb-2">Feeling Check-In</h3>
+                    <h3 className="text-lg mb-2 pb-4 leading-8 font-sfpro">Feeling Check-In</h3>
                     <div className="flex justify-between">
                         {['😡', '😟', '😐', '😊', '😍'].map((emoji, index) => (
                             <button
@@ -68,7 +79,7 @@ const WakeUp = () => {
                         ))}
                     </div>
                 </div>
-                <button className="w-full p-3 bg-blue-600 rounded-md">Mark as Done</button>
+                <button className="w-full p-2 leading-8 bg-custompurple text-black rounded-xl">Mark as Done</button>
             </div>
 
         </div>
