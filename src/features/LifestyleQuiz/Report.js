@@ -254,7 +254,7 @@ function Report() {
               </div>
               <div className="flex flex-col items-center justify-center gap-1">
                 <img src={'/assets/fitnessprogram.svg'} alt="coaches" />
-                <PlanFeatureText>Fitness program</PlanFeatureText>
+                <PlanFeatureText>Fitness programm</PlanFeatureText>
               </div>
               <div className="flex flex-col items-center justify-center gap-1">
                 <img src={'/assets/dietplan.svg'} alt="coaches" />

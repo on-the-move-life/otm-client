@@ -25,7 +25,7 @@ function AssessmentScreen({ screen, questions, getScreenCounts, decreaseScreenAn
                     />
                     <p
                         className='text-[14px] text-[#848ce9] absolute right-[5%] w-fit cursor-pointer'
-                        onClick={() => navigate('/questionnaire/fitness-score')}
+                        onClick={() => navigate('/')}
                     >
                         Skip
                     </p>

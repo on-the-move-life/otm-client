@@ -130,9 +130,9 @@ export function validateEmail(email) {
 
 // function to validate phone number
 export function validatePhoneNumber(phoneNumber) {
-    // Regular expression for a more complex phone number validation
-    const phoneRegex = /^\+?(\d[\d. ()]+)?(\([\d. ()]+\))?[\d. ()]+\d$/;
-  
+    // Regular expression for a simple phone number validation
+    const phoneRegex = /^\d{10}$/;
+
     // Check if the phoneNumber matches the regex pattern
     return phoneNumber === "" ? true : phoneRegex.test(phoneNumber);
 }
@@ -144,28 +144,4 @@ export function validatePositiveInteger(inputValue) {
 
     // Check if the inputValue matches the regex pattern
     return inputValue === "" ? true : positiveIntegerRegex.test(inputValue);
-}
-
-// function to get the percent completion of the question in lifestyle questionnaire
-/**
- * 
- * @param {object} response -> an object of key : question code and values : array of response string/number
- * @returns {number} -> return the attempted percentage of question in rounded-off(floored) value
- */
-export function getPercentAttemptedQuestions(response){
-    try{
-        let questionsNotCompleted = 0
-        const responseValuesArray = Object.values(response);
-
-        responseValuesArray.forEach(value => {
-            if(value[0] === ''){
-                questionsNotCompleted += 1;
-            }
-        })
-        return Math.floor((responseValuesArray.length - questionsNotCompleted) / responseValuesArray.length)
-    }
-    catch(err){
-        console.log("error in getPercentCompletedQuestions", err);
-        return 0;
-    }
 }

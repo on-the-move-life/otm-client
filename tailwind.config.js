@@ -32,14 +32,7 @@ module.exports = withMT({
       fontFamily: {
         serif: ['Inter', 'sans-serif'],
       },
-      backgroundSize: {
-        '25%': '25%',
-        '50%': '50%',
-        '75%': '75%',
-        'full': '100%',
-      },
     },
-
   },
 
   plugins: [],

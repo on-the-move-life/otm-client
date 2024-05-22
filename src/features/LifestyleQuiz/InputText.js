@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import { validateEmail, validatePhoneNumber, validatePositiveInteger } from './utils/utils'
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
 
 function InputText({ questionCode, response, setResponse, inputType, placeholder, isRequired, validation, setValidation }) {
   useEffect(() => {
@@ -40,7 +38,7 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
 
   return (
     <div className='w-full text-white'>
-      {(inputType === 'email' || inputType === 'number') &&
+      {(inputType === 'email' || inputType === 'tel' || inputType === 'number') ?
         <input
           type={inputType} //text, number
           value={questionCode && Object.keys(response)?.length > 0 && (response[questionCode])[0]}
@@ -57,30 +55,9 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
             });
           }}
           placeholder={placeholder}
-        />}
-      {
-        (inputType === "tel") &&
-        <PhoneInput
-          placeholder="Enter phone number"
-          className="custom-phone-input"
-          autoComplete={false}
-          defaultCountry='IN'
-          style={{ borderColor: validation[questionCode] ? '#7e87ef' : 'red' }}
-          value={questionCode && Object.keys(response)?.length > 0 && (response[questionCode])[0]}
-          onChange={(value) => {
-            setResponse(prev => {
-              return (
-                {
-                  ...prev,
-                  [questionCode]: [value]
-                }
-              )
-            });
-          }} />
-      }
-      {(inputType === "text") &&
+        /> :
         <input
-          type={inputType} //text
+          type={inputType} //text, number
           value={questionCode && Object.keys(response)?.length > 0 && (response[questionCode])[0]}
           style={{ borderColor: '#7e87ef' }}
           className="textbox"
