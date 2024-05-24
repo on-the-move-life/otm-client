@@ -1,27 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { NavigationTab } from "./index"
 import Calendar from './Calendar'
 import ProgressBar from './ProgressBar';
 import FeelingCheckin from './components/FeelingCheckin';
 
 function MainPage() {
-  const value = 50;
+  const [value, setValue] = useState(80);
   return (
     <div className="min-h-screen px-3 py-4 flex flex-col justify-between items-center">
+      <ProgressBar value={value} />
       <Calendar />
+
       <NavigationTab />
       <div>
-        <ProgressBar>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value={value}
-          />
-
-        </ProgressBar>
-
-        <FeelingCheckin></FeelingCheckin>
 
       </div>
     </div>
