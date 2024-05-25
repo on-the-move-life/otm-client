@@ -8,6 +8,7 @@ import SkillProgression from './SkillProgression.js';
 import MovementDetail from './MovementDetail.js';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
+import AlertDialog from './AlertDialog.js';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const SectionDetail = () => {
   const [showLevel, setShowLevel] = useState(false);
   const [showMvmtDetail, setShowMvmtDetail] = useState(false);
   const [selectedMovement, setSelectedMovement] = useState({});
+  const [showAlertDialog, setShowAlertDialog] = useState(false);
+
 
   const lastPage = currentIndex === sectionList.length - 1;
 
@@ -85,6 +88,34 @@ const SectionDetail = () => {
       scale: "90%",
     }
   }
+
+  // alert dialog implementation
+
+  const handleFinishClick = () => {
+    setShowAlertDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    try {
+      console.log("Closing dialog...");
+      setShowAlertDialog(false);
+      console.log("Dialog closed");
+      console.log(showAlertDialog);
+      if (showAlertDialog) {
+        setShowAlertDialog(false);
+      }
+    } catch (error) {
+      console.log("Error closing dialog:", error);
+    }
+
+  };
+
+  const handleConfirmDialog = () => {
+    setShowAlertDialog(false);
+    console.log(showAlertDialog);
+
+    navigate('/workout-summary', { replace: true });
+  };
   return (
     <>
       {showMvmtDetail && (
@@ -376,12 +407,14 @@ const SectionDetail = () => {
               {lastPage ? (
                 <div
                   className="flex h-full w-3/4 flex-col items-center justify-center bg-theme"
-                  onClick={() => navigate('/workout-summary', { replace : true })}
-                // onClick={() => setShowAchievemntsPage(true)}
+                  onClick={handleFinishClick}
                 >
-                  <span className="text-2xl tracking-widest text-green">
-                    FINISH
-                  </span>
+                  <span className="text-2xl tracking-widest text-green">FINISH</span>
+                  <AlertDialog
+                    show={showAlertDialog}
+                    onClose={handleCloseDialog}
+                    onConfirm={handleConfirmDialog}
+                  />
                 </div>
               ) : (
                 <div className="flex h-full w-3/4 flex-col items-center justify-center bg-theme">
