@@ -11,8 +11,8 @@ const AlertDialog = ({ show, onClose, onConfirm }) => {
 
     return (
         <div className="fixed inset-0 z-50  flex items-center justify-center bg-black bg-opacity-50 ">
-            <div className="bg-black p-6 rounded-lg shadow-lg  border-green border-2">
-                <h2 className="text-xl font-semibold mb-4">Important Notice</h2>
+            <div className="bg-black p-6 rounded-lg shadow-lg  border-white border">
+
                 <p className="mb-6 ">Are you sure you want to finish?</p>
                 <div className="flex justify-end space-x-4">
                     <button
@@ -22,7 +22,7 @@ const AlertDialog = ({ show, onClose, onConfirm }) => {
                         Cancel
                     </button>
                     <button
-                        className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                        className="px-4 py-2 bg-green text-black rounded hover:bg-green-600"
                         onClick={onConfirm}
                     >
                         Confirm
