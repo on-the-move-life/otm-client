@@ -3,7 +3,7 @@ import { HiX } from 'react-icons/hi';
 import ChartComponent from './ChartComponent';
 import AnimatedComponent from '../../components/AnimatedComponent';
 
-const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP'];
+const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
 
 const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const selectedImage = movement.link[0];
@@ -14,7 +14,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   };
 
   return (
-    <AnimatedComponent key={Math.random()*1000}>
+    <AnimatedComponent key={Math.random() * 1000}>
       <div
         className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll bg-[#141414] px-4 pb-32 pt-8"
         style={{ maxHeight: 'content-fit' }}
