@@ -14,7 +14,7 @@ const ProgressBar = ({ progress }) => {
 
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
 
       <div className="text-blue font-sfpro text-[14px] font-body-condensed-bold">
         You completed {progress}% of your perfect day
@@ -28,16 +28,10 @@ const ProgressBar = ({ progress }) => {
           transition={{ duration: 1 }}
         >
 
-          {/* <motion.div
-            className="absolute top-0 right-0 h-full w-6 bg-white rounded-full shadow"
-            initial={{ x: '-100%' }}
-            animate={{ x: `-${100 - progress}%` }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="absolute inset-0 flex items-center justify-center text-gray-800 font-bold">{progress}</span>
-          </motion.div> */}
-        </motion.div>
 
+        </motion.div>
+        <span className="text-white font-bold">{progress}%</span>
+        <div className="w-6 h-6 bg-white border-2 border-gray-400 rounded-full ml-2"></div>
       </div>
     </div>
 

@@ -12,7 +12,7 @@ function MainPage() {
 
   return (
     <div className="min-h-screen px-3 py-4 flex flex-col justify-between items-center">
-      <div className="w-2/3">
+      <div >
         <ProgressBar progress={progress} />
       </div>
       <Calendar />
