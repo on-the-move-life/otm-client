@@ -6,7 +6,7 @@ import FeelingCheckin from './components/FeelingCheckin';
 
 function MainPage() {
 
-  const [progress, setProgress] = useState(85);
+  const [progress, setProgress] = useState(72);
 
 
 
