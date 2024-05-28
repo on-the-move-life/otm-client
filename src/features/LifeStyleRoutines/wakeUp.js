@@ -32,16 +32,16 @@ const WakeUp = () => {
                 <h1 className="text-2xl leading-normal text-white font-sfpro font-medium capitalize p-1">🛏️ Wake Up Routine</h1>
                 <button className="flex items-center flex-col ">
                     <div className="" />
+                    <div className='pr-3'>
+                        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17" cy="17" r="15.5" fill="#282828" stroke="#7E87EF" stroke-width="2" />
+                            <circle cx="17" cy="17" r="10.5" fill="#5ECC7B" />
+                        </svg>
+                    </div>
 
-                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="Group 523">
-                            <circle id="Ellipse 105" cx="10.5" cy="10.5" r="8.5" fill="#5ECC7B" />
-                            <circle id="Ellipse 106" cx="10.5" cy="10.5" r="10" stroke="#5ECC7B" />
-                            <path id="Icon" d="M14 8L8.77952 13.25L7 11.4604" stroke="black" strokeWidth="1.45833" strokeLinecap="round" strokeLinejoin="round" />
-                        </g>
-                    </svg>
 
-                    <span className="text-customGray font-sfpro text-xs font-medium">Mark as done</span>
+                    <div className='pr-2 pb-2'>  <span className="text-customGray font-sfpro text-xs font-medium">Mark as done</span>
+                    </div>
                 </button>
             </div>
 
