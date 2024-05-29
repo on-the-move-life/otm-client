@@ -89,17 +89,12 @@ const SectionDetail = () => {
   };
 
   const handleAlertDialog = (confirm) => {
-    console.log('Attempting to close alert box...');
-    setShowAlertDialog(false); //not working
+    setShowAlertDialog(false);
 
     if (confirm) {
       navigate('/workout-summary', { replace: true });
     }
   };
-
-  useEffect(() => {
-    console.log('showAlertDialog state updated:', showAlertDialog);
-  }, [showAlertDialog]);
 
   return (
     <>
@@ -398,9 +393,6 @@ const SectionDetail = () => {
                 <span className="text-2xl tracking-widest text-green">
                   FINISH
                 </span>
-                {showAlertDialog && (
-                  <AlertDialog handleAlertDialog={handleAlertDialog} />
-                ) }
               </div>
             ) : (
               <div className="flex h-full w-3/4 flex-col items-center justify-center bg-theme">
@@ -431,6 +423,8 @@ const SectionDetail = () => {
           </footer>
         </div>
       )}
+
+      {showAlertDialog && <AlertDialog handleAlertDialog={handleAlertDialog} />}
     </>
   );
 };
