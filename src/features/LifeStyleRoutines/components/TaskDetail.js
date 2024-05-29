@@ -4,13 +4,7 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
 
 
     const [CurrentTask, setCurrentTask] = useState(tasks[0]);
-    const [CurrentTaskDetails, setCurrentTaskDetails] = useState(CurrentTask.details);
-    const [selectedFeeling, setSelectedFeeling] = useState(CurrentTask.mood);
-    // console.log(SelectedCircle, tasks);
-    console.log(CurrentTaskDetails[0].name);
-    console.log(CurrentTaskDetails[0].duration);
-    console.log(CurrentTaskDetails[0].description);
-
+    const [selectedFeeling, setSelectedFeeling] = useState(tasks[0].mood);
 
     return (
         <div className="h-screen w-screen  bg-black p-2">
@@ -60,25 +54,8 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
 
                 <div className="mb-6">
 
-                    {/* {tasks.map((task, index) => (
-                        < TaskCard key={index} task={task} index={index} />
-                    ))} */}
+                    <TaskCard tasks={tasks} />
 
-
-                    <div className="">
-                        <div className='bg-mediumGray rounded-xl'>
-
-                            <div className="p-4 rounded-md ">
-                                <div className='flex items-center space-x-2'>
-                                    <h3 className="text-xl text-custompurple font-sfpro">{CurrentTaskDetails[0].name}</h3>
-                                    <p className="text-customGray text-sm font-sfpro">{CurrentTaskDetails[0].duration}</p>
-                                </div>
-                                <p className="text-lightGray text-sm font-sfpro">{CurrentTaskDetails[0].description}</p>
-                                <p className="text-lightGray text-sm font-sfpro">Links to resource</p>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
 
 
@@ -107,35 +84,35 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
                     <div className="flex space-x-4 items-center justify-center">
                         <button
                             onClick={() => setSelectedFeeling(1)}
-                            className={`transition-transform duration-200 ${selectedFeeling === 1 ? 'transform scale-125' : ''
+                            className={`transition-transform duration-200 ${selectedFeeling === 1 ? 'transform scale-125 bg-white/75 rounded-md' : ''
                                 }`}
                         >
                             <img src={'./assets/Feeling-sad.svg'} alt="Sad" className={`w-10 h-10 ${selectedFeeling === 1 ? 'text-red-500' : ''}`} />
                         </button>
                         <button
                             onClick={() => setSelectedFeeling(2)}
-                            className={`transition-transform duration-200 ${selectedFeeling === 2 ? 'transform scale-125' : ''
+                            className={`transition-transform duration-200 ${selectedFeeling === 2 ? 'transform scale-125  bg-white/75 rounded-md' : ''
                                 }`}
                         >
                             <img src={'./assets/Feeling-sad2.svg'} alt="Neutral" className={`w-10 h-10 ${selectedFeeling === 2 ? 'text-yellow-500' : ''}`} />
                         </button>
                         <button
                             onClick={() => setSelectedFeeling(3)}
-                            className={`transition-transform duration-200 ${selectedFeeling === 3 ? 'transform scale-125' : ''
+                            className={`transition-transform duration-200 ${selectedFeeling === 3 ? 'transform scale-125  bg-white/75 rounded-md' : ''
                                 }`}
                         >
                             <img src={'./assets/Feeling-neutral.svg'} alt="Happy" className={`w-10 h-10 ${selectedFeeling === 3 ? 'text-yellow-400' : ''}`} />
                         </button>
                         <button
                             onClick={() => setSelectedFeeling(4)}
-                            className={`transition-transform duration-200 ${selectedFeeling === 4 ? 'transform scale-125' : ''
+                            className={`transition-transform duration-200 ${selectedFeeling === 4 ? 'transform scale-125  bg-white/75 rounded-md' : ''
                                 }`}
                         >
                             <img src={'./assets/Feeling-happy.svg'} alt="Very Happy" className={`w-10 h-10 ${selectedFeeling === 4 ? 'text-green-500' : ''}`} />
                         </button>
                         <button
                             onClick={() => setSelectedFeeling(5)}
-                            className={`transition-transform duration-200 ${selectedFeeling === 5 ? 'transform scale-125' : ''
+                            className={`transition-transform duration-200 ${selectedFeeling === 5 ? 'transform scale-125  bg-white/75 rounded-md' : ''
                                 }`}
                         >
                             <img src={'./assets/Feeling-happy.svg'} alt="Ecstatic" className={`w-10 h-10 ${selectedFeeling === 5 ? 'text-green-400' : ''}`} />
