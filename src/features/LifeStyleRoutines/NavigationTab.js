@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import NavigationAnalytics from './components/NavigationAnalytics'
 import NavigationClock from './components/NavigationClock'
-function NavigationTab() {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+function NavigationTab({ selectedIndex, setSelectedIndex }) {
   return (
     <div className='w-full flex flex-row justify-around items-center'>
       <div className='flex flex-row justify-center items-center gap-2' onClick={() => {

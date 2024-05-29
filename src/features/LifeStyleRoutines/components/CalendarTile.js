@@ -6,7 +6,7 @@ import {
     buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import Fire from './Fire';
+import Fire from './icons/Fire';
 
 function CalendarTile({ day, date, percentCompletion, isSelected, setSelectedDate, todayDate, todayDay }) {
     const angle = (percentCompletion / 100) * 180;
