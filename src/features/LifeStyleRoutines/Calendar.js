@@ -5,7 +5,8 @@ import {
   addDays,
   lastDayOfWeek,
   getDay,
-  getDate
+  getDate,
+  parse
 } from 'date-fns';
 import CalendarTile from './components/CalendarTile';
 
@@ -43,13 +44,25 @@ function Calendar() {
     return weekDays;
   };
 
+ /**
+ * Returns the day of the week as a short string (e.g. "Fri", "Thu", "Mon", etc.)
+ * for a given input string in the format "May 30 2024".
+ *
+ * @param {string} inputString - The input string in the format "May 30 2024".
+ * @returns {string} The day of the week as a short string (e.g. "Fri", "Thu", "Mon", etc.).
+ */
+  const getDayOfWeek = (inputString) => {
+    const date = parse(inputString, 'MMMM d yyyy', new Date());
+    return format(date, 'EEE');
+  };
+
   const weekDaysWithDates = getWeekDaysWithDates(currentMonth);
 
   return (
     <div>
       <div className="w-full flex flex-row justify-around items-center">
         {weekDaysWithDates.map((weekDay, index) => (
-          <CalendarTile day={weekDay.day} date={weekDay.date} isSelected={weekDay.date === selectedTile ? true : false} percentCompletion={(index * 30 + 10)} setSelectedDate={setSelectedTile} todayDate={todayDate} todayDay={todayDay}/>
+          <CalendarTile day={weekDay.day} date={weekDay.date} isSelected={weekDay.date === selectedTile ? true : false} percentCompletion={(index * 30 + 10)} setSelectedDate={setSelectedTile} todayDate={todayDate} todayDay={todayDay} />
         ))}
       </div>
     </div>
