@@ -1,26 +1,28 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import {
     GrayMorningCircleIcon,
     GrayAfternoonCircleIcon,
     GrayEveningCircleIcon,
     GrayNightCircleIcon,
     GrayAlwaysActiveCircleIcon,
-    Mood1Icon,
-    Mood2Icon,
-    Mood3Icon,
-    Mood4Icon,
-    Mood5Icon,
 } from "../index"
+// Import react-circular-progressbar module and styles
+import {
+    CircularProgressbar,
+    buildStyles
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import SummaryTag from './SummaryTag';
 
 /**
- *  
- * @returns a summary component for each task of the particular circle
+ * 
+ * @returns a component which shows the list of completed and incompleted tasks
  */
 
-function SummaryTile({ circleName, taskName, comment, mood, isCompleted }) {
-    useEffect(() => {
-        console.log("task name , mood : ", taskName, mood)
-    }, [])
+function SummaryTile({ circle }) {
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [incompletedTasks, setIncompletedTasks] = useState([]);
+
     const grayIcons = useMemo(() => {
         return (
             {
@@ -33,31 +35,72 @@ function SummaryTile({ circleName, taskName, comment, mood, isCompleted }) {
         )
     }, [])
 
-    const moodIcons = useMemo(() => {
-        return(
-            {
-                1: <Mood1Icon/>,
-                2: <Mood2Icon/>,
-                3: <Mood3Icon/>,
-                4: <Mood4Icon/>,
-                5: <Mood5Icon/>
+    const colors = useMemo(() => [
+        { threshold: 25, color: '#e74c3c' },
+        { threshold: 50, color: '#F5C563' },
+        { threshold: 75, color: '#7E87EF' },
+        { threshold: 100, color: '#5ECC7B' }
+    ], []);
+
+    // Determine the color based on the percentage
+    const getColor = () => {
+        for (let i = 0; i < colors.length; i++) {
+            if (circle?.completionPercentage <= colors[i].threshold) {
+                return colors[i].color;
             }
-        )
-    }, [])
+        }
+        return colors[colors.length - 1].color; // Default to the last color if not matched
+    };
+
+    const color = getColor();
+
+    useEffect(() => {
+        setCompletedTasks(circle?.tasks.filter(task => task?.completed === true));
+        setIncompletedTasks(circle?.tasks.filter(task => task?.completed !== true));
+    }, [circle])
 
     return (
-        <div className='w-full flex flex-row justify-between items-center px-4 py-2 bg-[#1C1C1E] rounded-[12px]'>
-            <div className='w-full flex flex-col justify-center items-start gap-1'>
-                <div className='flex flex-row justify-start items-center gap-[2px]'>
-                    {grayIcons[circleName]}
-                    <p className='text-[9.8px] text-[#929292]'>{circleName}</p>
+        <div className='w-full flex flex-col justify-start items-start bg-transparent gap-[2px]'>
+            <div className='w-full flex flex-row justify-between items-center  px-4 py-2 bg-[#1C1C1E] rounded-t-[12px]'>
+                <div className='flex flex-row justify-start items-center gap-[3px]'>
+                    {grayIcons[circle?.name]}
+                    <p className='text-[14px] text-[#F8F8F8]'>{circle?.name}</p>
                 </div>
-                <h3 className={`text-[18.5px] capitalize ${!isCompleted ? 'text-[#929292]' : 'text-[#F8F8F8]'}`}>{taskName}</h3>
-                {/* Not sure about this check is this comment could appear in the non-completed tasks also */}
-                {isCompleted === true && <p className='text-[#545454] text-[12px]' style={{ fontWeight: 400 }}>comments about this routine go here they can stretch to required height</p>}
+                <div className='relative top-[5px]'>
+                    <CircularProgressbar
+                        value={circle?.completionPercentage}
+                        circleRatio={0.50}
+                        strokeWidth={14}
+                        styles={buildStyles({
+                            rotation: 0.75,
+                            strokeLinecap: 'round',
+                            trailColor: '#ffffff1f',
+                            pathColor: color,
+                            textSize: '16px',
+                            pathTransitionDuration: 0.5,
+                        })}
+                        className='w-fit h-8' // Set the size of the progress bar
+                    />
+                </div>
             </div>
-            {/* Not sure about this check is this comment could appear in the non-completed tasks also */}
-            {isCompleted === true && mood !== undefined && moodIcons[mood]}
+            {completedTasks.length > 0 &&
+                <div className='w-full flex flex-row justify-start items-center gap-2 px-4 py-2 flex-wrap bg-[#1C1C1E]'>
+                    {
+                        circle?.tasks.map(task => {
+                            return task?.completed === true && <SummaryTag key={task?.taskId} name={task?.name} id={task?.taskId} isCompleted={task?.completed} />
+                        })
+                    }
+                </div>
+            }
+            {incompletedTasks.length > 0 &&
+                <div className='w-full flex flex-row justify-start items-center gap-2 px-4 py-2 flex-wrap bg-[#1C1C1E] rounded-b-[12px]'>
+                    {
+                        circle?.tasks.map(task => {
+                            return task?.completed !== true && <SummaryTag key={task?.taskId} name={task?.name} id={task?.taskId} isCompleted={task?.completed} />
+                        })
+                    }
+                </div>
+            }
         </div>
     )
 }
