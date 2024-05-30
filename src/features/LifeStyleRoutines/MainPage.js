@@ -42,7 +42,7 @@ function MainPage() {
         size={30}
         className="absolute left-[5%] w-fit cursor-pointer"
       />
-      <Calendar />
+      <Calendar completionHistory={completionHistory}/>
       {
         section === 0 && <Routines circles={circles}/>
       }
