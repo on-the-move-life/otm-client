@@ -12,10 +12,10 @@ const TaskCard = ({ tasks, index }) => {
 
     return (
         <div>
-            <div className='bg-mediumGray rounded-xl'>
+            <div className='bg-mediumGray rounded-xl p-4'>
 
                 {CurrentTaskDetails.map((task, index) => (
-                    <div key={index} className="p-4 rounded-md">
+                    <div key={index} className="pb-2 rounded-md">
                         <div className='flex items-center space-x-2'>
                             <h3 className="text-xl text-custompurple font-sfpro">{task.name}</h3>
                             <p className="text-customGray text-sm font-sfpro">{task.duration}</p>

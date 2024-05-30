@@ -19,10 +19,10 @@ const CircleTask = ({ SelectedCircle, tasks }) => {
 
                 <div className="w-full flex justify-center">
                     <span className="text-lightGray font-sfpro text-sm font-medium ">Today, May 15</span>
-
+                    {/* display date from api */}
                 </div>
             </div>
-            <div className="flex ">
+            <div className="flex p-2">
                 <div><svg xmlns="http://www.w3.org/2000/svg" width="40" height="41" viewBox="0 0 40 41" fill="none">
                     <path d="M28.3385 20.5013C28.3385 25.1037 24.6076 28.8346 20.0052 28.8346C15.4028 28.8346 11.6719 25.1037 11.6719 20.5013C11.6719 15.8989 15.4028 12.168 20.0052 12.168C24.6076 12.168 28.3385 15.8989 28.3385 20.5013Z" fill="#F5C563" stroke="#F5C563" stroke-width="2.5" />
                     <path d="M20.0065 3.83398V6.33398M20.0065 34.6673V37.1673M31.7912 32.2861L30.0234 30.5184M9.98861 10.4827L8.22084 8.71498M36.6732 20.5007H34.1732M5.83984 20.5007H3.33984M31.792 8.71517L30.0242 10.4829M9.98942 30.5186L8.22165 32.2863" stroke="#F5C563" stroke-width="2.5" stroke-linecap="round" />
@@ -31,9 +31,14 @@ const CircleTask = ({ SelectedCircle, tasks }) => {
 
             </div>
 
-            {tasks.map((task, index) => (
-                <TaskItem key={index} task={task} index={index} />
-            ))}
+            <div className='p-2'>
+                {tasks.map((task, index) => (
+                    <TaskItem key={index} task={task} index={index} />
+                ))}
+
+            </div>
+
+
         </div>
     )
 }

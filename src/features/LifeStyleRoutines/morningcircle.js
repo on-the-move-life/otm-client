@@ -50,7 +50,7 @@ const Morningcircle = () => {
                         {
                             "taskId": "1-1",
                             "name": "wakeUp",
-                            "time": "",
+                            "time": "8 AM",
                             "details": [
                                 {
                                     "name": "wakeUp",
@@ -276,7 +276,7 @@ const Morningcircle = () => {
 
 
     return (
-        <div className='h-screen w-screen  bg-black p-2' >
+        <div className='h-screen w-screen  bg-black ' >
             {/* <h2>Success</h2> */}
             {/* <CircleTask SelectedCircle={routinedata.lifeStyle.circles[0].name} tasks={routinedata.lifeStyle.circles[0].tasks} /> */}
 

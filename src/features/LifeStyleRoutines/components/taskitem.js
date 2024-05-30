@@ -9,7 +9,7 @@ function TaskItem({ task, index }) {
                 {task.icon}
             </div> */}
             <div className="ml-4 flex-1">
-                <h3 className="text-custompurple font-sfpro text-xs font-semibold ">{task.time}</h3>
+                <h3 className="text-custompurple font-sfpro text-base font-semibold ">{task.time}</h3>
                 <p className='text-white font-sfpro font-medium capitalize text-lg'>{task.name}</p>
             </div>
             <div className="text-2xl">
