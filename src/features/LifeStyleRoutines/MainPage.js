@@ -37,20 +37,24 @@ function MainPage() {
   }, [])
 
   return (
-    <div className="min-h-screen px-3 py-4 flex flex-col justify-between items-center">
+    <>
       <BackButton
         size={30}
-        className="absolute left-[5%] w-fit cursor-pointer"
+        className="absolute left-3 top-2 w-fit cursor-pointer"
       />
-      <Calendar completionHistory={completionHistory}/>
-      {
-        section === 0 && <Routines circles={circles}/>
-      }
-      {
-        section === 1 && <Summary circles={circles}/>
-      }
-      <NavigationTab selectedIndex={section} setSelectedIndex={setSection}/>
-    </div>
+      <div className="h-full px-3 py-5 flex flex-col justify-start items-center gap-3 mb-9 mt-7">
+        {completionHistory && <Calendar completionHistory={completionHistory} />}
+        {
+          section === 0 && <Routines circles={circles} />
+        }
+        {
+          section === 1 && <Summary circles={circles} />
+        }
+      </div>
+      <div className='w-full fixed bottom-0 left-0 py-2 bg-black/20 backdrop-blur-sm'>
+        <NavigationTab selectedIndex={section} setSelectedIndex={setSection} />
+      </div>
+    </>
   )
 }
 

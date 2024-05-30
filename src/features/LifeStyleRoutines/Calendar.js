@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CalendarTile from './components/CalendarTile';
 
 function Calendar({ completionHistory }) {
-  const [selectedDate, setSelectedDate] = useState(completionHistory[completionHistory.length - 1]?.date);
+  const [selectedDate, setSelectedDate] = useState(null);
 
+  useEffect(() => {
+    try{
+      const todayDate =  completionHistory[completionHistory?.length - 1]?.date;
+      setSelectedDate(todayDate);
+    }
+    catch(err){
+      console.log("error : ", completionHistory)
+    }
+  }, [completionHistory])
+  
   return (
     <div>
       <div className="w-full flex flex-row justify-around items-center">
