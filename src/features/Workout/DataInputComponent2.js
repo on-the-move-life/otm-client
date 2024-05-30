@@ -15,7 +15,7 @@ const DataInputComponent = ({
     const textInputRef = useRef('');
     const [storedValue, setValue, getItem] = useLocalStorage(inputId, '');
     const [storedInputValues, setStoredInputValues, getStoredInputValues] = useLocalStorage('inputIds', []);
-    
+
     const handleInputChange = (value) => {
         setValue(value);
 
@@ -49,10 +49,10 @@ const DataInputComponent = ({
     useEffect(() => {
         console.log("value and unit and storedValue : ", extractValue(value), extractUnit(value), storedValue)
         try {
-            if(weightValue === ""){
+            if (weightValue === "") {
                 handleInputChange("");
             }
-            else{
+            else {
                 console.log("this should not run")
                 const weightToUpdate = unit === "" ? `${weightValue} kg` : `${weightValue} ${unit}`;
                 handleInputChange(weightToUpdate.toString());
@@ -91,16 +91,25 @@ const DataInputComponent = ({
                     </select>
                 </>
             ) : inputType === 'textarea' ? (
-                <textarea
-                    className="textbox outline-none"
-                    rows={1}
-                    id={inputId}
-                    name={inputId}
-                    value={value}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                    placeholder={placeholder}
-                    ref={textInputRef}
-                ></textarea>
+                <>
+                    <label
+                        className="text-xs tracking-widest text-lightGray"
+                        htmlFor={inputId}
+                    >
+                        {label}
+                    </label>
+                    <textarea
+                        className="textbox outline-none"
+                        rows={1}
+                        id={inputId}
+                        name={inputId}
+                        value={value}
+                        onChange={(e) => handleInputChange(e.target.value)}
+                        placeholder={placeholder}
+                        label={label}
+                        ref={textInputRef}
+                    ></textarea>
+                </>
             ) : (inputType === "number" && label.includes('kg')) ? (
                 <div className='w-full'>
                     <label className="text-gray-600 text-sm">
@@ -136,15 +145,23 @@ const DataInputComponent = ({
                     </div>
                 </div>
             ) : (
-                <input
-                    className="textbox outline-none"
-                    type={inputType}
-                    id={inputId}
-                    name={inputId}
-                    value={value}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                    placeholder={placeholder}
-                />
+                <>
+                    <label
+                        className="text-xs tracking-widest text-lightGray"
+                        htmlFor={inputId}
+                    >
+                        {label}
+                    </label>
+                    <input
+                        className="textbox outline-none"
+                        type={inputType}
+                        id={inputId}
+                        name={inputId}
+                        value={value}
+                        onChange={(e) => handleInputChange(e.target.value)}
+                        placeholder={placeholder}
+                    />
+                </>
             )}
         </div>
     );
