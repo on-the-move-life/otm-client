@@ -13,15 +13,17 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import SummaryTag from './SummaryTag';
+import CircleSummary from './CircleSummary';
 
 /**
  * 
  * @returns a component which shows the list of completed and incompleted tasks
  */
 
-function SummaryTile({ circle }) {
+function SummaryTile({ circle, date }) {
     const [completedTasks, setCompletedTasks] = useState([]);
     const [incompletedTasks, setIncompletedTasks] = useState([]);
+    const [showSummary, setShowSummary] = useState(false);
 
     const grayIcons = useMemo(() => {
         return (
@@ -60,48 +62,51 @@ function SummaryTile({ circle }) {
     }, [circle])
 
     return (
-        <div className='w-full flex flex-col justify-start items-start bg-transparent gap-[2px]'>
-            <div className='w-full flex flex-row justify-between items-center  px-4 py-2 bg-[#1C1C1E] rounded-t-[12px]'>
-                <div className='flex flex-row justify-start items-center gap-[3px]'>
-                    {grayIcons[circle?.name]}
-                    <p className='text-[14px] text-[#F8F8F8]'>{circle?.name}</p>
+        <>
+            {!showSummary && <div className='w-full flex flex-col justify-start items-start bg-transparent gap-[2px]' onClick={() => setShowSummary(true)}>
+                <div className='w-full flex flex-row justify-between items-center  px-4 py-2 bg-[#1C1C1E] rounded-t-[12px]'>
+                    <div className='flex flex-row justify-start items-center gap-[3px]'>
+                        {grayIcons[circle?.name]}
+                        <p className='text-[14px] text-[#F8F8F8]'>{circle?.name}</p>
+                    </div>
+                    <div className='relative top-[5px]'>
+                        <CircularProgressbar
+                            value={circle?.completionPercentage}
+                            circleRatio={0.50}
+                            strokeWidth={14}
+                            styles={buildStyles({
+                                rotation: 0.75,
+                                strokeLinecap: 'round',
+                                trailColor: '#ffffff1f',
+                                pathColor: color,
+                                textSize: '16px',
+                                pathTransitionDuration: 0.5,
+                            })}
+                            className='w-fit h-8' // Set the size of the progress bar
+                        />
+                    </div>
                 </div>
-                <div className='relative top-[5px]'>
-                    <CircularProgressbar
-                        value={circle?.completionPercentage}
-                        circleRatio={0.50}
-                        strokeWidth={14}
-                        styles={buildStyles({
-                            rotation: 0.75,
-                            strokeLinecap: 'round',
-                            trailColor: '#ffffff1f',
-                            pathColor: color,
-                            textSize: '16px',
-                            pathTransitionDuration: 0.5,
-                        })}
-                        className='w-fit h-8' // Set the size of the progress bar
-                    />
-                </div>
-            </div>
-            {completedTasks.length > 0 &&
-                <div className='w-full flex flex-row justify-start items-center gap-2 px-4 py-2 flex-wrap bg-[#1C1C1E]'>
-                    {
-                        circle?.tasks.map(task => {
-                            return task?.completed === true && <SummaryTag key={task?.taskId} name={task?.name} id={task?.taskId} isCompleted={task?.completed} />
-                        })
-                    }
-                </div>
-            }
-            {incompletedTasks.length > 0 &&
-                <div className='w-full flex flex-row justify-start items-center gap-2 px-4 py-2 flex-wrap bg-[#1C1C1E] rounded-b-[12px]'>
-                    {
-                        circle?.tasks.map(task => {
-                            return task?.completed !== true && <SummaryTag key={task?.taskId} name={task?.name} id={task?.taskId} isCompleted={task?.completed} />
-                        })
-                    }
-                </div>
-            }
-        </div>
+                {completedTasks.length > 0 &&
+                    <div className='w-full flex flex-row justify-start items-center gap-2 px-4 py-2 flex-wrap bg-[#1C1C1E]'>
+                        {
+                            circle?.tasks.map(task => {
+                                return task?.completed === true && <SummaryTag key={task?.taskId} name={task?.name} id={task?.taskId} isCompleted={task?.completed} />
+                            })
+                        }
+                    </div>
+                }
+                {incompletedTasks.length > 0 &&
+                    <div className='w-full flex flex-row justify-start items-center gap-2 px-4 py-2 flex-wrap bg-[#1C1C1E] rounded-b-[12px]'>
+                        {
+                            circle?.tasks.map(task => {
+                                return task?.completed !== true && <SummaryTag key={task?.taskId} name={task?.name} id={task?.taskId} isCompleted={task?.completed} />
+                            })
+                        }
+                    </div>
+                }
+            </div>}
+            {showSummary && <CircleSummary circleName={circle?.name} circleTasks={circle?.tasks} completionPercentage={circle?.completionPercentage} setShowSummary={setShowSummary} date={date}/>}
+        </>
     )
 }
 

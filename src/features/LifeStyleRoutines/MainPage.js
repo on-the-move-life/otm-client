@@ -13,6 +13,7 @@ function MainPage() {
   const [completionHistory, setCompletionHistory] = useState(null)
   const [circles, setCircles] = useState(null);
   const [percentCompletion, setPercentCompletion] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   /**
    * section -> Routine or Summary
    * indices : 0 for Routine & 1 for Summary
@@ -43,12 +44,12 @@ function MainPage() {
         className="absolute left-3 top-2 w-fit cursor-pointer"
       />
       <div className="h-full px-3 py-5 flex flex-col justify-start items-center gap-3 mb-9 mt-7">
-        {completionHistory && <Calendar completionHistory={completionHistory} />}
+        {completionHistory && <Calendar completionHistory={completionHistory} isSummaryPage={section === 1} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>}
         {
           section === 0 && <Routines circles={circles} />
         }
         {
-          section === 1 && <Summary circles={circles} />
+          section === 1 && <Summary circles={circles} date={selectedDate}/>
         }
       </div>
       <div className='w-full fixed bottom-0 left-0 py-2 bg-black/20 backdrop-blur-sm'>

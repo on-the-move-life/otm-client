@@ -4,7 +4,7 @@ import {
     AfternoonCircleIcon,
     EveningCircleIcon,
     NightCircleIcon,
-    AlwaysActiveIcon
+    AlwaysActiveIcon,
 } from "../index";
 // Import react-circular-progressbar module and styles
 import {

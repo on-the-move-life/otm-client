@@ -2,11 +2,9 @@ import React, { useMemo } from 'react'
 // Import react-circular-progressbar module and styles
 import {
     CircularProgressbar,
-    CircularProgressbarWithChildren,
     buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import Fire from './icons/Fire';
 import {
     format,
     parse
