@@ -56,7 +56,7 @@ function MainPage() {
           section === 1 && <Summary circles={circles} date={selectedDate}/>
         }
       </div>
-      <div className='w-full fixed bottom-0 left-0 py-2 bg-black/20 backdrop-blur-sm'>
+      <div className='w-full fixed bottom-0 left-0 py-4 bg-black/20 backdrop-blur-sm'>
         <NavigationTab selectedIndex={section} setSelectedIndex={setSection} />
       </div>
     </>
