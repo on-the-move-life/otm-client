@@ -1,22 +1,79 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TaskCard from './TaskCard';
-const TaskDetail = ({ SelectedCircle, tasks, index }) => {
+import { axiosClient } from '../apiClient';
 
-
+const TaskDetail = ({ SelectedCircle, tasks, setShowTaskDetail }) => {
     const [CurrentTask, setCurrentTask] = useState(tasks[0]);
-    const [selectedFeeling, setSelectedFeeling] = useState(tasks[0].mood);
+    const [selectedFeeling, setSelectedFeeling] = useState(-1);
+    const [feedback, setFeedback] = useState('');
+    const today = new Date(); // Create a Date object for today's date
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    const formattedDate = today.toLocaleString('en-US', options);
+
+    // function to POST emoji reaction
+    function handleEmojiReaction() {
+        axiosClient.post('/', {
+            user: JSON.parse(localStorage.getItem('user'))['code'],
+            date: formattedDate,
+            taskId: tasks?.taskId,
+            events: [
+                {
+                    type: "moodCheckIn",
+                    input: selectedFeeling
+                }
+            ]
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
+
+    // function to handle feedback response
+    function handleFeedbackResponse() {
+        axiosClient.post('/', {
+            user: JSON.parse(localStorage.getItem('user'))['code'],
+            date: formattedDate,
+            taskId: tasks?.taskId,
+            events: [
+                {
+                    type: "feedback",
+                    input: feedback
+                }
+            ]
+        })
+    }
+
+    // function for Mark as Done
+    function handleMarkDone() {
+        axiosClient.post('/', {
+            user: JSON.parse(localStorage.getItem('user'))['code'],
+            date: formattedDate,
+            taskId: tasks?.taskId,
+            events: [
+                {
+                    type: "isDone",
+                    input: true
+                }
+            ]
+        })
+    }
+
+    useEffect(() => {
+        if(selectedFeeling !== -1){
+            handleEmojiReaction();
+        }
+    }, [selectedFeeling])
 
     return (
-        <div className="h-screen w-screen  bg-black p-2">
+        <div className="h-screen w-full fixed top-0 left-0 z-[100]  bg-black p-2">
             <div className="relative flex items-center p-4 bg-black text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none">
+                {/* BackButton */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none" onClick={() => setShowTaskDetail(false)}>
                     <path d="M0 8.70206C0 9.03638 0.127827 9.32153 0.393314 9.57719L8.06293 17.0796C8.26942 17.296 8.54474 17.4041 8.85939 17.4041C9.49853 17.4041 10 16.9125 10 16.2635C10 15.9489 9.87217 15.6637 9.65585 15.4474L2.74336 8.70206L9.65585 1.95674C9.87217 1.73058 10 1.44543 10 1.13078C10 0.491642 9.49853 0 8.85939 0C8.54474 0 8.26942 0.108161 8.06293 0.324484L0.393314 7.82694C0.127827 8.0826 0.00983284 8.36775 0 8.70206Z" fill="#7E87EF" />
                 </svg>
 
                 <div className="w-full flex flex-col justify-center items-center text-center">
                     <span className="text-lightGray font-sfpro text-sm font-medium ">    <div className="text-dark-grey font-sfpro text-sm font-medium"> {SelectedCircle}</div> </span>
                     <span className="text-custompurple font-sfpro text-lg block mt-1">8 AM</span>
-
                 </div>
 
             </div>
@@ -24,7 +81,11 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
             <div className="flex justify-between ">
 
                 <h1 className="text-3xl leading-normal text-white font-sfpro font-medium capitalize pl-1 pt-4 ml-6">{CurrentTask.name}</h1>
-                <button className="flex items-center flex-col ">
+                <button className="flex items-center flex-col " onClick={() =>{
+                    if(!CurrentTask?.completed){
+                       handleMarkDone();
+                    }
+                }}>
                     <div className="" />
                     <div className='pr-3'>
                         {CurrentTask.completed ? (
@@ -44,7 +105,8 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
                     </div>
 
 
-                    <div className='pr-2 pb-2'>  <span className="text-customGray font-sfpro text-xs font-medium">Mark as done</span>
+                    <div className='pr-2 pb-2'>
+                        <span className="text-customGray font-sfpro text-xs font-medium">Mark as done</span>
                     </div>
                 </button>
             </div>
@@ -52,9 +114,7 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
             <div className="w-auto p-3 ">
 
                 <div className="mb-6 ">
-
                     <TaskCard tasks={tasks} />
-
                 </div>
 
 
@@ -62,8 +122,6 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
                 <div className="mb-6 ">
                     <h3 className="text-xl text-white font-sfpro mb-2 leading-8">Reflect</h3>
                     <div className='bg-mediumGray rounded-xl p-2'>
-
-
                         <p className="text-lightGray mb-2 p-2 text-sm">
                             How did you feel performing this habit today?
                             <br />
@@ -72,9 +130,9 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
                         <textarea
                             className="w-full p-2  bg-black rounded-xl text-white font-sfpro focus:outline-none"
                             placeholder="Type your answer here..."
+                            onChange={(e) => setFeedback(e.target.value)}
                         />
-                        <button className="w-full p-1 leading-8 bg-custompurple text-black rounded-xl text-sm">Submit</button>
-
+                        <button className="w-full p-1 leading-8 bg-custompurple text-black rounded-xl text-sm" onClick={handleFeedbackResponse}>Submit</button>
                     </div>
 
                 </div>
@@ -118,7 +176,7 @@ const TaskDetail = ({ SelectedCircle, tasks, index }) => {
                         </button>
                     </div>
                 </div>
-                <button className="w-full p-2 leading-8 bg-custompurple text-black rounded-xl">Mark as Done</button>
+                <button className="w-full p-2 leading-8 bg-custompurple text-black rounded-xl" onClick={handleMarkDone}>Mark as Done</button>
             </div>
 
         </div>

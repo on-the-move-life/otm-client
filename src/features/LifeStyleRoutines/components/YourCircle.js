@@ -9,13 +9,14 @@ import {
 // Import react-circular-progressbar module and styles
 import {
     CircularProgressbar,
-    CircularProgressbarWithChildren,
     buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import CircleTask from './CircleTask';
 
-function YourCircle({ name, tasks, percentCompletion }) {
+function YourCircle({ name, tasks, percentCompletion, date }) {
     const [tasksName, setTasksName] = useState("");
+    const [showCircleDetails, setShowCircleDetails] = useState(false);
     const circleIcons = useMemo(() => (
         {
             "Morning Circle": <MorningCircleIcon />,
@@ -59,31 +60,35 @@ function YourCircle({ name, tasks, percentCompletion }) {
     }, [])
 
     return (
-        <div className='w-full flex flex-row justify-between items-center px-4 py-2 bg-[#1C1C1E] rounded-[12px]'>
-            <div className='w-full flex flex-row justify-start items-center gap-5'>
-                <div>{circleIcons[name]}</div>
-                <div className='flex flex-col justify-center items-start'>
-                    <p className='text-[12px] text-[#7E87EF] uppercase' style={{fontWeight: 600}}>{circleTime[name]}</p>
-                    <p className='text-[#F8F8F8] text-[18.5px] capitalize'>{name}</p>
-                    <p className='w-[200px] text-[#545454] text-[12px] whitespace-nowrap overflow-hidden text-ellipsis'>{tasksName}</p>
-                </div>
-            </div>
-            <div className='relative top-[8px]'>
-                <CircularProgressbar
-                    value={percentCompletion}
-                    circleRatio={0.50}
-                    strokeWidth={14}
-                    styles={buildStyles({
-                        rotation: 0.75,
-                        strokeLinecap: 'round',
-                        trailColor: '#ffffff1f',
-                        pathColor: color,
-                        pathTransitionDuration: 0.5,
-                    })}
-                    className='h-[50px] w-full'
-                />
-            </div>
-        </div>
+        <>
+            {!showCircleDetails &&
+                <div className='w-full flex flex-row justify-between items-center px-4 py-2 bg-[#1C1C1E] rounded-[12px]' onClick={() => setShowCircleDetails(true)}>
+                    <div className='w-full flex flex-row justify-start items-center gap-5'>
+                        <div>{circleIcons[name]}</div>
+                        <div className='flex flex-col justify-center items-start'>
+                            <p className='text-[12px] text-[#7E87EF] uppercase' style={{ fontWeight: 600 }}>{circleTime[name]}</p>
+                            <p className='text-[#F8F8F8] text-[18.5px] capitalize'>{name}</p>
+                            <p className='w-[200px] text-[#545454] text-[12px] whitespace-nowrap overflow-hidden text-ellipsis'>{tasksName}</p>
+                        </div>
+                    </div>
+                    <div className='relative top-[8px]'>
+                        <CircularProgressbar
+                            value={percentCompletion}
+                            circleRatio={0.50}
+                            strokeWidth={14}
+                            styles={buildStyles({
+                                rotation: 0.75,
+                                strokeLinecap: 'round',
+                                trailColor: '#ffffff1f',
+                                pathColor: color,
+                                pathTransitionDuration: 0.5,
+                            })}
+                            className='h-[50px] w-full'
+                        />
+                    </div>
+                </div>}
+            {showCircleDetails && <CircleTask SelectedCircle={name} tasks={tasks} date={date} setShowCircleDetails={setShowCircleDetails}/>}
+        </>
     )
 }
 

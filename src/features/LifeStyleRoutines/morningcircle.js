@@ -278,7 +278,7 @@ const Morningcircle = () => {
     return (
         <div className='h-screen w-screen  bg-black ' >
             {/* <h2>Success</h2> */}
-            {/* <CircleTask SelectedCircle={routinedata.lifeStyle.circles[0].name} tasks={routinedata.lifeStyle.circles[0].tasks} /> */}
+            <CircleTask SelectedCircle={routinedata.lifeStyle.circles[0].name} tasks={routinedata.lifeStyle.circles[0].tasks} />
 
             <TaskDetail SelectedCircle={routinedata.lifeStyle.circles[0].name} tasks={routinedata.lifeStyle.circles[0].tasks} />
         </div>

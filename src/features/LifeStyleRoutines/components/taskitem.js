@@ -1,10 +1,10 @@
 import React from 'react';
 import { FaCheckCircle, FaCircle } from 'react-icons/fa';
 
-function TaskItem({ task, index }) {
+function TaskItem({ task, index, onClick }) {
     console.log(index);
     return (
-        <div className="flex items-center my-2 px-5 py-4 rounded-xl bg-mediumGray">
+        <div className="flex items-center my-2 px-5 py-4 rounded-xl bg-mediumGray" onClick={!task?.completed && onClick}>
             {/* <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full text-2xl">
                 {task.icon}
             </div> */}

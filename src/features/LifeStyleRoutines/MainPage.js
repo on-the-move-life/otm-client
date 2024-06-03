@@ -46,7 +46,7 @@ function MainPage() {
       <div className="h-full px-3 py-5 flex flex-col justify-start items-center gap-3 mb-9 mt-7">
         {completionHistory && <Calendar completionHistory={completionHistory} isSummaryPage={section === 1} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>}
         {
-          section === 0 && <Routines circles={circles} />
+          section === 0 && <Routines circles={circles} date={selectedDate}/>
         }
         {
           section === 1 && <Summary circles={circles} date={selectedDate}/>
