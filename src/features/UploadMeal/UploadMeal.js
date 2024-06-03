@@ -5,13 +5,40 @@ import styled from 'styled-components';
 import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
 import { BsImageFill } from "react-icons/bs";
+import axios from 'axios';
 
+// styling
+
+const ProfilePicHeading = styled.div`
+ color: #D7D7D7;
+ text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+ font-size: 20px;
+ font-style: normal;
+ line-height: 29.066px; /* 160% */
+ text-transform: capitalize;
+ letter-spacing: 1px;
+ `
+const IconLabel = styled.div`
+ color: #D7D7D7;
+ text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+ font-size: 15px;
+ font-style: normal;
+ line-height: 29.066px; /* 160% */
+ text-transform: capitalize;
+ letter-spacing: 1px;
+ `
 
 const UploadMeal = () => {
 
+    const [imageURL, setImageURL] = useState('');
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
+
     const profilePicRef = useRef(null);
     const profilePicCameraRef = useRef(null);
-    const [showProfilePicPopup, setShowProfilePicPopup] = useState(true);
+    const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
     const modalVariants = {
         hidden: {
             opacity: 0,
@@ -29,34 +56,107 @@ const UploadMeal = () => {
     };
 
 
-    // styling
 
-    const ProfilePicHeading = styled.div`
-color: #D7D7D7;
-text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 20px;
-font-style: normal;
-line-height: 29.066px; /* 160% */
-text-transform: capitalize;
-letter-spacing: 1px;
-`
-    const IconLabel = styled.div`
-color: #D7D7D7;
-text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 15px;
-font-style: normal;
-line-height: 29.066px; /* 160% */
-text-transform: capitalize;
-letter-spacing: 1px;
-`
+    const handleClick = () => {
+        setShowProfilePicPopup(true);
+    };
+
+    // // api handling
+    // const handleInputChange = (e) => {
+    //     setImageURL(e.target.value);
+    // };
+
+    // const handleSubmit = async () => {
+    //     try {
+    //         const payload = {
+    //             user: 'PRAN',
+    //             img: imageURL,
+    //         };
+
+    //         const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', payload);
+    //         setResponse(res.data);
+    //         setError(null);
+    //     } catch (err) {
+    //         console.error('Error submitting the request:', err);
+    //         setError(err);
+    //         setResponse(null);
+    //     }
+    // };
+
+
+    // // camera input from userprofile
+    // function handlePicChange(e) {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //         setProfilePicFile(file);
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setChosenPic(reader.result);
+    //         };
+    //         reader.readAsDataURL(file);
+    //         e.target.value = null;
+    //         setShowProfilePicPopup(false);
+    //         const formData = new FormData();
+    //         formData.append('profilePicture', file);
+    //         formData.append('email', JSON.parse(localStorage.getItem('user')).email);
+    //         axios
+    //             .post(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
+    //             .then(res => {
+    //                 console.log('profile picture updated!');
+    //             })
+    //             .catch(err => {
+    //                 console.log(err);
+    //                 setProfilePicError(true);
+    //             })
+    //     }
+    // }
+
 
 
     return (
 
         // <div><h3>Success</h3></div>
         <div>
+
+            <div className="min-h-screen bg-black flex items-center justify-center flex-col ">
+
+                {/* upload component */}
+                <div className="  w-screen bg-mediumGray text-custompurple p-4 rounded-lg shadow-lg max-w-sm mx-auto">
+                    <p className="mb-4">
+                        Please Upload your meal photo
+                    </p>
+                    <button onClick={handleClick} className="bg-transparent w-full border border-custompurple text-custompurple py-2 px-4 rounded hover:bg-indigo-500 hover:text-white transition duration-300" >
+                        Upload Meal Photo
+                    </button>
+                </div>
+
+                {/* description component */}
+                <div className="bg-mediumGray text-white mt-4 p-4 rounded-lg shadow-lg w-screen max-w-sm mx-auto">
+                    <h3 className="text-white font-sfPro font-body-condensed-bold mb-2">Meal Details</h3>
+                    <div className="bg-mediumGray p-4 rounded-lg">
+                        <p className="flex items-center mb-2 text-sm">
+
+                            <span className="font-body-condensed-bold">Meal Info</span>
+                        </p>
+                        <ul className="text-sm">
+                            <li>Calorie Information about meal </li>
+
+                        </ul>
+                    </div>
+                    <div className="bg-mediumGray p-4 rounded-lg">
+                        <p className="flex items-center mb-2 text-sm">
+
+                            <span className="font-body-condensed-bold">Meal Feedback </span>
+                        </p>
+                        <ul className="text-sm">
+                            <li>Feedback on meal</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
 
 
             {showProfilePicPopup &&
@@ -74,22 +174,22 @@ letter-spacing: 1px;
                         <div className='w-full flex flex-row justify-start gap-[40px] items-center'>
                             <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicCameraRef.current.click()}>
                                 <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                                    <IoCamera size={30} color='#5ECC7B' />
+                                    <IoCamera size={30} color='#7E87EF' />
                                 </button>
                                 <IconLabel>Camera</IconLabel>
                             </div>
                             <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicRef.current.click()}>
                                 <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                                    <BsImageFill size={30} color='#5ECC7B' />
+                                    <BsImageFill size={30} color='#7E87EF' />
                                 </button>
                                 <IconLabel>Gallery</IconLabel>
                             </div>
-                            <div className='w-fit flex flex-col justify-center items-center gap-1' >
+                            {/* <div className='w-fit flex flex-col justify-center items-center gap-1' >
                                 <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                                     <IoMdTrash size={30} color='gray' />
                                 </button>
                                 <IconLabel>Delete</IconLabel>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </motion.div>}
