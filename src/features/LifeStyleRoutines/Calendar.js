@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CalendarTile from './components/CalendarTile';
 import { formatDate } from "./utils";
+import ProgressBar from './ProgressBar';
 
 function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedDate }) {
   const [reversedCompletionHistory, setReverseCompletionHistory] = useState(null);
+  const [percentCompletionOfSelectedDate, setPercentCompletionOfSelectedDate] = useState(null);
 
   useEffect(() => {
     const tempReversedCompletionHistory = completionHistory.reverse();
@@ -20,8 +22,15 @@ function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedD
     }
   }, [completionHistory, reversedCompletionHistory])
 
+  useEffect(() => {
+    if (completionHistory && selectedDate) {
+      const percentCompletionHistory = completionHistory.find((history) => history.date === selectedDate);
+      setPercentCompletionOfSelectedDate(percentCompletionHistory?.completionPercentage);
+    }
+  }, [selectedDate, completionHistory])
+
   return (
-    <div className='w-full flex flex-col justify-center items-start gap-3'>
+    <div className='w-full flex flex-col justify-center items-start'>
       {selectedDate && !isSummaryPage && <h3 className='text-[26px]' style={{ lineHeight: '41.6px' }}><span className='text-[#F8F8F8]'>{formatDate(selectedDate)[0]},</span> <span className='text-[#929292]'>{formatDate(selectedDate)[1]}</span></h3>}
       {selectedDate && isSummaryPage &&
         <div className='w-full flex flex-col justify-start items-start'>
@@ -29,7 +38,8 @@ function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedD
           <h5 className='text-[20px] text-[#929292]'>{formatDate(selectedDate)[0]}, {formatDate(selectedDate)[1]}</h5>
         </div>
       }
-      <div className="w-full flex flex-row justify-around items-center">
+      {percentCompletionOfSelectedDate !== null && <ProgressBar progress={percentCompletionOfSelectedDate}/>}
+      <div className="w-full flex flex-row justify-around items-center mt-4">
         {reversedCompletionHistory && selectedDate && reversedCompletionHistory?.map((history, index) => (
           <CalendarTile date={history?.date} percentCompletion={history?.completionPercentage} setSelectedDate={setSelectedDate} isToday={index === completionHistory?.length - 1} isSelected={history?.date === selectedDate} />
         ))}
