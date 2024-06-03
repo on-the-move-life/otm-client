@@ -38,7 +38,7 @@ function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedD
           <h5 className='text-[20px] text-[#929292]'>{formatDate(selectedDate)[0]}, {formatDate(selectedDate)[1]}</h5>
         </div>
       }
-      {percentCompletionOfSelectedDate !== null && <ProgressBar progress={percentCompletionOfSelectedDate}/>}
+      {percentCompletionOfSelectedDate !== null && percentCompletionOfSelectedDate !== 0 && <ProgressBar progress={percentCompletionOfSelectedDate}/>}
       <div className="w-full flex flex-row justify-around items-center mt-4">
         {reversedCompletionHistory && selectedDate && reversedCompletionHistory?.map((history, index) => (
           <CalendarTile date={history?.date} percentCompletion={history?.completionPercentage} setSelectedDate={setSelectedDate} isToday={index === completionHistory?.length - 1} isSelected={history?.date === selectedDate} />

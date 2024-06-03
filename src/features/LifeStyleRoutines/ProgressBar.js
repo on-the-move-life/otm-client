@@ -16,10 +16,10 @@ const ProgressBar = ({ progress }) => {
   return (
     <div className="w-full ">
 
-      <div className="text-blue font-sfpro text-[14px] font-body-condensed-bold">
+      <div className="text-blue font-sfpro text-[14px] font-body-condensed-bold my-2">
         You completed {progress}% of your perfect day
       </div>
-      <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+      <div className="w-full h-4 bg-[#1C1C1E] rounded-full overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{ background: gradient, width: `${progress}%` }}

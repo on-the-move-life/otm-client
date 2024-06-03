@@ -58,6 +58,7 @@ const TaskDetail = ({ SelectedCircle, tasks, setShowTaskDetail }) => {
     }
 
     useEffect(() => {
+        console.log("tasks : ", tasks)
         if(selectedFeeling !== -1){
             handleEmojiReaction();
         }
