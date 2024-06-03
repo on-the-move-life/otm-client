@@ -15,7 +15,9 @@ function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedD
   useEffect(() => {
     try {
       const todayDate = reversedCompletionHistory[completionHistory?.length - 1]?.date;
-      setSelectedDate(todayDate);
+      if(selectedDate === null){
+        setSelectedDate(todayDate)
+      }
     }
     catch (err) {
       console.log("error : ", reversedCompletionHistory)
@@ -27,7 +29,7 @@ function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedD
       const percentCompletionHistory = completionHistory.find((history) => history.date === selectedDate);
       setPercentCompletionOfSelectedDate(percentCompletionHistory?.completionPercentage);
     }
-  }, [selectedDate, completionHistory])
+  }, [completionHistory, selectedDate])
 
   return (
     <div className='w-full flex flex-col justify-center items-start'>

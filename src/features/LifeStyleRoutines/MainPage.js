@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NavigationTab } from "./index"
 import Calendar from './Calendar'
-import YourCircle from './components/YourCircle'
 import { axiosClient } from "./apiClient"
 import { getFormattedDate } from './utils'
 import BackButton from '../../components/BackButton';
@@ -23,11 +22,10 @@ function MainPage() {
 
   const navigate = useNavigate();
 
-  function getData() {
-    const currentDate = getFormattedDate();
-    console.log(currentDate)
+  function getData(date) {
+    console.log(date)
     const memberCode = JSON.parse(localStorage.getItem('user'))['code'];
-    axiosClient.get(`?user=${memberCode}&date=${currentDate}`)
+    axiosClient.get(`?user=${memberCode}&date=${date}`)
       .then(res => {
         setCompletionHistory(res.data?.completionHistory);
         setCircles(res.data?.lifeStyle?.circles);
@@ -37,8 +35,15 @@ function MainPage() {
   }
 
   useEffect(() => {
-    getData();
-  }, [])
+    // initially when the selected date is null, call for today's date
+    if(selectedDate === null){
+      const currentDate = getFormattedDate();
+      getData(currentDate);
+    }
+    else{
+      getData(selectedDate)
+    }
+  }, [selectedDate])
 
   return (
     <>
