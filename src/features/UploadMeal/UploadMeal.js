@@ -37,6 +37,7 @@ const UploadMeal = () => {
     const [error, setError] = useState(null);
 
     const profilePicRef = useRef(null);
+    const fileInputRef = useRef(null);
     const profilePicCameraRef = useRef(null);
     const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
     const modalVariants = {
@@ -61,7 +62,44 @@ const UploadMeal = () => {
         setShowProfilePicPopup(true);
     };
 
+    const handleCameraClick = () => {
+        fileInputRef.current.click();
+    };
+
+
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                try {
+                    const formData = new FormData();
+                    formData.append('user', 'PRAN');
+                    formData.append('img', file);
+
+                    const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+
+                    setResponse(res.data);
+                    setError(null);
+                } catch (err) {
+                    console.error('Error submitting the request:', err);
+                    setError(err);
+                    setResponse(null);
+                    // setImageURL(file)
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+
     // // api handling
+
     // const handleInputChange = (e) => {
     //     setImageURL(e.target.value);
     // };
@@ -133,6 +171,13 @@ const UploadMeal = () => {
                 {/* description component */}
                 <div className="bg-mediumGray text-white mt-4 p-4 rounded-lg shadow-lg w-screen max-w-sm mx-auto">
                     <h3 className="text-white font-sfPro font-body-condensed-bold mb-2">Meal Details</h3>
+                    {/* meal pic */}
+                    {imageURL && (
+                        <div>
+                            <h2>Selected Image:</h2>
+                            <img src={imageURL} alt="Selected" style={{ width: '200px', height: '200px' }} />
+                        </div>
+                    )}
                     <div className="bg-mediumGray p-4 rounded-lg">
                         <p className="flex items-center mb-2 text-sm">
 
@@ -172,7 +217,15 @@ const UploadMeal = () => {
                     <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
                         <ProfilePicHeading>Meal photo</ProfilePicHeading>
                         <div className='w-full flex flex-row justify-start gap-[40px] items-center'>
-                            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicCameraRef.current.click()}>
+                            <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handleCameraClick}>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    capture="user"
+                                    hidden
+                                    onChange={handleFileChange}
+                                />
                                 <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                                     <IoCamera size={30} color='#7E87EF' />
                                 </button>
