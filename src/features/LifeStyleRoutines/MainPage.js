@@ -7,6 +7,7 @@ import { getFormattedDate } from './utils'
 import BackButton from '../../components/BackButton';
 import Routines from './Routines'
 import Summary from './Summary'
+import { useNavigate } from 'react-router-dom'
 
 function MainPage() {
   // Defining states for the fetched data
@@ -19,6 +20,8 @@ function MainPage() {
    * indices : 0 for Routine & 1 for Summary
    */
   const [section, setSection] = useState(0);
+
+  const navigate = useNavigate();
 
   function getData() {
     const currentDate = getFormattedDate();
@@ -42,6 +45,7 @@ function MainPage() {
       <BackButton
         size={30}
         className="absolute left-3 top-2 w-fit cursor-pointer"
+        action={() => navigate('/')}
       />
       <div className="h-full px-3 py-5 flex flex-col justify-start items-center gap-3 mb-9 mt-7">
         {completionHistory && <Calendar completionHistory={completionHistory} isSummaryPage={section === 1} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>}
