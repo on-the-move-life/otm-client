@@ -32,7 +32,7 @@ const IconLabel = styled.div`
 
 const UploadMeal = () => {
 
-    const [imageURL, setImageURL] = useState('');
+    const [imageURL, setImageURL] = useState(null);
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
 
@@ -75,10 +75,12 @@ const UploadMeal = () => {
             reader.onloadend = async () => {
                 try {
                     const formData = new FormData();
+                    formData.append('file', file);
                     formData.append('user', 'PRAN');
-                    formData.append('img', file);
+                    formData.append('date', 'June 4 2024');
+                    formData.append('taskId', '1-6');
 
-                    const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
+                    const res = await axios.post('http://localhost:882/api/v1/lifestyle/meal-info', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         },
@@ -86,6 +88,8 @@ const UploadMeal = () => {
 
                     setResponse(res.data);
                     setError(null);
+                    setImageURL(res.data.mealUrl);
+                    // console.log(res.data.mealUrl);
                 } catch (err) {
                     console.error('Error submitting the request:', err);
                     setError(err);
