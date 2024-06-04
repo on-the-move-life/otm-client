@@ -119,7 +119,7 @@ const Home = () => {
             </p>
           </section>
           <section className='w-full flex flex-row justify-center items-center gap-3'>
-              <LifeStyleScore completionPercentage={homeStats?.dailyCompletion}/>
+              <LifeStyleScore completionPercentage={homeStats?.routineProgress}/>
               <LifeStyleRoutine/>
           </section>
           <section>

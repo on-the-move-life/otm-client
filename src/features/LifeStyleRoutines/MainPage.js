@@ -44,6 +44,7 @@ function MainPage() {
     }
   };
 
+  // this will call the API whenever the date is changed
   useEffect(() => {
     getData(selectedDate);
   }, [selectedDate]);

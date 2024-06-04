@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion } from 'framer-motion';
 
@@ -32,17 +31,6 @@ background-clip: text;
 `
 const TotalParticipants = styled.div`
 color: #545454;
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 9.333px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-`
-const TotalParticipantsHighlighted = styled.span`
-background: var(--Green-purple-gradient, linear-gradient(96deg, #9BF2C0 1.49%, #91BDF6 103.49%));
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
 font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 font-size: 9.333px;
 font-style: normal;

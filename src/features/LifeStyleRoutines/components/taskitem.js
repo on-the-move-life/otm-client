@@ -32,7 +32,7 @@ function TaskItem({ task, SelectedCircle, date }) {
             taskId: task?.taskId,
             events: [
                 {
-                    type: "isDone",
+                    type: "completed",
                     input: task?.completed === undefined ? true : !task?.completed
                 }
             ]

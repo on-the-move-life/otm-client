@@ -49,7 +49,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             taskId: task?.taskId,
             events: [
                 {
-                    type: "moodCheckin",
+                    type: "mood",
                     input: selectedFeeling
                 }
             ]
@@ -100,7 +100,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             taskId: task?.taskId,
             events: [
                 {
-                    type: "isDone",
+                    type: "completed",
                     input: task?.completed === undefined ? true : !task?.completed
                 }
             ]
@@ -141,9 +141,8 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
             </div>
 
-            <div className="flex justify-between ">
-
-                <h1 className="text-3xl leading-normal text-white font-sfpro font-medium capitalize pl-1 pt-4 ml-6">{task?.name}</h1>
+            <div className="flex flex-row items-center justify-between">
+                <h1 className="text-3xl leading-normal text-white font-sfpro font-medium capitalize pl-1 ml-6">{task?.name}</h1>
                 <button className="flex items-center flex-col " onClick={handleMarkDone}>
                     <div className="" />
                     <div className='pr-3'>
