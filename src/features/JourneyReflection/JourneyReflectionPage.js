@@ -25,7 +25,7 @@ const JourneyReflectionPage = () => {
       <div className='flex flex-row overflow-x-auto sm:max-w-screen-lg max-w-screen-[700px] mx-auto overflow-hidden px-4'>
       {objectives.map((prod,index)=>{
           return (
-            <div key={index} className='flex-shrink-0 w-3/5 sm:w-[600px] h-auto p-4 bg-black m-2 rounded-md'>
+            <div key={index} className='flex-shrink-0 w-3/5 sm:w-[600px] h-auto p-4 bg-black m-1 rounded-md'>
             <h2 className='text-[#7E87EF] sm:text-lg text-sm'>{prod.heading}</h2>
             <hr className="my-2 border-gray-300" />
             <p className='sm:max-w-lg text-xs'>{prod.details}</p>
