@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-const TaskCard = ({ tasks, index }) => {
-    console.log(tasks);
+const TaskCard = ({ task, index }) => {
+    console.log(task);
 
-    const [CurrentTask, setCurrentTask] = useState(tasks[0]);
+    const [CurrentTask, setCurrentTask] = useState(task);
     const [CurrentTaskDetails, setCurrentTaskDetails] = useState(CurrentTask.details);
 
     console.log(CurrentTaskDetails[0].name);

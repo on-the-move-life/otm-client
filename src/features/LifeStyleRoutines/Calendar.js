@@ -2,48 +2,66 @@ import React, { useEffect, useState } from 'react';
 import CalendarTile from './components/CalendarTile';
 import { formatDate } from "./utils";
 import ProgressBar from './ProgressBar';
+import { getFormattedDate } from './utils';
 
 function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedDate }) {
-  const [reversedCompletionHistory, setReverseCompletionHistory] = useState(null);
+  const [reversedCompletionHistory, setReversedCompletionHistory] = useState([]);
   const [percentCompletionOfSelectedDate, setPercentCompletionOfSelectedDate] = useState(null);
 
   useEffect(() => {
-    const tempReversedCompletionHistory = completionHistory.reverse();
-    setReverseCompletionHistory(tempReversedCompletionHistory);
-  }, [completionHistory])
+    if (completionHistory && completionHistory.length > 0) {
+      setReversedCompletionHistory(completionHistory.slice().reverse());
+    }
+  }, [completionHistory]);
 
   useEffect(() => {
     try {
-      const todayDate = reversedCompletionHistory[completionHistory?.length - 1]?.date;
-      if(selectedDate === null){
-        setSelectedDate(todayDate)
+      const todayDate = reversedCompletionHistory[reversedCompletionHistory.length - 1]?.date;
+      console.log("selected date : ", selectedDate)
+      if (!selectedDate) {
+        setSelectedDate(todayDate);
       }
+    } catch (err) {
+      console.error("Error occurred while setting selected date:", err);
     }
-    catch (err) {
-      console.log("error : ", reversedCompletionHistory)
-    }
-  }, [completionHistory, reversedCompletionHistory])
+  }, [selectedDate]);
 
   useEffect(() => {
-    if (completionHistory && selectedDate) {
-      const percentCompletionHistory = completionHistory.find((history) => history.date === selectedDate);
-      setPercentCompletionOfSelectedDate(percentCompletionHistory?.completionPercentage);
-    }
-  }, [completionHistory, selectedDate])
+    console.log("percentCompletionHistory : ", selectedDate)
+    const percentCompletionHistory = completionHistory?.find(history => history.date === selectedDate);
+    setPercentCompletionOfSelectedDate(percentCompletionHistory?.completionPercentage ?? null);
+  }, [completionHistory, selectedDate]);
 
   return (
-    <div className='w-full flex flex-col justify-center items-start'>
-      {selectedDate && !isSummaryPage && <h3 className='text-[26px]' style={{ lineHeight: '41.6px' }}><span className='text-[#F8F8F8]'>{formatDate(selectedDate)[0]},</span> <span className='text-[#929292]'>{formatDate(selectedDate)[1]}</span></h3>}
-      {selectedDate && isSummaryPage &&
-        <div className='w-full flex flex-col justify-start items-start'>
-          <h3 className='text-[26px] text-[#f8f8f8]' style={{lineHeight: '40px'}}>Summary</h3>
-          <h5 className='text-[20px] text-[#929292]'>{formatDate(selectedDate)[0]}, {formatDate(selectedDate)[1]}</h5>
-        </div>
-      }
-      {percentCompletionOfSelectedDate !== null && percentCompletionOfSelectedDate !== 0 && <ProgressBar progress={percentCompletionOfSelectedDate}/>}
+    <div className="w-full flex flex-col justify-center items-start">
+      {selectedDate && (
+        <>
+          {!isSummaryPage &&
+            <h3 className="text-2xl font-bold" style={{ lineHeight: '41.6px' }}>
+              <span className="text-white">{formatDate(selectedDate)[0]}, </span>
+              <span className="text-gray-500">{formatDate(selectedDate)[1]}</span>
+            </h3>}
+          {isSummaryPage && (
+            <>
+              <h3 className='text-[26px] text-[#FFF]' style={{lineHeight: '40px'}}>Summary</h3>
+              <h5 className="text-lg text-gray-500">{formatDate(selectedDate).join(', ')}</h5>
+            </>
+          )}
+        </>
+      )}
+      {percentCompletionOfSelectedDate !== null && percentCompletionOfSelectedDate !== 0 && (
+        <ProgressBar progress={percentCompletionOfSelectedDate} />
+      )}
       <div className="w-full flex flex-row justify-around items-center mt-4">
-        {reversedCompletionHistory && selectedDate && reversedCompletionHistory?.map((history, index) => (
-          <CalendarTile date={history?.date} percentCompletion={history?.completionPercentage} setSelectedDate={setSelectedDate} isToday={index === completionHistory?.length - 1} isSelected={history?.date === selectedDate} />
+        {reversedCompletionHistory.map(history => (
+          <CalendarTile
+            key={history.date}
+            date={history.date}
+            percentCompletion={history.completionPercentage}
+            setSelectedDate={setSelectedDate}
+            isToday={history.date === reversedCompletionHistory[reversedCompletionHistory.length - 1]?.date}
+            isSelected={history?.date === selectedDate}
+          />
         ))}
       </div>
     </div>

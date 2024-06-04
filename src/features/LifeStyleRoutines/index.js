@@ -18,3 +18,6 @@ export { default as Mood3Icon } from "./components/icons/Mood3Icon"
 export { default as Mood4Icon } from "./components/icons/Mood4Icon"
 export { default as Mood5Icon } from "./components/icons/Mood5Icon"
 
+// redux exports
+export { default as store } from "./ReduxStore/store"
+
