@@ -118,7 +118,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
                                             {moodIcons[task?.mood]}
                                             <div className='flex flex-col justify-center items-start'>
                                                 <h3 className='text-[18.5px] text-[#f8f8f8] capitalize'>{task?.name}</h3>
-                                                <p className='text-[12px] text-[#545454]'>comments about this routine go here they can stretch to required height</p>
+                                                <p className='text-[12px] text-[#545454]'>{task?.feedback}</p>
                                             </div>
                                         </div>
                                     )
@@ -132,7 +132,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
                                             {moodIcons[task?.mood]}
                                             <div className='flex flex-col justify-center items-start'>
                                                 <h3 className='text-[18.5px] text-[#929292] capitalize'>{task?.name}</h3>
-                                                <p className='text-[12px] text-[#545454]'>Lorem Ipsum</p>
+                                                <p className='text-[12px] text-[#545454]'>{task?.feedback}</p>
                                             </div>
                                         </div>
                                     )

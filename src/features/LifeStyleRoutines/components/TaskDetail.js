@@ -136,7 +136,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                 <div className="w-full flex flex-col justify-center items-center text-center">
                     <span className="text-lightGray font-sfpro text-sm font-medium ">    <div className="text-dark-grey font-sfpro text-sm font-medium"> {SelectedCircle}</div> </span>
-                    <span className="text-custompurple font-sfpro text-lg block mt-1">8 AM</span>
+                    <span className="text-custompurple font-sfpro text-lg block mt-1">{task?.time}</span>
                 </div>
 
             </div>
@@ -193,7 +193,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                                 placeholder="Type your answer here..."
                                 onChange={(e) => setFeedback(e.target.value)}
                             /> :
-                            <p className='px-2 text-md text-[#9e9d9d]'>{task?.feedback}</p>
+                            <p className='px-2 text-md text-custompurple'>{task?.feedback}</p>
                         }
                         {(task?.feedback === undefined || task?.feedback === null || storedFeedbackValue === undefined || storedFeedbackValue === null) && <button className="w-full p-1 leading-8 bg-custompurple text-black rounded-xl text-sm" onClick={handleFeedbackResponse}>Submit</button>}
                     </div>
