@@ -15,8 +15,10 @@ const ProgressBar = ({ progress }) => {
 
   return (
     <div className="w-full ">
-
-      <div className="text-blue font-sfpro text-[14px] font-body-condensed-bold my-2">
+      <div className={`text-[25px] text-[#f7d002]`}>
+        {progress}%
+      </div>
+      <div className="text-blue font-sfpro text-[14px] font-body-condensed-bold mb-2">
         You completed {progress}% of your perfect day
       </div>
       <div className="w-full h-4 bg-[#1C1C1E] rounded-full overflow-hidden">

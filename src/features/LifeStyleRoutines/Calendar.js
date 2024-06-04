@@ -48,9 +48,10 @@ function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedD
           )}
         </>
       )}
-      {percentCompletionOfSelectedDate !== null && percentCompletionOfSelectedDate !== 0 && (
+      {(percentCompletionOfSelectedDate !== null && percentCompletionOfSelectedDate !== 0) && (
         <ProgressBar progress={percentCompletionOfSelectedDate} />
       )}
+      {(percentCompletionOfSelectedDate === null || percentCompletionOfSelectedDate === 0) && <p className='text-blue font-sfpro text-[14px] font-body-condensed-bold'>Let's make today count. Begin by completing your first task</p>}
       <div className="w-full flex flex-row justify-around items-center mt-4">
         {reversedCompletionHistory.map(history => (
           <CalendarTile
