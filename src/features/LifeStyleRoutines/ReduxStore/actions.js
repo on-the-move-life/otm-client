@@ -4,7 +4,8 @@ import {
     FETCH_INITIAL_STATE_SUCCESS,
     FETCH_INITIAL_STATE_FAILURE,
     TOGGLE_TASK_COMPLETION,
-    CHANGE_MOOD_ICON
+    CHANGE_MOOD_ICON,
+    SUBMIT_REFLECTION_FEEDBACK
   } from './actionTypes';
   
   export const fetchInitialStateRequest = () => ({
@@ -55,6 +56,19 @@ import {
           circleName: circleName,
           taskId: taskId,
           mood: moodIconValue
+        }
+      }
+    )
+  }
+
+  export const handleFeedbackChange = (circleName, taskId, feedbackValue) => {
+    return (
+      {
+        type: SUBMIT_REFLECTION_FEEDBACK,
+        payload: {
+          circleName: circleName,
+          taskId: taskId,
+          feedbackValue: feedbackValue
         }
       }
     )

@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react'
 import TaskCard from './TaskCard';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeMoodIcon, toggleCompletion } from '../ReduxStore/actions';
+import { changeMoodIcon, toggleCompletion, handleFeedbackChange } from '../ReduxStore/actions';
+import { getFormattedDate } from '../utils';
 
-const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date }) => {
-    const [CurrentTask, setCurrentTask] = useState(task);
+const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
     const [feedback, setFeedback] = useState('');
 
-    const today = new Date(); // Create a Date object for today's date
-    const options = { month: 'long', day: 'numeric', year: 'numeric' };
-    const formattedDate = today.toLocaleString('en-US', options).replace(',', '');
+    const formattedDate = getFormattedDate();
     const finalDate = (date === null || date === undefined) ? formattedDate : date;
 
     const dispatch = useDispatch();
@@ -33,9 +31,18 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         }
         return false;
     });
+    const storedFeedbackValue = useSelector(state => {
+        const circle = state?.lifestyle?.circles.find(circle => circle?.name === SelectedCircle);
+        if (circle) {
+            const mytask = circle?.tasks.find(mappedTask => mappedTask.taskId === task?.taskId);
+            return mytask ? task?.feedback : '';
+        }
+        return '';
+    });
 
     // function to POST emoji reaction
     function handleEmojiReaction() {
+        dispatch(changeMoodIcon(SelectedCircle, task?.taskId, selectedFeeling));
         axiosClient.post('/', {
             user: JSON.parse(localStorage.getItem('user'))['code'],
             date: finalDate,
@@ -48,10 +55,12 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             ]
         })
             .then(res => {
-                dispatch(changeMoodIcon(SelectedCircle, task?.taskId, selectedFeeling));
                 console.log(res);
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                dispatch(changeMoodIcon(SelectedCircle, task?.taskId, -1)); // reset mood icon
+                console.error(err);
+            })
     }
 
     // function to handle feedback response
@@ -68,13 +77,23 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                     }
                 ]
             })
-                .then(res => console.log(res))
-                .catch(err => console.error(err))
+                .then(res => {
+                    const action = handleFeedbackChange(SelectedCircle, task?.taskId, feedback);
+                    dispatch(action);
+                    console.log(res);
+                })
+                .catch(err => {
+                    const resetAction = handleFeedbackChange(SelectedCircle, task?.taskId, null);
+                    dispatch(resetAction);
+                    console.error(err);
+                })
         }
     }
 
     // function for Mark as Done
     function handleMarkDone() {
+        setTaskCompleted(true);
+        dispatch(toggleCompletion(SelectedCircle, task?.taskId));
         axiosClient.post('/', {
             user: JSON.parse(localStorage.getItem('user'))['code'],
             date: finalDate,
@@ -87,11 +106,13 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             ]
         })
             .then(res => {
-                setTaskCompleted(true);
-                dispatch(toggleCompletion(SelectedCircle, task?.taskId));
                 console.log(res);
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                setTaskCompleted(false);
+                dispatch(toggleCompletion(SelectedCircle, task?.taskId));
+                console.error(err);
+            })
     }
 
     useEffect(() => {
@@ -122,7 +143,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
             <div className="flex justify-between ">
 
-                <h1 className="text-3xl leading-normal text-white font-sfpro font-medium capitalize pl-1 pt-4 ml-6">{CurrentTask.name}</h1>
+                <h1 className="text-3xl leading-normal text-white font-sfpro font-medium capitalize pl-1 pt-4 ml-6">{task?.name}</h1>
                 <button className="flex items-center flex-col " onClick={handleMarkDone}>
                     <div className="" />
                     <div className='pr-3'>
@@ -167,12 +188,15 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                             <br />
                             Any insights you’d like to note?
                         </p>
-                        <textarea
-                            className="w-full p-2  bg-black rounded-xl text-white font-sfpro focus:outline-none"
-                            placeholder="Type your answer here..."
-                            onChange={(e) => setFeedback(e.target.value)}
-                        />
-                        <button className="w-full p-1 leading-8 bg-custompurple text-black rounded-xl text-sm" onClick={handleFeedbackResponse}>Submit</button>
+                        {(task?.feedback === undefined || task?.feedback === null || storedFeedbackValue === undefined || storedFeedbackValue === null) ?
+                            <textarea
+                                className="w-full p-2  bg-black rounded-xl text-white font-sfpro focus:outline-none"
+                                placeholder="Type your answer here..."
+                                onChange={(e) => setFeedback(e.target.value)}
+                            /> :
+                            <p className='px-2 text-md text-[#9e9d9d]'>{task?.feedback}</p>
+                        }
+                        {(task?.feedback === undefined || task?.feedback === null || storedFeedbackValue === undefined || storedFeedbackValue === null) && <button className="w-full p-1 leading-8 bg-custompurple text-black rounded-xl text-sm" onClick={handleFeedbackResponse}>Submit</button>}
                     </div>
 
                 </div>

@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import TaskDetail from './TaskDetail';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeMoodIcon, toggleCompletion } from '../ReduxStore/actions';
+import { toggleCompletion } from '../ReduxStore/actions';
+import { getFormattedDate } from '../utils';
 
 function TaskItem({ task, SelectedCircle, date }) {
     const [showTaskDetail, setShowTaskDetail] = useState(false);
     const [taskCompleted, setTaskCompleted] = useState(false);
-    const today = new Date(); // Create a Date object for today's date
-    const options = { month: 'long', day: 'numeric', year: 'numeric' };
-    const formattedDate = today.toLocaleString('en-US', options).replace(',', '');
-    const finalDate = (date === null || date === undefined ) ? formattedDate : date;
+    const formattedDate = getFormattedDate();
+    const finalDate = (date === null || date === undefined) ? formattedDate : date;
 
     const dispatch = useDispatch();
     const isCompleted = useSelector(state => {
@@ -25,6 +24,8 @@ function TaskItem({ task, SelectedCircle, date }) {
     // function for Mark as Done
     function handleMarkDone(event) {
         event.stopPropagation(); // Stop propagation to prevent opening next page
+        setTaskCompleted(true);
+        dispatch(toggleCompletion(SelectedCircle, task?.taskId));
         axiosClient.post('/', {
             user: JSON.parse(localStorage.getItem('user'))['code'],
             date: finalDate,
@@ -37,11 +38,13 @@ function TaskItem({ task, SelectedCircle, date }) {
             ]
         })
             .then(res => {
-                setTaskCompleted(true);
-                dispatch(toggleCompletion(SelectedCircle, task?.taskId));
                 console.log(res);
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                setTaskCompleted(true);
+                dispatch(toggleCompletion(SelectedCircle, task?.taskId));
+                console.log(err);
+            })
     }
     return (
         <>
@@ -77,7 +80,7 @@ function TaskItem({ task, SelectedCircle, date }) {
                         )}
                     </div>
                 </div>}
-            {showTaskDetail && <TaskDetail SelectedCircle={SelectedCircle} task={task} setShowTaskDetail={setShowTaskDetail} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} date={date}/>}
+            {showTaskDetail && <TaskDetail SelectedCircle={SelectedCircle} task={task} setShowTaskDetail={setShowTaskDetail} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} date={date} />}
         </>
     );
 }

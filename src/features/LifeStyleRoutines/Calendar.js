@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import CalendarTile from './components/CalendarTile';
 import { formatDate } from "./utils";
 import ProgressBar from './ProgressBar';
-import { getFormattedDate } from './utils';
 
 function Calendar({ completionHistory, isSummaryPage, selectedDate, setSelectedDate }) {
   const [reversedCompletionHistory, setReversedCompletionHistory] = useState([]);

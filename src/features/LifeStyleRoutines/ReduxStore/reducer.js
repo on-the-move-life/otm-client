@@ -5,7 +5,8 @@ import {
   FETCH_INITIAL_STATE_FAILURE,
   UPDATE_COMPLETION_PERCENTAGE,
   TOGGLE_TASK_COMPLETION,
-  CHANGE_MOOD_ICON
+  CHANGE_MOOD_ICON,
+  SUBMIT_REFLECTION_FEEDBACK
 } from './actionTypes';
 
 const initialState = {
@@ -98,6 +99,26 @@ const reducer = (state = initialState, action) => {
           )
         }
       }
+
+      case SUBMIT_REFLECTION_FEEDBACK:
+        return {
+          ...state,
+          lifeStyle: {
+            ...state.lifeStyle,
+            circles: state?.lifeStyle?.circles.map(circle =>
+              circle.name === action.payload.circleName
+                ? {
+                  ...circle,
+                  tasks: circle?.tasks.map(task =>
+                    task.taskId === action.payload?.taskId
+                      ? { ...task, feedback: action.payload?.feedbackValue }
+                      : task
+                  )
+                }
+                : circle
+            )
+          }
+        }
 
     default:
       return state;
