@@ -30,7 +30,7 @@ function TaskItem({ task, index, onClick, SelectedCircle }) {
             events: [
                 {
                     type: "isDone",
-                    input: true
+                    input: task?.completed === undefined ? true : !task?.completed
                 }
             ]
         })
@@ -56,7 +56,9 @@ function TaskItem({ task, index, onClick, SelectedCircle }) {
                     </div>
                     <div className="text-2xl">
                         {(task?.completed || isCompleted) ? (
-                            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={(event) => {
+                                handleMarkDone(event);
+                            }}>
                                 <circle cx="17" cy="17" r="15.5" fill="#282828" stroke="#7E87EF" stroke-width="2" />
                                 <circle cx="17" cy="17" r="10.5" fill="#5ECC7B" />
                             </svg>

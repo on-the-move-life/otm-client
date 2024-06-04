@@ -81,7 +81,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
             events: [
                 {
                     type: "isDone",
-                    input: true
+                    input: task?.completed === undefined ? true : !task?.completed
                 }
             ]
         })
@@ -99,6 +99,10 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
             handleEmojiReaction();
         }
     }, [selectedFeeling])
+
+    useEffect(() => {
+        console.log("toggled ")
+    }, [isCompleted])
 
     return (
         <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2">
@@ -121,7 +125,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
                 <button className="flex items-center flex-col " onClick={handleMarkDone}>
                     <div className="" />
                     <div className='pr-3'>
-                        {(CurrentTask.completed || taskCompleted || isCompleted) ? (
+                        {(task?.completed || isCompleted) ? (
                             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="17" cy="17" r="15.5" fill="#282828" stroke="#7E87EF" stroke-width="2" />
                                 <circle cx="17" cy="17" r="10.5" fill="#5ECC7B" />
@@ -138,7 +142,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
                     </div>
 
 
-                    {!(CurrentTask.completed || taskCompleted || isCompleted) &&
+                    {!(task?.completed || isCompleted) &&
                         <div className='pr-2 pb-2'>
                             <span className="text-customGray font-sfpro text-xs font-medium">Mark as done</span>
                         </div>
@@ -211,7 +215,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
                         </button>
                     </div>
                 </div>
-                {!(CurrentTask.completed || taskCompleted || isCompleted) &&
+                {!(task?.completed || isCompleted) &&
                     <div className='w-full px-3 fixed bottom-4 left-0'>
                         <button className="w-full bg-custompurple text-black rounded-xl p-2" onClick={handleMarkDone}>Mark as Done</button>
                     </div>

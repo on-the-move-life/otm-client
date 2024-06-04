@@ -70,7 +70,7 @@ const reducer = (state = initialState, action) => {
                 ...circle,
                 tasks: circle.tasks.map(task =>
                   task.taskId === action.payload.taskId
-                    ? { ...task, completed: true }
+                    ? { ...task, completed: task?.completed === undefined ? true : !task?.completed }
                     : task
                 )
               }
