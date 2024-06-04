@@ -4,12 +4,14 @@ import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoodIcon, toggleCompletion } from '../ReduxStore/actions';
 
-function TaskItem({ task, index, onClick, SelectedCircle }) {
+function TaskItem({ task, SelectedCircle, date }) {
     const [showTaskDetail, setShowTaskDetail] = useState(false);
     const [taskCompleted, setTaskCompleted] = useState(false);
     const today = new Date(); // Create a Date object for today's date
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
     const formattedDate = today.toLocaleString('en-US', options).replace(',', '');
+    const finalDate = (date === null || date === undefined ) ? formattedDate : date;
+
     const dispatch = useDispatch();
     const isCompleted = useSelector(state => {
         const circle = state?.lifestyle?.circles.find(circle => circle?.name === SelectedCircle);
@@ -25,7 +27,7 @@ function TaskItem({ task, index, onClick, SelectedCircle }) {
         event.stopPropagation(); // Stop propagation to prevent opening next page
         axiosClient.post('/', {
             user: JSON.parse(localStorage.getItem('user'))['code'],
-            date: formattedDate,
+            date: finalDate,
             taskId: task?.taskId,
             events: [
                 {
@@ -75,7 +77,7 @@ function TaskItem({ task, index, onClick, SelectedCircle }) {
                         )}
                     </div>
                 </div>}
-            {showTaskDetail && <TaskDetail SelectedCircle={SelectedCircle} task={task} setShowTaskDetail={setShowTaskDetail} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} />}
+            {showTaskDetail && <TaskDetail SelectedCircle={SelectedCircle} task={task} setShowTaskDetail={setShowTaskDetail} taskCompleted={taskCompleted} setTaskCompleted={setTaskCompleted} date={date}/>}
         </>
     );
 }

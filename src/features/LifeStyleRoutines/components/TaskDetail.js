@@ -4,7 +4,7 @@ import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoodIcon, toggleCompletion } from '../ReduxStore/actions';
 
-const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, setTaskCompleted }) => {
+const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date }) => {
     const [CurrentTask, setCurrentTask] = useState(task);
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
     const [feedback, setFeedback] = useState('');
@@ -12,6 +12,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
     const today = new Date(); // Create a Date object for today's date
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
     const formattedDate = today.toLocaleString('en-US', options).replace(',', '');
+    const finalDate = (date === null || date === undefined) ? formattedDate : date;
 
     const dispatch = useDispatch();
     const moodValue = useSelector(state => {
@@ -37,7 +38,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
     function handleEmojiReaction() {
         axiosClient.post('/', {
             user: JSON.parse(localStorage.getItem('user'))['code'],
-            date: formattedDate,
+            date: finalDate,
             taskId: task?.taskId,
             events: [
                 {
@@ -58,7 +59,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
         if (feedback !== '') {
             axiosClient.post('/', {
                 user: JSON.parse(localStorage.getItem('user'))['code'],
-                date: formattedDate,
+                date: finalDate,
                 taskId: task?.taskId,
                 events: [
                     {
@@ -76,7 +77,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, taskCompleted, se
     function handleMarkDone() {
         axiosClient.post('/', {
             user: JSON.parse(localStorage.getItem('user'))['code'],
-            date: formattedDate,
+            date: finalDate,
             taskId: task?.taskId,
             events: [
                 {

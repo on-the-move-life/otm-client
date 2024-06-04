@@ -40,7 +40,7 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails }) => {
 
             <div className='p-2'>
                 {tasks.map((task, index) => (
-                    <TaskItem key={task?.taskId} task={task} SelectedCircle={SelectedCircle} index={index} />
+                    <TaskItem key={task?.taskId} task={task} SelectedCircle={SelectedCircle} index={index} date={date}/>
                 ))}
 
             </div>
