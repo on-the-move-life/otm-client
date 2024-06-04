@@ -68,7 +68,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
     }, [circleTasks])
 
     return (
-        <div className='w-full h-screen fixed top-0 left-0 bg-[#1c1c1e] z-50'>
+        <div className='w-full h-screen fixed top-0 left-0 bg-[#1c1c1e] z-50 overflow-y-scroll'>
             <div className='w-full flex flex-col justify-start items-start'>
                 <div className='w-full bg-[#17171a]'>
                     <div class="w-full flex flex-row justify-center items-center px-3 py-4">

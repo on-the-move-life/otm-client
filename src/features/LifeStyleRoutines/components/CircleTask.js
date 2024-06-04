@@ -22,7 +22,7 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails }) => {
 
 
     return (
-        <div className="w-full h-screen fixed top-0 left-0 z-50 p-2 bg-black text-white rounded-lg">
+        <div className="w-full h-screen fixed top-0 left-0 z-50 p-2 bg-black text-white rounded-lg overflow-y-scroll">
             <div className="relative flex items-center p-4 bg-black text-white">
                 {/* BackButton */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none" onClick={() => setShowCircleDetails(false)}>
