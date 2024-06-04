@@ -70,14 +70,14 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
     return (
         <div className='w-full h-screen fixed top-0 left-0 bg-[#1c1c1e] z-50 overflow-y-scroll'>
             <div className='w-full flex flex-col justify-start items-start'>
-                <div className='w-full bg-[#17171a]'>
-                    <div class="w-full flex flex-row justify-center items-center px-3 py-4">
+                <div className='w-full bg-[#17171a] px-3 py-5'>
+                    <div class="w-full flex flex-row justify-center items-center py-4">
                         <h5 class="text-[#929292]">Summary, {formatDate(date)[0]} {formatDate(date)[1]}</h5>
                         <div className='absolute right-3 top-2' onClick={() => setShowSummary(false)}>
                             <CrossIcon />
                         </div>
                     </div>
-                    <div className='w-full flex flex-row justify-between items-center px-3 mt-7 mb-2'>
+                    <div className='w-full flex flex-row justify-between items-center mt-7 mb-2'>
                         <div className='w-fit flex flex-row justify-center items-center gap-2'>
                             {circleIcons[circleName]}
                             <h3 className='text-[26px] capitalize text-[#f8f8f8]'>{circleName}</h3>
@@ -98,7 +98,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
                             />
                         </div>
                     </div>
-                    <div className='w-full flex flex-row justify-start items-center gap-5 px-3'>
+                    <div className='w-full flex flex-row justify-start items-center gap-5'>
                         <div className={`w-fit flex flex-col justify-center items-center gap-2 text-[14px] box-border rounded-b-[3px] ${selectedIndex === 0 ? 'border-b-[3px] border-[#5ecc7b] text-[#5ecc7b]' : ' text-[#929292]'}`} onClick={() => setSelectedIndex(0)}>
                             Complete
                         </div>
@@ -107,7 +107,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
                         </div>
                     </div>
                 </div>
-                <div className='w-full flex flex-col justify-start items-start gap-5 py-5 px-3'>
+                <div className='w-full flex flex-col justify-start items-start gap-5 py-5 px-5'>
                     {
                         selectedIndex === 0 ? (
                             (completedTasks === null || completedTasks?.length === 0) ?
