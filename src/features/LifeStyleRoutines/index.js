@@ -1,5 +1,6 @@
 export { default as NavigationTab } from "./NavigationTab"
 export { default as LifeStyleRoutine } from "./MainPage"
+export { default as ProgressBar } from "./ProgressBar"
 
 // icons export
 export { default as MorningCircleIcon } from "./components/icons/MorningCircleIcon"

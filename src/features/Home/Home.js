@@ -7,6 +7,8 @@ import {
   LeaderBoard,
   DuePaymentIndicator,
   MoveCoins,
+  LifeStyleScore,
+  LifeStyleRoutine
 } from '.';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,6 +16,7 @@ import { AiOutlineRight } from 'react-icons/ai';
 import { FaUserCircle } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
 import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
+import { LifestyleHeading } from '../LifestyleQuiz';
 
 
 const Home = () => {
@@ -114,6 +117,10 @@ const Home = () => {
               {homeStats.quote && homeStats?.quote !== null && homeStats?.quote !== '' ? homeStats?.quote : `Fitness is not a destination. It's a journey of self-improvement,
               one workout at a time.`}
             </p>
+          </section>
+          <section className='w-full flex flex-row justify-center items-center gap-3'>
+              <LifeStyleScore completionPercentage={homeStats?.dailyCompletion}/>
+              <LifeStyleRoutine/>
           </section>
           <section>
             <WeeklyWorkoutReport

@@ -16,7 +16,7 @@ function MainPage() {
   // Defining states for the fetched data
   const [selectedDate, setSelectedDate] = useState(getFormattedDate());
   const [section, setSection] = useState(0);
-  const [pageLoading, setPageLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [pageError, setPageError] = useState(false);
 
   const navigate = useNavigate();
