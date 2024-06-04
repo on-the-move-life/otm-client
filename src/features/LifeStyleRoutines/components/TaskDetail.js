@@ -49,7 +49,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             taskId: task?.taskId,
             events: [
                 {
-                    type: "moodCheckIn",
+                    type: "moodCheckin",
                     input: selectedFeeling
                 }
             ]
