@@ -1,0 +1,524 @@
+{
+  "success": true,
+  "renewalReport": {
+    "name": "Suma Ganesh",
+    "summary": "Suma's fitness journey has shown remarkable dedication and resilience. She has maintained a consistent workout routine, even managing to work out while travelling and juggling daily responsibilities. Suma has successfully navigated shifting to new platforms and resolving minor issues with flexibility and resourcefulness. Her progress in increasing workout intensity and approaching a well-rounded fitness regimen is commendable. Although there have been fluctuations in workout frequency and intensity, she's continuously adapted and pushed toward her fitness goals.",
+    "objectives": [
+      {
+        "heading": "Consistent Workout Routine",
+        "details": "Suma has aimed to maintain a steady workout regimen, managing to exercise despite a varying schedule and occasional disruptions. She effectively utilizes resources like workout bands on the go and adapts to different environments, ensuring regular physical activity."
+      },
+      {
+        "heading": "Balanced Nutrition and Healthy Diet",
+        "details": "Nutrition is a significant focus for Suma. She strives for a balanced diet, even under challenging circumstances such as travel or family events. She faces difficulties like balancing traditional foods with her dietary preferences but makes conscious choices towards healthier alternatives."
+      },
+      {
+        "heading": "Improving Fitness Scores and Metcon Performance",
+        "details": "Suma is dedicated to enhancing her overall fitness scores and Metcon performance. She pays attention to fitness assessments and integrates feedback into her routine to boost her METCON intensity scores and overall fitness."
+      }
+    ],
+    "futureStrategies": [
+      {
+        "heading": "Enhanced Accountability",
+        "details": "To support Suma's consistency, we'll introduce more structured accountability checks. Regular updates on workouts and dietary habits will help keep her on track and make adjustments as needed."
+      },
+      {
+        "heading": "Strategic Nutritional Planning",
+        "details": "We'll focus on creating more personalized and adaptive nutritional plans that align with Suma's lifestyle changes and dietary preferences. This includes preparing for days with expected dietary deviations and managing cravings."
+      }
+    ],
+    "futurePlan": [
+      {
+        "month": "June",
+        "theme": "Consistency Phase",
+        "details": "Focus on establishing a routine of at least 18-20 workouts per month, emphasizing consistent engagement rather than intensity."
+      },
+      {
+        "month": "July",
+        "theme": "Intensity Phase",
+        "details": "Increase workout intensity by incorporating more complex exercises and higher weights while maintaining workout frequency."
+      },
+      {
+        "month": "August",
+        "theme": "Performance Phase",
+        "details": "Focus on refining diet and nutrition, syncing with advanced workout strategies to optimize overall fitness and health outcomes."
+      }
+    ],
+    "workoutConsistencySummary": "Suma has displayed a mixed level of workout consistency, with recent months showing a dip possibly due to external circumstances like travel. Earlier in the year, she was frequently in the green and dark green zones. Moving forward, the focus will be on regaining and maintaining this level of consistency.",
+    "fitnessScore": "Suma's fitness score has improved impressively from a low of 1.3 to a current level of 6.8, transitioning from a Newbie to Advanced status. This progression speaks volumes about her commitment and adaptation to workout intensities. Continued efforts are expected to help her reach an elite fitness level in the coming months."
+  },
+  "consistency": [
+    {
+      "week": "3Jun-9Jun",
+      "count": 1
+    },
+    {
+      "week": "27May-2Jun",
+      "count": 2
+    },
+    {
+      "week": "20May-26May",
+      "count": 0
+    },
+    {
+      "week": "13May-19May",
+      "count": 0
+    },
+    {
+      "week": "6May-12May",
+      "count": 1
+    },
+    {
+      "week": "29Apr-5May",
+      "count": 2
+    },
+    {
+      "week": "22Apr-28Apr",
+      "count": 3
+    },
+    {
+      "week": "15Apr-21Apr",
+      "count": 1
+    },
+    {
+      "week": "8Apr-14Apr",
+      "count": 0
+    },
+    {
+      "week": "1Apr-7Apr",
+      "count": 1
+    },
+    {
+      "week": "25Mar-31Mar",
+      "count": 2
+    },
+    {
+      "week": "18Mar-24Mar",
+      "count": 3
+    },
+    {
+      "week": "11Mar-17Mar",
+      "count": 4
+    },
+    {
+      "week": "4Mar-10Mar",
+      "count": 0
+    },
+    {
+      "week": "26Feb-3Mar",
+      "count": 4
+    },
+    {
+      "week": "19Feb-25Feb",
+      "count": 0
+    },
+    {
+      "week": "12Feb-18Feb",
+      "count": 4
+    },
+    {
+      "week": "5Feb-11Feb",
+      "count": 4
+    },
+    {
+      "week": "29Jan-4Feb",
+      "count": 3
+    },
+    {
+      "week": "22Jan-28Jan",
+      "count": 5
+    },
+    {
+      "week": "15Jan-21Jan",
+      "count": 4
+    },
+    {
+      "week": "8Jan-14Jan",
+      "count": 5
+    },
+    {
+      "week": "1Jan-7Jan",
+      "count": 2
+    },
+    {
+      "week": "25Dec-31Dec",
+      "count": 2
+    },
+    {
+      "week": "18Dec-24Dec",
+      "count": 3
+    },
+    {
+      "week": "11Dec-17Dec",
+      "count": 2
+    },
+    {
+      "week": "4Dec-10Dec",
+      "count": 0
+    },
+    {
+      "week": "27Nov-3Dec",
+      "count": 5
+    },
+    {
+      "week": "20Nov-26Nov",
+      "count": 2
+    },
+    {
+      "week": "13Nov-19Nov",
+      "count": 4
+    },
+    {
+      "week": "6Nov-12Nov",
+      "count": 5
+    },
+    {
+      "week": "30Oct-5Nov",
+      "count": 3
+    },
+    {
+      "week": "23Oct-29Oct",
+      "count": 2
+    },
+    {
+      "week": "16Oct-22Oct",
+      "count": 1
+    },
+    {
+      "week": "9Oct-15Oct",
+      "count": 3
+    },
+    {
+      "week": "2Oct-8Oct",
+      "count": 3
+    },
+    {
+      "week": "25Sep-1Oct",
+      "count": 2
+    },
+    {
+      "week": "18Sep-24Sep",
+      "count": 3
+    },
+    {
+      "week": "11Sep-17Sep",
+      "count": 3
+    },
+    {
+      "week": "4Sep-10Sep",
+      "count": 4
+    },
+    {
+      "week": "28Aug-3Sep",
+      "count": 3
+    }
+  ],
+  "fitnessScore": [
+    {
+      "_id": "6656abe301c1fc103420b6a8",
+      "assessmentMonth": {
+        "day": 29,
+        "month": 5,
+        "year": 2024
+      },
+      "totalScore": 6.8
+    },
+    {
+      "_id": "6630ff35bc2d97e426236cf8",
+      "assessmentMonth": {
+        "day": 30,
+        "month": 4,
+        "year": 2024
+      },
+      "totalScore": 6.6
+    },
+    {
+      "_id": "662744240c95e247ae155162",
+      "assessmentMonth": {
+        "day": 23,
+        "month": 4,
+        "year": 2024
+      },
+      "totalScore": 6.6
+    },
+    {
+      "_id": "661e14b16c5966df9fec0c40",
+      "assessmentMonth": {
+        "day": 16,
+        "month": 4,
+        "year": 2024
+      },
+      "totalScore": 6.6
+    },
+    {
+      "_id": "660243f8c6e944c58d013c2d",
+      "assessmentMonth": {
+        "day": 26,
+        "month": 3,
+        "year": 2024
+      },
+      "totalScore": 6.3
+    },
+    {
+      "_id": "65fa5ce1c6e944c58d00ffc3",
+      "assessmentMonth": {
+        "day": 20,
+        "month": 3,
+        "year": 2024
+      },
+      "totalScore": 5.6
+    },
+    {
+      "_id": "65f7b91957052d1d061753cc",
+      "assessmentMonth": {
+        "day": 18,
+        "month": 3,
+        "year": 2024
+      },
+      "totalScore": 5.6
+    },
+    {
+      "_id": "65f3c829d1b9ab9ddf1d0f93",
+      "assessmentMonth": {
+        "day": 15,
+        "month": 3,
+        "year": 2024
+      },
+      "totalScore": 5.6
+    },
+    {
+      "_id": "65efd138d1b9ab9ddf1cf7b5",
+      "assessmentMonth": {
+        "day": 12,
+        "month": 3,
+        "year": 2024
+      },
+      "totalScore": 5.6
+    },
+    {
+      "_id": "65deb01c2dddea507fbaf301",
+      "assessmentMonth": {
+        "day": 28,
+        "month": 2,
+        "year": 2024
+      },
+      "totalScore": 5.4
+    },
+    {
+      "_id": "65cd8d13a49f6d6b3367d477",
+      "assessmentMonth": {
+        "day": 15,
+        "month": 2,
+        "year": 2024
+      },
+      "totalScore": 5.4
+    },
+    {
+      "_id": "65cb0b8fa49f6d6b3367c59d",
+      "assessmentMonth": {
+        "day": 13,
+        "month": 2,
+        "year": 2024
+      },
+      "totalScore": 5.3
+    },
+    {
+      "_id": "65c2ff6e8767d80541852201",
+      "assessmentMonth": {
+        "day": 7,
+        "month": 2,
+        "year": 2024
+      },
+      "totalScore": 4.7
+    },
+    {
+      "_id": "65b9ca3c30f7a4ab2dc4c3f6",
+      "assessmentMonth": {
+        "day": 31,
+        "month": 1,
+        "year": 2024
+      },
+      "totalScore": 4.9
+    },
+    {
+      "_id": "65b7231215caf0fcf1a56688",
+      "assessmentMonth": {
+        "day": 29,
+        "month": 1,
+        "year": 2024
+      },
+      "totalScore": 4.9
+    },
+    {
+      "_id": "65b08cb593e490b08a168b56",
+      "assessmentMonth": {
+        "day": 24,
+        "month": 1,
+        "year": 2024
+      },
+      "totalScore": 4.4
+    },
+    {
+      "_id": "65a605fd2dbe0c395c4eaf85",
+      "assessmentMonth": {
+        "day": 16,
+        "month": 1,
+        "year": 2024
+      },
+      "totalScore": 5.3
+    },
+    {
+      "_id": "659e15487121262e7296f5be",
+      "assessmentMonth": {
+        "day": 10,
+        "month": 1,
+        "year": 2024
+      },
+      "totalScore": 4.9
+    },
+    {
+      "_id": "659c182ad24d84ee1e1d7b8d",
+      "assessmentMonth": {
+        "day": 8,
+        "month": 1,
+        "year": 2024
+      },
+      "totalScore": 5.4
+    },
+    {
+      "_id": "65938db361fde30dfe8a6695",
+      "assessmentMonth": {
+        "day": 2,
+        "month": 1,
+        "year": 2024
+      },
+      "totalScore": 5.4
+    },
+    {
+      "_id": "658a6866548f1deea8b65c47",
+      "assessmentMonth": {
+        "day": 26,
+        "month": 12,
+        "year": 2023
+      },
+      "totalScore": 5.7
+    },
+    {
+      "_id": "6581b1778d221ddbff439584",
+      "assessmentMonth": {
+        "day": 19,
+        "month": 12,
+        "year": 2023
+      },
+      "totalScore": 5.6
+    },
+    {
+      "_id": "657ad6d091a01de84e897fd3",
+      "assessmentMonth": {
+        "day": 14,
+        "month": 12,
+        "year": 2023
+      },
+      "totalScore": 4.9
+    },
+    {
+      "_id": "656c89cf07924bf8391b5c0d",
+      "assessmentMonth": {
+        "day": 3,
+        "month": 12,
+        "year": 2023
+      },
+      "totalScore": 4.8
+    },
+    {
+      "_id": "6567361dba46d5ae16ad0ae5",
+      "assessmentMonth": {
+        "day": 29,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 4.4
+    },
+    {
+      "_id": "6564913bc2b859e078b9e0a1",
+      "assessmentMonth": {
+        "day": 27,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 4.4
+    },
+    {
+      "_id": "655ac3505bc28242e4d46e93",
+      "assessmentMonth": {
+        "day": 20,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 4.6
+    },
+    {
+      "_id": "6556c47a5bc28242e4d45afc",
+      "assessmentMonth": {
+        "day": 17,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 4.6
+    },
+    {
+      "_id": "65522c26edf5e43b764ade2e",
+      "assessmentMonth": {
+        "day": 13,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 4.4
+    },
+    {
+      "_id": "654c921d909fb8b2da72866c",
+      "assessmentMonth": {
+        "day": 9,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 4.1
+    },
+    {
+      "_id": "6549f2a3a2acbd07310cbe56",
+      "assessmentMonth": {
+        "day": 7,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 3.3
+    },
+    {
+      "_id": "65464203f2e935ff95f053e5",
+      "assessmentMonth": {
+        "day": 4,
+        "month": 11,
+        "year": 2023
+      },
+      "totalScore": 3.1
+    },
+    {
+      "_id": "653faa62b434bae8de4354e9",
+      "assessmentMonth": {
+        "day": 30,
+        "month": 10,
+        "year": 2023
+      },
+      "totalScore": 1.3
+    },
+    {
+      "_id": "64edd0df5b6c29d7135fc943",
+      "assessmentMonth": {
+        "day": 29,
+        "month": 8,
+        "year": 2023
+      },
+      "totalScore": 1
+    }
+  ]
+}
