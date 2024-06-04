@@ -14,7 +14,7 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import CircleTask from './CircleTask';
 
-function YourCircle({ name, tasks, percentCompletion, date }) {
+function YourCircle({ name, tasks, percentCompletion, date, setReloadCounter }) {
     const [tasksName, setTasksName] = useState("");
     const [showCircleDetails, setShowCircleDetails] = useState(false);
     const circleIcons = useMemo(() => (
@@ -62,7 +62,10 @@ function YourCircle({ name, tasks, percentCompletion, date }) {
     return (
         <>
             {!showCircleDetails &&
-                <div className='w-full flex flex-row justify-between items-center px-4 py-2 bg-[#1C1C1E] rounded-[12px]' onClick={() => setShowCircleDetails(true)}>
+                <div className='w-full flex flex-row justify-between items-center px-4 py-2 bg-[#1C1C1E] rounded-[12px]' onClick={() => {
+                    setShowCircleDetails(true);
+                    setReloadCounter(true);
+                }}>
                     <div className='w-full flex flex-row justify-start items-center gap-5'>
                         <div>{circleIcons[name]}</div>
                         <div className='flex flex-col justify-center items-start'>
@@ -87,7 +90,7 @@ function YourCircle({ name, tasks, percentCompletion, date }) {
                         />
                     </div>
                 </div>}
-            {showCircleDetails && <CircleTask SelectedCircle={name} tasks={tasks} date={date} setShowCircleDetails={setShowCircleDetails}/>}
+            {showCircleDetails && <CircleTask SelectedCircle={name} tasks={tasks} date={date} setShowCircleDetails={setShowCircleDetails} setReloadCounter={setReloadCounter}/>}
         </>
     )
 }

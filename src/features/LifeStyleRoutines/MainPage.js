@@ -18,6 +18,7 @@ function MainPage() {
   const [section, setSection] = useState(0);
   const [pageLoading, setPageLoading] = useState(true);
   const [pageError, setPageError] = useState(false);
+  const [reloadCounter, setReloadCounter] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,8 +47,10 @@ function MainPage() {
 
   // this will call the API whenever the date is changed
   useEffect(() => {
-    getData(selectedDate);
-  }, [selectedDate]);
+    if(reloadCounter === false){
+      getData(selectedDate);
+    }
+  }, [selectedDate, reloadCounter]);
 
   const renderContent = () => {
     if (pageLoading) {
@@ -77,7 +80,7 @@ function MainPage() {
           />
         )}
         {section === 0 ? (
-          <Routines circles={circles} date={selectedDate} />
+          <Routines circles={circles} date={selectedDate} setReloadCounter={setReloadCounter}/>
         ) : (
           <Summary circles={circles} date={selectedDate} />
         )}

@@ -30,7 +30,7 @@ function LifeStyleRoutine() {
   return (
     <Container className='w-6/12 flex flex-col justify-center items-center gap-1' onClick={() => navigate('/lifestyle-routine')}>
       <IoTimerOutline size={40} color={'#000'}/>
-      <Heading>Track our Routine</Heading>
+      <Heading>Track Your Routine</Heading>
     </Container>
   )
 }
