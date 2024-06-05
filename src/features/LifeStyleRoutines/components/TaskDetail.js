@@ -142,7 +142,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             </div>
 
             <div className="flex flex-row items-center justify-between">
-                <h1 className="text-3xl leading-normal text-white font-sfpro font-medium capitalize pl-1 ml-6">{task?.name}</h1>
+                <h1 className="text-[26px] leading-normal text-white font-sfpro font-medium capitalize ml-3">{task?.name}</h1>
                 <button className="flex items-center flex-col " onClick={handleMarkDone}>
                     <div className="" />
                     <div className='pr-3'>
@@ -180,9 +180,9 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
 
                 <div className="mb-6 ">
-                    <h3 className="text-xl text-white font-sfpro mb-2 leading-8">Reflect</h3>
+                    <h3 className="text-[20px] text-white font-sfpro mb-2 leading-8">Reflect</h3>
                     <div className='bg-mediumGray rounded-xl p-2'>
-                        <p className="text-custompurple mb-2 p-2 text-sm">
+                        <p className="text-custompurple mb-2 p-2 text-[14px]">
                             How did you feel performing this habit today?
                             <br />
                             Any insights you’d like to note?
@@ -193,14 +193,14 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                                 placeholder="Type your answer here..."
                                 onChange={(e) => setFeedback(e.target.value)}
                             /> :
-                            <p className='px-2 text-md text-lightGray'>{task?.feedback}</p>
+                            <p className='px-2 text-md text-lightGray text-[14px]'>{task?.feedback}</p>
                         }
                         {(task?.feedback === undefined || task?.feedback === null || storedFeedbackValue === undefined || storedFeedbackValue === null) && <button className="w-full p-1 leading-8 bg-custompurple text-black rounded-xl text-sm" onClick={handleFeedbackResponse}>Submit</button>}
                     </div>
 
                 </div>
                 <div className="mb-6">
-                    <h3 className="text-lg mb-2 pb-4 leading-8 font-sfpro">Feeling Check-In</h3>
+                    <h3 className="text-[20px] mb-2 pb-4 leading-8 font-sfpro">Feeling Check-In</h3>
                     <div className="flex space-x-4 items-center justify-center w-full">
                         <button
                             onClick={() => setSelectedFeeling(1)}

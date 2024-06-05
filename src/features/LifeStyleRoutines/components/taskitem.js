@@ -57,7 +57,7 @@ function TaskItem({ task, SelectedCircle, date }) {
             </div> */}
                     <div className="ml-4 flex-1">
                         <h3 className="text-custompurple font-sfpro text-base font-semibold ">{task.time}</h3>
-                        <p className='text-white font-sfpro font-medium capitalize text-lg'>{task.name}</p>
+                        <p className='text-white font-sfpro font-medium capitalize text-[18.5px]'>{task.name}</p>
                     </div>
                     <div className="text-2xl">
                         {(task?.completed || isCompleted) ? (

@@ -38,7 +38,7 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setRelo
             </div>
             <div className="flex p-2">
                 {circleIcons[SelectedCircle]}
-                <h1 className="text-2xl leading-normal text-white font-sfpro font-medium capitalize p-1">{SelectedCircle}</h1>
+                <h1 className="text-[26px] leading-normal text-white font-sfpro font-medium capitalize p-1">{SelectedCircle}</h1>
             </div>
 
             <div className='p-2'>
