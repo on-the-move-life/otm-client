@@ -13,7 +13,7 @@ function TaskItem({ task, SelectedCircle, date }) {
 
     const dispatch = useDispatch();
     const isCompleted = useSelector(state => {
-        const circle = state?.lifestyle?.circles.find(circle => circle?.name === SelectedCircle);
+        const circle = state?.lifeStyleDetails?.circles.find(circle => circle?.name === SelectedCircle);
         if (circle) {
             const mytask = circle?.tasks.find(mappedTask => mappedTask.taskId === task?.taskId);
             return mytask ? task?.completed : false;

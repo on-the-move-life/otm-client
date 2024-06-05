@@ -14,7 +14,7 @@ const initialState = {
   error: null,
   success: false,
   completionHistory: [],
-  lifeStyle: {
+  lifeStyleDetails: {
     _id: '',
     circles: [],
     memberCode: '',
@@ -49,9 +49,9 @@ const reducer = (state = initialState, action) => {
     case UPDATE_COMPLETION_PERCENTAGE:
       return {
         ...state,
-        lifeStyle: {
-          ...state.lifeStyle,
-          circles: state.lifeStyle.circles.map(circle =>
+        lifeStyleDetails: {
+          ...state.lifeStyleDetails,
+          circles: state.lifeStyleDetails.circles.map(circle =>
             circle.name === action.payload.circleName
               ? { ...circle, completionPercentage: action.payload.completionPercentage }
               : circle
@@ -63,9 +63,9 @@ const reducer = (state = initialState, action) => {
     case TOGGLE_TASK_COMPLETION:
       return {
         ...state,
-        lifeStyle: {
-          ...state.lifeStyle,
-          circles: state?.lifeStyle?.circles.map(circle =>
+        lifeStyleDetails: {
+          ...state.lifeStyleDetails,
+          circles: state?.lifeStyleDetails?.circles.map(circle =>
             circle.name === action.payload.circleName
               ? {
                 ...circle,
@@ -83,9 +83,9 @@ const reducer = (state = initialState, action) => {
     case CHANGE_MOOD_ICON:
       return {
         ...state,
-        lifeStyle: {
-          ...state.lifeStyle,
-          circles: state?.lifeStyle?.circles.map(circle =>
+        lifeStyleDetails: {
+          ...state.lifeStyleDetails,
+          circles: state?.lifeStyleDetails?.circles.map(circle =>
             circle.name === action.payload.circleName
               ? {
                 ...circle,
@@ -103,9 +103,9 @@ const reducer = (state = initialState, action) => {
       case SUBMIT_REFLECTION_FEEDBACK:
         return {
           ...state,
-          lifeStyle: {
-            ...state.lifeStyle,
-            circles: state?.lifeStyle?.circles.map(circle =>
+          lifeStyleDetails: {
+            ...state.lifeStyleDetails,
+            circles: state?.lifeStyleDetails?.circles.map(circle =>
               circle.name === action.payload.circleName
                 ? {
                   ...circle,

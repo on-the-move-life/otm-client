@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react';
 import {
     MorningCircleIcon,
     AfternoonCircleIcon,
@@ -20,11 +20,11 @@ import "react-circular-progressbar/dist/styles.css";
 import CrossIcon from './icons/CrossIcon';
 import { formatDate } from "../utils";
 
-
 function CircleSummary({ circleName, circleTasks, completionPercentage, setShowSummary, date }) {
     const [selectedIndex, setSelectedIndex] = useState(0); // default is completed
     const [completedTasks, setCompletedTasks] = useState([]);
     const [incompletedTasks, setIncompletedTasks] = useState([]);
+
     const circleIcons = useMemo(() => (
         {
             "Morning Circle": <MorningCircleIcon />,
@@ -33,7 +33,8 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
             "Night Circle": <NightCircleIcon />,
             "Always Active Circle": <AlwaysActiveIcon />
         }
-    ), [])
+    ), []);
+
     const moodIcons = useMemo(() => (
         {
             1: <Mood1Icon />,
@@ -42,7 +43,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
             4: <Mood4Icon />,
             5: <Mood5Icon />
         }
-    ), [])
+    ), []);
 
     const colors = useMemo(() => [
         { threshold: 25, color: '#e74c3c' },
@@ -50,7 +51,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
         { threshold: 75, color: '#7E87EF' },
         { threshold: 100, color: '#5ECC7B' }
     ], []);
-    // Determine the color based on the percentage
+
     const getColor = () => {
         for (let i = 0; i < colors.length; i++) {
             if (completionPercentage <= colors[i].threshold) {
@@ -65,14 +66,21 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
     useEffect(() => {
         setCompletedTasks(circleTasks.filter(task => task?.completed === true));
         setIncompletedTasks(circleTasks.filter(task => task?.completed !== true));
-    }, [circleTasks])
+    }, [circleTasks]);
+
+    const hasAnyIconInCompletedTasks = useMemo(() => {
+        return completedTasks.some(task => task?.mood);
+    }, [completedTasks]);
+    const hasAnyIconInIncompletedTasks = useMemo(() => {
+        return incompletedTasks.some(task => task?.mood);
+    }, [incompletedTasks]);
 
     return (
         <div className='w-full h-screen fixed top-0 left-0 bg-[#1c1c1e] z-50 overflow-y-scroll'>
             <div className='w-full flex flex-col justify-start items-start'>
                 <div className='w-full bg-[#17171a] px-3 py-5'>
-                    <div class="w-full flex flex-row justify-center items-center py-4">
-                        <h5 class="text-[#929292]">Summary, {formatDate(date)[0]} {formatDate(date)[1]}</h5>
+                    <div className="w-full flex flex-row justify-center items-center py-4">
+                        <h5 className="text-[#929292]">Summary, {formatDate(date)[0]} {formatDate(date)[1]}</h5>
                         <div className='absolute right-3 top-2' onClick={() => setShowSummary(false)}>
                             <CrossIcon />
                         </div>
@@ -112,38 +120,41 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
                         selectedIndex === 0 ? (
                             (completedTasks === null || completedTasks?.length === 0) ?
                                 <div className='text-[18.5px] text-[#929292]'>No Tasks</div> :
-                                completedTasks.map((task, index) => {
-                                    return (
-                                        <div className='w-full flex flex-row justify-start items-center gap-4'>
-                                            {moodIcons[task?.mood]}
-                                            <div className='flex flex-col justify-center items-start'>
-                                                <h3 className='text-[18.5px] text-[#f8f8f8] capitalize'>{task?.name}</h3>
-                                                <p className='text-[12px] text-[#545454]'>{task?.feedback}</p>
+                                completedTasks.map((task, index) => (
+                                    <div className='w-full flex flex-row justify-start items-center gap-4' key={index}>
+                                        {hasAnyIconInCompletedTasks && (
+                                            <div>
+                                                {task?.mood ? moodIcons[task.mood] : <div style={{ width: '36px', height: '36px' }}></div>}
                                             </div>
+                                        )}
+                                        <div className='flex flex-col justify-center items-start'>
+                                            <h3 className='text-[18.5px] text-[#f8f8f8] capitalize'>{task?.name}</h3>
+                                            <p className='text-[12px] text-[#545454]'>{task?.feedback}</p>
                                         </div>
-                                    )
-                                })
+                                    </div>
+                                ))
                         ) : (
                             (incompletedTasks === null || incompletedTasks?.length === 0) ?
                                 <div className='text-[18.5px] text-[#929292]'>No Tasks</div> :
-                                incompletedTasks.map((task, index) => {
-                                    return (
-                                        <div className='w-full flex flex-row justify-start items-center gap-4'>
-                                            {moodIcons[task?.mood]}
-                                            <div className='flex flex-col justify-center items-start'>
-                                                <h3 className='text-[18.5px] text-[#929292] capitalize'>{task?.name}</h3>
-                                                <p className='text-[12px] text-[#545454]'>{task?.feedback}</p>
+                                incompletedTasks.map((task, index) => (
+                                    <div className='w-full flex flex-row justify-start items-center gap-4' key={index}>
+                                        {hasAnyIconInIncompletedTasks && (
+                                            <div>
+                                                {task?.mood ? moodIcons[task.mood] : <div style={{ width: '36px', height: '36px' }}></div>}
                                             </div>
+                                        )}
+                                        <div className='flex flex-col justify-center items-start'>
+                                            <h3 className='text-[18.5px] text-[#929292] capitalize'>{task?.name}</h3>
+                                            <p className='text-[12px] text-[#545454]'>{task?.feedback}</p>
                                         </div>
-                                    )
-                                })
+                                    </div>
+                                ))
                         )
                     }
                 </div>
             </div>
         </div>
-    )
-
+    );
 }
 
-export default CircleSummary
+export default CircleSummary;

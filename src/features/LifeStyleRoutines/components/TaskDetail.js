@@ -14,7 +14,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
     const dispatch = useDispatch();
     const moodValue = useSelector(state => {
-        const circle = state?.lifeStyle?.circles.find(circle => circle?.name === SelectedCircle);
+        const circle = state?.lifeStyleDetails?.circles.find(circle => circle?.name === SelectedCircle);
         if (circle) {
             const mytask = circle?.tasks.find(mappedTask => mappedTask?.taskId === task?.taskId);
             if (mytask) {
@@ -24,7 +24,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         return null; // or any default value you prefer
     });
     const isCompleted = useSelector(state => {
-        const circle = state?.lifestyle?.circles.find(circle => circle?.name === SelectedCircle);
+        const circle = state?.lifeStyleDetails?.circles.find(circle => circle?.name === SelectedCircle);
         if (circle) {
             const mytask = circle?.tasks.find(mappedTask => mappedTask.taskId === task?.taskId);
             return mytask ? task?.completed : false;
@@ -32,7 +32,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         return false;
     });
     const storedFeedbackValue = useSelector(state => {
-        const circle = state?.lifestyle?.circles.find(circle => circle?.name === SelectedCircle);
+        const circle = state?.lifeStyleDetails?.circles.find(circle => circle?.name === SelectedCircle);
         if (circle) {
             const mytask = circle?.tasks.find(mappedTask => mappedTask.taskId === task?.taskId);
             return mytask ? task?.feedback : '';

@@ -25,8 +25,8 @@ function MainPage() {
 
   const { completionHistory, circles, percentCompletion } = useSelector(state => ({
     completionHistory: state.completionHistory,
-    circles: state.lifeStyle?.circles,
-    percentCompletion: state.lifeStyle?.completionHistory,
+    circles: state.lifeStyleDetails?.circles,
+    percentCompletion: state.lifeStyleDetails?.completionHistory,
   }));
 
   const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
