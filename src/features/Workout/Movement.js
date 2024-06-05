@@ -1,6 +1,6 @@
 import React from 'react';
 
-const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP'];
+const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
 
 const Movement = ({
   movement,

@@ -15,10 +15,15 @@ module.exports = withMT({
         blue: '#7E87EF',
         lightGray: '#B1B1B1',
         yellow: '#F5C563',
+<<<<<<< HEAD
         mediumGray: '#1C1C1E',
         lightGray: '#929292',
         custompurple: '#7E87EF',
         customGray: '#545454',
+=======
+        gradientStart: '#7E87EF',
+        gradientEnd: '#B0B5F8',
+>>>>>>> f9bab911297360d86a6190b7e23b8746994d8b7d
       },
       backgroundImage: {
         'landing-cover': "url('../public/assets/landing-cover.png')",
