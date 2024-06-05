@@ -182,7 +182,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                 <div className="mb-6 ">
                     <h3 className="text-xl text-white font-sfpro mb-2 leading-8">Reflect</h3>
                     <div className='bg-mediumGray rounded-xl p-2'>
-                        <p className="text-lightGray mb-2 p-2 text-sm">
+                        <p className="text-custompurple mb-2 p-2 text-sm">
                             How did you feel performing this habit today?
                             <br />
                             Any insights you’d like to note?
@@ -193,7 +193,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                                 placeholder="Type your answer here..."
                                 onChange={(e) => setFeedback(e.target.value)}
                             /> :
-                            <p className='px-2 text-md text-custompurple'>{task?.feedback}</p>
+                            <p className='px-2 text-md text-lightGray'>{task?.feedback}</p>
                         }
                         {(task?.feedback === undefined || task?.feedback === null || storedFeedbackValue === undefined || storedFeedbackValue === null) && <button className="w-full p-1 leading-8 bg-custompurple text-black rounded-xl text-sm" onClick={handleFeedbackResponse}>Submit</button>}
                     </div>
