@@ -7,6 +7,8 @@ import {
   LeaderBoard,
   DuePaymentIndicator,
   MoveCoins,
+  LifeStyleScore,
+  LifeStyleRoutine
 } from '.';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,6 +16,7 @@ import { AiOutlineRight } from 'react-icons/ai';
 import { FaUserCircle } from "react-icons/fa";
 import { useUserContext } from '../../contexts/UserContext';
 import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
+import { LifestyleHeading } from '../LifestyleQuiz';
 import LifestyleDesignBanner from '../../components/LifestyleDesignBanner';
 
 
@@ -82,7 +85,7 @@ const Home = () => {
 
         <div className="flex min-h-screen w-screen flex-col gap-5 px-4 pb-8 ">
           <section className="pb-0 pt-5">
-            <LifestyleDesignBanner />
+            {!(homeStats?.showLifestyle === true) && <LifestyleDesignBanner />}
 
             <div className="flex items-center justify-between">
               <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-3xl font-semibold text-transparent">
@@ -119,6 +122,11 @@ const Home = () => {
               one workout at a time.`}
             </p>
           </section>
+          {homeStats?.showLifestyle === true && 
+          <section className='w-full flex flex-row justify-center items-center gap-3'>
+              <LifeStyleScore completionPercentage={homeStats?.routineProgress}/>
+              <LifeStyleRoutine/>
+          </section>}
           <section>
             <WeeklyWorkoutReport
               suggestedWorkoutPerWeek={homeStats?.frequency}

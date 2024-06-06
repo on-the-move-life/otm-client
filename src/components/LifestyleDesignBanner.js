@@ -6,7 +6,7 @@ const LifestyleDesignBanner = () => {
       {/* elem 1 */}
       <img src="/assets/ldbannerleft.svg" alt="lifestyle design banner" />
 
-      <div className="flex font-sfpro  text-sm font-semibold leading-none text-black">
+      <div className="flex font-sfpro text-sm leading-none text-black">
         <img
           className="mr-1"
           src="/assets/ldbannertime.svg"
