@@ -6,8 +6,10 @@ import { IoMdTrash } from "react-icons/io";
 import { IoCamera } from "react-icons/io5";
 import { BsImageFill } from "react-icons/bs";
 import axios from 'axios';
+import NutriInfo from './NutriInfo';
 
 // styling
+
 
 const ProfilePicHeading = styled.div`
  color: #D7D7D7;
@@ -171,44 +173,27 @@ const UploadMeal = () => {
                         Upload Meal Photo
                     </button>
                 </div>
+                {/* {imageURL && (
+                    <div>
+                        <h2>Selected Image:</h2>
+                        <img src={imageURL} alt="Selected" style={{ width: '200px', height: '200px' }} />
+                    </div>
+                )} */}
 
                 {/* description component */}
-                <div className="bg-mediumGray text-white mt-4 p-4 rounded-lg shadow-lg w-screen max-w-sm mx-auto">
-                    <h3 className="text-white font-sfPro font-body-condensed-bold mb-2">Meal Details</h3>
-                    {/* meal pic */}
-                    {imageURL && (
-                        <div>
-                            <h2>Selected Image:</h2>
-                            <img src={imageURL} alt="Selected" style={{ width: '200px', height: '200px' }} />
-                        </div>
-                    )}
-                    <div className="bg-mediumGray p-4 rounded-lg">
-                        <p className="flex items-center mb-2 text-sm">
+                <div>
 
-                            <span className="font-body-condensed-bold">Meal Info</span>
-                        </p>
-                        <ul className="text-sm">
-                            <li>Calorie Information about meal </li>
+                    <NutriInfo></NutriInfo>
 
-                        </ul>
-                    </div>
-                    <div className="bg-mediumGray p-4 rounded-lg">
-                        <p className="flex items-center mb-2 text-sm">
-
-                            <span className="font-body-condensed-bold">Meal Feedback </span>
-                        </p>
-                        <ul className="text-sm">
-                            <li>Feedback on meal</li>
-
-                        </ul>
-                    </div>
                 </div>
+
             </div>
 
 
 
 
-            {showProfilePicPopup &&
+            {
+                showProfilePicPopup &&
                 <motion.div
                     className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'
                     initial="hidden"
@@ -249,8 +234,9 @@ const UploadMeal = () => {
                             </div> */}
                         </div>
                     </div>
-                </motion.div>}
-        </div>
+                </motion.div>
+            }
+        </div >
     )
 }
 
