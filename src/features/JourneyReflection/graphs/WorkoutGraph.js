@@ -10,16 +10,18 @@ const WorkoutGraph = () => {
     { month: 'May', workouts: 20 },
     { month: 'June', workouts: 18 },
   ];
+  
 
   return (
-    <div className='flex items-center justify-center'>
+    <div className='flex items-center justify-center flex-shrink-0 w-full sm:w-[600px] h-auto ml-4'>
+      <div>
       <LineChart
         width={500}
         height={300}
         data={data}
         margin={{
           top: 5,
-          right: 30,
+          right: 20,
           left: 20,
           bottom: 5,
         }}
@@ -30,6 +32,7 @@ const WorkoutGraph = () => {
         <Line type="monotone" dataKey="workouts" stroke="#8884d8" />
         <Area type="monotone" dataKey="workouts" fill="#FFF" />
       </LineChart>
+      </div>
     </div>
   )
 }
