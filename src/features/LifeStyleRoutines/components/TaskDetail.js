@@ -4,6 +4,8 @@ import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoodIcon, toggleCompletion, handleFeedbackChange } from '../ReduxStore/actions';
 import { getFormattedDate } from '../utils';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
@@ -59,6 +61,8 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             })
             .catch(err => {
                 dispatch(changeMoodIcon(SelectedCircle, task?.taskId, -1)); // reset mood icon
+                setSelectedFeeling(-1); // reset mood icon in state
+                toast.error('Something went wrong');
                 console.error(err);
             })
     }
@@ -85,6 +89,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                 .catch(err => {
                     const resetAction = handleFeedbackChange(SelectedCircle, task?.taskId, null);
                     dispatch(resetAction);
+                    toast.error('Something went wrong');
                     console.error(err);
                 })
         }
@@ -111,6 +116,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             .catch(err => {
                 setTaskCompleted(false);
                 dispatch(toggleCompletion(SelectedCircle, task?.taskId));
+                toast.error('Something went wrong');
                 console.error(err);
             })
     }
@@ -128,6 +134,20 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
     return (
         <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2">
+            <div className="fixed top-0 z-[200]">
+                <ToastContainer
+                    position="top-center"
+                    autoClose={1000}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeButton={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
+            </div>
             <div className="relative flex items-center p-4 bg-black text-white">
                 {/* BackButton */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none" onClick={() => setShowTaskDetail(false)}>
