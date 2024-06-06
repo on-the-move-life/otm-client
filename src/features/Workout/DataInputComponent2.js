@@ -110,7 +110,7 @@ const DataInputComponent = ({
                         ref={textInputRef}
                     ></textarea>
                 </>
-            ) : (inputType === "number" && label.includes('kg')) ? (
+            ) : (inputType === "number" && inputId.split('-').includes('load')) ? (
                 <div className='w-full'>
                     <label className="text-gray-600 text-sm">
                         {label}
