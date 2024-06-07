@@ -37,6 +37,8 @@ const UploadMeal = () => {
     const [imageURL, setImageURL] = useState(null);
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
+    const [mealInfo, setMealInfo] = useState(null);
+    const [loading, setLoader] = useState(false);
 
     const profilePicRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -71,6 +73,7 @@ const UploadMeal = () => {
 
 
     const handleFileChange = async (e) => {
+        setLoader(true);
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -88,10 +91,20 @@ const UploadMeal = () => {
                         },
                     });
 
-                    setResponse(res.data);
-                    setError(null);
-                    setImageURL(res.data.mealUrl);
-                    // console.log(res.data.mealUrl);
+                    if (res.data) {
+                        setLoader(false);
+
+                        setResponse(res.data);
+                        setError(null);
+                        setImageURL(res.data.mealUrl);
+                        console.log(res.data.mealNutritionAnalysis.calories);
+                        setMealInfo(res.data.mealNutritionAnalysis);
+                    }
+
+                    // setResponse(res.data);
+                    // setError(null);
+                    // setImageURL(res.data.mealUrl);
+                    // console.log(response);
                 } catch (err) {
                     console.error('Error submitting the request:', err);
                     setError(err);
@@ -173,18 +186,34 @@ const UploadMeal = () => {
                         Upload Meal Photo
                     </button>
                 </div>
-                {/* {imageURL && (
-                    <div>
-                        <h2>Selected Image:</h2>
-                        <img src={imageURL} alt="Selected" style={{ width: '200px', height: '200px' }} />
+
+
+                {loading && (
+
+
+                    <div className="max-w-sm mx-auto  rounded-lg shadow-md p-3 flex items-center space-x-6 bg-mediumGray   " >
+
+                        <p>Loading...</p>
                     </div>
-                )} */}
+                )}
+
+                {imageURL && (
+
+
+                    <div className="max-w-sm mx-auto  rounded-lg shadow-md p-3 flex items-center space-x-6 bg-mediumGray justify-center  " >
+
+                        <img className="w-1/2  " src={imageURL} alt="Selected" />
+
+                    </div>
+                )}
 
                 {/* description component */}
-                <div>
+                <div>{
 
-                    <NutriInfo></NutriInfo>
+                    mealInfo &&
 
+                    <NutriInfo mealdata={mealInfo}></NutriInfo>
+                }
                 </div>
 
             </div>
