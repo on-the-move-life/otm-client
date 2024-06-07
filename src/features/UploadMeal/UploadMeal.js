@@ -39,6 +39,7 @@ const UploadMeal = () => {
     const [error, setError] = useState(null);
     const [mealInfo, setMealInfo] = useState(null);
     const [loading, setLoader] = useState(false);
+    const [loadingpic, setLoadingpic] = useState(null);
 
     const profilePicRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -76,7 +77,11 @@ const UploadMeal = () => {
         setLoader(true);
         const file = e.target.files[0];
         if (file) {
+
+
+
             const reader = new FileReader();
+
             reader.onloadend = async () => {
                 try {
                     const formData = new FormData();
@@ -192,6 +197,8 @@ const UploadMeal = () => {
 
 
                     <div className="max-w-sm mx-auto  rounded-lg shadow-md p-3 flex items-center space-x-6 bg-mediumGray   " >
+
+                        {/* <img src={loadingpic}></img> */}
 
                         <p>Loading...</p>
                     </div>
