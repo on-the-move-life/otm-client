@@ -13,10 +13,10 @@ const WorkoutGraph = () => {
   
 
   return (
-    <div className='flex items-center justify-center flex-shrink-0 w-full sm:w-[600px] h-auto ml-4'>
+    <div className='flex items-center justify-center flex-shrink-0 w-full sm:w-[900px] h-auto sm:ml-0 ml-24'>
       <div>
       <LineChart
-        width={500}
+        width={600}
         height={300}
         data={data}
         margin={{

@@ -6,11 +6,13 @@ const FitnessProgress = () => {
   return (
     <div>
       <div className='sm:px-10 px-4 mt-16'>
-      <h1 className='text-[#7E87EF] sm:text-3xl text-xl sm:text-center text-left font-serif sm:mt-8 mt-2'>Fitness Score Progress</h1>
+      <h1 className='text-[#7E87EF] sm:text-3xl text-xl sm:text-center text-left sm:mt-8 mt-2 font-sf-pro'>Fitness Score Progress</h1>
       </div>
-      <div className='sm:px-10 px-4 mt-8 flex flex-col items-center justify-center'>
+      <div className='flex flex-row overflow-x-auto sm:max-w-screen-lg max-w-screen-[400px] mx-auto overflow-hidden px-2 sm:mt-14 mt-10'>
         <FitnessGraph/>
-        <p className='sm:text-base text-xs sm:text-center text-left sm:px-32 px-8 mt-8'>{info.renewalReport.fitnessScore}</p>
+      </div>
+      <div>
+      <p className='sm:text-base text-sm sm:text-center text-left sm:px-32 px-8 mt-8 font-sf-pro'>{info.renewalReport.fitnessScore}</p>
       </div>
     </div>
   )
