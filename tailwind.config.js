@@ -15,6 +15,12 @@ module.exports = withMT({
         blue: '#7E87EF',
         lightGray: '#B1B1B1',
         yellow: '#F5C563',
+        mediumGray: '#1C1C1E',
+        lightGray: '#929292',
+        custompurple: '#7E87EF',
+        customGray: '#545454',
+        gradientStart: '#7E87EF',
+        gradientEnd: '#B0B5F8',
       },
       backgroundImage: {
         'landing-cover': "url('../public/assets/landing-cover.png')",
@@ -31,6 +37,7 @@ module.exports = withMT({
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],
+        sfpro: ['"SF Pro Display"', 'sans-serif'],
       },
       backgroundSize: {
         '25%': '25%',
