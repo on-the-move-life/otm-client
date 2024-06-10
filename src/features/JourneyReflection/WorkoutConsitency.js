@@ -4,7 +4,7 @@ import WorkoutGraph from './graphs/WorkoutGraph'
 const WorkoutConsitency = () => {
   return (
     <div>
-        <div className='sm:px-10 px-4 mt-16'>
+        <div className='sm:px-10 px-4 sm:mt-10 mt-4'>
       <h2 className='text-[#B1B1B1] sm:text-center text-left sm:text-lg text-xs tracking-[5px] font-sf-pro'>PERFORMACE STATS</h2>
       <h1 className='text-[#7E87EF] sm:text-2xl text-[22.33px] sm:text-center text-left sm:mt-8 mt-2 font-sf-pro'>Workout Consistency Progress</h1>
       </div>

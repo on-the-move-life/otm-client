@@ -20,7 +20,7 @@ const Track = () => {
     const {futureStrategies} = info.renewalReport;
   return (
     <div>
-      <div className='sm:px-10 px-2 sm:mt-10 mt-8'>
+      <div className='sm:px-10 px-2 sm:mt-10 mt-4'>
         <h1 className='text-[#7E87EF] sm:text-2xl text-[22.33px] sm:text-center text-left font-sf-pro'>What More We Want to Track</h1>
         <p className='text-white sm:text-base text-sm sm:text-center text-left sm:px-32 mt-8 font-sf-pro'>To take your fitness journey to the next level, we've got a few extra metrics to track that'll make you feel like a true <span className='text-[#7E87EF]'>fitness superhero</span></p>
       </div>
