@@ -39,13 +39,13 @@ const FitnessGraph = () => {
     //return <path d={path} stroke="none" fill={fill} />;
   //};
   return (
-    <div className='flex items-center justify-center flex-shrink-0 w-full sm:w-[900px] h-auto sm:ml-0 ml-24'>
+    <div className='flex items-center justify-center flex-shrink-0 w-[600px] sm:w-[900px] h-auto sm:ml-0 ml-[22.5px]'>
       <div className=''>
       <ComposedChart
         width={650}
         height={300}
         data={data}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
       >
         <XAxis dataKey="month" tick={{ fontSize: 10 }} />
         <YAxis />

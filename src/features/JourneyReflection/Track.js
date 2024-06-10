@@ -1,25 +1,40 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import info from './info.json';
+
+const TrackSlider = ({heading, detail, index}) => {
+  const colors = useMemo(() => ['#7E87EF', '#F5C563', '#DDF988', '#5ECC7B'], []);
+  const headingColor = colors[(index % colors.length)];
+  return(
+      <div className='min-w-[300px] flex flex-col justify-start items-start gap-[2px]'>
+          <div className='w-full bg-[#1c1c1e] px-3 py-2 rounded-t-[12px]'>
+              <h1 className='text-[16px]' style={{fontWeight: 600, color: headingColor}}>{heading}</h1>
+          </div>
+          <div className='w-full bg-[#1c1c1e] p-3 rounded-b-[12px]'>
+              <p className='text-[14px] text-[#fff]' style={{fontWeight: 500}}>{detail}</p>
+          </div>
+      </div>
+  )
+}
+
 const Track = () => {
     const {futureStrategies} = info.renewalReport;
   return (
     <div>
-      <div className='sm:px-10 px-2 mt-20'>
-        <h1 className='text-[#7E87EF] sm:text-4xl text-[22px] sm:text-center text-left font-sf-pro'>What More We Want to Track</h1>
+      <div className='sm:px-10 px-2 sm:mt-10 mt-8'>
+        <h1 className='text-[#7E87EF] sm:text-2xl text-[22.33px] sm:text-center text-left font-sf-pro'>What More We Want to Track</h1>
         <p className='text-white sm:text-base text-sm sm:text-center text-left sm:px-32 mt-8 font-sf-pro'>To take your fitness journey to the next level, we've got a few extra metrics to track that'll make you feel like a true <span className='text-[#7E87EF]'>fitness superhero</span></p>
       </div>
-      <div className='flex flex-row overflow-x-auto sm:max-w-screen-lg max-w-screen-[400px] mx-auto overflow-hidden px-2 sm:mt-12 mt-10'>
-      {futureStrategies.map((prod,index)=>{
-          return (
-            <div key={index} className='flex-shrink-0 w-4/5 sm:w-[600px] h-auto p-4 bg-black m-1 rounded-md'>
-            <h2 className='text-[#7E87EF] sm:text-lg text-sm text-center font-sf-pro'>{prod.heading}</h2>
-            <hr className="my-2 border-gray-300" />
-            <p className='sm:max-w-xl text-xs font-sf-pro'>{prod.details}</p>
-            </div>
-          )
-        })
-        }
-      </div>
+      <div className="w-full flex flex-col justify-center items-start" >
+          <div className='w-full flex flex-row gap-5 overflow-x-scroll hide-scrollbar sm:py-10 py-8 px-4'>
+             {
+               futureStrategies?.map((item, index) => {
+                  return (
+                   <TrackSlider heading={item?.heading} detail={item?.details} index={index} key={item?.heading}/>
+                     )
+                  })
+              }
+             </div>
+       </div>
     </div>
   )
 }

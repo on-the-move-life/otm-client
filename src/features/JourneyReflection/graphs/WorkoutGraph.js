@@ -11,12 +11,17 @@ const WorkoutGraph = () => {
     { month: 'June', workouts: 18 },
   ];
   
+  const CustomTick = ({ x, y, payload }) => (
+    <text x={x} y={y} dy={10} textAnchor="middle" fill="#ffffff" className="text-[10px]">
+      {payload.value}
+    </text>
+  );
 
   return (
-    <div className='flex items-center justify-center flex-shrink-0 w-full sm:w-[900px] h-auto sm:ml-0 ml-24'>
+    <div className='flex items-center justify-center flex-shrink-0 w-[300px] sm:w-[900px] h-auto sm:ml-0 ml-4'>
       <div>
       <LineChart
-        width={600}
+        width={450}
         height={300}
         data={data}
         margin={{
@@ -26,7 +31,7 @@ const WorkoutGraph = () => {
           bottom: 5,
         }}
       >
-        <XAxis dataKey="month" />
+        <XAxis dataKey="month" tick={<CustomTick />} />
         <YAxis />
         <Legend />
         <Line type="monotone" dataKey="workouts" stroke="#8884d8" />

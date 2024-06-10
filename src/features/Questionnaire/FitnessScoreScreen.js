@@ -59,6 +59,7 @@ function FitnessScorePage() {
                 }, 1000)
             })
     }
+    
     useEffect(() => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
