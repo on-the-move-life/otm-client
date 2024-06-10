@@ -255,7 +255,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                             className={`transition-transform duration-200 ${(selectedFeeling === 5 || moodValue === 5) ? 'transform scale-125  bg-white/10 rounded-md' : ''
                                 }`}
                         >
-                            <img src={'./assets/Feeling-happy.svg'} alt="Ecstatic" className={`w-15 h-15 ${(selectedFeeling === 5 || moodValue === 5) ? 'text-green-400' : ''}`} />
+                            <img src={'./assets/Feeling-happy2.svg'} alt="Ecstatic" className={`w-15 h-15 ${(selectedFeeling === 5 || moodValue === 5) ? 'text-green-400' : ''}`} />
                         </button>
                     </div>
                 </div>

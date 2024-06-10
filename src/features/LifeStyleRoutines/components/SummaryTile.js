@@ -14,9 +14,9 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import SummaryTag from './SummaryTag';
 import CircleSummary from './CircleSummary';
+import { getColor } from "../utils"
 
 /**
- * 
  * @returns a component which shows the list of completed and incompleted tasks
  */
 
@@ -44,17 +44,7 @@ function SummaryTile({ circle, date }) {
         { threshold: 100, color: '#5ECC7B' }
     ], []);
 
-    // Determine the color based on the percentage
-    const getColor = () => {
-        for (let i = 0; i < colors.length; i++) {
-            if (circle?.completionPercentage <= colors[i].threshold) {
-                return colors[i].color;
-            }
-        }
-        return colors[colors.length - 1].color; // Default to the last color if not matched
-    };
-
-    const color = getColor();
+    const color = getColor(colors, circle?.completionPercentage);
 
     useEffect(() => {
         setCompletedTasks(circle?.tasks.filter(task => task?.completed === true));

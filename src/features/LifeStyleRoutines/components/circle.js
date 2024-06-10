@@ -1,7 +1,5 @@
 import React from 'react';
-import TaskItem from './taskitem.js';
-import { FaArrowLeft } from 'react-icons/fa';
-
+import TaskItem from './TaskItem.js';
 
 const tasks = [
     { time: '8 AM', title: 'Wake Up Routine', icon: '🛏️', completed: true },

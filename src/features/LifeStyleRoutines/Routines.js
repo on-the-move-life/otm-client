@@ -1,6 +1,5 @@
 import React from 'react'
 import YourCircle from './components/YourCircle'
-import { set } from 'date-fns'
 
 function Routines({ circles, date, setReloadCounter }) {
   return (

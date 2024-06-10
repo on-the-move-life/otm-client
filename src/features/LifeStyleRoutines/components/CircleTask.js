@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import TaskItem from './taskitem.js';
+import React, { useMemo } from 'react'
+import TaskItem from './TaskItem.js';
 import {
     MorningCircleIcon,
     AfternoonCircleIcon,
