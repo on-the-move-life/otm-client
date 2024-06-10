@@ -25,7 +25,7 @@ const FuturePlan = () => {
 
 
 <div className="w-full flex flex-col justify-center items-start sm:mt-10 mt-8">
-        <h1 className='sm:text-3xl text-[22.33px] text-[#7e87ef] sm:text-center text-left w-full px-4' style={{ lineHeight: '40px', marginBlock: '10px' }}>Future Plan</h1>
+        <h1 className='sm:text-3xl text-[22.33px] purple-gradient sm:text-center text-left w-full px-4' style={{ lineHeight: '40px', marginBlock: '10px' }}>Future Plan</h1>
           <div className='w-full flex flex-row gap-5 overflow-x-scroll hide-scrollbar sm:py-10 py-8 px-4'>
              {
                futurePlan?.map((item, index) => {
