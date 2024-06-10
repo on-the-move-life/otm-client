@@ -31,7 +31,6 @@ module.exports = withMT({
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],
-        'sf-pro': ['"SF Pro Display"', 'sans-serif'],
       },
       backgroundSize: {
         '25%': '25%',
