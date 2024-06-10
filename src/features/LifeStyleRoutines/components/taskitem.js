@@ -4,8 +4,7 @@ import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCompletion } from '../ReduxStore/actions';
 import { getFormattedDate } from '../utils';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 function TaskItem({ task, SelectedCircle, date }) {
     const [showTaskDetail, setShowTaskDetail] = useState(false);
@@ -51,20 +50,6 @@ function TaskItem({ task, SelectedCircle, date }) {
     }
     return (
         <>
-            <div className="fixed top-0 z-[200]">
-                <ToastContainer
-                    position="top-center"
-                    autoClose={2000}
-                    hideProgressBar={true}
-                    newestOnTop={false}
-                    closeButton={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="dark"
-                />
-            </div>
             {!showTaskDetail &&
                 <div className="flex items-center my-2 px-5 py-4 rounded-xl bg-mediumGray" onClick={() => {
                     setShowTaskDetail(true);
