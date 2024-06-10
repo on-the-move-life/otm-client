@@ -4,6 +4,7 @@ import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCompletion } from '../ReduxStore/actions';
 import { getFormattedDate } from '../utils';
+import { toast } from 'react-toastify';
 
 function TaskItem({ task, SelectedCircle, date }) {
     const [showTaskDetail, setShowTaskDetail] = useState(false);
@@ -43,6 +44,7 @@ function TaskItem({ task, SelectedCircle, date }) {
             .catch(err => {
                 setTaskCompleted(true);
                 dispatch(toggleCompletion(SelectedCircle, task?.taskId));
+                toast.error('Something went wrong');
                 console.log(err);
             })
     }

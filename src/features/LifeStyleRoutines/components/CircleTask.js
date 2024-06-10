@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import TaskItem from './taskitem.js';
 import {
     MorningCircleIcon,
@@ -8,6 +8,8 @@ import {
     AlwaysActiveIcon
 } from "../index.js"
 import { formatDate } from "../utils.js";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setReloadCounter }) => {
     const circleIcons = useMemo(() => (
@@ -23,6 +25,20 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setRelo
 
     return (
         <div className="w-full h-screen fixed top-0 left-0 z-50 p-2 bg-black text-white rounded-lg overflow-y-scroll">
+            <div className="fixed top-0 z-[200]">
+                <ToastContainer
+                    position="top-center"
+                    autoClose={2000}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeButton={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
+            </div>
             <div className="relative flex items-center p-4 bg-black text-white">
                 {/* BackButton */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none" onClick={() => {

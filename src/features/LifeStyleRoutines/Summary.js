@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import SummaryTile from "./components/SummaryTile";
 
 function Summary({ circles, date }) {

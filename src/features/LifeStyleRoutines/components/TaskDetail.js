@@ -4,6 +4,7 @@ import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoodIcon, toggleCompletion, handleFeedbackChange } from '../ReduxStore/actions';
 import { getFormattedDate } from '../utils';
+import { toast } from 'react-toastify';
 
 const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
@@ -59,6 +60,8 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             })
             .catch(err => {
                 dispatch(changeMoodIcon(SelectedCircle, task?.taskId, -1)); // reset mood icon
+                setSelectedFeeling(-1); // reset mood icon in state
+                toast.error('Something went wrong');
                 console.error(err);
             })
     }
@@ -85,6 +88,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                 .catch(err => {
                     const resetAction = handleFeedbackChange(SelectedCircle, task?.taskId, null);
                     dispatch(resetAction);
+                    toast.error('Something went wrong');
                     console.error(err);
                 })
         }
@@ -111,6 +115,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             .catch(err => {
                 setTaskCompleted(false);
                 dispatch(toggleCompletion(SelectedCircle, task?.taskId));
+                toast.error('Something went wrong');
                 console.error(err);
             })
     }
@@ -199,7 +204,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                     </div>
 
                 </div>
-                <div className="mb-6">
+                <div className="mb-9">
                     <h3 className="text-[20px] mb-2 pb-4 leading-8 font-sfpro">Feeling Check-In</h3>
                     <div className="flex space-x-4 items-center justify-center w-full">
                         <button
@@ -235,7 +240,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                             className={`transition-transform duration-200 ${(selectedFeeling === 5 || moodValue === 5) ? 'transform scale-125  bg-white/10 rounded-md' : ''
                                 }`}
                         >
-                            <img src={'./assets/Feeling-happy.svg'} alt="Ecstatic" className={`w-15 h-15 ${(selectedFeeling === 5 || moodValue === 5) ? 'text-green-400' : ''}`} />
+                            <img src={'./assets/Feeling-happy2.svg'} alt="Ecstatic" className={`w-15 h-15 ${(selectedFeeling === 5 || moodValue === 5) ? 'text-green-400' : ''}`} />
                         </button>
                     </div>
                 </div>
