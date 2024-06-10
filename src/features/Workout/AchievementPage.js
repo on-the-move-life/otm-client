@@ -97,8 +97,8 @@ const AchievementPage = ({
                     alt="MoveCoins Logo"
                   />
                   <GradientText>{coinsEarned}</GradientText> MoveCoins! <br />
-                  Redeem your coins on your next purchase and
-                  <GradientText> SAVE</GradientText>
+                  Head to the marketplace and <GradientText>treat yourself </GradientText>
+                  to something special!
                 </div>
                 {/* <p className="text-slate-500 break-words font-normal leading-normal">
                   {' '}
