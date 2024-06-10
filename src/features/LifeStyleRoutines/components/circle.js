@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskItem from './TaskItem.js';
+import TaskItem from './taskitem.js';
 
 const tasks = [
     { time: '8 AM', title: 'Wake Up Routine', icon: '🛏️', completed: true },

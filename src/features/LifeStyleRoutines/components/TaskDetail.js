@@ -137,7 +137,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             <div className="fixed top-0 z-[200]">
                 <ToastContainer
                     position="top-center"
-                    autoClose={1000}
+                    autoClose={2000}
                     hideProgressBar={true}
                     newestOnTop={false}
                     closeButton={false}
@@ -219,7 +219,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                     </div>
 
                 </div>
-                <div className="mb-6">
+                <div className="mb-9">
                     <h3 className="text-[20px] mb-2 pb-4 leading-8 font-sfpro">Feeling Check-In</h3>
                     <div className="flex space-x-4 items-center justify-center w-full">
                         <button
