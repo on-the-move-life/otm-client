@@ -1,4 +1,3 @@
-
 import Conclusion from './Conclusion';
 import FitnessProgress from './FitnessProgress';
 import FuturePlan from './FuturePlan';
