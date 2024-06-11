@@ -34,14 +34,14 @@ const Track = () => {
         <h1 className="purple-gradient font-sf-pro text-left text-[22.33px] sm:text-center sm:text-2xl px-4">
           What More We Want to Track
         </h1>
-        <p className="font-sf-pro mt-8 text-left text-sm text-white sm:px-32 sm:text-center sm:text-base px-4">
+        <p className="font-sf-pro sm:mt-10 mt-4 text-left text-sm text-white sm:px-32 sm:text-center sm:text-base px-4">
           To take your fitness journey to the next level, we've got a few extra
           metrics to track that'll make you feel like a true{' '}
           <span className="text-[#7E87EF]">fitness superhero</span>
         </p>
       </div>
       <div className="flex w-full flex-col items-start justify-center">
-        <div className="hide-scrollbar flex w-full flex-row gap-5 overflow-x-scroll px-4 py-4 sm:py-6">
+        <div className="hide-scrollbar flex w-full flex-row gap-5 overflow-x-scroll px-4 py-4 sm:py-4">
           {futureStrategies?.map((item, index) => {
             return (
               <TrackSlider

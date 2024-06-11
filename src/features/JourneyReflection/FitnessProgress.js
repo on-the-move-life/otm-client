@@ -10,7 +10,7 @@ const FitnessProgress = () => {
           Fitness Score Progress
         </h1>
       </div>
-      <div className="hide-scrollbar max-w-screen-[400px] mx-auto mt-10 flex flex-row overflow-hidden overflow-x-auto sm:mt-14 sm:max-w-screen-lg">
+      <div className="hide-scrollbar items-center justify-center mt-10 flex flex-row overflow-hidden overflow-x-auto sm:mt-14">
         <FitnessGraph />
       </div>
       <div>

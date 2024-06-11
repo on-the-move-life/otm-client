@@ -12,7 +12,7 @@ const WorkoutConsitency = () => {
           Workout Consistency Progress
         </h1>
       </div>
-      <div className="max-w-screen-[400px] hide-scrollbar mx-auto mt-10 flex flex-row overflow-hidden overflow-x-auto px-2 sm:mt-14 sm:max-w-screen-lg">
+      <div className="hide-scrollbar mt-10 flex items-center justify-center flex-row overflow-hidden overflow-x-auto sm:mt-14 w-full">
         <WorkoutGraph />
       </div>
       <div className="mt-8 sm:px-10">
