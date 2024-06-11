@@ -116,3 +116,10 @@ export const getColor = (colors, percentCompletion) => {
     return colors[colors.length - 1].color; // Default to the last color if not matched
 };
 
+// function to determine if the devive is iPhone or not
+export const isIPhone = () => {
+    const userAgent = navigator.userAgent;
+    console.log("user agent : ", userAgent.includes('iPhone'));
+    return userAgent.includes('iPhone');
+};
+

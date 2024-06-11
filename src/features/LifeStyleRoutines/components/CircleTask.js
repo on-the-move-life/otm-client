@@ -7,7 +7,7 @@ import {
     NightCircleIcon,
     AlwaysActiveIcon
 } from "../index.js"
-import { formatDate } from "../utils.js";
+import { formatDate, isIPhone } from "../utils.js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,7 +24,7 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setRelo
 
 
     return (
-        <div className="w-full h-screen fixed top-0 left-0 z-50 p-2 bg-black text-white rounded-lg overflow-y-scroll">
+        <div className="w-full h-screen fixed top-0 left-0 z-50 p-2 bg-black text-white rounded-lg overflow-y-scroll" style={{paddingBottom: isIPhone() ? '100px' : ''}}>
             <div className="fixed top-0 z-[200]">
                 <ToastContainer
                     position="top-center"

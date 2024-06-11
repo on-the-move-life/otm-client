@@ -3,7 +3,7 @@ import TaskCard from './TaskCard';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoodIcon, toggleCompletion, handleFeedbackChange } from '../ReduxStore/actions';
-import { getFormattedDate } from '../utils';
+import { getFormattedDate, isIPhone } from '../utils';
 import { toast } from 'react-toastify';
 
 const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
@@ -132,7 +132,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
     }, [isCompleted])
 
     return (
-        <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2">
+        <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2" style={{paddingBottom: isIPhone() ? '150px' : ''}}>
             <div className="relative flex items-center p-4 bg-black text-white">
                 {/* BackButton */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none" onClick={() => setShowTaskDetail(false)}>
