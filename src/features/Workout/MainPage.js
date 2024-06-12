@@ -122,7 +122,7 @@ const MainPage = () => {
               className="relative w-full h-12 border-none rounded-lg bg-gradient-to-r from-[#d1d1d1] via-[#FFFFFF] to-[#d1d1d1] bg-[length:250%] bg-left text-[#FFFFFF] flex items-center justify-center cursor-pointer overflow-hidden animate-backgroundMove mt-2"
               onClick={() => setShowUpdateWorkout(true)}
             >
-              <span className="absolute w-[97%] h-[90%] rounded-md bg-black bg-opacity-90 text-[#ffffff] flex items-center justify-center animate-backgroundMove">Build Your Workout</span>
+              <span className="absolute w-[97%] h-[90%] rounded-md bg-black bg-opacity-90 text-[#ffffff] flex items-center justify-center animate-backgroundMove">Customise Workout</span>
             </button>
           </footer>
         </>
