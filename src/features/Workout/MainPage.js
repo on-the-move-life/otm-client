@@ -72,7 +72,7 @@ const MainPage = () => {
                   <h2 className="text-xl">{workoutData.theme}</h2>
                   </div>
                   <div className="flex items-center justify-center rounded-[7px] border border-white px-[3px]">
-                     <button onClick={() => setShowUpdateWorkout(true)} className="w-fit rounded border bg-white px-[0.7px] text-center text-[10px] font-bold -tracking-[0.36px] text-black">
+                     <button onClick={() => setShowUpdateWorkout(true)} className="w-fit rounded border bg-white px-[0.7px] text-center text-[10px] font-bold text-black">
                        Change
                     </button>
                   </div>
@@ -112,7 +112,7 @@ const MainPage = () => {
              0%, 100% { background-position: left; }
              50% { background-position: right; }
             }
-          
+
             .animate-backgroundMove {
              animation: backgroundMove 3s infinite;
              }
