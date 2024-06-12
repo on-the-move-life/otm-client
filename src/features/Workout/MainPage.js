@@ -71,9 +71,9 @@ const MainPage = () => {
                     <div>
                   <h2 className="text-xl">{workoutData.theme}</h2>
                   </div>
-                  <div className="flex items-center justify-center rounded-[7px] border border-white py-[1px] px-[3px]">
-                     <button onClick={() => setShowUpdateWorkout(true)} className="w-fit rounded border bg-white px-[2px] text-center text-[10px] font-bold -tracking-[0.36px] text-black">
-                       Change Workout
+                  <div className="flex items-center justify-center rounded-[7px] border border-white px-[3px]">
+                     <button onClick={() => setShowUpdateWorkout(true)} className="w-fit rounded border bg-white px-[0.7px] text-center text-[10px] font-bold -tracking-[0.36px] text-black">
+                       Change
                     </button>
                   </div>
                   </div>
@@ -122,7 +122,7 @@ const MainPage = () => {
               className="relative w-full h-12 border-none rounded-lg bg-gradient-to-r from-[#d1d1d1] via-[#FFFFFF] to-[#d1d1d1] bg-[length:250%] bg-left text-[#FFFFFF] flex items-center justify-center cursor-pointer overflow-hidden animate-backgroundMove mt-2"
               onClick={() => setShowUpdateWorkout(true)}
             >
-              <span className="absolute w-[97%] h-[90%] rounded-md bg-black bg-opacity-90 text-[#ffffff] flex items-center justify-center animate-backgroundMove">Customize Workout</span>
+              <span className="absolute w-[97%] h-[90%] rounded-md bg-black bg-opacity-90 text-[#ffffff] flex items-center justify-center animate-backgroundMove">Build Your Workout</span>
             </button>
           </footer>
         </>
