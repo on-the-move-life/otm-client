@@ -183,29 +183,29 @@ const UploadMeal = () => {
         <div>
 
             {/* new upload meal */}
-            <div className="flex items-center bg-gray-800 rounded-lg p-5 text-white w-96">
+            <div className="flex items-center bg-black rounded-lg p-5 text-white w-full justify-center self-center align-center">
                 <img
                     src="https://via.placeholder.com/100" // Replace this with the actual image URL
                     alt="Shrimps & Rice"
-                    className="w-24 h-24 rounded-lg mr-5"
+                    className="w-[122px] h-[143px]  rounded-lg mr-5"
                 />
                 <div className="flex flex-col">
-                    <p className="text-sm text-gray-400">7 June 2024</p>
+                    <p className="text-lightGray font-sfpro text-14px font-medium">7 June 2024</p>
                     <h2 className="text-xl font-bold my-1">Shrimps & Rice</h2>
                     <p className="text-gray-400">
                         AI generated feedback on how well the plate is prepared according to their goals and restrictions
                     </p>
                 </div>
             </div>
-            <div style={{ backgroundColor: "#333", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <NewUploadMeal></NewUploadMeal>
+            <div className="flex justify-center items-center h-auto mb-20">
+                <NewUploadMeal mealdata={mealInfo}></NewUploadMeal>
             </div>
 
 
-            <div className="min-h-screen bg-black flex items-center justify-center flex-col ">
-                <div className="flex items-center bg-gray-800 text-white p-4 rounded-lg shadow-lg">
+            <div className="h-auto flex items-center justify-center flex-col  " onClick={handleClick}>
+                <div className="flex items-center bg-mediumGray text-white p-4 rounded-lg shadow-lg">
                     <div className="flex items-center mr-4">
-                        <div className="w-10 h-10 bg-gray-700 flex items-center justify-center rounded-full">
+                        <div className="w-[10px] h-[10px] bg-gray-700 flex items-center justify-center rounded-full">
                             <svg
                                 className="w-6 h-6 text-white"
                                 fill="none"
@@ -223,8 +223,8 @@ const UploadMeal = () => {
                         </div>
                     </div>
                     <div>
-                        <div className="text-lg font-semibold">Upload meal photo</div>
-                        <div className="text-sm text-gray-400">Let the power of AI breakdown your meal</div>
+                        <div className="text-white font-sfpro text-[14px] font-medium">Upload meal photo</div>
+                        <div className="text-lightGray font-sfpro text-[14px] font-medium">Let the power of AI breakdown your meal</div>
                     </div>
                     <div className="ml-auto">
                         <img
@@ -239,14 +239,14 @@ const UploadMeal = () => {
                 {/* upload component */}
                 <MealGlance></MealGlance>
 
-                <div className="  w-screen bg-mediumGray text-custompurple p-4 rounded-lg shadow-lg max-w-sm mx-auto">
+                {/* <div className="  w-screen bg-mediumGray text-custompurple p-4 rounded-lg shadow-lg max-w-sm mx-auto">
                     <p className="mb-4">
                         Please Upload your meal photo
                     </p>
                     <button onClick={handleClick} className="bg-transparent w-full border border-custompurple text-custompurple py-2 px-4 rounded hover:bg-indigo-500 hover:text-white transition duration-300" >
                         Upload Meal Photo
                     </button>
-                </div>
+                </div> */}
 
 
                 {loading && (
