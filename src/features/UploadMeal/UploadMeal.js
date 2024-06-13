@@ -8,6 +8,7 @@ import { BsImageFill } from "react-icons/bs";
 import axios from 'axios';
 import NutriInfo from './NutriInfo';
 import NewUploadMeal from './NewUploadMeal';
+import MealGlance from './MealGlance';
 
 // styling
 
@@ -236,6 +237,8 @@ const UploadMeal = () => {
 
 
                 {/* upload component */}
+                <MealGlance></MealGlance>
+
                 <div className="  w-screen bg-mediumGray text-custompurple p-4 rounded-lg shadow-lg max-w-sm mx-auto">
                     <p className="mb-4">
                         Please Upload your meal photo

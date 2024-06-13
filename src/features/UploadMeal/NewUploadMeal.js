@@ -8,19 +8,28 @@ const NewUploadMeal = () => {
         datasets: [
             {
                 data: [40, 17, 43],
-                backgroundColor: ["#FF6384", "#36A2EB", "#4CAF50"],
-                borderWidth: 0,
+                backgroundColor: [
+                    '#FA5757',
+                    '#7E87EF',
+                    '#5ECC7B',
+                ],
+                borderWidth: 5,
+                borderColor: 'rgba(0,0,0,0.1)',
+                hoverBorderColor: 'rgba(0,0,0,0.1)',
+                borderJoinStyle: 'round',
+                borderRadius: 20, // For rounded ends
             },
         ],
+
     };
 
     const options = {
-        cutout: '80%',
+        cutout: '85%',
         rotation: 270,
         circumference: 180,
         plugins: {
             tooltip: {
-                enabled: false,
+                enabled: true,
             },
         },
     };
@@ -30,7 +39,7 @@ const NewUploadMeal = () => {
         <>
 
 
-            <div style={{ position: "relative", width: "300px", height: "300px" }}>
+            <div className="relative w-[300px] h-[300px]">
 
 
 
@@ -57,9 +66,9 @@ const NewUploadMeal = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1 }}
                     >
-                        <h2>Total Calories</h2>
-                        <h1>400</h1>
+                        <h2 className="text-lightGray font-sfpro text-[23px] font-normal leading-normal">Total Calories</h2>
                         <p>Approx</p>
+                        <h1 className="text-white font-sfpro text-[32px] font-normal leading-normal">400</h1>
                     </motion.div>
                 </div>
                 <div
@@ -70,14 +79,16 @@ const NewUploadMeal = () => {
                         color: "white",
                     }}
                 >
+
+
                     <div style={{ textAlign: "center" }}>
-                        <p style={{ color: "#FF6384" }}>40% carbs</p>
+                        <p style={{ color: "#FA5757" }}>40% carbs</p>
                     </div>
                     <div style={{ textAlign: "center" }}>
-                        <p style={{ color: "#36A2EB" }}>17% fats</p>
+                        <p style={{ color: "#7E87EF" }}>17% fats</p>
                     </div>
                     <div style={{ textAlign: "center" }}>
-                        <p style={{ color: "#4CAF50" }}>43% protein</p>
+                        <p style={{ color: "#5ECC7B" }}>43% protein</p>
                     </div>
                 </div>
             </div>
