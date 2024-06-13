@@ -11,6 +11,7 @@ import { Report } from './features/LifestyleQuiz';
 import { Questionnaire } from './features/Questionnaire';
 import { FitnessScoreScreen } from './features/Questionnaire';
 import { LifeStyleRoutine } from './features/LifeStyleRoutines';
+import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from "./features/LifeStyleRoutines"
 
@@ -61,6 +62,7 @@ function App() {
         <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
+        <Route path="/monthly-wrapped" element={<RouteMiddleware><MonthlyWrapped /></RouteMiddleware>} />
         <Route
           path="/lifestyle-routine"
           element={
