@@ -84,7 +84,7 @@ function LandingPage() {
           sessionID && navigate(`/questionnaire/lifestyle/result/${sessionID}`);
         }
 
-        // after successful submission, let the user proceed to the next question
+        // after successful subxmission, let the user proceed to the next question
         // possible error - network breakdown
         increaseScreenAndRank(screen, maxScreenCount, setScreen);
       })

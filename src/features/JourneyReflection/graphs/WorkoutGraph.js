@@ -1,19 +1,21 @@
 import React from 'react'
 import { Bar, XAxis, YAxis, ComposedChart, Cell } from 'recharts';
 
-const workoutGraph = () => {
-  const data = [
-    { month: 'January', workouts: 10 },
-    { month: 'February', workouts: 15 },
-    { month: 'March', workouts: 8 },
-    { month: 'April', workouts: 12 },
-    { month: 'May', workouts: 20 },
-    { month: 'June', workouts: 18 },
+const workoutGraph = ({apiData}) => {
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ];
-  const getBarColor = (workout) => {
-    if (workout < 11) return '#FA5757';
-    if (workout >= 11 && workout <= 16) return '#DDF988';
-    if (workout > 16) return '#5ECC7B';
+  
+  const formattedData = apiData?.data?.monthlyConsistency?.map(item => ({
+    ...item,
+    MonthYear: `${monthNames[item.Month - 1]} ${item.Year}`
+  }));
+  
+  const getBarColor = (workoutnumber) => {
+    if (workoutnumber < 12) return '#FA5757';
+    if (workoutnumber >= 12 && workoutnumber <= 20) return '#DDF988';
+    if (workoutnumber > 20) return '#5ECC7B';
   };
   const getPath = (x, y, width, height) => {
     return `M${x},${y + height}
@@ -39,19 +41,19 @@ const workoutGraph = () => {
   //return <path d={path} stroke="none" fill={fill} />;
   //};
   return (
-    <div className="flex h-auto flex-shrink-0 sm:ml-0 ml-[120px]">
+    <div className="flex h-auto flex-shrink-0 sm:ml-0 ml-[130px] px-4">
       <div className="">
         <ComposedChart
           width={550}
           height={300}
-          data={data}
+          data={formattedData}
           margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
         >
-          <XAxis dataKey="month" tick={{ fontSize: 9 }} />
+          <XAxis dataKey="MonthYear" tick={{ fontSize: 9 }} />
           <YAxis />
-          <Bar dataKey="workouts" fill="#8884d8" shape={<CustomBarShape />}>
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getBarColor(entry.workouts)} />
+          <Bar dataKey="Count" fill="#8884d8" shape={<CustomBarShape />}>
+            {apiData?.data?.monthlyConsistency?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={getBarColor(entry.Count)} />
             ))}
           </Bar>
         </ComposedChart>

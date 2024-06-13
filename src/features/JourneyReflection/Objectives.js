@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react'
-import info from './info.json';
+import React, {useMemo } from 'react'
 
 
 const ObjectiveSlider = ({heading, detail, index}) => {
@@ -17,15 +16,14 @@ const ObjectiveSlider = ({heading, detail, index}) => {
   )
 }
 
-const Objectives = () => {
-    const { objectives } = info.renewalReport;
+const Objectives = ({apiData}) => {
   return (
     <div>
       <div className="w-full flex flex-col justify-center items-start sm:mt-10 mt-4">
         <h1 className='sm:text-2xl text-[22.33px] purple-gradient sm:text-center text-left w-full px-6' style={{ lineHeight: '25px', marginBlock: '10px' }}>Your Top 3 Objectives</h1>
           <div className='w-full flex flex-row gap-5 overflow-x-scroll hide-scrollbar px-4 mt-2'>
              {
-               objectives?.map((item, index) => {
+               apiData?.data?.objectives?.map((item, index) => {
                   return (
                    <ObjectiveSlider heading={item?.heading} detail={item?.details} index={index} key={item?.heading}/>
                      )

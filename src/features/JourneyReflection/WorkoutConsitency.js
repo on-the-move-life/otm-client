@@ -1,7 +1,7 @@
 import React from 'react';
-import info from './info.json';
 import WorkoutGraph from './graphs/WorkoutGraph';
-const WorkoutConsitency = () => {
+const WorkoutConsitency = ({apiData}) => {
+ 
   return (
     <div>
       <div className="sm:mt-10 mt-4 px-4 sm:px-10">
@@ -13,11 +13,11 @@ const WorkoutConsitency = () => {
         </h1>
       </div>
       <div className="hide-scrollbar mt-10 flex items-center justify-center flex-row overflow-hidden overflow-x-auto sm:mt-14 w-full">
-        <WorkoutGraph />
+        <WorkoutGraph apiData={apiData}/>
       </div>
       <div className="mt-8 sm:px-10">
         <p className="font-sf-pro px-4 text-left text-sm sm:px-32 sm:text-center sm:text-base">
-          {info.renewalReport.workoutConsistencySummary}
+          {apiData?.data?.workoutConsistencySummary}
         </p>
       </div>
     </div>

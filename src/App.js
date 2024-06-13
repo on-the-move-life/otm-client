@@ -53,7 +53,7 @@ function App() {
         <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />
         <Route path="/questionnaire/fitness-score" element={<RouteMiddleware><FitnessScoreScreen /></RouteMiddleware>} />
         <Route path="/questionnaire/lifestyle" element={<LifeStyle />} />
-        <Route path="/questionnaire/lifestyle/result/:sessionID" element={<Report />} />
+        <Route path="/:sessionID" element={<Report />} />
         <Route path="/section-details" element={<RouteMiddleware><SectionDetail /></RouteMiddleware>} />
         <Route path="/workout" element={<RouteMiddleware><Workout /></RouteMiddleware>} />
         <Route path="/workout-summary" element={<RouteMiddleware><WorkoutSummary /></RouteMiddleware>} />
@@ -62,7 +62,7 @@ function App() {
         <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
-        <Route path="/journey-reflection" element={<RouteMiddleware><JourneyReflectionPage/></RouteMiddleware>} />
+        <Route path="/journey-reflection/:reportId" element={<RouteMiddleware><JourneyReflectionPage/></RouteMiddleware>} />
         <Route
           path="/lifestyle-routine"
           element={

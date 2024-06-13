@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-const WeeklyWorkoutJourney = ({lastEightWeeksWorkout = [], suggestedWorkoutPerWeek = 4 }) => {
-
+const WeeklyWorkoutJourney = ({ apiData }) => {
+    const suggestedWorkoutPerWeek = 2; 
+    const lastEightWeeksWorkout = apiData?.data?.last8WeekConsistency;
     const Bar = ({ progress }) => {
         const [basicgreen, intermediategreen, advancedgreen, red, yellow, gray] = ['#119832', '#29C344', '#7FE08A', '#FA5757', '#F5C563', '#323232'] // colors of the bar
         const [height, setHeight] = useState(0);

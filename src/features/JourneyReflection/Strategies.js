@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import info from './info.json';
 
 const StrategiesSlider = ({ heading, detail, index }) => {
   const colors = useMemo(
@@ -26,8 +25,7 @@ const StrategiesSlider = ({ heading, detail, index }) => {
   );
 };
 
-const Strategies = () => {
-  const { futureStrategies } = info.renewalReport;
+const Strategies = ({apiData}) => {
   return (
     <div>
       <div className="sm:mt-10 mt-4 flex w-full flex-col items-start justify-center">
@@ -38,7 +36,7 @@ const Strategies = () => {
           Strategies To Build
         </h1>
         <div className="hide-scrollbar flex w-full flex-row gap-5 overflow-x-scroll px-4">
-          {futureStrategies?.map((item, index) => {
+          {apiData?.data?.futureStrategies?.map((item, index) => {
             return (
               <StrategiesSlider
                 heading={item?.heading}

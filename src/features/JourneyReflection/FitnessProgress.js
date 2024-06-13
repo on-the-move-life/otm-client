@@ -1,8 +1,7 @@
 import React from 'react';
 import FitnessGraph from './graphs/FitnessGraph';
-import info from './info.json';
 
-const FitnessProgress = () => {
+const FitnessProgress = ({apiData}) => {
   return (
     <div>
       <div className="sm:mt-10 mt-4 px-4 sm:px-10">
@@ -11,11 +10,11 @@ const FitnessProgress = () => {
         </h1>
       </div>
       <div className="hide-scrollbar items-center justify-center mt-10 flex flex-row overflow-hidden overflow-x-auto sm:mt-14">
-        <FitnessGraph />
+        <FitnessGraph apiData={apiData} />
       </div>
       <div>
         <p className="font-sf-pro mt-8 px-4 text-left text-sm sm:px-32 sm:text-center sm:text-base">
-          {info.renewalReport.fitnessScore}
+          {apiData?.data?.summary}
         </p>
       </div>
     </div>
