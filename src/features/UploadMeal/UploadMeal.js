@@ -7,6 +7,7 @@ import { IoCamera } from "react-icons/io5";
 import { BsImageFill } from "react-icons/bs";
 import axios from 'axios';
 import NutriInfo from './NutriInfo';
+import NewUploadMeal from './NewUploadMeal';
 
 // styling
 
@@ -90,7 +91,7 @@ const UploadMeal = () => {
                     formData.append('date', 'June 4 2024');
                     formData.append('taskId', '1-6');
 
-                    const res = await axios.post('http://localhost:882/api/v1/lifestyle/meal-info', formData, {
+                    const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         },
@@ -180,7 +181,59 @@ const UploadMeal = () => {
         // <div><h3>Success</h3></div>
         <div>
 
+            {/* new upload meal */}
+            <div className="flex items-center bg-gray-800 rounded-lg p-5 text-white w-96">
+                <img
+                    src="https://via.placeholder.com/100" // Replace this with the actual image URL
+                    alt="Shrimps & Rice"
+                    className="w-24 h-24 rounded-lg mr-5"
+                />
+                <div className="flex flex-col">
+                    <p className="text-sm text-gray-400">7 June 2024</p>
+                    <h2 className="text-xl font-bold my-1">Shrimps & Rice</h2>
+                    <p className="text-gray-400">
+                        AI generated feedback on how well the plate is prepared according to their goals and restrictions
+                    </p>
+                </div>
+            </div>
+            <div style={{ backgroundColor: "#333", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <NewUploadMeal></NewUploadMeal>
+            </div>
+
+
             <div className="min-h-screen bg-black flex items-center justify-center flex-col ">
+                <div className="flex items-center bg-gray-800 text-white p-4 rounded-lg shadow-lg">
+                    <div className="flex items-center mr-4">
+                        <div className="w-10 h-10 bg-gray-700 flex items-center justify-center rounded-full">
+                            <svg
+                                className="w-6 h-6 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 4v16c0 .522.214 1.023.595 1.405.381.381.883.595 1.405.595h12c.522 0 1.023-.214 1.405-.595.381-.382.595-.883.595-1.405V4M4 4h16M4 4l8 8m0-8l8 8M12 12l8 8M12 12l-8 8"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="text-lg font-semibold">Upload meal photo</div>
+                        <div className="text-sm text-gray-400">Let the power of AI breakdown your meal</div>
+                    </div>
+                    <div className="ml-auto">
+                        <img
+                            src="/path/to/your/image.png" // Replace with the correct path to the image
+                            alt="Meal"
+                            className="w-16 h-16 rounded-lg"
+                        />
+                    </div>
+                </div>
+
 
                 {/* upload component */}
                 <div className="  w-screen bg-mediumGray text-custompurple p-4 rounded-lg shadow-lg max-w-sm mx-auto">
@@ -224,6 +277,7 @@ const UploadMeal = () => {
                 </div>
 
             </div>
+
 
 
 
