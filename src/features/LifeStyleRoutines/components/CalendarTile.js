@@ -5,10 +5,7 @@ import {
     buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import {
-    format,
-    parse
-} from 'date-fns';
+import { getDayOfWeek, extractDay, getColor } from '../utils';
 
 function CalendarTile({ date, percentCompletion, isSelected, setSelectedDate, isToday }) {
     const colors = useMemo(() => [
@@ -18,59 +15,10 @@ function CalendarTile({ date, percentCompletion, isSelected, setSelectedDate, is
         { threshold: 100, color: '#5ECC7B' }
     ], []);
 
-    // Determine the color based on the percentage
-    const getColor = () => {
-        for (let i = 0; i < colors.length; i++) {
-            if (percentCompletion <= colors[i].threshold) {
-                return colors[i].color;
-            }
-        }
-        return colors[colors.length - 1].color; // Default to the last color if not matched
-    };
-
-    /**
-     * Returns the day of the week as a short string (e.g. "Fri", "Thu", "Mon", etc.)
-     * for a given input string in the format "May 30 2024".
-     *
-     * @param {string} inputString - The input string in the format "May 30 2024".
-     * @returns {string} The day of the week as a short string (e.g. "Fri", "Thu", "Mon", etc.).
-     */
-    const getDayOfWeek = (inputString) => {
-        const date = parse(inputString, 'MMMM d yyyy', new Date());
-        return format(date, 'EEE');
-    };
-
-    /**
-     * Extracts the day from a string input with a date in the format "Month Day Year".
-     * Handles various month names and abbreviations.
-     *
-     * @param {string} dateString - The input string with a date in the format "Month Day Year" (e.g. "May 24 2024", "May 24, 2024", "May-24-2024", "May 24th 2024", "May 24 2,024").
-     * @returns {number} The day of the month (e.g. 24).
-     */
-    const extractDay = (dateString) => {
-        /**
-         * Regular expression to match the day part of the date string.
-         * Matches one or more digits (\d+) surrounded by optional whitespace characters (\s*)
-         * and/or punctuation characters ([-,\.])
-         */
-        const dayRegex = /\s*[-,\.]?\s*(\d+)\s*[-,\.]?\s*/;
-
-        try {
-            const match = dateString.match(dayRegex);
-            if (match) {
-                return parseInt(match[1], 10); // Return the day as an integer
-            } else {
-                throw new Error(`Invalid date format: ${dateString}`);
-            }
-        } catch (err) {
-            console.error(`extractDay error: ${err}`);
-            return NaN; // Return NaN if an error occurs
-        }
-    };
-
-    const color = getColor();
+    const color = getColor(colors, percentCompletion);
     const weekDay = getDayOfWeek(date);
     const day = extractDay(date);
+    
     return (
         <div className={`relative w-fit h-[100px] px-3 flex flex-col justify-center items-center gap-0 rounded-[7.5px] ${isSelected ? 'bg-[#929292]/30' : ''}`} onClick={() => {
             setSelectedDate(date);

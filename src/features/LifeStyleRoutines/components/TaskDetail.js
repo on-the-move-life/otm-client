@@ -3,7 +3,8 @@ import TaskCard from './TaskCard';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoodIcon, toggleCompletion, handleFeedbackChange } from '../ReduxStore/actions';
-import { getFormattedDate } from '../utils';
+import { getFormattedDate, isIPhone } from '../utils';
+import { toast } from 'react-toastify';
 
 const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
@@ -59,6 +60,8 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             })
             .catch(err => {
                 dispatch(changeMoodIcon(SelectedCircle, task?.taskId, -1)); // reset mood icon
+                setSelectedFeeling(-1); // reset mood icon in state
+                toast.error('Something went wrong');
                 console.error(err);
             })
     }
@@ -85,6 +88,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                 .catch(err => {
                     const resetAction = handleFeedbackChange(SelectedCircle, task?.taskId, null);
                     dispatch(resetAction);
+                    toast.error('Something went wrong');
                     console.error(err);
                 })
         }
@@ -111,6 +115,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
             .catch(err => {
                 setTaskCompleted(false);
                 dispatch(toggleCompletion(SelectedCircle, task?.taskId));
+                toast.error('Something went wrong');
                 console.error(err);
             })
     }
@@ -127,7 +132,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
     }, [isCompleted])
 
     return (
-        <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2">
+        <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2" style={{paddingBottom: isIPhone() ? '150px' : ''}}>
             <div className="relative flex items-center p-4 bg-black text-white">
                 {/* BackButton */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none" onClick={() => setShowTaskDetail(false)}>
@@ -199,7 +204,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                     </div>
 
                 </div>
-                <div className="mb-6">
+                <div className="mb-9">
                     <h3 className="text-[20px] mb-2 pb-4 leading-8 font-sfpro">Feeling Check-In</h3>
                     <div className="flex space-x-4 items-center justify-center w-full">
                         <button
@@ -235,7 +240,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                             className={`transition-transform duration-200 ${(selectedFeeling === 5 || moodValue === 5) ? 'transform scale-125  bg-white/10 rounded-md' : ''
                                 }`}
                         >
-                            <img src={'./assets/Feeling-happy.svg'} alt="Ecstatic" className={`w-15 h-15 ${(selectedFeeling === 5 || moodValue === 5) ? 'text-green-400' : ''}`} />
+                            <img src={'./assets/Feeling-happy2.svg'} alt="Ecstatic" className={`w-15 h-15 ${(selectedFeeling === 5 || moodValue === 5) ? 'text-green-400' : ''}`} />
                         </button>
                     </div>
                 </div>

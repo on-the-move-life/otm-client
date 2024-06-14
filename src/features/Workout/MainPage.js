@@ -69,14 +69,13 @@ const MainPage = () => {
                   </span>
                   <div className="flex gap-2">
                     <div>
-                      <h2 className="text-xl">{workoutData.theme}</h2>
-                    </div>
-                    <div className="flex items-center justify-center rounded-[7px] border border-white p-[3px]">
-                      <button onClick={() => setShowUpdateWorkout(true)}
-                       className="w-fit rounded border bg-white px-2 py-0.5  text-center text-xs font-bold -tracking-[0.36px] text-black">
-                        Edit Workout
-                      </button>
-                    </div>
+                  <h2 className="text-xl">{workoutData.theme}</h2>
+                  </div>
+                  <div className="flex items-center justify-center rounded-[7px] border border-white px-[3px]">
+                     <button onClick={() => setShowUpdateWorkout(true)} className="w-fit rounded border bg-white px-[0.7px] text-center text-[10px] font-bold text-black">
+                       Change
+                    </button>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -109,21 +108,21 @@ const MainPage = () => {
             </button>
             <style>
               {`
-               @keyframes backgroundMove {
-               0%, 100% { background-position: left; }
-               50% { background-position: right; }
-               }
-          
-               .animate-backgroundMove {
-               animation: backgroundMove 3s infinite;
-               }
-             `}
-             </style>
+             @keyframes backgroundMove {
+             0%, 100% { background-position: left; }
+             50% { background-position: right; }
+            }
+
+            .animate-backgroundMove {
+             animation: backgroundMove 3s infinite;
+             }
+            `}
+           </style>
             <button
-              className="relative mt-2 w-full h-12 border-none rounded-lg bg-gradient-to-r from-[#77530a] via-[#ffd277] to-[#77530a] bg-[length:250%] bg-left text-[#ffd277] flex items-center justify-center cursor-pointer overflow-hidden animate-backgroundMove"
+              className="relative w-full h-12 border-none rounded-lg bg-gradient-to-r from-[#d1d1d1] via-[#FFFFFF] to-[#d1d1d1] bg-[length:250%] bg-left text-[#FFFFFF] flex items-center justify-center cursor-pointer overflow-hidden animate-backgroundMove mt-2"
               onClick={() => setShowUpdateWorkout(true)}
             >
-              <span className="absolute w-[97%] h-[90%] rounded-md bg-black bg-opacity-90 text-[#ffd277] flex items-center justify-center animate-backgroundMove">Build Your Workout</span>
+              <span className="absolute w-[97%] h-[90%] rounded-md bg-black bg-opacity-90 text-[#ffffff] flex items-center justify-center animate-backgroundMove">Customise Workout</span>
             </button>
           </footer>
         </>

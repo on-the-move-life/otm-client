@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import NavigationAnalytics from './components/NavigationAnalytics'
-import NavigationClock from './components/NavigationClock'
+import React from 'react'
+import NavigationAnalytics from './components/icons/NavigationAnalytics'
+import NavigationClock from './components/icons/NavigationClock'
 function NavigationTab({ selectedIndex, setSelectedIndex }) {
   return (
     <div className='w-full flex flex-row justify-around items-center'>

@@ -1,6 +1,5 @@
 import React from 'react'
 import YourCircle from './components/YourCircle'
-import { set } from 'date-fns'
 
 function Routines({ circles, date, setReloadCounter }) {
   return (
@@ -9,7 +8,7 @@ function Routines({ circles, date, setReloadCounter }) {
       {
         circles && circles.map(circle => {
           return (
-            <YourCircle name={circle?.name} percentCompletion={circle?.completionPercentage} tasks={circle?.tasks} date={date} setReloadCounter={setReloadCounter}/>
+            <YourCircle name={circle?.name} percentCompletion={circle?.completionPercentage} tasks={circle?.tasks} date={date} setReloadCounter={setReloadCounter} time={circle?.time}/>
           )
         })
       }

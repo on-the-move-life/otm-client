@@ -210,7 +210,7 @@ function FitnessScorePage() {
                             whileTap={{ scale: 0.9 }}
                             className='w-full'
                             onClick={() => {
-                                navigate('/')
+                                navigate('/home')
                             }}
                         >
                             <Button text={"Go to my Dashboard"} type="lifestyle" />

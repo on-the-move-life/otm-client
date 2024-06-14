@@ -18,7 +18,7 @@ import {
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import CrossIcon from './icons/CrossIcon';
-import { formatDate } from "../utils";
+import { formatDate, getColor, isIPhone } from "../utils";
 
 function CircleSummary({ circleName, circleTasks, completionPercentage, setShowSummary, date }) {
     const [selectedIndex, setSelectedIndex] = useState(0); // default is completed
@@ -52,16 +52,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
         { threshold: 100, color: '#5ECC7B' }
     ], []);
 
-    const getColor = () => {
-        for (let i = 0; i < colors.length; i++) {
-            if (completionPercentage <= colors[i].threshold) {
-                return colors[i].color;
-            }
-        }
-        return colors[colors.length - 1].color; // Default to the last color if not matched
-    };
-
-    const color = getColor();
+    const color = getColor(colors, completionPercentage);
 
     useEffect(() => {
         setCompletedTasks(circleTasks.filter(task => task?.completed === true));
@@ -115,7 +106,7 @@ function CircleSummary({ circleName, circleTasks, completionPercentage, setShowS
                         </div>
                     </div>
                 </div>
-                <div className='w-full flex flex-col justify-start items-start gap-5 py-5 px-5'>
+                <div className='w-full flex flex-col justify-start items-start gap-5 py-5 px-5' style={{paddingBottom: isIPhone() ? '100px' : ''}}>
                     {
                         selectedIndex === 0 ? (
                             (completedTasks === null || completedTasks?.length === 0) ?
