@@ -97,7 +97,7 @@ export default function BarChart({ inputData = [4, 2, 6, 1, 4, 2, 1] }) {
     };
 
     return (
-        <div className="w-[326px] h-[457px] bar-chart-style px-4 pb-3 flex flex-col justify-between items-start">
+        <div className="w-[100%] h-[100%] max-w-[326px] max-h-[457px] bar-chart-style px-4 pb-3 flex flex-col justify-between items-start">
             <img src="/assets/star_bar_chart.png" alt="star" height={74} width={74} className="relative right-[10px]"/>
             <Bar options={options} data={data} />
             <p className="bar-chart-text text-start text-[#ffffff42]"><span className="text-[#7E87EF]">Wednesday,&nbsp;</span> is your favourite day to workout</p>
