@@ -1,10 +1,45 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import TaskCard from './TaskCard';
+import EmptyMealCard from './EmptyMealCard';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeMoodIcon, toggleCompletion, handleFeedbackChange } from '../ReduxStore/actions';
 import { getFormattedDate, isIPhone } from '../utils';
 import { toast } from 'react-toastify';
+
+
+import { motion } from 'framer-motion';
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import styled from 'styled-components';
+import { IoMdTrash } from "react-icons/io";
+import { IoCamera } from "react-icons/io5";
+import { BsImageFill } from "react-icons/bs";
+import axios from 'axios';
+import { MealDoughnut } from './MealDoughnut';
+import { MealInfocard } from "./MealInfocard";
+import FullMealInfoCard from './FullMealInfoCard';
+
+
+const ProfilePicHeading = styled.div`
+ color: #D7D7D7;
+ text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+ font-size: 20px;
+ font-style: normal;
+ line-height: 29.066px; /* 160% */
+ text-transform: capitalize;
+ letter-spacing: 1px;
+ `
+const IconLabel = styled.div`
+ color: #D7D7D7;
+ text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+ font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+ font-size: 15px;
+ font-style: normal;
+ line-height: 29.066px; /* 160% */
+ text-transform: capitalize;
+ letter-spacing: 1px;
+ `
 
 const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
@@ -131,8 +166,97 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         console.log("toggled ")
     }, [isCompleted])
 
+
+    // meal info handling
+
+    const [imageURL, setImageURL] = useState(null);
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
+    const [mealInfo, setMealInfo] = useState(null);
+    const [loading, setLoader] = useState(false);
+    const [loadingpic, setLoadingpic] = useState(null);
+
+    const profilePicRef = useRef(null);
+    const fileInputRef = useRef(null);
+    const profilePicCameraRef = useRef(null);
+    const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
+    const modalVariants = {
+        hidden: {
+            opacity: 0,
+            y: '100%',
+        },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: 'tween',
+                duration: 0.5,
+                ease: 'easeInOut',
+            },
+        },
+    };
+
+
+
+    const handleClick = () => {
+        setShowProfilePicPopup(true);
+        console.log("clicked");
+    };
+
+    const handleCameraClick = () => {
+        fileInputRef.current.click();
+    };
+
+
+
+    const handleFileChange = async (e) => {
+        setLoader(true);
+        const file = e.target.files[0];
+        if (file) {
+
+
+
+            const reader = new FileReader();
+
+            reader.onloadend = async () => {
+                try {
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('user', 'PRAN');
+                    formData.append('date', 'June 4 2024');
+                    formData.append('taskId', '1-6');
+
+                    const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+
+                    if (res.data) {
+                        setLoader(false);
+
+                        setResponse(res.data);
+                        setError(null);
+                        setImageURL(res.data.mealUrl);
+                        console.log(res.data.mealNutritionAnalysis.calories);
+                        setMealInfo(res.data.mealNutritionAnalysis);
+                    }
+
+
+                } catch (err) {
+                    console.error('Error submitting the request:', err);
+                    setError(err);
+                    setResponse(null);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+
+
     return (
-        <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2" style={{paddingBottom: isIPhone() ? '150px' : ''}}>
+        <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2" style={{ paddingBottom: isIPhone() ? '150px' : '' }}>
             <div className="relative flex items-center p-4 bg-black text-white">
                 {/* BackButton */}
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18" fill="none" onClick={() => setShowTaskDetail(false)}>
@@ -181,6 +305,95 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                 <div className="mb-6 ">
                     <TaskCard task={task} />
                 </div>
+
+
+
+                {/* meal info components */}
+                <div onClick={handleClick}>
+
+
+                    <EmptyMealCard />
+
+                </div>
+
+
+                {/* upload meal component */}
+
+                {/* meal doughnut component */}
+
+                <div>{
+
+                    mealInfo &&
+
+                    <div className="flex justify-center items-center h-auto mb-20">
+
+                        <FullMealInfoCard mealdata={mealInfo} ImagePath={imageURL} />
+
+                    </div>
+
+                }
+                </div>
+                <div>{
+
+                    mealInfo &&
+
+                    <div className="flex justify-center items-center h-auto mb-20">
+
+                        <MealDoughnut mealdata={mealInfo} />
+
+                    </div>
+
+                }
+                    <div> <MealInfocard ImagePath={imageURL}></MealInfocard> </div>
+
+                </div>
+
+
+
+                {
+                    showProfilePicPopup &&
+                    <motion.div
+                        className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'
+                        initial="hidden"
+                        animate={showProfilePicPopup ? "visible" : "hidden"}
+                        variants={modalVariants}
+                    >
+                        <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => setShowProfilePicPopup(false)}>
+                            <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
+                        </button>
+                        <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
+                            <ProfilePicHeading>Meal photo</ProfilePicHeading>
+                            <div className='w-full flex flex-row justify-start gap-[40px] items-center'>
+                                <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handleCameraClick}>
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/*"
+                                        capture="user"
+                                        hidden
+                                        onChange={handleFileChange}
+                                    />
+                                    <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                                        <IoCamera size={30} color='#7E87EF' />
+                                    </button>
+                                    <IconLabel>Camera</IconLabel>
+                                </div>
+                                <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicRef.current.click()}>
+                                    <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                                        <BsImageFill size={30} color='#7E87EF' />
+                                    </button>
+                                    <IconLabel>Gallery</IconLabel>
+                                </div>
+                                {/* <div className='w-fit flex flex-col justify-center items-center gap-1' >
+                                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
+                                    <IoMdTrash size={30} color='gray' />
+                                </button>
+                                <IconLabel>Delete</IconLabel>
+                            </div> */}
+                            </div>
+                        </div>
+                    </motion.div>
+                }
 
 
 
