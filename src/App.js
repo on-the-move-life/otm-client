@@ -62,7 +62,7 @@ function App() {
         <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
-        <Route path="/journey-reflection/:reportId" element={<RouteMiddleware><JourneyReflectionPage/></RouteMiddleware>} />
+        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage/>} />
         <Route
           path="/lifestyle-routine"
           element={

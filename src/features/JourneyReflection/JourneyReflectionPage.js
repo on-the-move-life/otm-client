@@ -62,7 +62,7 @@ const JourneyReflectionPage = () => {
           <Track/>
        </section>
        <section>
-          <Conclusion/>
+          <Conclusion apiData={apiData}/>
        </section>
       </div>
     </div>
