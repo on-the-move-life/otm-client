@@ -316,6 +316,19 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                 </div>
 
+                {/* loader */}
+
+                {loading && (
+
+
+                    <div className="max-w-sm mx-auto  rounded-lg shadow-md p-3 flex items-center space-x-6 bg-mediumGray  mb-2  " >
+
+                        {/* <img src={loadingpic}></img> */}
+
+                        <p className='text-white font-sfpro font-medium text-lg'> Loading...</p>
+                    </div>
+                )}
+
 
                 {/* upload meal component */}
 
