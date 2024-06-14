@@ -41,10 +41,10 @@ const workoutGraph = ({apiData}) => {
   //return <path d={path} stroke="none" fill={fill} />;
   //};
   return (
-    <div className="flex h-auto flex-shrink-0 sm:ml-0 ml-[130px] px-4">
+    <div className="flex h-auto flex-shrink-0 sm:ml-0 ml-[80px] px-4">
       <div className="">
         <ComposedChart
-          width={550}
+          width={500}
           height={300}
           data={formattedData}
           margin={{ top: 0, right: 0, left: 0, bottom: 0 }}

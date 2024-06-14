@@ -7,26 +7,28 @@ import Strategies from './Strategies';
 import Track from './Track';
 import WeeklyWorkoutJourney from './WeeklyWorkoutJourney';
 import WorkoutConsitency from './WorkoutConsitency';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import axiosClient from './ApiClient';
 
 const JourneyReflectionPage = () => {
    const { reportId } = useParams(); 
    const [apiData, setApiData] = useState([]);
-
+   const [error, setError] = useState(null);
    useEffect(() => {
-      const fetchReport = async () => {
-         const response = await axios.get('https://otm-main-production.up.railway.app/api/v1/renewal-report', {
-            params: {
-              reportId: '666ac08a93dc5b3561e23b68',
-            },
-          });
+      const fetchData = async () => {
+         try {
+          const response = await axiosClient.get(`/renewal-report?reportId=${reportId}`);
           setApiData(response.data);
-        } 
-      fetchReport();
+         }
+         catch(error){
+         setError(error);
+         }
+      };
+      fetchData();
     }, [reportId]);
      const nameParts = apiData?.data?.name?.split(' ');
      const firstName = nameParts?.[0];
+     if (error) return <div className="text-center mt-12">Something Went Wrong!</div>;
     
   return (
     <div className='bg-black w-full h-auto flex flex-col px-2 sm:py-10 py-5'>
