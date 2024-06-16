@@ -18,6 +18,8 @@ import axios from 'axios';
 import { MealDoughnut } from './MealDoughnut';
 import { MealInfocard } from "./MealInfocard";
 import FullMealInfoCard from './FullMealInfoCard';
+import MealPage from './MealPage';
+import { Loader } from '../../../components';
 
 
 const ProfilePicHeading = styled.div`
@@ -42,6 +44,8 @@ const IconLabel = styled.div`
  `
 
 const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
+    const [showMealInfo, setshowMealInfo] = useState(false);
+
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
     const [feedback, setFeedback] = useState('');
 
@@ -222,11 +226,11 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                 try {
                     const formData = new FormData();
                     formData.append('file', file);
-                    formData.append('user', 'PRAN');
-                    formData.append('date', 'June 4 2024');
-                    formData.append('taskId', '1-6');
+                    formData.append('user', JSON.parse(localStorage.getItem('user'))['code']);
+                    formData.append('date', finalDate);
+                    formData.append('taskId', task?.taskId);
 
-                    const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
+                    const res = await axios.post('http://localhost:882/api/v1/lifestyle/meal-info', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         },
@@ -240,6 +244,9 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                         setImageURL(res.data.mealUrl);
                         console.log(res.data.mealNutritionAnalysis.calories);
                         setMealInfo(res.data.mealNutritionAnalysis);
+                        setshowMealInfo(true);
+                        // setShowTaskDetail(false);
+
                     }
 
 
@@ -318,16 +325,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                 {/* loader */}
 
-                {loading && (
 
-
-                    <div className="max-w-sm mx-auto  rounded-lg shadow-md p-3 flex items-center space-x-6 bg-mediumGray  mb-2  " >
-
-                        {/* <img src={loadingpic}></img> */}
-
-                        <p className='text-white font-sfpro font-medium text-lg'> Loading...</p>
-                    </div>
-                )}
 
 
                 {/* upload meal component */}
@@ -350,14 +348,9 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                     mealInfo &&
 
-                    <div className="flex justify-center items-center h-auto mb-20">
-
-                        <MealDoughnut mealdata={mealInfo} />
-
-                    </div>
+                    <MealPage mealdata={mealInfo} ImagePath={imageURL} ></MealPage>
 
                 }
-                    <div> <MealInfocard ImagePath={imageURL}></MealInfocard> </div>
 
                 </div>
 
@@ -476,6 +469,25 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                     </div>
                 }
             </div>
+
+
+
+            {loading && (
+
+
+                <div className="max-w-sm mx-auto  rounded-lg shadow-md p-3 flex items-center space-x-6 bg-mediumGray  mb-2  " >
+
+
+                    <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+                        <div className=" p-6 rounded-lg shadow-lg">
+
+                            <Loader />
+
+                        </div>
+                    </div>
+
+                </div>
+            )}
 
         </div>
     )
