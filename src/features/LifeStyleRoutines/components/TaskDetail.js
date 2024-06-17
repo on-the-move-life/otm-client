@@ -236,7 +236,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                     formData.append('date', finalDate);
                     formData.append('taskId', task?.taskId);
 
-                    const res = await axios.post('http://localhost:882/api/v1/lifestyle/meal-info', formData, {
+                    const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         },
