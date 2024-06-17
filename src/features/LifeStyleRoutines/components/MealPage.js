@@ -21,9 +21,7 @@ const MealPage = ({ mealdata, ImagePath }) => {
 
 
 
-            <div className='w-full px-3 bottom-4 left-0'>
-                <button className="w-full bg-custompurple text-black rounded-xl p-2" >Done</button>
-            </div>
+
         </div>
     )
 }
