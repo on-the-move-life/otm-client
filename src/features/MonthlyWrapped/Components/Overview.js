@@ -9,9 +9,9 @@ function Overview({ photoURL = 'https://images.unsplash.com/photo-1551606712-b03
                 backgroundPosition: 'center', // Add this to center the image
             }}
         >
-            <div className='w-full h-full px-4 pb-3 rounded-[22.291px] flex flex-col justify-between items-start bg-black/50 backdrop-blur-[1px]'>
+            <div className='w-full h-full px-4 pb-3 rounded-[22.291px] flex flex-col justify-between items-start bg-black/10 backdrop-blur-[1px]'>
                 <img src="/assets/overview_streak.png" alt="star" height={74} width={74} className="relative right-[10px]"/>
-                <p className="bar-chart-text text-start text-white/80">{description}</p>
+                <p className="bar-chart-text text-start text-white/90">{description}</p>
             </div>
         </div>
     )

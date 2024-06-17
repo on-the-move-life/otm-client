@@ -99,7 +99,7 @@ export default function RadarChart({currentMonthData = [10, 8, 4, 9, 5], prevMon
       <div className="w-full h-[250px] bg-center bg-contain bg-no-repeat flex flex-col justify-center items-center" style={{backgroundImage: `url(${'/assets/radar_chart_bg.svg'})`}}>
         <Radar data={data} options={options} className="relative left-[7px] top-[10px]"/>
       </div>
-      <p className="bar-chart-text text-start text-[#ffffff42]"><span className="text-[#7E87EF]">Endurance,&nbsp;</span> is your strongest element of fitness</p>
+      <p className="bar-chart-text text-start text-[#ffffff42]" style={{marginBlock: '1em'}}><span className="text-[#7E87EF]">Endurance,&nbsp;</span> is your strongest element of fitness</p>
     </div>
   );
 }
