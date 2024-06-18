@@ -182,11 +182,16 @@ const TimelineTile = ({ data }) => {
         </div>
 
         <Date>{formattedDate}</Date>
-        <div className="timeline-tags flex flex-row space-x-3 text-xs my-2">
+        <div className="timeline-tags flex flex-row sm:space-x-3 space-x-1 text-xs my-2">
           {/* <InfoTile>Horizontal Pull</InfoTile> */}
           <InfoTile>{formattedTime}</InfoTile>
           <InfoTile>Total Workouts {data?.consistency?.total}</InfoTile>
-          {/* <InfoTile>700Kcal</InfoTile> */}
+          <InfoTile>
+            <div className='flex gap-2 justify-center items-center'>
+              <img src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`} className='w-4 h-4' alt='move coins logo'/>
+              <p>20 Coins</p>
+            </div>
+          </InfoTile>
         </div>
         {data?.achievement?.length > 0 && (
           <section className="my-4 flex flex-col justify-center backdrop-blur-sm rounded-lg p-2">
