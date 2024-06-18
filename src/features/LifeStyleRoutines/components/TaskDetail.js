@@ -628,7 +628,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                         <img className='rounded-lg mb-4 w-[358px] h-[421px]  ' src={selectedImage} alt="Preview" />
 
-                        <div className=' absolute w-full px-3 bottom-100 left-0 mt-[125px]'>
+                        <div className='  w-full px-3 bottom-100 left-0 mt-[125px]'>
                             <button className="w-full text-lightGray underline mb-4 text-center   font-sfpro">pick a different image</button>
                             <button className="w-full bg-custompurple text-black rounded-xl p-2 flex flex-row justify-center align-middle font-sfpro" onClick={handleSubmit} > <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="Frame 48096138">
