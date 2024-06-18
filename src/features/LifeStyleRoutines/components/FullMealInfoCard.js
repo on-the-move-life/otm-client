@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const FullMealInfoCard = ({ mealdata, ImagePath }) => {
+const FullMealInfoCard = ({ mealdata, ImagePath, finalDate }) => {
     return (
         <div className='bg-mediumGray rounded-xl pb-3'>
 
@@ -14,7 +14,7 @@ const FullMealInfoCard = ({ mealdata, ImagePath }) => {
                     />
                     <div>
                         <div className='flex flex-row justify-between'>
-                            <p className="text-sm text-gray-400">7 June 2024</p>
+                            <p className="text-sm text-gray-400">{finalDate}</p>
                             <div className="text-xl font-semibold">{mealdata.calories} Kcal</div>
 
 
@@ -56,8 +56,8 @@ const FullMealInfoCard = ({ mealdata, ImagePath }) => {
             </div>
             <div className="flex text-white text-sm m-2">
                 <span className='mr-2 text-[#FA5757] font-sfpro text-xs font-medium' > <p> {mealdata.carbohydrates}% carbs </p> </span>
-                <span className='mr-2 text-[#7E87EF] font-sfpro text-xs font-medium'> <p>{mealdata.protein}% fats </p>  </span>
-                <span className='mr-2 text-[#5ECC7B] font-sfpro text-xs font-medium'> <p>{mealdata.fat}% protein </p> </span>
+                <span className='mr-2 text-[#7E87EF] font-sfpro text-xs font-medium'> <p>{mealdata.fat}% fats </p>  </span>
+                <span className='mr-2 text-[#5ECC7B] font-sfpro text-xs font-medium'> <p>{mealdata.protein}% protein </p> </span>
             </div>
 
 

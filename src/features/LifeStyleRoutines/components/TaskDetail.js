@@ -3,7 +3,7 @@ import TaskCard from './TaskCard';
 import EmptyMealCard from './EmptyMealCard';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeMoodIcon, toggleCompletion, handleFeedbackChange } from '../ReduxStore/actions';
+import { changeMoodIcon, toggleCompletion, handleFeedbackChange, handleMealinfoChange } from '../ReduxStore/actions';
 import { getFormattedDate, isIPhone } from '../utils';
 import { toast } from 'react-toastify';
 
@@ -20,6 +20,7 @@ import { MealInfocard } from "./MealInfocard";
 import FullMealInfoCard from './FullMealInfoCard';
 import MealPage from './MealPage';
 import { Loader } from '../../../components';
+import { IoSparkles } from 'react-icons/io5';
 
 
 const ProfilePicHeading = styled.div`
@@ -44,12 +45,18 @@ const IconLabel = styled.div`
  `
 
 const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted, date, taskCompleted }) => {
-    console.log("meal task is" + task.taskId);
-    const [showMealInfo, setshowMealInfo] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(null);
 
+    console.log("meal task is" + task.type);
+
+    const [showMealInfo, setshowMealInfo] = useState(false);
+    const [isMealTask, setIsMealTask] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [file, setFile] = useState(null);
     const [selectedFeeling, setSelectedFeeling] = useState(-1);
     const [feedback, setFeedback] = useState('');
+    const [response, setResponse] = useState(null);
+
+
 
     const formattedDate = getFormattedDate();
     const finalDate = (date === null || date === undefined) ? formattedDate : date;
@@ -73,6 +80,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         }
         return false;
     });
+
     const storedFeedbackValue = useSelector(state => {
         const circle = state?.lifeStyleDetails?.circles.find(circle => circle?.name === SelectedCircle);
         if (circle) {
@@ -81,6 +89,23 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         }
         return '';
     });
+
+    console.log("stored feedback value is", storedFeedbackValue);
+
+
+    // mealinfo value
+
+    const storedMealInfoValue = useSelector(state => {
+        const circle = state?.lifeStyleDetails?.circles.find(circle => circle?.name === SelectedCircle);
+        if (circle) {
+            const mytask = circle?.tasks.find(mappedTask => mappedTask.taskId === task?.taskId);
+
+            return mytask ? task?.mealInfo : null;
+        }
+        return null;
+    });
+
+    console.log("stored mealinfo value is", storedMealInfoValue);
 
     // function to POST emoji reaction
     function handleEmojiReaction() {
@@ -176,16 +201,35 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
     // meal info handling
 
     const [imageURL, setImageURL] = useState(null);
-    const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
     const [mealInfo, setMealInfo] = useState(null);
     const [loading, setLoader] = useState(false);
-    const [loadingpic, setLoadingpic] = useState(null);
+    const [loadingpic, setLoadingpic] = useState(false);
 
     const profilePicRef = useRef(null);
     const fileInputRef = useRef(null);
     const profilePicCameraRef = useRef(null);
     const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
+
+
+    useEffect(() => {
+        if (task.type === 'meal') {
+            setIsMealTask(true);
+        } else {
+            setIsMealTask(false);
+        }
+    }, [task.type]);
+
+    useEffect(() => {
+        if (task.mealInfo) {
+
+            setMealInfo(task.mealInfo);
+            setImageURL(task.mealUrl);
+        } else {
+            setMealInfo(null);
+        }
+    }, [task.type]);
+
     const modalVariants = {
         hidden: {
             opacity: 0,
@@ -215,54 +259,65 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
 
 
-    const handleFileChange = async (e) => {
+    const handleFileChange = (e) => {
         setLoader(true);
-        const file = e.target.files[0];
-        if (file) {
-
-
-
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
             const reader = new FileReader();
 
             reader.onload = (event) => {
                 setSelectedImage(event.target.result);
             };
 
-            reader.onloadend = async () => {
-                try {
-                    const formData = new FormData();
-                    formData.append('file', file);
-                    formData.append('user', JSON.parse(localStorage.getItem('user'))['code']);
-                    formData.append('date', finalDate);
-                    formData.append('taskId', task?.taskId);
+            reader.onloadend = () => {
+                setFile(selectedFile);
+                setLoader(false);
+                setLoadingpic(true);
+                setshowMealInfo(false);
 
-                    const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
-                    });
-
-                    if (res.data) {
-                        setLoader(false);
-
-                        setResponse(res.data);
-                        setError(null);
-                        setImageURL(res.data.mealUrl);
-                        console.log(res.data.mealNutritionAnalysis.calories);
-                        setMealInfo(res.data.mealNutritionAnalysis);
-                        setshowMealInfo(true);
-                        // setShowTaskDetail(false);
-
-                    }
-
-
-                } catch (err) {
-                    console.error('Error submitting the request:', err);
-                    setError(err);
-                    setResponse(null);
-                }
             };
-            reader.readAsDataURL(file);
+
+            reader.readAsDataURL(selectedFile);
+        }
+    };
+
+
+    const handleSubmit = async () => {
+        if (file) {
+            setLoader(true);
+            try {
+
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('user', JSON.parse(localStorage.getItem('user'))['code']);
+                formData.append('date', finalDate);
+                formData.append('taskId', task?.taskId);
+
+                const res = await axios.post('https://otm-main-production.up.railway.app/api/v1/lifestyle/meal-info', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                if (res.data) {
+                    dispatch(handleMealinfoChange(SelectedCircle, task?.taskId, res.data));
+
+                    setLoader(false);
+                    setResponse(res.data);
+                    setError(null);
+                    setImageURL(res.data.mealUrl);
+                    console.log(res.data.mealNutritionAnalysis.calories);
+                    setMealInfo(res.data.mealNutritionAnalysis);
+                    setshowMealInfo(true);
+                    setSelectedImage(null);
+                    setShowProfilePicPopup(false);
+                }
+            } catch (err) {
+                console.error('Error submitting the request:', err);
+                setError(err);
+                setResponse(null);
+                setLoader(false);
+            }
         }
     };
 
@@ -271,12 +326,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
     return (
         <div className="h-screen overflow-y-scroll w-full fixed top-0 left-0 z-[100]  bg-black p-2" style={{ paddingBottom: isIPhone() ? '150px' : '' }}>
 
-            {/* image preview working */}
-            {/* {selectedImage && (
-                <div className="mt-4">
-                    <img src={selectedImage} alt="Preview" className="max-w-full h-auto" />
-                </div>
-            )} */}
+
 
             {!showMealInfo && <>
 
@@ -333,39 +383,62 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                     {/* meal info components */}
 
-
-                    {!mealInfo && <div onClick={handleClick}>
-
-
-                        <EmptyMealCard />
-
-                    </div>}
+                    {isMealTask && <>
+                        {!mealInfo && <div onClick={handleClick}>
 
 
+                            <EmptyMealCard />
+
+                        </div>}
 
 
-                    <div>{
 
-                        mealInfo &&
 
-                        <div className="flex justify-center items-center h-auto mb-20">
 
-                            <FullMealInfoCard mealdata={mealInfo} ImagePath={imageURL} />
 
+                        <div>{
+
+
+
+                            (!mealInfo && storedMealInfoValue) &&
+
+                            <div className="flex justify-center items-center h-auto mb-5">
+
+                                <FullMealInfoCard mealdata={storedMealInfoValue.mealNutritionAnalysis} ImagePath={storedMealInfoValue.mealUrl} finalDate={finalDate} />
+
+                            </div>
+
+                        }
                         </div>
 
-                    }
-                    </div>
+                        <div>{
 
-                    {/* <div>{
 
-                    mealInfo &&
 
-                    <MealPage mealdata={mealInfo} ImagePath={imageURL} ></MealPage>
+                            mealInfo &&
 
-                }
+                            <div className="flex justify-center items-center h-auto mb-5">
 
-                </div> */}
+                                <FullMealInfoCard mealdata={mealInfo} ImagePath={imageURL} finalDate={finalDate} />
+
+                            </div>
+
+                        }
+                        </div>
+
+
+
+
+
+
+
+
+                    </>}
+
+
+
+
+
 
 
 
@@ -490,13 +563,93 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
             {showMealInfo && <div className="flex justify-center items-center h-auto mb-20 flex-col">
 
+                <div onClick={() => setshowMealInfo(false)} className='flex flex-row items-center text-center align-middle justify-center mt-10  ' >
+
+                    <svg className='mt-1' width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="elements">
+                            <circle id="Ellipse 1119" cx="4.07031" cy="4.06152" r="0.8125" stroke="#F8F8F8" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
+                            <path id="Rectangle 2056" d="M1.35938 6.49935C1.35938 4.07358 1.35938 2.8607 2.11296 2.10711C2.86655 1.35352 4.07944 1.35352 6.50521 1.35352C8.93098 1.35352 10.1439 1.35352 10.8975 2.10711C11.651 2.8607 11.651 4.07358 11.651 6.49935C11.651 8.92512 11.651 10.138 10.8975 10.8916C10.1439 11.6452 8.93098 11.6452 6.50521 11.6452C4.07944 11.6452 2.86655 11.6452 2.11296 10.8916C1.35938 10.138 1.35938 8.92512 1.35938 6.49935Z" stroke="#F8F8F8" stroke-width="1.2" />
+                            <path id="Vector" d="M2.71094 11.374C5.07935 8.54379 7.73439 4.81119 11.6471 7.33447" stroke="#F8F8F8" stroke-width="1.2" />
+                        </g>
+                    </svg>
+
+
+                    <div className="text-lightGray font-sfpro text-[14px] font-medium pl-2 font-sfpro">Upload meal photo</div>
+
+                    <div className='absolute right-9 mb-1'  >     <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="18.4932" cy="18.4932" r="18.4932" fill="#1C1C1E" />
+                        <path d="M24.1026 12.8848L12.8828 24.1045M24.1026 24.1045L12.8828 12.8848" stroke="#B1B1B1" stroke-width="1.60274" stroke-linecap="round" />
+                    </svg> </div>
+
+
+
+
+
+                </div>
+
                 <MealPage mealdata={mealInfo} ImagePath={imageURL} />
 
-                <div className='w-full px-3 bottom-4 left-0'>
-                    <button className="w-full bg-custompurple text-black rounded-xl p-2" onClick={() => setshowMealInfo(false)} >Done</button>
+
+
+                <div className='w-full px-3 bottom-4 left-0 mt-10'>
+                    <button className="w-full bg-custompurple text-black rounded-xl pt-[10px] pb-[10px]  pr-[14px]  pl-[14px] " onClick={() => setshowMealInfo(false)} >Done</button>
                 </div>
 
             </div>}
+
+
+            {selectedImage && <div className="max-w-sm mx-auto  rounded-lg shadow-md p-3 flex items-center space-x-6  mb-2  " >
+
+
+
+
+                <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+                    <div className=" p-6 rounded-lg shadow-lg">
+
+                        <div className='flex flex-row items-center text-center align-middle justify-center ' >
+
+                            <div className='flex flex-row items-center text-center mb-50 absolute  top-12'>
+                                <svg className='mt-1' width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="elements">
+                                        <circle id="Ellipse 1119" cx="4.07031" cy="4.06152" r="0.8125" stroke="#F8F8F8" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path id="Rectangle 2056" d="M1.35938 6.49935C1.35938 4.07358 1.35938 2.8607 2.11296 2.10711C2.86655 1.35352 4.07944 1.35352 6.50521 1.35352C8.93098 1.35352 10.1439 1.35352 10.8975 2.10711C11.651 2.8607 11.651 4.07358 11.651 6.49935C11.651 8.92512 11.651 10.138 10.8975 10.8916C10.1439 11.6452 8.93098 11.6452 6.50521 11.6452C4.07944 11.6452 2.86655 11.6452 2.11296 10.8916C1.35938 10.138 1.35938 8.92512 1.35938 6.49935Z" stroke="#F8F8F8" stroke-width="1.2" />
+                                        <path id="Vector" d="M2.71094 11.374C5.07935 8.54379 7.73439 4.81119 11.6471 7.33447" stroke="#F8F8F8" stroke-width="1.2" />
+                                    </g>
+                                </svg>
+
+
+                                <div className="text-lightGray font-sfpro text-[14px] font-medium pl-2  font-sfpro ml-15">Upload meal photo</div>
+                            </div>
+
+
+
+                            <div onClick={() => setSelectedImage(null)} className='absolute right-10 top-10'>
+                                <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="18.4932" cy="18.4932" r="18.4932" fill="#1C1C1E" />
+                                    <path d="M24.1026 12.8848L12.8828 24.1045M24.1026 24.1045L12.8828 12.8848" stroke="#B1B1B1" stroke-width="1.60274" stroke-linecap="round" />
+                                </svg> </div>
+                        </div>
+
+                        <img className='rounded-lg mb-4 w-[358px] h-[421px]  ' src={selectedImage} alt="Preview" />
+
+                        <div className=' absolute w-full px-3 bottom-100 left-0 mt-[125px]'>
+                            <button className="w-full text-lightGray underline mb-4 text-center   font-sfpro">pick a different image</button>
+                            <button className="w-full bg-custompurple text-black rounded-xl p-2 flex flex-row justify-center align-middle font-sfpro" onClick={handleSubmit} > <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="Frame 48096138">
+                                    <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M24.424 10.296C15.7816 10.854 15.3286 11.3106 14.7706 19.9494C14.2125 11.307 13.756 10.854 5.11719 10.296C13.7596 9.73794 14.2125 9.28135 14.7706 0.642578C15.3286 9.28498 15.7852 9.73794 24.424 10.296Z" fill="black" />
+                                    <path id="Vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M13.0708 17.1116C7.47862 17.4726 7.18553 17.7681 6.82444 23.3579C6.46336 17.7657 6.16792 17.4726 0.578125 17.1116C6.17027 16.7505 6.46336 16.455 6.82444 10.8652C7.18553 16.4574 7.48096 16.7505 13.0708 17.1116Z" fill="black" />
+                                </g>
+                            </svg>
+                                Analyse  </button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>}
+
+
 
 
 

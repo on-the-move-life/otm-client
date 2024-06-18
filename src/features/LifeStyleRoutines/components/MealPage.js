@@ -6,7 +6,8 @@ const MealPage = ({ mealdata, ImagePath }) => {
     return (
 
         <div>
-            <div className="flex justify-center items-center h-auto mb-20">
+
+            <div className="flex justify-center items-center h-auto mb-5 mt-7">
 
 
                 <MealInfocard mealdata={mealdata} ImagePath={ImagePath}> </MealInfocard>
