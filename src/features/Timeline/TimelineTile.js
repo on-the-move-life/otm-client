@@ -189,7 +189,7 @@ const TimelineTile = ({ data }) => {
           <InfoTile>
             <div className='flex gap-2 justify-center items-center'>
               <img src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`} className='w-4 h-4' alt='move coins logo'/>
-              <p>20 Coins</p>
+              <p>21 Coins</p>
             </div>
           </InfoTile>
         </div>
