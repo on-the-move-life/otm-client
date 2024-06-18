@@ -90,7 +90,6 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         return '';
     });
 
-    console.log("stored feedback value is", storedFeedbackValue);
 
 
     // mealinfo value
@@ -471,17 +470,14 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
                                         <IconLabel>Camera</IconLabel>
                                     </div>
                                     <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicRef.current.click()}>
+
+                                        <input ref={profilePicRef} type='file' accept='image/png, image/jpg, image/jpeg' name="profile image" hidden onInput={handleFileChange}></input>
                                         <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
                                             <BsImageFill size={30} color='#7E87EF' />
                                         </button>
                                         <IconLabel>Gallery</IconLabel>
                                     </div>
-                                    {/* <div className='w-fit flex flex-col justify-center items-center gap-1' >
-                                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                                    <IoMdTrash size={30} color='gray' />
-                                </button>
-                                <IconLabel>Delete</IconLabel>
-                            </div> */}
+
                                 </div>
                             </div>
                         </motion.div>
