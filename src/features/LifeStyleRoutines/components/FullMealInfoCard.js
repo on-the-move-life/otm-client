@@ -1,68 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const FullMealInfoCard = ({ mealdata, ImagePath, finalDate }) => {
-    return (
-        <div className='bg-mediumGray rounded-xl pb-3'>
+const FullMealInfoCard = ({
+  mealInfo = {},
+  imageURL = '',
+  finalDate = '',
+  setshowMealInfoPage
+}) => {
 
-            <div className="text-white  p-4 shadow-md flex items-center justify-between">
-                <div className="flex items-center">
-                    <img
-                        src={ImagePath}
-                        alt="Meal"
-                        className="rounded-lg w-16 h-16 mr-4"
-                    />
-                    <div>
-                        <div className='flex flex-row justify-between'>
-                            <p className="text-sm text-gray-400">{finalDate}</p>
-                            <div className="text-xl font-semibold">{mealdata.calories} Kcal</div>
-
-
-                        </div>
-
-
-                        <h2 className="text-lg font-semibold">Shrimps & Rice</h2>
-                        <p className="text-sm text-gray-400">
-                            AI generated feedback on how well the plate is prepared according to their goals and restrictions
-                        </p>
-                    </div>
+  return (
+    <>
+      <div
+        className="rounded-xl border border-red bg-mediumGray pb-3"
+        onClick={() => setshowMealInfoPage(true)}
+      >
+        <div className="flex  items-center justify-between p-4 text-white shadow-md">
+          <div className="flex items-center">
+            <img
+              src={imageURL}
+              alt="Meal"
+              className="mr-4 h-16 w-16 rounded-lg"
+            />
+            <div>
+              <div className="flex flex-row justify-between">
+                <p className="text-sm text-gray-400">{finalDate}</p>
+                <div className="text-xl font-semibold">
+                  {mealInfo?.calories} Kcal
                 </div>
+              </div>
+
+              <h2 className="text-lg font-semibold">Shrimps & Rice</h2>
+              <p className="text-sm text-gray-400">
+                AI generated feedback on how well the plate is prepared
+                according to their goals and restrictions
+              </p>
             </div>
-
-
-
-            <div className="m-2">
-
-                <div className="flex mt-1">
-                    <motion.div
-                        className="bg-red h-2 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${mealdata.carbohydrates}%` }}
-                        transition={{ duration: 0.5 }}
-                    />
-                    <motion.div
-                        className="bg-blue h-2 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${mealdata.protein}%` }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                    />
-                    <motion.div
-                        className="bg-green h-2 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${mealdata.fat}%` }}
-                        transition={{ duration: 0.5, delay: 1 }}
-                    />
-                </div>
-            </div>
-            <div className="flex text-white text-sm m-2">
-                <span className='mr-2 text-[#FA5757] font-sfpro text-xs font-medium' > <p> {mealdata.carbohydrates}% carbs </p> </span>
-                <span className='mr-2 text-[#7E87EF] font-sfpro text-xs font-medium'> <p>{mealdata.fat}% fats </p>  </span>
-                <span className='mr-2 text-[#5ECC7B] font-sfpro text-xs font-medium'> <p>{mealdata.protein}% protein </p> </span>
-            </div>
-
-
+          </div>
         </div>
-    )
-}
 
-export default FullMealInfoCard
+        <div className="m-2">
+          <div className="mt-1 flex">
+            <motion.div
+              className="h-2 rounded-full bg-red"
+              initial={{ width: 0 }}
+              animate={{ width: `${mealInfo.carbohydrates}%` }}
+              transition={{ duration: 0.5 }}
+            />
+            <motion.div
+              className="h-2 rounded-full bg-blue"
+              initial={{ width: 0 }}
+              animate={{ width: `${mealInfo.protein}%` }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            />
+            <motion.div
+              className="h-2 rounded-full bg-green"
+              initial={{ width: 0 }}
+              animate={{ width: `${mealInfo.fat}%` }}
+              transition={{ duration: 0.5, delay: 1 }}
+            />
+          </div>
+        </div>
+        <div className="m-2 flex text-sm text-white">
+          <span className="mr-2 font-sfpro text-xs font-medium text-[#FA5757]">
+            {' '}
+            <p> {mealInfo.carbohydrates}% carbs </p>{' '}
+          </span>
+          <span className="mr-2 font-sfpro text-xs font-medium text-[#7E87EF]">
+            {' '}
+            <p>{mealInfo.fat}% fats </p>{' '}
+          </span>
+          <span className="mr-2 font-sfpro text-xs font-medium text-[#5ECC7B]">
+            {' '}
+            <p>{mealInfo.protein}% protein </p>{' '}
+          </span>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default FullMealInfoCard;
