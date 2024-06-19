@@ -4,21 +4,35 @@ import { MealInfocard } from './MealInfocard';
 import CrossIcon from './icons/CrossIcon';
 
 const MealPage = ({ mealInfo, imageURL, finalDate, setshowMealInfoPage }) => {
-  return (
-    <div>
-      <p>{finalDate}</p>
-      <div onClick={() => setshowMealInfoPage(false)}>
-        <CrossIcon />
-      </div>
 
-      <div className="mb-5 mt-7 flex h-auto items-center justify-center">
-        <MealInfocard imageURL={imageURL}> </MealInfocard>
-      </div>
-      <div className="flex items-center justify-center ">
-        <MealDoughnut mealInfo={mealInfo}></MealDoughnut>
-      </div>
-    </div>
-  );
+    console.log('inside Mealpage mealInfo ', mealInfo);
+
+    return (
+        <div>
+
+            <div
+
+                className="mt-2 flex flex-row items-center justify-center text-center align-middle w-full  "
+            >
+                <div className="pl-2 font-sfpro  text-[14px] font-medium text-lightGray">
+                    <p>{finalDate}</p>
+                </div>
+
+                <div className='absolute right-0 mr-2' onClick={() => setshowMealInfoPage(false)}>
+                    <CrossIcon />
+                </div>
+            </div>
+
+
+
+            <div className="mb-5 mt-7 flex h-auto items-center justify-center">
+                <MealInfocard imageURL={imageURL}> </MealInfocard>
+            </div>
+            <div className="flex items-center justify-center ">
+                <MealDoughnut mealInfo={mealInfo}></MealDoughnut>
+            </div>
+        </div>
+    );
 };
 
 export default MealPage;
