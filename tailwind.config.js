@@ -33,7 +33,7 @@ module.exports = withMT({
         'lb-down-arrow': "url('../public/assests/downArrow.svg)",
         elipse: "url('../public/assets/elipse.svg')",
         'profile-bg': "url('../public/assets/profile-bg.png')",
-        'achievements-cover': "url('../public/assets/achievements-bg.png')"
+        'achievements-cover': "url('../public/assets/achievements-bg.png')",
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],

@@ -48,6 +48,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
     console.log("meal task is" + task.type);
 
+    // const [showMealInfo, setshowMealInfo] = useState(false);
     const [showMealInfo, setshowMealInfo] = useState(false);
     const [isMealTask, setIsMealTask] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -220,9 +221,11 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
     }, [task.type]);
 
     useEffect(() => {
-        if (task.mealInfo) {
+        if (task.mealInfo && (storedMealInfoValue == null || storedMealInfoValue == undefined)) {
 
+            // setMealInfo(task.mealInfo);
             setMealInfo(task.mealInfo);
+            console.log("GET API RESPONSE is:", task.mealInfo.mealNutritionAnalysis);
             setImageURL(task.mealUrl);
         } else {
             setMealInfo(null);
@@ -303,10 +306,12 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                     setLoader(false);
                     setResponse(res.data);
+                    console.log("res.data is ", res.data);
                     setError(null);
                     setImageURL(res.data.mealUrl);
                     console.log(res.data.mealNutritionAnalysis.calories);
                     setMealInfo(res.data.mealNutritionAnalysis);
+                    console.log("POST API RESPONSE- res.data.mealNutritionAnalysis ", res.data.mealNutritionAnalysis);
                     setshowMealInfo(true);
                     setSelectedImage(null);
                     setShowProfilePicPopup(false);
@@ -320,6 +325,37 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
         }
     };
 
+
+    const MealTaskComponent = () => {
+
+        if (isMealTask && (!mealInfo && !storedMealInfoValue)) {
+            console.log("inside empty meal card ", mealInfo);
+
+            return <div onClick={handleClick}>
+
+                <EmptyMealCard />
+
+            </div>;
+        }
+
+        else if (isMealTask && (mealInfo !== undefined && mealInfo !== null)) {
+            console.log("inside isMealTask && mealInfo ", mealInfo);
+            return <div className="flex justify-center items-center h-auto mb-5">
+
+                <FullMealInfoCard mealdata={mealInfo} ImagePath={imageURL} finalDate={finalDate} />
+
+            </div>;
+        }
+        else if (isMealTask && storedMealInfoValue) {
+            console.log("inside redux card ", storedMealInfoValue);
+
+            return <div className="flex justify-center items-center h-auto mb-5">
+
+                <FullMealInfoCard mealdata={storedMealInfoValue.mealNutritionAnalysis} ImagePath={storedMealInfoValue.mealUrl} finalDate={finalDate} />
+
+            </div>;
+        }
+    }
 
 
     return (
@@ -355,7 +391,6 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
 
                             ) : (
-                                // <img src={'./assets/task-left.svg'} alt="" />
                                 <svg width="33" height="34" viewBox="0 0 33 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle id="Ellipse 1776" cx="16.5" cy="17" r="15.5" stroke="#3D3D3D" stroke-width="2" />
                                 </svg>
@@ -382,64 +417,7 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
                     {/* meal info components */}
 
-                    {isMealTask && <>
-                        {!mealInfo && <div onClick={handleClick}>
-
-
-                            <EmptyMealCard />
-
-                        </div>}
-
-
-
-
-
-
-                        <div>{
-
-
-
-                            (!mealInfo && storedMealInfoValue) &&
-
-                            <div className="flex justify-center items-center h-auto mb-5">
-
-                                <FullMealInfoCard mealdata={storedMealInfoValue.mealNutritionAnalysis} ImagePath={storedMealInfoValue.mealUrl} finalDate={finalDate} />
-
-                            </div>
-
-                        }
-                        </div>
-
-                        <div>{
-
-
-
-                            mealInfo &&
-
-                            <div className="flex justify-center items-center h-auto mb-5">
-
-                                <FullMealInfoCard mealdata={mealInfo} ImagePath={imageURL} finalDate={finalDate} />
-
-                            </div>
-
-                        }
-                        </div>
-
-
-
-
-
-
-
-
-                    </>}
-
-
-
-
-
-
-
+                    <MealTaskComponent />
 
                     {
                         showProfilePicPopup &&
@@ -644,10 +622,6 @@ const TaskDetail = ({ SelectedCircle, task, setShowTaskDetail, setTaskCompleted,
 
 
             </div>}
-
-
-
-
 
 
             {loading && (

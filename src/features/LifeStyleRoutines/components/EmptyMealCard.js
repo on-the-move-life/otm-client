@@ -36,7 +36,7 @@ const EmptyMealCard = () => {
                     {/* svg render */}
 
                     <div className="relative inline-block overflow-hidden">
-                        <div className="w-20 h-20 border-4 border-lightGray rounded-full absolute top-0 left-0"></div>
+                        {/* <div className="w-20 h-20 border-4 border-lightGray rounded-full absolute top-0 left-0"></div> */}
                         <span className="text-6xl relative z-10">🍲</span>
                     </div>
 
