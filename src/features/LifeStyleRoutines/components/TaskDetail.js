@@ -26,6 +26,9 @@ import { Loader } from '../../../components';
 import { IoSparkles } from 'react-icons/io5';
 import MealUploadButton from './MealUploadButton';
 import CrossIcon from './icons/CrossIcon';
+import MealImageicon from './icons/MealImageicon';
+import MealCrossIcon from './icons/MealCrossIcon';
+import SparkleIcon from './icons/SparkleIcon';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -121,6 +124,7 @@ const TaskDetail = ({
         return '';
     });
 
+
     // mealinfo value
 
     const storedMealInfoValue = useSelector((state) => {
@@ -136,6 +140,8 @@ const TaskDetail = ({
         }
         return null;
     });
+
+    console.log("**Stored Mealinfovalue is", storedMealInfoValue);
 
     // function to POST emoji reaction
     function handleEmojiReaction() {
@@ -244,10 +250,13 @@ const TaskDetail = ({
     }, []);
 
     useEffect(() => {
-        if (task.mealInfo) {
+        if (task.mealInfo !== undefined) {
             setMealInfo(task.mealInfo);
             setImageURL(task.mealUrl);
+            console.log("**task.mealInfo exists", task.mealInfo);
+
         } else {
+            console.log("task.mealInfo does not exist");
             setMealInfo(null);
         }
     }, [task.type]);
@@ -285,6 +294,7 @@ const TaskDetail = ({
 
             reader.onload = (event) => {
                 setSelectedImage(event.target.result);
+                setshowMealInfoPage(false);
 
             };
 
@@ -293,7 +303,7 @@ const TaskDetail = ({
                 setShowProfilePicPopup(false)
                 setLoader(false);
                 setLoadingpic(true);
-                setshowMealInfo(false);
+
             };
 
             reader.readAsDataURL(selectedFile);
@@ -320,9 +330,7 @@ const TaskDetail = ({
                 });
 
                 if (res.data) {
-                    dispatch(
-                        handleMealinfoChange(SelectedCircle, task?.taskId, res.data),
-                    );
+
 
                     setLoader(false);
                     console.log('res.data is ', res.data);
@@ -334,6 +342,8 @@ const TaskDetail = ({
                         'POST API RESPONSE- res.data.mealNutritionAnalysis ',
                         res.data.mealNutritionAnalysis,
                     );
+
+                    handleReduxMealInfoFields(res.data.mealNutritionAnalysis, res.data.mealUrl)
                     setshowMealInfo(true);
                     setSelectedImage(null);
                     setShowProfilePicPopup(false);
@@ -388,11 +398,32 @@ const TaskDetail = ({
         }
     };
 
+    const handleReduxMealInfoFields = ({ mealInfo, imageURL }) => {
+
+        const newReduxMealInfoFields = {
+            mealInfo: mealInfo,
+            imageURL: imageURL,
+        };
+
+        console.log("**newReduxMealInfoFields are", newReduxMealInfoFields);
+
+
+        dispatch(
+            handleMealinfoChange(SelectedCircle, task?.taskId, newReduxMealInfoFields),
+        );
+
+
+
+
+    };
+
     return (
         <div
             className="fixed left-0 top-0 z-[100] h-screen w-full overflow-y-scroll  bg-black p-2"
             style={{ paddingBottom: isIPhone() ? '150px' : '' }}
         >
+
+
             {!showMealInfoPage && (
                 <>
                     <div className="relative flex items-center bg-black p-4 text-white">
@@ -492,208 +523,9 @@ const TaskDetail = ({
 
                         <MealTaskComponent />
 
-                        {showMealInfo && (
-                            <div className="mb-20 flex h-auto flex-col items-center justify-center">
-                                <div
-                                    onClick={() => setshowMealInfo(false)}
-                                    className="mt-10 flex flex-row items-center justify-center text-center align-middle  "
-                                >
-                                    <div className="pl-2 font-sfpro  text-[14px] font-medium text-lightGray">
-                                        Upload meal photo
-                                    </div>
-
-                                    <div className="absolute right-9 mb-1">
-                                        {' '}
-                                        <svg
-                                            width="37"
-                                            height="37"
-                                            viewBox="0 0 37 37"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <circle
-                                                cx="18.4932"
-                                                cy="18.4932"
-                                                r="18.4932"
-                                                fill="#1C1C1E"
-                                            />
-                                            <path
-                                                d="M24.1026 12.8848L12.8828 24.1045M24.1026 24.1045L12.8828 12.8848"
-                                                stroke="#B1B1B1"
-                                                stroke-width="1.60274"
-                                                stroke-linecap="round"
-                                            />
-                                        </svg>{' '}
-                                    </div>
-                                </div>
 
 
 
-                                <div className="bottom-4 left-0 mt-10 w-full px-3">
-                                    <button
-                                        className="w-full rounded-xl bg-custompurple pb-[10px] pl-[14px] pr-[14px]  pt-[10px]  text-black "
-                                        onClick={() => setshowMealInfo(false)}
-                                    >
-                                        Done
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        {selectedImage && (
-                            <div className="mx-auto mb-2  flex max-w-sm items-center space-x-6 rounded-lg p-3  shadow-md  ">
-                                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
-                                    <div className=" rounded-lg p-6 shadow-lg">
-                                        <div className="flex flex-row items-center justify-center text-center align-middle ">
-                                            <div className="mb-50 absolute top-12 flex flex-row items-center  text-center">
-                                                <svg
-                                                    className="mt-1"
-                                                    width="13"
-                                                    height="13"
-                                                    viewBox="0 0 13 13"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <g id="elements">
-                                                        <circle
-                                                            id="Ellipse 1119"
-                                                            cx="4.07031"
-                                                            cy="4.06152"
-                                                            r="0.8125"
-                                                            stroke="#F8F8F8"
-                                                            stroke-width="0.8"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                        />
-                                                        <path
-                                                            id="Rectangle 2056"
-                                                            d="M1.35938 6.49935C1.35938 4.07358 1.35938 2.8607 2.11296 2.10711C2.86655 1.35352 4.07944 1.35352 6.50521 1.35352C8.93098 1.35352 10.1439 1.35352 10.8975 2.10711C11.651 2.8607 11.651 4.07358 11.651 6.49935C11.651 8.92512 11.651 10.138 10.8975 10.8916C10.1439 11.6452 8.93098 11.6452 6.50521 11.6452C4.07944 11.6452 2.86655 11.6452 2.11296 10.8916C1.35938 10.138 1.35938 8.92512 1.35938 6.49935Z"
-                                                            stroke="#F8F8F8"
-                                                            stroke-width="1.2"
-                                                        />
-                                                        <path
-                                                            id="Vector"
-                                                            d="M2.71094 11.374C5.07935 8.54379 7.73439 4.81119 11.6471 7.33447"
-                                                            stroke="#F8F8F8"
-                                                            stroke-width="1.2"
-                                                        />
-                                                    </g>
-                                                </svg>
-
-                                                <div className="ml-15 pl-2 font-sfpro font-sfpro text-[14px]  font-medium text-lightGray">
-                                                    Upload meal photo
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                onClick={() => setSelectedImage(null)}
-                                                className="absolute right-10 top-10"
-                                            >
-                                                <CrossIcon />{' '}
-                                            </div>
-                                        </div>
-
-                                        <img
-                                            className="mb-4 h-[421px] w-[358px] rounded-lg  "
-                                            src={selectedImage}
-                                            alt="Preview"
-                                        />
-
-                                        <div className="  bottom-100 left-0 mt-[125px] w-full px-3">
-                                            <button onClick={() => setShowProfilePicPopup(true)} className="mb-4 w-full text-center font-sfpro text-lightGray   underline">
-                                                pick a different image
-                                            </button>
-                                            <button
-                                                className="flex w-full flex-row justify-center rounded-xl bg-custompurple p-2 align-middle font-sfpro text-black"
-                                                onClick={handleImageUploadSubmit}
-                                            >
-                                                {' '}
-                                                <svg
-                                                    width="25"
-                                                    height="24"
-                                                    viewBox="0 0 25 24"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <g id="Frame 48096138">
-                                                        <path
-                                                            id="Vector"
-                                                            fill-rule="evenodd"
-                                                            clip-rule="evenodd"
-                                                            d="M24.424 10.296C15.7816 10.854 15.3286 11.3106 14.7706 19.9494C14.2125 11.307 13.756 10.854 5.11719 10.296C13.7596 9.73794 14.2125 9.28135 14.7706 0.642578C15.3286 9.28498 15.7852 9.73794 24.424 10.296Z"
-                                                            fill="black"
-                                                        />
-                                                        <path
-                                                            id="Vector_2"
-                                                            fill-rule="evenodd"
-                                                            clip-rule="evenodd"
-                                                            d="M13.0708 17.1116C7.47862 17.4726 7.18553 17.7681 6.82444 23.3579C6.46336 17.7657 6.16792 17.4726 0.578125 17.1116C6.17027 16.7505 6.46336 16.455 6.82444 10.8652C7.18553 16.4574 7.48096 16.7505 13.0708 17.1116Z"
-                                                            fill="black"
-                                                        />
-                                                    </g>
-                                                </svg>
-                                                Analyse{' '}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {showProfilePicPopup && (
-                            <motion.div
-                                className="fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 p-5 backdrop-blur-lg"
-                                initial="hidden"
-                                animate={showProfilePicPopup ? 'visible' : 'hidden'}
-                                variants={modalVariants}
-                            >
-                                <button
-                                    className="absolute left-[47%] top-0 cursor-pointer"
-                                    onClick={() => setShowProfilePicPopup(false)}
-                                >
-                                    <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
-                                </button>
-                                <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
-                                    <ProfilePicHeading>Meal photo</ProfilePicHeading>
-                                    <div className="flex w-full flex-row items-center justify-start gap-[40px]">
-                                        <div
-                                            className="flex w-fit flex-col items-center justify-center gap-1"
-                                            onClick={handleCameraClick}
-                                        >
-                                            <input
-                                                ref={fileInputRef}
-                                                type="file"
-                                                accept="image/*"
-                                                capture="user"
-                                                hidden
-                                                onChange={handleFileChange}
-                                            />
-                                            <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
-                                                <IoCamera size={30} color="#7E87EF" />
-                                            </button>
-                                            <IconLabel>Camera</IconLabel>
-                                        </div>
-                                        <div
-                                            className="flex w-fit flex-col items-center justify-center gap-1"
-                                            onClick={() => profilePicRef.current.click()}
-                                        >
-                                            <input
-                                                ref={profilePicRef}
-                                                type="file"
-                                                accept="image/png, image/jpg, image/jpeg"
-                                                name="profile image"
-                                                hidden
-                                                onInput={handleFileChange}
-                                            ></input>
-                                            <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
-                                                <BsImageFill size={30} color="#7E87EF" />
-                                            </button>
-                                            <IconLabel>Gallery</IconLabel>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        )}
 
                         <div className="mb-6 ">
                             <h3 className="mb-2 font-sfpro text-[20px] leading-8 text-white">
@@ -832,12 +664,114 @@ const TaskDetail = ({
                     </div>
                 </>
             )}
+
+            {(selectedImage && !showMealInfoPage) && (
+                <div className="mx-auto mb-2  flex max-w-sm items-center space-x-6 rounded-lg p-3  shadow-md  ">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+                        <div className=" rounded-lg p-6 shadow-lg">
+                            <div className="flex flex-row items-center justify-center text-center align-middle ">
+                                <div className="mb-50 absolute top-12 flex flex-row items-center  text-center">
+                                    <MealImageicon />
+
+                                    <div className="ml-15 pl-2 font-sfpro font-sfpro text-[14px]  font-medium text-lightGray">
+                                        Upload meal photo
+                                    </div>
+                                </div>
+
+                                <div
+                                    onClick={() => setSelectedImage(null)}
+                                    className="absolute right-10 top-10"
+                                >
+                                    <MealCrossIcon />{' '}
+                                </div>
+                            </div>
+
+                            <img
+                                className="mb-4 h-[421px] w-[358px] rounded-lg  "
+                                src={selectedImage}
+                                alt="Preview"
+                            />
+
+                            <div className="  bottom-100 left-0 mt-[125px] w-full px-3">
+                                <button onClick={() => setShowProfilePicPopup(true)} className="mb-4 w-full text-center font-sfpro text-lightGray   underline">
+                                    pick a different image
+                                </button>
+                                <button
+                                    className="flex w-full flex-row justify-center rounded-xl bg-custompurple p-2 align-middle font-sfpro text-black"
+                                    onClick={handleImageUploadSubmit}
+                                >
+                                    {' '}
+                                    <SparkleIcon />
+                                    Analyse{' '}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+            {showProfilePicPopup && (
+                <motion.div
+                    className="fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 p-5 backdrop-blur-lg"
+                    initial="hidden"
+                    animate={showProfilePicPopup ? 'visible' : 'hidden'}
+                    variants={modalVariants}
+                >
+                    <button
+                        className="absolute left-[47%] top-0 cursor-pointer"
+                        onClick={() => setShowProfilePicPopup(false)}
+                    >
+                        <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
+                    </button>
+                    <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
+                        <ProfilePicHeading>Meal photo</ProfilePicHeading>
+                        <div className="flex w-full flex-row items-center justify-start gap-[40px]">
+                            <div
+                                className="flex w-fit flex-col items-center justify-center gap-1"
+                                onClick={handleCameraClick}
+                            >
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    capture="user"
+                                    hidden
+                                    onChange={handleFileChange}
+                                />
+                                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
+                                    <IoCamera size={30} color="#7E87EF" />
+                                </button>
+                                <IconLabel>Camera</IconLabel>
+                            </div>
+                            <div
+                                className="flex w-fit flex-col items-center justify-center gap-1"
+                                onClick={() => profilePicRef.current.click()}
+                            >
+                                <input
+                                    ref={profilePicRef}
+                                    type="file"
+                                    accept="image/png, image/jpg, image/jpeg"
+                                    name="profile image"
+                                    hidden
+                                    onInput={handleFileChange}
+                                ></input>
+                                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
+                                    <BsImageFill size={30} color="#7E87EF" />
+                                </button>
+                                <IconLabel>Gallery</IconLabel>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
             {showMealInfoPage && (
                 <MealPage setshowMealInfoPage={setshowMealInfoPage} finalDate={finalDate} mealInfo={mealInfo} imageURL={imageURL} />
             )}
 
-            {/* meal info conditional components */}
 
+            {/* loading component */}
             {loading && (
                 <div className="mx-auto mb-2  flex max-w-sm items-center space-x-6 rounded-lg bg-mediumGray p-3  shadow-md  ">
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -847,6 +781,8 @@ const TaskDetail = ({
                     </div>
                 </div>
             )}
+
+
         </div>
     );
 };

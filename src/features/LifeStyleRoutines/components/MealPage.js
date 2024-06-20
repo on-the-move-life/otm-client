@@ -31,6 +31,15 @@ const MealPage = ({ mealInfo, imageURL, finalDate, setshowMealInfoPage }) => {
             <div className="flex items-center justify-center ">
                 <MealDoughnut mealInfo={mealInfo}></MealDoughnut>
             </div>
+
+            <div className="bottom-4 left-0 mt-60 w-full px-3">
+                <button
+                    className="w-full rounded-xl bg-custompurple pb-[10px] pl-[14px] pr-[14px]  pt-[10px]  text-black "
+                    onClick={() => setshowMealInfoPage(false)}
+                >
+                    Done
+                </button>
+            </div>
         </div>
     );
 };

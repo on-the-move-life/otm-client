@@ -23,6 +23,7 @@ module.exports = withMT({
         gradientEnd: '#B0B5F8',
       },
       backgroundImage: {
+        'mealInfo-gradient': 'radial-gradient(50% 50% at 50% 50%, #5ECC7B 49.83%, #F5C563 100%)',
         'landing-cover': "url('../public/assets/landing-cover.png')",
         'green-logo': "url('../public/assets/green-logo.svg')",
         'red-logo': "url('../public/assets/red-logo.svg')",

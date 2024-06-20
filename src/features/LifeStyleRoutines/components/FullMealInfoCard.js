@@ -14,7 +14,7 @@ const FullMealInfoCard = ({
     return (
         <>
             <div
-                className="rounded-xl border border-red bg-mediumGray pb-3"
+                className="rounded-xl rounded-[12px] border border-[rgba(94,204,123,0.66)] bg-[#1C1C1E] shadow-[0_50px_14px_0_rgba(94,204,123,0),0_32px_13px_0_rgba(94,204,123,0.03),0_18px_11px_0_rgba(94,204,123,0.1),0_8px_8px_0_rgba(94,204,123,0.17),0_2px_4px_0_rgba(94,204,123,0.2)] bg-mediumGray pb-3"
                 onClick={() => setshowMealInfoPage(true)}
             >
                 <div className="flex  items-center justify-between p-4 text-white shadow-md">
