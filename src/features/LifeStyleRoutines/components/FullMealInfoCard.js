@@ -11,6 +11,8 @@ const FullMealInfoCard = ({
 
     console.log('inside FullMealInfoCard mealInfo ', mealInfo);
 
+    const {carbohydrates, fat, protein, calories} = mealInfo;
+
     return (
         <>
             <div
@@ -28,7 +30,7 @@ const FullMealInfoCard = ({
                             <div className="flex flex-row justify-between">
                                 <p className="text-sm text-gray-400">{finalDate}</p>
                                 <div className="text-xl font-semibold">
-                                    {mealInfo?.calories} Kcal
+                                    {calories} Kcal
                                 </div>
                             </div>
 
@@ -46,19 +48,19 @@ const FullMealInfoCard = ({
                         <motion.div
                             className="h-2 rounded-full bg-red"
                             initial={{ width: 0 }}
-                            animate={{ width: `${mealInfo?.carbohydrates}%` }}
+                            animate={{ width: `${carbohydrates}%` }}
                             transition={{ duration: 0.5 }}
                         />
                         <motion.div
                             className="h-2 rounded-full bg-blue"
                             initial={{ width: 0 }}
-                            animate={{ width: `${mealInfo?.protein}%` }}
+                            animate={{ width: `${protein}%` }}
                             transition={{ duration: 0.5, delay: 0.5 }}
                         />
                         <motion.div
                             className="h-2 rounded-full bg-green"
                             initial={{ width: 0 }}
-                            animate={{ width: `${mealInfo?.fat}%` }}
+                            animate={{ width: `${fat}%` }}
                             transition={{ duration: 0.5, delay: 1 }}
                         />
                     </div>
@@ -66,15 +68,15 @@ const FullMealInfoCard = ({
                 <div className="m-2 flex text-sm text-white">
                     <span className="mr-2 font-sfpro text-xs font-medium text-[#FA5757]">
                         {' '}
-                        <p> {mealInfo.carbohydrates}% carbs </p>{' '}
+                        <p> {carbohydrates}% carbs </p>{' '}
                     </span>
                     <span className="mr-2 font-sfpro text-xs font-medium text-[#7E87EF]">
                         {' '}
-                        <p>{mealInfo.fat}% fats </p>{' '}
+                        <p>{fat}% fats </p>{' '}
                     </span>
                     <span className="mr-2 font-sfpro text-xs font-medium text-[#5ECC7B]">
                         {' '}
-                        <p>{mealInfo.protein}% protein </p>{' '}
+                        <p>{protein}% protein </p>{' '}
                     </span>
                 </div>
             </div>
