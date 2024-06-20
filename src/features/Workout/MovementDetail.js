@@ -1,14 +1,112 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { HiX } from 'react-icons/hi';
-import ChartComponent from './ChartComponent';
 import AnimatedComponent from '../../components/AnimatedComponent';
 
-const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
+const movementDescription = {
+  data: [
+    {
+      heading: "Setup",
+      details: [
+        "Ensure all necessary tools and materials are available",
+        "Set up the workspace for optimal efficiency",
+        "Verify all safety measures are in place",
+        "Review the project plan and timeline"
+      ],
+      color: "red"
+    },
+    {
+      heading: "Execution",
+      details: [
+        "Begin the project following the established plan",
+        "Monitor progress and adjust as necessary",
+        "Maintain communication with all team members",
+        "Track time spent on each task for future reference"
+      ],
+      color: "blue"
+    },
+    {
+      heading: "Completion",
+      details: [
+        "Review the completed work against the initial plan",
+        "Gather feedback from team members and stakeholders",
+        "Document any deviations from the plan and their reasons",
+        "Conduct a final quality check before delivery"
+      ],
+      color: "green"
+    },
+    {
+      heading: "Key Tips",
+      details: [
+        "Stay organized and focused meow meow",
+        "Communicate effectively meow meow",
+        "Be flexible and adaptable meow meow",
+        "Reflect on what worked well and what didn’t"
+      ],
+      color: "white"
+    }
+  ]
+};
+const focusData = {
+  data: [
+    {
+      heading: "Focus Area",
+      subHeaders: [
+        { subHeading: "Abs"},
+        { subHeading: "Shoulders"},
+        { subHeading: "Back"},
+        { subHeading: "Core"}
+      ]
+    },
+    {
+      heading: "Equipment",
+      subHeaders: [
+        { subHeading: "Wheel Roller"},
+        { subHeading: "Mats"},
+        { subHeading: "Bands"}
+      ]
+    }
+  ]
+};
+
+const MovementDescriptionCard = ({ heading, details, color , index }) => {
+
+  const colors = useMemo(() => ['#7E87EF', '#F5C563', '#DDF988', '#5ECC7B'], []);
+  const headingColor = colors[(index % colors.length)];
+  return (
+    <div className="bg-black sm:w-72 h-auto p-4 rounded-lg w-[340px]">
+      <h2 className="text-2xl font-bold mb-4" style={{fontWeight: 600, color: headingColor}}>{heading}</h2>
+      <ul className="">
+        {details.map((point, idx) => (
+          <li key={idx} className="mb-2 flex">
+            <span className={`w-2.5 h-2 rounded-full mt-3 mr-2 bg-white`}></span>
+             <span className='sm:text-lg text-lg font-light'>{point}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+const FocusEquipmentCard = ({ heading, subHeaders ,index}) => {
+  const colors = useMemo(() => ['#7E87EF', '#F5C563', '#DDF988', '#5ECC7B'], []);
+  const headingColor = colors[(index % colors.length)];
+  return (
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold mb-4" style={{fontWeight: 600, color: headingColor}}>{heading}</h2>
+      <ul className="flex gap-4">
+        {subHeaders.map((subItem, idx) => (
+          <li key={idx} className="mb-2 flex border-[1px] border-white px-3 py-2 sm:px-6 rounded-md">
+            <span className='text-sm sm:text-lg'>{subItem.subHeading}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const selectedImage = movement.link[0];
   const selectedMvmtName = movement.name;
-
+ 
   const handleCloseModal = () => {
     closeMovementDetail();
   };
@@ -16,7 +114,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   return (
     <AnimatedComponent key={Math.random() * 1000}>
       <div
-        className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll bg-[#141414] px-4 pb-32 pt-8"
+        className="flex min-h-screen w-screen flex-col overflow-x-hidden overflow-y-scroll bg-[#141414] pt-8 px-4"
         style={{ maxHeight: 'content-fit' }}
       >
         <div className=" flex justify-end">
@@ -27,41 +125,47 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
             <HiX size={20} />
           </span>
         </div>
-        <div className="my-4 flex min-h-[80vh] flex-col justify-around px-8">
-          <h3 className="text-center text-3xl text-white ">{selectedMvmtName}</h3>
-          {sectionWithLoadArray.includes(sectionCode) &&
-            movement.totalTimesPerformed > 0 && (
-              <div className="flex flex-col">
-                <p className="my-8 rounded-lg border p-1 text-center text-white">
-                  You have done this exercise{' '}
-                  <span className="text-green">
-                    {movement.totalTimesPerformed}{' '}
-                  </span>
-                  {movement.totalTimesPerformed === 1 ? 'time' : 'times'}
-                </p>
-                <ChartComponent data={movement} />
-                <p className=" my-4 text-center text-base">
-                  Your personal record is{' '}
-                  <span className="rounded-lg bg-floYellow p-0.5 font-bold text-black">
-                    {movement.personalRecord} {''}KG
-                  </span>
-                </p>
-              </div>
-            )}
-          <div className="flex h-fit w-full items-center justify-center">
+        <div className="flex min-h-[60vh] flex-col items-center justify-center">
+        <div className="flex h-auto w-[30%] sm:w-full items-center justify-center">
             <img
-              className="my-4 h-full rounded-2xl"
+              className="h-full rounded-2xl"
               src={selectedImage}
               alt="Movement"
             />
           </div>
+          <h3 className="text-center sm:text-3xl text-xl mt-2">{selectedMvmtName}</h3>
 
+          <div className="relative overflow-y-auto sm:w-full sm:h-auto h-[550px] w-[360px] flex flex-col hide-scrollbar sm:ml-0 sm:pb-20 pb:0 sm:items-center sm:justify-center mt-6 pb-6">
+          <div className='sm:w-[90%] sm:h-auto h-[280px] w-[340px] bg-black rounded-lg sm:mt-12 mt-4 flex flex-col sm:gap-4 px-4 py-4 sm:px-10 sm:ml-0 ml-3'>
+          {focusData.data.map((item, index) => (
+          <FocusEquipmentCard
+            heading={item.heading}
+            subHeaders={item.subHeaders}
+            key={item.heading}
+            index={index}
+          />
+        ))}
+          </div>
+          <div className='flex sm:w-full w-[360px] flex-col items-center justify-center sm:flex-row sm:gap-6 gap-3 sm:mt-6 mt-3'>
+           {movementDescription.data.map((item, index) => (
+           <MovementDescriptionCard
+          heading={item.heading}
+          details={item.details}
+          color={item.color}
+          key={item.heading}
+          index={index}
+          />
+          ))}
+          </div>
+           </div>
+           <div className='absolute z-10 w-[90%] flex items-center justify-center bottom-2'>
           <button
             onClick={closeMovementDetail}
-            className="workout-gradient-button mt-10 h-10  w-full rounded-xl border-[rgba(209,209,209,0.70)] font-bold text-black"
+            className="workout-gradient-button sm:text-lg items-center justify-center flex bg-white p-4 shadow-md text-center h-14 w-full rounded-xl border-[rgba(209,209,209,0.70)] font-bold text-black"
           >
-            CLOSE
+           <span>Back</span>
           </button>
+          </div>
         </div>
       </div>
     </AnimatedComponent>
