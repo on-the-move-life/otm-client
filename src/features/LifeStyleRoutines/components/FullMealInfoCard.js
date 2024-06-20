@@ -32,7 +32,7 @@ const FullMealInfoCard = ({
                                 </div>
                             </div>
 
-                            <h2 className="text-lg font-semibold">Shrimps & Rice</h2>
+                            {/* <h2 className="text-lg font-semibold">Shrimps & Rice</h2> */}
                             <p className="text-sm text-gray-400">
                                 AI generated feedback on how well the plate is prepared
                                 according to their goals and restrictions

@@ -2,6 +2,7 @@ import React from 'react';
 import { MealDoughnut } from './MealDoughnut';
 import { MealInfocard } from './MealInfocard';
 import CrossIcon from './icons/CrossIcon';
+import MealCrossIcon from './icons/MealCrossIcon';
 
 const MealPage = ({ mealInfo, imageURL, finalDate, setshowMealInfoPage }) => {
 
@@ -19,7 +20,7 @@ const MealPage = ({ mealInfo, imageURL, finalDate, setshowMealInfoPage }) => {
                 </div>
 
                 <div className='absolute right-0 mr-2' onClick={() => setshowMealInfoPage(false)}>
-                    <CrossIcon />
+                    <MealCrossIcon />
                 </div>
             </div>
 
