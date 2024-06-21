@@ -1,72 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { HiX } from 'react-icons/hi';
 import AnimatedComponent from '../../components/AnimatedComponent';
-
-const movementDescription = {
-  data: [
-    {
-      heading: "Setup",
-      details: [
-        "Ensure all necessary tools and materials are available",
-        "Set up the workspace for optimal efficiency",
-        "Verify all safety measures are in place",
-        "Review the project plan and timeline"
-      ],
-      color: "red"
-    },
-    {
-      heading: "Execution",
-      details: [
-        "Begin the project following the established plan",
-        "Monitor progress and adjust as necessary",
-        "Maintain communication with all team members",
-        "Track time spent on each task for future reference"
-      ],
-      color: "blue"
-    },
-    {
-      heading: "Completion",
-      details: [
-        "Review the completed work against the initial plan",
-        "Gather feedback from team members and stakeholders",
-        "Document any deviations from the plan and their reasons",
-        "Conduct a final quality check before delivery"
-      ],
-      color: "green"
-    },
-    {
-      heading: "Key Tips",
-      details: [
-        "Stay organized and focused meow meow",
-        "Communicate effectively meow meow",
-        "Be flexible and adaptable meow meow",
-        "Reflect on what worked well and what didn’t"
-      ],
-      color: "white"
-    }
-  ]
-};
-const focusData = {
-  data: [
-    {
-      heading: "Focus Area",
-      subHeaders: [
-        { subHeading: "Abs"},
-        { subHeading: "Shoulders"},
-        { subHeading: "Back"},
-        { subHeading: "Core"}
-      ]
-    },
-    {
-      heading: "Equipment",
-      subHeaders: [
-        { subHeading: "Wheel Roller"},
-        { subHeading: "Mats"},
-        { subHeading: "Bands"}
-      ]
-    }
-  ]
-};
+import { fetchExerciseDetails } from './fetchAiData';
 
 const MovementDescriptionCard = ({ heading, details, color , index }) => {
 
@@ -104,6 +39,22 @@ const FocusEquipmentCard = ({ heading, subHeaders ,index}) => {
 };
 
 const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
+  const [aiData, setAiData] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchExerciseDetails(movement.name);
+      setAiData(data);
+    };
+
+    getData();
+  }, [movement.name]);
+
+  if (!aiData) {
+    return <div>Loading...</div>;
+  }
+
+  const { movementDescription, focusData } = aiData;
   const selectedImage = movement.link[0];
   const selectedMvmtName = movement.name;
  
