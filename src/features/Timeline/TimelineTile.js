@@ -17,7 +17,6 @@ import { useTagAndColor } from '../../hooks/useTagAndColor';
 import { axiosClient } from './apiClient';
 import { motion } from 'framer-motion';
 
-
 const TimelineTile = ({ data }) => {
   const [collapsed, setCollapsed] = useState(true);
   const [coachNoteIndex, setCoachNoteIndex] = useState(0);
@@ -61,6 +60,7 @@ const TimelineTile = ({ data }) => {
     }
   }
 
+  console.log(data);
   function handleComment() {
     setIsCommenting(true);
     const comment = typedCommentRef.current.value;
@@ -189,7 +189,7 @@ const TimelineTile = ({ data }) => {
           <InfoTile>
             <div className='flex gap-2 justify-center items-center'>
               <img src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`} className='w-4 h-4' alt='move coins logo'/>
-              <p>21 Coins</p>
+              <p>{data?.points} Coins</p>
             </div>
           </InfoTile>
         </div>
