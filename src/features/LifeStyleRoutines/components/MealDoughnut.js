@@ -8,7 +8,7 @@ export const MealDoughnut = ({ mealInfo = {} }) => {
     const data = {
         datasets: [
             {
-                data: [mealInfo.carbohydrates, mealInfo.protein, mealInfo.fat],
+                data: [mealInfo.carbohydrates, mealInfo.fat, mealInfo.protein],
                 backgroundColor: ['#FA5757', '#7E87EF', '#5ECC7B'],
                 borderWidth: 1,
                 borderColor: 'rgba(0,0,0,0.1)',
@@ -75,12 +75,12 @@ export const MealDoughnut = ({ mealInfo = {} }) => {
                             </div>
                             <div className="text-center">
                                 <p className="font-sfpro text-[14px] text-[#7E87EF] ">
-                                    {mealInfo?.protein}% fats
+                                    {mealInfo?.fat}% fats
                                 </p>
                             </div>
                             <div className="text-center">
                                 <p className="font-sfpro text-[14px] text-[#5ECC7B] ">
-                                    {mealInfo?.fat}% protein
+                                    {mealInfo?.protein}% protein
                                 </p>
                             </div>
                         </div>

@@ -11,7 +11,7 @@ const FullMealInfoCard = ({
 
     console.log('inside FullMealInfoCard mealInfo ', mealInfo);
 
-    const {carbohydrates, fat, protein, calories} = mealInfo;
+    const { carbohydrates, fat, protein, calories } = mealInfo;
 
     return (
         <>
@@ -54,13 +54,13 @@ const FullMealInfoCard = ({
                         <motion.div
                             className="h-2 rounded-full bg-blue"
                             initial={{ width: 0 }}
-                            animate={{ width: `${protein}%` }}
+                            animate={{ width: `${fat}%` }}
                             transition={{ duration: 0.5, delay: 0.5 }}
                         />
                         <motion.div
                             className="h-2 rounded-full bg-green"
                             initial={{ width: 0 }}
-                            animate={{ width: `${fat}%` }}
+                            animate={{ width: `${protein}%` }}
                             transition={{ duration: 0.5, delay: 1 }}
                         />
                     </div>

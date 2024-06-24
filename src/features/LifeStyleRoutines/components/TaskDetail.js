@@ -6,7 +6,8 @@ import {
   changeMoodIcon,
   toggleCompletion,
   handleFeedbackChange,
-  handleMealinfoChange,
+  handleMealInfoChange,
+  handleMealUrlChange
 } from '../ReduxStore/actions';
 import { getFormattedDate, isIPhone } from '../utils';
 import { toast } from 'react-toastify';
@@ -84,6 +85,7 @@ const TaskDetail = ({
   const finalDate = date === null || date === undefined ? formattedDate : date;
 
   const dispatch = useDispatch();
+
   const moodValue = useSelector((state) => {
     const circle = state?.lifeStyleDetails?.circles.find(
       (circle) => circle?.name === SelectedCircle,
@@ -98,6 +100,7 @@ const TaskDetail = ({
     }
     return null; // or any default value you prefer
   });
+
   const isCompleted = useSelector((state) => {
     const circle = state?.lifeStyleDetails?.circles.find(
       (circle) => circle?.name === SelectedCircle,
@@ -124,9 +127,8 @@ const TaskDetail = ({
     return '';
   });
 
-  // mealinfo value
-
-  const storedMealInfoValue = useSelector((state) => {
+  // mealinfo change
+  const storedMealInfoField = useSelector((state) => {
     const circle = state?.lifeStyleDetails?.circles.find(
       (circle) => circle?.name === SelectedCircle,
     );
@@ -134,13 +136,25 @@ const TaskDetail = ({
       const mytask = circle?.tasks.find(
         (mappedTask) => mappedTask.taskId === task?.taskId,
       );
-
       return mytask ? task?.mealInfo : null;
     }
-    return null;
+    return '';
   });
 
-  console.log('**Stored Mealinfovalue is', storedMealInfoValue);
+  // mealUrl change
+  const storedMealUrlField = useSelector((state) => {
+    const circle = state?.lifeStyleDetails?.circles.find(
+      (circle) => circle?.name === SelectedCircle,
+    );
+    if (circle) {
+      const mytask = circle?.tasks.find(
+        (mappedTask) => mappedTask.taskId === task?.taskId,
+      );
+      return mytask ? task?.mealUrl : null;
+    }
+    return '';
+  });
+
 
   // function to POST emoji reaction
   function handleEmojiReaction() {
@@ -238,26 +252,45 @@ const TaskDetail = ({
     }
   }, [selectedFeeling]);
 
-  useEffect(() => {}, [isCompleted]);
+  useEffect(() => { }, [isCompleted]);
 
+
+  // effect to check if task has a meal
   useEffect(() => {
     if (task.type === 'meal') {
       setIsMealTask(true);
     } else {
       setIsMealTask(false);
     }
+  }, [task]);
+
+  // effect to check if lifestyle routine has mealinfo data
+  useEffect(() => {
+    if (task.mealInfo) {
+      dispatch(handleMealInfoChange(SelectedCircle, task?.taskId, task.mealInfo));
+      dispatch(handleMealUrlChange(SelectedCircle, task?.taskId, task.mealUrl));
+      // setMealInfo(task.mealInfo);
+      // setImageURL();
+      console.log('**storedMealInfoField exists', task.mealInfo);
+      // console.log('**task.mealInfo exists', task.mealInfo);
+    } else {
+      // console.log('task.mealInfo does not exist');
+      console.log('**storedMealInfoField does not exist');
+      setMealInfo(null);
+    }
   }, []);
 
   useEffect(() => {
-    if (task.mealInfo !== undefined) {
-      setMealInfo(task.mealInfo);
-      setImageURL(task.mealUrl);
-      console.log('**task.mealInfo exists', task.mealInfo);
-    } else {
-      console.log('task.mealInfo does not exist');
-      setMealInfo(null);
+    if (storedMealUrlField) {
+      console.log("current state feedbackvalue in redux is: ", storedMealUrlField);
     }
-  }, [task.type]);
+
+    else {
+      console.log("storedMealInfoField is : ", storedMealUrlField);
+    }
+  }, [storedMealUrlField]);
+
+
 
   const modalVariants = {
     hidden: {
@@ -330,14 +363,11 @@ const TaskDetail = ({
           const { mealUrl, mealNutritionAnalysis } = res.data;
           setLoader(false);
           setError(null);
-          setImageURL(mealUrl);
-          setMealInfo(mealNutritionAnalysis);
+          // setImageURL(mealUrl);
+          // setMealInfo(mealNutritionAnalysis);
+          dispatch(handleMealInfoChange(SelectedCircle, task?.taskId, mealNutritionAnalysis));
+          dispatch(handleMealUrlChange(SelectedCircle, task?.taskId, mealUrl));
 
-
-          handleReduxMealInfoFields(
-            mealNutritionAnalysis,
-            mealUrl,
-          );
           setshowMealInfo(true);
           setSelectedImage(null);
           setShowProfilePicPopup(false);
@@ -353,10 +383,12 @@ const TaskDetail = ({
   };
 
   const MealTaskComponent = () => {
-    // console.log("isMealTask:", isMealTask, "mealInfo:", mealInfo, "storedMealInfoValue:", storedMealInfoValue);
 
-    if (isMealTask && !mealInfo && !storedMealInfoValue) {
-      console.log('inside empty meal card ', mealInfo);
+
+    // if lifestyle routine does not have mealInfo data
+    if (isMealTask && !storedMealInfoField) {
+      // console.log('inside empty meal card ', mealInfo);
+      console.log('inside empty meal card ', storedMealInfoField);
 
       return (
         <div onClick={handleClick}>
@@ -365,53 +397,25 @@ const TaskDetail = ({
       );
     }
     //fetching from api
-    else if (isMealTask && !storedMealInfoValue && mealInfo) {
-      console.log('inside isMealTask && mealInfo ', mealInfo);
+    else if (isMealTask && storedMealInfoField) {
+      // console.log('inside isMealTask && mealInfo ', mealInfo, imageURL);
+      console.log('inside isMealTask && mealInfo ', storedMealInfoField, storedMealUrlField);
       return (
         <div className="mb-5 flex h-auto items-center justify-center">
           <FullMealInfoCard
-            mealInfo={mealInfo}
-            imageURL={imageURL}
+            mealInfo={storedMealInfoField}
+            imageURL={storedMealUrlField}
             finalDate={finalDate}
             setshowMealInfoPage={setshowMealInfoPage}
           />
         </div>
       );
     }
-    //fetching from redux
-    else if (isMealTask && !mealInfo && storedMealInfoValue) {
-      console.log('inside redux card ', storedMealInfoValue);
 
-      return (
-        <div className="mb-5 flex h-auto items-center justify-center">
-          <FullMealInfoCard
-            mealdata={storedMealInfoValue.mealNutritionAnalysis}
-            ImagePath={storedMealInfoValue.mealUrl}
-            finalDate={finalDate}
-          />
-        </div>
-      );
-    }
   };
 
 
 
-  const handleReduxMealInfoFields = ( mealInfo, imageURL ) => {
-    const newReduxMealInfoFields = {
-      mealInfo,
-      imageURL,
-    };
-
-    console.log('**newReduxMealInfoFields are', newReduxMealInfoFields);
-
-    dispatch(
-      handleMealinfoChange(
-        SelectedCircle,
-        task?.taskId,
-        newReduxMealInfoFields,
-      ),
-    );
-  };
 
   return (
     <div
@@ -528,9 +532,9 @@ const TaskDetail = ({
                   Any insights you’d like to note?
                 </p>
                 {task?.feedback === undefined ||
-                task?.feedback === null ||
-                storedFeedbackValue === undefined ||
-                storedFeedbackValue === null ? (
+                  task?.feedback === null ||
+                  storedFeedbackValue === undefined ||
+                  storedFeedbackValue === null ? (
                   <textarea
                     className="w-full rounded-xl  bg-black p-2 font-sfpro text-white focus:outline-none"
                     placeholder="Type your answer here..."
@@ -545,13 +549,13 @@ const TaskDetail = ({
                   task?.feedback === null ||
                   storedFeedbackValue === undefined ||
                   storedFeedbackValue === null) && (
-                  <button
-                    className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
-                    onClick={handleFeedbackResponse}
-                  >
-                    Submit
-                  </button>
-                )}
+                    <button
+                      className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
+                      onClick={handleFeedbackResponse}
+                    >
+                      Submit
+                    </button>
+                  )}
               </div>
             </div>
             <div className="mb-9">
@@ -561,92 +565,82 @@ const TaskDetail = ({
               <div className="flex w-full items-center justify-center space-x-4">
                 <button
                   onClick={() => setSelectedFeeling(1)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 1 || moodValue === 1
-                      ? 'scale-125 transform rounded-md bg-white/10'
-                      : ''
-                  }`}
+                  className={`transition-transform duration-200 ${selectedFeeling === 1 || moodValue === 1
+                    ? 'scale-125 transform rounded-md bg-white/10'
+                    : ''
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-sad.svg'}
                     alt="Sad"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 1 || moodValue === 1
-                        ? 'text-red-500'
-                        : ''
-                    }`}
+                    className={`w-15 h-15 ${selectedFeeling === 1 || moodValue === 1
+                      ? 'text-red-500'
+                      : ''
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(2)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 2 || moodValue === 2
-                      ? 'scale-125 transform  rounded-md bg-white/10'
-                      : ''
-                  }`}
+                  className={`transition-transform duration-200 ${selectedFeeling === 2 || moodValue === 2
+                    ? 'scale-125 transform  rounded-md bg-white/10'
+                    : ''
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-sad2.svg'}
                     alt="Neutral"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 2 || moodValue === 2
-                        ? 'text-yellow-500'
-                        : ''
-                    }`}
+                    className={`w-15 h-15 ${selectedFeeling === 2 || moodValue === 2
+                      ? 'text-yellow-500'
+                      : ''
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(3)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 3 || moodValue === 3
-                      ? 'scale-125 transform  rounded-md bg-white/10'
-                      : ''
-                  }`}
+                  className={`transition-transform duration-200 ${selectedFeeling === 3 || moodValue === 3
+                    ? 'scale-125 transform  rounded-md bg-white/10'
+                    : ''
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-neutral.svg'}
                     alt="Happy"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 3 || moodValue === 3
-                        ? 'text-yellow-400'
-                        : ''
-                    }`}
+                    className={`w-15 h-15 ${selectedFeeling === 3 || moodValue === 3
+                      ? 'text-yellow-400'
+                      : ''
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(4)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 4 || moodValue === 4
-                      ? 'scale-125 transform  rounded-md bg-white/10'
-                      : ''
-                  }`}
+                  className={`transition-transform duration-200 ${selectedFeeling === 4 || moodValue === 4
+                    ? 'scale-125 transform  rounded-md bg-white/10'
+                    : ''
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-happy.svg'}
                     alt="Very Happy"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 4 || moodValue === 4
-                        ? 'text-green-500'
-                        : ''
-                    }`}
+                    className={`w-15 h-15 ${selectedFeeling === 4 || moodValue === 4
+                      ? 'text-green-500'
+                      : ''
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(5)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 5 || moodValue === 5
-                      ? 'scale-125 transform  rounded-md bg-white/10'
-                      : ''
-                  }`}
+                  className={`transition-transform duration-200 ${selectedFeeling === 5 || moodValue === 5
+                    ? 'scale-125 transform  rounded-md bg-white/10'
+                    : ''
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-happy2.svg'}
                     alt="Ecstatic"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 5 || moodValue === 5
-                        ? 'text-green-400'
-                        : ''
-                    }`}
+                    className={`w-15 h-15 ${selectedFeeling === 5 || moodValue === 5
+                      ? 'text-green-400'
+                      : ''
+                      }`}
                   />
                 </button>
               </div>
@@ -772,8 +766,8 @@ const TaskDetail = ({
         <MealPage
           setshowMealInfoPage={setshowMealInfoPage}
           finalDate={finalDate}
-          mealInfo={mealInfo}
-          imageURL={imageURL}
+          mealInfo={storedMealInfoField}
+          imageURL={storedMealUrlField}
         />
       )}
 

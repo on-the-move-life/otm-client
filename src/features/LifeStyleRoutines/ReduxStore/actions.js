@@ -6,7 +6,8 @@ import {
   TOGGLE_TASK_COMPLETION,
   CHANGE_MOOD_ICON,
   SUBMIT_REFLECTION_FEEDBACK,
-  SUBMIT_MEALINFO
+  UPDATE_MEALINFO,
+  UPDATE_MEALURL
 } from './actionTypes';
 
 export const fetchInitialStateRequest = () => ({
@@ -75,16 +76,29 @@ export const handleFeedbackChange = (circleName, taskId, feedbackValue) => {
   )
 }
 
-
-// mealinfo action
-export const handleMealinfoChange = (circleName, taskId, mealInfo) => {
+// MEALINFO UPDATE
+export const handleMealInfoChange = (circleName, taskId, mealInfo) => {
   return (
     {
-      type: SUBMIT_MEALINFO,
+      type: UPDATE_MEALINFO,
       payload: {
         circleName: circleName,
         taskId: taskId,
         mealInfo: mealInfo
+      }
+    }
+  )
+}
+
+// MEALURL UPDATE
+export const handleMealUrlChange = (circleName, taskId, mealUrl) => {
+  return (
+    {
+      type: UPDATE_MEALURL,
+      payload: {
+        circleName: circleName,
+        taskId: taskId,
+        mealUrl: mealUrl
       }
     }
   )
