@@ -19,6 +19,7 @@ import { motion } from 'framer-motion';
 
 
 const TimelineTile = ({ data }) => {
+  console.log(data);
   const [collapsed, setCollapsed] = useState(true);
   const [coachNoteIndex, setCoachNoteIndex] = useState(0);
   const [achievementsIndex, setAchievementsIndex] = useState(0);
@@ -186,6 +187,11 @@ const TimelineTile = ({ data }) => {
           {/* <InfoTile>Horizontal Pull</InfoTile> */}
           <InfoTile>{formattedTime}</InfoTile>
           <InfoTile>Total Workouts {data?.consistency?.total}</InfoTile>
+            <div className='flex gap-2 justify-center items-center p-0.5 px-2  border-white-opacity-23 rounded border bg-[rgba(59,59,59,0.06)] backdrop-blur-[17px]'>
+              <img src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`} className='w-4 h-4' alt='move coins logo'/>
+              <p>{data?.moveCoins} Coins</p>
+            </div>
+
           {/* <InfoTile>700Kcal</InfoTile> */}
         </div>
         {data?.achievement?.length > 0 && (
