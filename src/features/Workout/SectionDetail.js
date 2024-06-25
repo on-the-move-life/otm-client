@@ -3,15 +3,17 @@ import { useNavigate, Link } from 'react-router-dom';
 import DataInputComponent2 from './DataInputComponent2';
 import Movement from './Movement.js';
 import { HiX } from 'react-icons/hi';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import SkillProgression from './SkillProgression.js';
 import MovementDetail from './MovementDetail.js';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import AlertDialog from './AlertDialog.js';
+import { updateSectionWorkout } from './WorkoutSlice.js';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { workout, index } = useSelector((store) => store.workoutReducer);
 
@@ -69,7 +71,7 @@ const SectionDetail = () => {
     } else {
       setCurrentSection(sectionList[index]);
     }
-  }, []);
+  }, [workout, index, sectionList]);
   const sectionPageAnimation = {
     initial: {
       opacity: 0,
@@ -96,6 +98,11 @@ const SectionDetail = () => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(updateSectionWorkout('SUH', 'HR'))
+    }, 5000)
+  }, [])
   return (
     <>
       {showMvmtDetail && (

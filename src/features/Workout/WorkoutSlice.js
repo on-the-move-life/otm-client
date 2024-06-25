@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { axiosClient } from './apiClient';
 
 const initialState = {
@@ -66,7 +67,19 @@ export default function workoutReducer(state = initialState, action) {
         ...state,
         index: action.payload,
       };
-
+    case 'updateSection':
+      return{
+        ...state,
+        workout: {
+          ...state.workout,
+          program: [...state.workout.program].map(prg => {
+            if(prg.code === action.payload.code){
+              return action.payload;
+            }
+            return prg;
+          })
+        }
+      }
     default:
       return state;
   }
@@ -129,4 +142,12 @@ export function setStatus(status) {
 
 export function setIndex(index) {
   return { type: 'workout/setIndex', payload: index };
+}
+
+export function updateSectionWorkout(mvmntCodeToBeReplaced, mvmntCodeToReplaceWith){
+  return async function (dispatch) {
+    const res = await axios.get(`http://localhost:882/api/v1/workout/hyper/swap-mvmt/workout?swapMvmt=${mvmntCodeToBeReplaced}&insertMvmt=${mvmntCodeToReplaceWith}&user=PRAN`);
+    console.log("movement swap response : ", res.data.section);
+    dispatch({type: 'updateSection', payload: res?.data?.section})
+  }
 }
