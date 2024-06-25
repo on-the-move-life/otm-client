@@ -330,7 +330,7 @@ const UserDetails = ({ showHistory }) => {
                     className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
                     onClick={() => showHistory()}
                   >
-                    <button className="border border-red text-lg font-medium text-white">
+                    <button className="text-lg font-medium text-white">
                       Check payment history
                     </button>
                   </div>
