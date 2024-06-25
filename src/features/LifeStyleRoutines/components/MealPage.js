@@ -2,7 +2,12 @@ import React from 'react';
 import { MealDoughnut } from './MealDoughnut';
 import MealCrossIcon from './icons/MealCrossIcon';
 
-const MealPage = ({ mealInfo, imageURL, finalDate, setshowMealInfoPage }) => {
+const MealPage = ({
+  mealInfo = {},
+  imageURL,
+  finalDate,
+  setshowMealInfoPage,
+}) => {
   return (
     <div className="py-4">
       <div className="mt-2 flex w-full flex-row items-center justify-center">
@@ -18,21 +23,29 @@ const MealPage = ({ mealInfo, imageURL, finalDate, setshowMealInfoPage }) => {
         </div>
       </div>
 
-      <div className="mb-5 mt-7 flex h-auto items-center justify-center">
-        {/* meal info */}
-        <div className=" h-fit w-full rounded-lg  bg-black p-5 text-white">
-          <img
-            src={imageURL} // Replace this with the actual image URL
-            alt="image title"
-            className="float-left mr-3 h-[130px] w-[122px] rounded-lg bg-cover"
-          />
-          {/* <h2 className="my-1 text-xl font-bold">Shrimps & Rice</h2> */}
-          <p className="text-gray-400">{mealInfo.feedback}</p>
-        </div>
-      </div>
-      {mealInfo.calories && (
-        <div className="flex items-center justify-center ">
-          <MealDoughnut mealInfo={mealInfo}></MealDoughnut>
+      {Object.keys(mealInfo).length !== 0 ? (
+        <>
+          <div className="mb-5 mt-7 flex h-auto items-center justify-center">
+            {/* meal info */}
+            <div className=" h-fit w-full rounded-lg  bg-black p-5 text-white">
+              <img
+                src={imageURL} // Replace this with the actual image URL
+                alt="image title"
+                className="float-left mr-3 h-[130px] w-[122px] rounded-lg bg-cover"
+              />
+              {/* <h2 className="my-1 text-xl font-bold">Shrimps & Rice</h2> */}
+              <p className="text-gray-400">{mealInfo.feedback || ''}</p>
+            </div>
+          </div>
+          {mealInfo.calories && (
+            <div className="flex items-center justify-center ">
+              <MealDoughnut mealInfo={mealInfo}></MealDoughnut>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="flex items-center justify-center">
+          No meal data found
         </div>
       )}
 

@@ -241,7 +241,7 @@ const TaskDetail = ({
     }
   }, [selectedFeeling]);
 
-  useEffect(() => { }, [isCompleted]);
+  useEffect(() => {}, [isCompleted]);
 
   // effect to check if task has a meal
   useEffect(() => {
@@ -361,7 +361,7 @@ const TaskDetail = ({
           );
           dispatch(handleMealUrlChange(SelectedCircle, task?.taskId, mealUrl));
           setshowImageUploadPage(false);
-          setshowMealInfoPage(true)
+          setshowMealInfoPage(true);
           setSelectedImage(null);
           setShowProfilePicPopup(false);
         }
@@ -410,7 +410,7 @@ const TaskDetail = ({
       className="fixed left-0 top-0 z-[100] h-screen w-full overflow-y-scroll  bg-black p-2"
       style={{ paddingBottom: isIPhone() ? '150px' : '' }}
     >
-      {(!showMealInfoPage && !showImageUploadPage) && (
+      {!showMealInfoPage && !showImageUploadPage && (
         <>
           <div className="relative flex items-center bg-black p-4 text-white">
             {/* BackButton */}
@@ -520,9 +520,9 @@ const TaskDetail = ({
                   Any insights you’d like to note?
                 </p>
                 {task?.feedback === undefined ||
-                  task?.feedback === null ||
-                  storedFeedbackValue === undefined ||
-                  storedFeedbackValue === null ? (
+                task?.feedback === null ||
+                storedFeedbackValue === undefined ||
+                storedFeedbackValue === null ? (
                   <textarea
                     className="w-full rounded-xl  bg-black p-2 font-sfpro text-white focus:outline-none"
                     placeholder="Type your answer here..."
@@ -537,13 +537,13 @@ const TaskDetail = ({
                   task?.feedback === null ||
                   storedFeedbackValue === undefined ||
                   storedFeedbackValue === null) && (
-                    <button
-                      className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
-                      onClick={handleFeedbackResponse}
-                    >
-                      Submit
-                    </button>
-                  )}
+                  <button
+                    className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
+                    onClick={handleFeedbackResponse}
+                  >
+                    Submit
+                  </button>
+                )}
               </div>
             </div>
             <div className="mb-9">
@@ -553,82 +553,92 @@ const TaskDetail = ({
               <div className="flex w-full items-center justify-center space-x-4">
                 <button
                   onClick={() => setSelectedFeeling(1)}
-                  className={`transition-transform duration-200 ${selectedFeeling === 1 || moodValue === 1
-                    ? 'scale-125 transform rounded-md bg-white/10'
-                    : ''
-                    }`}
+                  className={`transition-transform duration-200 ${
+                    selectedFeeling === 1 || moodValue === 1
+                      ? 'scale-125 transform rounded-md bg-white/10'
+                      : ''
+                  }`}
                 >
                   <img
                     src={'./assets/Feeling-sad.svg'}
                     alt="Sad"
-                    className={`w-15 h-15 ${selectedFeeling === 1 || moodValue === 1
-                      ? 'text-red-500'
-                      : ''
-                      }`}
+                    className={`w-15 h-15 ${
+                      selectedFeeling === 1 || moodValue === 1
+                        ? 'text-red-500'
+                        : ''
+                    }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(2)}
-                  className={`transition-transform duration-200 ${selectedFeeling === 2 || moodValue === 2
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
-                    }`}
+                  className={`transition-transform duration-200 ${
+                    selectedFeeling === 2 || moodValue === 2
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
+                  }`}
                 >
                   <img
                     src={'./assets/Feeling-sad2.svg'}
                     alt="Neutral"
-                    className={`w-15 h-15 ${selectedFeeling === 2 || moodValue === 2
-                      ? 'text-yellow-500'
-                      : ''
-                      }`}
+                    className={`w-15 h-15 ${
+                      selectedFeeling === 2 || moodValue === 2
+                        ? 'text-yellow-500'
+                        : ''
+                    }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(3)}
-                  className={`transition-transform duration-200 ${selectedFeeling === 3 || moodValue === 3
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
-                    }`}
+                  className={`transition-transform duration-200 ${
+                    selectedFeeling === 3 || moodValue === 3
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
+                  }`}
                 >
                   <img
                     src={'./assets/Feeling-neutral.svg'}
                     alt="Happy"
-                    className={`w-15 h-15 ${selectedFeeling === 3 || moodValue === 3
-                      ? 'text-yellow-400'
-                      : ''
-                      }`}
+                    className={`w-15 h-15 ${
+                      selectedFeeling === 3 || moodValue === 3
+                        ? 'text-yellow-400'
+                        : ''
+                    }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(4)}
-                  className={`transition-transform duration-200 ${selectedFeeling === 4 || moodValue === 4
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
-                    }`}
+                  className={`transition-transform duration-200 ${
+                    selectedFeeling === 4 || moodValue === 4
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
+                  }`}
                 >
                   <img
                     src={'./assets/Feeling-happy.svg'}
                     alt="Very Happy"
-                    className={`w-15 h-15 ${selectedFeeling === 4 || moodValue === 4
-                      ? 'text-green-500'
-                      : ''
-                      }`}
+                    className={`w-15 h-15 ${
+                      selectedFeeling === 4 || moodValue === 4
+                        ? 'text-green-500'
+                        : ''
+                    }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(5)}
-                  className={`transition-transform duration-200 ${selectedFeeling === 5 || moodValue === 5
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
-                    }`}
+                  className={`transition-transform duration-200 ${
+                    selectedFeeling === 5 || moodValue === 5
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
+                  }`}
                 >
                   <img
                     src={'./assets/Feeling-happy2.svg'}
                     alt="Ecstatic"
-                    className={`w-15 h-15 ${selectedFeeling === 5 || moodValue === 5
-                      ? 'text-green-400'
-                      : ''
-                      }`}
+                    className={`w-15 h-15 ${
+                      selectedFeeling === 5 || moodValue === 5
+                        ? 'text-green-400'
+                        : ''
+                    }`}
                   />
                 </button>
               </div>
@@ -647,11 +657,11 @@ const TaskDetail = ({
         </>
       )}
 
-      {(selectedImage && showImageUploadPage) && (
+      {selectedImage && showImageUploadPage && (
         <div className="mx-auto mb-2  flex max-w-sm items-center space-x-6 rounded-lg p-3  shadow-md  ">
           <div className="flex items-center justify-center bg-black">
-            <div className=" rounded-lg p-6 shadow-lg">
-              <div className="flex flex-row items-center justify-between text-center align-middle w-full">
+            <div className=" rounded-lg shadow-lg">
+              <div className="flex w-full flex-row items-center justify-between text-center align-middle">
                 {/* empty div to put other two divs in place */}
                 <div></div>
 
@@ -668,19 +678,18 @@ const TaskDetail = ({
                     setSelectedImage(null);
                     setshowImageUploadPage(false);
                   }}
-                  className=" mb-3"
                 >
                   <MealCrossIcon />{' '}
                 </div>
               </div>
 
               <img
-                className="mb-4 h-[421px] w-[358px] rounded-lg  "
+                className="mb-6 mt-[58px] h-[421px] w-[358px]  rounded-lg"
                 src={selectedImage}
                 alt="Preview"
               />
 
-              <div className="  w-full px-3">
+              <div className="w-full px-3">
                 <button
                   onClick={() => setShowProfilePicPopup(true)}
                   className="mb-4 w-full text-center font-sfpro text-lightGray underline"
@@ -689,7 +698,7 @@ const TaskDetail = ({
                 </button>
                 <div className="fixed bottom-4 left-0 w-full px-3">
                   <button
-                    className="w-full flex flex-row items-center justify-center p-3 rounded-xl bg-custompurple text-black "
+                    className="flex w-full flex-row items-center justify-center rounded-xl bg-custompurple p-3 text-black "
                     onClick={handleImageUploadSubmit}
                   >
                     <SparkleIcon />

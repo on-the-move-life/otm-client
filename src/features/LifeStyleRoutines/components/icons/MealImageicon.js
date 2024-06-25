@@ -3,7 +3,6 @@ import React from 'react'
 function MealImageicon() {
     return (
         <svg
-            className="mt-1"
             width="13"
             height="13"
             viewBox="0 0 13 13"
