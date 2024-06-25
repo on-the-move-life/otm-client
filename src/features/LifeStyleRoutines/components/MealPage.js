@@ -38,7 +38,7 @@ const MealPage = ({ mealInfo, imageURL, finalDate, setshowMealInfoPage }) => {
 
       <div className="fixed bottom-4 left-0 w-full px-3">
         <button
-          className="w-full rounded-xl bg-custompurple pb-[10px] pl-[14px] pr-[14px]  pt-[10px]  text-black "
+          className="w-full rounded-xl bg-custompurple px-[14px] py-[10px] text-black "
           onClick={() => setshowMealInfoPage(false)}
         >
           Done

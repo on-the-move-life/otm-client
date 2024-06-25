@@ -688,14 +688,15 @@ const TaskDetail = ({
                 >
                   pick a different image
                 </button>
-                <button
-                  className="flex w-full flex-row justify-center rounded-xl bg-custompurple p-2 align-middle font-sfpro text-black"
-                  onClick={handleImageUploadSubmit}
-                >
-                  {' '}
-                  <SparkleIcon />
-                  Analyse{' '}
-                </button>
+                <div className="fixed bottom-4 left-0 w-full px-3">
+                  <button
+                    className="w-full rounded-xl bg-custompurple px-[14px] py-[10px] text-black "
+                    onClick={handleImageUploadSubmit}
+                  >
+                    <SparkleIcon />
+                    Analyse{' '}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
