@@ -1,7 +1,7 @@
 import { HiX } from 'react-icons/hi';
-import ChartComponent from './ChartComponent';
 import AnimatedComponent from '../../components/AnimatedComponent';
 import { IoIosSearch } from "react-icons/io";
+import ChartComponent from './ChartComponent';
 import { GiSkippingRope } from "react-icons/gi";
 import { useEffect, useRef, useState } from 'react';
 

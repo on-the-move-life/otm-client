@@ -54,7 +54,7 @@ function MoveCoinsPopUp({ setShowPopUp, coins }) {
                 <Heading>Movecoins Earned!!</Heading>
             </div>
             <div className='w-full flex flex-col justify-center items-center gap-3'>
-                <Description className='flex flex-row gap-1'>You earned <span className='flex flex-row gap-1 bg-gradient-to-tr from-[#D6B6F0] to-[#7E87EF] text-black font-extrabold px-2 rounded-sm'><img src={"/assets/otm-logo.svg"} alt="logo" />{coins}</span> Movecoins!</Description>
+                <Description className='flex flex-row gap-1'>You earned <span className='flex flex-row gap-1 bg-gradient-to-tr from-[#D6B6F0] to-[#7E87EF] text-black font-extrabold px-2 rounded-sm'><img src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`} className='w-4 h-4' alt='move coins logo'/>{coins}</span> Movecoins!</Description>
                 <Instruction>Redeem your coins on your next purchase and save</Instruction>
             </div>
             <div className='w-full flex flex-col justify-center items-center gap-1'>
