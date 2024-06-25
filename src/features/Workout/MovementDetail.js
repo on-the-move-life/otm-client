@@ -3,7 +3,8 @@ import ChartComponent from './ChartComponent';
 import AnimatedComponent from '../../components/AnimatedComponent';
 import { IoIosSearch } from "react-icons/io";
 import { GiSkippingRope } from "react-icons/gi";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 
 const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
 const capitalizeFirstLetter = (string) => {
@@ -12,15 +13,17 @@ const capitalizeFirstLetter = (string) => {
 
 const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const [scrolled, setScrolled] = useState(false);
-  const headerRef = useRef(null);
+  const controls = useAnimation();
 
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 100) {
+      if (offset > 10) {
         setScrolled(true);
+        controls.start("scrolled");
       } else {
         setScrolled(false);
+        controls.start("notScrolled");
       }
     };
 
@@ -29,61 +32,105 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
-  const selectedImage = movement.link[0];
-  const selectedMvmtName = movement.name;
+  }, [controls]);
 
-  console.log(movement);
   const handleCloseModal = () => {
     closeMovementDetail();
   };
 
+  const selectedImage = movement.link[0];
+  const selectedMvmtName = movement.name;
+
+  const headerVariants = {
+    notScrolled: {
+      position: 'relative',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      top:'12px',
+    },
+    scrolled: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '8px 16px',
+      backgroundColor: '#141414',
+      zIndex: 50,
+    },
+  };
+
+  const imageVariants = {
+    notScrolled: { 
+      height: '160px',
+      width: 'auto',
+      marginBottom: '16px',
+      borderRadius: '0%',
+      marginTop:'30px',
+    },
+    scrolled: { 
+      height: '48px',
+      width: '48px',
+      marginRight: '16px',
+      borderRadius: '15%',
+    },
+  };
+
+  const titleVariants = {
+    notScrolled: { fontSize: '32px' },
+    scrolled: { fontSize: '20px' },
+  };
+
+  const closeButtonVariants = {
+    notScrolled: { 
+      opacity: 1, 
+      position: 'absolute',
+      top: '8px',
+      right: '8px',
+    },
+    scrolled: { 
+      opacity: 1,
+      position: 'relative',
+      top: 0,
+      right: 0,
+    },
+  };
+
   return (
     <div className="relative flex flex-col min-h-screen w-screen bg-[#141414] overflow-x-hidden">
-         <div
-        ref={headerRef}
-        className={`transition-all duration-900 ease-in-out ${
-          scrolled
-            ? 'fixed top-0 left-0 right-0 z-50 bg-[#141414] py-2 flex items-center justify-between px-4'
-            : 'relative'
-        }`}
+        <motion.div
+        initial="notScrolled"
+        animate={controls}
+        variants={headerVariants}
+        transition={{ duration: 0.1, ease: "easeInOut" }}
+        className="flex bg-[#141414]"
       >
-        <div className={`flex transition-all duration-900 ease-in-out ${scrolled ? 'flex-row items-center' : 'flex-col items-center w-full'}`}>
-          <img
-            className={`transition-all duration-900 ease-in-out ${
-              scrolled ? 'sm:h-28 sm:w-28 h-12 w-12 rounded-md mr-4' : 'my-4 sm:h-full h-40'
-            }`}
-            src={selectedImage}
-            alt="Movement"
-          />
-          <h3 className={`text-center text-white transition-all duration-500 ease-in-out ${
-            scrolled ? 'text-xl sm:text-2xl' : 'sm:text-3xl text-2xl'
-          }`}>
-            {selectedMvmtName}
-          </h3>
-        </div>
-        {scrolled && (
-          <span
-            onClick={handleCloseModal}
-            className="rounded-full p-2"
-          >
-            <HiX size={20} />
-          </span>
-        )}
-        
-      </div>
-
-      {!scrolled && (
-        <div className="absolute top-8 right-2">
-          <span
-            onClick={handleCloseModal}
-            className="rounded-full bg-[#202020] p-2"
-          >
-            <HiX size={20} />
-          </span>
-        </div>
-      )}
-        <div className="flex-1 overflow-y-auto pb-20">
+        <motion.img
+          variants={imageVariants}
+          transition={{ duration: 0.1, ease: "easeInOut" }}
+          src={selectedImage}
+          alt="Movement"
+        />
+        <motion.h3
+          variants={titleVariants}
+          transition={{ duration: 0.1, ease: "easeInOut" }}
+          className="text-center text-white"
+        >
+          {selectedMvmtName}
+        </motion.h3>
+        <motion.span
+          variants={closeButtonVariants}
+          transition={{ duration: 0.1, ease: "easeInOut" }}
+          onClick={handleCloseModal}
+          className="rounded-full bg-[#202020] p-2"
+        >
+          <HiX size={20} />
+        </motion.span>
+      </motion.div>
+        <div className={`flex-1 overflow-y-auto pb-10 ${scrolled ? 'mt-16' : ''}`}>
         <div className="my-4 flex flex-col justify-center items-center pb-16">
           {sectionWithLoadArray.includes(sectionCode) &&
             movement.totalTimesPerformed > 0 && (
