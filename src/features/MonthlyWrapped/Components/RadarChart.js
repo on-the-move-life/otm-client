@@ -9,9 +9,15 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { convertMonthlySkillPoint, getCurrentAndPreviousMonth } from "../utils"
 
 
-export default function RadarChart({currentMonthData = [10, 8, 4, 9, 5], prevMonthData = [8, 6, 6, 3, 7]}) {
+export default function RadarChart({ radarChartData }) {
+  const { currMonthSkillPoint, prevMonthSkillPoint, bestSkill } = radarChartData;
+  const currentMonthData = convertMonthlySkillPoint(currMonthSkillPoint);
+  const prevMonthData = convertMonthlySkillPoint(prevMonthSkillPoint);
+  const [ currentMonthName, previousMonthName ] = getCurrentAndPreviousMonth();
+  
   ChartJS.register(
     RadialLinearScale,
     PointElement,
@@ -22,7 +28,7 @@ export default function RadarChart({currentMonthData = [10, 8, 4, 9, 5], prevMon
   );
   
   // scaling the unit based on the max value in the input data, so that the graph doesn't go out of the box
-  const maxScaleUnit = (Math.ceil(Math.max(...currentMonthData, ...prevMonthData) / 5) + 1) * 5; 
+  const maxScaleUnit = (Math.floor(Math.max(...currentMonthData, ...prevMonthData) / 5) + 1) * 5; 
   
   const data = {
     labels: ["Endurance", "Pull", "Squat", "Core", "Push"],
@@ -92,14 +98,14 @@ export default function RadarChart({currentMonthData = [10, 8, 4, 9, 5], prevMon
       <div className="w-full flex flex-row justify-between items-center">
         <img src="/assets/fire_radar_chart.svg" alt="star" height={74} width={74} className="relative right-[10px]"/>
         <div className="w-fit flex flex-col justify-center items-start gap-1 text-[15px]" style={{fontWeight: 600, letterSpacing: '0.292px' }}>
-            <p className="text-[#7E87EF]">Previous Month</p>
-            <p className="text-[#5ECC7B]">Current Month</p>
+            <p className="text-[#7E87EF]">{previousMonthName}</p>
+            <p className="text-[#5ECC7B]">{currentMonthName}</p>
         </div>
       </div>
       <div className="w-full h-[250px] bg-center bg-contain bg-no-repeat flex flex-col justify-center items-center" style={{backgroundImage: `url(${'/assets/radar_chart_bg.svg'})`}}>
         <Radar data={data} options={options} className="relative left-[7px] top-[10px]"/>
       </div>
-      <p className="bar-chart-text text-start text-[#ffffff42]" style={{marginBlock: '1em'}}><span className="text-[#7E87EF]">Endurance,&nbsp;</span> is your strongest element of fitness</p>
+      <p className="bar-chart-text text-start text-[#ffffff42]" style={{marginBlock: '1em'}}><span className="text-[#7E87EF]">{bestSkill},&nbsp;</span> is your strongest element of fitness</p>
     </div>
   );
 }
