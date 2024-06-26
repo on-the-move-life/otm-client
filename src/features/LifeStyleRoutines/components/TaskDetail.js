@@ -327,7 +327,7 @@ const TaskDetail = ({
     }
   };
 
-  const handleImageUploadSubmit = async () => {
+  const handleMealUploadSubmit = async () => {
     if (file) {
       setLoader(true);
       try {
@@ -348,8 +348,8 @@ const TaskDetail = ({
 
         //if api data is available
         if (res.data) {
-          const { mealUrl, mealNutritionAnalysis } = res.data;
           setLoader(false);
+          const { mealUrl, mealNutritionAnalysis } = res.data;
           // setImageURL(mealUrl);
           // setMealInfo(mealNutritionAnalysis);
           dispatch(
@@ -366,8 +366,9 @@ const TaskDetail = ({
           setShowProfilePicPopup(false);
         }
       } catch (err) {
-        console.error('Error submitting the request:', err);
         setLoader(false);
+        toast.error(err.response?.data?.message);
+        console.error('Error submitting the request:', err);
       }
     }
   };
@@ -699,7 +700,7 @@ const TaskDetail = ({
                 <div className="fixed bottom-4 left-0 w-full px-3">
                   <button
                     className="flex w-full flex-row items-center justify-center rounded-xl bg-custompurple p-3 text-black "
-                    onClick={handleImageUploadSubmit}
+                    onClick={handleMealUploadSubmit}
                   >
                     <SparkleIcon />
                     Analyse{' '}
