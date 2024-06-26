@@ -1,38 +1,28 @@
 import { HiX } from 'react-icons/hi';
 import ChartComponent from './ChartComponent';
-import AnimatedComponent from '../../components/AnimatedComponent';
+//import AnimatedComponent from '../../components/AnimatedComponent';
 import { IoIosSearch } from "react-icons/io";
 import { GiSkippingRope } from "react-icons/gi";
 import { useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useTransform, useViewportScroll } from 'framer-motion';
 
-const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
-const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
+const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3']
 
 const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const [scrolled, setScrolled] = useState(false);
-  const controls = useAnimation();
+  const { scrollY } = useViewportScroll();
+
+  const imageSize = useTransform(scrollY, [0, 50], [160, 70]);
+  const imageRadius = useTransform(scrollY, [0, 50], [0, 6]);
+  const headerPadding = useTransform(scrollY, [0, 50], [0, 12]);
+  const titleSize = useTransform(scrollY, [0, 50], [24, 26]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 10) {
-        setScrolled(true);
-        controls.start("scrolled");
-      } else {
-        setScrolled(false);
-        controls.start("notScrolled");
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [controls]);
+    const unsubscribe = scrollY.onChange(latest => {
+      setScrolled(latest > 50);
+    });
+    return () => unsubscribe();
+  }, [scrollY]);
 
   const handleCloseModal = () => {
     closeMovementDetail();
@@ -40,90 +30,79 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
 
   const selectedImage = movement.link[0];
   const selectedMvmtName = movement.name;
-
-  const headerVariants = {
-    notScrolled: {
-      position: 'relative',
-      flexDirection: 'column',
-      alignItems: 'center',
-      width: '100%',
-      top:'12px',
-    },
-    scrolled: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '8px 16px',
-      backgroundColor: '#141414',
-      zIndex: 50,
-    },
+  const capitalizeFirstLetter = (string) => {
+    return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   };
-
-  const imageVariants = {
-    notScrolled: { 
-      height: '160px',
-      width: 'auto',
-      marginBottom: '16px',
-      borderRadius: '0%',
-      marginTop:'30px',
-    },
-    scrolled: { 
-      height: '48px',
-      width: '48px',
-      marginRight: '16px',
-      borderRadius: '15%',
-    },
-  };
-
-  const titleVariants = {
-    notScrolled: { fontSize: '32px' },
-    scrolled: { fontSize: '20px' },
-  };
-
-  const closeButtonVariants = {
-    notScrolled: { 
-      opacity: 1, 
-      position: 'absolute',
-      top: '8px',
-      right: '8px',
-    },
-    scrolled: { 
-      opacity: 1,
-      position: 'relative',
-      top: 0,
-      right: 0,
-    },
-  };
+ 
 
   return (
     <div className="relative flex flex-col min-h-screen w-screen bg-[#141414] overflow-x-hidden">
         <motion.div
-        initial="notScrolled"
-        animate={controls}
-        variants={headerVariants}
-        transition={{ duration: 0.1, ease: "easeInOut" }}
-        className="flex bg-[#141414]"
+        style={{
+          position: scrolled ? 'fixed' : 'relative',
+          top: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          flexDirection: scrolled ? 'row' : 'column',
+          alignItems: 'center',
+          justifyContent: scrolled ? 'space-between' : 'center',
+          padding: headerPadding,
+          backgroundColor: '#141414',
+          zIndex: 50,
+        }}
       >
-        <motion.img
-          variants={imageVariants}
-          transition={{ duration: 0.1, ease: "easeInOut" }}
-          src={selectedImage}
-          alt="Movement"
-        />
-        <motion.h3
-          variants={titleVariants}
-          transition={{ duration: 0.1, ease: "easeInOut" }}
-          className="text-center text-white"
-        >
-          {selectedMvmtName}
-        </motion.h3>
+        {scrolled ? (
+          <>
+            <motion.img
+              style={{
+                height: imageSize,
+                width: imageSize,
+                borderRadius: imageRadius,
+              }}
+              src={selectedImage}
+              alt="Movement"
+            />
+            <motion.h3
+              style={{
+                fontSize: titleSize,
+                flex: 1,
+                textAlign: 'center',
+              }}
+              className="text-white"
+            >
+              {capitalizeFirstLetter(selectedMvmtName)}
+            </motion.h3>
+          </>
+        ) : (
+          <>
+            <motion.h3
+              style={{
+                fontSize: titleSize,
+                marginBottom: 16,
+              }}
+              className="text-center text-white mt-10"
+            >
+              {capitalizeFirstLetter(selectedMvmtName)}
+            </motion.h3>
+            <motion.img
+              style={{
+                height: imageSize,
+                width: imageSize,
+                borderRadius: imageRadius,
+              }}
+              src={selectedImage}
+              alt="Movement"
+            />
+          </>
+        )}
         <motion.span
-          variants={closeButtonVariants}
-          transition={{ duration: 0.1, ease: "easeInOut" }}
+          style={{
+            opacity: 1,
+            position: scrolled ? 'relative' : 'absolute',
+            top: scrolled ? 0 : 32,
+            right: scrolled ? 0 : 8,
+          }}
           onClick={handleCloseModal}
           className="rounded-full bg-[#202020] p-2"
         >
@@ -142,9 +121,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                   </span>
                   {movement.totalTimesPerformed === 1 ? 'time' : 'times'}
                 </p>
-                <AnimatedComponent key={Math.random() * 1000}>
+                <div key={Math.random() * 1000}>
                 <ChartComponent data={movement} />
-                </AnimatedComponent>   
+                </div>   
                 <p className=" my-4 text-center text-base">
                   Your personal record is{' '}
                   <span className="rounded-lg bg-floYellow p-0.5 font-bold text-black">
@@ -161,7 +140,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  {movement?.focus_area?.map((det,index)=>{
                   return (
                     <div className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
-                    <p className='text-white sm:text-base text-sm'>{det}</p>
+                    <p className='text-[#B1B1B1] sm:text-base text-xs'>{det}</p>
                     </div>
                   )
                  })}
@@ -171,7 +150,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  {movement?.equipment?.map((det,index)=>{
                   return (
                     <div className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
-                    <p className='text-white sm:text-base text-sm'>{det}</p>
+                    <p className='text-[#B1B1B1] sm:text-base text-xs'>{det}</p>
                     </div>
                   )
                  })}
@@ -187,9 +166,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  {movement?.setup?.map((det,index)=>{
                   return ( 
                     
-                    <li key={index} className='text-white sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#7E87EF] rounded-full mt-2"></div>
-                      <span className='text-lg'>{capitalizeFirstLetter(det)}</span>
+                    <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
+                      <div className="w-3 h-3 bg-[#7E87EF] rounded-full mt-1"></div>
+                      <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
                   )
@@ -206,9 +185,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  {movement?.execution?.map((det,index)=>{
                   return ( 
                     
-                    <li key={index} className='text-white sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#5ECC7B] rounded-full mt-2"></div>
-                      <span className='text-lg'>{det}</span>
+                    <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
+                      <div className="w-3 h-3 bg-[#5ECC7B] rounded-full mt-1"></div>
+                      <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
                   )
@@ -225,9 +204,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  {movement?.completion?.map((det,index)=>{
                   return ( 
                     
-                    <li key={index} className='text-white sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#F5C563] rounded-full mt-2"></div>
-                      <span className='text-lg'>{det}</span>
+                    <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
+                      <div className="w-3 h-3 bg-[#F5C563] rounded-full mt-1"></div>
+                      <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
                   )
@@ -244,9 +223,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  {movement?.key_tips?.map((det,index)=>{
                   return ( 
                     
-                    <li key={index} className='text-white sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#DDF988] rounded-full mt-2"></div>
-                      <span className='text-lg'>{det}</span>
+                    <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
+                      <div className="w-3 h-3 bg-[#DDF988] rounded-full mt-1"></div>
+                      <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
                   )
