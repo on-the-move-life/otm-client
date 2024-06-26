@@ -15,7 +15,8 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const imageSize = useTransform(scrollY, [0, 50], [160, 70]);
   const imageRadius = useTransform(scrollY, [0, 50], [0, 6]);
   const headerPadding = useTransform(scrollY, [0, 50], [0, 12]);
-  const titleSize = useTransform(scrollY, [0, 50], [24, 26]);
+  const titleSize = useTransform(scrollY, [0, 50], [24, 30]);
+  const titleFontWeight = useTransform(scrollY, [0, 50], [400, 900]);
 
   useEffect(() => {
     const unsubscribe = scrollY.onChange(latest => {
@@ -66,6 +67,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
             <motion.h3
               style={{
                 fontSize: titleSize,
+                fontWeight: titleFontWeight,
                 flex: 1,
                 textAlign: 'center',
               }}
@@ -79,6 +81,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
             <motion.h3
               style={{
                 fontSize: titleSize,
+                fontWeight: titleFontWeight,
                 marginBottom: 16,
               }}
               className="text-center text-white mt-10"
