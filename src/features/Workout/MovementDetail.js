@@ -126,7 +126,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
           {sectionWithLoadArray.includes(sectionCode) &&
             movement.totalTimesPerformed > 0 && (
               <div className="flex flex-col">
-                <p className="my-8 rounded-lg border p-1 text-center text-white">
+                <p className="my-8 rounded-lg border py-1 text-center text-white sm:text-base text-sm">
                   You have done this exercise{' '}
                   <span className="text-green">
                     {movement.totalTimesPerformed}{' '}
@@ -136,7 +136,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                 <div key={Math.random() * 1000}>
                 <ChartComponent data={movement} />
                 </div>   
-                <p className=" my-4 text-center text-base">
+                <p className=" my-4 text-center sm:text-base text-sm">
                   Your personal record is{' '}
                   <span className="rounded-lg bg-floYellow p-0.5 font-bold text-black">
                     {movement.personalRecord} {''}KG
@@ -147,22 +147,22 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               <div className='h-auto w-[350px] sm:w-[1300px] mt-4 sm:mt-10'>
                 <div className='flex flex-col space-y-4'>
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
-                 <h1 className='sm:text-2xl text-xl flex gap-1 text-[#7E87EF] font-700'><span className='mt-[4px]'><IoIosSearch /></span> Focus Area</h1>
+                 <h1 className='sm:text-xl text-[14px] flex gap-1 text-[#7E87EF] font-700'><span className='mt-[4px]'><IoIosSearch /></span> Focus Area</h1>
                  <div className='flex sm:gap-4 gap-2'>
                  {movement?.focus_area?.map((det,index)=>{
                   return (
                     <div className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
-                    <p className='text-[#B1B1B1] sm:text-base text-xs'>{det}</p>
+                    <p className='text-[#B1B1B1] sm:text-base text-[9.333px]'>{det}</p>
                     </div>
                   )
                  })}
                   </div>           
-                 <h1 className='sm:text-2xl text-xl mt-6 text-[#F5C563] font-700 gap-1 flex'><span className='mt-[4px]'><GiSkippingRope /></span> Equipment</h1>
+                 <h1 className='sm:text-xl text-[14px] mt-6 text-[#F5C563] font-700 gap-1 flex'><span className='mt-[4px]'><GiSkippingRope /></span> Equipment</h1>
                  <div className='flex sm:gap-4 gap-2'>
                  {movement?.equipment?.map((det,index)=>{
                   return (
                     <div className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
-                    <p className='text-[#B1B1B1] sm:text-base text-xs'>{det}</p>
+                    <p className='text-[#B1B1B1] sm:text-base text-[9.333px]'>{det}</p>
                     </div>
                   )
                  })}
@@ -173,13 +173,13 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               <div className='h-auto w-[350px] sm:w-[1300px] mt-4'>
                 <div className='flex flex-col space-y-4'>
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
-                 <h1 className='sm:text-3xl text-2xl flex gap-1 font-700'>Setup</h1>
+                 <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Setup</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
                  {movement?.setup?.map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#7E87EF] rounded-full mt-1"></div>
+                      <div className="w-3 h-3 bg-[#7E87EF] rounded-full sm:mt-2 mt-1"></div>
                       <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
@@ -192,13 +192,13 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               <div className='h-auto w-[350px] sm:w-[1300px] mt-4'>
                 <div className='flex flex-col space-y-4'>
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
-                 <h1 className='sm:text-3xl text-2xl flex gap-1 font-700'>Execution</h1>
+                 <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Execution</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
                  {movement?.execution?.map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#5ECC7B] rounded-full mt-1"></div>
+                      <div className="w-3 h-3 bg-[#5ECC7B] rounded-full sm:mt-2 mt-1"></div>
                       <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
@@ -211,13 +211,13 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               <div className='h-auto w-[350px] sm:w-[1300px] mt-4'>
                 <div className='flex flex-col space-y-4'>
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
-                 <h1 className='sm:text-3xl text-2xl flex gap-1 font-700'>Completion</h1>
+                 <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Completion</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
                  {movement?.completion?.map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#F5C563] rounded-full mt-1"></div>
+                      <div className="w-3 h-3 bg-[#F5C563] rounded-full sm:mt-2 mt-1"></div>
                       <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
@@ -230,13 +230,13 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               <div className='h-auto w-[350px] sm:w-[1300px] mt-4'>
                 <div className='flex flex-col space-y-4'>
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
-                 <h1 className='sm:text-3xl text-2xl flex gap-1 font-700'>Key Tips</h1>
+                 <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Key Tips</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
                  {movement?.key_tips?.map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
-                      <div className="w-3 h-3 bg-[#DDF988] rounded-full mt-1"></div>
+                      <div className="w-3 h-3 bg-[#DDF988] rounded-full sm:mt-2 mt-1"></div>
                       <span className='sm:text-lg text-sm'>{capitalizeFirstLetter(det)}</span>
                     </li>
                     
