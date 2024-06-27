@@ -13,9 +13,9 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const { scrollY } = useViewportScroll();
 
   const imageSize = useTransform(scrollY, [0, 50], [160, 70]);
-  const imageRadius = useTransform(scrollY, [0, 50], [0, 6]);
+  const imageRadius = useTransform(scrollY, [0, 50], [0, 8]);
   const headerPadding = useTransform(scrollY, [0, 50], [0, 12]);
-  const titleSize = useTransform(scrollY, [0, 50], [24, 30]);
+  const titleSize = useTransform(scrollY, [0, 50], [20, 20]);
   const titleFontWeight = useTransform(scrollY, [0, 50], [400, 900]);
 
   useEffect(() => {
@@ -55,6 +55,8 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
       >
         {scrolled ? (
           <>
+          <motion.div style={{display: 'flex', gap: 12, alignItems: 'center',
+                justifyContent: 'center' }}>
             <motion.img
               style={{
                 height: imageSize,
@@ -68,16 +70,21 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               style={{
                 fontSize: titleSize,
                 fontWeight: titleFontWeight,
-                flex: 1,
+                marginLeft: 0,
+                flex: 'none',
                 textAlign: 'center',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
-              className="text-white"
+              className="text-white whitespace-nowrap overflow-hidden text-ellipsis"
             >
               {capitalizeFirstLetter(selectedMvmtName)}
             </motion.h3>
+            </motion.div>
           </>
         ) : (
           <>
+          <motion.div>
             <motion.h3
               style={{
                 fontSize: titleSize,
@@ -97,8 +104,10 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
               src={selectedImage}
               alt="Movement"
             />
+            </motion.div>
           </>
         )}
+        
         <motion.span
           style={{
             opacity: 1,
