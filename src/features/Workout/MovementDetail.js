@@ -12,7 +12,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useViewportScroll();
 
-  const imageSize = useTransform(scrollY, [0, 50], [160, 70]);
+  const imageSize = useTransform(scrollY, [0, 50], [200, 70]);
   const imageRadius = useTransform(scrollY, [0, 50], [0, 8]);
   const headerPadding = useTransform(scrollY, [0, 50], [0, 12]);
   const titleSize = useTransform(scrollY, [0, 50], [20, 20]);
