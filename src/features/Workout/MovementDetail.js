@@ -16,7 +16,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
   const imageRadius = useTransform(scrollY, [0, 50], [0, 8]);
   const headerPadding = useTransform(scrollY, [0, 50], [0, 12]);
   const titleSize = useTransform(scrollY, [0, 50], [20, 20]);
-  const titleFontWeight = useTransform(scrollY, [0, 50], [400, 900]);
+  const titleFontWeight = useTransform(scrollY, [0, 50], [400, 500]);
 
   useEffect(() => {
     const unsubscribe = scrollY.onChange(latest => {
