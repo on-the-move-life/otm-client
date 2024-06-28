@@ -144,7 +144,7 @@ function MainPage() {
               <h4 style={{ letterSpacing: '0.288px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.33)', fontSize: '14.385px' }}>Fitness Score</h4>
               <div className="flex flex-row justify-center items-end">
                 <h4 style={{ color: 'rgba(255, 255, 255, 0.80)', fontSize: '28.952px', fontWeight: 600, lineHeight: '30.888px', letterSpacing: '0.579px' }}>{radarChartData?.fitnessScore}</h4>
-                <p className={`${radarChartData?.fitnessScoreChange?.includes('+') ? 'text-[#5ECC7B]' : 'text-red'}`} style={{ fontSize: '15.263px', fontWeight: 600, lineHeight: '16.283px', letterSpacing: ' 0.305px' }}>{radarChartData?.fitnessScoreChange}</p>
+                <p className={`${radarChartData?.fitnessScoreChange?.includes('-') ? 'text-red' : 'text-[#5ECC7B]'}`} style={{ fontSize: '15.263px', fontWeight: 600, lineHeight: '16.283px', letterSpacing: ' 0.305px' }}>{(radarChartData?.fitnessScoreChange.includes('-') || radarChartData?.fitnessScoreChange.includes('+')) ? radarChartData?.fitnessScoreChange : `+${radarChartData?.fitnessScoreChange}`}</p>
               </div>
             </div>
             {radarChartData && <RadarChart radarChartData={radarChartData} />}
