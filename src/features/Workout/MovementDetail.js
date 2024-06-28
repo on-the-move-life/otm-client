@@ -157,16 +157,26 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                   )
                  })}
                   </div>           
-                 <h1 className='sm:text-xl text-[14px] mt-6 text-[#F5C563] font-700 gap-1 flex'><span className='mt-[4px]'><GiSkippingRope /></span> Equipment</h1>
-                 <div className='flex sm:gap-4 gap-2'>
-                 {movement?.equipment?.map((det,index)=>{
-                  return (
-                    <div className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
-                    <p className='text-[#B1B1B1] sm:text-base text-[9.333px]'>{det}</p>
-                    </div>
-                  )
-                 })}
+                  <h1 className='sm:text-xl text-[14px] mt-6 text-[#F5C563] font-700 gap-1 flex'><span className='mt-[4px]'><GiSkippingRope /></span> Equipment</h1>
+                  <div className='flex sm:gap-4 gap-2'>
+                  {movement?.equipment && movement.equipment.length > 0 ? (
+                   movement.equipment.map((det, index) => (
+                   det.trim() !== '' ? (
+                  <div key={index} className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
+                  <p className='text-[#B1B1B1] sm:text-base text-[9.333px]'>{det}</p>
                   </div>
+                  ) : (
+                   <div key={index} className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
+                     <p className='text-[#B1B1B1] sm:text-base text-[9.333px]'>None</p>
+                   </div>
+                    )
+                    ))
+                    ) : (
+                    <div className='p-2 border-white border-[1px] rounded-md inline-block gap-2 w-auto h-auto mt-3 justify-center items-center ml-2'>
+                   <p className='text-[#B1B1B1] sm:text-base text-[9.333px]'>None</p>
+                  </div>
+                  )}
+                 </div>
                  </div>
                </div>
               </div>
