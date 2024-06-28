@@ -6,3 +6,4 @@ export { default as MoveCoins } from './MoveCoins';
 export { default as Home } from './Home';
 export { default as LifeStyleScore } from './LifeStyleScore';
 export { default as LifeStyleRoutine } from './LifeStyleRoutine';
+export { default as MonthlyWrapped } from "./MonthlyWrapped";

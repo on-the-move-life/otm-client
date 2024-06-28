@@ -9,14 +9,14 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { convertMonthlySkillPoint, getCurrentAndPreviousMonth } from "../utils"
+import { convertMonthlySkillPoint, getPreviousAndPreviousToPreviousMonth } from "../utils"
 
 
 export default function RadarChart({ radarChartData }) {
   const { currMonthSkillPoint, prevMonthSkillPoint, bestSkill } = radarChartData;
   const currentMonthData = convertMonthlySkillPoint(currMonthSkillPoint);
   const prevMonthData = convertMonthlySkillPoint(prevMonthSkillPoint);
-  const [ currentMonthName, previousMonthName ] = getCurrentAndPreviousMonth();
+  const [ previousMonthName, previousToPreviousMonthName ] = getPreviousAndPreviousToPreviousMonth();
   
   ChartJS.register(
     RadialLinearScale,
@@ -98,8 +98,8 @@ export default function RadarChart({ radarChartData }) {
       <div className="w-full flex flex-row justify-between items-center">
         <img src="/assets/fire_radar_chart.svg" alt="star" height={74} width={74} className="relative right-[10px]"/>
         <div className="w-fit flex flex-col justify-center items-start gap-1 text-[15px]" style={{fontWeight: 600, letterSpacing: '0.292px' }}>
-            <p className="text-[#7E87EF]">{previousMonthName}</p>
-            <p className="text-[#5ECC7B]">{currentMonthName}</p>
+            <p className="text-[#7E87EF]">{previousToPreviousMonthName}</p>
+            <p className="text-[#5ECC7B]">{previousMonthName}</p>
         </div>
       </div>
       <div className="w-full h-[250px] bg-center bg-contain bg-no-repeat flex flex-col justify-center items-center" style={{backgroundImage: `url(${'/assets/radar_chart_bg.svg'})`}}>

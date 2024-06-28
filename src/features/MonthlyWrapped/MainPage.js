@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BarChart from './Components/BarChart';
 import RadarChart from './Components/RadarChart';
 import Overview from './Components/Overview';
-import { getCurrentMonthYear, getCurrentMonth, getCurrentYear } from './utils';
+import { getPreviousMonthYear, getPreviousMonth, getCurrentYear } from './utils';
 import Stories from 'react-insta-stories';
 import { useNavigate } from 'react-router-dom';
 import { axiosClient } from './apiClient';
@@ -10,8 +10,8 @@ import Loader from '../../components/Loader';
 import Error from '../../components/Error';
 
 function MainPage() {
-  const todayDate = getCurrentMonthYear();
-  const [currentMonthNumber, currentMonthName] = getCurrentMonth();
+  const todayDate = getPreviousMonthYear();
+  const [currentMonthNumber, currentMonthName] = getPreviousMonth();
   const currentYear = getCurrentYear();
   const userName = JSON.parse(localStorage.getItem('user'))['name'];
   const userCode = JSON.parse(localStorage.getItem('user'))['code'];
