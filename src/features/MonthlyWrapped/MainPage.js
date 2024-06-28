@@ -191,6 +191,7 @@ function MainPage() {
                 storyContainerStyles={{ background: 'transparent' }}
               />
             </div>
+            <img src={'/assets/monthly_wrapped_otm_logo.svg'} alt="otm" width={120}/>
           </div>
         </div>}
     </>
