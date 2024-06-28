@@ -34,8 +34,6 @@ const WorkoutSummary = () => {
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
-  console.log(workoutSummary);
-
   const dispatch = useDispatch();
 
   const { workout, status } = useSelector(
