@@ -3,6 +3,7 @@ import { axiosClient } from './apiClient';
 
 const initialState = {
   workout: {},
+  workoutId: '',
   workoutSummary: {},
   answers: [],
   status: '', //['error', 'loading', 'success']
@@ -11,7 +12,6 @@ const initialState = {
   index: 0,
   swapMovementsList: [],
   oldSwapMovementCode: '',
-  oldSwapMovementId: '',
 };
 
 export default function workoutReducer(state = initialState, action) {
@@ -21,9 +21,11 @@ export default function workoutReducer(state = initialState, action) {
         ...action.payload[0],
         program: action.payload[0].program.slice(1),
       };
+      const workoutId = action.payload[0]._id;
       return {
         ...state,
         workout: workoutData,
+        workoutId: workoutId,
         status: 'success',
       };
 
@@ -93,7 +95,6 @@ export default function workoutReducer(state = initialState, action) {
         ...state,
         swapMovementsList: [...action.payload],
         oldSwapMovementCode: action.oldSwapMovementCode,
-        oldSwapMovementId: action.oldSwapMovementId,
       }
     default:
       return state;
@@ -179,14 +180,14 @@ export function updateSectionWorkout(oldMvmt, newMvmt, sectionCode, workoutID) {
   }
 }
 
-export function fetchSwapMovementList(movementCode, movementId) {
+export function fetchSwapMovementList(movementCode) {
   return async function (dispatch) {
     try {
       dispatch(setStatus('loading'));
       const res = await axios.get(`https://otm-main-production.up.railway.app/api/v1/workout/movement/alternate?mvmt=${movementCode}`);
       console.log("Movement Swap Movements List : ", res?.data?.mvmtList);
       dispatch(setStatus('success'));
-      dispatch({ type: 'updateSwapMovementsList', payload: res?.data?.mvmtList, oldSwapMovementCode: movementCode, oldSwapMovementId: movementId });
+      dispatch({ type: 'updateSwapMovementsList', payload: res?.data?.mvmtList, oldSwapMovementCode: movementCode });
     }
     catch (err) {
       console.log(err.message, "ERROR");

@@ -25,7 +25,7 @@ const Movement = ({
           <div className="text-md mb-1 flex justify-between items-center text-lightGray">
             <span onClick={() => openMovementDetail(movement)}>{movement.fullName}</span>
             <div className='w-fit flex flex-row justify-center items-center gap-1 cursor-pointer' onClick={() => {
-              dispatch(fetchSwapMovementList(movement?.code, movement?._id));
+              dispatch(fetchSwapMovementList(movement?.code));
               setShowSwapOptions(true);
             }}>
               <img src={'/assets/movement_swap_icon.svg'} alt="movement_swap"/>

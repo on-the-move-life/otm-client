@@ -9,7 +9,6 @@ import MovementDetail from './MovementDetail.js';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import AlertDialog from './AlertDialog.js';
-import { updateSectionWorkout } from './WorkoutSlice.js';
 import SwapMovementOptions from './SwapMovementOptions.js';
 
 const SectionDetail = () => {
@@ -100,11 +99,6 @@ const SectionDetail = () => {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      // dispatch(updateSectionWorkout('SUH', 'HR', 'Core', 'lajdsoadfaldf'))
-    }, 5000)
-  }, [])
   return (
     <>
       {showMvmtDetail && (
@@ -433,7 +427,7 @@ const SectionDetail = () => {
           </footer>
         </div>
       )}
-      {showSwapOptions && <SwapMovementOptions setShowSwapOptions={setShowSwapOptions}/>}
+      {showSwapOptions && <SwapMovementOptions setShowSwapOptions={setShowSwapOptions} sectionCode={code}/>}
       {showAlertDialog && <AlertDialog handleAlertDialog={handleAlertDialog} />}
     </>
   );

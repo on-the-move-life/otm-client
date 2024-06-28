@@ -5,7 +5,7 @@ import Error from '../../components/Error';
 import AlertDialog from './AlertDialog';
 import { updateSectionWorkout, setMovementSwapSectionStatus } from './WorkoutSlice.js';
 
-function SwapMovementOptions({ setShowSwapOptions }) {
+function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
     const [movementsList, setMovementsList] = useState(null);
     const [equipments, setEquipments] = useState([]);
     const [currentEquipment, setCurrentEquipment] = useState('');
@@ -15,7 +15,7 @@ function SwapMovementOptions({ setShowSwapOptions }) {
     const [showDetail, setShowDetail] = useState(false);
     const [selectedMovementDetail, setSelectedMovementDetail] = useState(null);
     const dispatch = useDispatch();
-    const { swapMovementsList, status, oldSwapMovementCode, oldSwapMovementId, swapMovementSectionStatus } = useSelector(store => store.workoutReducer);
+    const { swapMovementsList, status, oldSwapMovementCode, workoutId, swapMovementSectionStatus } = useSelector(store => store.workoutReducer);
 
     useEffect(() => {
         // reset to default empty status on first load
@@ -41,7 +41,7 @@ function SwapMovementOptions({ setShowSwapOptions }) {
     useEffect(() => {
         if (alertMessage) {
             // call the dispatch function to update the workout section
-            dispatch(updateSectionWorkout(oldSwapMovementCode, selectedMovementInfo?.code, selectedMovementInfo?.section, oldSwapMovementId));
+            dispatch(updateSectionWorkout(oldSwapMovementCode, selectedMovementInfo?.code, sectionCode, workoutId));
         }
         setShowAlertDialog(false);
     }, [alertMessage])
