@@ -10,6 +10,7 @@ import { Tooltip, Typography } from '@material-tailwind/react';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import AlertDialog from './AlertDialog.js';
 import { updateSectionWorkout } from './WorkoutSlice.js';
+import SwapMovementOptions from './SwapMovementOptions.js';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const SectionDetail = () => {
   const [showMvmtDetail, setShowMvmtDetail] = useState(false);
   const [selectedMovement, setSelectedMovement] = useState({});
   const [showAlertDialog, setShowAlertDialog] = useState(false);
+  const [showSwapOptions, setShowSwapOptions] = useState(false);
 
   const lastPage = currentIndex === sectionList.length - 1;
 
@@ -100,7 +102,7 @@ const SectionDetail = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(updateSectionWorkout('SUH', 'HR'))
+      // dispatch(updateSectionWorkout('SUH', 'HR', 'Core', 'lajdsoadfaldf'))
     }, 5000)
   }, [])
   return (
@@ -113,7 +115,7 @@ const SectionDetail = () => {
         />
       )}
       {showLevel && <SkillProgression setShowLevel={setShowLevel} />}
-      {!showLevel && !showMvmtDetail && Object.keys(workout).length !== 0 && (
+      {!showLevel && !showMvmtDetail && Object.keys(workout).length !== 0 && !showSwapOptions && (
         <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
           <AnimatedComponent
             key={Math.random() * 1000}
@@ -303,6 +305,7 @@ const SectionDetail = () => {
                       sectionCode={code}
                       movementLength={movementLength}
                       openMovementDetail={openMovementDetail}
+                      setShowSwapOptions={setShowSwapOptions}
                     />
                   );
                 })}
@@ -430,7 +433,7 @@ const SectionDetail = () => {
           </footer>
         </div>
       )}
-
+      {showSwapOptions && <SwapMovementOptions setShowSwapOptions={setShowSwapOptions}/>}
       {showAlertDialog && <AlertDialog handleAlertDialog={handleAlertDialog} />}
     </>
   );
