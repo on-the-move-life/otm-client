@@ -281,7 +281,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                 swapMovementSectionStatus === 'error' && <Error className={'w-full h-screen mx-auto fixed top-0 left-0 bg-black z-[100]'} ><h3 className='text-red'>Oops! <br /> Could not swap the movements</h3></Error>
             }
             {
-                showAlertDialog && <AlertDialog handleAlertDialog={handleAlertMessage} />
+                showAlertDialog && <AlertDialog handleAlertDialog={handleAlertMessage} message={"Are you sure you want to swap your current movement with this one?"}/>
             }
             {
                 showDetail && selectedMovementDetail && <MovementDetail mvmt={selectedMovementDetail} />
