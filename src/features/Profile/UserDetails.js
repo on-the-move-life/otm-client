@@ -16,6 +16,7 @@ import ProfilePicture from './ProfilePicture';
 import axios from 'axios';
 import AnimatedComponent from '../../components/AnimatedComponent';
 import { motion } from 'framer-motion';
+import { MonthlyWrapped } from '../Home';
 
 const ProfilePicHeading = styled.div`
 color: #D7D7D7;
@@ -50,6 +51,7 @@ const UserDetails = ({ showHistory }) => {
   const [profilePicFile, setProfilePicFile] = useState(null);
   const [uniqueImageURLKey, setUniqueImageURLKey] = useState(null);
   const [profilePicError, setProfilePicError] = useState(false);
+  const currentDate = new Date().getDate();
 
   const navigate = useNavigate();
 
@@ -240,6 +242,11 @@ const UserDetails = ({ showHistory }) => {
                 </div>
               </div> */}
             </div>
+            {currentDate > 5 &&
+              <section className='w-full flex flex-row justify-center items-center gap-3 my-2'>
+                <MonthlyWrapped />
+              </section>
+            }
             <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
               <div className=" flex h-full flex-col justify-around">
                 <section>
