@@ -254,7 +254,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                 <img src={'/assets/close_icon.svg'} alt="close" onClick={() => setShowSwapOptions(false)} />
             </div>
             {status === 'success' &&
-                <div className='w-full flex flex-row justify-start items-center gap-2'>
+                <div className='w-full flex flex-row flex-wrap justify-start items-center gap-2'>
                     {
                         equipments?.length > 0 && equipments.map(equip => <div key={equip === '' ? 'All' : equip} className={`px-5 py-1.5 text-[10px] rounded-[6px] ${currentEquipment === equip ? 'bg-[#5ecc7b] text-black' : 'bg-black text-[#fff]'}`} onClick={() => setCurrentEquipment(equip)}>{equip === '' ? 'All' : equip}</div>)
                     }

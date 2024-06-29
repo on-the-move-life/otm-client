@@ -34,7 +34,6 @@ const WorkoutSummary = () => {
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
-
   const dispatch = useDispatch();
 
   const { workout, status } = useSelector(
@@ -146,7 +145,7 @@ const WorkoutSummary = () => {
   return (
     <>
       {status === 'error' && <Error>Oops! Something went wrong...</Error>}
-      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && <AchievementPage setShowAchievemntsPage={setShowAchievemntsPage} totalWorkouts={Number(workoutSummary?.consistency?.total) - 1} coinsEarned={workoutSummary?.points}/>}
+      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && <AchievementPage setShowAchievemntsPage={setShowAchievemntsPage} totalWorkouts={Number(workoutSummary?.consistency?.total) - 1} coinsEarned={workoutSummary?.moveCoins}/>}
       {status === 'loading' && <Loader />}
       {/* {status === 'error' && <Error>Oops! Something Went Wrong</Error>} */}
 
