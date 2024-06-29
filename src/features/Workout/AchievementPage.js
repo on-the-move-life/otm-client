@@ -92,8 +92,8 @@ const AchievementPage = ({
                 <div className="text-[14px] text-lightGray">
                   You earned
                   <img
-                    className="mx-1 inline-block w-5"
-                    src="/assets/movecoinslogo.svg"
+                    className="mx-1 inline-block w-4"
+                    src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`}
                     alt="MoveCoins Logo"
                   />
                   <GradientText>{coinsEarned}</GradientText> MoveCoins! <br />
