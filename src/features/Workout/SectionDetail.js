@@ -10,6 +10,7 @@ import { Tooltip, Typography } from '@material-tailwind/react';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import AlertDialog from './AlertDialog.js';
 import SwapMovementOptions from './SwapMovementOptions.js';
+import { setIndex } from './WorkoutSlice.js';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const SectionDetail = () => {
 
   const sectionList = workout?.program || [];
 
-  const [currentIndex, setCurrentIndex] = useState(index);
+  
   const [currentSection, setCurrentSection] = useState([]);
   const [showLevel, setShowLevel] = useState(false);
   const [showMvmtDetail, setShowMvmtDetail] = useState(false);
@@ -27,20 +28,20 @@ const SectionDetail = () => {
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [showSwapOptions, setShowSwapOptions] = useState(false);
 
-  const lastPage = currentIndex === sectionList.length - 1;
+  const lastPage = index === sectionList.length - 1;
 
   const handleNext = () => {
-    const newIndex = currentIndex + 1;
-    setCurrentIndex(newIndex);
+    const newIndex = index + 1;
+    dispatch(setIndex(newIndex));
     setCurrentSection(sectionList[newIndex]);
   };
 
   const handlePrevious = () => {
-    const newIndex = currentIndex - 1;
+    const newIndex = index - 1;
     if (newIndex === -1) {
       return;
     }
-    setCurrentIndex(newIndex);
+    dispatch(setIndex(newIndex));
     setCurrentSection(sectionList[newIndex]);
   };
 
@@ -67,6 +68,7 @@ const SectionDetail = () => {
   const movementLength = movements.length;
 
   useEffect(() => {
+    console.log("section index : ", index);
     if (Object.keys(workout).length === 0) {
       window.location.replace('/workout');
     } else {
@@ -382,7 +384,7 @@ const SectionDetail = () => {
 
           <footer className="fixed bottom-0 flex h-20 w-screen items-center justify-around rounded-xl border-t-[0.5px] border-[#383838]">
             <button
-              disabled={currentIndex === 0}
+              disabled={index === 0}
               onClick={handlePrevious}
               className="flex h-full w-1/4 items-center justify-center border-r-[0.5px] border-[#383838] bg-theme"
             >
@@ -404,7 +406,7 @@ const SectionDetail = () => {
                   SECTION
                 </span>
                 <p className="pt-1 text-2xl">
-                  {currentIndex + 1} / {sectionList.length}
+                  {index + 1} / {sectionList.length}
                 </p>
               </div>
             )}
