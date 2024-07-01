@@ -34,7 +34,7 @@ body {
   letter-spacing: 0.2em;
 }
 
-.custom-phone-input{
+.custom-phone-input {
   background: none;
   border-bottom: 1px solid;
   padding-top: 20px;
@@ -43,18 +43,18 @@ body {
   width: 100%;
 }
 
-.custom-phone-input input[type="tel"]{
+.custom-phone-input input[type="tel"] {
   outline: none;
   background: none;
 }
 
-.custom-phone-input>div{
+.custom-phone-input>div {
   padding-left: 5px;
   padding-right: 5px;
 }
 
 
-.custom-phone-input input[type="tel"]::placeholder{
+.custom-phone-input input[type="tel"]::placeholder {
   font-size: 0.7em;
   letter-spacing: 0.2em;
 }
@@ -761,4 +761,28 @@ button:active {
 
 .custom-textarea::placeholder {
   color: #565656;
+}
+
+/* Monthly Wrapped CSS styles */
+.bar-chart-style {
+  border-radius: 22.291px;
+  border: 0.697px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba(35, 35, 35, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%);
+  background-blend-mode: luminosity;
+  box-shadow: 65.48px 167.184px 50.155px 0px rgba(0, 0, 0, 0.01), 41.796px 106.928px 45.976px 0px rgba(0, 0, 0, 0.04), 23.684px 60.256px 38.661px 0px rgba(0, 0, 0, 0.15), 10.449px 26.819px 28.561px 0px rgba(0, 0, 0, 0.26), 2.786px 6.618px 15.673px 0px rgba(0, 0, 0, 0.29);
+}
+
+.bar-chart-text {
+  font-size: 16.544px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.331px;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

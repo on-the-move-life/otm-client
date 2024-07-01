@@ -21,6 +21,7 @@ module.exports = withMT({
         customGray: '#545454',
         gradientStart: '#7E87EF',
         gradientEnd: '#B0B5F8',
+       'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
       },
       backgroundImage: {
         'mealInfo-gradient': 'radial-gradient(50% 50% at 50% 50%, #5ECC7B 49.83%, #F5C563 100%)',

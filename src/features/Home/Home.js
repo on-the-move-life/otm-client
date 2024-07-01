@@ -8,7 +8,8 @@ import {
   DuePaymentIndicator,
   MoveCoins,
   LifeStyleScore,
-  LifeStyleRoutine
+  LifeStyleRoutine,
+  MonthlyWrapped
 } from '.';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -34,6 +35,7 @@ const Home = () => {
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
 
   const navigate = useNavigate();
+  const currentDate = new Date().getDate();
 
   function navigateToProfile() {
     navigate('/profile');
@@ -122,11 +124,11 @@ const Home = () => {
               one workout at a time.`}
             </p>
           </section>
-          {homeStats?.showLifestyle === true && 
-          <section className='w-full flex flex-row justify-center items-center gap-3'>
-              <LifeStyleScore completionPercentage={homeStats?.routineProgress}/>
-              <LifeStyleRoutine/>
-          </section>}
+          {homeStats?.showLifestyle === true &&
+            <section className='w-full flex flex-row justify-center items-center gap-3'>
+              <LifeStyleScore completionPercentage={homeStats?.routineProgress} />
+              <LifeStyleRoutine />
+            </section>}
           <section>
             <WeeklyWorkoutReport
               suggestedWorkoutPerWeek={homeStats?.frequency}
@@ -143,6 +145,11 @@ const Home = () => {
             <LeaderBoard rank={homeStats?.workoutRank?.rank} totalParticipants={homeStats?.workoutRank?.totalMembers} />
             <MoveCoins coins={homeStats?.moveCoins} />
           </section>
+          {currentDate <= 5 &&
+            <section className='w-full flex flex-row justify-center items-center gap-3'>
+              <MonthlyWrapped />
+            </section>
+          }
           {homeStats?.isPaymentDue && (
             <section>
               <DuePaymentIndicator />
