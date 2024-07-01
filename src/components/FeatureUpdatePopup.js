@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Button from './Button';
 import axios from 'axios';
+import styled from 'styled-components';
 
 // uiVersion must be updated whenever a new feature is added
-export const uiVersion = '1.0.0';
+export const uiVersion = '1.1.1';
 
 // function to compare versions "1.0.0" of this format and return true if the first version is greater than the second
 function compareVersions(uiVersion, backendVersion) {
@@ -32,7 +33,7 @@ const FeatureUpdatePopup = ({ backendVersion }) => {
   // isOpen state determines whether the popup is visible or not
   const [isOpen, setIsOpen] = useState(false);
 
-  const heading = 'Introducing: The OTM Marketplace';
+  const heading = 'INTRODUCING YOUR NEW FAVORITE FEATURES';
   const featureBody =
     'Earn Movecoins with every workout and unlock exclusive offers';
   const featureImage = 'assets/movecoins-feature.png';
@@ -103,18 +104,40 @@ const FeatureUpdatePopup = ({ backendVersion }) => {
             variants={modal}
             className="h-fit w-10/12 rounded-lg bg-white/20 p-2 backdrop-blur-sm"
           >
-            <div className="purple-text-gradient text-center text-xl font-semibold">
-              {heading}
+            <div className="rounded-[5.5px] bg-[#7E87EF] px-2 py-2">
+              <p className="anton">{heading}</p>
             </div>
             {/* Add the image and detail about the feature */}
-            <p className="px-4 py-2 text-sm">{featureBody}</p>
-            <img
+            {/* <p className="px-4 py-2 text-sm">{featureBody}</p> */}
+            <ul class="my-2 list-inside list-disc font-[600]">
+              <li className="my-3">
+                Easily replace any movement in your workout with another.
+                Customize your workouts like never before!
+              </li>
+              <li className="my-3">
+                Tap on any movement card to get a detailed explanation. Perfect
+                your form and technique with ease!
+              </li>
+              <li className="my-3">
+                Upload pictures of your meals and let our AI analyze the
+                calories and macros.
+              </li>
+              <li className="my-3">
+                Enjoy a fun and intuitive summary of your performance from the
+                past month. Check out your monthly wrapped now!
+              </li>
+            </ul>
+            {/* <img
               src={featureImage}
               alt="feature"
               className="mx-auto h-[400px]"
-            />
+            /> */}
             {/* Button to close the popup */}
-            <Button action={handleClose} text={'close'} />
+            <Button
+              action={handleClose}
+              text={'close'}
+              style={{ background: '#7E87EF', color: 'white' }}
+            />
           </motion.div>
         </div>
       </motion.div>
