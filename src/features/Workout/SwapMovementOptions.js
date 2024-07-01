@@ -162,7 +162,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                 {
                                     mvmt?.setup.map((item, index) => {
                                         return (
-                                            item !== '' && 
+                                            item !== '' &&
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
                                                 <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#7E87EF]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
@@ -183,7 +183,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                 {
                                     mvmt?.execution.map((item, index) => {
                                         return (
-                                            item !== '' && 
+                                            item !== '' &&
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
                                                 <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#5ECC7B]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
@@ -204,7 +204,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                 {
                                     mvmt?.completion.map((item, index) => {
                                         return (
-                                            item !== '' && 
+                                            item !== '' &&
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
                                                 <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#F5C563]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
@@ -225,7 +225,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                 {
                                     mvmt?.key_tips.map((item, index) => {
                                         return (
-                                            item !== '' && 
+                                            item !== '' &&
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
                                                 <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#DDF988]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
@@ -278,7 +278,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                 status === 'error' && <Error className={'w-full mx-auto'}><h3 className='text-red'>Oops! <br /> Could not fetch the list of movements</h3></Error>
             }
             {
-                swapMovementSectionStatus === 'error' && <Error className={'w-full h-screen mx-auto fixed top-0 left-0 bg-black z-[100]'} ><h3 className='text-red'>Oops! <br /> Could not swap the movements</h3></Error>
+                swapMovementSectionStatus === 'error' && <Error className={'w-full h-screen mx-auto fixed top-0 left-0 bg-black z-[100]'} ><h3 className='text-red'>Oops! <br /> Could not swap the movement</h3></Error>
             }
             {
                 showAlertDialog && <AlertDialog handleAlertDialog={handleAlertMessage} message={"Are you sure you want to swap your current movement with this one?"}/>
