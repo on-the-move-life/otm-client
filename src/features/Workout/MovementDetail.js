@@ -185,7 +185,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
                  <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Setup</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
-                 {movement?.setup?.map((det,index)=>{
+                 {movement?.setup?.slice(0, -1).map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
@@ -204,7 +204,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
                  <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Execution</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
-                 {movement?.execution?.map((det,index)=>{
+                 {movement?.execution?.slice(0, -1).map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
@@ -223,7 +223,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
                  <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Completion</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
-                 {movement?.completion?.map((det,index)=>{
+                 {movement?.completion?.slice(0, -1).map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
@@ -242,7 +242,7 @@ const MovementDetail = ({ movement, sectionCode, closeMovementDetail }) => {
                  <div className='w-full h-auto bg-black rounded-lg sm:px-10 sm:py-10 px-4 py-4'>
                  <h1 className='sm:text-2xl text-[20px] flex gap-1 font-700'>Key Tips</h1>
                  <ul className='flex flex-col sm:gap-4 gap-2 sm:mt-2 mt-0'>
-                 {movement?.key_tips?.map((det,index)=>{
+                 {movement?.key_tips?.slice(0, -1).map((det,index)=>{
                   return ( 
                     
                     <li key={index} className='text-[#B1B1B1] sm:text-base text-sm flex gap-2 mt-2'>
