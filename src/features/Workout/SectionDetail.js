@@ -12,6 +12,7 @@ import AlertDialog from './AlertDialog.js';
 import SwapMovementOptions from './SwapMovementOptions.js';
 import { setIndex } from './WorkoutSlice.js';
 import { CiDumbbell } from "react-icons/ci";
+import WeightChoosingGuide from './WeightChoosingGuide';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const SectionDetail = () => {
   const [selectedMovement, setSelectedMovement] = useState({});
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [showSwapOptions, setShowSwapOptions] = useState(false);
+  const [showWeightGuide, setShowWeightGuide] = useState(false);
 
   const lastPage = index === sectionList.length - 1;
 
@@ -54,7 +56,13 @@ const SectionDetail = () => {
   const closeMovementDetail = () => {
     setShowMvmtDetail(false);
   };
-
+  const openWeightGuide = () => {
+    setShowWeightGuide(true);
+  };
+  
+  const closeWeightGuide = () => {
+    setShowWeightGuide(false);
+  };
   const {
     name = '',
     movements = [],
@@ -112,6 +120,7 @@ const SectionDetail = () => {
         />
       )}
       {showLevel && <SkillProgression setShowLevel={setShowLevel} />}
+      {showWeightGuide && <WeightChoosingGuide closeWeightGuide={closeWeightGuide} />}
       {!showLevel && !showMvmtDetail && Object.keys(workout).length !== 0 && !showSwapOptions && (
         <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
           <AnimatedComponent
@@ -229,7 +238,7 @@ const SectionDetail = () => {
                 )}
               </div>
               <div className='w-[250px] h-auto flex justify-center items-center py-5'>
-               <p className='text-[#7E87EF] flex gap-[2px]'>
+               <p className='text-[#7E87EF] flex gap-[2px] cursor-pointer' onClick={openWeightGuide}>
                   <span className='mt-[4px] text-[22px]'><CiDumbbell /></span>
                   <span className='text-[20px]'>Weight Choosing Guide</span>
                 </p>
