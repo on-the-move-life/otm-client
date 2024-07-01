@@ -40,10 +40,10 @@ export const BarChart = ({ chartData, maxValue }) => {
     },
     layout: {
       padding: {
-        left: 20,
-        right: 20,
-        top: 20,
-        bottom: 20,
+        left: 5,
+        right: 5,
+        top: 5,
+        bottom: 5,
       },
     },
     elements: {
