@@ -76,7 +76,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
         return (
             <div className='w-full h-[85px] rounded-[12px] bg-black flex flex-row justify-between items-center' onClick={() => setSelectedMovementDetail(mvmt)}>
                 <div className='w-full h-full flex flex-row justify-start items-center gap-5' onClick={() => setShowDetail(true)}>
-                    <img src={mvmt?.link[0]} alt={mvmt?.name} className='rounded-l-[12px] h-[85px] w-[85px] object-cover' />
+                    <img src={mvmt?.link[0]} alt={mvmt?.name} loading='lazy' className='rounded-l-[12px] h-[85px] w-[85px] object-cover' />
                     <div>
                         <h3 className='text-[14px] text-[#fff] capitalize'>{mvmt?.name}</h3>
                         <div className='flex flex-row justify-start items-start gap-2 text-[#b1b1b1] text-[10px] '>
