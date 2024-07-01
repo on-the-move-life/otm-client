@@ -13,23 +13,31 @@ const Movement = ({
 }) => {
   const dispatch = useDispatch();
   return (
-    <div
-      className={`card ${movementLength > 1 ? 'w-[90%]' : 'w-full'}`}
-    >
+    <div className={`card ${movementLength > 1 ? 'w-[90%]' : 'w-full'}`}>
       <div
         className={`mb-8 flex h-[400px]
            w-full
           flex-col justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-lg`}
       >
         <div>
-          <div className="text-md mb-1 flex justify-between items-center text-lightGray">
-            <span onClick={() => openMovementDetail(movement)}>{movement.fullName}</span>
-            <div className='w-fit flex flex-row justify-center items-center gap-1 cursor-pointer' onClick={() => {
-              dispatch(fetchSwapMovementList(movement?.code));
-              setShowSwapOptions(true);
-            }}>
-              <img src={'/assets/movement_swap_icon.svg'} alt="movement_swap"/>
-              <p className='text-[18px] text-[#929292] capitalize' style={{fontWeight: 590, letterSpacing: '-0.54px', }}>Swap</p>
+          <div className="text-md mb-1 flex items-center justify-between text-lightGray">
+            <span onClick={() => openMovementDetail(movement)}>
+              {movement.fullName}
+            </span>
+            <div
+              className="flex w-fit cursor-pointer flex-row items-center justify-center gap-1"
+              onClick={() => {
+                dispatch(fetchSwapMovementList(movement?.code));
+                setShowSwapOptions(true);
+              }}
+            >
+              <img src={'/assets/movement_swap_icon.svg'} alt="movement_swap" />
+              <p
+                className="text-[15px] capitalize text-[#5ECC7B]"
+                style={{ fontWeight: 590, letterSpacing: '-0.54px' }}
+              >
+                Swap
+              </p>
             </div>
           </div>
           {sectionWithLoadArray.includes(sectionCode) && (
