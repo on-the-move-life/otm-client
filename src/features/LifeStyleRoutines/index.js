@@ -18,7 +18,10 @@ export { default as Mood2Icon } from "./components/icons/Mood2Icon"
 export { default as Mood3Icon } from "./components/icons/Mood3Icon"
 export { default as Mood4Icon } from "./components/icons/Mood4Icon"
 export { default as Mood5Icon } from "./components/icons/Mood5Icon"
-
+export { default as MealIcon1 } from "./components/icons/MealIcon1"
+export { default as MealMeterIcon } from "./components/icons/MealMeterIcon"
+export { default as MealImageicon } from "./components/icons/MealImageicon"
+export { default as MealCrossIcon } from "./components/icons/MealCrossIcon"
 // redux exports
 export { default as store } from "./ReduxStore/store"
 
