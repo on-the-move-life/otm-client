@@ -80,8 +80,8 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                     <div>
                         <h3 className='text-[14px] text-[#fff] capitalize'>{mvmt?.name}</h3>
                         <div className='flex flex-row justify-start items-start gap-2 text-[#b1b1b1] text-[10px] '>
-                            <p>{mvmt?.bucket}</p>
                             <p>{mvmt?.section}</p>
+                            <p>{mvmt?.bucket}</p>
                         </div>
                     </div>
                 </div>
@@ -164,7 +164,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                         return (
                                             item !== '' && 
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
-                                                <div className='w-[11px] h-[11px] rounded-full bg-[#7E87EF]'></div>
+                                                <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#7E87EF]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
                                             </div>
                                         )
@@ -185,7 +185,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                         return (
                                             item !== '' && 
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
-                                                <div className='w-[11px] h-[11px] rounded-full bg-[#5ECC7B]'></div>
+                                                <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#5ECC7B]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
                                             </div>
                                         )
@@ -206,7 +206,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                         return (
                                             item !== '' && 
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
-                                                <div className='w-[11px] h-[11px] rounded-full bg-[#F5C563]'></div>
+                                                <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#F5C563]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
                                             </div>
                                         )
@@ -227,7 +227,7 @@ function SwapMovementOptions({ setShowSwapOptions, sectionCode }) {
                                         return (
                                             item !== '' && 
                                             <div key={item} className='w-full flex flex-row justify-start items-center gap-2'>
-                                                <div className='w-[11px] h-[11px] rounded-full bg-[#DDF988]'></div>
+                                                <div className='min-w-[11px] max-w-[11px] h-[11px] rounded-full bg-[#DDF988]'></div>
                                                 <p className='text-[14px] text-[#b1b1b1]'>{item}</p>
                                             </div>
                                         )
