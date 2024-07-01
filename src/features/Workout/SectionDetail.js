@@ -3,41 +3,45 @@ import { useNavigate, Link } from 'react-router-dom';
 import DataInputComponent2 from './DataInputComponent2';
 import Movement from './Movement.js';
 import { HiX } from 'react-icons/hi';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import SkillProgression from './SkillProgression.js';
 import MovementDetail from './MovementDetail.js';
 import { Tooltip, Typography } from '@material-tailwind/react';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import AlertDialog from './AlertDialog.js';
+import SwapMovementOptions from './SwapMovementOptions.js';
+import { setIndex } from './WorkoutSlice.js';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { workout, index } = useSelector((store) => store.workoutReducer);
 
   const sectionList = workout?.program || [];
 
-  const [currentIndex, setCurrentIndex] = useState(index);
+  
   const [currentSection, setCurrentSection] = useState([]);
   const [showLevel, setShowLevel] = useState(false);
   const [showMvmtDetail, setShowMvmtDetail] = useState(false);
   const [selectedMovement, setSelectedMovement] = useState({});
   const [showAlertDialog, setShowAlertDialog] = useState(false);
+  const [showSwapOptions, setShowSwapOptions] = useState(false);
 
-  const lastPage = currentIndex === sectionList.length - 1;
+  const lastPage = index === sectionList.length - 1;
 
   const handleNext = () => {
-    const newIndex = currentIndex + 1;
-    setCurrentIndex(newIndex);
+    const newIndex = index + 1;
+    dispatch(setIndex(newIndex));
     setCurrentSection(sectionList[newIndex]);
   };
 
   const handlePrevious = () => {
-    const newIndex = currentIndex - 1;
+    const newIndex = index - 1;
     if (newIndex === -1) {
       return;
     }
-    setCurrentIndex(newIndex);
+    dispatch(setIndex(newIndex));
     setCurrentSection(sectionList[newIndex]);
   };
 
@@ -64,12 +68,13 @@ const SectionDetail = () => {
   const movementLength = movements.length;
 
   useEffect(() => {
+    console.log("section index : ", index);
     if (Object.keys(workout).length === 0) {
       window.location.replace('/workout');
     } else {
       setCurrentSection(sectionList[index]);
     }
-  }, []);
+  }, [workout, index, sectionList]);
   const sectionPageAnimation = {
     initial: {
       opacity: 0,
@@ -106,7 +111,7 @@ const SectionDetail = () => {
         />
       )}
       {showLevel && <SkillProgression setShowLevel={setShowLevel} />}
-      {!showLevel && !showMvmtDetail && Object.keys(workout).length !== 0 && (
+      {!showLevel && !showMvmtDetail && Object.keys(workout).length !== 0 && !showSwapOptions && (
         <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
           <AnimatedComponent
             key={Math.random() * 1000}
@@ -296,6 +301,7 @@ const SectionDetail = () => {
                       sectionCode={code}
                       movementLength={movementLength}
                       openMovementDetail={openMovementDetail}
+                      setShowSwapOptions={setShowSwapOptions}
                     />
                   );
                 })}
@@ -378,7 +384,7 @@ const SectionDetail = () => {
 
           <footer className="fixed bottom-0 flex h-20 w-screen items-center justify-around rounded-xl border-t-[0.5px] border-[#383838]">
             <button
-              disabled={currentIndex === 0}
+              disabled={index === 0}
               onClick={handlePrevious}
               className="flex h-full w-1/4 items-center justify-center border-r-[0.5px] border-[#383838] bg-theme"
             >
@@ -400,7 +406,7 @@ const SectionDetail = () => {
                   SECTION
                 </span>
                 <p className="pt-1 text-2xl">
-                  {currentIndex + 1} / {sectionList.length}
+                  {index + 1} / {sectionList.length}
                 </p>
               </div>
             )}
@@ -423,7 +429,7 @@ const SectionDetail = () => {
           </footer>
         </div>
       )}
-
+      {showSwapOptions && <SwapMovementOptions setShowSwapOptions={setShowSwapOptions} sectionCode={code}/>}
       {showAlertDialog && <AlertDialog handleAlertDialog={handleAlertDialog} />}
     </>
   );
