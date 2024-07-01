@@ -12,6 +12,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setReloadCounter }) => {
+
+    tasks.map((task, index) => (
+        console.log("Task ID are" + task?.taskId)
+    ));
+
     const circleIcons = useMemo(() => (
         {
             "Morning Circle": <MorningCircleIcon />,
@@ -24,7 +29,7 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setRelo
 
 
     return (
-        <div className="w-full h-screen fixed top-0 left-0 z-50 p-2 bg-black text-white rounded-lg overflow-y-scroll" style={{paddingBottom: isIPhone() ? '100px' : ''}}>
+        <div className="w-full h-screen fixed top-0 left-0 z-50 p-2 bg-black text-white rounded-lg overflow-y-scroll" style={{ paddingBottom: isIPhone() ? '100px' : '' }}>
             <div className="fixed top-0 z-[200]">
                 <ToastContainer
                     position="top-center"
@@ -59,7 +64,7 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setRelo
 
             <div className='p-2'>
                 {tasks.map((task, index) => (
-                    <TaskItem key={task?.taskId} task={task} SelectedCircle={SelectedCircle} index={index} date={date}/>
+                    <TaskItem key={task?.taskId} task={task} SelectedCircle={SelectedCircle} index={index} date={date} />
                 ))}
 
             </div>

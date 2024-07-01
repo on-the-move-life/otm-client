@@ -202,11 +202,25 @@ button:active {
 
 }
 
+.mealInfoBoxGradient {
+  background: rgba(95, 95, 95, 0.30);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(37.5px);
+}
+
 .workout-gradient-text {
   background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
   background-clip: text;
   display: inline-block;
   color: transparent;
+}
+
+.truncate-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Change this value to the number of lines you want */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .anton {
