@@ -5,7 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 // uiVersion must be updated whenever a new feature is added
-export const uiVersion = '1.1.0';
+export const uiVersion = '1.1.1';
 
 // function to compare versions "1.0.0" of this format and return true if the first version is greater than the second
 function compareVersions(uiVersion, backendVersion) {
