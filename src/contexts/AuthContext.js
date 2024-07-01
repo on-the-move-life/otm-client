@@ -1,3 +1,4 @@
+//AuthContext.js
 import { useContext, useReducer, createContext } from 'react';
 import { uiVersion } from '../components/FeatureUpdatePopup';
 

@@ -11,6 +11,7 @@ import AnimatedComponent from '../../components/AnimatedComponent.js';
 import AlertDialog from './AlertDialog.js';
 import SwapMovementOptions from './SwapMovementOptions.js';
 import { setIndex } from './WorkoutSlice.js';
+import { CiDumbbell } from "react-icons/ci";
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -214,7 +215,7 @@ const SectionDetail = () => {
                       })}
                   </ul>
                 </div>
-
+               
                 {code !== 'METCON' && code !== 'FEED' && (
                   <div className="flex w-1/6 grow items-center justify-around text-green">
                     {movements && movementLength > 1 && (
@@ -227,7 +228,12 @@ const SectionDetail = () => {
                   </div>
                 )}
               </div>
-
+              <div className='w-[250px] h-auto flex justify-center items-center py-5'>
+               <p className='text-[#7E87EF] flex gap-[2px]'>
+                  <span className='mt-[4px] text-[22px]'><CiDumbbell /></span>
+                  <span className='text-[20px]'>Weight Choosing Guide</span>
+                </p>
+              </div>
               {code === 'GYM' && (
                 <div
                   className="my-4 flex items-center justify-center rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] py-2"
