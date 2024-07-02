@@ -237,11 +237,11 @@ const SectionDetail = () => {
                   </div>
                 )}
               </div>
-              <div className='w-[250px] h-auto flex justify-center items-center py-5'>
+              <div className='w-[250px] h-auto flex justify-center items-center py-3'>
                <p className='text-[#7E87EF] flex gap-[2px] cursor-pointer' onClick={openWeightGuide}>
                   <span className='mt-[4px] text-[22px]'><CiDumbbell /></span>
                   <span className='text-[20px]'>Weight Choosing Guide</span>
-                </p>
+              </p>
               </div>
               {code === 'GYM' && (
                 <div
