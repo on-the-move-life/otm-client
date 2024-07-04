@@ -23,7 +23,7 @@ const WeightChoosingGuide = ({ closeWeightGuide }) => {
           <div className="absolute right-4 top-4 ">
             <button
               onClick={closeWeightGuide}
-              className="ml-2 rounded-full border border-yellow bg-black p-2 text-[#B1B1B1]"
+              className="ml-2 rounded-full  bg-black p-2 text-[#B1B1B1]"
             >
               <HiX size={24} />
             </button>
