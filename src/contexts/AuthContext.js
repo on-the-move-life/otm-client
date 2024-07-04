@@ -1,3 +1,4 @@
+//AuthContext.js
 import { useContext, useReducer, createContext } from 'react';
 import { uiVersion } from '../components/FeatureUpdatePopup';
 
@@ -77,6 +78,14 @@ function reducer(state, action) {
         ...state,
         error: null,
       };
+      case 'adminLogin':
+        return {
+        ...state,
+        user: action.payload,
+        isAuthenticated: true,
+        isAdmin: true,
+        error: null,
+        };
 
     default:
       throw new Error('Unknown action');
@@ -163,6 +172,21 @@ function AuthProvider({ children }) {
         dispatch({ type: 'error', payload: response.data.msg });
       });
   }
+  async function adminLogin(body) {
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, body)
+      .then((res) => {
+        const user = res.data?.user;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          dispatch({ type: 'adminLogin', payload: user });
+        }
+      })
+      .catch(({ response }) => {
+        console.log(response, 'ERROR');
+        dispatch({ type: 'error', payload: response.data.msg });
+      });
+  }
 
   function logout() {
     localStorage.removeItem('user');
@@ -185,6 +209,9 @@ function AuthProvider({ children }) {
       return user;
     }
   }
+  function resetError() {
+    dispatch({ type: 'resetError' });
+  }
 
   return (
     <AuthContext.Provider
@@ -200,6 +227,8 @@ function AuthProvider({ children }) {
         logout,
         error,
         reset,
+        adminLogin,
+        resetError,
       }}
     >
       {children}
