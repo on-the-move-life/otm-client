@@ -1,3 +1,4 @@
+//App.js
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Home } from './features/Home';
@@ -15,7 +16,6 @@ import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from "./features/LifeStyleRoutines"
-
 function App() {
   // const { user, getUserFromStorage } = useAuth();
   let user = localStorage.getItem('user');

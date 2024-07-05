@@ -202,11 +202,36 @@ button:active {
 
 }
 
+.mealInfoBoxGradient {
+  background: rgba(95, 95, 95, 0.30);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(37.5px);
+}
+
 .workout-gradient-text {
   background: linear-gradient(96deg, #FFF 5.01%, #757575 98.91%);
   background-clip: text;
   display: inline-block;
   color: transparent;
+}
+
+.truncate-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Change this value to the number of lines you want */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.anton {
+  color: var(--White, #fff);
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 32.781px;
+  text-transform: uppercase;
+  line-height: 45.59px;
+  text-align: center;
 }
 
 .purple-gradient {
@@ -392,6 +417,15 @@ button:active {
   justify-content: center;
   width: 100%;
   height: content-fit;
+}
+
+.feature-popup-wrapper {
+  border-radius: 11.782px;
+  border: 0.736px solid rgba(126, 135, 239, 0.27);
+  background: var(--White, #FFF);
+  color: black;
+  font-family: "SF Pro Rounded";
+  padding: 10px;
 }
 
 .countdown {
