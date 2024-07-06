@@ -21,11 +21,10 @@ export default function workoutReducer(state = initialState, action) {
         ...action.payload[0],
         program: action.payload[0].program.slice(1),
       };
-      const workoutId = action.payload[0]._id;
       return {
         ...state,
         workout: workoutData,
-        workoutId: workoutId,
+        workoutId: action.payload[0]._id,
         status: 'success',
       };
 
@@ -37,6 +36,7 @@ export default function workoutReducer(state = initialState, action) {
       return {
         ...state,
         workout: updateData,
+        workoutId: action.payload[0]._id,
         status: 'success',
       };
 
