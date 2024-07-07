@@ -313,6 +313,7 @@ const UserDetails = ({ showHistory }) => {
                 <section className="flex flex-col items-center ">
                   <div
                     className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                    onClick={() => window.open('https://calendly.com/onthemove1', '_blank')}
                   >
                     <button className="text-lg font-medium text-white">
                       Open Calendly
