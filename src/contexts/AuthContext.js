@@ -178,7 +178,7 @@ function AuthProvider({ children }) {
   }
   async function adminLogin(password) {
     try {
-      const response = await axios.post(`http://localhost:882/auth/admin-login`, { password }, { withCredentials: true });
+      const response = await axios.post(`https://otm-main-zwdk.onrender.com/auth/admin-login`, { password }, { withCredentials: true });
       if (response.data.success) {
         dispatch({ type: 'adminLogin' });
         return true;
