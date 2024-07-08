@@ -15,8 +15,6 @@ import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from "./features/LifeStyleRoutines"
-import AdminLogin from './features/AdminLogin/AdminLogin'
-import AdminDashboard from './features/AdminLogin/AdminDashboard'
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -35,15 +33,6 @@ function App() {
       return children;
     } else {
       return <Navigate to="/login" />;
-    }
-  }
-  function AdminRouteMiddleware({ children }) {
-    const adminToken = localStorage.getItem('adminToken');
-  
-    if (adminToken === 'mock-admin-token') {
-      return children;
-    } else {
-      return <Navigate to="/admin-login" />;
     }
   }
   return (
@@ -82,15 +71,6 @@ function App() {
               <RouteMiddleware><LifeStyleRoutine /></RouteMiddleware>
             </Provider>
           }
-        />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route 
-          path="/admin-dashboard" 
-          element={
-            <AdminRouteMiddleware>
-              <AdminDashboard />
-            </AdminRouteMiddleware>
-          } 
         />
       </Routes>
     </BrowserRouter>
