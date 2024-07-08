@@ -1,5 +1,7 @@
+//AuthContext.js
 import { useContext, useReducer, createContext } from 'react';
 import { uiVersion } from '../components/FeatureUpdatePopup';
+import Cookies from 'js-cookie';
 
 import axios from 'axios';
 //create a new context
@@ -10,6 +12,7 @@ const initialState = {
   isAuthenticated: false,
   isSignUp: null,
   error: null,
+  isAdmin: false,
 };
 
 function reducer(state, action) {
@@ -77,7 +80,17 @@ function reducer(state, action) {
         ...state,
         error: null,
       };
-
+      case 'adminLogin':
+      return {
+        ...state,
+        isAdmin: true,
+        error: null,
+      };
+    case 'adminLogout':
+      return {
+        ...state,
+        isAdmin: false,
+      };
     default:
       throw new Error('Unknown action');
   }
@@ -85,7 +98,7 @@ function reducer(state, action) {
 
 //create a provider function that will wrap the application
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated, isSignUp, error }, dispatch] = useReducer(
+  const [{ user, isAuthenticated, isSignUp, error, isAdmin }, dispatch] = useReducer(
     reducer,
     initialState,
   );
@@ -163,6 +176,24 @@ function AuthProvider({ children }) {
         dispatch({ type: 'error', payload: response.data.msg });
       });
   }
+  async function adminLogin(password) {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, { password });
+      if (response.data.success) {
+        dispatch({ type: 'adminLogin' });
+        return true;
+      }
+    } catch (error) {
+      console.error('Admin login error:', error);
+      dispatch({ type: 'error', payload: 'Admin login failed' });
+    }
+    return false;
+  }
+
+  function adminLogout() {
+    Cookies.remove('jwt');
+    dispatch({ type: 'adminLogout' });
+  }
 
   function logout() {
     localStorage.removeItem('user');
@@ -200,6 +231,9 @@ function AuthProvider({ children }) {
         logout,
         error,
         reset,
+        isAdmin,
+        adminLogin,
+        adminLogout,
       }}
     >
       {children}
