@@ -178,11 +178,11 @@ function AuthProvider({ children }) {
   }
   async function adminLogin(password) {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, { password });
+      const response = await axios.post(`http://localhost:882/auth/admin-login`, { password }, { withCredentials: true });
       if (response.data.success) {
         dispatch({ type: 'adminLogin' });
         return true;
-      }
+      } 
     } catch (error) {
       console.error('Admin login error:', error);
       dispatch({ type: 'error', payload: 'Admin login failed' });

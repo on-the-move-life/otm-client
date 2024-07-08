@@ -17,12 +17,8 @@ export function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const jwt = localStorage.getItem('jwt'); // Assuming you store the JWT in localStorage
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/members/active`, {
-        headers: {
-          'Authorization': `Bearer ${jwt}`
-        }
-      });
+      // const jwt = localStorage.getItem('jwt'); // Assuming you store the JWT in localStorage
+      const response = await axios.get(`http://localhost:882/api/v1/members/active`, { withCredentials: true });
       console.log('Response:', response);
       setUsers(response.data.data);
       setLoading(false);
