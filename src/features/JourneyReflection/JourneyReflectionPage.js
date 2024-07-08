@@ -9,6 +9,8 @@ import WeeklyWorkoutJourney from './WeeklyWorkoutJourney';
 import WorkoutConsitency from './WorkoutConsitency';
 import { useParams } from 'react-router-dom';
 import axiosClient from './ApiClient';
+import TotalWorkout from './TotalWorkout';
+import MovecoinsDetail from './MovecoinsDetails';
 
 const JourneyReflectionPage = () => {
   const { reportId } = useParams();
@@ -57,8 +59,15 @@ const JourneyReflectionPage = () => {
           <Objectives apiData={apiData} />
         </section>
         <section>
+          <TotalWorkout apiData={apiData} />
+        </section>
+        <section>
+          <MovecoinsDetail apiData={apiData} />
+        </section>
+        <section>
           <WorkoutConsitency apiData={apiData} />
         </section>
+
         <section>
           <FitnessProgress apiData={apiData} />
         </section>

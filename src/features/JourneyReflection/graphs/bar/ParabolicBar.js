@@ -13,12 +13,22 @@ const getNormalParabolicPath = ({ x, y, width, height, controlPointOffset }) =>
    Z`;
 
 const ParabolicBar = (props) => {
-  const { x, y, width, height, controlPointOffset } = props;
+  const { x, y, width, height, controlPointOffset, Count } = props;
 
   const fillColor = `${
-    (height >= 50 && height <= 100 && '#F5C563') ||
-    (height < 50 && '#FA5757') ||
-    (height > 100 && '#5ECC7B')
+    (Count > 0 && Count <= 5 && '#FA5757') ||
+    (Count > 5 && Count <= 10 && '#ed4928') ||
+    (Count > 10 && Count <= 15 && '#F5C563') ||
+    (Count > 15 && Count <= 20 && '#5ECC7B') ||
+    (Count > 20 && '#7E87EF')
+  }`;
+
+  const fillStroke = `${
+    (Count > 0 && Count <= 5 && '#ca4245') ||
+    (Count > 5 && Count <= 10 && '#ed4928') ||
+    (Count > 10 && Count <= 15 && '#F5C563') ||
+    (Count > 15 && Count <= 20 && '#387D4B') ||
+    (Count > 20 && '#7E87EF')
   }`;
 
   const Arr = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -39,11 +49,7 @@ const ParabolicBar = (props) => {
                 item,
               })}
               fill={fillColor}
-              stroke={`${
-                (height >= 50 && height <= 100 && '#F5C563') ||
-                (height < 50 && '#ca4245') ||
-                (height > 100 && '#387D4B')
-              }`}
+              stroke={fillStroke}
               fillOpacity={0}
             />
           );
@@ -59,11 +65,7 @@ const ParabolicBar = (props) => {
                 controlPointOffset,
               })}
               fill={fillColor}
-              stroke={`${
-                (height >= 50 && height <= 100 && '#F5C563') ||
-                (height < 50 && '#ca4245') ||
-                (height > 100 && '#267540')
-              }`}
+              stroke={fillStroke}
               fillOpacity={0.7}
             />
           );
