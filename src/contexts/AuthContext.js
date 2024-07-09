@@ -78,7 +78,6 @@ function reducer(state, action) {
         ...state,
         error: null,
       };
-
     default:
       throw new Error('Unknown action');
   }
@@ -186,6 +185,9 @@ function AuthProvider({ children }) {
       return user;
     }
   }
+  function resetError() {
+    dispatch({ type: 'resetError' });
+  }
 
   return (
     <AuthContext.Provider
@@ -201,6 +203,7 @@ function AuthProvider({ children }) {
         logout,
         error,
         reset,
+        resetError,
       }}
     >
       {children}
