@@ -1,17 +1,18 @@
 import React from 'react';
+import { Counter } from '../../components';
 
 const TotalWorkout = ({ apiData }) => {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="px-4 mt-4 sm:mt-10 sm:px-10">
-        <h1 className="purple-gradient font-sf-pro mt-2 text-left text-[22.33px] sm:mt-8 sm:text-center sm:text-2xl">
-          Total Workouts
-        </h1>
+        <h2 className="font-sf-pro text-left text-xs tracking-[5px] text-[#B1B1B1] sm:text-center sm:text-lg">
+          TOTAL WORKOUTS
+        </h2>
       </div>
 
       <div>
-        <p className="px-4 mt-6 text-sm text-left font-sf-pro sm:px-32 sm:text-center sm:text-base">
-          {apiData?.data?.summary}
+        <p className="purple-white-gradient  px-4 text-left text-[80px] font-extrabold sm:px-32 sm:text-center sm:text-base">
+          <Counter currentValue={apiData?.data?.totalWorkouts} />
         </p>
       </div>
     </div>

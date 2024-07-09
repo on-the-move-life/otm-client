@@ -5,9 +5,9 @@ const WeeklyWorkoutJourney = ({ apiData }) => {
   const lastEightWeeksWorkout = apiData?.data?.last8WeekConsistency;
   const Bar = ({ progress }) => {
     const [basicgreen, intermediategreen, advancedgreen, red, yellow, gray] = [
-      '#119832',
-      '#29C344',
       '#7FE08A',
+      '#29C344',
+      '#119832',
       '#FA5757',
       '#F5C563',
       '#323232',

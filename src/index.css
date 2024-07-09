@@ -259,6 +259,23 @@ button:active {
   -webkit-text-fill-color: transparent;
 }
 
+.purple-white-gradient {
+  background: var(
+    --Gradient-purple,
+    linear-gradient(0deg, #d6b6f0 2.94%, #ffffff 96.92%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.purple-gradient-background {
+  background: var(
+    --Gradient-purple,
+    linear-gradient(95deg, #d6b6f0 2.94%, #7e87ef 96.92%)
+  );
+}
+
 .main-gradient-text {
   display: inline-block;
   color: transparent;
