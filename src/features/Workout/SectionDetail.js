@@ -243,15 +243,7 @@ const SectionDetail = () => {
                     </div>
                   )}
                 </div>
-                <div
-                  onClick={openWeightGuide}
-                  className=" mb-4 flex  h-auto w-full items-center justify-center gap-2 rounded-[6px] bg-[#1C1C1E] py-2 text-[#7E87EF]"
-                >
-                  <span className=" text-[22px]">
-                    <CiDumbbell />
-                  </span>
-                  <span className="text-sm">Weight Choosing Guide</span>
-                </div>
+
                 {code === 'GYM' && (
                   <div
                     className="my-4 flex items-center justify-center rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] py-2"
@@ -345,8 +337,17 @@ const SectionDetail = () => {
                     </ul>
                   </div>
                 )}
+                <div
+                  onClick={openWeightGuide}
+                  className="my-4 flex  h-auto w-full items-center justify-center gap-2 rounded-[6px] bg-[#1C1C1E] py-2 text-lightGray"
+                >
+                  <span className=" text-[22px]">
+                    <CiDumbbell />
+                  </span>
+                  <span className="text-sm">Weight Choosing Guide</span>
+                </div>
                 <div>
-                  <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
+                  <h2 className="workout-gradient-text my-4 text-2xl">
                     Data Inputs
                   </h2>
                   {dataInput.map((input, index) => (
