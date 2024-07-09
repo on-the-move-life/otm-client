@@ -35,7 +35,6 @@ function App() {
       return <Navigate to="/login" />;
     }
   }
-
   return (
     <BrowserRouter>
       <Routes>

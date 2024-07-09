@@ -210,7 +210,7 @@ const UserDetails = ({ showHistory }) => {
         </motion.div>
       )}
       {memberData && (
-        <div className="h-screen w-screen overflow-x-auto px-4 pb-32 pt-8">
+        <div className="h-screen w-screen overflow-x-auto px-4 pb-4 pt-8">
           {profilePicError && (
             <div className="fixed top-0 z-50 h-full w-full bg-black">
               <Error>Oops! Something went wrong...</Error>
@@ -298,7 +298,34 @@ const UserDetails = ({ showHistory }) => {
             <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
               <div className=" flex h-full flex-col justify-around">
                 <section>
-                  <div className="workout-gradient-text text-3xl font-medium leading-10">
+                  <div className="workout-gradient-text text-2xl font-medium leading-10">
+                    Book a Call
+                  </div>
+                  <div
+                    className="pt-2 "
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
+                  <div className='text-white text-[14px]'>
+                    <p>Easily schedule a one-on-one call with your coach for personalised guidance and mentoring.</p>
+                  </div>
+                  </div>
+                </section>
+                <section className="flex flex-col items-center ">
+                  <div
+                    className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                    onClick={() => window.open('https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach', '_blank')}
+                  >
+                    <button className="text-lg font-medium text-white">
+                      Open Calendly
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
+              <div className=" flex h-full flex-col justify-around">
+                <section>
+                  <div className="workout-gradient-text text-2xl font-medium leading-10">
                     Membership
                   </div>
                   <div
@@ -342,7 +369,7 @@ const UserDetails = ({ showHistory }) => {
               </div>
             </div>
             <div
-              className="mt-52 flex w-full flex-col"
+              className="mt-8 flex w-full flex-col"
               onClick={() => {
                 setShowProfilePicPopup(false);
                 handleLogout();
