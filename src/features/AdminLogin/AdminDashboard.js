@@ -17,7 +17,8 @@ export function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      // const jwt = localStorage.getItem('jwt'); // Assuming you store the JWT in localStorage
+      const jwt = document.cookie.split(';')
+      console.log("jwt cookie : ", jwt);
       const response = await axios.get(`https://otm-main-zwdk.onrender.com/api/v1/members/active`, { withCredentials: true });
       console.log('Response:', response);
       setUsers(response.data.data);
