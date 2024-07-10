@@ -58,12 +58,17 @@ const JourneyReflectionPage = () => {
         <section>
           <Objectives apiData={apiData} />
         </section>
-        <section>
-          <TotalWorkout apiData={apiData} />
-        </section>
-        <section>
-          <MovecoinsDetail apiData={apiData} />
-        </section>
+        {apiData?.data?.totalWorkouts && (
+          <section>
+            <TotalWorkout apiData={apiData} />
+          </section>
+        )}
+        {apiData?.data?.totalMovecoins && (
+          <section>
+            <MovecoinsDetail apiData={apiData} />
+          </section>
+        )}
+
         <section>
           <WorkoutConsitency apiData={apiData} />
         </section>
