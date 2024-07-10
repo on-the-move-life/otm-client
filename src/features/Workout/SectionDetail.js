@@ -339,7 +339,7 @@ const SectionDetail = () => {
                 )}
                 <div
                   onClick={openWeightGuide}
-                  className="my-4 flex  h-auto w-full items-center justify-center gap-2 rounded-[6px] bg-[#1C1C1E] py-2 text-lightGray"
+                  className="my-4 flex  h-auto w-full items-center justify-center gap-2 rounded-[6px] bg-[#1C1C1E] py-2 text-white"
                 >
                   <span className=" text-[22px]">
                     <CiDumbbell />

@@ -316,7 +316,7 @@ const UserDetails = ({ showHistory }) => {
                     onClick={() => window.open('https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach', '_blank')}
                   >
                     <button className="text-lg font-medium text-white">
-                      Open Calendly
+                      Book Here
                     </button>
                   </div>
                 </section>
