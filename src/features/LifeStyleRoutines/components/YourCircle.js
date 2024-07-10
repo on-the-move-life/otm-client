@@ -9,12 +9,14 @@ import {
 // Import react-circular-progressbar module and styles
 import {
     CircularProgressbar,
+    CircularProgressbarWithChildren,
     buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import CircleTask from './CircleTask';
+import Fire from "./Fire"
 
-function YourCircle({ name, tasks, percentCompletion, date, setReloadCounter, time }) {
+function YourCircle({ name, tasks, percentCompletion, date, setReloadCounter, time, streak, streakMessage }) {
     const [tasksName, setTasksName] = useState("");
     const [showCircleDetails, setShowCircleDetails] = useState(false);
     const circleIcons = useMemo(() => (
@@ -70,27 +72,52 @@ function YourCircle({ name, tasks, percentCompletion, date, setReloadCounter, ti
                         <div>{circleIcons[name]}</div>
                         <div className='flex flex-col justify-center items-start'>
                             <p className='text-[12px] text-[#7E87EF] uppercase' style={{ fontWeight: 600 }}>{time}</p>
-                            <p className='text-[#F8F8F8] text-[18.5px] capitalize'>{name}</p>
+                            <div className="w-fit flex flex-row justify-center items-center gap-[15px]">
+                                <p className='text-[#F8F8F8] text-[18.5px] capitalize'>{name}</p>
+                                {streak > 0 &&
+                                    <div className='w-fit flex flex-row justify-center items-center gap-3'>
+                                        <Fire className={'scale-[2.5]'} />
+                                        <p className="text-[#545454] font-bold text-sm">{streak} {streak > 1 ? 'days' : 'day'}</p>
+                                    </div>
+                                }
+                            </div>
                             <p className='w-[200px] text-[#545454] text-[12px] whitespace-nowrap overflow-hidden text-ellipsis'>{tasksName}</p>
                         </div>
                     </div>
                     <div className='relative top-[8px]'>
-                        <CircularProgressbar
-                            value={percentCompletion}
-                            circleRatio={0.50}
-                            strokeWidth={14}
-                            styles={buildStyles({
-                                rotation: 0.75,
-                                strokeLinecap: 'round',
-                                trailColor: '#ffffff1f',
-                                pathColor: color,
-                                pathTransitionDuration: 0.5,
-                            })}
-                            className='h-[50px] w-full'
-                        />
+                        {percentCompletion === 100 ?
+                            <CircularProgressbarWithChildren
+                                value={percentCompletion}
+                                circleRatio={0.50}
+                                strokeWidth={14}
+                                styles={buildStyles({
+                                    rotation: 0.75,
+                                    strokeLinecap: 'round',
+                                    trailColor: '#ffffff1f',
+                                    pathColor: color,
+                                    pathTransitionDuration: 0.5,
+                                })}
+                                className='h-[50px] w-full'
+                            >
+                                <Fire className={'relative top-[-5px] scale-[1.5]'} />
+                            </CircularProgressbarWithChildren> :
+                            <CircularProgressbar
+                                value={percentCompletion}
+                                circleRatio={0.50}
+                                strokeWidth={14}
+                                styles={buildStyles({
+                                    rotation: 0.75,
+                                    strokeLinecap: 'round',
+                                    trailColor: '#ffffff1f',
+                                    pathColor: color,
+                                    pathTransitionDuration: 0.5,
+                                })}
+                                className='h-[50px] w-full'
+                            />
+                        }
                     </div>
                 </div>}
-            {showCircleDetails && <CircleTask SelectedCircle={name} tasks={tasks} date={date} setShowCircleDetails={setShowCircleDetails} setReloadCounter={setReloadCounter}/>}
+            {showCircleDetails && <CircleTask SelectedCircle={name} tasks={tasks} date={date} setShowCircleDetails={setShowCircleDetails} setReloadCounter={setReloadCounter} streak={streak} streakMessage={streakMessage} />}
         </>
     )
 }

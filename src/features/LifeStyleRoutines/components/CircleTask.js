@@ -10,8 +10,9 @@ import {
 import { formatDate, isIPhone } from "../utils.js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Fire from "./Fire";
 
-const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setReloadCounter }) => {
+const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setReloadCounter, streak, streakMessage }) => {
 
     tasks.map((task, index) => (
         console.log("Task ID are" + task?.taskId)
@@ -60,8 +61,14 @@ const CircleTask = ({ SelectedCircle, tasks, date, setShowCircleDetails, setRelo
             <div className="flex p-2">
                 {circleIcons[SelectedCircle]}
                 <h1 className="text-[26px] leading-normal text-white font-sfpro font-medium capitalize p-1">{SelectedCircle}</h1>
+                {streak > 0 &&
+                    <div className="flex flex-row justify-center items-center gap-2 ml-3">
+                        <Fire className={'scale-[2.5]'}/>
+                        <p className="text-[#545454] font-bold text-sm">{streak} {streak > 1 ? 'days' : 'day'}</p>
+                    </div>
+                }
             </div>
-
+            {streakMessage && <p className='text-[#b1b1b1] text-sm'>{streakMessage[0]} <span className='text-[#F5C563]'>{streakMessage[1]}</span></p>}
             <div className='p-2'>
                 {tasks.map((task, index) => (
                     <TaskItem key={task?.taskId} task={task} SelectedCircle={SelectedCircle} index={index} date={date} />

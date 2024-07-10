@@ -8,7 +8,7 @@ function Routines({ circles, date, setReloadCounter }) {
       {
         circles && circles.map(circle => {
           return (
-            <YourCircle name={circle?.name} percentCompletion={circle?.completionPercentage} tasks={circle?.tasks} date={date} setReloadCounter={setReloadCounter} time={circle?.time}/>
+            <YourCircle name={circle?.name} percentCompletion={circle?.completionPercentage} tasks={circle?.tasks} date={date} setReloadCounter={setReloadCounter} time={circle?.time} streak={circle?.streak} streakMessage={circle?.streakMessage}/>
           )
         })
       }

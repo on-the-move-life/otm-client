@@ -21,7 +21,9 @@ const initialState = {
     circles: [],
     memberCode: '',
     completionPercentage: 0
-  }
+  },
+  streak: null,
+  streakMessage: null,
 };
 
 const reducer = (state = initialState, action) => {

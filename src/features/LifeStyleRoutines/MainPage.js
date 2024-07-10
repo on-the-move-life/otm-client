@@ -23,10 +23,12 @@ function MainPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { completionHistory, circles, percentCompletion } = useSelector(state => ({
+  const { completionHistory, circles, percentCompletion, streak, streakMessage } = useSelector(state => ({
     completionHistory: state.completionHistory,
     circles: state.lifeStyleDetails?.circles,
     percentCompletion: state.lifeStyleDetails?.completionHistory,
+    streak: state.streak,
+    streakMessage: state.streakMessage
   }));
 
   const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
@@ -79,6 +81,7 @@ function MainPage() {
             setSelectedDate={setSelectedDate} 
           />
         )}
+        {streakMessage && <p className='text-[#b1b1b1] text-sm'>{streakMessage[0]} <span className='text-[#F5C563]'>{streakMessage[1]}</span></p>}
         {section === 0 ? (
           <Routines circles={circles} date={selectedDate} setReloadCounter={setReloadCounter}/>
         ) : (
