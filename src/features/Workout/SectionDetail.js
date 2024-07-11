@@ -13,7 +13,6 @@ import SwapMovementOptions from './SwapMovementOptions.js';
 import { setIndex } from './WorkoutSlice.js';
 import { CiDumbbell } from 'react-icons/ci';
 import WeightChoosingGuide from './WeightChoosingGuide';
-import ReactPlayer from 'react-player';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -490,22 +489,17 @@ const SectionDetail = () => {
                 )}
                 <div className="flex justify-center">
                   <div className="player-wrapper h-[500px] max-w-[500px]">
-                    {/* <video width="600" controls>
-                    <source
-                      src={
-                        'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4'
-                      }
-                      type="video/mp4"
-                    />
-                    Your browser does not support the video tag.
-                  </video> */}
-                    <ReactPlayer
-                      className="react-player"
-                      url={'https://www.youtube.com/watch?v=KRntP-q_R9s'}
+                    <iframe
                       width="100%"
                       height="100%"
-                      controls={true}
-                    />
+                      src="https://www.youtube.com/embed/KRntP-q_R9s?si=ULkUBJKFXiXfr5yt"
+                      title="YouTube video player"
+                      loading="lazy"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen
+                    ></iframe>
                   </div>
                 </div>
                 <div className="gap-3 scrolling-wrapper">
