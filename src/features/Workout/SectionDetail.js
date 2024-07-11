@@ -29,7 +29,7 @@ const SectionDetail = () => {
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [showSwapOptions, setShowSwapOptions] = useState(false);
   const [showWeightGuide, setShowWeightGuide] = useState(false);
-  const [ispersonalRecordVisible, setIsPpersonalRecordVisible] =
+  const [ispPrsonalRecordVisible, setIsPpersonalRecordVisible] =
     useState(false);
   const lastPage = index === sectionList.length - 1;
 
@@ -88,7 +88,7 @@ const SectionDetail = () => {
   useEffect(() => {
     const keyToCheck = 'personalRecord';
     const isKeyPresent = movements?.some((obj) => keyToCheck in obj);
-    setIsPrRecordVisible(isKeyPresent);
+    setIsPpersonalRecordVisible(isKeyPresent);
   }, [movements]);
 
   const sectionPageAnimation = {
@@ -346,7 +346,7 @@ const SectionDetail = () => {
                   </div>
                 )}
 
-                {ispersonalRecordVisible && (
+                {ispPrsonalRecordVisible === true && (
                   <div
                     onClick={openWeightGuide}
                     className="my-4 flex  h-auto w-full items-center justify-center gap-2 rounded-[6px] bg-[#1C1C1E] py-2 text-white"
