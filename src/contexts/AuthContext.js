@@ -2,7 +2,7 @@
 import { useContext, useReducer, createContext } from 'react';
 import { uiVersion } from '../components/FeatureUpdatePopup';
 import Cookies from 'js-cookie';
-
+import { useEffect } from 'react';
 import axios from 'axios';
 //create a new context
 const AuthContext = createContext();
@@ -102,7 +102,6 @@ function AuthProvider({ children }) {
     reducer,
     initialState,
   );
-
   async function login(body) {
     // api call
     axios
@@ -178,8 +177,12 @@ function AuthProvider({ children }) {
   }
   async function adminLogin(password) {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, { password });
+      const response = await axios.post(`https://otm-main-zwdk.onrender.com/auth/admin-login`, { password });
       if (response.data.success) {
+        const { jwt, expiresIn } = response.data;
+        const expirationTime = new Date().getTime() + expiresIn * 1000;
+        localStorage.setItem('adminJwt', jwt);
+        localStorage.setItem('adminJwtExpiration', expirationTime);
         dispatch({ type: 'adminLogin' });
         return true;
       }
@@ -194,6 +197,23 @@ function AuthProvider({ children }) {
     Cookies.remove('jwt');
     dispatch({ type: 'adminLogout' });
   }
+  function checkAdminAuth() {
+    const jwt = localStorage.getItem('adminJwt');
+    const expiration = localStorage.getItem('adminJwtExpiration');
+    if (jwt && expiration) {
+      if (new Date().getTime() < parseInt(expiration)) {
+        dispatch({ type: 'adminLogin' });
+        return true;
+      } else {
+        adminLogout();
+      }
+    }
+    return false;
+  }
+
+  useEffect(() => {
+    checkAdminAuth();
+  }, []);
 
   function logout() {
     localStorage.removeItem('user');
@@ -234,6 +254,7 @@ function AuthProvider({ children }) {
         isAdmin,
         adminLogin,
         adminLogout,
+        checkAdminAuth
       }}
     >
       {children}

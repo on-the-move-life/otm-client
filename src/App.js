@@ -1,3 +1,4 @@
+//App.js
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Home } from './features/Home';
@@ -18,7 +19,7 @@ import { store } from "./features/LifeStyleRoutines"
 import { AdminLogin } from './features/AdminLogin/AdminLogin';
 import { AdminDashboard } from './features/AdminLogin/AdminDashboard';
 import { useAuth } from './contexts/AuthContext';
-
+import { useEffect,useState } from 'react';
 function App() {
   // const { user, getUserFromStorage } = useAuth();
   let user = localStorage.getItem('user');
@@ -39,7 +40,21 @@ function App() {
     }
   }
   function AdminRouteMiddleware({ children }) {
-    const { isAdmin } = useAuth();
+    const { isAdmin, checkAdminAuth } = useAuth();
+    const [checking, setChecking] = useState(true);
+  
+    useEffect(() => {
+      const check = async () => {
+        await checkAdminAuth();
+        setChecking(false);
+      };
+      check();
+    }, []);
+  
+    if (checking) {
+      return <div>Loading...</div>;
+    }
+  
     return isAdmin ? children : <Navigate to="/admin-login" />;
   }
 

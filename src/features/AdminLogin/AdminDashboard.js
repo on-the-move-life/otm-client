@@ -17,8 +17,11 @@ export function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const jwt = localStorage.getItem('jwt'); // Assuming you store the JWT in localStorage
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/members/active`, {
+      const jwt = localStorage.getItem('adminJwt');
+      if (!jwt) {
+        throw new Error('No admin JWT found');
+      }
+      const response = await axios.get(`https://otm-main-zwdk.onrender.com/api/v1/members/active`, {
         headers: {
           'Authorization': `Bearer ${jwt}`
         }
@@ -30,6 +33,10 @@ export function AdminDashboard() {
       console.error('Error details:', err);
       setError(`Failed to fetch users: ${err.message}`);
       setLoading(false);
+      if (err.message === 'No admin JWT found') {
+        adminLogout();
+        navigate('/admin-login');
+      }
     }
   };
 
