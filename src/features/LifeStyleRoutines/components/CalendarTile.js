@@ -28,7 +28,7 @@ function CalendarTile({ date, percentCompletion, isSelected, setSelectedDate, is
             {isToday && <p className='absolute text-center top-[-15px] mb-1 text-[#929292] text-[20px]'>.</p>}
             <h3 className={`text-[15px] ${isSelected ? 'text-[#7E87EF]' : 'text-[#929292]'}`}>{weekDay}</h3>
             <h4 className={`text-[18px]  ${isSelected ? 'text-[#7E87EF]' : 'text-[#f8f8f8]'}`}>{day}</h4>
-            <div>
+            <div className="w-[27px] h-[27px]">
                 {percentCompletion !== 100 ?
                     <CircularProgressbar
                         value={percentCompletion}
