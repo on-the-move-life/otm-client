@@ -87,7 +87,7 @@ const SectionDetail = () => {
 
   useEffect(() => {
     const keyToCheck = 'personalRecord';
-    const isKeyPresent = movements.some((obj) => keyToCheck in obj);
+    const isKeyPresent = movements?.some((obj) => keyToCheck in obj);
     setIsPrRecordVisible(isKeyPresent);
   }, [movements]);
 
