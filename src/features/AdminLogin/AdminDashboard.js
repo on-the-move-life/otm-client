@@ -29,7 +29,7 @@ export function AdminDashboard() {
   const fetchUsers = async () => {
     try {
       const jwt = localStorage.getItem('adminJwt');
-      const response = await axios.get(`https://otm-main-zwdk.onrender.com/api/v1/members/active`, {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/members/active`, {
         headers: {
           'Authorization': `Bearer ${jwt}`
         }

@@ -178,7 +178,7 @@ function AuthProvider({ children }) {
   }
   async function adminLogin(password) {
     try {
-      const response = await axios.post(`https://otm-main-zwdk.onrender.com/auth/admin-login`, { password });
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, { password });
       if (response.data.success) {
         const { jwt, expiresIn } = response.data;
         const expirationTime = new Date().getTime() + expiresIn * 1000;
