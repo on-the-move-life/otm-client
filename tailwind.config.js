@@ -24,6 +24,7 @@ module.exports = withMT({
        'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
       },
       backgroundImage: {
+        'mealInfo-gradient': 'radial-gradient(50% 50% at 50% 50%, #5ECC7B 49.83%, #F5C563 100%)',
         'landing-cover': "url('../public/assets/landing-cover.png')",
         'green-logo': "url('../public/assets/green-logo.svg')",
         'red-logo': "url('../public/assets/red-logo.svg')",
@@ -34,7 +35,7 @@ module.exports = withMT({
         'lb-down-arrow': "url('../public/assests/downArrow.svg)",
         elipse: "url('../public/assets/elipse.svg')",
         'profile-bg': "url('../public/assets/profile-bg.png')",
-        'achievements-cover': "url('../public/assets/achievements-bg.png')"
+        'achievements-cover': "url('../public/assets/achievements-bg.png')",
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],

@@ -1,4 +1,3 @@
-// AdminDashboard.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -8,35 +7,40 @@ export function AdminDashboard() {
   const { adminLogout, login } = useAuth();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    setFilteredUsers(
+      users.filter(user =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.code.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, users]);
+
   const fetchUsers = async () => {
     try {
       const jwt = localStorage.getItem('adminJwt');
-      if (!jwt) {
-        throw new Error('No admin JWT found');
-      }
       const response = await axios.get(`https://otm-main-zwdk.onrender.com/api/v1/members/active`, {
         headers: {
           'Authorization': `Bearer ${jwt}`
         }
       });
-      console.log('Response:', response);
       setUsers(response.data.data);
+      setFilteredUsers(response.data.data);
       setLoading(false);
     } catch (err) {
       console.error('Error details:', err);
       setError(`Failed to fetch users: ${err.message}`);
       setLoading(false);
-      if (err.message === 'No admin JWT found') {
-        adminLogout();
-        navigate('/admin-login');
-      }
     }
   };
 
@@ -46,10 +50,9 @@ export function AdminDashboard() {
   };
 
   const handleUserLogin = (user) => {
-    // Simulate user login
     const body = {
       email: user.email,
-      password: 'dummyPassword', // You might need to adjust this based on your backend requirements
+      password: 'dummyPassword',
       platform: 'email',
     };
     login(body);
@@ -57,14 +60,14 @@ export function AdminDashboard() {
     navigate('/home');
   };
 
-  if (loading) return <div className="min-h-screen bg-gray-900 text-white p-8">Loading...</div>;
-  if (error) return <div className="min-h-screen bg-gray-900 text-white p-8">Error: {error}</div>;
+  if (loading) return <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">Loading...</div>;
+  if (error) return <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">Error: {error}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold mb-4 md:mb-0">Admin Dashboard</h1>
           <button
             onClick={handleLogout}
             className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -72,19 +75,26 @@ export function AdminDashboard() {
             Logout
           </button>
         </div>
-        <div className="bg-gray-800 rounded-lg shadow-lg p-6">
+        <div className="bg-gray-800 rounded-lg shadow-lg p-4 md:p-6">
           <h2 className="text-2xl font-semibold mb-4">Active Users</h2>
+          <input
+            type="text"
+            placeholder="Search users..."
+            className="w-full p-2 mb-4 bg-gray-700 rounded text-white"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
           <ul className="space-y-4">
-            {users.map((user) => (
-              <li key={user.code} className="flex justify-between items-center bg-gray-700 p-4 rounded-lg">
-                <div>
+            {filteredUsers.map((user) => (
+              <li key={user.code} className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gray-700 p-4 rounded-lg">
+                <div className="mb-2 md:mb-0">
                   <p className="font-semibold">{user.name}</p>
                   <p className="text-sm text-gray-300">{user.email}</p>
                   <p className="text-xs text-gray-400">Code: {user.code}</p>
                 </div>
                 <button
                   onClick={() => handleUserLogin(user)}
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2 md:mt-0"
                 >
                   Login as User
                 </button>

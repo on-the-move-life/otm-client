@@ -6,7 +6,9 @@ import {
   UPDATE_COMPLETION_PERCENTAGE,
   TOGGLE_TASK_COMPLETION,
   CHANGE_MOOD_ICON,
-  SUBMIT_REFLECTION_FEEDBACK
+  SUBMIT_REFLECTION_FEEDBACK,
+  UPDATE_MEALINFO,
+  UPDATE_MEALURL
 } from './actionTypes';
 
 const initialState = {
@@ -100,25 +102,68 @@ const reducer = (state = initialState, action) => {
         }
       }
 
-      case SUBMIT_REFLECTION_FEEDBACK:
-        return {
-          ...state,
-          lifeStyleDetails: {
-            ...state.lifeStyleDetails,
-            circles: state?.lifeStyleDetails?.circles.map(circle =>
-              circle.name === action.payload.circleName
-                ? {
-                  ...circle,
-                  tasks: circle?.tasks.map(task =>
-                    task.taskId === action.payload?.taskId
-                      ? { ...task, feedback: action.payload?.feedbackValue }
-                      : task
-                  )
-                }
-                : circle
-            )
-          }
+    case SUBMIT_REFLECTION_FEEDBACK:
+      return {
+        ...state,
+        lifeStyleDetails: {
+          ...state.lifeStyleDetails,
+          circles: state?.lifeStyleDetails?.circles.map(circle =>
+            circle.name === action.payload.circleName
+              ? {
+                ...circle,
+                tasks: circle?.tasks.map(task =>
+                  task.taskId === action.payload?.taskId
+                    ? { ...task, feedback: action.payload?.feedbackValue }
+                    : task
+                )
+              }
+              : circle
+          )
         }
+      }
+
+    // MEALINFO UPDATE
+    case UPDATE_MEALINFO:
+      return {
+        ...state,
+        lifeStyleDetails: {
+          ...state.lifeStyleDetails,
+          circles: state?.lifeStyleDetails?.circles.map(circle =>
+            circle.name === action.payload.circleName
+              ? {
+                ...circle,
+                tasks: circle?.tasks.map(task =>
+                  task.taskId === action.payload?.taskId
+                    ? { ...task, mealInfo: action.payload?.mealInfo }
+                    : task
+                )
+              }
+              : circle
+          )
+        }
+      }
+
+    // MEALURL UPDATE
+    case UPDATE_MEALURL:
+      return {
+        ...state,
+        lifeStyleDetails: {
+          ...state.lifeStyleDetails,
+          circles: state?.lifeStyleDetails?.circles.map(circle =>
+            circle.name === action.payload.circleName
+              ? {
+                ...circle,
+                tasks: circle?.tasks.map(task =>
+                  task.taskId === action.payload?.taskId
+                    ? { ...task, mealUrl: action.payload?.mealUrl }
+                    : task
+                )
+              }
+              : circle
+          )
+        }
+      }
+
 
     default:
       return state;

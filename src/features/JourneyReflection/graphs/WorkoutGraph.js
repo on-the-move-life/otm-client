@@ -1,66 +1,126 @@
-import React from 'react'
-import { Bar, XAxis, YAxis, ComposedChart, Cell } from 'recharts';
+import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const workoutGraph = ({apiData}) => {
+import {
+  Bar,
+  XAxis,
+  YAxis,
+  ComposedChart,
+  Cell,
+  ResponsiveContainer,
+  CartesianGrid,
+  Line,
+  Tooltip,
+} from 'recharts';
+import { CustomizedWorkoutLabel } from '../CustomizedWorkoutLabel';
+import ParabolicBar from './bar/ParabolicBar';
+
+const WorkoutGraph = ({ apiData }) => {
+  const [chartWidth, setChartWidth] = useState(400);
+
   const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    'Jan',
+    'Feb',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
-  
-  const formattedData = apiData?.data?.monthlyConsistency?.map(item => ({
+
+  useEffect(() => {
+    const handleResize = () => {
+      setChartWidth(window.innerWidth < 430 ? window.innerWidth - 20 : 400);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const formattedData = apiData?.data?.monthlyConsistency?.map((item) => ({
     ...item,
-    MonthYear: `${monthNames[item.Month - 1]} ${item.Year}`
+    MonthYear: `${monthNames[item.Month - 1]} ${item.Year}`,
   }));
-  
-  const getBarColor = (workoutnumber) => {
-    if (workoutnumber < 12) return '#FA5757';
-    if (workoutnumber >= 12 && workoutnumber <= 20) return '#DDF988';
-    if (workoutnumber > 20) return '#5ECC7B';
-  };
-  const getPath = (x, y, width, height) => {
-    return `M${x},${y + height}
-      C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
-      ${x + width / 2},${y}
-      C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${
-        y + height
-      } ${x + width},${y + height}
-      Z`;
-  };
-  const CustomBarShape = (props) => {
-    const { x, y, width, height, fill } = props;
-    return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
-  };
-  //const BellBarShape = (props) => {
-  //const { x, y, width, height, fill } = props;
-  //const path = `
-  //M${x},${y + height}
-  //Q${x + width / 2},${y - height}
-  //${x + width},${y + height}
-  //Z
-  //`;
-  //return <path d={path} stroke="none" fill={fill} />;
-  //};
+
   return (
-    <div className="flex h-auto flex-shrink-0 sm:ml-0 ml-[80px] px-4">
-      <div className="">
+    <div className="mx-auto my-auto mt-5 max-w-[450px]">
+      <ResponsiveContainer width="95%" height={200}>
         <ComposedChart
           width={500}
           height={300}
           data={formattedData}
-          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
         >
-          <XAxis dataKey="MonthYear" tick={{ fontSize: 9 }} />
-          <YAxis />
-          <Bar dataKey="Count" fill="#8884d8" shape={<CustomBarShape />}>
-            {apiData?.data?.monthlyConsistency?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getBarColor(entry.Count)} />
-            ))}
-          </Bar>
+          <XAxis
+            tick={{ width: 55, fontSize: 13 }}
+            padding={{ left: 6, right: 8 }}
+            dataKey="MonthYear"
+            className="pt-7"
+            label={<CustomizedWorkoutLabel chartWidth={chartWidth} />}
+            interval={'preserveStartEnd'}
+          />
+          <YAxis
+            domain={[0, 20]}
+            label={{
+              value: 'NO. OF WORKOUTS',
+              angle: -90,
+              fontSize: 12,
+              position: 'insideBottomLeft',
+              offset: 25,
+            }}
+            axisLine={false}
+            className="mt-7"
+            tick={{ fontSize: 12 }}
+            tickCount={6} // This sets the number of ticks on the Y-axis
+            interval="preserveEnd"
+          />
+          <Tooltip
+            content={({ payload }) => {
+              if (payload && payload.length > 0) {
+                const { payload: tooltipPayload } = payload[0];
+                return (
+                  <div className="custom-tooltip rounded-md border border-[#1c1c1e] bg-black  p-2 text-[#808080]">
+                    <p>{`Date: ${tooltipPayload.MonthYear}`}</p>
+                    <p>{`Count: ${tooltipPayload.Count}`}</p>
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
+          <CartesianGrid opacity={0.3} vertical={false} />
+          <Bar
+            dataKey="Count"
+            fill="#8884d8"
+            shape={
+              <ParabolicBar
+                controlPointOffset={15}
+                data={apiData?.data?.monthlyConsistency?.map((entry, index) => (
+                  <Cell key={`cell-${index}`} />
+                ))}
+              />
+            }
+          />
+          <Line
+            dot={false}
+            type="monotone"
+            dataKey="Count"
+            stroke="#7D86EB"
+            strokeWidth={2}
+          />
         </ComposedChart>
-      </div>
+      </ResponsiveContainer>
     </div>
   );
+};
 
-}
-
-export default workoutGraph
+export default WorkoutGraph;

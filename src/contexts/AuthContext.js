@@ -1,4 +1,5 @@
 //AuthContext.js
+//AuthContext.js
 import { useContext, useReducer, createContext } from 'react';
 import { uiVersion } from '../components/FeatureUpdatePopup';
 import Cookies from 'js-cookie';
@@ -236,6 +237,9 @@ function AuthProvider({ children }) {
       return user;
     }
   }
+  function resetError() {
+    dispatch({ type: 'resetError' });
+  }
 
   return (
     <AuthContext.Provider
@@ -255,6 +259,7 @@ function AuthProvider({ children }) {
         adminLogin,
         adminLogout,
         checkAdminAuth
+        
       }}
     >
       {children}

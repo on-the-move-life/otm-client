@@ -7,10 +7,10 @@ import { formatDate } from '../../utils';
 import { axiosClient } from './apiClient';
 import { FaUserCircle } from 'react-icons/fa';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { BsImageFill } from "react-icons/bs";
-import { IoMdTrash } from "react-icons/io";
-import { IoCamera } from "react-icons/io5";
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { BsImageFill } from 'react-icons/bs';
+import { IoMdTrash } from 'react-icons/io';
+import { IoCamera } from 'react-icons/io5';
 import { Error } from '../../components';
 import ProfilePicture from './ProfilePicture';
 import axios from 'axios';
@@ -19,25 +19,25 @@ import { motion } from 'framer-motion';
 import { MonthlyWrapped } from '../Home';
 
 const ProfilePicHeading = styled.div`
-color: #D7D7D7;
-text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 20px;
-font-style: normal;
-line-height: 29.066px; /* 160% */
-text-transform: capitalize;
-letter-spacing: 1px;
-`
+  color: #d7d7d7;
+  text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 29.066px; /* 160% */
+  text-transform: capitalize;
+  letter-spacing: 1px;
+`;
 const IconLabel = styled.div`
-color: #D7D7D7;
-text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 15px;
-font-style: normal;
-line-height: 29.066px; /* 160% */
-text-transform: capitalize;
-letter-spacing: 1px;
-`
+  color: #d7d7d7;
+  text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  line-height: 29.066px; /* 160% */
+  text-transform: capitalize;
+  letter-spacing: 1px;
+`;
 
 const UserDetails = ({ showHistory }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -108,14 +108,17 @@ const UserDetails = ({ showHistory }) => {
       formData.append('profilePicture', file);
       formData.append('email', JSON.parse(localStorage.getItem('user')).email);
       axios
-        .post(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`, formData)
-        .then(res => {
+        .post(
+          `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/profile-picture`,
+          formData,
+        )
+        .then((res) => {
           console.log('profile picture updated!');
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           setProfilePicError(true);
-        })
+        });
     }
   }
 
@@ -127,17 +130,17 @@ const UserDetails = ({ showHistory }) => {
     axiosClient
       .delete('/profile-picture', {
         data: {
-          email: email
-        }
+          email: email,
+        },
       })
-      .then(res => {
-        console.log('profile picture deleted!')
+      .then((res) => {
+        console.log('profile picture deleted!');
         window.location.reload();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         setProfilePicError(true);
-      })
+      });
   }
 
   const modalVariants = {
@@ -159,43 +162,60 @@ const UserDetails = ({ showHistory }) => {
   return (
     <AnimatedComponent>
       {/* profile pic update popup */}
-      {showProfilePicPopup &&
+      {showProfilePicPopup && (
         <motion.div
-          className='w-full h-[200px] rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 backdrop-blur-lg fixed bottom-0 left-0 z-50 p-5'
+          className="fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 p-5 backdrop-blur-lg"
           initial="hidden"
-          animate={showProfilePicPopup ? "visible" : "hidden"}
+          animate={showProfilePicPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
         >
-          <button className='absolute top-0 left-[47%] cursor-pointer' onClick={() => setShowProfilePicPopup(false)}>
-            <MdOutlineKeyboardArrowDown size={30} color='#D7D7D7' />
+          <button
+            className="absolute left-[47%] top-0 cursor-pointer"
+            onClick={() => setShowProfilePicPopup(false)}
+          >
+            <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
           </button>
-          <div className='w-full flex flex-col items-start justify-around h-full mt-3 '>
+          <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
             <ProfilePicHeading>Profile photo</ProfilePicHeading>
-            <div className='w-full flex flex-row justify-start gap-[40px] items-center'>
-              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicCameraRef.current.click()}>
-                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                  <IoCamera size={30} color='#5ECC7B' />
+            <div className="flex w-full flex-row items-center justify-start gap-[40px]">
+              <div
+                className="flex w-fit flex-col items-center justify-center gap-1"
+                onClick={() => profilePicCameraRef.current.click()}
+              >
+                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
+                  <IoCamera size={30} color="#5ECC7B" />
                 </button>
                 <IconLabel>Camera</IconLabel>
               </div>
-              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={() => profilePicRef.current.click()}>
-                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                  <BsImageFill size={30} color='#5ECC7B' />
+              <div
+                className="flex w-fit flex-col items-center justify-center gap-1"
+                onClick={() => profilePicRef.current.click()}
+              >
+                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
+                  <BsImageFill size={30} color="#5ECC7B" />
                 </button>
                 <IconLabel>Gallery</IconLabel>
               </div>
-              <div className='w-fit flex flex-col justify-center items-center gap-1' onClick={handlePicDelete}>
-                <button className='border-gray-500 border-[0.5px] rounded-full p-3 cursor-pointer'>
-                  <IoMdTrash size={30} color='gray' />
+              <div
+                className="flex w-fit flex-col items-center justify-center gap-1"
+                onClick={handlePicDelete}
+              >
+                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
+                  <IoMdTrash size={30} color="gray" />
                 </button>
                 <IconLabel>Delete</IconLabel>
               </div>
             </div>
           </div>
-        </motion.div>}
+        </motion.div>
+      )}
       {memberData && (
-        <div className="h-screen w-screen overflow-x-auto px-4 pb-32 pt-8">
-          {profilePicError && <div className='h-full w-full fixed top-0 z-50 bg-black'><Error>Oops! Something went wrong...</Error></div>}
+        <div className="h-screen w-screen overflow-x-auto px-4 pb-4 pt-8">
+          {profilePicError && (
+            <div className="fixed top-0 z-50 h-full w-full bg-black">
+              <Error>Oops! Something went wrong...</Error>
+            </div>
+          )}
           <div className="mb-4">
             <HiArrowNarrowLeft
               size={20}
@@ -211,21 +231,49 @@ const UserDetails = ({ showHistory }) => {
           {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
             <div className="mt-6 flex flex-col items-center justify-center gap-1">
-              <div className='w-[100px] h-[100px] rounded-full relative'>
-                {
-                  chosenPic ?
-                    <ProfilePicture inputPic={chosenPic} altText={'profile picture'} height={"100px"} width={"100px"} /> :
-                    memberData && memberData?.profilePicture ?
-                      <ProfilePicture inputPic={uniqueImageURLKey} altText={'profile picture'} height={"100px"} width={"100px"} /> :
-                      <FaUserCircle size={100} color={'#91BDF6'} />
-                }
-                <button className='w-[40px] h-[40px] flex flex-row justify-center items-center rounded-full bg-green absolute bottom-0 right-0' onClick={() => {
-                  setShowProfilePicPopup(true);
-                }}>
+              <div className="relative h-[100px] w-[100px] rounded-full">
+                {chosenPic ? (
+                  <ProfilePicture
+                    inputPic={chosenPic}
+                    altText={'profile picture'}
+                    height={'100px'}
+                    width={'100px'}
+                  />
+                ) : memberData && memberData?.profilePicture ? (
+                  <ProfilePicture
+                    inputPic={uniqueImageURLKey}
+                    altText={'profile picture'}
+                    height={'100px'}
+                    width={'100px'}
+                  />
+                ) : (
+                  <FaUserCircle size={100} color={'#91BDF6'} />
+                )}
+                <button
+                  className="absolute bottom-0 right-0 flex h-[40px] w-[40px] flex-row items-center justify-center rounded-full bg-green"
+                  onClick={() => {
+                    setShowProfilePicPopup(true);
+                  }}
+                >
                   <IoCamera size={25} color="black" />
                 </button>
-                <input ref={profilePicRef} type='file' accept='image/png, image/jpg, image/jpeg' name="profile image" hidden onInput={handlePicChange}></input>
-                <input ref={profilePicCameraRef} type='file' capture="user" accept='image/png, image/jpg, image/jpeg' name="profile image camera" hidden onInput={handlePicChange}></input>
+                <input
+                  ref={profilePicRef}
+                  type="file"
+                  accept="image/png, image/jpg, image/jpeg"
+                  name="profile image"
+                  hidden
+                  onInput={handlePicChange}
+                ></input>
+                <input
+                  ref={profilePicCameraRef}
+                  type="file"
+                  capture="user"
+                  accept="image/png, image/jpg, image/jpeg"
+                  name="profile image camera"
+                  hidden
+                  onInput={handlePicChange}
+                ></input>
               </div>
               <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
                 {memberData.name}
@@ -250,10 +298,40 @@ const UserDetails = ({ showHistory }) => {
             <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
               <div className=" flex h-full flex-col justify-around">
                 <section>
-                  <div className="workout-gradient-text text-3xl font-medium leading-10">
+                  <div className="workout-gradient-text text-2xl font-medium leading-10">
+                    Book a Call
+                  </div>
+                  <div
+                    className="pt-2 "
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
+                  <div className='text-white text-[14px]'>
+                    <p>Easily schedule a one-on-one call with your coach for personalised guidance and mentoring.</p>
+                  </div>
+                  </div>
+                </section>
+                <section className="flex flex-col items-center ">
+                  <div
+                    className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                    onClick={() => window.open('https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach', '_blank')}
+                  >
+                    <button className="text-lg font-medium text-white">
+                      Book Here
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
+              <div className=" flex h-full flex-col justify-around">
+                <section>
+                  <div className="workout-gradient-text text-2xl font-medium leading-10">
                     Membership
                   </div>
-                  <div className="pt-2 " onClick={() => setShowProfilePicPopup(false)}>
+                  <div
+                    className="pt-2 "
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
                     {memberData.isPaymentDue ? (
                       <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
                         <div className="relative h-3 w-3">
@@ -279,21 +357,24 @@ const UserDetails = ({ showHistory }) => {
                   {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
                   <div className="text-lg font-medium text-black">Pay now</div>
                 </div> */}
-                  <div className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5">
-                    <button
-                      className="text-lg font-medium text-white"
-                      onClick={() => showHistory()}
-                    >
+                  <div
+                    className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                    onClick={() => showHistory()}
+                  >
+                    <button className="text-lg font-medium text-white">
                       Check payment history
                     </button>
                   </div>
                 </section>
               </div>
             </div>
-            <div className="w-full flex flex-col mt-52" onClick={() => {
-              setShowProfilePicPopup(false);
-              handleLogout();
-            }}>
+            <div
+              className="mt-8 flex w-full flex-col"
+              onClick={() => {
+                setShowProfilePicPopup(false);
+                handleLogout();
+              }}
+            >
               <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
                 <div className="relative h-5 w-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />

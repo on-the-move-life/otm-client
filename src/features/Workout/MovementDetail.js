@@ -1,3 +1,4 @@
+//MovementDetail.js
 import { HiX } from 'react-icons/hi';
 import ChartComponent from './ChartComponent';
 //import AnimatedComponent from '../../components/AnimatedComponent';

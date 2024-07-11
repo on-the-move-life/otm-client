@@ -76,7 +76,7 @@ function App() {
         <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />
         <Route path="/questionnaire/fitness-score" element={<RouteMiddleware><FitnessScoreScreen /></RouteMiddleware>} />
         <Route path="/questionnaire/lifestyle" element={<LifeStyle />} />
-        <Route path="/:sessionID" element={<Report />} />
+        <Route path="/questionnaire/lifestyle/result/:sessionID" element={<Report />} />
         <Route path="/section-details" element={<RouteMiddleware><SectionDetail /></RouteMiddleware>} />
         <Route path="/workout" element={<RouteMiddleware><Workout /></RouteMiddleware>} />
         <Route path="/workout-summary" element={<RouteMiddleware><WorkoutSummary /></RouteMiddleware>} />
