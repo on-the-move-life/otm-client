@@ -13,7 +13,7 @@ import SwapMovementOptions from './SwapMovementOptions.js';
 import { setIndex } from './WorkoutSlice.js';
 import { CiDumbbell } from 'react-icons/ci';
 import WeightChoosingGuide from './WeightChoosingGuide';
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
