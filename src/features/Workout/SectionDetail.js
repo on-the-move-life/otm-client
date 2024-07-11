@@ -13,6 +13,7 @@ import SwapMovementOptions from './SwapMovementOptions.js';
 import { setIndex } from './WorkoutSlice.js';
 import { CiDumbbell } from 'react-icons/ci';
 import WeightChoosingGuide from './WeightChoosingGuide';
+import ReactPlayer from 'react-player/lazy';
 
 const SectionDetail = () => {
   const navigate = useNavigate();
@@ -20,7 +21,187 @@ const SectionDetail = () => {
 
   const { workout, index } = useSelector((store) => store.workoutReducer);
 
-  const sectionList = workout?.program || [];
+  const dummyData = [
+    {
+      code: 'MOB',
+      name: 'Warmup',
+      format: '2 Rounds',
+      movements: [
+        {
+          _id: '66792eb47a5749d8bedaac53',
+          bucket: 'Scapular',
+          section: 'Mobility',
+          res_section: '',
+          tag: [''],
+          code: 'WSL',
+          name: 'Wallslideere',
+          hint: '',
+          equipment: [''],
+          variation: ['seated'],
+          rep_range: '30-41 sec',
+          beg_rep_range: '',
+          adv_rep_range: '',
+          link: [
+            'https://storage.googleapis.com/otm_web_assets/OTM%20GIFS%202/Wall%20slides%20-%20Made%20with%20Clipchamp.gif',
+          ],
+          alt_basic_equipment: [''],
+          alt_no_equipment: [''],
+          alt_skill_equipment: [''],
+          focus_area: ['Shoulders'],
+          setup: [
+            'Stand with back against a wall',
+            ' arms bent at 90 degrees',
+            ' slide arms up and down the wall',
+            '',
+          ],
+          execution: [
+            'Keep elbows and wrists in contact with the wall throughout the movement',
+            '',
+          ],
+          completion: [
+            'Complete the desired number of reps',
+            ' Keep your core engaged',
+            '',
+          ],
+          key_tips: [
+            'Focus on keeping the entire arm in contact with the wall',
+            ' Keep movements controlled',
+            '',
+          ],
+          count: 1,
+          reps: '30-45 sec',
+          fullName: ' Wallslidessdsdf ',
+        },
+        {
+          _id: '66792eb47a5749d8bedaac51',
+          bucket: 'Scapular',
+          section: 'Mobility',
+          res_section: '',
+          tag: [''],
+          code: 'TSE',
+          name: 'Wall t-spine extensions',
+          hint: '',
+          equipment: [''],
+          variation: ['wall'],
+          rep_range: '10-12',
+          beg_rep_range: '',
+          adv_rep_range: '',
+          link: [
+            'https://storage.googleapis.com/otm_web_assets/OTM%20GIFS%202/Wall%20t-spine%20extensions%20-%20Made%20with%20Clipchamp.gif',
+          ],
+          alt_basic_equipment: [''],
+          alt_no_equipment: [''],
+          alt_skill_equipment: [''],
+          focus_area: ['Spine'],
+          setup: [
+            'Stand facing a wall with hands on the wall at shoulder height',
+            ' lean in and arch back',
+            '',
+          ],
+          execution: [
+            'Hold the stretch for a few seconds',
+            ' then return to standing',
+            '',
+          ],
+          completion: [
+            'Complete the desired number of reps',
+            ' Keep your core engaged',
+            '',
+          ],
+          key_tips: [
+            'Focus on arching through the upper back',
+            ' Keep breathing steady',
+            '',
+          ],
+          count: 1,
+          reps: '10-12',
+          fullName: ' Wall t-spine extensions ',
+        },
+        {
+          _id: '66792eb47a5749d8bedaac50',
+          bucket: 'Scapular',
+          section: 'Mobility',
+          res_section: '',
+          tag: [''],
+          code: 'TSER',
+          name: 'Wall t-spine extension raises',
+          hint: '',
+          equipment: [''],
+          variation: ['wall'],
+          rep_range: '10-12',
+          beg_rep_range: '',
+          adv_rep_range: '',
+          link: [
+            'https://storage.googleapis.com/otm_web_assets/OTM%20GIFS%202/Wall%20t-spine%20extension%20raises%20-%20Made%20with%20Clipchamp.gif',
+          ],
+          alt_basic_equipment: [''],
+          alt_no_equipment: [''],
+          alt_skill_equipment: [''],
+          focus_area: ['Spine'],
+          setup: [
+            'Stand facing a wall with hands on the wall at shoulder height',
+            ' lean in and raise arms overhead',
+            '',
+          ],
+          execution: [
+            'Keep arms straight and raise them overhead',
+            ' then lower back down',
+            '',
+          ],
+          completion: [
+            'Complete the desired number of reps',
+            ' Keep your core engaged',
+            '',
+          ],
+          key_tips: [
+            'Focus on arching through the upper back',
+            ' Keep movements controlled',
+            ' Keep breathing steady',
+            '',
+          ],
+          count: 1,
+          reps: '10-12',
+          fullName: ' Wall t-spine extension raises ',
+        },
+      ],
+      sectionMain:
+        '2 Rounds\n30-41 sec  Wallslidesaa \n10-12  Wall t-spine extensions \n10-12  Wall t-spine extension raises \n\n',
+      links: [
+        [
+          'https://storage.googleapis.com/otm_web_assets/OTM%20GIFS%202/Wall%20slides%20-%20Made%20with%20Clipchamp.gif',
+        ],
+        [
+          'https://storage.googleapis.com/otm_web_assets/OTM%20GIFS%202/Wall%20t-spine%20extensions%20-%20Made%20with%20Clipchamp.gif',
+        ],
+        [
+          'https://storage.googleapis.com/otm_web_assets/OTM%20GIFS%202/Wall%20t-spine%20extension%20raises%20-%20Made%20with%20Clipchamp.gif',
+        ],
+      ],
+      sectionFooter: '',
+      dataInput: [
+        {
+          id: 'MOB-rounds',
+          label: 'Rounds Completed',
+          placeholder: 0,
+          type: 'select',
+          options: [0, 1, 2, 3, 4, 5],
+        },
+        {
+          id: 'MOB-comment',
+          label: 'Comment',
+          placeholder: 'enter your comment here...',
+          type: 'textarea',
+        },
+      ],
+      notes: [],
+      meta: null,
+      rounds: '2',
+      description:
+        'The strength in your flexibility, helps increase your range of motion and performance.',
+    },
+  ];
+
+  const sectionList = dummyData;
 
   const [currentSection, setCurrentSection] = useState([]);
   const [showLevel, setShowLevel] = useState(false);
@@ -30,16 +211,16 @@ const SectionDetail = () => {
   const [showSwapOptions, setShowSwapOptions] = useState(false);
   const [showWeightGuide, setShowWeightGuide] = useState(false);
 
-  const lastPage = index === sectionList.length - 1;
+  const lastPage = 0 === sectionList.length - 1;
 
   const handleNext = () => {
-    const newIndex = index + 1;
+    const newIndex = 0 + 1;
     dispatch(setIndex(newIndex));
     setCurrentSection(sectionList[newIndex]);
   };
 
   const handlePrevious = () => {
-    const newIndex = index - 1;
+    const newIndex = 0 - 1;
     if (newIndex === -1) {
       return;
     }
@@ -76,13 +257,13 @@ const SectionDetail = () => {
   const movementLength = movements.length;
 
   useEffect(() => {
-    console.log('section index : ', index);
-    if (Object.keys(workout).length === 0) {
-      window.location.replace('/workout');
-    } else {
-      setCurrentSection(sectionList[index]);
-    }
-  }, [workout, index, sectionList]);
+    // console.log('section index : ', index);
+    // if (Object.keys(workout).length === 0) {
+    //   window.location.replace('/workout');
+    // } else {
+    setCurrentSection(sectionList[index]);
+    // }
+  }, []);
   const sectionPageAnimation = {
     initial: {
       opacity: 0,
@@ -126,7 +307,7 @@ const SectionDetail = () => {
         !showMvmtDetail &&
         Object.keys(workout).length !== 0 &&
         !showSwapOptions && (
-          <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
+          <div className="w-screen h-screen pt-8 overflow-x-hidden max-h-fit">
             <AnimatedComponent
               key={Math.random() * 1000}
               animation={sectionPageAnimation}
@@ -158,7 +339,7 @@ const SectionDetail = () => {
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                           strokeWidth={2}
-                          className="h-7 w-7 cursor-pointer pb-1 text-green"
+                          className="pb-1 cursor-pointer h-7 w-7 text-green"
                         >
                           <path
                             strokeLinecap="round"
@@ -168,7 +349,7 @@ const SectionDetail = () => {
                         </svg>
                       </Tooltip>
                     </div>
-                    <h1 className="workout-gradient-text pb-2 text-3xl">
+                    <h1 className="pb-2 text-3xl workout-gradient-text">
                       {name}
                     </h1>
                   </div>
@@ -179,12 +360,12 @@ const SectionDetail = () => {
 
                 <div className="h-0 w-screen border-b-[0.5px] border-[#2E2E2E]"></div>
                 {code === 'METCON' && (
-                  <div className="my-6 flex flex-col">
+                  <div className="flex flex-col my-6">
                     <span className="text-sm tracking-widest text-green">
                       TODAY'S FORMAT
                     </span>
                     <div className="flex flex-col">
-                      <span className=" workout-gradient-text text-2xl uppercase">
+                      <span className="text-2xl uppercase workout-gradient-text">
                         {formatInfo?.name}
                       </span>
                       {formatInfo?.name !== 'EMOM' &&
@@ -204,7 +385,7 @@ const SectionDetail = () => {
                   </div>
                 )}
 
-                <div className="max-w-10/12 my-12 flex max-h-20 rounded-lg">
+                <div className="flex my-12 rounded-lg max-w-10/12 max-h-20">
                   <div className="flex items-center justify-center">
                     {movements && movementLength > 1 && (
                       <div className="h-fit w-fit">
@@ -232,7 +413,7 @@ const SectionDetail = () => {
                   </div>
 
                   {code !== 'METCON' && code !== 'FEED' && (
-                    <div className="flex w-1/6 grow items-center justify-around text-green">
+                    <div className="flex items-center justify-around w-1/6 grow text-green">
                       {movements && movementLength > 1 && (
                         <div>
                           <img src={'/assets/bracket-arrow.svg'} alt="" />
@@ -251,7 +432,7 @@ const SectionDetail = () => {
                       setShowLevel(true);
                     }}
                   >
-                    <span className=" text-center text-sm tracking-wider">
+                    <span className="text-sm tracking-wider text-center ">
                       Check Skill Progression
                     </span>
                     <span className="mx-1">
@@ -261,17 +442,17 @@ const SectionDetail = () => {
                 )}
 
                 {code === 'METCON' && (
-                  <div className="my-6 flex justify-around">
+                  <div className="flex justify-around my-6">
                     <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
-                      <span className=" text-xs text-lightGray">
+                      <span className="text-xs text-lightGray">
                         {formatInfo?.name === 'AMRAP'
                           ? 'Target Rounds'
                           : 'Target Time'}
                       </span>
-                      <div className="flex h-full w-full items-center justify-center text-green">
+                      <div className="flex items-center justify-center w-full h-full text-green">
                         <span className="text-3xl">{formatInfo.target}</span>
                         {formatInfo?.name !== 'AMRAP' && (
-                          <span className="pl-1 pt-3 text-xs tracking-widest">
+                          <span className="pt-3 pl-1 text-xs tracking-widest">
                             MINS
                           </span>
                         )}
@@ -279,53 +460,73 @@ const SectionDetail = () => {
                     </div>
 
                     <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
-                      <span className=" text-xs text-lightGray">
+                      <span className="text-xs text-lightGray">
                         Current Intensity
                       </span>
-                      <div className="flex h-full w-full items-center justify-center text-green">
+                      <div className="flex items-center justify-center w-full h-full text-green">
                         <span className="text-3xl">
                           {formatInfo?.currentIntensity}
                         </span>
-                        <span className="text-md pl-1 pt-3 tracking-widest">
+                        <span className="pt-3 pl-1 tracking-widest text-md">
                           %
                         </span>
                       </div>
                     </div>
 
                     <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
-                      <span className=" text-xs text-lightGray">
+                      <span className="text-xs text-lightGray">
                         Target Intensity
                       </span>
-                      <div className="flex h-full w-full items-center justify-center text-green">
+                      <div className="flex items-center justify-center w-full h-full text-green">
                         <span className="text-3xl">
                           {formatInfo?.targetIntensity}
                         </span>
-                        <span className="text-md pl-1 pt-3 tracking-widest">
+                        <span className="pt-3 pl-1 tracking-widest text-md">
                           %
                         </span>
                       </div>
                     </div>
                   </div>
                 )}
-
-                <div className="scrolling-wrapper gap-3">
+                <div className="flex justify-center">
+                  <div className="player-wrapper h-[500px] max-w-[500px]">
+                    {/* <video width="600" controls>
+                    <source
+                      src={
+                        'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4'
+                      }
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video> */}
+                    <ReactPlayer
+                      className="react-player"
+                      url={'https://www.youtube.com/watch?v=KRntP-q_R9s'}
+                      width="100%"
+                      height="100%"
+                      controls={true}
+                    />
+                  </div>
+                </div>
+                <div className="gap-3 scrolling-wrapper">
                   {movements.map((movement) => {
                     return (
-                      <Movement
-                        movement={movement}
-                        key={movement._id}
-                        sectionCode={code}
-                        movementLength={movementLength}
-                        openMovementDetail={openMovementDetail}
-                        setShowSwapOptions={setShowSwapOptions}
-                      />
+                      <></>
+                      // <Movement
+                      //   movement={movement}
+                      //   key={movement._id}
+                      //   sectionCode={code}
+                      //   movementLength={movementLength}
+                      //   openMovementDetail={openMovementDetail}
+                      //   setShowSwapOptions={setShowSwapOptions}
+                      // />
                     );
                   })}
                 </div>
                 {(code === 'GYM' || (code === 'ASMT' && notes.length > 0)) && (
                   <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
                     <p className="mb-2 text-xs tracking-[3px]">NOTES</p>
-                    <ul className="list-disc pl-3">
+                    <ul className="pl-3 list-disc">
                       {notes.map((note, idx) => (
                         <li
                           className="my-2 text-xs font-light tracking-wider text-lightGray"
@@ -347,7 +548,7 @@ const SectionDetail = () => {
                   <span className="text-sm">Weight Choosing Guide</span>
                 </div>
                 <div>
-                  <h2 className="workout-gradient-text my-4 text-2xl">
+                  <h2 className="my-4 text-2xl workout-gradient-text">
                     Data Inputs
                   </h2>
                   {dataInput.map((input, index) => (
@@ -377,7 +578,7 @@ const SectionDetail = () => {
               </div>
 
               <div>
-                <h2 className="workout-gradient-text mb-4 mt-8 text-2xl">
+                <h2 className="mt-8 mb-4 text-2xl workout-gradient-text">
                   Data Inputs
                 </h2>
                 {dataInput.map((input, index) => (
@@ -393,10 +594,10 @@ const SectionDetail = () => {
 
               {/* {!lastPage && (
               <div
-                className="mt-4 flex items-center justify-center"
+                className="flex items-center justify-center mt-4"
                 onClick={() => navigate('/workout')}
               >
-                <div className="flex items-center rounded bg-red p-1 font-bold text-black">
+                <div className="flex items-center p-1 font-bold text-black rounded bg-red">
                   <span>EXIT WORKOUT</span>
                   <span className="ml-2">
                     <HiX color="black" size={20} />
@@ -418,7 +619,7 @@ const SectionDetail = () => {
 
               {lastPage ? (
                 <div
-                  className="flex h-full w-3/4 flex-col items-center justify-center bg-theme"
+                  className="flex flex-col items-center justify-center w-3/4 h-full bg-theme"
                   onClick={() => setShowAlertDialog(true)}
                 >
                   <span className="text-2xl tracking-widest text-green">
@@ -426,7 +627,7 @@ const SectionDetail = () => {
                   </span>
                 </div>
               ) : (
-                <div className="flex h-full w-3/4 flex-col items-center justify-center bg-theme">
+                <div className="flex flex-col items-center justify-center w-3/4 h-full bg-theme">
                   <span className="text-xs tracking-widest text-lightGray">
                     SECTION
                   </span>
