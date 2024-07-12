@@ -29,9 +29,10 @@ const SectionDetail = () => {
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [showSwapOptions, setShowSwapOptions] = useState(false);
   const [showWeightGuide, setShowWeightGuide] = useState(false);
-  const [ispPrsonalRecordVisible, setIsPpersonalRecordVisible] =
-    useState(false);
+
   const lastPage = index === sectionList.length - 1;
+
+  const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
 
   const handleNext = () => {
     const newIndex = index + 1;
@@ -76,6 +77,10 @@ const SectionDetail = () => {
 
   const movementLength = movements.length;
 
+  const isSectionCodeAvailable = sectionWithLoadArray.includes(code);
+
+  console.log('xxxxx', isSectionCodeAvailable);
+
   useEffect(() => {
     console.log('section index : ', index);
     if (Object.keys(workout).length === 0) {
@@ -84,12 +89,6 @@ const SectionDetail = () => {
       setCurrentSection(sectionList[index]);
     }
   }, [workout, index, sectionList]);
-
-  useEffect(() => {
-    const keyToCheck = 'personalRecord';
-    const isKeyPresent = movements?.some((obj) => keyToCheck in obj);
-    setIsPpersonalRecordVisible(isKeyPresent);
-  }, [movements]);
 
   const sectionPageAnimation = {
     initial: {
@@ -122,7 +121,7 @@ const SectionDetail = () => {
       {showMvmtDetail && (
         <MovementDetail
           movement={selectedMovement}
-          sectionCode={currentSection.code}
+          isSectionCodeAvailable={isSectionCodeAvailable}
           closeMovementDetail={closeMovementDetail}
         />
       )}
@@ -322,7 +321,7 @@ const SectionDetail = () => {
                       <Movement
                         movement={movement}
                         key={movement._id}
-                        sectionCode={code}
+                        isSectionCodeAvailable={isSectionCodeAvailable}
                         movementLength={movementLength}
                         openMovementDetail={openMovementDetail}
                         setShowSwapOptions={setShowSwapOptions}
@@ -346,7 +345,7 @@ const SectionDetail = () => {
                   </div>
                 )}
 
-                {ispPrsonalRecordVisible === true && (
+                {isSectionCodeAvailable && (
                   <div
                     onClick={openWeightGuide}
                     className="my-4 flex  h-auto w-full items-center justify-center gap-2 rounded-[6px] bg-[#1C1C1E] py-2 text-white"
