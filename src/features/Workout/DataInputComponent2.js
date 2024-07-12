@@ -10,14 +10,17 @@ const DataInputComponent = ({
     label,
     // value,
     twClasses,
+    options,
+    unitId
 }) => {
     const selectInputRef = useRef('');
     const textInputRef = useRef('');
     const [storedValue, setValue, getItem] = useLocalStorage(inputId, '');
+    const [storedUnitValue, setUnitValue, getUnitValue] = useLocalStorage(unitId, '');
     const [storedInputValues, setStoredInputValues, getStoredInputValues] = useLocalStorage('inputIds', []);
 
-    const handleInputChange = (value) => {
-        setValue(value);
+    const handleInputChange = (value, inputId) => {
+        inputId.includes('unit') ? setUnitValue(value) : setValue(value);
 
         // add the inputId to the storedInputValues array if it's not already there
         const inputIds = getStoredInputValues();
@@ -42,26 +45,7 @@ const DataInputComponent = ({
 
     // Set default value to an empty string if not provided
     const value = storedValue !== undefined ? storedValue : '';
-    const [weightValue, setWeightValue] = useState(extractValue(value));
-    const [unit, setUnit] = useState(extractUnit(value));
-
-    // this useEffect will run whenever there is a change in the weight value
-    useEffect(() => {
-        console.log("value and unit and storedValue : ", extractValue(value), extractUnit(value), storedValue)
-        try {
-            if (weightValue === "") {
-                handleInputChange("");
-            }
-            else {
-                console.log("this should not run")
-                const weightToUpdate = unit === "" ? `${weightValue} kg` : `${weightValue} ${unit}`;
-                handleInputChange(weightToUpdate.toString());
-            }
-        }
-        catch (e) {
-            console.log("error : ", e);
-        }
-    }, [weightValue])
+    const unitValue = storedUnitValue !== undefined ? storedUnitValue : '';
 
     return (
         <div className="py-4">
@@ -79,7 +63,7 @@ const DataInputComponent = ({
                         id={inputId}
                         name={inputId}
                         value={value}
-                        onChange={(e) => handleInputChange(e.target.value)}
+                        onChange={(e) => handleInputChange(e.target.value, inputId)}
                         label={label}
                         ref={selectInputRef}
                     >
@@ -104,43 +88,37 @@ const DataInputComponent = ({
                         id={inputId}
                         name={inputId}
                         value={value}
-                        onChange={(e) => handleInputChange(e.target.value)}
+                        onChange={(e) => handleInputChange(e.target.value, inputId)}
                         placeholder={placeholder}
                         label={label}
                         ref={textInputRef}
                     ></textarea>
                 </>
-            ) : (inputType === "number" && inputId.split('-').includes('load')) ? (
+            ) : (inputType === "number" && inputId.includes('load')) ? (
                 <div className='w-full'>
                     <label className="text-gray-600 text-sm">
                         {label}
                     </label>
                     <div className="w-full relative mt-2 text-gray-500">
+                        {options !== null && 
                         <div className="absolute inset-y-0 left-3 my-auto h-6 flex items-center border-r pr-2">
-                            <select className="text-sm outline-none rounded-lg h-full bg-transparent" value={unit} onChange={(e) => {
-                                if (e.target.value === "kg") {
-                                    setUnit('kg')
-                                    if (weightValue !== "") {
-                                        const lbsWeight = Number(weightValue);
-                                        const kgValue = (lbsWeight / 2.20462).toFixed(2);
-                                        setWeightValue(kgValue);
-                                    }
-                                }
-                                else {
-                                    setUnit('lbs')
-                                    if (weightValue !== "") {
-                                        const kgWeight = Number(weightValue);
-                                        const lbsValue = (kgWeight * 2.20462).toFixed(2);
-                                        setWeightValue(lbsValue)
-                                    }
-                                }
+                            <select className="text-sm outline-none rounded-lg h-full bg-transparent" value={unitValue} onChange={(e) => {
+                                // this sets the value of unit
+                                handleInputChange(e.target.value, unitId)
                             }}>
-                                <option>kg</option>
-                                <option>lbs</option>
+                                {
+                                    options && options.map(option => {
+                                        return <option>{option}</option>
+                                    })
+                                }
                             </select>
-                        </div>
-                        <input type="number" placeholder={placeholder} value={weightValue} pattern={"[0-9.+-e]"} className="textbox-kginput w-full pl-[4.5rem] pr-3 py-2 text-[#b1b1b1] appearance-none bg-transparent outline-none border focus:border-slate-600 shadow-sm rounded-lg" onChange={(e) => {
-                            setWeightValue(validateInput(e.target.value));
+                        </div>}
+                        <input type="number" placeholder={placeholder} value={value} pattern={"[0-9.+-e]"} className="textbox-kginput w-full pl-[4.5rem] pr-3 py-2 text-[#b1b1b1] appearance-none bg-transparent outline-none border focus:border-slate-600 shadow-sm rounded-lg" onChange={(e) => {
+                            handleInputChange(e.target.value, inputId);
+                            // to selet the initial default unit if user does not explicitly chooses the unit
+                            if(unitValue === ''){
+                                handleInputChange(options[0], unitId);
+                            }
                         }} />
                     </div>
                 </div>
@@ -158,7 +136,7 @@ const DataInputComponent = ({
                         id={inputId}
                         name={inputId}
                         value={value}
-                        onChange={(e) => handleInputChange(e.target.value)}
+                        onChange={(e) => handleInputChange(e.target.value, inputId)}
                         placeholder={placeholder}
                     />
                 </>

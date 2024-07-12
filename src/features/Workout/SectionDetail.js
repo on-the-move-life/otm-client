@@ -23,6 +23,7 @@ const SectionDetail = () => {
   const [showMvmtDetail, setShowMvmtDetail] = useState(false);
   const [selectedMovement, setSelectedMovement] = useState({});
   const [showAlertDialog, setShowAlertDialog] = useState(false);
+  const [units, setUnits] = useState(null);
 
   const lastPage = currentIndex === sectionList.length - 1;
 
@@ -70,6 +71,18 @@ const SectionDetail = () => {
       setCurrentSection(sectionList[index]);
     }
   }, []);
+
+  useEffect(() => {
+    // preparing units for load valued datainputs
+    const unitsObject = {};
+    dataInput.forEach(input => {
+      if(input.label === 'unit'){
+        unitsObject[input.id] = input;
+      }
+    })
+    setUnits(unitsObject);
+  }, [dataInput])
+
   const sectionPageAnimation = {
     initial: {
       opacity: 0,
@@ -320,13 +333,16 @@ const SectionDetail = () => {
                   Data Inputs
                 </h2>
                 {dataInput.map((input, index) => (
-                  <DataInputComponent2
+                  units !== null && input.label !== 'unit' && 
+                    <DataInputComponent2
                     key={index}
                     inputId={input.id}
                     inputType={input.type}
                     inputOptions={input.options}
                     placeholder={input.placeholder}
                     label={input.label}
+                    options={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['options'] : null}
+                    unitId={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['id'] : null}
                   />
                 ))}
               </div>
