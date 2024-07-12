@@ -108,6 +108,8 @@ const SectionDetail = () => {
       navigate('/workout-summary', { replace: true });
     }
   };
+  console.log(movements);
+  console.log(dataInput);
 
   return (
     <>
@@ -346,21 +348,74 @@ const SectionDetail = () => {
                   </span>
                   <span className="text-sm">Weight Choosing Guide</span>
                 </div>
-                <div>
-                  <h2 className="workout-gradient-text my-4 text-2xl">
-                    Data Inputs
-                  </h2>
-                  {dataInput.map((input, index) => (
-                    <DataInputComponent2
-                      key={index}
-                      inputId={input.id}
-                      inputType={input.type}
-                      inputOptions={input.options}
-                      placeholder={input.label}
-                      label={input.label}
-                    />
-                  ))}
-                </div>
+                {/* ... existing code ... */}
+
+<div>
+  <h2 className="workout-gradient-text my-4 text-2xl">
+    Data Inputs
+  </h2>
+  {name === 'Gymnastic Strength' ? (
+    <>
+      {/* First two inputs for Gymnastic Strength */}
+      {dataInput.slice(0, 2).map((input, index) => (
+        <DataInputComponent2
+          key={index}
+          inputId={input.id}
+          inputType={input.type}
+          inputOptions={input.options}
+          placeholder={input.label}
+          label={input.label}
+        />
+      ))}
+      
+            {/* Max Efforts Test section */}
+            <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+        <p className="mb-2 text-xs tracking-[3px]">MAX EFFORTS TEST</p>
+        {movements.map((movement, idx) => (
+          <div key={idx} className="mb-4">
+            <div className="flex flex-col items-center">
+              <h3 className="text-center text-sm font-semibold text-white">{movement.name}</h3>
+              <img 
+                src={movement.link[0]} 
+                alt={movement.name} 
+                className="my-2 rounded w-24 sm:w-40" 
+              />
+            </div>
+            <ul className="list-disc pl-4">
+              <li className="my-1 text-xs text-lightGray">{dataInput[2].label}</li>
+              <li className="my-1 text-xs text-lightGray">At max do 25 reps</li>
+            </ul>
+            {dataInput.length > 3 && (
+              <div className="mt-2">
+                <DataInputComponent2
+                  inputId={dataInput[3].id}
+                  inputType={dataInput[3].type}
+                  inputOptions={dataInput[3].options}
+                  placeholder={dataInput[3].label}
+                  label={dataInput[3].label}
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </>
+  ) : (
+    // Original code for other sections
+    dataInput.map((input, index) => (
+      <DataInputComponent2
+        key={index}
+        inputId={input.id}
+        inputType={input.type}
+        inputOptions={input.options}
+        placeholder={input.label}
+        label={input.label}
+      />
+    ))
+  )}
+</div>
+
+{/* ... rest of the existing code ... */}
                 {/* {!lastPage && (
               <div className="scrolling-wrapper">
                 {movements.map((movement) => {
