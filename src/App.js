@@ -1,3 +1,4 @@
+//App.js
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import { Home } from './features/Home';
@@ -10,10 +11,11 @@ import { LifeStyle } from './features/LifestyleQuiz';
 import { Report } from './features/LifestyleQuiz';
 import { Questionnaire } from './features/Questionnaire';
 import { FitnessScoreScreen } from './features/Questionnaire';
+import JourneyReflectionPage from './features/JourneyReflection/JourneyReflectionPage'
 import { LifeStyleRoutine } from './features/LifeStyleRoutines';
+import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from "./features/LifeStyleRoutines"
-
 function App() {
   // const { user, getUserFromStorage } = useAuth();
   let user = localStorage.getItem('user');
@@ -33,7 +35,6 @@ function App() {
       return <Navigate to="/login" />;
     }
   }
-
   return (
     <BrowserRouter>
       <Routes>
@@ -61,6 +62,8 @@ function App() {
         <Route path="/marketplace" element={<RouteMiddleware><MarketPlace /></RouteMiddleware>} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
+        <Route path="/monthly-wrapped" element={<RouteMiddleware><MonthlyWrapped /></RouteMiddleware>} />
+        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage/>} />
         <Route
           path="/lifestyle-routine"
           element={

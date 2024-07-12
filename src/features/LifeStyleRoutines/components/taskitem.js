@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskDetail from './TaskDetail';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCompletion } from '../ReduxStore/actions';
 import { getFormattedDate } from '../utils';
+import { toast } from 'react-toastify';
+import { current } from '@reduxjs/toolkit';
 
 function TaskItem({ task, SelectedCircle, date }) {
     const [showTaskDetail, setShowTaskDetail] = useState(false);
@@ -20,6 +22,18 @@ function TaskItem({ task, SelectedCircle, date }) {
         }
         return false;
     });
+
+
+    // [Monarch]testing for mealinfo implementation
+
+
+    useEffect(() => {
+        if (isCompleted) {
+            console.log("current state in redux is: ", isCompleted);
+        }
+    }, [isCompleted]);
+
+
 
     // function for Mark as Done
     function handleMarkDone(event) {
@@ -43,6 +57,7 @@ function TaskItem({ task, SelectedCircle, date }) {
             .catch(err => {
                 setTaskCompleted(true);
                 dispatch(toggleCompletion(SelectedCircle, task?.taskId));
+                toast.error('Something went wrong');
                 console.log(err);
             })
     }
