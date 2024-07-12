@@ -346,18 +346,19 @@ const SectionDetail = () => {
                   </span>
                   <span className="text-sm">Weight Choosing Guide</span>
                 </div>
-                <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-                 <h2 className="workout-gradient-text mb-4 text-2xl">Max Efforts Test</h2>
-                 {dataInput.map((input, index) => (
-                 <DataInputComponent2
-                  key={index}
-                  inputId={input.id}
-                  inputType={input.type}
-                  inputOptions={input.options}
-                  placeholder={input.label}
-                  label={input.label}
-                  index={index}
-                  />
+                <div>
+                  <h2 className="workout-gradient-text my-4 text-2xl">
+                    Data Inputs
+                  </h2>
+                  {dataInput.map((input, index) => (
+                    <DataInputComponent2
+                      key={index}
+                      inputId={input.id}
+                      inputType={input.type}
+                      inputOptions={input.options}
+                      placeholder={input.label}
+                      label={input.label}
+                    />
                   ))}
                 </div>
                 {/* {!lastPage && (
