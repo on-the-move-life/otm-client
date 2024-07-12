@@ -7,8 +7,6 @@ import { GiSkippingRope } from 'react-icons/gi';
 import { useEffect, useState } from 'react';
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
 
-const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
-
 const MovementDetail = ({
   movement,
   isSectionCodeAvailable,
@@ -150,7 +148,7 @@ const MovementDetail = ({
               <div key={Math.random() * 1000}>
                 <ChartComponent data={movement} />
               </div>
-              <p className="my-4 text-sm text-center  sm:text-base">
+              <p className="my-4 text-sm text-center sm:text-base">
                 Your personal record is{' '}
                 <span className="rounded-lg bg-floYellow p-0.5 font-bold text-black">
                   {movement.personalRecord} {''}KG
