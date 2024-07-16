@@ -19,7 +19,7 @@ export function AdminLogin() {
     if (success) {
       navigate('/admin-dashboard');
     } else {
-      setError('Wrong password');
+      setError('Admin login failed. Please check your password and try again.');
     }
   };
 

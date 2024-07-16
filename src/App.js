@@ -40,11 +40,10 @@ function App() {
     }
   }
   function AdminRouteMiddleware({ children }) {
-    const { isAdmin, checkAdminAuth } = useAuth();
-    useEffect(() => {
-      checkAdminAuth();
-    }, []);
-    return isAdmin ? children : <Navigate to="/admin-login" />;
+    const { checkAdminAuth } = useAuth();
+    const adminLoggedIn = checkAdminAuth();
+    checkAdminAuth();
+    return adminLoggedIn ? children : <Navigate to="/admin-login" />;
   }
 
   return (

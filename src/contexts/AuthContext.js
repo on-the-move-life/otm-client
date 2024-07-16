@@ -179,18 +179,24 @@ function AuthProvider({ children }) {
   async function adminLogin(password) {
     try {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, { password });
-      if (response.data.success) {
-        const { jwt, expiresIn } = response.data;
-        Cookies.set('adminJwt', jwt, { expires: expiresIn / 86400 }); 
+      const { success, isAdmin, expiresIn, jwt } = response.data;
+      
+      if (success && isAdmin) {
+        Cookies.set('adminJwt', jwt, { 
+          expires: expiresIn / 86400,
+          secure: true, 
+        });
+        dispatch({ type: 'adminLogin' });
         return true;
+      } else {
+        throw new Error('Admin login failed');
       }
     } catch (error) {
       console.error('Admin login error:', error);
       dispatch({ type: 'error', payload: 'Admin login failed' });
+      return false;
     }
-    return false;
   }
-
   function adminLogout() {
     Cookies.remove('adminJwt');
     dispatch({ type: 'adminLogout' });
