@@ -22,17 +22,11 @@ import { useAuth } from './contexts/AuthContext';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
-  const { checkAdminAuth } = useAuth();
-  let user = localStorage.getItem('user');
-  if (user && !user.includes('undefined')) {
-    user = JSON.parse(user);
-  }
+  const { checkAdminAuth, getUserFromStorage } = useAuth();
 
   function RouteMiddleware({ children }) {
-    let user = localStorage.getItem('user');
-    if (user && !user.includes('undefined')) {
-      user = JSON.parse(user);
-    }
+    console.log("RouteMiddleware called");
+    const user = getUserFromStorage();
 
     if (user && user.email) {
       return children;
@@ -40,6 +34,7 @@ function App() {
       return <Navigate to="/login" />;
     }
   }
+
   function AdminRouteMiddleware({ children }) {
     console.log("AdminRouteMiddleware Called")
     const adminLoggedIn = checkAdminAuth();
@@ -49,16 +44,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            user && user.email ? (
-              <Navigate to="/home" />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
+        <Route path="/" element={<RouteMiddleware><Home /></RouteMiddleware>} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<RouteMiddleware><Home /></RouteMiddleware>} />
         <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />

@@ -230,9 +230,13 @@ function AuthProvider({ children }) {
     let user = localStorage.getItem('user');
     if (user && !user.includes('undefined')) {
       user = JSON.parse(user);
-      dispatch({ type: 'getUserFromStorage', payload: user });
+      // Calling a dispatch function causes re-render. 
+      // Thus, call it only when the isAuthenticated flag is false
+      if(isAuthenticated === false)
+        dispatch({ type: 'getUserFromStorage', payload: user });
       return user;
     }
+    return user;
   }
 
   return (
