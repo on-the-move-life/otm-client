@@ -41,20 +41,9 @@ function App() {
   }
   function AdminRouteMiddleware({ children }) {
     const { isAdmin, checkAdminAuth } = useAuth();
-    const [checking, setChecking] = useState(true);
-  
     useEffect(() => {
-      const check = async () => {
-        await checkAdminAuth();
-        setChecking(false);
-      };
-      check();
+      checkAdminAuth();
     }, []);
-  
-    if (checking) {
-      return <div>Loading...</div>;
-    }
-  
     return isAdmin ? children : <Navigate to="/admin-login" />;
   }
 

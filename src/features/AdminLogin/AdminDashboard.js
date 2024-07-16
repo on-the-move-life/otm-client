@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export function AdminDashboard() {
   const { adminLogout, login } = useAuth();
@@ -28,7 +29,7 @@ export function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const jwt = localStorage.getItem('adminJwt');
+      const jwt = Cookies.get('adminJwt');
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/members/active`, {
         headers: {
           'Authorization': `Bearer ${jwt}`
@@ -43,7 +44,6 @@ export function AdminDashboard() {
       setLoading(false);
     }
   };
-
   const handleLogout = () => {
     adminLogout();
     navigate('/admin-login');

@@ -1,11 +1,11 @@
 // AdminLogin.js
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export function AdminLogin() {
-  const [password, setPassword] = useState('');
+  const passwordRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const { adminLogin } = useAuth();
@@ -14,12 +14,17 @@ export function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    const password = passwordRef.current.value;
     const success = await adminLogin(password);
     if (success) {
       navigate('/admin-dashboard');
     } else {
       setError('Wrong password');
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -43,13 +48,12 @@ export function AdminLogin() {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                ref={passwordRef}
               />
               <button
                 type="button"
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-400"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={togglePasswordVisibility}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>

@@ -181,10 +181,7 @@ function AuthProvider({ children }) {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, { password });
       if (response.data.success) {
         const { jwt, expiresIn } = response.data;
-        const expirationTime = new Date().getTime() + expiresIn * 1000;
-        localStorage.setItem('adminJwt', jwt);
-        localStorage.setItem('adminJwtExpiration', expirationTime);
-        dispatch({ type: 'adminLogin' });
+        Cookies.set('adminJwt', jwt, { expires: expiresIn / 86400 }); 
         return true;
       }
     } catch (error) {
@@ -195,19 +192,15 @@ function AuthProvider({ children }) {
   }
 
   function adminLogout() {
-    Cookies.remove('jwt');
+    Cookies.remove('adminJwt');
     dispatch({ type: 'adminLogout' });
   }
+
   function checkAdminAuth() {
-    const jwt = localStorage.getItem('adminJwt');
-    const expiration = localStorage.getItem('adminJwtExpiration');
-    if (jwt && expiration) {
-      if (new Date().getTime() < parseInt(expiration)) {
-        dispatch({ type: 'adminLogin' });
-        return true;
-      } else {
-        adminLogout();
-      }
+    const jwt = Cookies.get('adminJwt');
+    if (jwt) {
+      dispatch({ type: 'adminLogin' });
+      return true;
     }
     return false;
   }
