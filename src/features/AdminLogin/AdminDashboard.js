@@ -3,6 +3,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
 
 export function AdminDashboard() {
   const { adminLogout, login } = useAuth();
@@ -60,8 +62,10 @@ export function AdminDashboard() {
     navigate('/home');
   };
 
-  if (loading) return <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">Loading...</div>;
-  if (error) return <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">Error: {error}</div>;
+  if (loading) return <Loader className={'h-screen fixed left-0 top-0 z-[200] bg-black'} />;
+  if (error) return (<div className="w-full h-screen fixed top-0 left-0 z-[200] bg-black">
+    <Error>Some Error Occurred</Error>
+  </div>);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">
