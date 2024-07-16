@@ -42,7 +42,6 @@ function App() {
   function AdminRouteMiddleware({ children }) {
     const { checkAdminAuth } = useAuth();
     const adminLoggedIn = checkAdminAuth();
-    checkAdminAuth();
     return adminLoggedIn ? children : <Navigate to="/admin-login" />;
   }
 
