@@ -3,7 +3,6 @@
 import { useContext, useReducer, createContext } from 'react';
 import { uiVersion } from '../components/FeatureUpdatePopup';
 import Cookies from 'js-cookie';
-import { useEffect } from 'react';
 import axios from 'axios';
 //create a new context
 const AuthContext = createContext();
@@ -205,15 +204,14 @@ function AuthProvider({ children }) {
   function checkAdminAuth() {
     const jwt = Cookies.get('adminJwt');
     if (jwt) {
-      dispatch({ type: 'adminLogin' });
+      // Calling a dispatch function changes the context and hence a re-render occurs. 
+      // Therefore a check is required to only set the admin true when it's false
+      if(adminLogin === false)
+        dispatch({ type: 'adminLogin' });
       return true;
     }
     return false;
   }
-
-  useEffect(() => {
-    checkAdminAuth();
-  }, []);
 
   function logout() {
     localStorage.removeItem('user');
@@ -235,9 +233,6 @@ function AuthProvider({ children }) {
       dispatch({ type: 'getUserFromStorage', payload: user });
       return user;
     }
-  }
-  function resetError() {
-    dispatch({ type: 'resetError' });
   }
 
   return (

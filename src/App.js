@@ -19,9 +19,10 @@ import { store } from "./features/LifeStyleRoutines"
 import { AdminLogin } from './features/AdminLogin/AdminLogin';
 import { AdminDashboard } from './features/AdminLogin/AdminDashboard';
 import { useAuth } from './contexts/AuthContext';
-import { useEffect,useState } from 'react';
+
 function App() {
   // const { user, getUserFromStorage } = useAuth();
+  const { checkAdminAuth } = useAuth();
   let user = localStorage.getItem('user');
   if (user && !user.includes('undefined')) {
     user = JSON.parse(user);
@@ -40,7 +41,7 @@ function App() {
     }
   }
   function AdminRouteMiddleware({ children }) {
-    const { checkAdminAuth } = useAuth();
+    console.log("AdminRouteMiddleware Called")
     const adminLoggedIn = checkAdminAuth();
     return adminLoggedIn ? children : <Navigate to="/admin-login" />;
   }
