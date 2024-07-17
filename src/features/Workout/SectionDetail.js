@@ -353,7 +353,7 @@ const SectionDetail = () => {
   <h2 className="workout-gradient-text my-4 text-2xl">
     Data Inputs
   </h2>
-  {name === "Gymnastic Strength" 
+  {code === 'GYM'
     ? dataInput.slice(0, 2).map((input, index) => (
         <DataInputComponent2
           key={index}
@@ -376,7 +376,7 @@ const SectionDetail = () => {
       ))
   }
   
-  {name === "Gymnastic Strength" && dataInput.length > 2 && (
+  {code === 'GYM' && dataInput.length > 2 && (
     <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
       <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORTS TEST</p>
       <div className="flex flex-col items-center mb-4 sm:mt-4 mt-4">
