@@ -349,49 +349,61 @@ const SectionDetail = () => {
                   <span className="text-sm">Weight Choosing Guide</span>
                 </div>
 
-               <div>
-        <h2 className="workout-gradient-text my-4 text-2xl">
-          Data Inputs
-        </h2>
-        {dataInput.slice(0, 2).map((input, index) => (
-          <DataInputComponent2
-            key={index}
-            inputId={input.id}
-            inputType={input.type}
-            inputOptions={input.options}
-            placeholder={input.label}
-            label={input.label}
-          />
-        ))}
-        
-        {name === "Gymnastic Strength" && dataInput.length > 2 && (
-          <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-            <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORTS TEST</p>
-            <div className="flex flex-col items-center mb-4 sm:mt-4 mt-4">
-              <p className="mb-2 sm:text-base text-sm font-semibold text-center">{movements[0]?.name}</p>
-              {movements[0]?.link && movements[0].link[0] && (
-                <img src={movements[0].link[0]} alt={movements[0].name} className="sm:w-32 w-20 max-w-xs" />
-              )}
-            </div>
-            <DataInputComponent2
-              key={2}
-              inputId={dataInput[2].id}
-              inputType={dataInput[2].type}
-              inputOptions={dataInput[2].options}
-              placeholder={dataInput[2].label}
-              label={dataInput[2].label}
-            />
-            <ul className="list-disc pl-5 mt-4">
-              <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-                Enter the number of reps
-              </li>
-              <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-                At max do 25 reps
-              </li>
-            </ul>
-          </div>
+                <div>
+  <h2 className="workout-gradient-text my-4 text-2xl">
+    Data Inputs
+  </h2>
+  {name === "Gymnastic Strength" 
+    ? dataInput.slice(0, 2).map((input, index) => (
+        <DataInputComponent2
+          key={index}
+          inputId={input.id}
+          inputType={input.type}
+          inputOptions={input.options}
+          placeholder={input.label}
+          label={input.label}
+        />
+      ))
+    : dataInput.map((input, index) => (
+        <DataInputComponent2
+          key={index}
+          inputId={input.id}
+          inputType={input.type}
+          inputOptions={input.options}
+          placeholder={input.label}
+          label={input.label}
+        />
+      ))
+  }
+  
+  {name === "Gymnastic Strength" && dataInput.length > 2 && (
+    <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+      <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORTS TEST</p>
+      <div className="flex flex-col items-center mb-4 sm:mt-4 mt-4">
+        <p className="mb-2 sm:text-base text-sm font-semibold text-center">{movements[0]?.name}</p>
+        {movements[0]?.link && movements[0].link[0] && (
+          <img src={movements[0].link[0]} alt={movements[0].name} className="sm:w-32 w-20 max-w-xs" />
         )}
       </div>
+      <DataInputComponent2
+        key={2}
+        inputId={dataInput[2].id}
+        inputType={dataInput[2].type}
+        inputOptions={dataInput[2].options}
+        placeholder={dataInput[2].label}
+        label={dataInput[2].label}
+      />
+      <ul className="list-disc pl-5 mt-4">
+        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+          Enter the number of reps
+        </li>
+        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+          At max do 25 reps
+        </li>
+      </ul>
+    </div>
+  )}
+</div>
 
                 {/* {!lastPage && (
               <div className="scrolling-wrapper">
