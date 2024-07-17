@@ -4,23 +4,25 @@ import MealCrossIcon from './icons/MealCrossIcon';
 
 const MealPage = ({
   mealInfo = {},
-  imageURL,
-  finalDate,
-  setshowMealInfoPage,
+  imageURL = 'No URL',
+  finalDate = 'No Date',
+  setIsVisible
 }) => {
+
+
+  console.log('mealInfo', mealInfo);
   return (
     <div className="py-4">
-      <div className="mt-2 flex w-full flex-row items-center justify-center">
+      <div className=" flex w-full flex-row items-center justify-center">
         <p className="pl-2 font-sfpro  text-[14px] font-medium text-custompurple">
           {finalDate}
         </p>
 
-        <div
+        {/* <div
           className="absolute right-0 mr-4"
-          onClick={() => setshowMealInfoPage(false)}
         >
           <MealCrossIcon />
-        </div>
+        </div> */}
       </div>
 
       {Object.keys(mealInfo).length !== 0 ? (
@@ -49,10 +51,9 @@ const MealPage = ({
         </div>
       )}
 
-      <div className="fixed bottom-4 left-0 w-full px-3">
+      <div onClick={() => setIsVisible(true)} className="fixed bottom-4 left-0 w-full px-3">
         <button
           className="w-full rounded-xl bg-custompurple px-[14px] py-[10px] text-black "
-          onClick={() => setshowMealInfoPage(false)}
         >
           Done
         </button>

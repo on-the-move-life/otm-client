@@ -5,7 +5,7 @@ const FullMealInfoCard = ({
   mealInfo = {},
   imageURL = '',
   finalDate = '',
-  setshowMealInfoPage,
+
 }) => {
   console.log('inside FullMealInfoCard mealInfo ', mealInfo);
 
@@ -15,7 +15,7 @@ const FullMealInfoCard = ({
     <>
       <div
         className="rounded-xl border border-[rgba(94,204,123,0.66)] bg-mediumGray pb-3 shadow-[0_50px_14px_0_rgba(94,204,123,0),0_32px_13px_0_rgba(94,204,123,0.03),0_18px_11px_0_rgba(94,204,123,0.1),0_8px_8px_0_rgba(94,204,123,0.17),0_2px_4px_0_rgba(94,204,123,0.2)]"
-        onClick={() => setshowMealInfoPage(true)}
+
       >
         <div className="flex  items-center justify-between p-4 text-white shadow-md">
           <div className="flex">
