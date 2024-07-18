@@ -103,7 +103,7 @@ const AnalyseMealComp = ({ setParentVisibilityCheck, task = null, date = null, S
     useEffect(() => {
 
         if (task == null) {
-            getUserData(finalDate)
+            getUserData()
             setselectedTaskId('');
         }
 
@@ -115,25 +115,40 @@ const AnalyseMealComp = ({ setParentVisibilityCheck, task = null, date = null, S
 
 
 
-    const getUserData = async (date) => {
+    const getUserData = async () => {
         setLoader(true);
-        const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
+
+        // To fetch user lifestyle details having the mealInfo fields
+        // is not used anymore
+        // const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
         try {
-            const response = await axiosClient.get(`?user=${memberCode}&date=${date}`);
-            dispatch(fetchInitialStateSuccess(response.data));
 
-            setApiResponse(response.data);
-            console.log("API RESPONSE", response.data);
+            const mealObject =
+                [
+                    { taskId: "1", taskName: "Breakfast" },
+                    { taskId: "2", taskName: "Lunch" },
+                    { taskId: "3", taskName: "Dinner" }
+                ]
+                ;
 
 
-            const mealTaskIds = response.data.lifeStyleDetails.circles.flatMap(circle =>
-                circle.tasks
-                    .filter(task => task.type === 'meal').map(task => ({ taskId: task.taskId, taskName: task.name, circleName: circle.name }))
-            );
+            setmealTaskIds(mealObject);
 
-            console.log("MEAL TASK IDS", mealTaskIds);
 
-            setmealTaskIds(mealTaskIds);
+            //     const response = await axiosClient.get(`?user=${memberCode}&date=${date}`);
+            //     dispatch(fetchInitialStateSuccess(response.data));
+
+            //     setApiResponse(response.data);
+            //     console.log("API RESPONSE", response.data);
+
+
+            //     const mealTaskIds = response.data.lifeStyleDetails.circles.flatMap(circle =>
+            //         circle.tasks
+            //             .filter(task => task.type === 'meal').map(task => ({ taskId: task.taskId, taskName: task.name, circleName: circle.name }))
+            //     );
+
+            //     console.log("MEAL TASK IDS", mealTaskIds);
+
         } catch (error) {
             console.error(error);
         } finally {
@@ -198,7 +213,7 @@ letter-spacing: 1px;
 
     // Meal image post request handling
     const handleMealUploadSubmit = async () => {
-        if (file && selectedTaskId && finalDate) {
+        if (file && finalDate) {
             setLoader(true);
             try {
                 const formData = new FormData();
@@ -252,12 +267,17 @@ letter-spacing: 1px;
     const handleSelectChange = (event) => {
 
         const taskId = event.target.value;
+        console.log("selected task is", taskId);
+
         setselectedTaskId(taskId);
         const selectedTask = mealTaskIds.find(task => task.taskId === taskId);
         if (selectedTask) {
             setTaskCircle(selectedTask.circleName);
         }
-        console.log("selected circle is", selectedTask.circleName);
+
+        if (task == null) {
+            setselectedTaskId(undefined);
+        }
 
 
         // setselectedTaskId(event.target.value);
