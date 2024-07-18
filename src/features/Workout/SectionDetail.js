@@ -79,8 +79,6 @@ const SectionDetail = () => {
 
   const isSectionCodeAvailable = sectionWithLoadArray.includes(code);
 
-  console.log('xxxxx', isSectionCodeAvailable);
-
   useEffect(() => {
     console.log('section index : ', index);
     if (Object.keys(workout).length === 0) {
