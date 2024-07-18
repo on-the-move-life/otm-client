@@ -52,12 +52,6 @@ export function AdminDashboard() {
   };
 
   const handleUserLogin = (user) => {
-    const body = {
-      email: user.email,
-      password: 'dummyPassword',
-      platform: 'email',
-    };
-    login(body);
     localStorage.setItem('user', JSON.stringify(user));
     navigate('/home');
   };
