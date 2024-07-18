@@ -6,7 +6,8 @@ const MealPage = ({
   mealInfo = {},
   imageURL = 'No URL',
   finalDate = 'No Date',
-  setIsVisible
+  setIsVisible,
+  setParentVisibilityCheck
 }) => {
 
 
@@ -18,18 +19,18 @@ const MealPage = ({
           {finalDate}
         </p>
 
-        {/* <div
+        <div onClick={() => setParentVisibilityCheck(true)}
           className="absolute right-0 mr-4"
         >
           <MealCrossIcon />
-        </div> */}
+        </div>
       </div>
 
       {Object.keys(mealInfo).length !== 0 ? (
         <>
           <div className="mb-5 mt-7 flex h-auto items-center justify-center">
             {/* meal info */}
-            <div className=" h-fit w-full rounded-lg  bg-black p-5 text-white">
+            <div className=" h-fit w-full rounded-lg  p-5 text-white">
               <img
                 src={imageURL} // Replace this with the actual image URL
                 alt="image title"
@@ -51,7 +52,7 @@ const MealPage = ({
         </div>
       )}
 
-      <div onClick={() => setIsVisible(true)} className="fixed bottom-4 left-0 w-full px-3">
+      <div onClick={() => setParentVisibilityCheck(true)} className="fixed bottom-4 left-0 w-full px-3">
         <button
           className="w-full rounded-xl bg-custompurple px-[14px] py-[10px] text-black "
         >

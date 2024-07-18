@@ -9,21 +9,21 @@ import { IoCamera } from 'react-icons/io5';
 import { BsImageFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import {
+    fetchInitialStateSuccess,
     handleMealInfoChange,
     handleMealUrlChange,
 } from '../ReduxStore/actions';
 import { getFormattedDate } from '../utils';
 import MealPage from './MealPage';
 import { Loader } from '../../../components';
+import MealImageicon from './icons/MealImageicon';
+import MealCrossIcon from './icons/MealCrossIcon';
 
-const AnalyseMealComp = ({ task = null, date = null, SelectedCircle = null
+const AnalyseMealComp = ({ setParentVisibilityCheck, task = null, date = null, SelectedCircle = null
 }) => {
 
 
-    // console.log("INSIDE ANALYSE COMPONENT", task, date, Circle);
 
-
-    // const [selectedDate, setSelectedDate] = useState(getFormattedDate());
     const [isVisible, setIsVisible] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +40,9 @@ const AnalyseMealComp = ({ task = null, date = null, SelectedCircle = null
 
     const [TaskCircle, setTaskCircle] = useState(SelectedCircle);
 
+    const [tempMealInfo, setTempMealInfo] = useState(null);
+    const [tempMealUrl, setTempMealUrl] = useState(null);
+
     const formattedDate = getFormattedDate();
     const finalDate = date === null || date === undefined ? formattedDate : date;
 
@@ -51,10 +54,12 @@ const AnalyseMealComp = ({ task = null, date = null, SelectedCircle = null
     const dispatch = useDispatch();
 
     const storedMealInfoField = useSelector((state) => {
+        console.log("INSIDE REDUX state", state);
         const circle = state?.lifeStyleDetails?.circles.find(
             (circle) => circle?.name === TaskCircle,
         );
         if (circle) {
+            console.log("INSIDE REDUX circle", circle);
             const mytask = circle?.tasks.find(
                 (mappedTask) => mappedTask.taskId === task?.taskId,
             );
@@ -115,6 +120,7 @@ const AnalyseMealComp = ({ task = null, date = null, SelectedCircle = null
         const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
         try {
             const response = await axiosClient.get(`?user=${memberCode}&date=${date}`);
+            dispatch(fetchInitialStateSuccess(response.data));
 
             setApiResponse(response.data);
             console.log("API RESPONSE", response.data);
@@ -184,7 +190,7 @@ letter-spacing: 1px;
 
 
     const handleClose = () => {
-        setIsVisible(false);
+        setParentVisibilityCheck(true);
     };
 
 
@@ -192,7 +198,7 @@ letter-spacing: 1px;
 
     // Meal image post request handling
     const handleMealUploadSubmit = async () => {
-        if (file) {
+        if (file && selectedTaskId && finalDate) {
             setLoader(true);
             try {
                 const formData = new FormData();
@@ -219,6 +225,9 @@ letter-spacing: 1px;
 
 
                     console.log("inside API selected circle and taskId", TaskCircle, selectedTaskId);
+
+                    setTempMealInfo(mealNutritionAnalysis);
+                    setTempMealUrl(mealUrl);
 
                     dispatch(
                         handleMealInfoChange(
@@ -282,50 +291,12 @@ letter-spacing: 1px;
                         )}
 
 
-                        {/* {mealTaskIds.map((taskId) => (
-                            <option key={taskId} value={taskId}>{taskId}</option>
-                        ))} */}
+
                     </select>
-                    {/* {selectedTaskId && (
-                        <div className="mt-4">
-                            <p className="text-sm text-gray-700">Selected Task ID: <span className="font-medium">{selectedTaskId}</span></p>
-                        </div>
-                    )} */}
+
                 </div>
             </div>
-            // <div className="relative inline-block w-64">
-            //     <button
-            //         onClick={toggleDropdown}
-            //         className="bg-white border border-gray-300 text-gray-700 py-2 px-4 w-full rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            //     >
-            //         {selectedOption ? selectedOption.label : placeholder}
-            //         <svg
-            //             className={`w-5 h-5 inline-block ml-2 transform transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'}`}
-            //             xmlns="http://www.w3.org/2000/svg"
-            //             viewBox="0 0 20 20"
-            //             fill="currentColor"
-            //         >
-            //             <path
-            //                 fillRule="evenodd"
-            //                 d="M10 3a1 1 0 00-.707.293l-5 5a1 1 0 001.414 1.414L10 5.414l4.293 4.293a1 1 0 001.414-1.414l-5-5A1 1 0 0010 3z"
-            //                 clipRule="evenodd"
-            //             />
-            //         </svg>
-            //     </button>
-            //     {/* {isOpen && (
-            //         <ul className="absolute left-0 w-full bg-black text-white border border-gray-300 rounded-md mt-1 shadow-lg z-10">
-            //             {MealOptions.map((option) => (
-            //                 <li
-            //                     key={MealOptions.value}
-            //                     onClick={() => handleOptionClick(option)}
-            //                     className="cursor-pointer text-white hover:bg-gray-100 px-4 py-2"
-            //                 >
-            //                     {MealOptions.label}
-            //                 </li>
-            //             ))}
-            //         </ul>
-            //     )} */}
-            // </div>
+
 
         );
     }
@@ -360,19 +331,39 @@ letter-spacing: 1px;
         <>
             {isVisible ?
                 <>
-                    <div className="mx-auto mb-2  flex max-w-sm items-center space-x-6 rounded-lg p-2  shadow-md  ">
-                        <div className="flex items-center justify-center bg-black">
-                            <div className=" rounded-lg shadow-lg">
+                    <div className="flex w-full flex-row items-center justify-between text-center align-middle mt-2">
+                        {/* empty div to put other two divs in place */}
+                        <div></div>
+
+                        <div className=" flex flex-row items-center  text-center">
+                            <MealImageicon />
+
+                            <div className="ml-15 pl-2 font-sfpro text-[14px]  font-medium text-lightGray">
+                                Upload meal photo
+                            </div>
+                        </div>
+
+                        <div className='mr-4'
+                            onClick={handleClose}
+                        >
+                            <MealCrossIcon />{' '}
+                        </div>
+                    </div>
+
+                    <div className="  flex max-w-sm items-center space-x-6 rounded-lg  shadow-md  ">
+
+                        <div className="flex items-center justify-center ">
+                            <div className="  rounded-lg shadow-lg">
 
 
 
 
-                                <div className="mb-6 mt-[58px] h-[421px] w-[358px] border-2  border-gray-400 rounded-lg flex items-center justify-center" onClick={() => setshowMealPicPopUp(true)}>
+                                <div className="ml-2 mb-6 mt-[58px] h-[421px] w-[358px]   border-gray-400 rounded-lg flex items-center justify-center bg-mediumGray" onClick={() => setshowMealPicPopUp(true)}>
 
 
                                     {!selectedImage ? <div className=" rounded-lg  p-4 ">
                                         <p className='text-center'>
-                                            Click to upload image
+                                            Click here to upload image
                                         </p>
                                     </div> : <img
                                         className="h-auto w-auto object-cover"
@@ -384,12 +375,6 @@ letter-spacing: 1px;
 
 
                                 </div>
-
-                                {/* <img
-                                className="mb-6 mt-[58px] h-[421px] w-[358px]  rounded-lg"
-                                src={selectedImage}
-                                alt="Preview"
-                            /> */}
 
 
 
@@ -432,8 +417,8 @@ letter-spacing: 1px;
 
                     </div>
                 </> : <MealPage finalDate={finalDate}
-                    mealInfo={storedMealInfoField}
-                    imageURL={storedMealUrlField} setIsVisible={setIsVisible} />
+                    mealInfo={storedMealInfoField ? storedMealInfoField : tempMealInfo}
+                    imageURL={storedMealUrlField ? storedMealUrlField : tempMealUrl} setParentVisibilityCheck={setParentVisibilityCheck} />
 
 
             }

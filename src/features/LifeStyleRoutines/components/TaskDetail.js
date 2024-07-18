@@ -31,7 +31,9 @@ const TaskDetail = ({
   taskCompleted,
 }) => {
   // const [isMealTask, setIsMealTask] = useState(false);
-  const [isMealTask, setIsMealTask] = useState(true);
+  const [parentVisibilityCheck, setParentVisibilityCheck] = useState(true)
+
+  const [isMealTask, setIsMealTask] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedFeeling, setSelectedFeeling] = useState(-1);
   const [feedback, setFeedback] = useState('');
@@ -262,7 +264,7 @@ const TaskDetail = ({
 
   const handleClick = () => {
     // setShowProfilePicPopup(true);
-    setshowImageUploadPage(true)
+    setParentVisibilityCheck(false)
     console.log('clicked');
   };
 
@@ -300,7 +302,7 @@ const TaskDetail = ({
             mealInfo={storedMealInfoField}
             imageURL={storedMealUrlField}
             finalDate={finalDate}
-            setshowMealInfoPage={setshowMealInfoPage}
+          // setshowMealInfoPage={setshowMealInfoPage}
           />
         </div>
       );
@@ -312,7 +314,7 @@ const TaskDetail = ({
       className="fixed left-0 top-0 z-[100] h-screen w-full overflow-y-scroll  bg-black p-2"
       style={{ paddingBottom: isIPhone() ? '150px' : '' }}
     >
-      {!showMealInfoPage && !showImageUploadPage && (
+      {parentVisibilityCheck && (
         <>
           <div className="relative flex items-center bg-black p-4 text-white">
             {/* BackButton */}
@@ -550,32 +552,11 @@ const TaskDetail = ({
       )}
 
 
-      {showImageUploadPage && (
+      {!parentVisibilityCheck && (
 
         <div>
 
-
-          <div className="flex w-full flex-row items-center justify-between text-center align-middle">
-            {/* empty div to put other two divs in place */}
-            <div></div>
-
-            <div className=" flex flex-row items-center  text-center">
-              <MealImageicon />
-
-              <div className="ml-15 pl-2 font-sfpro text-[14px]  font-medium text-lightGray">
-                Upload meal photo
-              </div>
-            </div>
-
-            <div
-              onClick={handleClose}
-            >
-              <MealCrossIcon />{' '}
-            </div>
-          </div>
-
-
-          <AnalyseMealComp task={task} date={finalDate} SelectedCircle={SelectedCircle} />
+          <AnalyseMealComp setParentVisibilityCheck={setParentVisibilityCheck} task={task} date={finalDate} SelectedCircle={SelectedCircle} />
 
 
         </div>
