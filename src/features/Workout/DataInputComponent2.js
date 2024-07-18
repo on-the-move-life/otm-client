@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { validateInput, extractUnit, extractValue } from "./utils"
 
 const DataInputComponent = ({
     inputId,
@@ -49,7 +48,8 @@ const DataInputComponent = ({
 
     return (
         <div className="py-4">
-            {inputType === 'select' ? (
+            {/* !inputId.includes('unit') -> this check is to prevent the rendering of unit dataInput element */}
+            {inputType === 'select' && !inputId.includes('unit') ? (
                 <>
                     <label
                         className="text-xs tracking-widest text-lightGray"
@@ -122,7 +122,8 @@ const DataInputComponent = ({
                         }} />
                     </div>
                 </div>
-            ) : (
+            ) : ( 
+                !inputId.includes('unit') && 
                 <>
                     <label
                         className="text-xs tracking-widest text-lightGray"

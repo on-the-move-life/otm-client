@@ -89,7 +89,8 @@ const SectionDetail = () => {
     // preparing units for load valued datainputs
     const unitsObject = {};
     dataInput.forEach(input => {
-      if (input.label === 'unit') {
+      // the best way to identify the unit dataInput element
+      if (input.id.includes('unit')) {
         unitsObject[input.id] = input;
       }
     })
