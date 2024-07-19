@@ -6,6 +6,7 @@ import {
   TOGGLE_TASK_COMPLETION,
   CHANGE_MOOD_ICON,
   SUBMIT_REFLECTION_FEEDBACK,
+  SUBMIT_STEPS_FEEDBACK,
   UPDATE_MEALINFO,
   UPDATE_MEALURL
 } from './actionTypes';
@@ -71,6 +72,20 @@ export const handleFeedbackChange = (circleName, taskId, feedbackValue) => {
         circleName: circleName,
         taskId: taskId,
         feedbackValue: feedbackValue
+      }
+    }
+  )
+}
+
+export const handleStepChange = (circleName, taskId, steps) => {
+
+  return (
+    {
+      type: SUBMIT_STEPS_FEEDBACK,
+      payload: {
+        circleName: circleName,
+        taskId: taskId,
+        steps: steps
       }
     }
   )

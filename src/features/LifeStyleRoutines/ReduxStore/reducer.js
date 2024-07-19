@@ -7,6 +7,7 @@ import {
   TOGGLE_TASK_COMPLETION,
   CHANGE_MOOD_ICON,
   SUBMIT_REFLECTION_FEEDBACK,
+  SUBMIT_STEPS_FEEDBACK,
   UPDATE_MEALINFO,
   UPDATE_MEALURL
 } from './actionTypes';
@@ -114,6 +115,26 @@ const reducer = (state = initialState, action) => {
                 tasks: circle?.tasks.map(task =>
                   task.taskId === action.payload?.taskId
                     ? { ...task, feedback: action.payload?.feedbackValue }
+                    : task
+                )
+              }
+              : circle
+          )
+        }
+      }
+    // steps count
+    case SUBMIT_STEPS_FEEDBACK:
+      return {
+        ...state,
+        lifeStyleDetails: {
+          ...state.lifeStyleDetails,
+          circles: state?.lifeStyleDetails?.circles.map(circle =>
+            circle.name === action.payload.circleName
+              ? {
+                ...circle,
+                tasks: circle?.tasks.map(task =>
+                  task.taskId === action.payload?.taskId
+                    ? { ...task, feedback: action.payload?.steps }
                     : task
                 )
               }
