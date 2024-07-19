@@ -303,14 +303,14 @@ const AnalyseMealComp = ({
             {isVisible ? (
                 <>
                     {setParentVisibilityCheck && (
-                        <div className="mt-2 flex w-full flex-row items-center justify-between text-center align-middle">
+                        <div className="mt-2 flex w-full flex-row items-center justify-center text-center align-middle">
                             {/* empty div to put other two divs in place */}
                             <div></div>
 
                             <div className=" flex flex-row items-center  text-center">
                                 <MealImageicon />
 
-                                <div className="ml-15 pl-2 font-sfpro text-[14px]  font-medium text-lightGray">
+                                <div className="ml-15 font-sfpro text-[14px]  font-medium text-lightGray">
                                     Upload meal photo
                                 </div>
                             </div>
@@ -330,7 +330,7 @@ const AnalyseMealComp = ({
                                             backgroundImage: `url('/assets/meal-analysis-image-placeholder.jpg')`,
                                             backgroundBlendMode: 'color-dodge',
                                         }}
-                                        className=" mb-6 ml-2 mt-[58px] flex h-[421px]   w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
+                                        className=" mb-6 mt-[58px] flex h-[421px]   w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
                                         onClick={() => setshowMealPicPopUp(true)}
                                     >
                                         <div className=" rounded-lg  p-4 ">

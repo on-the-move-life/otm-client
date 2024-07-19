@@ -155,6 +155,14 @@ const Home = () => {
               <DuePaymentIndicator />
             </section>
           )}
+          <Link to="/MealUpload" className="main-cta">
+            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+              Meal Upload
+            </span>
+            <span>
+              <AiOutlineRight size={22} />
+            </span>
+          </Link>
           <Link to="/workout" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
               Workouts
@@ -166,14 +174,6 @@ const Home = () => {
           <Link to="/timeline" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
               Timeline
-            </span>
-            <span>
-              <AiOutlineRight size={22} />
-            </span>
-          </Link>
-          <Link to="/MealUpload" className="main-cta">
-            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-              Meal Upload
             </span>
             <span>
               <AiOutlineRight size={22} />
