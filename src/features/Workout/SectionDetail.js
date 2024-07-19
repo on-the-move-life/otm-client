@@ -380,7 +380,7 @@ const SectionDetail = () => {
                         inputId={input.id}
                         inputType={input.type}
                         inputOptions={input.options}
-                        placeholder={input.label}
+                        placeholder={input.placeholder}
                         label={input.label}
                         options={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['options'] : null}
                         unitId={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['id'] : null}
@@ -392,7 +392,7 @@ const SectionDetail = () => {
                         inputId={input.id}
                         inputType={input.type}
                         inputOptions={input.options}
-                        placeholder={input.label}
+                        placeholder={input.placeholder}
                         label={input.label}
                         options={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['options'] : null}
                         unitId={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['id'] : null}
@@ -420,7 +420,7 @@ const SectionDetail = () => {
                         inputId={dataInput[2].id}
                         inputType={dataInput[2].type}
                         inputOptions={dataInput[2].options}
-                        placeholder={dataInput[2].label}
+                        placeholder={dataInput[2].placeholder}
                         label={dataInput[2].label}
                         options={units[`${dataInput[2].id}-unit`] !== undefined ? units[`${dataInput[2].id}-unit`]['options'] : null}
                         unitId={units[`${dataInput[2].id}-unit`] !== undefined ? units[`${dataInput[2].id}-unit`]['id'] : null}
