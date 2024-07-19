@@ -21,26 +21,22 @@ const MealUpload = () => {
 
     return (
         <>
-            <div className="flex h-screen w-full flex-col px-4 py-8 justify-center">
-                <div className="flex h-fit">
-                    <div className="flex w-full justify-between">
-                        <div className="flex h-full w-full flex-col items-start justify-between">
-                            <div className="mb-4">
-                                <HiArrowNarrowLeft
-                                    size={20}
-                                    onClick={() => {
-                                        navigate('/home');
-                                    }}
-                                />
-                            </div>
-                            <div className='w-full flex flex-row justify-between items-center'>
-                                <MealUploadHeading>Meal Upload</MealUploadHeading>
-                            </div>
-                        </div>
+            <div className="flex min-h-screen w-full flex-col px-4 py-8 justify-center overflow-y-scroll">
+                <div className="flex h-full w-full flex-col items-start justify-between">
+                    <div className="mb-4">
+                        <HiArrowNarrowLeft
+                            size={20}
+                            onClick={() => {
+                                navigate('/home');
+                            }}
+                        />
+                    </div>
+                    <div className='w-full flex flex-row justify-between items-center'>
+                        <MealUploadHeading>Meal Upload</MealUploadHeading>
                     </div>
                 </div>
 
-                <div className='w-full mx-auto'>
+                <div className='w-full'>
                     <AnalyseMealComp />
                 </div>
             </div>
