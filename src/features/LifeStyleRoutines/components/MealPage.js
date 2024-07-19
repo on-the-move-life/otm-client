@@ -59,6 +59,8 @@ const MealPage = ({
           Done
         </button>
       </div>
+
+      <div className="h-[40px] w-[1px]  "></div>
     </div>
   );
 };

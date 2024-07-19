@@ -81,7 +81,6 @@ const AnalyseMealComp = ({
         return myTask ? myTask.mealUrl : '';
     });
 
-
     console.log('storedMealUrlField', storedMealUrlField);
     console.log('storedMealInfoField', storedMealInfoField);
     // checking if arguments are empty
@@ -239,36 +238,40 @@ const AnalyseMealComp = ({
 
     const DropdownComp = () => {
         return (
-            <div className="bg-medium-gray flex items-center justify-center">
-                <div className="bg-medium-gray w-80 rounded p-6 shadow-md">
-                    <label
-                        htmlFor="taskId"
-                        className="bg-medium-gray mb-2 block text-sm font-medium text-gray-700"
-                    >
-                        Select your meal:
-                    </label>
-                    <select
-                        id="taskId"
-                        value={selectedTaskId}
-                        onChange={handleSelectChange}
-                        className="mt-1 block w-full rounded-md border border-gray-300 bg-mediumGray px-3 py-2 text-lightGray shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    >
-                        <option value="" disabled>
-                            Select one option
-                        </option>
+            <div className="py-4 w-full">
+                <label
+                    className="text-xs tracking-widest text-lightGray"
+                    htmlFor="taskId"
+                >
+                    Select your meal:
+                </label>
 
-                        {mealTaskIds != null ? (
-                            mealTaskIds.map((task, index) => (
-                                <option key={index} value={task.taskId}>
-                                    {task.taskName}
-                                </option>
-                            ))
-                        ) : (
-                            <option value={selectedTaskId}>{selectedTaskName}</option>
-                        )}
-                    </select>
-                </div>
+                <select
+                    className="block w-full px-4 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
+                    id="taskId"
+                    value={selectedTaskId}
+                    onChange={handleSelectChange}
+                >
+                    <option value="" disabled className='bg-mediumGray text-white w-[10px] '>
+                        Select one option
+                    </option>
+
+
+                    {mealTaskIds != null ? (
+                        mealTaskIds.map((task, index) => (
+                            <option key={index} value={task.taskId} className='bg-mediumGray text-white' >
+                                {task.taskName}
+                            </option>
+                        ))
+                    ) : (
+                        <option value={selectedTaskId}>{selectedTaskName}</option>
+                    )}
+
+
+                </select>
             </div>
+
+
         );
     };
 
@@ -325,6 +328,7 @@ const AnalyseMealComp = ({
                                     <div
                                         style={{
                                             backgroundImage: `url('/assets/meal-analysis-image-placeholder.jpg')`,
+                                            backgroundBlendMode: 'color-dodge',
                                         }}
                                         className=" mb-6 ml-2 mt-[58px] flex h-[421px]   w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
                                         onClick={() => setshowMealPicPopUp(true)}
@@ -361,7 +365,7 @@ const AnalyseMealComp = ({
                                         </button>
                                     )}
 
-                                    <div className="flex items-center justify-center rounded-lg border-[1px] border-gray-400  ">
+                                    <div className="flex items-center justify-center rounded-lg  ">
                                         <DropdownComp />
                                     </div>
                                     <div className="fixed bottom-4 left-0 w-full px-3">
