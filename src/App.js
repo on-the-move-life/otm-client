@@ -16,9 +16,12 @@ import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from "./features/LifeStyleRoutines"
+
 import { AdminLogin } from './features/AdminLogin/AdminLogin';
 import { AdminDashboard } from './features/AdminLogin/AdminDashboard';
 import { useAuth } from './contexts/AuthContext';
+
+import MealUpload from './features/LifeStyleRoutines/MealUpload';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -60,7 +63,9 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
         <Route path="/monthly-wrapped" element={<RouteMiddleware><MonthlyWrapped /></RouteMiddleware>} />
-        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage/>} />
+        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage />} />
+        <Route path="/MealUpload" element={<RouteMiddleware><MealUpload /></RouteMiddleware>} />
+
         <Route
           path="/lifestyle-routine"
           element={

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskCard from './TaskCard';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,11 +11,6 @@ import {
 } from '../ReduxStore/actions';
 import { getFormattedDate, isIPhone } from '../utils';
 import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import styled from 'styled-components';
-import { IoCamera } from 'react-icons/io5';
-import { BsImageFill } from 'react-icons/bs';
 
 import FullMealInfoCard from './FullMealInfoCard';
 import MealPage from './MealPage';
@@ -24,27 +19,7 @@ import MealUploadButton from './MealUploadButton';
 import MealImageicon from './icons/MealImageicon';
 import MealCrossIcon from './icons/MealCrossIcon';
 import SparkleIcon from './icons/SparkleIcon';
-
-const ProfilePicHeading = styled.div`
-  color: #d7d7d7;
-  text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  line-height: 29.066px; /* 160% */
-  text-transform: capitalize;
-  letter-spacing: 1px;
-`;
-const IconLabel = styled.div`
-  color: #d7d7d7;
-  text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  line-height: 29.066px; /* 160% */
-  text-transform: capitalize;
-  letter-spacing: 1px;
-`;
+import AnalyseMealComp from './AnalyseMealComp';
 
 const TaskDetail = ({
   SelectedCircle,
@@ -54,9 +29,10 @@ const TaskDetail = ({
   date,
   taskCompleted,
 }) => {
+  const [parentVisibilityCheck, setParentVisibilityCheck] = useState(true);
+
   const [isMealTask, setIsMealTask] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [file, setFile] = useState(null);
   const [selectedFeeling, setSelectedFeeling] = useState(-1);
   const [feedback, setFeedback] = useState('');
   const [showMealInfoPage, setshowMealInfoPage] = useState(false);
@@ -65,11 +41,6 @@ const TaskDetail = ({
   // meal info handling
 
   const [loading, setLoader] = useState(false);
-
-  const profilePicRef = useRef(null);
-  const fileInputRef = useRef(null);
-
-  const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
 
   const formattedDate = getFormattedDate();
   const finalDate = date === null || date === undefined ? formattedDate : date;
@@ -118,6 +89,7 @@ const TaskDetail = ({
   });
 
   // mealinfo change
+
   const storedMealInfoField = useSelector((state) => {
     const circle = state?.lifeStyleDetails?.circles.find(
       (circle) => circle?.name === SelectedCircle,
@@ -241,14 +213,15 @@ const TaskDetail = ({
     }
   }, [selectedFeeling]);
 
-  useEffect(() => {}, [isCompleted]);
+  useEffect(() => { }, [isCompleted]);
 
   // effect to check if task has a meal
   useEffect(() => {
     if (task.type === 'meal') {
       setIsMealTask(true);
     } else {
-      setIsMealTask(false);
+      // setIsMealTask(false);
+      console.log('do nothing');
     }
   }, [task]);
 
@@ -280,102 +253,22 @@ const TaskDetail = ({
     }
   }, [storedMealUrlField]);
 
-  const modalVariants = {
-    hidden: {
-      opacity: 0,
-      y: '100%',
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: 'tween',
-        duration: 0.5,
-        ease: 'easeInOut',
-      },
-    },
-  };
-
   const handleClick = () => {
-    setShowProfilePicPopup(true);
+    // setShowProfilePicPopup(true);
+    setParentVisibilityCheck(false);
     console.log('clicked');
   };
 
-  const handleCameraClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleFileChange = (e) => {
-    setLoader(true);
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        setSelectedImage(event.target.result);
-        setshowMealInfoPage(false);
-        setshowImageUploadPage(true);
-      };
-
-      reader.onloadend = () => {
-        setFile(selectedFile);
-        setShowProfilePicPopup(false);
-        setLoader(false);
-      };
-
-      reader.readAsDataURL(selectedFile);
-    }
-  };
-
-  const handleMealUploadSubmit = async () => {
-    if (file) {
-      setLoader(true);
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append(
-          'user',
-          JSON.parse(localStorage.getItem('user'))['code'],
-        );
-        formData.append('date', finalDate);
-        formData.append('taskId', task?.taskId);
-
-        const res = await axiosClient.post('/meal-info', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        //if api data is available
-        if (res.data) {
-          setLoader(false);
-          const { mealUrl, mealNutritionAnalysis } = res.data;
-          // setImageURL(mealUrl);
-          // setMealInfo(mealNutritionAnalysis);
-          dispatch(
-            handleMealInfoChange(
-              SelectedCircle,
-              task?.taskId,
-              mealNutritionAnalysis,
-            ),
-          );
-          dispatch(handleMealUrlChange(SelectedCircle, task?.taskId, mealUrl));
-          setshowImageUploadPage(false);
-          setshowMealInfoPage(true);
-          setSelectedImage(null);
-          setShowProfilePicPopup(false);
-        }
-      } catch (err) {
-        setLoader(false);
-        toast.error(err.response?.data?.message);
-        console.error('Error submitting the request:', err);
-      }
-    }
+  const handleClose = () => {
+    // setShowProfilePicPopup(true);
+    setshowImageUploadPage(false);
+    console.log('clicked');
   };
 
   const MealTaskComponent = () => {
     // if lifestyle routine does not have mealInfo data
     if (isMealTask && !storedMealInfoField) {
+      // if (true) {
       // console.log('inside empty meal card ', mealInfo);
       console.log('inside empty meal card ', storedMealInfoField);
 
@@ -394,12 +287,15 @@ const TaskDetail = ({
         storedMealUrlField,
       );
       return (
-        <div className="mb-5 flex h-auto items-center justify-center">
+        <div
+          onClick={handleClick}
+          className="mb-5 flex h-auto items-center justify-center"
+        >
           <FullMealInfoCard
             mealInfo={storedMealInfoField}
             imageURL={storedMealUrlField}
             finalDate={finalDate}
-            setshowMealInfoPage={setshowMealInfoPage}
+          // setshowMealInfoPage={setshowMealInfoPage}
           />
         </div>
       );
@@ -411,7 +307,7 @@ const TaskDetail = ({
       className="fixed left-0 top-0 z-[100] h-screen w-full overflow-y-scroll  bg-black p-2"
       style={{ paddingBottom: isIPhone() ? '150px' : '' }}
     >
-      {!showMealInfoPage && !showImageUploadPage && (
+      {parentVisibilityCheck && (
         <>
           <div className="relative flex items-center bg-black p-4 text-white">
             {/* BackButton */}
@@ -521,9 +417,9 @@ const TaskDetail = ({
                   Any insights you’d like to note?
                 </p>
                 {task?.feedback === undefined ||
-                task?.feedback === null ||
-                storedFeedbackValue === undefined ||
-                storedFeedbackValue === null ? (
+                  task?.feedback === null ||
+                  storedFeedbackValue === undefined ||
+                  storedFeedbackValue === null ? (
                   <textarea
                     className="w-full rounded-xl  bg-black p-2 font-sfpro text-white focus:outline-none"
                     placeholder="Type your answer here..."
@@ -538,13 +434,13 @@ const TaskDetail = ({
                   task?.feedback === null ||
                   storedFeedbackValue === undefined ||
                   storedFeedbackValue === null) && (
-                  <button
-                    className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
-                    onClick={handleFeedbackResponse}
-                  >
-                    Submit
-                  </button>
-                )}
+                    <button
+                      className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
+                      onClick={handleFeedbackResponse}
+                    >
+                      Submit
+                    </button>
+                  )}
               </div>
             </div>
             <div className="mb-9">
@@ -554,92 +450,82 @@ const TaskDetail = ({
               <div className="flex w-full items-center justify-center space-x-4">
                 <button
                   onClick={() => setSelectedFeeling(1)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 1 || moodValue === 1
+                  className={`transition-transform duration-200 ${selectedFeeling === 1 || moodValue === 1
                       ? 'scale-125 transform rounded-md bg-white/10'
                       : ''
-                  }`}
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-sad.svg'}
                     alt="Sad"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 1 || moodValue === 1
+                    className={`w-15 h-15 ${selectedFeeling === 1 || moodValue === 1
                         ? 'text-red-500'
                         : ''
-                    }`}
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(2)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 2 || moodValue === 2
+                  className={`transition-transform duration-200 ${selectedFeeling === 2 || moodValue === 2
                       ? 'scale-125 transform  rounded-md bg-white/10'
                       : ''
-                  }`}
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-sad2.svg'}
                     alt="Neutral"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 2 || moodValue === 2
+                    className={`w-15 h-15 ${selectedFeeling === 2 || moodValue === 2
                         ? 'text-yellow-500'
                         : ''
-                    }`}
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(3)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 3 || moodValue === 3
+                  className={`transition-transform duration-200 ${selectedFeeling === 3 || moodValue === 3
                       ? 'scale-125 transform  rounded-md bg-white/10'
                       : ''
-                  }`}
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-neutral.svg'}
                     alt="Happy"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 3 || moodValue === 3
+                    className={`w-15 h-15 ${selectedFeeling === 3 || moodValue === 3
                         ? 'text-yellow-400'
                         : ''
-                    }`}
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(4)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 4 || moodValue === 4
+                  className={`transition-transform duration-200 ${selectedFeeling === 4 || moodValue === 4
                       ? 'scale-125 transform  rounded-md bg-white/10'
                       : ''
-                  }`}
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-happy.svg'}
                     alt="Very Happy"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 4 || moodValue === 4
+                    className={`w-15 h-15 ${selectedFeeling === 4 || moodValue === 4
                         ? 'text-green-500'
                         : ''
-                    }`}
+                      }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(5)}
-                  className={`transition-transform duration-200 ${
-                    selectedFeeling === 5 || moodValue === 5
+                  className={`transition-transform duration-200 ${selectedFeeling === 5 || moodValue === 5
                       ? 'scale-125 transform  rounded-md bg-white/10'
                       : ''
-                  }`}
+                    }`}
                 >
                   <img
                     src={'./assets/Feeling-happy2.svg'}
                     alt="Ecstatic"
-                    className={`w-15 h-15 ${
-                      selectedFeeling === 5 || moodValue === 5
+                    className={`w-15 h-15 ${selectedFeeling === 5 || moodValue === 5
                         ? 'text-green-400'
                         : ''
-                    }`}
+                      }`}
                   />
                 </button>
               </div>
@@ -658,125 +544,19 @@ const TaskDetail = ({
         </>
       )}
 
-      {selectedImage && showImageUploadPage && (
-        <div className="mx-auto mb-2  flex max-w-sm items-center space-x-6 rounded-lg p-3  shadow-md  ">
-          <div className="flex items-center justify-center bg-black">
-            <div className=" rounded-lg shadow-lg">
-              <div className="flex w-full flex-row items-center justify-between text-center align-middle">
-                {/* empty div to put other two divs in place */}
-                <div></div>
-
-                <div className=" flex flex-row items-center  text-center">
-                  <MealImageicon />
-
-                  <div className="ml-15 pl-2 font-sfpro text-[14px]  font-medium text-lightGray">
-                    Upload meal photo
-                  </div>
-                </div>
-
-                <div
-                  onClick={() => {
-                    setSelectedImage(null);
-                    setshowImageUploadPage(false);
-                  }}
-                >
-                  <MealCrossIcon />{' '}
-                </div>
-              </div>
-
-              <img
-                className="mb-6 mt-[58px] h-[421px] w-[358px]  rounded-lg"
-                src={selectedImage}
-                alt="Preview"
-              />
-
-              <div className="w-full px-3">
-                <button
-                  onClick={() => setShowProfilePicPopup(true)}
-                  className="mb-4 w-full text-center font-sfpro text-lightGray underline"
-                >
-                  pick a different image
-                </button>
-                <div className="fixed bottom-4 left-0 w-full px-3">
-                  <button
-                    className="flex w-full flex-row items-center justify-center rounded-xl bg-custompurple p-3 text-black "
-                    onClick={handleMealUploadSubmit}
-                  >
-                    <SparkleIcon />
-                    Analyse{' '}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+      {!parentVisibilityCheck && (
+        <div>
+          <AnalyseMealComp
+            setParentVisibilityCheck={setParentVisibilityCheck}
+            task={task}
+            date={finalDate}
+            SelectedCircle={SelectedCircle}
+          />
         </div>
       )}
 
-      {showProfilePicPopup && (
-        <motion.div
-          className="fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 p-5 backdrop-blur-lg"
-          initial="hidden"
-          animate={showProfilePicPopup ? 'visible' : 'hidden'}
-          variants={modalVariants}
-        >
-          <button
-            className="absolute left-[47%] top-0 cursor-pointer"
-            onClick={() => setShowProfilePicPopup(false)}
-          >
-            <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
-          </button>
-          <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
-            <ProfilePicHeading>Meal photo</ProfilePicHeading>
-            <div className="flex w-full flex-row items-center justify-start gap-[40px]">
-              <div
-                className="flex w-fit flex-col items-center justify-center gap-1"
-                onClick={handleCameraClick}
-              >
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture="user"
-                  hidden
-                  onChange={handleFileChange}
-                />
-                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
-                  <IoCamera size={30} color="#7E87EF" />
-                </button>
-                <IconLabel>Camera</IconLabel>
-              </div>
-              <div
-                className="flex w-fit flex-col items-center justify-center gap-1"
-                onClick={() => profilePicRef.current.click()}
-              >
-                <input
-                  ref={profilePicRef}
-                  type="file"
-                  accept="image/png, image/jpg, image/jpeg"
-                  name="profile image"
-                  hidden
-                  onInput={handleFileChange}
-                ></input>
-                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
-                  <BsImageFill size={30} color="#7E87EF" />
-                </button>
-                <IconLabel>Gallery</IconLabel>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      {showMealInfoPage && (
-        <MealPage
-          setshowMealInfoPage={setshowMealInfoPage}
-          finalDate={finalDate}
-          mealInfo={storedMealInfoField}
-          imageURL={storedMealUrlField}
-        />
-      )}
-
       {/* loading component */}
+
       {loading && (
         <div className="mx-auto mb-2  flex max-w-sm items-center space-x-6 rounded-lg bg-mediumGray p-3  shadow-md  ">
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">

@@ -229,7 +229,7 @@ const TimelineTile = ({ data }) => {
               </div> */}
 
               <div className='h-fit w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs'>
-                <p className='w-full text-center tracking-widest'>{data?.achievement[achievementsIndex]?.medal} {data?.achievement[achievementsIndex]?.type} : {data?.achievement[achievementsIndex]?.weight}</p>
+                <p className='w-full text-center tracking-widest'>{data?.achievement[achievementsIndex]?.medal} {data?.achievement[achievementsIndex]?.movementInfo?.name} : {data?.achievement[achievementsIndex]?.weight}</p>
               </div>
 
               {data?.achievement?.length > 1 &&
