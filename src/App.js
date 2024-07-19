@@ -16,6 +16,7 @@ import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from "./features/LifeStyleRoutines"
+import MealUpload from './features/LifeStyleRoutines/MealUpload';
 function App() {
   // const { user, getUserFromStorage } = useAuth();
   let user = localStorage.getItem('user');
@@ -63,7 +64,9 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
         <Route path="/monthly-wrapped" element={<RouteMiddleware><MonthlyWrapped /></RouteMiddleware>} />
-        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage/>} />
+        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage />} />
+        <Route path="/MealUpload" element={<RouteMiddleware><MealUpload /></RouteMiddleware>} />
+
         <Route
           path="/lifestyle-routine"
           element={
