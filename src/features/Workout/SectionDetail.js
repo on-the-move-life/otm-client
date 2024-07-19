@@ -384,7 +384,7 @@ const SectionDetail = () => {
   
   {code === 'GYM' && dataInput.length > 2 && (
   <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-    <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORTS TEST</p>
+    <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORT TEST</p>
     <div className="flex flex-col items-center mb-4 sm:mt-4 mt-4">
       <p className="mb-2 sm:text-base text-sm font-semibold text-center">
         {assessmentMovement?.name}
