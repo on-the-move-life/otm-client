@@ -57,27 +57,48 @@ const MainPage = () => {
                     navigate('/home');
                   }}
                 />
-                <div className='w-full flex flex-col justify-center items-start mt-2'>
-                  <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
-                    {memberName}
-                  </h1>
+                 <div className='w-full flex flex-col justify-center items-start mt-2'>
+                   <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
+                   {memberName}
+                   </h1>
                   <span className="text-xs font-extralight tracking-wider text-lightGray">
-                    Let's crush this workout
+                   Let's crush this workout
                   </span>
                   <span className="mt-6 text-xs tracking-widest text-lightGray">
-                    TODAY'S FOCUS
+                   TODAY'S FOCUS
                   </span>
-                  <div className="flex gap-2">
-                    <div>
-                  <h2 className="text-xl">{workoutData.theme}</h2>
-                  </div>
-                  <div className="flex items-center justify-center rounded-[7px] border border-white px-[3px]">
-                     <button onClick={() => setShowUpdateWorkout(true)} className="w-fit rounded border bg-white px-[0.7px] text-center text-[10px] font-bold text-black">
-                       Change
-                    </button>
-                  </div>
-                  </div>
-                </div>
+                <div className="flex sm:justify-normal sm:gap-5 justify-between w-full items-center">
+                <div className="flex gap-2 items-center">
+                 <div>
+                 <h2 className="text-xl">{workoutData.theme}</h2>
+                 </div>
+                 <div className="flex items-center justify-center">
+                <button 
+                onClick={() => setShowUpdateWorkout(true)} 
+                className="w-fit rounded-[4px] border border-white bg-black p-[3px]"
+                >
+                <span className="bg-white px-[2px] py-[1px] text-[10px] font-bold text-black rounded-[4px] block">
+                Change
+               </span>
+              </button>
+              </div>
+             </div>
+           {(workoutData.workoutCalories || workoutData.workoutDuration) && (
+             <div className="flex sm:flex-row sm:gap-2 flex-col items-end">
+              {workoutData.workoutCalories && (
+              <span className="text-sm ">
+              {workoutData.workoutCalories} calories
+              </span>
+             )}
+             {workoutData.workoutDuration && (
+             <span className="text-sm ">
+             {workoutData.workoutDuration} mins
+             </span>
+            )}
+            </div>
+            )}
+            </div>
+            </div>
               </div>
 
                 {/* <div className="mt-4 h-fit rounded-xl border border-white p-2 text-center text-[10px] uppercase tracking-widest">

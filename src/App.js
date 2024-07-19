@@ -16,18 +16,20 @@ import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from "./features/LifeStyleRoutines"
+
+import { AdminLogin } from './features/AdminLogin/AdminLogin';
+import { AdminDashboard } from './features/AdminLogin/AdminDashboard';
+import { useAuth } from './contexts/AuthContext';
+
+import MealUpload from './features/LifeStyleRoutines/MealUpload';
+
 function App() {
   // const { user, getUserFromStorage } = useAuth();
-  let user = localStorage.getItem('user');
-  if (user && !user.includes('undefined')) {
-    user = JSON.parse(user);
-  }
+  const { checkAdminAuth, getUserFromStorage } = useAuth();
 
   function RouteMiddleware({ children }) {
-    let user = localStorage.getItem('user');
-    if (user && !user.includes('undefined')) {
-      user = JSON.parse(user);
-    }
+    console.log("RouteMiddleware called");
+    const user = getUserFromStorage();
 
     if (user && user.email) {
       return children;
@@ -35,19 +37,17 @@ function App() {
       return <Navigate to="/login" />;
     }
   }
+
+  function AdminRouteMiddleware({ children }) {
+    console.log("AdminRouteMiddleware Called")
+    const adminLoggedIn = checkAdminAuth();
+    return adminLoggedIn ? children : <Navigate to="/admin-login" />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            user && user.email ? (
-              <Navigate to="/home" />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
+        <Route path="/" element={<RouteMiddleware><Home /></RouteMiddleware>} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<RouteMiddleware><Home /></RouteMiddleware>} />
         <Route path="/questionnaire" element={<RouteMiddleware><Questionnaire /></RouteMiddleware>} />
@@ -63,13 +63,23 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path="/timeline" element={<RouteMiddleware><Timeline /></RouteMiddleware>} />
         <Route path="/monthly-wrapped" element={<RouteMiddleware><MonthlyWrapped /></RouteMiddleware>} />
-        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage/>} />
+        <Route path="/journey-reflection/:reportId" element={<JourneyReflectionPage />} />
+        <Route path="/MealUpload" element={<RouteMiddleware><MealUpload /></RouteMiddleware>} />
+
         <Route
           path="/lifestyle-routine"
           element={
             <Provider store={store}>
               <RouteMiddleware><LifeStyleRoutine /></RouteMiddleware>
             </Provider>
+          }
+        />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route
+          path="/admin-dashboard" element={
+            <AdminRouteMiddleware>
+              <AdminDashboard />
+            </AdminRouteMiddleware>
           }
         />
       </Routes>

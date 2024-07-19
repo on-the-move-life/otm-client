@@ -44,10 +44,20 @@ const Home = () => {
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
 
-    getUserFromStorage();
+    /*********** This code snippet is commented intentionally by @SaurabhSahu01 ***********/
+    /* getUserFromStorage returns null or the user data */
+    // const clientUser = getUserFromStorage();
+    /* 
+      If the user is null, it is navigated to '/'. Check App.js to see what happens on the route '/'
+      If the user is not logged in, clientUser is null. Redirected to the route '/'. 
+      There it checks if the user is undefined or not, then accordingly redirect to '/home' or '/login'
+    */
+    // if (clientUser === null) {
+    //   console.log("navigating to '/'");
+    //   navigate('/');
+    // }
 
-    if (user === null) navigate('/');
-
+    // if the user is not null
     function getUserData() {
       setLoader(true);
       axios
@@ -155,6 +165,14 @@ const Home = () => {
               <DuePaymentIndicator />
             </section>
           )}
+          <Link to="/MealUpload" className="main-cta">
+            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+              Meal Upload
+            </span>
+            <span>
+              <AiOutlineRight size={22} />
+            </span>
+          </Link>
           <Link to="/workout" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
               Workouts
