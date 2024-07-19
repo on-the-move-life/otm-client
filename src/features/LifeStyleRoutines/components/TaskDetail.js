@@ -21,7 +21,6 @@ import MealCrossIcon from './icons/MealCrossIcon';
 import SparkleIcon from './icons/SparkleIcon';
 import AnalyseMealComp from './AnalyseMealComp';
 
-
 const TaskDetail = ({
   SelectedCircle,
   task,
@@ -30,8 +29,7 @@ const TaskDetail = ({
   date,
   taskCompleted,
 }) => {
-  // const [isMealTask, setIsMealTask] = useState(false);
-  const [parentVisibilityCheck, setParentVisibilityCheck] = useState(true)
+  const [parentVisibilityCheck, setParentVisibilityCheck] = useState(true);
 
   const [isMealTask, setIsMealTask] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -43,10 +41,6 @@ const TaskDetail = ({
   // meal info handling
 
   const [loading, setLoader] = useState(false);
-
-  // const profilePicRef = useRef(null);
-  // const fileInputRef = useRef(null);
-
 
   const formattedDate = getFormattedDate();
   const finalDate = date === null || date === undefined ? formattedDate : date;
@@ -95,8 +89,6 @@ const TaskDetail = ({
   });
 
   // mealinfo change
-
-
 
   const storedMealInfoField = useSelector((state) => {
     const circle = state?.lifeStyleDetails?.circles.find(
@@ -229,7 +221,7 @@ const TaskDetail = ({
       setIsMealTask(true);
     } else {
       // setIsMealTask(false);
-      console.log("do nothing");
+      console.log('do nothing');
     }
   }, [task]);
 
@@ -261,19 +253,17 @@ const TaskDetail = ({
     }
   }, [storedMealUrlField]);
 
-
   const handleClick = () => {
     // setShowProfilePicPopup(true);
-    setParentVisibilityCheck(false)
+    setParentVisibilityCheck(false);
     console.log('clicked');
   };
 
   const handleClose = () => {
     // setShowProfilePicPopup(true);
-    setshowImageUploadPage(false)
+    setshowImageUploadPage(false);
     console.log('clicked');
   };
-
 
   const MealTaskComponent = () => {
     // if lifestyle routine does not have mealInfo data
@@ -297,7 +287,10 @@ const TaskDetail = ({
         storedMealUrlField,
       );
       return (
-        <div onClick={handleClick} className="mb-5 flex h-auto items-center justify-center">
+        <div
+          onClick={handleClick}
+          className="mb-5 flex h-auto items-center justify-center"
+        >
           <FullMealInfoCard
             mealInfo={storedMealInfoField}
             imageURL={storedMealUrlField}
@@ -458,80 +451,80 @@ const TaskDetail = ({
                 <button
                   onClick={() => setSelectedFeeling(1)}
                   className={`transition-transform duration-200 ${selectedFeeling === 1 || moodValue === 1
-                    ? 'scale-125 transform rounded-md bg-white/10'
-                    : ''
+                      ? 'scale-125 transform rounded-md bg-white/10'
+                      : ''
                     }`}
                 >
                   <img
                     src={'./assets/Feeling-sad.svg'}
                     alt="Sad"
                     className={`w-15 h-15 ${selectedFeeling === 1 || moodValue === 1
-                      ? 'text-red-500'
-                      : ''
+                        ? 'text-red-500'
+                        : ''
                       }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(2)}
                   className={`transition-transform duration-200 ${selectedFeeling === 2 || moodValue === 2
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
                     }`}
                 >
                   <img
                     src={'./assets/Feeling-sad2.svg'}
                     alt="Neutral"
                     className={`w-15 h-15 ${selectedFeeling === 2 || moodValue === 2
-                      ? 'text-yellow-500'
-                      : ''
+                        ? 'text-yellow-500'
+                        : ''
                       }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(3)}
                   className={`transition-transform duration-200 ${selectedFeeling === 3 || moodValue === 3
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
                     }`}
                 >
                   <img
                     src={'./assets/Feeling-neutral.svg'}
                     alt="Happy"
                     className={`w-15 h-15 ${selectedFeeling === 3 || moodValue === 3
-                      ? 'text-yellow-400'
-                      : ''
+                        ? 'text-yellow-400'
+                        : ''
                       }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(4)}
                   className={`transition-transform duration-200 ${selectedFeeling === 4 || moodValue === 4
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
                     }`}
                 >
                   <img
                     src={'./assets/Feeling-happy.svg'}
                     alt="Very Happy"
                     className={`w-15 h-15 ${selectedFeeling === 4 || moodValue === 4
-                      ? 'text-green-500'
-                      : ''
+                        ? 'text-green-500'
+                        : ''
                       }`}
                   />
                 </button>
                 <button
                   onClick={() => setSelectedFeeling(5)}
                   className={`transition-transform duration-200 ${selectedFeeling === 5 || moodValue === 5
-                    ? 'scale-125 transform  rounded-md bg-white/10'
-                    : ''
+                      ? 'scale-125 transform  rounded-md bg-white/10'
+                      : ''
                     }`}
                 >
                   <img
                     src={'./assets/Feeling-happy2.svg'}
                     alt="Ecstatic"
                     className={`w-15 h-15 ${selectedFeeling === 5 || moodValue === 5
-                      ? 'text-green-400'
-                      : ''
+                        ? 'text-green-400'
+                        : ''
                       }`}
                   />
                 </button>
@@ -551,19 +544,16 @@ const TaskDetail = ({
         </>
       )}
 
-
       {!parentVisibilityCheck && (
-
         <div>
-
-          <AnalyseMealComp setParentVisibilityCheck={setParentVisibilityCheck} task={task} date={finalDate} SelectedCircle={SelectedCircle} />
-
-
+          <AnalyseMealComp
+            setParentVisibilityCheck={setParentVisibilityCheck}
+            task={task}
+            date={finalDate}
+            SelectedCircle={SelectedCircle}
+          />
         </div>
-
       )}
-
-
 
       {/* loading component */}
 

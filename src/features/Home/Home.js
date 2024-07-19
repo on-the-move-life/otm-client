@@ -171,7 +171,7 @@ const Home = () => {
               <AiOutlineRight size={22} />
             </span>
           </Link>
-          <Link to="/testmealupload" className="main-cta">
+          <Link to="/MealUpload" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
               Meal Upload
             </span>

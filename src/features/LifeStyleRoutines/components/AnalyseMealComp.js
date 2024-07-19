@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react';
 import SparkleIcon from './icons/SparkleIcon';
 import { axiosClient } from '../apiClient';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,11 +19,12 @@ import { Loader } from '../../../components';
 import MealImageicon from './icons/MealImageicon';
 import MealCrossIcon from './icons/MealCrossIcon';
 
-const AnalyseMealComp = ({ setParentVisibilityCheck, task = null, date = null, SelectedCircle = null
+const AnalyseMealComp = ({
+    setParentVisibilityCheck = null,
+    task = null,
+    date = null,
+    SelectedCircle = null,
 }) => {
-
-
-
     const [isVisible, setIsVisible] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -47,108 +48,71 @@ const AnalyseMealComp = ({ setParentVisibilityCheck, task = null, date = null, S
     const finalDate = date === null || date === undefined ? formattedDate : date;
 
     // console.log();
-    console.log("task and date are", task, date);
-
+    console.log('task and date are', task, date);
 
     // redux implementation
     const dispatch = useDispatch();
 
+    const selectCircleAndTask = (state, TaskCircle, task) => {
+        console.log('INSIDE REDUX state', state);
+        const circle = state?.lifeStyleDetails?.circles.find(
+            (circle) => circle?.name === TaskCircle,
+        );
+
+        if (!circle) {
+            return { circle: null, task: null };
+        }
+
+        console.log('INSIDE REDUX circle', circle);
+        const myTask = circle?.tasks.find(
+            (mappedTask) => mappedTask.taskId === task?.taskId,
+        );
+
+        return { circle, task: myTask };
+    };
+
     const storedMealInfoField = useSelector((state) => {
-        console.log("INSIDE REDUX state", state);
-        const circle = state?.lifeStyleDetails?.circles.find(
-            (circle) => circle?.name === TaskCircle,
-        );
-        if (circle) {
-            console.log("INSIDE REDUX circle", circle);
-            const mytask = circle?.tasks.find(
-                (mappedTask) => mappedTask.taskId === task?.taskId,
-            );
-            return mytask ? task?.mealInfo : null;
-        }
-        return '';
+        const { task: myTask } = selectCircleAndTask(state, TaskCircle, task);
+        return myTask ? myTask.mealInfo : '';
     });
 
-    // mealUrl change
     const storedMealUrlField = useSelector((state) => {
-        const circle = state?.lifeStyleDetails?.circles.find(
-            (circle) => circle?.name === TaskCircle,
-        );
-        if (circle) {
-            const mytask = circle?.tasks.find(
-                (mappedTask) => mappedTask.taskId === task?.taskId,
-            );
-            return mytask ? task?.mealUrl : null;
-        }
-        return '';
+        const { task: myTask } = selectCircleAndTask(state, TaskCircle, task);
+        return myTask ? myTask.mealUrl : '';
     });
 
-    console.log("storedMealUrlField", storedMealUrlField);
-    console.log("storedMealInfoField", storedMealInfoField);
+
+    console.log('storedMealUrlField', storedMealUrlField);
+    console.log('storedMealInfoField', storedMealInfoField);
     // checking if arguments are empty
 
     useEffect(() => {
-
         if (storedMealInfoField) {
             setIsVisible(false);
-        }
-
-        else if (!storedMealInfoField) {
+        } else if (!storedMealInfoField) {
             setIsVisible(true);
         }
-
     }, [storedMealInfoField]);
-
-
 
     useEffect(() => {
-
         if (task == null) {
-            getUserData()
+            getUserData();
             setselectedTaskId('');
-        }
-
-        else if (!storedMealInfoField) {
+        } else if (!storedMealInfoField) {
             setIsVisible(true);
         }
-
     }, [storedMealInfoField]);
-
-
 
     const getUserData = async () => {
         setLoader(true);
 
-        // To fetch user lifestyle details having the mealInfo fields
-        // is not used anymore
-        // const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
         try {
-
-            const mealObject =
-                [
-                    { taskId: "1", taskName: "Breakfast" },
-                    { taskId: "2", taskName: "Lunch" },
-                    { taskId: "3", taskName: "Dinner" }
-                ]
-                ;
-
-
+            const mealObject = [
+                { taskId: '1', taskName: 'Breakfast' },
+                { taskId: '2', taskName: 'Lunch' },
+                { taskId: '3', taskName: 'Dinner' },
+            ];
             setmealTaskIds(mealObject);
-
-
-            //     const response = await axiosClient.get(`?user=${memberCode}&date=${date}`);
-            //     dispatch(fetchInitialStateSuccess(response.data));
-
-            //     setApiResponse(response.data);
-            //     console.log("API RESPONSE", response.data);
-
-
-            //     const mealTaskIds = response.data.lifeStyleDetails.circles.flatMap(circle =>
-            //         circle.tasks
-            //             .filter(task => task.type === 'meal').map(task => ({ taskId: task.taskId, taskName: task.name, circleName: circle.name }))
-            //     );
-
-            //     console.log("MEAL TASK IDS", mealTaskIds);
-
         } catch (error) {
             console.error(error);
         } finally {
@@ -156,36 +120,32 @@ const AnalyseMealComp = ({ setParentVisibilityCheck, task = null, date = null, S
         }
     };
 
-
-
     //   Meal image handling
-
 
     const handleCameraClick = () => {
         fileInputRef.current.click();
     };
 
-
     const ProfilePicHeading = styled.div`
-color: #d7d7d7;
-text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 20px;
-font-style: normal;
-line-height: 29.066px; /* 160% */
-text-transform: capitalize;
-letter-spacing: 1px;
-`;
+    color: #d7d7d7;
+    text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    line-height: 29.066px; /* 160% */
+    text-transform: capitalize;
+    letter-spacing: 1px;
+  `;
     const IconLabel = styled.div`
-color: #d7d7d7;
-text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-font-size: 15px;
-font-style: normal;
-line-height: 29.066px; /* 160% */
-text-transform: capitalize;
-letter-spacing: 1px;
-`;
+    color: #d7d7d7;
+    text-shadow: 0px 2.725px 2.725px rgba(0, 0, 0, 0.15);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    line-height: 29.066px; /* 160% */
+    text-transform: capitalize;
+    letter-spacing: 1px;
+  `;
 
     const modalVariants = {
         hidden: {
@@ -203,13 +163,9 @@ letter-spacing: 1px;
         },
     };
 
-
     const handleClose = () => {
         setParentVisibilityCheck(true);
     };
-
-
-
 
     // Meal image post request handling
     const handleMealUploadSubmit = async () => {
@@ -223,7 +179,7 @@ letter-spacing: 1px;
                     JSON.parse(localStorage.getItem('user'))['code'],
                 );
                 formData.append('date', finalDate);
-                console.log("Selected taskId and date is", selectedTaskId, finalDate);
+                console.log('Selected taskId and date is', selectedTaskId, finalDate);
                 formData.append('taskId', selectedTaskId);
 
                 const res = await axiosClient.post('/meal-info', formData, {
@@ -238,8 +194,11 @@ letter-spacing: 1px;
                     const { mealUrl, mealNutritionAnalysis } = res.data;
                     setIsVisible(false);
 
-
-                    console.log("inside API selected circle and taskId", TaskCircle, selectedTaskId);
+                    console.log(
+                        'inside API selected circle and taskId',
+                        TaskCircle,
+                        selectedTaskId,
+                    );
 
                     setTempMealInfo(mealNutritionAnalysis);
                     setTempMealUrl(mealUrl);
@@ -263,14 +222,12 @@ letter-spacing: 1px;
         }
     };
 
-
     const handleSelectChange = (event) => {
-
         const taskId = event.target.value;
-        console.log("selected task is", taskId);
+        console.log('selected task is', taskId);
 
         setselectedTaskId(taskId);
-        const selectedTask = mealTaskIds.find(task => task.taskId === taskId);
+        const selectedTask = mealTaskIds.find((task) => task.taskId === taskId);
         if (selectedTask) {
             setTaskCircle(selectedTask.circleName);
         }
@@ -278,50 +235,44 @@ letter-spacing: 1px;
         if (task == null) {
             setselectedTaskId(undefined);
         }
-
-
-        // setselectedTaskId(event.target.value);
-
-        // console.log("event is", selectedTaskId);
     };
-
-
 
     const DropdownComp = () => {
         return (
-
-
-            <div className="flex items-center justify-center bg-medium-gray">
-                <div className="bg-medium-gray p-6 rounded shadow-md w-80">
-                    <label htmlFor="taskId" className="bg-medium-gray block text-sm font-medium text-gray-700 mb-2">Select your meal:</label>
+            <div className="bg-medium-gray flex items-center justify-center">
+                <div className="bg-medium-gray w-80 rounded p-6 shadow-md">
+                    <label
+                        htmlFor="taskId"
+                        className="bg-medium-gray mb-2 block text-sm font-medium text-gray-700"
+                    >
+                        Select your meal:
+                    </label>
                     <select
                         id="taskId"
                         value={selectedTaskId}
                         onChange={handleSelectChange}
-                        className="text-lightGray mt-1 block w-full py-2 px-3 border border-gray-300 bg-mediumGray rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full rounded-md border border-gray-300 bg-mediumGray px-3 py-2 text-lightGray shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >
-                        <option value="" disabled>Select one option</option>
-
+                        <option value="" disabled>
+                            Select one option
+                        </option>
 
                         {mealTaskIds != null ? (
                             mealTaskIds.map((task, index) => (
-                                <option key={index} value={task.taskId}>{task.taskName}</option>
-                            ))) : (
+                                <option key={index} value={task.taskId}>
+                                    {task.taskName}
+                                </option>
+                            ))
+                        ) : (
                             <option value={selectedTaskId}>{selectedTaskName}</option>
                         )}
-
-
-
                     </select>
-
                 </div>
             </div>
-
-
         );
-    }
+    };
 
-    // file upload 
+    // file upload
     const handleFileChange = (e) => {
         setLoader(true);
         const selectedFile = e.target.files[0];
@@ -342,82 +293,76 @@ letter-spacing: 1px;
         }
     };
 
-
-
-    // Meal Information Component 
+    // Meal Information Component
 
     return (
-
         <>
-            {isVisible ?
+            {isVisible ? (
                 <>
-                    <div className="flex w-full flex-row items-center justify-between text-center align-middle mt-2">
-                        {/* empty div to put other two divs in place */}
-                        <div></div>
+                    {setParentVisibilityCheck && (
+                        <div className="mt-2 flex w-full flex-row items-center justify-between text-center align-middle">
+                            {/* empty div to put other two divs in place */}
+                            <div></div>
 
-                        <div className=" flex flex-row items-center  text-center">
-                            <MealImageicon />
+                            <div className=" flex flex-row items-center  text-center">
+                                <MealImageicon />
 
-                            <div className="ml-15 pl-2 font-sfpro text-[14px]  font-medium text-lightGray">
-                                Upload meal photo
+                                <div className="ml-15 pl-2 font-sfpro text-[14px]  font-medium text-lightGray">
+                                    Upload meal photo
+                                </div>
+                            </div>
+
+                            <div className="mr-4" onClick={handleClose}>
+                                <MealCrossIcon />{' '}
                             </div>
                         </div>
-
-                        <div className='mr-4'
-                            onClick={handleClose}
-                        >
-                            <MealCrossIcon />{' '}
-                        </div>
-                    </div>
+                    )}
 
                     <div className="  flex max-w-sm items-center space-x-6 rounded-lg  shadow-md  ">
-
                         <div className="flex items-center justify-center ">
                             <div className="  rounded-lg shadow-lg">
-
-
-
-
-                                <div className="ml-2 mb-6 mt-[58px] h-[421px] w-[358px]   border-gray-400 rounded-lg flex items-center justify-center bg-mediumGray" onClick={() => setshowMealPicPopUp(true)}>
-
-
-                                    {!selectedImage ? <div className=" rounded-lg  p-4 ">
-                                        <p className='text-center'>
-                                            Click here to upload image
-                                        </p>
-                                    </div> : <img
-                                        className="h-auto w-auto object-cover"
-                                        src={selectedImage}
-                                        alt="Preview"
-                                    />
-                                    }
-
-
-
-                                </div>
-
-
+                                {!selectedImage ? (
+                                    <div
+                                        style={{
+                                            backgroundImage: `url('/assets/meal-analysis-image-placeholder.jpg')`,
+                                        }}
+                                        className=" mb-6 ml-2 mt-[58px] flex h-[421px]   w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
+                                        onClick={() => setshowMealPicPopUp(true)}
+                                    >
+                                        <div className=" rounded-lg  p-4 ">
+                                            <p className="text-center">Click here to upload image</p>
+                                        </div>{' '}
+                                    </div>
+                                ) : (
+                                    <div
+                                        className="mb-6 ml-2 mt-[58px] flex h-[421px]   h-fit w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
+                                        onClick={() => setshowMealPicPopUp(true)}
+                                    >
+                                        {' '}
+                                        <img
+                                            className=" m-auto h-fit w-full rounded-lg bg-cover  "
+                                            src={selectedImage}
+                                            alt="Preview"
+                                        />
+                                    </div>
+                                )}
 
                                 <div className="w-full px-3">
+                                    {!selectedImage ? (
+                                        <div>
+                                            <p></p>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            onClick={() => setshowMealPicPopUp(true)}
+                                            className="mb-4 w-full text-center font-sfpro text-lightGray underline"
+                                        >
+                                            pick a different image
+                                        </button>
+                                    )}
 
-                                    {!selectedImage ? <div >
-                                        <p >
-
-                                        </p>
-                                    </div> : <button
-                                        onClick={() => setshowMealPicPopUp(true)}
-                                        className="mb-4 w-full text-center font-sfpro text-lightGray underline"
-                                    >
-                                        pick a different image
-                                    </button>
-                                    }
-
-                                    <div className="flex justify-center items-center border-[1px] border-gray-400 rounded-lg  " >
-
-                                        <DropdownComp
-
-                                        // placeholder="Select an option"
-                                        />
+                                    <div className="flex items-center justify-center rounded-lg border-[1px] border-gray-400  ">
+                                        <DropdownComp />
                                     </div>
                                     <div className="fixed bottom-4 left-0 w-full px-3">
                                         <button
@@ -428,78 +373,78 @@ letter-spacing: 1px;
                                             Analyse{' '}
                                         </button>
                                     </div>
+
+                                    <div className="h-[120px] w-[1px]  "></div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
-                </> : <MealPage finalDate={finalDate}
+                </>
+            ) : (
+                <MealPage
+                    finalDate={finalDate}
                     mealInfo={storedMealInfoField ? storedMealInfoField : tempMealInfo}
-                    imageURL={storedMealUrlField ? storedMealUrlField : tempMealUrl} setParentVisibilityCheck={setParentVisibilityCheck} />
+                    imageURL={storedMealUrlField ? storedMealUrlField : tempMealUrl}
+                    setParentVisibilityCheck={
+                        setParentVisibilityCheck ? setParentVisibilityCheck : setIsVisible
+                    }
+                />
+            )}
 
-
-            }
-
-            {
-                showMealPicPopUp && (
-                    <motion.div
-                        className="fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 p-5 backdrop-blur-lg"
-                        initial="hidden"
-                        animate={showMealPicPopUp ? 'visible' : 'hidden'}
-                        variants={modalVariants}
+            {showMealPicPopUp && (
+                <motion.div
+                    className="fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 p-5 backdrop-blur-lg"
+                    initial="hidden"
+                    animate={showMealPicPopUp ? 'visible' : 'hidden'}
+                    variants={modalVariants}
+                >
+                    <button
+                        className="absolute left-[47%] top-0 cursor-pointer"
+                        onClick={() => setshowMealPicPopUp(false)}
                     >
-                        <button
-                            className="absolute left-[47%] top-0 cursor-pointer"
-                            onClick={() => setshowMealPicPopUp(false)}
-                        >
-                            <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
-                        </button>
-                        <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
-                            <ProfilePicHeading>Meal photo</ProfilePicHeading>
-                            <div className="flex w-full flex-row items-center justify-start gap-[40px]">
-                                <div
-                                    className="flex w-fit flex-col items-center justify-center gap-1"
-                                    onClick={handleCameraClick}
-                                >
-                                    <input
-                                        ref={fileInputRef}
-                                        type="file"
-                                        accept="image/*"
-                                        capture="user"
-                                        hidden
-                                        onChange={handleFileChange}
-                                    />
-                                    <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
-                                        <IoCamera size={30} color="#7E87EF" />
-                                    </button>
-                                    <IconLabel>Camera</IconLabel>
-                                </div>
-                                <div
-                                    className="flex w-fit flex-col items-center justify-center gap-1"
-                                    onClick={() => profilePicRef.current.click()}
-                                >
-                                    <input
-                                        ref={profilePicRef}
-                                        type="file"
-                                        accept="image/png, image/jpg, image/jpeg"
-                                        name="profile image"
-                                        hidden
-                                        onInput={handleFileChange}
-                                    ></input>
-                                    <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
-                                        <BsImageFill size={30} color="#7E87EF" />
-                                    </button>
-                                    <IconLabel>Gallery</IconLabel>
-                                </div>
+                        <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
+                    </button>
+                    <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
+                        <ProfilePicHeading>Meal photo</ProfilePicHeading>
+                        <div className="flex w-full flex-row items-center justify-start gap-[40px]">
+                            <div
+                                className="flex w-fit flex-col items-center justify-center gap-1"
+                                onClick={handleCameraClick}
+                            >
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    capture="user"
+                                    hidden
+                                    onChange={handleFileChange}
+                                />
+                                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
+                                    <IoCamera size={30} color="#7E87EF" />
+                                </button>
+                                <IconLabel>Camera</IconLabel>
+                            </div>
+                            <div
+                                className="flex w-fit flex-col items-center justify-center gap-1"
+                                onClick={() => profilePicRef.current.click()}
+                            >
+                                <input
+                                    ref={profilePicRef}
+                                    type="file"
+                                    accept="image/png, image/jpg, image/jpeg"
+                                    name="profile image"
+                                    hidden
+                                    onInput={handleFileChange}
+                                ></input>
+                                <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
+                                    <BsImageFill size={30} color="#7E87EF" />
+                                </button>
+                                <IconLabel>Gallery</IconLabel>
                             </div>
                         </div>
-                    </motion.div>
-                )
-            }
-
+                    </div>
+                </motion.div>
+            )}
 
             {/* loading component */}
 
@@ -512,15 +457,8 @@ letter-spacing: 1px;
                     </div>
                 </div>
             )}
-
-
         </>
+    );
+};
 
-
-
-
-
-    )
-}
-
-export default AnalyseMealComp
+export default AnalyseMealComp;
