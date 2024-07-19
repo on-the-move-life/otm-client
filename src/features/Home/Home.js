@@ -44,10 +44,20 @@ const Home = () => {
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
 
-    getUserFromStorage();
+    /*********** This code snippet is commented intentionally by @SaurabhSahu01 ***********/
+    /* getUserFromStorage returns null or the user data */
+    // const clientUser = getUserFromStorage();
+    /* 
+      If the user is null, it is navigated to '/'. Check App.js to see what happens on the route '/'
+      If the user is not logged in, clientUser is null. Redirected to the route '/'. 
+      There it checks if the user is undefined or not, then accordingly redirect to '/home' or '/login'
+    */
+    // if (clientUser === null) {
+    //   console.log("navigating to '/'");
+    //   navigate('/');
+    // }
 
-    if (user === null) navigate('/');
-
+    // if the user is not null
     function getUserData() {
       setLoader(true);
       axios
