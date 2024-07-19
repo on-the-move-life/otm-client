@@ -330,7 +330,7 @@ const AnalyseMealComp = ({
                                             backgroundImage: `url('/assets/meal-analysis-image-placeholder.jpg')`,
                                             backgroundBlendMode: 'color-dodge',
                                         }}
-                                        className=" mb-6 mt-[58px] flex h-[421px]   w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
+                                        className=" mb-6 mt-[58px] flex h-[421px] w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
                                         onClick={() => setshowMealPicPopUp(true)}
                                     >
                                         <div className=" rounded-lg  p-4 ">
@@ -344,7 +344,7 @@ const AnalyseMealComp = ({
                                     >
                                         {' '}
                                         <img
-                                            className=" m-auto h-fit w-full rounded-lg bg-cover  "
+                                            className=" m-auto h-auto max-h-[421px] w-full rounded-lg bg-cover  "
                                             src={selectedImage}
                                             alt="Preview"
                                         />
