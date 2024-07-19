@@ -41,7 +41,9 @@ function ProfilePicture({ inputPic, altText, width, height }) {
       <motion.img
         src={inputPic}
         alt={altText}
-        className={`w-[${width}] h-[${height}] rounded-full object-cover`}
+        width={width}
+        height={height}
+        className={` rounded-full object-cover`}
         onClick={handleZoom}
         variants={imageVariants}
         initial="hidden"
