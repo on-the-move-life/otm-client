@@ -141,6 +141,7 @@ const Home = () => {
             </section>}
           <section>
             <WeeklyWorkoutReport
+            consistencyTrend={homeStats?.consistencyTrend}
               suggestedWorkoutPerWeek={homeStats?.frequency}
               lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
             />

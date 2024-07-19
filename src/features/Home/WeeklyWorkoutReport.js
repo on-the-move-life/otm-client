@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
+function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
     const [currentScore, setCurrentScore] = useState(0);
 
     useEffect(() => {
@@ -68,6 +68,22 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
             </div>
         )
     }
+    const getTrendColor = (trend) => {
+        switch (trend) {
+            case 'decreasing':
+                return 'text-[#FA5757]';
+            case 'maintaining':
+                return 'text-[#F5C563]';
+            case 'improving':
+                return 'text-[#7FE08A]';
+            default:
+                return 'text-gray-500';
+        }
+    }
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     return (
         <div className="weekly-workout-consistency">
             <section className='w-full flex flex-row justify-between items-center'>
@@ -76,7 +92,12 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
             </section>
             <section className='w-full flex flex-row justify-between items-center'>
                 <div className='w-fit flex flex-col justify-center items-center gap-1'>
-                    <div className='wwc-score'>{currentScore}</div>
+                <div className='flex items-center'>
+                        <div className='wwc-score'>{currentScore}</div>
+                        <div className={`ml-2 text-sm md:text-base ${getTrendColor(consistencyTrend)}`}>
+                            {capitalizeFirstLetter(consistencyTrend)}
+                        </div>
+                    </div>
                     <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
                 </div>
                 {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
