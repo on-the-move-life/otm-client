@@ -71,6 +71,7 @@ const SectionDetail = () => {
     description = '',
     formatInfo = {},
     notes = [],
+    assessmentMovement = {},
   } = currentSection;
 
   const movementLength = movements.length;
@@ -108,8 +109,6 @@ const SectionDetail = () => {
       navigate('/workout-summary', { replace: true });
     }
   };
-  console.log(movements);
-  console.log(dataInput);
 
   return (
     <>
@@ -377,32 +376,38 @@ const SectionDetail = () => {
   }
   
   {code === 'GYM' && dataInput.length > 2 && (
-    <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-      <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORTS TEST</p>
-      <div className="flex flex-col items-center mb-4 sm:mt-4 mt-4">
-        <p className="mb-2 sm:text-base text-sm font-semibold text-center">{movements[0]?.name}</p>
-        {movements[0]?.link && movements[0].link[0] && (
-          <img src={movements[0].link[0]} alt={movements[0].name} className="sm:w-32 w-20 max-w-xs" />
-        )}
-      </div>
-      <DataInputComponent2
-        key={2}
-        inputId={dataInput[2].id}
-        inputType={dataInput[2].type}
-        inputOptions={dataInput[2].options}
-        placeholder={dataInput[2].label}
-        label={dataInput[2].label}
-      />
-      <ul className="list-disc pl-5 mt-4">
-        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-          Enter the number of reps
-        </li>
-        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-          At max do 25 reps
-        </li>
-      </ul>
+  <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+    <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORTS TEST</p>
+    <div className="flex flex-col items-center mb-4 sm:mt-4 mt-4">
+      <p className="mb-2 sm:text-base text-sm font-semibold text-center">
+        {assessmentMovement?.name}
+      </p>
+      {assessmentMovement?.link && assessmentMovement?.link[0] && (
+        <img 
+          src={assessmentMovement.link[0]} 
+          alt={assessmentMovement.name} 
+          className="sm:w-32 w-20 max-w-xs" 
+        />
+      )}
     </div>
-  )}
+    <DataInputComponent2
+      key={2}
+      inputId={dataInput[2].id}
+      inputType={dataInput[2].type}
+      inputOptions={dataInput[2].options}
+      placeholder={dataInput[2].label}
+      label={dataInput[2].label}
+    />
+    <ul className="list-disc pl-5 mt-4">
+      <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+        Enter the number of reps
+      </li>
+      <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+        At max do 25 reps
+      </li>
+    </ul>
+  </div>
+)}
 </div>
 
                 {/* {!lastPage && (
