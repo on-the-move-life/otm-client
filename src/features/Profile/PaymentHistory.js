@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { HiX } from 'react-icons/hi';
 import { useAuth } from '../../contexts/AuthContext';
-import { PaymentList } from '../Profile';
 import { Loader } from '../../components';
 import { formatPaymentData } from '../../utils';
-import { axiosClient } from './apiClient';
+import { axiosClient } from './apiProfileClient';
 import AnimatedComponent from '../../components/AnimatedComponent';
+import PaymentList from './PaymentList';
 
 const PaymentHistory = ({ onClose }) => {
   const [paymentHistory, setPaymentHistory] = useState([]);
@@ -45,20 +45,20 @@ const PaymentHistory = ({ onClose }) => {
 
   return (
     <AnimatedComponent>
-      <div className="flex flex-col bg-neutral-900 h-screen w-screen bg-[#141414] p-4">
+      <div className="bg-neutral-900 flex h-screen w-screen flex-col bg-[#141414] p-4">
         <div className="flex justify-end" onClick={() => onClose()}>
           <span className="rounded-full bg-[#1F1F1F] p-1">
             <HiX size={20} />
           </span>
         </div>
-        <h1 className="text-neutral-400 px-auto my-2 flex items-center justify-center text-3xl font-medium leading-10">
+        <h1 className="flex items-center justify-center my-2 text-3xl font-medium leading-10 text-neutral-400 px-auto">
           Payment History
         </h1>
-        <div className=" grow  items-center justify-center">
+        <div className="items-center justify-center grow">
           {paymentHistory && paymentHistory.length !== 0 ? (
             <PaymentList data={paymentHistory} />
           ) : (
-            <h2 className="text-green text-2xl">No History Yet </h2>
+            <h2 className="text-2xl text-green">No History Yet </h2>
           )}
         </div>
       </div>

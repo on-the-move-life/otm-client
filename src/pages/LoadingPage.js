@@ -25,7 +25,7 @@ const LoadingPage = () => {
       } else {
         // Clear the interval when progress reaches 100%
         clearInterval(interval);
-        navigate('/home');
+        navigate('/fitness');
       }
     }, 500);
 

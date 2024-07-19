@@ -68,7 +68,7 @@ function LifeStyleScore({ completionPercentage = 72 }) {
   };
 
   return (
-    <Container className="flex flex-col items-center justify-center w-6/12 gap-1">
+    <Container className="flex flex-col items-center justify-center w-full gap-1">
       <Heading>Perfect Day</Heading>
       <Rank>{completionPercentage}%</Rank>
       <TotalParticipants>Of your perfect day complete</TotalParticipants>
