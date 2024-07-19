@@ -134,7 +134,7 @@ const reducer = (state = initialState, action) => {
                 ...circle,
                 tasks: circle?.tasks.map(task =>
                   task.taskId === action.payload?.taskId
-                    ? { ...task, feedback: action.payload?.steps }
+                    ? { ...task, steps: action.payload?.steps }
                     : task
                 )
               }

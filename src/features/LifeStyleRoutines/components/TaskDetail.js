@@ -25,6 +25,7 @@ import MealUploadButton from './MealUploadButton';
 import MealImageicon from './icons/MealImageicon';
 import MealCrossIcon from './icons/MealCrossIcon';
 import SparkleIcon from './icons/SparkleIcon';
+import { logDOM } from '@testing-library/react';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -56,7 +57,7 @@ const TaskDetail = ({
   taskCompleted,
 }) => {
   const [isMealTask, setIsMealTask] = useState(false);
-  const [isStepTask, setIsStepTask] = useState(true);
+  const [isStepTask, setIsStepTask] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [file, setFile] = useState(null);
   const [selectedFeeling, setSelectedFeeling] = useState(-1);
@@ -119,21 +120,22 @@ const TaskDetail = ({
     }
     return '';
   });
+  console.log('storedFeedbackValue', storedFeedbackValue);
+  // step count
+  const storedStepCountValue = useSelector((state) => {
+    const circle = state?.lifeStyleDetails?.circles.find(
+      (circle) => circle?.name === SelectedCircle,
+    );
+    if (circle) {
+      const mytask = circle?.tasks.find(
+        (mappedTask) => mappedTask.taskId === task?.taskId,
+      );
+      return mytask ? task?.steps : '';
+    }
+    return '';
+  });
 
-  // step count 
-  // const storedStepCountValue = useSelector((state) => {
-  //   const circle = state?.lifeStyleDetails?.circles.find(
-  //     (circle) => circle?.name === SelectedCircle,
-  //   );
-  //   if (circle) {
-  //     const mytask = circle?.tasks.find(
-  //       (mappedTask) => mappedTask.taskId === task?.taskId,
-  //     );
-  //     return mytask ? task?.feedback : '';
-  //   }
-  //   return '';
-  // });
-
+  console.log('storedStepCountValue', storedStepCountValue);
   // mealinfo change
   const storedMealInfoField = useSelector((state) => {
     const circle = state?.lifeStyleDetails?.circles.find(
@@ -204,13 +206,9 @@ const TaskDetail = ({
           ],
         })
         .then((res) => {
-          const action = handleStepChange(
-            SelectedCircle,
-            task?.taskId,
-            steps,
-          );
+          const action = handleStepChange(SelectedCircle, task?.taskId, steps);
           dispatch(action);
-          console.log(res);
+          console.log('STEPS ARE:', res);
         })
         .catch((err) => {
           const resetAction = handleStepChange(
@@ -224,6 +222,7 @@ const TaskDetail = ({
         });
     }
   }
+
   function handleFeedbackResponse() {
     if (feedback !== '') {
       axiosClient
@@ -301,6 +300,15 @@ const TaskDetail = ({
       setIsMealTask(true);
     } else {
       setIsMealTask(false);
+    }
+  }, [task]);
+
+  // effect to check if task is has step
+  useEffect(() => {
+    if (task.type === 'step') {
+      setIsStepTask(true);
+    } else {
+      setIsStepTask(false);
     }
   }, [task]);
 
@@ -564,30 +572,45 @@ const TaskDetail = ({
 
             {/* step tracker */}
 
-            {isStepTask && <div className="mb-6 ">
-              <h3 className="mb-2 font-sfpro text-[20px] leading-8 text-white">
-                Step Tracker
-              </h3>
-              <div className="rounded-xl bg-mediumGray p-2">
-                <p className="mb-2 text-[14px] text-custompurple">
-                  Log your steps
-                </p>
+            {isStepTask && (
+              <div className="mb-6 ">
+                <h3 className="mb-2 font-sfpro text-[20px] leading-8 text-white">
+                  Step Tracker
+                </h3>
+                <div className="rounded-xl bg-mediumGray p-2">
+                  <p className="mb-2 text-[14px] text-custompurple">
+                    Log your steps
+                  </p>
 
-                <textarea
-                  className="w-full rounded-xl  bg-black p-2 font-sfpro text-white focus:outline-none"
-                  placeholder="Type here..."
-                  onChange={(e) => setSteps(e.target.value)}
-                />
+                  {task?.steps === undefined ||
+                    task?.steps === null ||
+                    storedStepCountValue === undefined ||
+                    storedStepCountValue === null ? (
+                    <textarea
+                      className="w-full rounded-xl  bg-black p-2 font-sfpro text-white focus:outline-none"
+                      placeholder="Type here..."
+                      onChange={(e) => setSteps(e.target.value)}
+                    />
+                  ) : (
+                    <p className="text-md px-2 text-[14px] text-lightGray">
+                      {task?.steps}
+                    </p>
+                  )}
 
-                <button
-                  className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
-                  onClick={handleStepCountResponse}
-                >
-                  Submit
-                </button>
+                  {(task?.steps === undefined ||
+                    task?.steps === null ||
+                    storedStepCountValue === undefined ||
+                    storedStepCountValue === null) && (
+                      <button
+                        className="w-full rounded-xl bg-custompurple p-1 text-sm leading-8 text-black"
+                        onClick={handleStepCountResponse}
+                      >
+                        Submit
+                      </button>
+                    )}
+                </div>
               </div>
-            </div>}
-
+            )}
 
             <div className="mb-6 ">
               <h3 className="mb-2 font-sfpro text-[20px] leading-8 text-white">
