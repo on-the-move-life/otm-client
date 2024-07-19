@@ -25,24 +25,6 @@ const Community = () => {
   const navigate = useNavigate();
   const { value } = useParams();
 
-  // const fetchData = async () => {
-  //   const email = JSON.parse(localStorage.getItem('user'))?.email;
-  //   setCommunityLoading((prev) => true);
-  //   try {
-  //     const res = await TimelineAxiosClient.get(
-  //       `?type=community&page=${page}&email=${email}`,
-  //     );
-  //     setData((prev) => res?.data);
-  //     setCommunityLoading(false);
-  //   } catch (err) {
-  //     setError(true);
-  //     setCommunityLoading(false);
-  //     console.log(err);
-  //   }
-  // };
-
-  console.log(data, userData, communityloading, personalLoading);
-
   useEffect(() => {
     setCommunityLoading(true);
     const user = JSON.parse(localStorage.getItem('user'));
@@ -140,30 +122,36 @@ const Community = () => {
     (entry) => entry.code === user.code,
   );
 
+  console.log(matchingWorkoutUser, matchingFitnessUser);
+
   return (
     <div className="h-[calc(100vh-78px)] w-screen grow overflow-scroll px-4 pt-8">
       <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-3xl font-semibold text-transparent">
         Community
       </h1>
 
-      <RankDisplay
-        selectedDataType="workout"
-        name={matchingWorkoutUser?.name}
-        count={matchingWorkoutUser?.workout}
-        rankChange={matchingWorkoutUser?.rankChange}
-        rank={matchingWorkoutUser?.rank}
-        profilePicture={matchingWorkoutUser?.profilePicture}
-        isCurrentUser
-      />
+      {matchingWorkoutUser && (
+        <RankDisplay
+          selectedDataType="workout"
+          name={matchingWorkoutUser?.name}
+          count={matchingWorkoutUser?.workout}
+          rankChange={matchingWorkoutUser?.rankChange}
+          rank={matchingWorkoutUser?.rank}
+          profilePicture={matchingWorkoutUser?.profilePicture}
+          isCurrentUser
+        />
+      )}
 
-      <RankDisplay
-        name={matchingFitnessUser?.name}
-        count={matchingFitnessUser?.totalScore}
-        rankChange={matchingFitnessUser?.rankChange}
-        rank={matchingFitnessUser?.rank}
-        profilePicture={matchingFitnessUser?.profilePicture}
-        isCurrentUser
-      />
+      {matchingFitnessUser && (
+        <RankDisplay
+          name={matchingFitnessUser?.name}
+          count={matchingFitnessUser?.totalScore}
+          rankChange={matchingFitnessUser?.rankChange}
+          rank={matchingFitnessUser?.rank}
+          profilePicture={matchingFitnessUser?.profilePicture}
+          isCurrentUser
+        />
+      )}
 
       {data !== null && data.data.length > 0 && (
         <TimelineDisplay data={data.data[0]} timeline={'community'} />

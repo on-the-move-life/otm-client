@@ -26,10 +26,16 @@ const Timeline = () => {
             }}
           />
         </div>
-        <div className="flex flex-row items-center justify-between w-full">
-          <TimelineHeading>Timeline</TimelineHeading>
-        </div>
-        <div className="py-2 space-x-2">
+        <div className="flex flex-row items-center justify-between w-full"></div>
+        <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">
+          {value === 'community' ? (
+            <TimelineHeading>Community Timeline</TimelineHeading>
+          ) : (
+            <TimelineHeading>Personal Timeline</TimelineHeading>
+          )}
+        </h1>
+        {/* further need in future */}
+        {/* <div className="py-2 space-x-2">
           <button
             className={`${
               timeline !== null && timeline === 'community'
@@ -54,7 +60,7 @@ const Timeline = () => {
           >
             Personal
           </button>
-        </div>
+        </div> */}
         {timeline === 'community' ? (
           <CommunityTimeline />
         ) : (
