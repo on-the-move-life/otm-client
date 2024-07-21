@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
     const [currentScore, setCurrentScore] = useState(0);
 
+    //let test = 'improving';
+    //let test1 = 'maintaining';
+    //let test 2 = 'decreasing';
     useEffect(() => {
         // setting the average workout count
         try{
@@ -68,7 +71,7 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
             </div>
         )
     }
-    const getTrendColor = (trend) => {
+    const getTrendTextColor = (trend) => {
         switch (trend) {
             case 'decreasing':
                 return 'text-[#FA5757]';
@@ -80,7 +83,18 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                 return 'text-gray-500';
         }
     }
-
+    const getTrendBorderColor = (trend) => {
+        switch (trend) {
+            case 'decreasing':
+                return 'border-[#FA5757]';
+            case 'maintaining':
+                return 'border-[#F5C563]';
+            case 'improving':
+                return 'border-[#7FE08A]';
+            default:
+                return 'border-gray-500';
+        }
+    }
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -94,7 +108,7 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                 <div className='w-fit flex flex-col justify-center items-center gap-1'>
                 <div className='flex items-center'>
                         <div className='wwc-score'>{currentScore}</div>
-                        <div className={`ml-2 text-sm md:text-base ${getTrendColor(consistencyTrend)}`}>
+                        <div className={`ml-2 sm:text-[10px] text-[8px] ${getTrendBorderColor(consistencyTrend)} border-[1px] sm:px-[6px] sm:py-[0px] px-[6px] py-[3px] rounded-[6px] sm:text-base ${getTrendTextColor(consistencyTrend)}`}>
                             {capitalizeFirstLetter(consistencyTrend)}
                         </div>
                     </div>
