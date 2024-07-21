@@ -108,7 +108,7 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                 <div className='w-fit flex flex-col justify-center items-center gap-1'>
                 <div className='flex items-center'>
                         <div className='wwc-score'>{currentScore}</div>
-                        <div className={`ml-2 sm:text-[10px] text-[8px] ${getTrendBorderColor(consistencyTrend)} border-[1px] sm:px-[6px] sm:py-[0px] px-[6px] py-[3px] rounded-[6px] sm:text-base ${getTrendTextColor(consistencyTrend)}`}>
+                        <div className={`ml-2 sm:text-[10px] text-[8px] ${getTrendBorderColor(consistencyTrend)} border-[1px] sm:px-[6px] sm:py-[3px] px-[6px] py-[3px] rounded-[6px] ${getTrendTextColor(consistencyTrend)}`}>
                             {capitalizeFirstLetter(consistencyTrend)}
                         </div>
                     </div>
