@@ -224,15 +224,18 @@ const WorkoutSummary = () => {
             )}
 
             {countToEarnPerfectWeek !== null && countToEarnPerfectWeek < 0 && (
-              <p className="my-4 ">
-                Fitness Pro Alert! You've surpassed the
-                <span className="perfect-week inline-flex  w-fit items-center rounded">
-                  <img src="/assets/perfect-week.svg" alt="" />
-                </span>{' '}
-                goal with <strong>{Math.abs(countToEarnPerfectWeek)}</strong>{' '}
-                workout(s). <br />
-                Keep crushing it🔥
-              </p>
+              <p className="my-4">
+              Fitness Pro Alert! You've surpassed the{' '}
+              <span className="perfect-week inline-flex w-fit items-center rounded">
+                <img src="/assets/star.svg" alt="" />
+                <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
+                  Perfect Week x{homeStats.streak}
+                </span>
+              </span>{' '}
+              goal with <strong>{Math.abs(countToEarnPerfectWeek)}</strong>{' '}
+              workout(s). <br />
+              Keep crushing it🔥
+            </p>
             )}
 
 {countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
