@@ -25,6 +25,7 @@ import { AdminDashboard } from './features/AdminLogin/AdminDashboard';
 import { useAuth } from './contexts/AuthContext';
 
 import MealUpload from './features/LifeStyleRoutines/MealUpload';
+import NutritionPage from './features/Nutrition/NutritionPage';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -50,14 +51,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <RouteMiddleware>
-              <Home />
-            </RouteMiddleware>
-          }
-        />
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/timeline/:value"
@@ -153,7 +147,15 @@ function App() {
         />{' '}
         <Route element={<MainLayout />}>
           <Route
-            path="/fitness"
+            path="/nutrition"
+            element={
+              <RouteMiddleware>
+                <NutritionPage />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/home"
             element={
               <RouteMiddleware>
                 <FitnessPage />
@@ -186,6 +188,23 @@ function App() {
             }
           />
         </Route>
+        <Route
+          path="/MealUpload"
+          element={
+            <RouteMiddleware>
+              <MealUpload />
+            </RouteMiddleware>
+          }
+        />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <AdminRouteMiddleware>
+              <AdminDashboard />
+            </AdminRouteMiddleware>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

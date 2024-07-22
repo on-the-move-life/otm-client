@@ -10,7 +10,7 @@ const Error = ({ children, className, showButton = true }) => {
     >
       <div className="text-xl text-center">{children}</div>
       {showButton && (
-        <Link to="/fitness" className="text-lg underline text-green">
+        <Link to="/home" className="text-lg underline text-green">
           Go Back to Home
         </Link>
       )}

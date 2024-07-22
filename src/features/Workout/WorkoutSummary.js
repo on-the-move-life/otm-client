@@ -214,7 +214,7 @@ const WorkoutSummary = () => {
               </span>
             </div> */}
 
-                  <Link to="/fitness">
+                  <Link to="/home">
                     <HiHome size={40} color="#5ECC7B" />
                   </Link>
                 </div>

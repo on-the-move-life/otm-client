@@ -8,13 +8,13 @@ const Navbar = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const navArray = [1, 2, 3, 4];
+  const navArray = [1, 2, 3, 4, 5];
 
   // Hide nutrition temperory we need in future.
 
   const inActiveImagePath = [
     '/assets/movement_icon_inactive.svg',
-    // '/assets/nutrition_icon_inactive.svg',
+    '/assets/nutrition_icon_inactive.svg',
     '/assets/lifestyle_icon-inactive.svg',
     '/assets/community_icon_inactive.svg',
     '/assets/profile_icon_inactive.svg',
@@ -22,15 +22,15 @@ const Navbar = () => {
 
   const activeImagePath = [
     '/assets/movement_icon_active.svg',
-    // '/assets/nutrition_icon_active.svg',
+    '/assets/nutrition_icon_active.svg',
     '/assets/lifestyle_icon-active.svg',
     '/assets/community_icon_active.svg',
     '/assets/profile_icon_active.svg',
   ];
 
   const componentsPath = [
-    '/fitness',
-    // '/nutrition',
+    '/home',
+    '/nutrition',
     '/lifestyle',
     '/community',
     '/profile',

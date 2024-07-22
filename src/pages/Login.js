@@ -96,7 +96,7 @@ const Login = () => {
     else if (isSignUp) {
       navigate('/questionnaire');
     } else {
-      navigate('/fitness');
+      navigate('/home');
     }
   }, [isSignUp, navigate, username]);
 
