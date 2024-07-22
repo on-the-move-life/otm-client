@@ -1,3 +1,4 @@
+//WorkoutSummary.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,6 +18,8 @@ import AchievementPage from './AchievementPage.js';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import useLocalStorage from '../../hooks/useLocalStorage.js';
 import { AnimatePresence } from 'framer-motion';
+import { useAuth } from '../../contexts/AuthContext';
+import axios from 'axios';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -33,6 +36,8 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
+  const [homeStats, setHomeStats] = useState(null);
+  const { user } = useAuth();
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
   const dispatch = useDispatch();
 
@@ -53,6 +58,31 @@ const WorkoutSummary = () => {
 
   const inputValues = getInputValuesFromLocalStorage();
 
+  useEffect(() => {
+    const today = new Date().toLocaleDateString('en-GB');
+
+    function getUserData() {
+      axios
+        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
+          params: {
+            email: user.email,
+            day: today,
+          },
+        })
+        .then((res) => {
+          if (res.data) {
+            setHomeStats(res.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+
+    if (user && user.email) {
+      getUserData();
+    }
+  }, [user]);
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
@@ -126,6 +156,8 @@ const WorkoutSummary = () => {
     +fitnessScoreUpdates?.newScore - +fitnessScoreUpdates?.oldScore
   ).toFixed(1));
 
+  console.log(countToEarnPerfectWeek);
+
   useEffect(() => {
     if (inputValues && workout) {
       getWorkoutSummary();
@@ -181,7 +213,6 @@ const WorkoutSummary = () => {
                 </span>
               </span>
             </div>
-
             {countToEarnPerfectWeek !== null && countToEarnPerfectWeek > 0 && (
               <div className="my-4">
                 Complete{' '}
@@ -193,27 +224,37 @@ const WorkoutSummary = () => {
             )}
 
             {countToEarnPerfectWeek !== null && countToEarnPerfectWeek < 0 && (
-              <p className="my-4 ">
-                Fitness Pro Alert! You've surpassed the
-                <span className="perfect-week inline-flex  w-fit items-center rounded">
-                  <img src="/assets/perfect-week.svg" alt="" />
-                </span>{' '}
-                goal with <strong>{Math.abs(countToEarnPerfectWeek)}</strong>{' '}
-                workout(s). <br />
-                Keep crushing it🔥
-              </p>
+              <p className="my-4">
+              Fitness Pro Alert! You've surpassed the{' '}
+              <span className="perfect-week inline-flex w-fit items-center rounded">
+                <img src="/assets/star.svg" alt="" />
+                <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
+                  Perfect Week x{homeStats.streak}
+                </span>
+              </span>{' '}
+              goal with <strong>{Math.abs(countToEarnPerfectWeek)}</strong>{' '}
+              workout(s). <br />
+              Keep crushing it🔥
+            </p>
             )}
 
-            {countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
-              <div className="my-4">
-                Whoa! You just unlocked the{' '}
-                <span className="perfect-week inline-flex  w-fit items-center rounded">
-                  <img src="/assets/perfect-week.svg" alt="" />
-                </span>{' '}
-                badge by crushing {+workoutCountInfo?.frequency} workouts this week.
-                You're unstoppable 🔥
-              </div>
-            )}
+{countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
+  <div className="my-4">
+    <p>
+      Whoa! You just unlocked the{' '}
+      {parseInt(homeStats.streak) > 0 && (
+        <span className="perfect-week inline-flex items-center">
+          <img src="/assets/star.svg" alt="" className="inline-block" />
+          <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
+            Perfect Week x{homeStats.streak}
+          </span>
+        </span>
+      )}{' '}
+      badge by crushing {+workoutCountInfo?.frequency} workouts this week.
+      You're unstoppable 🔥
+    </p>
+  </div>
+)}
 
             {achievements.length > 0 && (
               <section className="my-8 flex flex-col justify-center ">

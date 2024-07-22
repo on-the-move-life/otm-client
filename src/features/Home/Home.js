@@ -1,3 +1,4 @@
+//Home.js
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error } from '../../components';
@@ -141,6 +142,7 @@ const Home = () => {
             </section>}
           <section>
             <WeeklyWorkoutReport
+            consistencyTrend={homeStats?.consistencyTrend}
               suggestedWorkoutPerWeek={homeStats?.frequency}
               lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
             />

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
+function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
     const [currentScore, setCurrentScore] = useState(0);
 
+    //let test = 'improving';
+    //let test1 = 'maintaining';
+    //let test 2 = 'decreasing';
     useEffect(() => {
         // setting the average workout count
         try{
@@ -22,7 +25,7 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
         }
     }, [lastEightWeeksWorkout])
 
-    const Bar = ({ progress }) => {
+    const Bar = ({ progress , isFirstBar }) => {
         const [basicgreen, intermediategreen, advancedgreen, red, yellow, gray] = ['#119832', '#29C344', '#7FE08A', '#FA5757', '#F5C563', '#323232'] // colors of the bar
         const [height, setHeight] = useState(0);
         const [color, setColor] = useState(gray);
@@ -61,12 +64,42 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
         };
 
         return (
-            <div className='h-[47px] w-[6px] rounded-xl bg-[#323232]'>
-                <div className='w-full h-full bg-transparent flex flex-col justify-end items-center'>
-                    <div style={barStyles} className='w-full rounded-xl barStyle'></div>
-                </div>
+            <div className='h-[47px] w-[6px] rounded-xl bg-[#323232] relative'>
+            <div className='w-full h-full bg-transparent flex flex-col justify-end items-center'>
+                <div style={barStyles} className='w-full rounded-xl barStyle'></div>
             </div>
+            {isFirstBar && (
+                <div className="absolute mt-1 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[8px] w-[4px] h-[4px] bg-white rounded-full"></div>
+            )}
+        </div>
         )
+    }
+    const getTrendTextColor = (trend) => {
+        switch (trend) {
+            case 'decreasing':
+                return 'text-[#FA5757]';
+            case 'maintaining':
+                return 'text-[#F5C563]';
+            case 'improving':
+                return 'text-[#7FE08A]';
+            default:
+                return 'text-gray-500';
+        }
+    }
+    const getTrendBorderColor = (trend) => {
+        switch (trend) {
+            case 'decreasing':
+                return 'border-[#FA5757]';
+            case 'maintaining':
+                return 'border-[#F5C563]';
+            case 'improving':
+                return 'border-[#7FE08A]';
+            default:
+                return 'border-gray-500';
+        }
+    }
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
     return (
         <div className="weekly-workout-consistency">
@@ -76,7 +109,12 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
             </section>
             <section className='w-full flex flex-row justify-between items-center'>
                 <div className='w-fit flex flex-col justify-center items-center gap-1'>
-                    <div className='wwc-score'>{currentScore}</div>
+                <div className='flex items-center'>
+                        <div className='wwc-score'>{currentScore}</div>
+                        <div className={`ml-2 sm:text-[10px] text-[8px] ${getTrendBorderColor(consistencyTrend)} border-[1px] sm:px-[6px] sm:py-[3px] px-[6px] py-[3px] rounded-[6px] ${getTrendTextColor(consistencyTrend)}`}>
+                            {capitalizeFirstLetter(consistencyTrend)}
+                        </div>
+                    </div>
                     <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
                 </div>
                 {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
@@ -84,7 +122,7 @@ function WeeklyWorkoutReport({ suggestedWorkoutPerWeek, lastEightWeeksWorkout })
                             [...Array(8).keys()]?.map((item, index) => {
                                 const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
                                 return (
-                                    <Bar progress={progressCount} key={Math.random() * 1000} />
+                                    <Bar progress={progressCount} key={Math.random() * 1000} isFirstBar={index === 0}  />
                                 )
                             })
                     }
