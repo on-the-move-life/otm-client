@@ -213,21 +213,6 @@ const WorkoutSummary = () => {
                 </span>
               </span>
             </div>
-            {homeStats && (
-  <section className="my-4">
-    {parseInt(homeStats.streak) > 0 && (
-      <div className="flex items-center ">
-        <div className="perfect-week my-2 flex w-fit items-center rounded">
-          <img src="/assets/star.svg" alt="" />
-          <span className="mx-0.5 text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
-            Perfect Week x{homeStats.streak}
-          </span>
-        </div>
-      </div>
-    )}
-    {/* You can add more conditional rendering based on the streak or other relevant data */}
-  </section>
-)}
             {countToEarnPerfectWeek !== null && countToEarnPerfectWeek > 0 && (
               <div className="my-4">
                 Complete{' '}
@@ -250,16 +235,23 @@ const WorkoutSummary = () => {
               </p>
             )}
 
-            {countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
-              <div className="my-4">
-                Whoa! You just unlocked the{' '}
-                <span className="perfect-week inline-flex  w-fit items-center rounded">
-                  <img src="/assets/perfect-week.svg" alt="" />
-                </span>{' '}
-                badge by crushing {+workoutCountInfo?.frequency} workouts this week.
-                You're unstoppable 🔥
-              </div>
-            )}
+{countToEarnPerfectWeek !== null && countToEarnPerfectWeek === 0 && (
+  <div className="my-4">
+    <p>
+      Whoa! You just unlocked the{' '}
+      {parseInt(homeStats.streak) > 0 && (
+        <span className="perfect-week inline-flex items-center">
+          <img src="/assets/star.svg" alt="" className="inline-block" />
+          <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
+            Perfect Week x{homeStats.streak}
+          </span>
+        </span>
+      )}{' '}
+      badge by crushing {+workoutCountInfo?.frequency} workouts this week.
+      You're unstoppable 🔥
+    </p>
+  </div>
+)}
 
             {achievements.length > 0 && (
               <section className="my-8 flex flex-col justify-center ">
