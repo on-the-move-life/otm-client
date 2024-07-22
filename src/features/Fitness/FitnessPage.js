@@ -12,6 +12,7 @@ import { AiOutlineRight } from 'react-icons/ai';
 import WeeklyWorkoutReport from './WeeklyWorkoutReport';
 import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
+import { TimelineHeading } from '../Timeline/StyledComponents';
 
 const FitnessPage = () => {
   const { setUserData } = useUserContext();
@@ -79,9 +80,8 @@ const FitnessPage = () => {
           <section className="pt-5 pb-0">
             <div className="flex justify-between">
               <div className="flex flex-col mt-3">
-                <h1 className="bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-3xl font-semibold text-transparent">
-                  Fitness
-                </h1>
+                <TimelineHeading>Fitness</TimelineHeading>
+
                 {/* <h2 className="mt-3 inline-block w-40 bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-lg font-semibold text-transparent">
                   Today's Workout
                 </h2> */}
@@ -120,6 +120,7 @@ const FitnessPage = () => {
 
           <section>
             <WeeklyWorkoutReport
+              consistencyTrend={homeStats?.consistencyTrend}
               suggestedWorkoutPerWeek={homeStats?.frequency}
               lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
             />
@@ -137,7 +138,7 @@ const FitnessPage = () => {
           )}
           <Link to="/workout" className="main-cta">
             <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-              Workouts
+              Today's Workout
             </span>
             <span>
               <AiOutlineRight size={22} />

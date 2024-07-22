@@ -8,6 +8,7 @@ import { useUserContext } from '../../contexts/UserContext';
 import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
 import LifeStyleScore from './LifeStyleScore';
 import LifeStyleRoutine from './LifeStyleRoutine';
+import { TimelineHeading } from '../Timeline/StyledComponents';
 
 const Lifestryle = () => {
   const { setUserData } = useUserContext();
@@ -65,15 +66,9 @@ const Lifestryle = () => {
       {error && <Error>{error}</Error>}
       {homeStats && (
         <div className="flex flex-col w-screen gap-5 px-4 pb-8 overflow-y-scroll grow">
-          <section className="pt-5 pb-0">
-            <div className="flex justify-between">
-              <div className="flex flex-col mt-3">
-                <h1 className="bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-3xl font-semibold text-transparent">
-                  Fitness
-                </h1>
-              </div>
-            </div>
-          </section>
+          <div className="mt-[32px]">
+            <TimelineHeading>Nutrition</TimelineHeading>
+          </div>
 
           {homeStats?.showLifestyle === true && (
             <section className="flex flex-col items-center justify-center w-full gap-3">

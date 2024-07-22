@@ -228,9 +228,6 @@ const UserDetails = ({ showHistory }) => {
               }}
             />
           </div> */}
-          <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-3xl font-semibold text-transparent">
-            Profile
-          </h1>
 
           {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
@@ -239,7 +236,7 @@ const UserDetails = ({ showHistory }) => {
                 <div className="text-2xl font-medium capitalize gradient-text text-neutral-400">
                   {memberData.name}
                 </div>
-                <div>
+                {/* <div>
                   {memberData.avgIntensity > 10 && (
                     <span
                       className={`mx-2 rounded  ${
@@ -249,7 +246,7 @@ const UserDetails = ({ showHistory }) => {
                       {showElite ? 'Elite' : 'Advanced'}
                     </span>
                   )}
-                </div>
+                </div> */}
               </div>
               <div className="relative h-[80px] w-[80px] rounded-full">
                 {chosenPic ? (
@@ -310,7 +307,7 @@ const UserDetails = ({ showHistory }) => {
             </div>
 
             <p className="mt-5">
-              Elevate every stepm embrace every challange, and evolve beyond
+              Elevate every step, embrace every challange, and evolve beyond
               your limits.
             </p>
 

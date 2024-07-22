@@ -53,7 +53,7 @@ const Navbar = () => {
   }, [path]);
 
   return (
-    <div className="flex h-[78px] w-full justify-around pt-[16px]">
+    <footer className="fixed  bottom-0 flex h-[78px] w-full justify-around pt-[16px]">
       {navArray.map((item, index) => (
         <div key={index} className="" onClick={() => handleActivePath(index)}>
           <Link to={`${componentsPath[index]}`} className="">
@@ -67,7 +67,7 @@ const Navbar = () => {
           </Link>
         </div>
       ))}
-    </div>
+    </footer>
   );
 };
 
