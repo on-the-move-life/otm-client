@@ -25,7 +25,7 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
         }
     }, [lastEightWeeksWorkout])
 
-    const Bar = ({ progress }) => {
+    const Bar = ({ progress , isFirstBar }) => {
         const [basicgreen, intermediategreen, advancedgreen, red, yellow, gray] = ['#119832', '#29C344', '#7FE08A', '#FA5757', '#F5C563', '#323232'] // colors of the bar
         const [height, setHeight] = useState(0);
         const [color, setColor] = useState(gray);
@@ -64,11 +64,14 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
         };
 
         return (
-            <div className='h-[47px] w-[6px] rounded-xl bg-[#323232]'>
-                <div className='w-full h-full bg-transparent flex flex-col justify-end items-center'>
-                    <div style={barStyles} className='w-full rounded-xl barStyle'></div>
-                </div>
+            <div className='h-[47px] w-[6px] rounded-xl bg-[#323232] relative'>
+            <div className='w-full h-full bg-transparent flex flex-col justify-end items-center'>
+                <div style={barStyles} className='w-full rounded-xl barStyle'></div>
             </div>
+            {isFirstBar && (
+                <div className="absolute mt-1 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[8px] w-[4px] h-[4px] bg-white rounded-full"></div>
+            )}
+        </div>
         )
     }
     const getTrendTextColor = (trend) => {
@@ -119,7 +122,7 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                             [...Array(8).keys()]?.map((item, index) => {
                                 const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
                                 return (
-                                    <Bar progress={progressCount} key={Math.random() * 1000} />
+                                    <Bar progress={progressCount} key={Math.random() * 1000} isFirstBar={index === 0}  />
                                 )
                             })
                     }
