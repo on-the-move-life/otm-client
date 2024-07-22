@@ -1,3 +1,4 @@
+//WorkoutSummary.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,6 +18,8 @@ import AchievementPage from './AchievementPage.js';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import useLocalStorage from '../../hooks/useLocalStorage.js';
 import { AnimatePresence } from 'framer-motion';
+import { useAuth } from '../../contexts/AuthContext';
+import axios from 'axios';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -33,6 +36,8 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
+  const [homeStats, setHomeStats] = useState(null);
+  const { user } = useAuth();
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
   const dispatch = useDispatch();
 
@@ -53,6 +58,31 @@ const WorkoutSummary = () => {
 
   const inputValues = getInputValuesFromLocalStorage();
 
+  useEffect(() => {
+    const today = new Date().toLocaleDateString('en-GB');
+
+    function getUserData() {
+      axios
+        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
+          params: {
+            email: user.email,
+            day: today,
+          },
+        })
+        .then((res) => {
+          if (res.data) {
+            setHomeStats(res.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+
+    if (user && user.email) {
+      getUserData();
+    }
+  }, [user]);
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
@@ -126,6 +156,8 @@ const WorkoutSummary = () => {
     +fitnessScoreUpdates?.newScore - +fitnessScoreUpdates?.oldScore
   ).toFixed(1));
 
+  console.log(countToEarnPerfectWeek);
+
   useEffect(() => {
     if (inputValues && workout) {
       getWorkoutSummary();
@@ -181,7 +213,21 @@ const WorkoutSummary = () => {
                 </span>
               </span>
             </div>
-
+            {homeStats && (
+  <section className="my-4">
+    {parseInt(homeStats.streak) > 0 && (
+      <div className="flex items-center ">
+        <div className="perfect-week my-2 flex w-fit items-center rounded">
+          <img src="/assets/star.svg" alt="" />
+          <span className="mx-0.5 text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
+            Perfect Week x{homeStats.streak}
+          </span>
+        </div>
+      </div>
+    )}
+    {/* You can add more conditional rendering based on the streak or other relevant data */}
+  </section>
+)}
             {countToEarnPerfectWeek !== null && countToEarnPerfectWeek > 0 && (
               <div className="my-4">
                 Complete{' '}
