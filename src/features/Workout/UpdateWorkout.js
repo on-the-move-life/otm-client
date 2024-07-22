@@ -66,7 +66,7 @@ const UpdateWorkout = ({ onClose }) => {
             <h3 className="relative top-5 workout-gradient-text text-center text-xl uppercase">
               Customize your workout
             </h3>
-
+            <p className='relative top-[60px] text-center sm:text-lg text-base'>Easily update your latest workout by selecting a theme, duration, and available equipment.</p>
             <section className='relative top-20'>
               <DataInputComponent
                 inputId="customTheme"
