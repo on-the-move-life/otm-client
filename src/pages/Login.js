@@ -111,12 +111,12 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if(error !== null && buttonClicked === true){
+    if (error !== null && buttonClicked === true) {
       setButtonClicked(false);
     }
-    console.log("error", error);
-    console.log("button Clicked", buttonClicked);
-  }, [buttonClicked, error])
+    console.log('error', error);
+    console.log('button Clicked', buttonClicked);
+  }, [buttonClicked, error]);
 
   return (
     <>
@@ -131,11 +131,11 @@ const Login = () => {
             {showSignUpInput
               ? 'Add your account details'
               : resetPassword
-                ? 'Update your password'
-                : 'Enter your login details'}
+              ? 'Update your password'
+              : 'Enter your login details'}
           </header>
           <form
-            className="mt-4 flex w-full flex-col"
+            className="flex flex-col w-full mt-4"
             action="post"
             onSubmit={handleEmailAuth}
           >
@@ -176,7 +176,7 @@ const Login = () => {
                   <p className="py-2 text-xs text-red">{error}</p>
                 </div>
               )}
-              <div className="mt-4 flex justify-between">
+              <div className="flex justify-between mt-4">
                 <button
                   className="text-sm text-green"
                   type="text"
@@ -200,8 +200,11 @@ const Login = () => {
             <button
               disabled={!error && (!email || !password || buttonClicked)}
               type="submit"
-              className={`continueButton w-full ${!error && (!email || !password || buttonClicked) ? 'bg-darkGray' : 'bg-green'
-                }`}
+              className={`continueButton w-full ${
+                !error && (!email || !password || buttonClicked)
+                  ? 'bg-darkGray'
+                  : 'bg-green'
+              }`}
             >
               Continue
             </button>
@@ -209,20 +212,20 @@ const Login = () => {
         </LoginInput>
       ) : (
         <AnimatedComponent>
-          <div className="flex h-screen flex-col items-center justify-evenly bg-landing-cover bg-cover bg-no-repeat">
-            <div className="flex h-screen w-full flex-col items-center justify-between py-16">
-              <div className=" mt-8 h-6 w-28">
+          <div className="flex flex-col items-center h-screen bg-no-repeat bg-cover justify-evenly bg-landing-cover">
+            <div className="flex flex-col items-center justify-between w-full h-screen py-16">
+              <div className="h-6 mt-8 w-28">
                 <img
-                  className="h-full w-full"
+                  className="w-full h-full"
                   src={'/assets/green-logo.svg'}
                   alt="green-logo"
                 />
               </div>
-              <div className="flex h-24 w-24 items-center justify-center">
+              <div className="flex items-center justify-center w-24 h-24">
                 <img src={'/assets/icon.svg'} alt="" />
               </div>
 
-              <footer className="flex w-11/12 flex-col items-center">
+              <footer className="flex flex-col items-center w-11/12">
                 <button
                   className="main-button-gradient flex w-full justify-start rounded-xl px-3.5 py-2.5 text-lg font-semibold text-black"
                   onClick={() => {
@@ -231,11 +234,13 @@ const Login = () => {
                   }}
                 >
                   <HiOutlineMail size={25} />
-                  <p className="w-full text-base text-center">Login with email</p>
+                  <p className="w-full text-base text-center">
+                    Login with email
+                  </p>
                 </button>
                 <p className="my-2 text-center">or</p>
                 <div
-                  className="mb-10 flex w-full justify-center"
+                  className="flex justify-center w-full mb-10"
                   id="loginDiv"
                 ></div>
                 <div className="flex space-x-1">
@@ -246,7 +251,7 @@ const Login = () => {
                       setShowSignUpInput(true);
                     }}
                     type="button"
-                    className="text-green underline"
+                    className="underline text-green"
                   >
                     Sign up
                   </button>

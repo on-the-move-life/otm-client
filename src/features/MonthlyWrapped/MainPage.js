@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import BarChart from './Components/BarChart';
 import RadarChart from './Components/RadarChart';
 import Overview from './Components/Overview';
-import { getPreviousMonthYear, getPreviousMonth, getCurrentYear } from './utils';
+import {
+  getPreviousMonthYear,
+  getPreviousMonth,
+  getCurrentYear,
+} from './utils';
 import Stories from 'react-insta-stories';
 import { useNavigate } from 'react-router-dom';
 import { axiosClient } from './apiClient';
@@ -29,8 +33,9 @@ function MainPage() {
 
   function fetchMonthlyWrappedData() {
     setLoading(true);
-    axiosClient.get(`?user=${userCode}&month=${currentMonthNumber}&year=${currentYear}`)
-      .then(res => {
+    axiosClient
+      .get(`?user=${userCode}&month=${currentMonthNumber}&year=${currentYear}`)
+      .then((res) => {
         const {
           rank,
           totalWorkout,
@@ -43,10 +48,10 @@ function MainPage() {
           currMonthSkillPoint,
           prevMonthSkillPoint,
           bestSkill,
-          weightInfo
+          weightInfo,
         } = res?.data?.data?.wrapped;
         const { lifted, imgUrl, caption } = weightInfo;
-        setBarChartData(prev => {
+        setBarChartData((prev) => {
           return {
             rank: rank,
             totalWorkout: totalWorkout,
@@ -54,133 +59,310 @@ function MainPage() {
             perfectWeeks: perfectWeeks,
             workoutByDay: workoutByDay,
             bestDay: bestDay,
-          }
+          };
         });
-        setRadarChartData(prev => {
+        setRadarChartData((prev) => {
           return {
             fitnessScore: fitnessScore,
             fitnessScoreChange: fitnessScoreChange,
             currMonthSkillPoint: currMonthSkillPoint,
             prevMonthSkillPoint: prevMonthSkillPoint,
             bestSkill: bestSkill,
-          }
-        })
-        setWeightInfoData(prev => {
+          };
+        });
+        setWeightInfoData((prev) => {
           return {
             lifted: lifted,
             imgUrl: imgUrl,
             caption: caption,
-          }
-        })
+          };
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         setError(true);
       })
       .finally(() => {
         setLoading(false);
-      })
+      });
   }
 
   useEffect(() => {
     fetchMonthlyWrappedData();
-  }, [])
+  }, []);
 
   const stories = [
     {
       content: ({ action, isPaused }) => {
         return (
-          <div className='w-full h-[100%] flex flex-col justify-start items-center gap-[100px] bg-transparent mt-[50px] px-2'>
-            <h2 className='text-[23px] text-white/80' style={{ lineHeight: '49.87px', letterSpacing: '0.46px', fontWeight: 600 }}>{userName}</h2>
-            <div className="h-[200px] w-[350px] relative bottom-[100px]">
+          <div className="mt-[50px] flex h-[100%] w-full flex-col items-center justify-start gap-[100px] bg-transparent px-2">
+            <h2
+              className="text-[23px] text-white/80"
+              style={{
+                lineHeight: '49.87px',
+                letterSpacing: '0.46px',
+                fontWeight: 600,
+              }}
+            >
+              {userName}
+            </h2>
+            <div className="relative bottom-[100px] h-[200px] w-[350px]">
               <img src="/assets/star_fire_streak.png" alt="star" />
             </div>
-            <div className='w-full flex flex-col justify-center items-center gap-3'>
-              <h1 className='text-[47px] text-white/80' style={{ textAlign: 'center', fontWeight: 600, lineHeight: '49.87px', letterSpacing: '0.935px' }}>Monthly Wrapped</h1>
-              <p style={{
-                color: 'rgba(255, 255, 255, 0.23)',
-                textAlign: 'center',
-                fontSize: '23.225px',
-                fontWeight: 600,
-                letterSpacing: '0.464px'
-              }}>
+            <div className="flex flex-col items-center justify-center w-full gap-3">
+              <h1
+                className="text-[47px] text-white/80"
+                style={{
+                  textAlign: 'center',
+                  fontWeight: 600,
+                  lineHeight: '49.87px',
+                  letterSpacing: '0.935px',
+                }}
+              >
+                Monthly Wrapped
+              </h1>
+              <p
+                style={{
+                  color: 'rgba(255, 255, 255, 0.23)',
+                  textAlign: 'center',
+                  fontSize: '23.225px',
+                  fontWeight: 600,
+                  letterSpacing: '0.464px',
+                }}
+              >
                 Insights into the reflection of your month
               </p>
             </div>
           </div>
         );
-      }
+      },
     },
     {
       content: ({ action, isPaused }) => {
         return (
-          <div className='w-full h-[100%] flex flex-col justify-start items-center gap-5 bg-transparent mt-[50px] px-4'>
-            <h2 className='text-[23px] text-white/80' style={{ lineHeight: '49.87px', letterSpacing: '0.46px', fontWeight: 600 }}>{userName}</h2>
-            <div className='w-full flex flex-row justify-between items-center'>
-              <div className='w-fit flex flex-col justify-center items-center'>
-                <h4 style={{ letterSpacing: '0.288px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.33)', fontSize: '14.385px' }}>Rank</h4>
-                <p style={{ letterSpacing: '0.579px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.80)', fontSize: '28.952px', lineHeight: '30.888px' }}>{barChartData?.rank}</p>
+          <div className="mt-[50px] flex h-[100%] w-full flex-col items-center justify-start gap-5 bg-transparent px-4">
+            <h2
+              className="text-[23px] text-white/80"
+              style={{
+                lineHeight: '49.87px',
+                letterSpacing: '0.46px',
+                fontWeight: 600,
+              }}
+            >
+              {userName}
+            </h2>
+            <div className="flex flex-row items-center justify-between w-full">
+              <div className="flex flex-col items-center justify-center w-fit">
+                <h4
+                  style={{
+                    letterSpacing: '0.288px',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.33)',
+                    fontSize: '14.385px',
+                  }}
+                >
+                  Rank
+                </h4>
+                <p
+                  style={{
+                    letterSpacing: '0.579px',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.80)',
+                    fontSize: '28.952px',
+                    lineHeight: '30.888px',
+                  }}
+                >
+                  {barChartData?.rank}
+                </p>
               </div>
-              <div className='w-fit flex flex-col justify-center items-center'>
-                <h4 style={{ letterSpacing: '0.288px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.33)', fontSize: '14.385px' }}>Workouts</h4>
-                <p style={{ letterSpacing: '0.579px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.80)', fontSize: '28.952px', lineHeight: '30.888px' }}>{barChartData?.totalWorkout}</p>
+              <div className="flex flex-col items-center justify-center w-fit">
+                <h4
+                  style={{
+                    letterSpacing: '0.288px',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.33)',
+                    fontSize: '14.385px',
+                  }}
+                >
+                  Workouts
+                </h4>
+                <p
+                  style={{
+                    letterSpacing: '0.579px',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.80)',
+                    fontSize: '28.952px',
+                    lineHeight: '30.888px',
+                  }}
+                >
+                  {barChartData?.totalWorkout}
+                </p>
               </div>
-              <div className='w-fit flex flex-col justify-center items-center'>
-                <h4 style={{ letterSpacing: '0.288px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.33)', fontSize: '14.385px' }}>Perfect Weeks</h4>
-                <p style={{ letterSpacing: '0.579px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.80)', fontSize: '28.952px', lineHeight: '30.888px' }}>{`${barChartData?.perfectWeeks}/${barChartData?.totalWeeks}`}</p>
+              <div className="flex flex-col items-center justify-center w-fit">
+                <h4
+                  style={{
+                    letterSpacing: '0.288px',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.33)',
+                    fontSize: '14.385px',
+                  }}
+                >
+                  Perfect Weeks
+                </h4>
+                <p
+                  style={{
+                    letterSpacing: '0.579px',
+                    fontWeight: 600,
+                    color: 'rgba(255, 255, 255, 0.80)',
+                    fontSize: '28.952px',
+                    lineHeight: '30.888px',
+                  }}
+                >{`${barChartData?.perfectWeeks}/${barChartData?.totalWeeks}`}</p>
               </div>
             </div>
             <BarChart barChartData={barChartData} />
           </div>
         );
-      }
+      },
     },
     {
       content: ({ action, isPaused }) => {
         return (
-          <div className='w-full h-[100%] flex flex-col justify-start items-center gap-5 bg-transparent mt-[50px] px-4'>
-            <h2 className='text-[23px] text-white/80' style={{ lineHeight: '49.87px', letterSpacing: '0.46px', fontWeight: 600 }}>{userName}</h2>
-            <div className="flex flex-col justify-center items-center gap-1">
-              <h4 style={{ letterSpacing: '0.288px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.33)', fontSize: '14.385px' }}>Fitness Score</h4>
-              <div className="flex flex-row justify-center items-end">
-                <h4 style={{ color: 'rgba(255, 255, 255, 0.80)', fontSize: '28.952px', fontWeight: 600, lineHeight: '30.888px', letterSpacing: '0.579px' }}>{radarChartData?.fitnessScore}</h4>
-                <p className={`${radarChartData?.fitnessScoreChange?.includes('-') ? 'text-red' : 'text-[#5ECC7B]'}`} style={{ fontSize: '15.263px', fontWeight: 600, lineHeight: '16.283px', letterSpacing: ' 0.305px' }}>{(radarChartData?.fitnessScoreChange.includes('-') || radarChartData?.fitnessScoreChange.includes('+')) ? radarChartData?.fitnessScoreChange : `+${radarChartData?.fitnessScoreChange}`}</p>
+          <div className="mt-[50px] flex h-[100%] w-full flex-col items-center justify-start gap-5 bg-transparent px-4">
+            <h2
+              className="text-[23px] text-white/80"
+              style={{
+                lineHeight: '49.87px',
+                letterSpacing: '0.46px',
+                fontWeight: 600,
+              }}
+            >
+              {userName}
+            </h2>
+            <div className="flex flex-col items-center justify-center gap-1">
+              <h4
+                style={{
+                  letterSpacing: '0.288px',
+                  fontWeight: 600,
+                  color: 'rgba(255, 255, 255, 0.33)',
+                  fontSize: '14.385px',
+                }}
+              >
+                Fitness Score
+              </h4>
+              <div className="flex flex-row items-end justify-center">
+                <h4
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.80)',
+                    fontSize: '28.952px',
+                    fontWeight: 600,
+                    lineHeight: '30.888px',
+                    letterSpacing: '0.579px',
+                  }}
+                >
+                  {radarChartData?.fitnessScore}
+                </h4>
+                <p
+                  className={`${
+                    radarChartData?.fitnessScoreChange?.includes('-')
+                      ? 'text-red'
+                      : 'text-[#5ECC7B]'
+                  }`}
+                  style={{
+                    fontSize: '15.263px',
+                    fontWeight: 600,
+                    lineHeight: '16.283px',
+                    letterSpacing: ' 0.305px',
+                  }}
+                >
+                  {radarChartData?.fitnessScoreChange.includes('-') ||
+                  radarChartData?.fitnessScoreChange.includes('+')
+                    ? radarChartData?.fitnessScoreChange
+                    : `+${radarChartData?.fitnessScoreChange}`}
+                </p>
               </div>
             </div>
             {radarChartData && <RadarChart radarChartData={radarChartData} />}
           </div>
         );
-      }
+      },
     },
     {
       content: ({ action, isPaused }) => {
         return (
-          <div className='w-full h-[100%] flex flex-col justify-start items-center gap-5 bg-transparent mt-[50px] px-4'>
-            <h2 className='text-[23px] text-white/80' style={{ lineHeight: '49.87px', letterSpacing: '0.46px', fontWeight: 600 }}>{userName}</h2>
-            <div className="flex flex-col justify-center items-center gap-1">
-              <h4 style={{ letterSpacing: '0.288px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.33)', fontSize: '14.385px' }}>Weight Lifted</h4>
-              <h4 style={{ color: 'rgba(255, 255, 255, 0.80)', fontSize: '28.952px', fontWeight: 600, lineHeight: '30.888px', letterSpacing: '0.579px' }}>{weightInfoData?.lifted} Kg</h4>
+          <div className="mt-[50px] flex h-[100%] w-full flex-col items-center justify-start gap-5 bg-transparent px-4">
+            <h2
+              className="text-[23px] text-white/80"
+              style={{
+                lineHeight: '49.87px',
+                letterSpacing: '0.46px',
+                fontWeight: 600,
+              }}
+            >
+              {userName}
+            </h2>
+            <div className="flex flex-col items-center justify-center gap-1">
+              <h4
+                style={{
+                  letterSpacing: '0.288px',
+                  fontWeight: 600,
+                  color: 'rgba(255, 255, 255, 0.33)',
+                  fontSize: '14.385px',
+                }}
+              >
+                Weight Lifted
+              </h4>
+              <h4
+                style={{
+                  color: 'rgba(255, 255, 255, 0.80)',
+                  fontSize: '28.952px',
+                  fontWeight: 600,
+                  lineHeight: '30.888px',
+                  letterSpacing: '0.579px',
+                }}
+              >
+                {weightInfoData?.lifted} Kg
+              </h4>
             </div>
             {weightInfoData && <Overview weightInfoData={weightInfoData} />}
           </div>
         );
-      }
+      },
     },
   ];
 
   return (
     <>
-      {loading && <Loader className={'h-screen fixed left-0 top-0 z-[1000] bg-black'} />}
-      {error && <Error className={'w-screen fixed left-0 top-0 z-[200] bg-black'}>Something went wrong. Please try again later.</Error>}
-      {!loading && !error &&
-        <div className='w-full min-h-screen bg-center bg-no-repeat bg-cover overflow-y-screen' style={{ backgroundImage: `url(${'/assets/monthly_wrapped_bg.svg'})` }}>
-          <div className='w-full min-h-screen flex flex-col justify-start items-center gap-3 py-5 overflow-y-scroll'>
-            <div className='relative w-full flex flex-col justify-center items-center gap-[1px]'>
-              <p className='text-[#929292] text-[9.3px] '>Monthly Wrapped</p>
-              <p className='text-[#7E87EF] text-[14px]'>{todayDate}</p>
-              <img src="/assets/close_icon.svg" alt="star" height={37} width={37} className="absolute right-0" style={{ marginRight: '0.5em' }} onClick={closePage} />
+      {loading && (
+        <Loader className={'fixed left-0 top-0 z-[1000] h-screen bg-black'} />
+      )}
+      {error && (
+        <Error className={'fixed left-0 top-0 z-[200] w-screen bg-black'}>
+          Something went wrong. Please try again later.
+        </Error>
+      )}
+      {!loading && !error && (
+        <div
+          className="w-full min-h-screen bg-center bg-no-repeat bg-cover overflow-y-screen"
+          style={{
+            backgroundImage: `url(${'/assets/monthly_wrapped_bg.svg'})`,
+          }}
+        >
+          <div className="flex flex-col items-center justify-start w-full min-h-screen gap-3 py-5 overflow-y-scroll">
+            <div className="relative flex w-full flex-col items-center justify-center gap-[1px]">
+              <p className="text-[9.3px] text-[#929292] ">Monthly Wrapped</p>
+              <p className="text-[14px] text-[#7E87EF]">{todayDate}</p>
+              <img
+                src="/assets/close_icon.svg"
+                alt="star"
+                height={37}
+                width={37}
+                className="absolute right-0"
+                style={{ marginRight: '0.5em' }}
+                onClick={closePage}
+              />
             </div>
-            <div className='w-full h-full flex-1 bg-transparent'>
+            <div className="flex-1 w-full h-full bg-transparent">
               <Stories
                 loop={true}
                 keyboardNavigation
@@ -191,9 +373,14 @@ function MainPage() {
                 storyContainerStyles={{ background: 'transparent' }}
               />
             </div>
-            <img src={'/assets/monthly_wrapped_otm_logo.svg'} alt="otm" width={120}/>
+            <img
+              src={'/assets/monthly_wrapped_otm_logo.svg'}
+              alt="otm"
+              width={120}
+            />
           </div>
-        </div>}
+        </div>
+      )}
     </>
   );
 }

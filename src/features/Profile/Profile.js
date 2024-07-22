@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { PaymentHistory, UserDetails } from '../Profile';
-
-
+import PaymentHistory from './PaymentHistory';
+import UserDetails from './UserDetail';
 
 const Profile = () => {
   const [showPaymentHistory, setShowPaymentHistory] = useState(false);
@@ -11,14 +10,12 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-screen items-center justify-center">
+    <div className="flex items-center justify-center w-screen grow">
       {!showPaymentHistory && (
-        <UserDetails  showHistory={togglePaymentHistory} />
+        <UserDetails showHistory={togglePaymentHistory} />
       )}
 
-      {showPaymentHistory && (
-        <PaymentHistory onClose={togglePaymentHistory} />
-      )}
+      {showPaymentHistory && <PaymentHistory onClose={togglePaymentHistory} />}
     </div>
   );
 };

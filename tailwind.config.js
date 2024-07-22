@@ -21,14 +21,16 @@ module.exports = withMT({
         customGray: '#545454',
         gradientStart: '#7E87EF',
         gradientEnd: '#B0B5F8',
-       'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
+        'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
       },
       backgroundImage: {
-        'mealInfo-gradient': 'radial-gradient(50% 50% at 50% 50%, #5ECC7B 49.83%, #F5C563 100%)',
+        'mealInfo-gradient':
+          'radial-gradient(50% 50% at 50% 50%, #5ECC7B 49.83%, #F5C563 100%)',
         'landing-cover': "url('../public/assets/landing-cover.png')",
         'green-logo': "url('../public/assets/green-logo.svg')",
         'red-logo': "url('../public/assets/red-logo.svg')",
         icon: "url('../public/assets/icon.svg')",
+        'gym-workout': "url('../public/assets/workout-cover.png')",
         'workout-cover': "url('../public/assets/gymbackground.jpeg')",
         'bullet-points': "url('../public/assets/bullet-points.svg')",
         'lb-up-arrow': "url('../public/assests/upArrow.svg)",
@@ -45,10 +47,9 @@ module.exports = withMT({
         '25%': '25%',
         '50%': '50%',
         '75%': '75%',
-        'full': '100%',
+        full: '100%',
       },
     },
-
   },
 
   plugins: [],
