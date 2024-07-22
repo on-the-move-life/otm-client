@@ -76,7 +76,7 @@ const FitnessPage = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex flex-col w-screen gap-5 px-4 pb-8 overflow-y-scroll grow">
+        <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
           <section className="pt-5 pb-0">
             <div className="flex justify-between">
               <div className="flex flex-col mt-3">

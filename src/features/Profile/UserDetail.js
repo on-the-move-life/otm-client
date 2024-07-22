@@ -214,7 +214,7 @@ const UserDetails = ({ showHistory }) => {
         </motion.div>
       )}
       {memberData && (
-        <div className="h-[calc(100vh-78px)] w-screen grow overflow-scroll px-4 pt-8">
+        <div className="w-screen grow overflow-scroll px-4 pb-[78px] pt-8">
           {profilePicError && (
             <div className="fixed top-0 z-50 w-full h-full bg-black">
               <Error>Oops! Something went wrong...</Error>

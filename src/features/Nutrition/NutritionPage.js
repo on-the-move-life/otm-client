@@ -4,7 +4,7 @@ import { TimelineHeading } from '../Timeline/StyledComponents';
 
 const NutritionPage = () => {
   return (
-    <div className="flex flex-col w-screen gap-5 px-4 pb-8 overflow-y-scroll grow">
+    <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4 pb-[78px] ">
       <div className="mt-[32px]">
         <TimelineHeading>Nutrition</TimelineHeading>
       </div>

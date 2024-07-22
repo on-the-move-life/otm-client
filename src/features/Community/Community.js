@@ -124,9 +124,9 @@ const Community = () => {
   );
 
   return (
-    <div className="h-[calc(100vh-78px)] w-screen grow overflow-scroll px-4 ">
+    <div className="w-screen grow overflow-scroll px-4 pb-[78px] ">
       <div className="mt-[32px]">
-        <TimelineHeading>Nutrition</TimelineHeading>
+        <TimelineHeading>Community</TimelineHeading>
       </div>
       {matchingWorkoutUser && (
         <RankDisplay
