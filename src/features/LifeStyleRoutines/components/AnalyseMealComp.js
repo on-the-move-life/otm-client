@@ -106,10 +106,16 @@ const AnalyseMealComp = ({
         setLoader(true);
 
         try {
+            // const mealObject = [
+            //     { taskId: '1', taskName: 'Breakfast' },
+            //     { taskId: '2', taskName: 'Lunch' },
+            //     { taskId: '3', taskName: 'Dinner' },
+            // ];
+
             const mealObject = [
-                { taskId: '1', taskName: 'Breakfast' },
-                { taskId: '2', taskName: 'Lunch' },
-                { taskId: '3', taskName: 'Dinner' },
+                { taskId: `Breakfast${Math.floor(Math.random() * 1000)}`, taskName: 'Breakfast' },
+                { taskId: `Lunch${Math.floor(Math.random() * 1000)}`, taskName: 'Lunch' },
+                { taskId: `Dinner${Math.floor(Math.random() * 1000)}`, taskName: 'Dinner' },
             ];
             setmealTaskIds(mealObject);
         } catch (error) {
@@ -231,9 +237,6 @@ const AnalyseMealComp = ({
             setTaskCircle(selectedTask.circleName);
         }
 
-        if (task == null) {
-            setselectedTaskId(undefined);
-        }
     };
 
     const DropdownComp = () => {
@@ -303,19 +306,19 @@ const AnalyseMealComp = ({
             {isVisible ? (
                 <>
                     {setParentVisibilityCheck && (
-                        <div className="mt-2 flex w-full flex-row items-center justify-center text-center align-middle">
+                        <div className="mt-2 flex w-full items-center justify-between text-center">
                             {/* empty div to put other two divs in place */}
                             <div></div>
 
-                            <div className=" flex flex-row items-center  text-center">
+                            <div className="flex flex-row items-center text-center mx-auto">
                                 <MealImageicon />
 
-                                <div className="ml-15 font-sfpro text-[14px]  font-medium text-lightGray">
+                                <div className="ml-3 font-sfpro text-[14px]  font-medium text-lightGray">
                                     Upload meal photo
                                 </div>
                             </div>
 
-                            <div className="mr-4" onClick={handleClose}>
+                            <div className="mr-4 flex-shrink-0" onClick={handleClose}>
                                 <MealCrossIcon />{' '}
                             </div>
                         </div>
