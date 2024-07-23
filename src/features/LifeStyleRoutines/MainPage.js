@@ -90,6 +90,7 @@ function MainPage() {
             setReloadCounter={setReloadCounter}
           />
         ) : (
+          
           <Summary circles={circles} date={selectedDate} />
         )}
       </div>

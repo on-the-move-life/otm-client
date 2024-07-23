@@ -26,6 +26,7 @@ import { useAuth } from './contexts/AuthContext';
 
 import MealUpload from './features/LifeStyleRoutines/MealUpload';
 import NutritionPage from './features/Nutrition/NutritionPage';
+import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -203,6 +204,14 @@ function App() {
             <AdminRouteMiddleware>
               <AdminDashboard />
             </AdminRouteMiddleware>
+          }
+        />
+        <Route
+          path="/WeeklyCheckIn"
+          element={
+            <RouteMiddleware>
+              <WeeklyCheckIn />
+            </RouteMiddleware>
           }
         />
       </Routes>
