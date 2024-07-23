@@ -35,11 +35,28 @@ const SectionDetail = () => {
     }
 
     if (workout && (workout.coolDownSection || workout.warmUpSection)) {
-      setUpdatedWorkoutProgram([
+      const workoutArr = [
         workout.warmUpSection,
         ...workout.program,
         workout.coolDownSection,
-      ]);
+      ];
+
+      const arrayFeed = workoutArr.some((item) => item.code === 'FEED');
+
+      if (arrayFeed === true) {
+        const secondLastIndex = workoutArr.length - 2;
+        const lastIndex = workoutArr.length - 1;
+        [workoutArr[secondLastIndex], workoutArr[lastIndex]] = [
+          workoutArr[lastIndex],
+          workoutArr[secondLastIndex],
+        ];
+
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+
+      if (arrayFeed === false) {
+        setUpdatedWorkoutProgram(workoutArr);
+      }
     }
   }, [workout]);
 
@@ -91,13 +108,13 @@ const SectionDetail = () => {
     assessmentMovement = {},
     links = [],
   } = currentSection;
-
+  console.log(name, movements, dataInput, code);
   const movementLength = movements.length;
 
   const isSectionCodeAvailable = sectionWithLoadArray.includes(code);
 
   useEffect(() => {
-    console.log('section index : ', index);
+    console.log('section index : ', index, updatedWorkoutProgram);
     if (Object.keys(workout).length === 0) {
       window.location.replace('/workout');
     }
@@ -246,7 +263,7 @@ const SectionDetail = () => {
                       <iframe
                         width="100%"
                         height="100%"
-                        src="https://youtu.be/g2638TELdTk"
+                        src={links[0]}
                         title="YouTube video player"
                         loading="lazy"
                         frameborder="0"

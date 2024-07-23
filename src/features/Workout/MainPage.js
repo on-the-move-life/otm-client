@@ -29,11 +29,28 @@ const MainPage = () => {
       workoutData &&
       (workoutData.coolDownSection || workoutData.warmUpSection)
     ) {
-      setUpdatedWorkoutProgram([
+      const workoutArr = [
         workoutData.warmUpSection,
         ...workoutData.program,
         workoutData.coolDownSection,
-      ]);
+      ];
+
+      const arrayFeed = workoutArr.some((item) => item.code === 'FEED');
+
+      if (arrayFeed === true) {
+        const secondLastIndex = workoutArr.length - 2;
+        const lastIndex = workoutArr.length - 1;
+        [workoutArr[secondLastIndex], workoutArr[lastIndex]] = [
+          workoutArr[lastIndex],
+          workoutArr[secondLastIndex],
+        ];
+
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+
+      if (arrayFeed === false) {
+        setUpdatedWorkoutProgram(workoutArr);
+      }
     }
   }, [workoutData]);
 
