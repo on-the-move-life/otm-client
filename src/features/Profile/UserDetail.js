@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../../components';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../../utils';
-import { axiosClient } from './apiClient';
+import { axiosClient } from './apiProfileClient';
 import { FaUserCircle } from 'react-icons/fa';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -16,7 +16,8 @@ import ProfilePicture from './ProfilePicture';
 import axios from 'axios';
 import AnimatedComponent from '../../components/AnimatedComponent';
 import { motion } from 'framer-motion';
-import { MonthlyWrapped } from '../Home';
+import MoveCoins from './MoveCoins';
+import MonthlyWrapped from './MonthlyWrapped';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -63,6 +64,9 @@ const UserDetails = ({ showHistory }) => {
       getMemberData(user);
     }
   }, []);
+
+  const showElite =
+    memberData && parseInt(memberData.avgIntensity) > 10 ? true : false;
 
   async function getMemberData(user) {
     try {
@@ -175,11 +179,11 @@ const UserDetails = ({ showHistory }) => {
           >
             <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
           </button>
-          <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
+          <div className="flex flex-col items-start justify-around w-full h-full mt-3 ">
             <ProfilePicHeading>Profile photo</ProfilePicHeading>
             <div className="flex w-full flex-row items-center justify-start gap-[40px]">
               <div
-                className="flex w-fit flex-col items-center justify-center gap-1"
+                className="flex flex-col items-center justify-center gap-1 w-fit"
                 onClick={() => profilePicCameraRef.current.click()}
               >
                 <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
@@ -188,7 +192,7 @@ const UserDetails = ({ showHistory }) => {
                 <IconLabel>Camera</IconLabel>
               </div>
               <div
-                className="flex w-fit flex-col items-center justify-center gap-1"
+                className="flex flex-col items-center justify-center gap-1 w-fit"
                 onClick={() => profilePicRef.current.click()}
               >
                 <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
@@ -197,7 +201,7 @@ const UserDetails = ({ showHistory }) => {
                 <IconLabel>Gallery</IconLabel>
               </div>
               <div
-                className="flex w-fit flex-col items-center justify-center gap-1"
+                className="flex flex-col items-center justify-center gap-1 w-fit"
                 onClick={handlePicDelete}
               >
                 <button className="cursor-pointer rounded-full border-[0.5px] border-gray-500 p-3">
@@ -210,52 +214,65 @@ const UserDetails = ({ showHistory }) => {
         </motion.div>
       )}
       {memberData && (
-        <div className="h-screen w-screen overflow-x-auto px-4 pb-4 pt-8">
+        <div className="w-screen grow overflow-scroll px-4 pb-[78px] pt-8">
           {profilePicError && (
-            <div className="fixed top-0 z-50 h-full w-full bg-black">
+            <div className="fixed top-0 z-50 w-full h-full bg-black">
               <Error>Oops! Something went wrong...</Error>
             </div>
           )}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <HiArrowNarrowLeft
               size={20}
               onClick={() => {
                 navigate('/home');
               }}
             />
-          </div>
-          <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-3xl font-semibold text-transparent">
-            My Profile
-          </h1>
+          </div> */}
 
           {/* User Profile Pic and Name */}
           <div className="flex flex-col items-center justify-center">
-            <div className="mt-6 flex flex-col items-center justify-center gap-1">
-              <div className="relative h-[100px] w-[100px] rounded-full">
+            <div className="flex items-center justify-center gap-5 mt-6">
+              <div className="flex flex-col items-center">
+                <div className="text-2xl font-medium capitalize gradient-text text-neutral-400">
+                  {memberData.name}
+                </div>
+                {/* <div>
+                  {memberData.avgIntensity > 10 && (
+                    <span
+                      className={`mx-2 rounded  ${
+                        showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
+                      } px-2  py-0.5 text-[13px] font-extrabold text-black`}
+                    >
+                      {showElite ? 'Elite' : 'Advanced'}
+                    </span>
+                  )}
+                </div> */}
+              </div>
+              <div className="relative h-[80px] w-[80px] rounded-full">
                 {chosenPic ? (
                   <ProfilePicture
                     inputPic={chosenPic}
                     altText={'profile picture'}
-                    height={'100px'}
-                    width={'100px'}
+                    height={'80px'}
+                    width={'80px'}
                   />
                 ) : memberData && memberData?.profilePicture ? (
                   <ProfilePicture
                     inputPic={uniqueImageURLKey}
                     altText={'profile picture'}
-                    height={'100px'}
-                    width={'100px'}
+                    height={'80px'}
+                    width={'80px'}
                   />
                 ) : (
-                  <FaUserCircle size={100} color={'#91BDF6'} />
+                  <FaUserCircle size={80} color={'#91BDF6'} />
                 )}
                 <button
-                  className="absolute bottom-0 right-0 flex h-[40px] w-[40px] flex-row items-center justify-center rounded-full bg-green"
+                  className="absolute bottom-0 right-0 flex h-[30px] w-[30px] flex-row items-center justify-center rounded-full bg-green"
                   onClick={() => {
                     setShowProfilePicPopup(true);
                   }}
                 >
-                  <IoCamera size={25} color="black" />
+                  <IoCamera size={20} color="black" />
                 </button>
                 <input
                   ref={profilePicRef}
@@ -275,57 +292,32 @@ const UserDetails = ({ showHistory }) => {
                   onInput={handlePicChange}
                 ></input>
               </div>
-              <div className="text-neutral-400 text-xl font-medium capitalize leading-loose">
-                {memberData.name}
-              </div>
-              {/* <div className="flex w-auto flex-row items-center justify-between ">
+
+              {/* <div className="flex flex-row items-center justify-between w-auto ">
                 <div className="perfect-week mr-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border px-2 py-0.5 text-xs text-black">
                   <img src="/assets/star.svg" alt=''/>
                 </div>
 
               </div> */}
               {/* <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
-                <div className="text-xs font-bold capitalize text-black">
+                <div className="text-xs font-bold text-black capitalize">
                   {memberData.intensity > 100 ? 'Elite' : 'Advanced'}
                 </div>
               </div> */}
             </div>
-            {currentDate > 5 &&
-              <section className='w-full flex flex-row justify-center items-center gap-3 my-2'>
-                <MonthlyWrapped />
-              </section>
-            }
-            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
-              <div className=" flex h-full flex-col justify-around">
+
+            <p className="mt-5">
+              Elevate every step, embrace every challange, and evolve beyond
+              your limits.
+            </p>
+
+            <div
+              className="w-full h-64 p-4 mx-auto mt-8 profile-program-box rounded-xl"
+              onClick={() => setShowProfilePicPopup(false)}
+            >
+              <div className="flex flex-col justify-around h-full ">
                 <section>
-                  <div className="workout-gradient-text text-2xl font-medium leading-10">
-                    Book a Call
-                  </div>
-                  <div
-                    className="pt-2 "
-                    onClick={() => setShowProfilePicPopup(false)}
-                  >
-                  <div className='text-white text-[14px]'>
-                    <p>Easily schedule a one-on-one call with your coach for personalised guidance and mentoring.</p>
-                  </div>
-                  </div>
-                </section>
-                <section className="flex flex-col items-center ">
-                  <div
-                    className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
-                    onClick={() => window.open('https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach', '_blank')}
-                  >
-                    <button className="text-lg font-medium text-white">
-                      Book Here
-                    </button>
-                  </div>
-                </section>
-              </div>
-            </div>
-            <div className="profile-program-box mx-auto mt-8 h-64 w-full rounded-xl  p-4" onClick={() => setShowProfilePicPopup(false)}>
-              <div className=" flex h-full flex-col justify-around">
-                <section>
-                  <div className="workout-gradient-text text-2xl font-medium leading-10">
+                  <div className="text-2xl font-medium leading-10 workout-gradient-text">
                     Membership
                   </div>
                   <div
@@ -334,16 +326,16 @@ const UserDetails = ({ showHistory }) => {
                   >
                     {memberData.isPaymentDue ? (
                       <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
-                        <div className="relative h-3 w-3">
+                        <div className="relative w-3 h-3">
                           <img src="/assets/alert-triangle.svg" alt="" />
                         </div>
-                        <div className="text-xs capitalize text-black">
+                        <div className="text-xs text-black capitalize">
                           Overdue
                         </div>
                       </div>
                     ) : (
                       <div className="bg-neutral-700 border-green-400 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-                        <ul className="list-disc pl-3">
+                        <ul className="pl-3 list-disc">
                           <li className="text-xs capitalize text-green">
                             Next payment due on{' '}
                             {formatDate(memberData?.paymentDueDate, false)}
@@ -368,15 +360,62 @@ const UserDetails = ({ showHistory }) => {
                 </section>
               </div>
             </div>
+
+            {/* <MoveCoins coins={0} /> */}
+
+            {currentDate > 5 && (
+              <section className="flex flex-row items-center justify-center w-full gap-3 mt-8">
+                <MonthlyWrapped />
+              </section>
+            )}
             <div
-              className="mt-8 flex w-full flex-col"
+              className="w-full h-64 p-4 mx-auto mt-8 profile-program-box rounded-xl"
+              onClick={() => setShowProfilePicPopup(false)}
+            >
+              <div className="flex flex-col justify-around h-full ">
+                <section>
+                  <div className="text-2xl font-medium leading-10 workout-gradient-text">
+                    Book a Call
+                  </div>
+                  <div
+                    className="pt-2 "
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
+                    <div className="text-[14px] text-white">
+                      <p>
+                        Easily schedule a one-on-one call with your coach for
+                        personalised guidance and mentoring.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+                <section className="flex flex-col items-center ">
+                  <div
+                    className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                    onClick={() =>
+                      window.open(
+                        'https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach',
+                        '_blank',
+                      )
+                    }
+                  >
+                    <button className="text-lg font-medium text-white">
+                      Book Here
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div
+              className="flex flex-col w-full mt-8"
               onClick={() => {
                 setShowProfilePicPopup(false);
                 handleLogout();
               }}
             >
               <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
-                <div className="relative h-5 w-5 origin-top-left">
+                <div className="relative w-5 h-5 origin-top-left">
                   <img src="./assets/logout.svg" alt="" />
                 </div>
                 <div className="text-lg font-medium text-lightGray">

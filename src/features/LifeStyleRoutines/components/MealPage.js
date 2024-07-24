@@ -4,20 +4,23 @@ import MealCrossIcon from './icons/MealCrossIcon';
 
 const MealPage = ({
   mealInfo = {},
-  imageURL,
-  finalDate,
-  setshowMealInfoPage,
+  imageURL = 'No URL',
+  finalDate = 'No Date',
+  setIsVisible,
+  setParentVisibilityCheck
 }) => {
+
+
+  console.log('mealInfo', mealInfo);
   return (
     <div className="py-4">
-      <div className="mt-2 flex w-full flex-row items-center justify-center">
+      <div className=" flex w-full flex-row items-center justify-center">
         <p className="pl-2 font-sfpro  text-[14px] font-medium text-custompurple">
           {finalDate}
         </p>
 
-        <div
+        <div onClick={() => setParentVisibilityCheck(true)}
           className="absolute right-0 mr-4"
-          onClick={() => setshowMealInfoPage(false)}
         >
           <MealCrossIcon />
         </div>
@@ -27,7 +30,7 @@ const MealPage = ({
         <>
           <div className="mb-5 mt-7 flex h-auto items-center justify-center">
             {/* meal info */}
-            <div className=" h-fit w-full rounded-lg  bg-black p-5 text-white">
+            <div className=" h-fit w-full rounded-lg  p-5 text-white">
               <img
                 src={imageURL} // Replace this with the actual image URL
                 alt="image title"
@@ -49,14 +52,15 @@ const MealPage = ({
         </div>
       )}
 
-      <div className="fixed bottom-4 left-0 w-full px-3">
+      <div onClick={() => setParentVisibilityCheck(true)} className="fixed bottom-4 left-0 w-full px-3">
         <button
           className="w-full rounded-xl bg-custompurple px-[14px] py-[10px] text-black "
-          onClick={() => setshowMealInfoPage(false)}
         >
           Done
         </button>
       </div>
+
+      <div className="h-[40px] w-[1px]  "></div>
     </div>
   );
 };

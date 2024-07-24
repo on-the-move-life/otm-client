@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import { useAuth } from '../../contexts/AuthContext';
 import List from './List';
@@ -10,12 +10,16 @@ import AnimatedComponent from '../../components/AnimatedComponent';
 const Leaderboard = () => {
   const [fitnessScoreData, setFitnessScoreData] = useState([]);
   const [workoutCountData, setWorkoutCountData] = useState([]);
-  const [selectedDataType, setSelectedDataType] = useState('workout'); // Default to 'fitness score'
+  const [selectedDataType, setSelectedDataType] = useState(null); // Default to 'fitness score'
   const [loadingFitnessScore, setLoadingFitnessScore] = useState(true);
   const [loadingWorkoutCount, setLoadingWorkoutCount] = useState(true);
 
   const { getUserFromStorage, user } = useAuth();
   const navigate = useNavigate();
+  const { value } = useParams();
+  useEffect(() => {
+    setSelectedDataType(value);
+  }, [value]);
 
   async function getFitnessScoreData() {
     // API call for fitnessScoreData
@@ -48,15 +52,15 @@ const Leaderboard = () => {
   }
 
   useEffect(() => {
-    if(user === null){
+    if (user === null) {
       getUserFromStorage();
     }
   }, []);
 
   useEffect(() => {
-    console.log('user : ', user)
+    console.log('user : ', user);
     if (user) {
-      console.log('user : ', user)
+      console.log('user : ', user);
       setLoadingFitnessScore(true);
       setLoadingWorkoutCount(true);
       getFitnessScoreData();
@@ -64,34 +68,34 @@ const Leaderboard = () => {
     }
   }, [user]);
 
-  if (!user || (loadingFitnessScore && loadingWorkoutCount)) {
+  if (!user || loadingFitnessScore || loadingWorkoutCount) {
     return <Loader />;
   }
 
   const matchingUser = (
-    selectedDataType === 'workout'
+    selectedDataType && selectedDataType === 'workout'
       ? workoutCountData.rankList
       : fitnessScoreData.rankList
   )?.find((entry) => entry.code === user.code);
 
   return (
-    <div className="w-screen rounded-3xl px-4 py-8">
+    <div className="w-screen h-full px-4 py-8 overflow-scroll rounded-3xl">
       <AnimatedComponent>
         <div className="mb-4">
           <HiArrowNarrowLeft
             size={20}
             onClick={() => {
-              navigate('/home');
+              navigate('/community');
             }}
           />
         </div>
-        <h2 className="leaderboard-gradient-text mb-3 text-3xl">
+        <h2 className="mb-3 text-3xl leaderboard-gradient-text">
           Top Performers
         </h2>
 
         {selectedDataType === 'workout' && workoutCountData && matchingUser && (
           <div>
-            <span className="leaderboard-gradient-text mr-2 text-4xl">
+            <span className="mr-2 text-4xl leaderboard-gradient-text">
               #{matchingUser.rank}
             </span>
             <span className="text-sm font-medium text-lightGray">
@@ -104,7 +108,7 @@ const Leaderboard = () => {
           fitnessScoreData &&
           matchingUser && (
             <div>
-              <span className="leaderboard-gradient-text mr-1 text-4xl">
+              <span className="mr-1 text-4xl leaderboard-gradient-text">
                 #{matchingUser.rank}
               </span>
               <span className="text-sm font-medium text-lightGray">
@@ -113,26 +117,28 @@ const Leaderboard = () => {
             </div>
           )}
 
-        <div className="flex-start flex space-x-2 py-2">
+        {/* <div className="flex py-2 space-x-2 flex-start">
           <div
-            className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'workout'
-              ? 'bg-white font-bold text-black'
-              : 'text-white'
-              } cursor-pointer px-2 py-0.5`}
+            className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
+              selectedDataType === 'workout'
+                ? 'bg-white font-bold text-black'
+                : 'text-white'
+            } cursor-pointer px-2 py-0.5`}
             onClick={() => setSelectedDataType('workout')}
           >
             <p className="text-xs">Workout</p>
           </div>
           <div
-            className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${selectedDataType === 'fitnessScore'
-              ? 'bg-white font-bold text-black'
-              : 'text-white'
-              } cursor-pointer px-2 py-0.5`}
+            className={`inline-flex h-5 items-center justify-center gap-0.5 rounded border ${
+              selectedDataType === 'fitnessScore'
+                ? 'bg-white font-bold text-black'
+                : 'text-white'
+            } cursor-pointer px-2 py-0.5`}
             onClick={() => setSelectedDataType('fitnessScore')}
           >
             <p className="text-xs">Fitness Score</p>
           </div>
-        </div>
+        </div> */}
         <div className="pb-2 text-[14px] font-medium text-lightGray">
           {selectedDataType === 'workout'
             ? 'Ranked by the number of workouts done this month'
@@ -143,7 +149,9 @@ const Leaderboard = () => {
           <span className="">RANK</span>
           <span>
             {' '}
-            {selectedDataType === 'workout' ? 'TOTAL WORKOUTS' : 'FITNESS SCORE'}
+            {selectedDataType === 'workout'
+              ? 'TOTAL WORKOUTS'
+              : 'FITNESS SCORE'}
           </span>
         </div>
       </AnimatedComponent>
@@ -152,14 +160,14 @@ const Leaderboard = () => {
           code={user.code}
           mode={selectedDataType}
           data={workoutCountData.rankList}
-          key={Math.random()*1000}
+          key={Math.random() * 1000}
         />
-      ) : selectedDataType === 'fitnessScore' && fitnessScoreData.rankList ? (
+      ) : selectedDataType === 'fitness_score' && fitnessScoreData.rankList ? (
         <List
           code={user.code}
           mode={selectedDataType}
           data={fitnessScoreData.rankList}
-          key={Math.random()*1000}
+          key={Math.random() * 1000}
         />
       ) : null}
     </div>

@@ -32,6 +32,11 @@ body {
   font-size: 0.7em;
   letter-spacing: 0.2em;
 }
+.textbox-kginput::placeholder{
+  font-size: 1em;
+  letter-spacing: 0.2em;
+  color: #565656;
+}
 
 .custom-phone-input {
   background: none;
@@ -335,7 +340,6 @@ button:active {
   border: 0.5px solid #444;
   height: 3em;
   font-size: 1.5em;
-  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -459,6 +463,13 @@ button:active {
   -webkit-text-fill-color: transparent;
 }
 
+.border-gradient {
+  border-image: var(
+    --Gradient-purple,
+    linear-gradient(95deg, #d6b6f0 2.94%, #7e87ef 96.92%)
+  );
+}
+
 .leaderboard-user-list-item {
   border-radius: 12px;
   border: 1.5px solid var(--Light-purple, #d6b6f0);
@@ -543,6 +554,23 @@ button:active {
   /* Make the text transparent so that the gradient shows through */
   line-height: 1;
   padding: 2rem 0.5rem;
+  /* background-image: linear-gradient(to bottom, rgba(white, 0.2), black); */
+}
+
+.countdown__inner__sec {
+  display: block;
+  width: 100%;
+  height: 5rem;
+  font-size: 3rem;
+  font-family: 'Anton', sans-serif;
+  background: linear-gradient(180deg, #fff 0%, #d6b6f0 100%);
+  -webkit-background-clip: text;
+  /* WebKit/Blink browsers */
+  background-clip: text;
+  color: transparent;
+  /* Make the text transparent so that the gradient shows through */
+  line-height: 1;
+  padding: 0.5rem;
   /* background-image: linear-gradient(to bottom, rgba(white, 0.2), black); */
 }
 
@@ -898,4 +926,8 @@ button:active {
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.background-gray-gradient {
+  background: linear-gradient(180deg, #171717 0%, #0f0f0f 100%);
 }
