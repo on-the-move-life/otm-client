@@ -3,6 +3,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error } from '../../components';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import Calendar from '../LifeStyleRoutines/Calendar';
+import { getFormattedDate } from '../LifeStyleRoutines/utils';
 import WeeklyWorkoutReport from '../Fitness/WeeklyWorkoutReport';
 
 const WeeklyCheckIn = () => {
@@ -11,63 +13,86 @@ const WeeklyCheckIn = () => {
   const [weeklyStats, setWeeklyStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
 
-  const [weekRating, setWeekRating] = useState('');
-  const [achievement, setAchievement] = useState('');
-  const [learnings, setLearnings] = useState('');
+  const [selectedDate, setSelectedDate] = useState(getFormattedDate());
+  const [completionHistory, setCompletionHistory] = useState([]);
+
+  const weekRatingRef = useRef(null);
+  const achievementRef = useRef(null);
+  const learningsRef = useRef(null);
 
   const weeklyWorkoutReportRef = useRef(null);
 
   useEffect(() => {
-    const today = new Date().toLocaleDateString('en-GB');
-
     getUserFromStorage();
+  }, [getUserFromStorage]);
 
-    function getWeeklyData() {
-      setLoader(true);
-      axios
-        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
-          params: {
-            email: user.email,
-            day: today,
-          },
-        })
-        .then((res) => {
-          if (res.data) {
-            setWeeklyStats(res.data);
-            setLoader(false);
-            setError(null);
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-          setWeeklyStats(null);
-          setError('Failed to fetch weekly data');
-          setLoader(false);
-        });
-    }
-
+  useEffect(() => {
     if (user && user.email) {
       getWeeklyData();
+      getCalendarData();
     } else {
       setError('Please login first');
     }
-  }, [user]);
+  }, [user, selectedDate]);
 
+  const getWeeklyData = () => {
+    setLoader(true);
+    const today = new Date().toLocaleDateString('en-GB');
+    axios
+      .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
+        params: {
+          email: user.email,
+          day: today,
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          console.log('Weekly stats received:', res.data);
+          setWeeklyStats(res.data);
+          setLoader(false);
+          setError(null);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setWeeklyStats(null);
+        setError('Failed to fetch weekly data');
+        setLoader(false);
+      });
+  };
+
+  const getCalendarData = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle`, {
+        params: {
+          user: user.code,
+          date: selectedDate
+        }
+      });
+      setCompletionHistory(response.data.completionHistory || []);
+    } catch (error) {
+      console.error('Error fetching calendar data:', error);
+      setError('Failed to fetch calendar data');
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const answers = [weekRating, achievement, learnings];
+    const answers = [
+      weekRatingRef.current.value,
+      achievementRef.current.value,
+      learningsRef.current.value
+    ];
     localStorage.setItem('weeklyCheckInAnswers', JSON.stringify(answers));
     alert('Your responses have been saved!');
-    
+
     // Reset form
-    setWeekRating('');
-    setAchievement('');
-    setLearnings('');
+    weekRatingRef.current.value = '';
+    achievementRef.current.value = '';
+    learningsRef.current.value = '';
 
     // Reset textarea heights
-    const textareas = e.target.querySelectorAll('textarea');
-    textareas.forEach(textarea => {
+    [achievementRef.current, learningsRef.current].forEach(textarea => {
       textarea.style.height = 'auto';
     });
   };
@@ -82,17 +107,16 @@ const WeeklyCheckIn = () => {
     visible: { y: 0, opacity: 1 },
   };
 
-  const handleTextAreaChange = (e, setter) => {
-    setter(e.target.value);
+  const handleTextAreaChange = (e) => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
   const memoizedWeeklyWorkoutReport = useMemo(() => (
     <WeeklyWorkoutReport
-      consistencyTrend={weeklyStats?.consistencyTrend}
-      suggestedWorkoutPerWeek={weeklyStats?.frequency}
-      lastEightWeeksWorkout={weeklyStats?.lastEightWeeksWorkout}
+      consistencyTrend={weeklyStats?.consistencyTrend || ''}
+      suggestedWorkoutPerWeek={weeklyStats?.frequency || 0}
+      lastEightWeeksWorkout={weeklyStats?.lastEightWeeksWorkout || []}
     />
   ), [weeklyStats]);
 
@@ -101,19 +125,33 @@ const WeeklyCheckIn = () => {
       <h1 className="text-2xl font-bold text-center mt-6 mb-4">Weekly Check-In</h1>
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
-      {weeklyStats && (
+      {!loader && !error && (
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          className="space-y-8"
         >
-          <motion.section variants={itemVariants} ref={weeklyWorkoutReportRef}>
+          <motion.section variants={itemVariants}>
+            <Calendar
+              completionHistory={completionHistory}
+              isSummaryPage={false}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
+          </motion.section>
+
+          <motion.section 
+            variants={itemVariants} 
+            ref={weeklyWorkoutReportRef}
+            className="mt-8"
+          >
             {memoizedWeeklyWorkoutReport}
           </motion.section>
 
           <motion.form
             onSubmit={handleSubmit}
-            className="mt-8 space-y-6"
+            className="mt-4 space-y-4"
             variants={containerVariants}
           >
             <motion.div variants={itemVariants}>
@@ -122,8 +160,7 @@ const WeeklyCheckIn = () => {
               </label>
               <select
                 id="weekRating"
-                value={weekRating}
-                onChange={(e) => setWeekRating(e.target.value)}
+                ref={weekRatingRef}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white p-2"
                 required
               >
@@ -140,8 +177,8 @@ const WeeklyCheckIn = () => {
               </label>
               <textarea
                 id="achievement"
-                value={achievement}
-                onChange={(e) => handleTextAreaChange(e, setAchievement)}
+                ref={achievementRef}
+                onChange={handleTextAreaChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
                 required
                 style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
@@ -154,8 +191,8 @@ const WeeklyCheckIn = () => {
               </label>
               <textarea
                 id="learnings"
-                value={learnings}
-                onChange={(e) => handleTextAreaChange(e, setLearnings)}
+                ref={learningsRef}
+                onChange={handleTextAreaChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
                 required
                 style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
