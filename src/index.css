@@ -293,6 +293,9 @@ button:active {
     0px 2.5px 4px 0px rgba(0, 0, 0, 0.15),
     0px 14px 14px 0px rgba(0, 0, 0, 0.09);
 }
+.mealplanner-gradient-button {
+  background-color: #7E87EF;
+}
 
 .marketplace-gradient-button {
   background: var(

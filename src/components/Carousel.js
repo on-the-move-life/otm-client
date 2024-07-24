@@ -29,13 +29,13 @@ function Carousel({ carouselComponents, autoPlay=true, playTime=5 }) {
         }
     }
   return (
-    <div className='w-full h-fit flex flex-col justify-center items-center gap-2'>
-        <div className='w-[358px] h-[406px] rounded-[12px]' onMouseDown={() => setHolding(true)} onMouseUp={() => setHolding(false)}>
-            {carouselComponents[currentIndex]}
-            <div className='w-full h-full bg-transparent z-[100] flex flex-row justify-between items-center'>
+    <div className='w-full h-fit flex flex-col justify-center items-center gap-7'>
+        <div className='w-[358px] h-[406px] rounded-[12px] relative'>
+            <div className='absolute w-full h-full bg-transparent z-[100] flex flex-row justify-between items-center' onMouseDown={() => setHolding(true)} onMouseUp={() => setHolding(false)}>
                 <div className='h-full w-1/2' onClick={reduceCurrentIndex}></div>
                 <div className='h-full w-1/2' onClick={increaseCurrentIndex}></div>
             </div>
+            {carouselComponents[currentIndex]}
         </div>
         <CarouselIndicator numberOfSlides={carouselComponents.length} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} isHolding={holding} countDownTimer={playTime} autoPlay={autoPlay}/>
     </div>

@@ -26,6 +26,7 @@ import { useAuth } from './contexts/AuthContext';
 
 import MealUpload from './features/LifeStyleRoutines/MealUpload';
 import NutritionPage from './features/Nutrition/NutritionPage';
+import { MealPlanner } from './features/Nutrition/MealPlanner';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -193,6 +194,14 @@ function App() {
           element={
             <RouteMiddleware>
               <MealUpload />
+            </RouteMiddleware>
+          }
+        />
+        <Route
+          path="/MealPlanner"
+          element={
+            <RouteMiddleware>
+              <MealPlanner />
             </RouteMiddleware>
           }
         />
