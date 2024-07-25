@@ -108,7 +108,6 @@ const SectionDetail = () => {
     assessmentMovement = {},
     links = [],
   } = currentSection;
-  console.log(name, movements, dataInput, code);
   const movementLength = movements.length;
 
   const isSectionCodeAvailable = sectionWithLoadArray.includes(code);
@@ -423,7 +422,7 @@ const SectionDetail = () => {
                   </div>
                 )}
 
-                {code !== 'WUP' && code !== 'COD' && (
+                {
                   <div>
                     <h2 className="my-4 text-2xl workout-gradient-text">
                       Data Inputs
@@ -519,7 +518,7 @@ const SectionDetail = () => {
                       </div>
                     )}
                   </div>
-                )}
+                }
 
                 {/* {!lastPage && (
               <div className="scrolling-wrapper">
