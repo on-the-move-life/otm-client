@@ -207,7 +207,7 @@ function App() {
           }
         />
         <Route
-          path="/WeeklyCheckIn"
+          path="/weekly-checkin"
           element={
             <RouteMiddleware>
               <WeeklyCheckIn />
