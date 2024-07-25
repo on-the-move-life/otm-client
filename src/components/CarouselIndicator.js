@@ -12,6 +12,7 @@ function CarouselIndicator({ numberOfSlides, currentIndex, setCurrentIndex, isHo
     // progress percentage
     const [progress, setProgress] = useState(0);
     const elapsedTimeRef = useRef(0);
+    const currentIndexRef = useRef(currentIndex);
 
     useEffect(() => {
         if(autoPlay){
@@ -33,6 +34,16 @@ function CarouselIndicator({ numberOfSlides, currentIndex, setCurrentIndex, isHo
                         if (prev === numberOfSlides - 1) return 0;
                         else return prev + 1;
                     })
+                }
+                // this check is when the user changes the slides manually
+                if(currentIndexRef.current !== currentIndex){
+                    // reset the time to 0
+                    elapsedTimeRef.current = 0;
+                    // reset the progres to 0
+                    setProgress(0);
+
+                    // update the currentIndexRef to the currentOne
+                    currentIndexRef.current = currentIndex;
                 }
             }, 10);
             return () => clearInterval(intervalId);
