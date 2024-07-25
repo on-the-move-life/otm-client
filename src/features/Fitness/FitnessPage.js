@@ -24,13 +24,12 @@ const FitnessPage = () => {
 
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
+  const [isWeekend, setIsWeekend] = useState(false);
 
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
 
   const navigate = useNavigate();
-
-  console.log(homeStats);
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
@@ -67,6 +66,13 @@ const FitnessPage = () => {
     } else {
       setError('Please login first');
     }
+
+    const checkIfWeekend = () => {
+      const presentday = new Date().getDay();
+      setIsWeekend(presentday === 0 || presentday === 6); // 0 is Sunday, 6 is Saturday
+    };
+
+    checkIfWeekend();
   }, []);
 
   return (
@@ -118,7 +124,16 @@ const FitnessPage = () => {
               </div>
             </div>
           </section> */}
-
+          {isWeekend && (
+            <Link to="/weekly-checkin" className="main-cta">
+              <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
+                Weekly Check-In
+              </span>
+              <span>
+                <AiOutlineRight size={22} />
+              </span>
+            </Link>
+          )}
           <section>
             <WeeklyWorkoutReport
               consistencyTrend={homeStats?.consistencyTrend}
