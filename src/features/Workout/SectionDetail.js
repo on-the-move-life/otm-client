@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import DataInputComponent2 from './DataInputComponent2';
 import Movement from './Movement.js';
 import { HiX } from 'react-icons/hi';
@@ -17,6 +17,9 @@ import WeightChoosingGuide from './WeightChoosingGuide';
 const SectionDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const params = useParams();
+
+  console.log('dfdfdfdfdf', params);
   const [updatedWorkoutProgram, setUpdatedWorkoutProgram] = useState(null);
   const { workout, index } = useSelector((store) => store.workoutReducer);
 
@@ -115,13 +118,12 @@ const SectionDetail = () => {
   useEffect(() => {
     console.log('section index : ', index, updatedWorkoutProgram);
     if (Object.keys(workout).length === 0) {
-      window.location.replace('/workout');
-    }
-    if (updatedWorkoutProgram) {
-      setCurrentSection(updatedWorkoutProgram[index]);
+      window.location.replace(`/workout/${params.value}`);
+    } else {
+      setCurrentSection(sectionList[index]);
     }
     console.log('Units : ', units);
-  }, [workout, index, sectionList, units, updatedWorkoutProgram]);
+  }, [workout, index, sectionList, units]);
 
   useEffect(() => {
     // preparing units for load valued datainputs
@@ -157,7 +159,7 @@ const SectionDetail = () => {
     setShowAlertDialog(false);
 
     if (confirm) {
-      navigate('/workout-summary', { replace: true });
+      navigate(`/workout-summary/${params.value}`, { replace: true });
     }
   };
 
@@ -422,35 +424,14 @@ const SectionDetail = () => {
                   </div>
                 )}
 
-                {
-                  <div>
-                    <h2 className="my-4 text-2xl workout-gradient-text">
-                      Data Inputs
-                    </h2>
-                    {code === 'GYM'
-                      ? dataInput
-                          .slice(0, 2)
-                          .map((input, index) => (
-                            <DataInputComponent2
-                              key={index}
-                              inputId={input.id}
-                              inputType={input.type}
-                              inputOptions={input.options}
-                              placeholder={input.placeholder}
-                              label={input.label}
-                              options={
-                                units[`${input.id}-unit`] !== undefined
-                                  ? units[`${input.id}-unit`]['options']
-                                  : null
-                              }
-                              unitId={
-                                units[`${input.id}-unit`] !== undefined
-                                  ? units[`${input.id}-unit`]['id']
-                                  : null
-                              }
-                            />
-                          ))
-                      : dataInput.map((input, index) => (
+                <div>
+                  <h2 className="my-4 text-2xl workout-gradient-text">
+                    Data Inputs
+                  </h2>
+                  {code === 'GYM'
+                    ? dataInput
+                        .slice(0, 2)
+                        .map((input, index) => (
                           <DataInputComponent2
                             key={index}
                             inputId={input.id}
@@ -469,56 +450,75 @@ const SectionDetail = () => {
                                 : null
                             }
                           />
-                        ))}
-
-                    {code === 'GYM' && dataInput.length > 2 && (
-                      <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-                        <p className="mb-2 text-sm tracking-[3px] sm:text-[15px]">
-                          MAX EFFORT TEST
-                        </p>
-                        <div className="flex flex-col items-center mt-4 mb-4 sm:mt-4">
-                          <p className="mb-2 text-sm font-semibold text-center sm:text-base">
-                            {assessmentMovement?.name}
-                          </p>
-                          {assessmentMovement?.link &&
-                            assessmentMovement?.link[0] && (
-                              <img
-                                src={assessmentMovement.link[0]}
-                                alt={assessmentMovement.name}
-                                className="w-20 max-w-xs sm:w-32"
-                              />
-                            )}
-                        </div>
+                        ))
+                    : dataInput.map((input, index) => (
                         <DataInputComponent2
-                          key={2}
-                          inputId={dataInput[2].id}
-                          inputType={dataInput[2].type}
-                          inputOptions={dataInput[2].options}
-                          placeholder={dataInput[2].placeholder}
-                          label={dataInput[2].label}
+                          key={index}
+                          inputId={input.id}
+                          inputType={input.type}
+                          inputOptions={input.options}
+                          placeholder={input.placeholder}
+                          label={input.label}
                           options={
-                            units[`${dataInput[2].id}-unit`] !== undefined
-                              ? units[`${dataInput[2].id}-unit`]['options']
+                            units[`${input.id}-unit`] !== undefined
+                              ? units[`${input.id}-unit`]['options']
                               : null
                           }
                           unitId={
-                            units[`${dataInput[2].id}-unit`] !== undefined
-                              ? units[`${dataInput[2].id}-unit`]['id']
+                            units[`${input.id}-unit`] !== undefined
+                              ? units[`${input.id}-unit`]['id']
                               : null
                           }
                         />
-                        <ul className="pl-5 mt-4 list-disc">
-                          <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-                            Enter the number of reps
-                          </li>
-                          <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-                            At max do 25 reps
-                          </li>
-                        </ul>
+                      ))}
+
+                  {code === 'GYM' && dataInput.length > 2 && (
+                    <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+                      <p className="mb-2 text-sm tracking-[3px] sm:text-[15px]">
+                        MAX EFFORT TEST
+                      </p>
+                      <div className="flex flex-col items-center mt-4 mb-4 sm:mt-4">
+                        <p className="mb-2 text-sm font-semibold text-center sm:text-base">
+                          {assessmentMovement?.name}
+                        </p>
+                        {assessmentMovement?.link &&
+                          assessmentMovement?.link[0] && (
+                            <img
+                              src={assessmentMovement.link[0]}
+                              alt={assessmentMovement.name}
+                              className="w-20 max-w-xs sm:w-32"
+                            />
+                          )}
                       </div>
-                    )}
-                  </div>
-                }
+                      <DataInputComponent2
+                        key={2}
+                        inputId={dataInput[2].id}
+                        inputType={dataInput[2].type}
+                        inputOptions={dataInput[2].options}
+                        placeholder={dataInput[2].placeholder}
+                        label={dataInput[2].label}
+                        options={
+                          units[`${dataInput[2].id}-unit`] !== undefined
+                            ? units[`${dataInput[2].id}-unit`]['options']
+                            : null
+                        }
+                        unitId={
+                          units[`${dataInput[2].id}-unit`] !== undefined
+                            ? units[`${dataInput[2].id}-unit`]['id']
+                            : null
+                        }
+                      />
+                      <ul className="pl-5 mt-4 list-disc">
+                        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+                          Enter the number of reps
+                        </li>
+                        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+                          At max do 25 reps
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
 
                 {/* {!lastPage && (
               <div className="scrolling-wrapper">

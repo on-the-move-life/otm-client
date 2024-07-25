@@ -1,7 +1,7 @@
 //WorkoutSummary.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import MoveCoinsPopUp from './MoveCoinsPopUp.js';
 import { Error, Loader } from '../../components';
 import {
@@ -20,6 +20,7 @@ import useLocalStorage from '../../hooks/useLocalStorage.js';
 import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
+import { axiosflexClient } from './apiFlexClient.js';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -43,6 +44,9 @@ const WorkoutSummary = () => {
   const { user } = useAuth();
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
   const dispatch = useDispatch();
+  const params = useParams();
+
+  console.log('ccccxxxx', params);
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
 
@@ -110,36 +114,73 @@ const WorkoutSummary = () => {
     };
 
     dispatch(setStatus('loading'));
-    axiosClient
-      .post('/score', payload)
-      .then((res) => {
-        if (res.data) {
-          dispatch(setStatus('success'));
-          setWorkoutSummary({
-            ...res.data,
-            sectionPerformance: res.data.sectionPerformance.slice(1),
-          });
+    {
+      params.value === 'flex' &&
+        axiosflexClient
+          .post('/score', payload)
+          .then((res) => {
+            if (res.data) {
+              dispatch(setStatus('success'));
+              setWorkoutSummary({
+                ...res.data,
+                sectionPerformance: res.data.sectionPerformance.slice(1),
+              });
 
-          setData();
-        }
-      })
-      .catch((err) => {
-        console.log(err.message, 'ERROR');
-        dispatch(setStatus('error'));
-        // Handle error here
-      })
-      .finally(() => {
-        // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
-        const storedInputIds = getStoredInputIds();
-        if (storedInputIds !== null) {
-          storedInputIds.forEach((id) => {
-            window.localStorage.removeItem(id);
-          });
+              setData();
+            }
+          })
+          .catch((err) => {
+            console.log(err.message, 'ERROR');
+            dispatch(setStatus('error'));
+            // Handle error here
+          })
+          .finally(() => {
+            // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
+            const storedInputIds = getStoredInputIds();
+            if (storedInputIds !== null) {
+              storedInputIds.forEach((id) => {
+                window.localStorage.removeItem(id);
+              });
 
-          // then finally delete the key 'inputIds' from local storage
-          window.localStorage.removeItem('inputIds');
-        }
-      });
+              // then finally delete the key 'inputIds' from local storage
+              window.localStorage.removeItem('inputIds');
+            }
+          });
+    }
+
+    {
+      params.value === 'today' &&
+        axiosflexClient
+          .post('/score', payload)
+          .then((res) => {
+            if (res.data) {
+              dispatch(setStatus('success'));
+              setWorkoutSummary({
+                ...res.data,
+                sectionPerformance: res.data.sectionPerformance.slice(1),
+              });
+
+              setData();
+            }
+          })
+          .catch((err) => {
+            console.log(err.message, 'ERROR');
+            dispatch(setStatus('error'));
+            // Handle error here
+          })
+          .finally(() => {
+            // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
+            const storedInputIds = getStoredInputIds();
+            if (storedInputIds !== null) {
+              storedInputIds.forEach((id) => {
+                window.localStorage.removeItem(id);
+              });
+
+              // then finally delete the key 'inputIds' from local storage
+              window.localStorage.removeItem('inputIds');
+            }
+          });
+    }
   }
 
   useEffect(() => {

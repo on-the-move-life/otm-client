@@ -84,7 +84,7 @@ function App() {
           element={<Report />}
         />
         <Route
-          path="/section-details"
+          path="/section-details/:value"
           element={
             <RouteMiddleware>
               <SectionDetail />
@@ -92,7 +92,7 @@ function App() {
           }
         />
         <Route
-          path="/workout"
+          path="/workout/:value"
           element={
             <RouteMiddleware>
               <Workout />
@@ -100,7 +100,7 @@ function App() {
           }
         />
         <Route
-          path="/workout-summary"
+          path="/workout-summary/:value"
           element={
             <RouteMiddleware>
               <WorkoutSummary />

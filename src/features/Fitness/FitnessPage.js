@@ -84,10 +84,20 @@ const FitnessPage = () => {
       {error && <Error>{error}</Error>}
       {homeStats && (
         <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
-          <section className="pt-5 pb-0">
+          <section className="pb-0 pt-5">
             <div className="flex justify-between">
-              <div className="flex flex-col mt-3">
-                <TimelineHeading>Fitness</TimelineHeading>
+              <div className="mt-3 flex flex-col">
+                <TimelineHeading>Movement</TimelineHeading>
+                {parseInt(homeStats.streak) > 0 && (
+                  <div className="flex items-center ">
+                    <div className="perfect-week my-2 flex w-fit items-center rounded">
+                      <img src="assets/star.svg" alt="" />
+                      <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
+                        Perfect Week x{homeStats.streak}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 {/* <h2 className="mt-3 inline-block w-40 bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-lg font-semibold text-transparent">
                   Today's Workout
@@ -98,51 +108,55 @@ const FitnessPage = () => {
               )}
             </div>
           </section>
-          {/* <section>
+          <section>
             <div className="flex items-center">
-              <div className="bg-gym-workout relative h-[102px] grow rounded-3xl">
+              <Link
+                to="/workout/today"
+                className="relative h-[102px] grow rounded-2xl bg-gym-workout"
+              >
                 <div className="absolute bottom-1 left-4">
-                  <h2 className="text-4xl font-semibold gradient-text">
-                    Shred
+                  <h2 className="gradient-text text-2xl font-semibold">
+                    Today's Workout
                   </h2>
                   <div className="flex gap-3">
-                    <h2 className="px-1 text-sm border rounded-md border-lightGray text-lightGray">
-                      At Home
+                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                      Theme
                     </h2>
-                    <h2 className="px-1 text-sm border rounded-md border-lightGray text-lightGray">
+                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
                       60 mins
                     </h2>
-                    <h2 className="px-1 text-sm border rounded-md border-lightGray text-lightGray">
+                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
                       {' '}
                       Knee Rehab
                     </h2>
                   </div>
                 </div>
-              </div>
-              <div className="w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient pb-7 text-white-opacity-23">
-                +
+              </Link>
+              <div className="background-gray-gradient relative ml-2 h-8 w-8 rounded-full text-center text-3xl text-white-opacity-23">
+                <div className="absolute -top-1 left-[6px]">+</div>
               </div>
             </div>
-          </section> */}
-           {isWeekend && (
-  <Link to="/weekly-checkin" className="">
-    <div className='flex-col p-4 bg-gradient-to-b from-gradientStart to-gradientEnd rounded-lg'>
-      <div className='flex justify-between items-center mb-2'>
-        <span className="inline-block purple-white-gradient font-semibold text-2xl tracking-wider">
-          Weekly Check-In
-        </span>
-        <span className='font-semibold'>
-          <AiOutlineRight size={26} className="text-white " />
-        </span>
-      </div>
-      <div className="flex justify-center">
-        <p className='text-[12px] text-white font-semibold max-w-[100%] text-left'>
-        View your weekly stats and register your thoughts and rating
-        </p>
-      </div>
-    </div>
-  </Link>
-)}
+          </section>{' '}
+          */}
+          {isWeekend && (
+            <Link to="/weekly-checkin" className="">
+              <div className="flex-col rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd p-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="purple-white-gradient inline-block text-2xl font-semibold tracking-wider">
+                    Weekly Check-In
+                  </span>
+                  <span className="font-semibold">
+                    <AiOutlineRight size={26} className="text-white " />
+                  </span>
+                </div>
+                <div className="flex justify-center">
+                  <p className="max-w-[100%] text-left text-[12px] font-semibold text-white">
+                    View your weekly stats and register your thoughts and rating
+                  </p>
+                </div>
+              </div>
+            </Link>
+          )}
           <section>
             <WeeklyWorkoutReport
               consistencyTrend={homeStats?.consistencyTrend}
@@ -169,6 +183,32 @@ const FitnessPage = () => {
               <AiOutlineRight size={22} />
             </span>
           </Link>
+          <section>
+            <div className="flex items-center">
+              <Link
+                to="/workout/flex"
+                className="relative h-[102px] grow rounded-2xl bg-gym-workout"
+              >
+                <div className="absolute bottom-1 left-4">
+                  <h2 className="gradient-text text-2xl font-semibold">
+                    Flex Workout
+                  </h2>
+                  <div className="flex gap-3">
+                    <h2 className="border-wh rounded-md border px-1 text-sm text-lightGray">
+                      Theme
+                    </h2>
+                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                      60 mins
+                    </h2>
+                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                      {' '}
+                      Knee Rehab
+                    </h2>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </section>
         </div>
       )}
     </>
