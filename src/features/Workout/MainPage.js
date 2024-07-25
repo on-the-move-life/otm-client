@@ -22,7 +22,7 @@ const MainPage = () => {
       workoutData &&
       (!workoutData.coolDownSection || !workoutData.warmUpSection)
     ) {
-      setUpdatedWorkoutProgram(...workoutData.program);
+      setUpdatedWorkoutProgram(workoutData.program);
     }
 
     if (
@@ -153,6 +153,7 @@ const MainPage = () => {
               transition={{ duration: 0.8, ease: 'easeInOut' }}
             >
               {updatedWorkoutProgram &&
+                updatedWorkoutProgram.length > 0 &&
                 updatedWorkoutProgram.map((data, index) => (
                   <SectionItem
                     sectionList={updatedWorkoutProgram}

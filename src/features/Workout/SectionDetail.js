@@ -31,7 +31,7 @@ const SectionDetail = () => {
 
   useEffect(() => {
     if (workout && (!workout.coolDownSection || !workout.warmUpSection)) {
-      setUpdatedWorkoutProgram(...workout.program);
+      setUpdatedWorkoutProgram(workout.program);
     }
 
     if (workout && (workout.coolDownSection || workout.warmUpSection)) {
