@@ -86,13 +86,13 @@ const FitnessPage = () => {
       {error && <Error>{error}</Error>}
       {homeStats && (
         <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
-          <section className="pb-0 pt-5">
+          <section className="pt-5 pb-0">
             <div className="flex justify-between">
-              <div className="mt-3 flex flex-col">
+              <div className="flex flex-col mt-3">
                 <TimelineHeading>Movement</TimelineHeading>
                 {parseInt(homeStats.streak) > 0 && (
                   <div className="flex items-center ">
-                    <div className="perfect-week my-2 flex w-fit items-center rounded">
+                    <div className="flex items-center my-2 rounded perfect-week w-fit">
                       <img src="assets/star.svg" alt="" />
                       <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
                         Perfect Week x{homeStats.streak}
@@ -124,20 +124,20 @@ const FitnessPage = () => {
                 to="/workout/today"
                 className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
               >
-                <div className="flex h-full flex-col justify-between">
+                <div className="flex flex-col justify-between h-full">
                   <div className="flex gap-3">
-                    <h2 className=" text-3xl font-medium">Today's Workout</h2>
+                    <h2 className="text-3xl font-medium ">Today's Workout</h2>
                     <img src="/assets/shred-logo.svg" />
                   </div>
 
                   <div className="flex gap-3">
-                    <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
+                    <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
                       {homeStats.hyperWorkoutParams.theme}
                     </h2>
-                    <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {homeStats.hyperWorkoutParams.duration} mins
                     </h2>
-                    <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
                       {homeStats.hyperWorkoutParams.calories} cal
                     </h2>
@@ -153,9 +153,9 @@ const FitnessPage = () => {
 
           {isWeekend && (
             <Link to="/weekly-checkin" className="">
-              <div className="flex-col rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd p-4">
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="purple-white-gradient inline-block text-2xl font-semibold tracking-wider">
+              <div className="flex-col p-4 rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="inline-block text-2xl font-semibold tracking-wider purple-white-gradient">
                     Weekly Check-In
                   </span>
                   <span className="font-semibold">
@@ -197,20 +197,20 @@ const FitnessPage = () => {
                 to="/workout/flex"
                 className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
               >
-                <div className="flex h-full flex-col justify-between">
+                <div className="flex flex-col justify-between h-full">
                   <div className="flex gap-3">
-                    <h2 className=" text-3xl font-medium">Flex</h2>
+                    <h2 className="text-3xl font-medium ">Flex</h2>
                     <img src="/assets/flex-logo.svg" />
                   </div>
 
                   <div className="flex gap-3">
-                    <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
+                    <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
                       {homeStats.flexWorkoutParams.theme}
                     </h2>
-                    <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {homeStats.flexWorkoutParams.duration} mins
                     </h2>
-                    <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
                       {homeStats.flexWorkoutParams.calories} cal
                     </h2>
@@ -223,8 +223,6 @@ const FitnessPage = () => {
               </div> */}
             </div>
           </section>
-
-
         </div>
       )}
     </>

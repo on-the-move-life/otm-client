@@ -7,7 +7,7 @@ const TaskCard = ({ task, index }) => {
 
   return (
     <div>
-      <div className="rounded-xl bg-mediumGray p-4">
+      <div className="p-4 rounded-xl bg-mediumGray">
         {task?.details.map((task, index) => (
           <div key={index} className="rounded-md ">
             <div className="flex items-center space-x-2">
