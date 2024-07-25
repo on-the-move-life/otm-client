@@ -46,8 +46,6 @@ const WorkoutSummary = () => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  console.log('ccccxxxx', params);
-
   const { workout, status } = useSelector((store) => store.workoutReducer);
 
   const getInputValuesFromLocalStorage = () => {
@@ -114,72 +112,72 @@ const WorkoutSummary = () => {
     };
 
     dispatch(setStatus('loading'));
-    {
-      params.value === 'flex' &&
-        axiosflexClient
-          .post('/score', payload)
-          .then((res) => {
-            if (res.data) {
-              dispatch(setStatus('success'));
-              setWorkoutSummary({
-                ...res.data,
-                sectionPerformance: res.data.sectionPerformance.slice(1),
-              });
 
-              setData();
-            }
-          })
-          .catch((err) => {
-            console.log(err.message, 'ERROR');
-            dispatch(setStatus('error'));
-            // Handle error here
-          })
-          .finally(() => {
-            // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
-            const storedInputIds = getStoredInputIds();
-            if (storedInputIds !== null) {
-              storedInputIds.forEach((id) => {
-                window.localStorage.removeItem(id);
-              });
+    if (params.value === 'flex') {
+      axiosflexClient
+        .post('/score', payload)
+        .then((res) => {
+          if (res.data) {
+            dispatch(setStatus('success'));
+            setWorkoutSummary({
+              ...res.data,
+              sectionPerformance: res.data.sectionPerformance.slice(1),
+            });
 
-              // then finally delete the key 'inputIds' from local storage
-              window.localStorage.removeItem('inputIds');
-            }
-          });
+            setData();
+          }
+        })
+        .catch((err) => {
+          console.log(err.message, 'ERROR');
+          dispatch(setStatus('error'));
+          // Handle error here
+        })
+        .finally(() => {
+          // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
+          const storedInputIds = getStoredInputIds();
+          if (storedInputIds !== null) {
+            storedInputIds.forEach((id) => {
+              window.localStorage.removeItem(id);
+            });
+
+            // then finally delete the key 'inputIds' from local storage
+            window.localStorage.removeItem('inputIds');
+          }
+        });
     }
 
-    {
-      params.value === 'today' &&
-        axiosflexClient
-          .post('/score', payload)
-          .then((res) => {
-            if (res.data) {
-              dispatch(setStatus('success'));
-              setWorkoutSummary({
-                ...res.data,
-                sectionPerformance: res.data.sectionPerformance.slice(1),
-              });
+    if (params.value === 'today') {
+      axiosClient
+        .post('/score', payload)
+        .then((res) => {
+          if (res.data) {
+            console.log('cccccccccccccccccccccccccc', params.value);
+            dispatch(setStatus('success'));
+            setWorkoutSummary({
+              ...res.data,
+              sectionPerformance: res.data.sectionPerformance.slice(1),
+            });
 
-              setData();
-            }
-          })
-          .catch((err) => {
-            console.log(err.message, 'ERROR');
-            dispatch(setStatus('error'));
-            // Handle error here
-          })
-          .finally(() => {
-            // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
-            const storedInputIds = getStoredInputIds();
-            if (storedInputIds !== null) {
-              storedInputIds.forEach((id) => {
-                window.localStorage.removeItem(id);
-              });
+            setData();
+          }
+        })
+        .catch((err) => {
+          console.log(err.message, 'ERROR');
+          dispatch(setStatus('error'));
+          // Handle error here
+        })
+        .finally(() => {
+          // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
+          const storedInputIds = getStoredInputIds();
+          if (storedInputIds !== null) {
+            storedInputIds.forEach((id) => {
+              window.localStorage.removeItem(id);
+            });
 
-              // then finally delete the key 'inputIds' from local storage
-              window.localStorage.removeItem('inputIds');
-            }
-          });
+            // then finally delete the key 'inputIds' from local storage
+            window.localStorage.removeItem('inputIds');
+          }
+        });
     }
   }
 

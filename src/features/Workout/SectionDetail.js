@@ -226,7 +226,10 @@ const SectionDetail = () => {
                       {name}
                     </h1>
                   </div>
-                  <Link to="/workout" className="rounded-full bg-[#202020] p-2">
+                  <Link
+                    to={`/workout/${params.value}`}
+                    className="rounded-full bg-[#202020] p-2"
+                  >
                     <HiX size={20} />
                   </Link>
                 </div>

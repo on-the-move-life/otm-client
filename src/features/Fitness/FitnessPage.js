@@ -112,7 +112,7 @@ const FitnessPage = () => {
             <div className="flex items-center">
               <Link
                 to="/workout/today"
-                className="relative h-[102px] grow rounded-2xl bg-gym-workout"
+                className="relative h-[102px] grow rounded-xl bg-gym-workout"
               >
                 <div className="absolute bottom-1 left-4">
                   <h2 className="gradient-text text-2xl font-semibold">
@@ -181,20 +181,20 @@ const FitnessPage = () => {
             <div className="flex items-center">
               <Link
                 to="/workout/flex"
-                className="relative h-[102px] grow rounded-2xl bg-gym-workout"
+                className="relative h-[102px] grow rounded-xl bg-gym-workout"
               >
                 <div className="absolute bottom-1 left-4">
-                  <h2 className="text-3xl font-medium gradient-text">
+                  <h2 className="text-2xl font-semibold gradient-text">
                     Flex Workout
                   </h2>
                   <div className="flex gap-3">
-                    <h2 className="px-1 text-sm text-white border border-white rounded-md">
+                    <h2 className=" rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
                       Theme
                     </h2>
-                    <h2 className="px-1 text-sm text-white border border-white rounded-md">
+                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       60 mins
                     </h2>
-                    <h2 className="px-1 text-sm text-white border border-white rounded-md">
+                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
                       Knee Rehab
                     </h2>
