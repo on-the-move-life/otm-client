@@ -119,22 +119,22 @@ const FitnessPage = () => {
                     Today's Workout
                   </h2>
                   <div className="flex gap-3">
-                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                    <h2 className=" rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
                       Theme
                     </h2>
-                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       60 mins
                     </h2>
-                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
                       Knee Rehab
                     </h2>
                   </div>
                 </div>
               </Link>
-              <div className="background-gray-gradient relative ml-2 h-8 w-8 rounded-full text-center text-3xl text-white-opacity-23">
+              {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
                 <div className="absolute -top-1 left-[6px]">+</div>
-              </div>
+              </div> */}
             </div>
           </section>{' '}
           */}
@@ -155,8 +155,9 @@ const FitnessPage = () => {
                   </p>
                 </div>
               </div>
-            </Link>
-          )}
+            </div>
+          </section>
+
           <section>
             <WeeklyWorkoutReport
               consistencyTrend={homeStats?.consistencyTrend}
@@ -175,14 +176,7 @@ const FitnessPage = () => {
               <DuePaymentIndicator />
             </section>
           )}
-          <Link to="/workout" className="main-cta">
-            <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-              Today's Workout
-            </span>
-            <span>
-              <AiOutlineRight size={22} />
-            </span>
-          </Link>
+
           <section>
             <div className="flex items-center">
               <Link
@@ -190,17 +184,17 @@ const FitnessPage = () => {
                 className="relative h-[102px] grow rounded-2xl bg-gym-workout"
               >
                 <div className="absolute bottom-1 left-4">
-                  <h2 className="gradient-text text-2xl font-semibold">
+                  <h2 className="text-3xl font-medium gradient-text">
                     Flex Workout
                   </h2>
                   <div className="flex gap-3">
-                    <h2 className="border-wh rounded-md border px-1 text-sm text-lightGray">
+                    <h2 className="px-1 text-sm text-white border border-white rounded-md">
                       Theme
                     </h2>
-                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                    <h2 className="px-1 text-sm text-white border border-white rounded-md">
                       60 mins
                     </h2>
-                    <h2 className="rounded-md border border-lightGray px-1 text-sm text-lightGray">
+                    <h2 className="px-1 text-sm text-white border border-white rounded-md">
                       {' '}
                       Knee Rehab
                     </h2>
