@@ -5,16 +5,54 @@ import { useNavigate } from 'react-router-dom';
 import UpdateWorkout from './UpdateWorkout';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { setIndex } from './WorkoutSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnimatedComponent from '../../components/AnimatedComponent';
 
 const MainPage = () => {
   const [showUpdateWorkout, setShowUpdateWorkout] = useState(false);
+  const [updatedWorkoutProgram, setUpdatedWorkoutProgram] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
+
+  useEffect(() => {
+    if (
+      workoutData &&
+      (!workoutData.coolDownSection || !workoutData.warmUpSection)
+    ) {
+      setUpdatedWorkoutProgram(workoutData.program);
+    }
+
+    if (
+      workoutData &&
+      (workoutData.coolDownSection || workoutData.warmUpSection)
+    ) {
+      const workoutArr = [
+        workoutData.warmUpSection,
+        ...workoutData.program,
+        workoutData.coolDownSection,
+      ];
+
+      const arrayFeed = workoutArr.some((item) => item.code === 'FEED');
+
+      if (arrayFeed === true) {
+        const secondLastIndex = workoutArr.length - 2;
+        const lastIndex = workoutArr.length - 1;
+        [workoutArr[secondLastIndex], workoutArr[lastIndex]] = [
+          workoutArr[lastIndex],
+          workoutArr[secondLastIndex],
+        ];
+
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+
+      if (arrayFeed === false) {
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+    }
+  }, [workoutData]);
 
   let memberName = 'Guest';
   let user = localStorage.getItem('user');
@@ -114,13 +152,15 @@ const MainPage = () => {
             <AnimatedComponent
               transition={{ duration: 0.8, ease: 'easeInOut' }}
             >
-              {workoutData.program.map((data, index) => (
-                <SectionItem
-                  sectionList={workoutData.program}
-                  index={index}
-                  key={index}
-                />
-              ))}
+              {updatedWorkoutProgram &&
+                updatedWorkoutProgram.length > 0 &&
+                updatedWorkoutProgram.map((data, index) => (
+                  <SectionItem
+                    sectionList={updatedWorkoutProgram}
+                    index={index}
+                    key={index}
+                  />
+                ))}
             </AnimatedComponent>
           </div>
           <footer className="fixed w-full px-4 bottom-4">

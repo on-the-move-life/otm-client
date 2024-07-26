@@ -17,10 +17,8 @@ import WeightChoosingGuide from './WeightChoosingGuide';
 const SectionDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [updatedWorkoutProgram, setUpdatedWorkoutProgram] = useState(null);
   const { workout, index } = useSelector((store) => store.workoutReducer);
-
-  const sectionList = workout?.program || [];
 
   const [currentSection, setCurrentSection] = useState([]);
   const [showLevel, setShowLevel] = useState(false);
@@ -30,6 +28,39 @@ const SectionDetail = () => {
   const [units, setUnits] = useState(null);
   const [showSwapOptions, setShowSwapOptions] = useState(false);
   const [showWeightGuide, setShowWeightGuide] = useState(false);
+
+  useEffect(() => {
+    if (workout && (!workout.coolDownSection || !workout.warmUpSection)) {
+      setUpdatedWorkoutProgram(workout.program);
+    }
+
+    if (workout && (workout.coolDownSection || workout.warmUpSection)) {
+      const workoutArr = [
+        workout.warmUpSection,
+        ...workout.program,
+        workout.coolDownSection,
+      ];
+
+      const arrayFeed = workoutArr.some((item) => item.code === 'FEED');
+
+      if (arrayFeed === true) {
+        const secondLastIndex = workoutArr.length - 2;
+        const lastIndex = workoutArr.length - 1;
+        [workoutArr[secondLastIndex], workoutArr[lastIndex]] = [
+          workoutArr[lastIndex],
+          workoutArr[secondLastIndex],
+        ];
+
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+
+      if (arrayFeed === false) {
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+    }
+  }, [workout]);
+
+  const sectionList = updatedWorkoutProgram || [];
 
   const lastPage = index === sectionList.length - 1;
 
@@ -75,33 +106,34 @@ const SectionDetail = () => {
     formatInfo = {},
     notes = [],
     assessmentMovement = {},
+    links = [],
   } = currentSection;
-
   const movementLength = movements.length;
 
   const isSectionCodeAvailable = sectionWithLoadArray.includes(code);
 
   useEffect(() => {
-    console.log('section index : ', index);
+    console.log('section index : ', index, updatedWorkoutProgram);
     if (Object.keys(workout).length === 0) {
       window.location.replace('/workout');
-    } else {
-      setCurrentSection(sectionList[index]);
     }
-    console.log("Units : ", units);
-  }, [workout, index, sectionList, units]);
+    if (updatedWorkoutProgram) {
+      setCurrentSection(updatedWorkoutProgram[index]);
+    }
+    console.log('Units : ', units);
+  }, [workout, index, sectionList, units, updatedWorkoutProgram]);
 
   useEffect(() => {
     // preparing units for load valued datainputs
     const unitsObject = {};
-    dataInput.forEach(input => {
+    dataInput.forEach((input) => {
       // the best way to identify the unit dataInput element
       if (input.id.includes('unit')) {
         unitsObject[input.id] = input;
       }
-    })
+    });
     setUnits(unitsObject);
-  }, [dataInput])
+  }, [dataInput]);
 
   const sectionPageAnimation = {
     initial: {
@@ -208,7 +240,7 @@ const SectionDetail = () => {
                         {formatInfo?.name}
                       </span>
                       {formatInfo?.name !== 'EMOM' &&
-                        formatInfo?.name !== 'AMRAP' ? (
+                      formatInfo?.name !== 'AMRAP' ? (
                         <span className="text-sm text-lightGray">
                           Rounds:{' '}
                           <span className="text-green">
@@ -220,6 +252,24 @@ const SectionDetail = () => {
                           {formatInfo?.duration}
                         </span>
                       )}
+                    </div>
+                  </div>
+                )}
+
+                {(code === 'WUP' || code === 'COD') && (
+                  <div className="flex justify-center ">
+                    <div className="player-wrapper mt-7 h-[500px] max-w-[500px]">
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src={links[0]}
+                        title="YouTube video player"
+                        loading="lazy"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                      ></iframe>
                     </div>
                   </div>
                 )}
@@ -251,17 +301,20 @@ const SectionDetail = () => {
                     </ul>
                   </div>
 
-                  {code !== 'METCON' && code !== 'FEED' && (
-                    <div className="flex items-center justify-around w-1/6 grow text-green">
-                      {movements && movementLength > 1 && (
-                        <div>
-                          <img src={'/assets/bracket-arrow.svg'} alt="" />
-                        </div>
-                      )}
-                      <span>x</span>
-                      <div className="text-3xl">{rounds}</div>
-                    </div>
-                  )}
+                  {code !== 'METCON' &&
+                    code !== 'FEED' &&
+                    code !== 'WUP' &&
+                    code !== 'COD' && (
+                      <div className="flex items-center justify-around w-1/6 grow text-green">
+                        {movements && movementLength > 1 && (
+                          <div>
+                            <img src={'/assets/bracket-arrow.svg'} alt="" />
+                          </div>
+                        )}
+                        <span>x</span>
+                        <div className="text-3xl">{rounds}</div>
+                      </div>
+                    )}
                 </div>
 
                 {code === 'GYM' && (
@@ -369,73 +422,103 @@ const SectionDetail = () => {
                   </div>
                 )}
 
-                <div>
-                  <h2 className="workout-gradient-text my-4 text-2xl">
-                    Data Inputs
-                  </h2>
-                  {code === 'GYM'
-                    ? dataInput.slice(0, 2).map((input, index) => (
-                      <DataInputComponent2
-                        key={index}
-                        inputId={input.id}
-                        inputType={input.type}
-                        inputOptions={input.options}
-                        placeholder={input.placeholder}
-                        label={input.label}
-                        options={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['options'] : null}
-                        unitId={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['id'] : null}
-                      />
-                    ))
-                    : dataInput.map((input, index) => (
-                      <DataInputComponent2
-                        key={index}
-                        inputId={input.id}
-                        inputType={input.type}
-                        inputOptions={input.options}
-                        placeholder={input.placeholder}
-                        label={input.label}
-                        options={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['options'] : null}
-                        unitId={units[`${input.id}-unit`] !== undefined ? units[`${input.id}-unit`]['id'] : null}
-                      />
-                    ))
-                  }
-
-                  {code === 'GYM' && dataInput.length > 2 && (
-                    <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
-                      <p className="mb-2 sm:text-[15px] text-sm tracking-[3px]">MAX EFFORT TEST</p>
-                      <div className="flex flex-col items-center mb-4 sm:mt-4 mt-4">
-                        <p className="mb-2 sm:text-base text-sm font-semibold text-center">
-                          {assessmentMovement?.name}
-                        </p>
-                        {assessmentMovement?.link && assessmentMovement?.link[0] && (
-                          <img
-                            src={assessmentMovement.link[0]}
-                            alt={assessmentMovement.name}
-                            className="sm:w-32 w-20 max-w-xs"
+                {
+                  <div>
+                    <h2 className="my-4 text-2xl workout-gradient-text">
+                      Data Inputs
+                    </h2>
+                    {code === 'GYM'
+                      ? dataInput
+                          .slice(0, 2)
+                          .map((input, index) => (
+                            <DataInputComponent2
+                              key={index}
+                              inputId={input.id}
+                              inputType={input.type}
+                              inputOptions={input.options}
+                              placeholder={input.placeholder}
+                              label={input.label}
+                              options={
+                                units[`${input.id}-unit`] !== undefined
+                                  ? units[`${input.id}-unit`]['options']
+                                  : null
+                              }
+                              unitId={
+                                units[`${input.id}-unit`] !== undefined
+                                  ? units[`${input.id}-unit`]['id']
+                                  : null
+                              }
+                            />
+                          ))
+                      : dataInput.map((input, index) => (
+                          <DataInputComponent2
+                            key={index}
+                            inputId={input.id}
+                            inputType={input.type}
+                            inputOptions={input.options}
+                            placeholder={input.placeholder}
+                            label={input.label}
+                            options={
+                              units[`${input.id}-unit`] !== undefined
+                                ? units[`${input.id}-unit`]['options']
+                                : null
+                            }
+                            unitId={
+                              units[`${input.id}-unit`] !== undefined
+                                ? units[`${input.id}-unit`]['id']
+                                : null
+                            }
                           />
-                        )}
+                        ))}
+
+                    {code === 'GYM' && dataInput.length > 2 && (
+                      <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
+                        <p className="mb-2 text-sm tracking-[3px] sm:text-[15px]">
+                          MAX EFFORT TEST
+                        </p>
+                        <div className="flex flex-col items-center mt-4 mb-4 sm:mt-4">
+                          <p className="mb-2 text-sm font-semibold text-center sm:text-base">
+                            {assessmentMovement?.name}
+                          </p>
+                          {assessmentMovement?.link &&
+                            assessmentMovement?.link[0] && (
+                              <img
+                                src={assessmentMovement.link[0]}
+                                alt={assessmentMovement.name}
+                                className="w-20 max-w-xs sm:w-32"
+                              />
+                            )}
+                        </div>
+                        <DataInputComponent2
+                          key={2}
+                          inputId={dataInput[2].id}
+                          inputType={dataInput[2].type}
+                          inputOptions={dataInput[2].options}
+                          placeholder={dataInput[2].placeholder}
+                          label={dataInput[2].label}
+                          options={
+                            units[`${dataInput[2].id}-unit`] !== undefined
+                              ? units[`${dataInput[2].id}-unit`]['options']
+                              : null
+                          }
+                          unitId={
+                            units[`${dataInput[2].id}-unit`] !== undefined
+                              ? units[`${dataInput[2].id}-unit`]['id']
+                              : null
+                          }
+                        />
+                        <ul className="pl-5 mt-4 list-disc">
+                          <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+                            Enter the number of reps
+                          </li>
+                          <li className="my-2 text-xs font-light tracking-wider text-lightGray">
+                            At max do 25 reps
+                          </li>
+                        </ul>
                       </div>
-                      <DataInputComponent2
-                        key={2}
-                        inputId={dataInput[2].id}
-                        inputType={dataInput[2].type}
-                        inputOptions={dataInput[2].options}
-                        placeholder={dataInput[2].placeholder}
-                        label={dataInput[2].label}
-                        options={units[`${dataInput[2].id}-unit`] !== undefined ? units[`${dataInput[2].id}-unit`]['options'] : null}
-                        unitId={units[`${dataInput[2].id}-unit`] !== undefined ? units[`${dataInput[2].id}-unit`]['id'] : null}
-                      />
-                      <ul className="list-disc pl-5 mt-4">
-                        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-                          Enter the number of reps
-                        </li>
-                        <li className="my-2 text-xs font-light tracking-wider text-lightGray">
-                          At max do 25 reps
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                }
 
                 {/* {!lastPage && (
               <div className="scrolling-wrapper">
