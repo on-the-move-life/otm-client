@@ -1,3 +1,4 @@
+//FitnessPage.js
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error, Counter } from '../../components';
@@ -23,13 +24,12 @@ const FitnessPage = () => {
 
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
+  const [isWeekend, setIsWeekend] = useState(false);
 
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
 
   const navigate = useNavigate();
-
-  console.log(homeStats);
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
@@ -66,6 +66,13 @@ const FitnessPage = () => {
     } else {
       setError('Please login first');
     }
+
+    const checkIfWeekend = () => {
+      const presentday = new Date().getDay();
+      setIsWeekend(presentday === 0 || presentday === 6); // 0 is Sunday, 6 is Saturday
+    };
+
+    checkIfWeekend();
   }, []);
 
   return (
@@ -117,7 +124,25 @@ const FitnessPage = () => {
               </div>
             </div>
           </section> */}
-
+           {isWeekend && (
+  <Link to="/weekly-checkin" className="">
+    <div className='flex-col p-4 bg-gradient-to-b from-gradientStart to-gradientEnd rounded-lg'>
+      <div className='flex justify-between items-center mb-2'>
+        <span className="inline-block purple-white-gradient font-semibold text-2xl tracking-wider">
+          Weekly Check-In
+        </span>
+        <span className='font-semibold'>
+          <AiOutlineRight size={26} className="text-white " />
+        </span>
+      </div>
+      <div className="flex justify-center">
+        <p className='text-[12px] text-white font-semibold max-w-[100%] text-left'>
+        View your weekly stats and register your thoughts and rating
+        </p>
+      </div>
+    </div>
+  </Link>
+)}
           <section>
             <WeeklyWorkoutReport
               consistencyTrend={homeStats?.consistencyTrend}
