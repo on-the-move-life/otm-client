@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error } from '../../components';
 import axios from 'axios';
@@ -22,8 +22,6 @@ const WeeklyCheckIn = () => {
   const [achievement, setAchievement] = useState('');
   const [learnings, setLearnings] = useState('');
 
-  const weeklyWorkoutReportRef = useRef(null);
-
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
@@ -35,24 +33,11 @@ const WeeklyCheckIn = () => {
     if (user && user.email) {
       getWeeklyData();
       getCalendarData();
-      loadFormData();
+      fetchSubmittedData();
     } else {
       setError('Please login first');
     }
   }, [user, selectedDate]);
-
-  const loadFormData = async () => {
-    const storedFormData = localStorage.getItem('weeklyCheckInFormData');
-    if (storedFormData) {
-      const parsedData = JSON.parse(storedFormData);
-      setWeekRating(parsedData.rating);
-      setAchievement(parsedData.achievement);
-      setLearnings(parsedData.learning);
-      setIsSubmitted(parsedData.isSubmitted);
-    } else {
-      await fetchSubmittedData();
-    }
-  };
 
   const getWeeklyData = () => {
     setLoader(true);
@@ -103,27 +88,24 @@ const WeeklyCheckIn = () => {
           currentWeek: true
         }
       });
-      if (response.data) {
-        setWeekRating(response.data.rating);
-        setAchievement(response.data.achievement);
-        setLearnings(response.data.learning);
+
+      if (response.data.success && response.data.data && response.data.data.length > 0) {
+        const checkInData = response.data.data[0];
+        setWeekRating(checkInData.rating.toString());
+        setAchievement(checkInData.achievement);
+        setLearnings(checkInData.learning);
         setIsSubmitted(true);
-        
-        saveFormDataToLocalStorage(response.data.rating, response.data.achievement, response.data.learning, true);
+      } else {
+        // Reset form if no data is found
+        setWeekRating('');
+        setAchievement('');
+        setLearnings('');
+        setIsSubmitted(false);
       }
     } catch (error) {
       console.error('Error fetching submitted weekly check-in data:', error);
+      setIsSubmitted(false);
     }
-  };
-
-  const saveFormDataToLocalStorage = (rating, achievement, learning, submitted) => {
-    const formData = {
-      rating,
-      achievement,
-      learning,
-      isSubmitted: submitted
-    };
-    localStorage.setItem('weeklyCheckInFormData', JSON.stringify(formData));
   };
 
   const handleSubmit = async (e) => {
@@ -145,13 +127,7 @@ const WeeklyCheckIn = () => {
       if (response.data.success) {
         setIsSubmitted(true);
         setShowSuccessPopup(true);
-        
-        saveFormDataToLocalStorage(
-          weeklyCheckInData.rating,
-          weeklyCheckInData.achievement,
-          weeklyCheckInData.learning,
-          true
-        );
+        fetchSubmittedData(); // Fetch the submitted data to display
       } else {
         alert('Failed to submit weekly check-in. Please try again.');
       }
@@ -212,7 +188,6 @@ const WeeklyCheckIn = () => {
 
             <motion.section 
               variants={itemVariants} 
-              ref={weeklyWorkoutReportRef}
               className="mt-8"
             >
               {memoizedWeeklyWorkoutReport}
@@ -238,7 +213,7 @@ const WeeklyCheckIn = () => {
                   >
                     <option value="">Select a rating</option>
                     {[...Array(11)].map((_, i) => (
-                      <option key={i} value={i}>{i}</option>
+                      <option key={i} value={i.toString()}>{i}</option>
                     ))}
                   </select>
                   <HiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-2xl pointer-events-none" />
