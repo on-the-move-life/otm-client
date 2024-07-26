@@ -180,7 +180,7 @@ const FitnessPage = () => {
             <div className="flex items-center">
               <Link
                 to="/workout/flex"
-                className="relative h-[102px] grow rounded-xl bg-gym-workout"
+                className="bg-flex-workout relative h-[102px] grow rounded-xl"
               >
                 <div className="absolute bottom-1 left-4">
                   <h2 className="text-2xl font-semibold gradient-text">

@@ -31,6 +31,7 @@ module.exports = withMT({
         'red-logo': "url('../public/assets/red-logo.svg')",
         icon: "url('../public/assets/icon.svg')",
         'gym-workout': "url('../public/assets/workout-cover.png')",
+        'flex-workout': "url('../public/assets/flex-workout.jpg')",
         'workout-cover': "url('../public/assets/gymbackground.jpeg')",
         'bullet-points': "url('../public/assets/bullet-points.svg')",
         'lb-up-arrow': "url('../public/assests/upArrow.svg)",
