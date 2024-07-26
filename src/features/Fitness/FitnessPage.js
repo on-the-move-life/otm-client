@@ -69,7 +69,7 @@ const FitnessPage = () => {
 
     const checkIfWeekend = () => {
       const presentday = new Date().getDay();
-      setIsWeekend(presentday === 0 || presentday === 6); // 0 is Sunday, 6 is Saturday
+      setIsWeekend(presentday === 0 || presentday === 6 || presentday === 5); // 0 is Sunday, 6 is Saturday
     };
 
     checkIfWeekend();
@@ -124,16 +124,25 @@ const FitnessPage = () => {
               </div>
             </div>
           </section> */}
-          {isWeekend && (
-            <Link to="/weekly-checkin" className="main-cta">
-              <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-                Weekly Check-In
-              </span>
-              <span>
-                <AiOutlineRight size={22} />
-              </span>
-            </Link>
-          )}
+           {isWeekend && (
+  <Link to="/weekly-checkin" className="">
+    <div className='flex-col p-4 bg-gradient-to-b from-gradientStart to-gradientEnd rounded-lg'>
+      <div className='flex justify-between items-center mb-2'>
+        <span className="inline-block bg-gradient-to-r from-[#388E3C] to-[#1976D2] bg-clip-text text-transparent font-semibold text-2xl">
+          Weekly Check-In
+        </span>
+        <span>
+          <AiOutlineRight size={26} className="text-white" />
+        </span>
+      </div>
+      <div className="flex justify-center">
+        <p className='text-[12px] text-white max-w-[90%] text-center'>
+          View this Week's Summary and register your thoughts and rating
+        </p>
+      </div>
+    </div>
+  </Link>
+)}
           <section>
             <WeeklyWorkoutReport
               consistencyTrend={homeStats?.consistencyTrend}

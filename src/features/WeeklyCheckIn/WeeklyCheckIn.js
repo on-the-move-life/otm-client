@@ -18,32 +18,41 @@ const WeeklyCheckIn = () => {
   const [selectedDate, setSelectedDate] = useState(getFormattedDate());
   const [completionHistory, setCompletionHistory] = useState([]);
 
-  const weekRatingRef = useRef(null);
-  const achievementRef = useRef(null);
-  const learningsRef = useRef(null);
+  const [weekRating, setWeekRating] = useState('');
+  const [achievement, setAchievement] = useState('');
+  const [learnings, setLearnings] = useState('');
 
   const weeklyWorkoutReportRef = useRef(null);
 
-  const [showSuccessPopup, setShowSuccessPopup] = useState(() => {
-    return localStorage.getItem('weeklyCheckInSubmitted') === 'true';
-  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
     getUserFromStorage();
   }, [getUserFromStorage]);
 
   useEffect(() => {
-    localStorage.setItem('weeklyCheckInSubmitted', showSuccessPopup);
-  }, [showSuccessPopup]);
-
-  useEffect(() => {
     if (user && user.email) {
       getWeeklyData();
       getCalendarData();
+      loadFormData();
     } else {
       setError('Please login first');
     }
   }, [user, selectedDate]);
+
+  const loadFormData = async () => {
+    const storedFormData = localStorage.getItem('weeklyCheckInFormData');
+    if (storedFormData) {
+      const parsedData = JSON.parse(storedFormData);
+      setWeekRating(parsedData.rating);
+      setAchievement(parsedData.achievement);
+      setLearnings(parsedData.learning);
+      setIsSubmitted(parsedData.isSubmitted);
+    } else {
+      await fetchSubmittedData();
+    }
+  };
 
   const getWeeklyData = () => {
     setLoader(true);
@@ -86,13 +95,44 @@ const WeeklyCheckIn = () => {
     }
   };
 
+  const fetchSubmittedData = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/weekly-checkin`, {
+        params: {
+          memberCode: user.code,
+          currentWeek: true
+        }
+      });
+      if (response.data) {
+        setWeekRating(response.data.rating);
+        setAchievement(response.data.achievement);
+        setLearnings(response.data.learning);
+        setIsSubmitted(true);
+        
+        saveFormDataToLocalStorage(response.data.rating, response.data.achievement, response.data.learning, true);
+      }
+    } catch (error) {
+      console.error('Error fetching submitted weekly check-in data:', error);
+    }
+  };
+
+  const saveFormDataToLocalStorage = (rating, achievement, learning, submitted) => {
+    const formData = {
+      rating,
+      achievement,
+      learning,
+      isSubmitted: submitted
+    };
+    localStorage.setItem('weeklyCheckInFormData', JSON.stringify(formData));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const weeklyCheckInData = {
-      rating: parseInt(weekRatingRef.current.value),
-      achievement: achievementRef.current.value,
-      learning: learningsRef.current.value,
+      rating: parseInt(weekRating),
+      achievement,
+      learning: learnings,
       memberCode: user.code
     };
 
@@ -103,21 +143,18 @@ const WeeklyCheckIn = () => {
       );
 
       if (response.data.success) {
+        setIsSubmitted(true);
         setShowSuccessPopup(true);
-        localStorage.setItem('weeklyCheckInSubmissionTime', new Date().toISOString());
+        
+        saveFormDataToLocalStorage(
+          weeklyCheckInData.rating,
+          weeklyCheckInData.achievement,
+          weeklyCheckInData.learning,
+          true
+        );
       } else {
         alert('Failed to submit weekly check-in. Please try again.');
       }
-
-      // Reset form
-      weekRatingRef.current.value = '';
-      achievementRef.current.value = '';
-      learningsRef.current.value = '';
-
-      // Reset textarea heights
-      [achievementRef.current, learningsRef.current].forEach(textarea => {
-        textarea.style.height = 'auto';
-      });
     } catch (error) {
       console.error('Error submitting weekly check-in:', error);
       alert('Failed to submit weekly check-in. Please try again.');
@@ -126,8 +163,6 @@ const WeeklyCheckIn = () => {
 
   const handleClosePopup = () => {
     setShowSuccessPopup(false);
-    localStorage.removeItem('weeklyCheckInSubmitted');
-    localStorage.removeItem('weeklyCheckInSubmissionTime');
   };
 
   const containerVariants = {
@@ -155,104 +190,114 @@ const WeeklyCheckIn = () => {
 
   return (
     <>
-    <div className={`flex w-screen grow flex-col gap-2 overflow-y-scroll px-4 pb-[20px] ${showSuccessPopup ? 'blur-sm' : ''}`}>
-      <h1 className="text-2xl font-bold text-center mt-4">Weekly Check-In</h1>
-      {loader && <Loader />}
-      {error && <Error>{error}</Error>}
-      {!loader && !error && (
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-8"
-        >
-          <motion.section variants={itemVariants}>
-            <Calendar
-              completionHistory={completionHistory}
-              isSummaryPage={false}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-            />
-          </motion.section>
-
-          <motion.section 
-            variants={itemVariants} 
-            ref={weeklyWorkoutReportRef}
-            className="mt-8"
-          >
-            {memoizedWeeklyWorkoutReport}
-          </motion.section>
-
-          <motion.form
-            onSubmit={handleSubmit}
-            className="mt-4 space-y-4"
+      <div className={`flex w-screen grow flex-col gap-2 overflow-y-scroll px-4 pb-[20px] ${showSuccessPopup ? 'blur-sm' : ''}`}>
+        <h1 className="text-2xl font-bold text-center mt-4">Weekly Check-In</h1>
+        {loader && <Loader />}
+        {error && <Error>{error}</Error>}
+        {!loader && !error && (
+          <motion.div
             variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-8"
           >
-            <motion.div variants={itemVariants}>
-              <label htmlFor="weekRating" className="block sm:text-lg text-base font-medium text-gray-700">
-                Rate your week out of 10
-              </label>
-              <div className="relative">
-                <select
-                  id="weekRating"
-                  ref={weekRatingRef}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white p-2 appearance-none"
+            <motion.section variants={itemVariants}>
+              <Calendar
+                completionHistory={completionHistory}
+                isSummaryPage={false}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+            </motion.section>
+
+            <motion.section 
+              variants={itemVariants} 
+              ref={weeklyWorkoutReportRef}
+              className="mt-8"
+            >
+              {memoizedWeeklyWorkoutReport}
+            </motion.section>
+
+            <motion.form
+              onSubmit={handleSubmit}
+              className="mt-4 space-y-4"
+              variants={containerVariants}
+            >
+              <motion.div variants={itemVariants}>
+                <label htmlFor="weekRating" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Rate your week out of 10
+                </label>
+                <div className="relative">
+                  <select
+                    id="weekRating"
+                    value={weekRating}
+                    onChange={(e) => setWeekRating(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white p-2 appearance-none"
+                    required
+                    disabled={isSubmitted}
+                  >
+                    <option value="">Select a rating</option>
+                    {[...Array(11)].map((_, i) => (
+                      <option key={i} value={i}>{i}</option>
+                    ))}
+                  </select>
+                  <HiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-2xl pointer-events-none" />
+                </div>
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label htmlFor="achievement" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Tell us your biggest achievement of the week
+                </label>
+                <textarea
+                  id="achievement"
+                  value={achievement}
+                  onChange={(e) => {
+                    setAchievement(e.target.value);
+                    handleTextAreaChange(e);
+                  }}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
                   required
-                >
-                  <option value="">Select a rating</option>
-                  {[...Array(11)].map((_, i) => (
-                    <option key={i} value={i}>{i}</option>
-                  ))}
-                </select>
-                <HiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-2xl pointer-events-none" />
-              </div>
-            </motion.div>
+                  style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
+                  readOnly={isSubmitted}
+                ></textarea>
+              </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <label htmlFor="achievement" className="block sm:text-lg text-base font-medium text-gray-700">
-                Tell us your biggest achievement of the week
-              </label>
-              <textarea
-                id="achievement"
-                ref={achievementRef}
-                onChange={handleTextAreaChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
-                required
-                style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
-              ></textarea>
-            </motion.div>
+              <motion.div variants={itemVariants}>
+                <label htmlFor="learnings" className="block sm:text-lg text-base font-medium text-gray-700">
+                  What are your learnings of the week and how can we build the next week better?
+                </label>
+                <textarea
+                  id="learnings"
+                  value={learnings}
+                  onChange={(e) => {
+                    setLearnings(e.target.value);
+                    handleTextAreaChange(e);
+                  }}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
+                  required
+                  style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
+                  readOnly={isSubmitted}
+                ></textarea>
+              </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <label htmlFor="learnings" className="block sm:text-lg text-base font-medium text-gray-700">
-                What are your learnings of the week and how can we build the next week better?
-              </label>
-              <textarea
-                id="learnings"
-                ref={learningsRef}
-                onChange={handleTextAreaChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
-                required
-                style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
-              ></textarea>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue"
-              >
-                Submit Weekly Check-In
-              </button>
-            </motion.div>
-          </motion.form>
-        </motion.div>
-      )}
-    </div>
-    {showSuccessPopup && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center">
-        <WeeklyCheckInSuccessPopup onClose={handleClosePopup} />
+              {!isSubmitted && (
+                <motion.div variants={itemVariants}>
+                  <button
+                    type="submit"
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue"
+                  >
+                    Submit Weekly Check-In
+                  </button>
+                </motion.div>
+              )}
+            </motion.form>
+          </motion.div>
+        )}
       </div>
-    )}
+      {showSuccessPopup && (
+        <WeeklyCheckInSuccessPopup onClose={handleClosePopup} />
+      )}
     </>
   );
 };
