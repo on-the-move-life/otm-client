@@ -951,3 +951,14 @@ button:active {
 .background-gray-gradient {
   background: linear-gradient(180deg, #171717 0%, #0f0f0f 100%);
 }
+
+.purple-white-gradient {
+  font-family: 'Anton', sans-serif;
+  background: linear-gradient(180deg, #fff 0%, #d6b6f0 100%);
+  -webkit-background-clip: text;
+  /* WebKit/Blink browsers */
+  background-clip: text;
+  color: transparent;
+  /* Make the text transparent so that the gradient shows through */
+  /* background-image: linear-gradient(to bottom, rgba(white, 0.2), black); */
+}

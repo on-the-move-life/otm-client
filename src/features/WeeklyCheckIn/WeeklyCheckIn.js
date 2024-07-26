@@ -8,6 +8,7 @@ import { getFormattedDate } from '../LifeStyleRoutines/utils';
 import WeeklyWorkoutReport from '../Fitness/WeeklyWorkoutReport';
 import { HiChevronDown } from 'react-icons/hi';
 import WeeklyCheckInSuccessPopup from '../../components/WeeklyCheckInSuccessPopup';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 const WeeklyCheckIn = () => {
   const [loader, setLoader] = useState(false);
@@ -167,7 +168,16 @@ const WeeklyCheckIn = () => {
   return (
     <>
       <div className={`flex w-screen grow flex-col gap-2 overflow-y-scroll px-4 pb-[20px] ${showSuccessPopup ? 'blur-sm' : ''}`}>
-        <h1 className="text-2xl font-bold text-center mt-4">Weekly Check-In</h1>
+      <div className="flex items-center justify-between mt-4 mb-2">
+        <button 
+          onClick={() => window.location.href = '/home'} 
+          className="text-white hover:text-gray-300 transition-colors"
+        >
+          <IoArrowBackOutline size={24} />
+        </button>
+        <h1 className="text-2xl font-bold text-center flex-grow">Weekly Check-In</h1>
+        <div className="w-6"></div> {/* This empty div helps center the title */}
+      </div>
         {loader && <Loader />}
         {error && <Error>{error}</Error>}
         {!loader && !error && (
