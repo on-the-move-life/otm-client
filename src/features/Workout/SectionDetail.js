@@ -580,7 +580,7 @@ const SectionDetail = () => {
                     onClick={handlePrevious}
                     className="flex h-full w-1/4 items-center justify-center border-r-[0.5px] border-[#383838] bg-theme"
                   >
-                    <img src="./assets/chevron.left.svg" alt="left-arrow" />
+                    <img src="/assets/chevron.left.svg" alt="left-arrow" />
                   </button>
 
                   {lastPage ? (
@@ -606,8 +606,8 @@ const SectionDetail = () => {
                   {lastPage ? (
                     <button className="flex h-full w-1/4 items-center justify-center border-l-[0.5px] border-[#383838] bg-theme">
                       <img
-                        src="./assets/chevron.right-hidden.svg"
-                        alt="right-arrow"
+                        src="/assets/chevron.right-hidden.svg"
+                        alt="right-arrows"
                       />
                     </button>
                   ) : (
@@ -615,7 +615,7 @@ const SectionDetail = () => {
                       onClick={handleNext}
                       className="flex h-full w-1/4 items-center justify-center border-l-[0.5px] border-[#383838] bg-theme"
                     >
-                      <img src="./assets/chevron.right.svg" alt="right-arrow" />
+                      <img src="/assets/chevron.right.svg" alt="right-arrow" />
                     </button>
                   )}
                 </footer>
