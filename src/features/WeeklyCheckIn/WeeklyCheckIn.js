@@ -3,11 +3,11 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error } from '../../components';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-//import Calendar from '../LifeStyleRoutines/Calendar';
 import Calendar from './Calender';
 import { getFormattedDate } from '../LifeStyleRoutines/utils';
 import WeeklyWorkoutReport from '../Fitness/WeeklyWorkoutReport';
 import { HiChevronDown } from 'react-icons/hi';
+import WeeklyCheckInSuccessPopup from '../../components/WeeklyCheckInSuccessPopup';
 
 const WeeklyCheckIn = () => {
   const [loader, setLoader] = useState(false);
@@ -24,9 +24,17 @@ const WeeklyCheckIn = () => {
 
   const weeklyWorkoutReportRef = useRef(null);
 
+  const [showSuccessPopup, setShowSuccessPopup] = useState(() => {
+    return localStorage.getItem('weeklyCheckInSubmitted') === 'true';
+  });
+
   useEffect(() => {
     getUserFromStorage();
   }, [getUserFromStorage]);
+
+  useEffect(() => {
+    localStorage.setItem('weeklyCheckInSubmitted', showSuccessPopup);
+  }, [showSuccessPopup]);
 
   useEffect(() => {
     if (user && user.email) {
@@ -78,25 +86,48 @@ const WeeklyCheckIn = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const answers = [
-      weekRatingRef.current.value,
-      achievementRef.current.value,
-      learningsRef.current.value
-    ];
-    localStorage.setItem('weeklyCheckInAnswers', JSON.stringify(answers));
-    alert('Your responses have been saved!');
+    
+    const weeklyCheckInData = {
+      rating: parseInt(weekRatingRef.current.value),
+      achievement: achievementRef.current.value,
+      learning: learningsRef.current.value,
+      memberCode: user.code
+    };
 
-    // Reset form
-    weekRatingRef.current.value = '';
-    achievementRef.current.value = '';
-    learningsRef.current.value = '';
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-checkin`,
+        weeklyCheckInData
+      );
 
-    // Reset textarea heights
-    [achievementRef.current, learningsRef.current].forEach(textarea => {
-      textarea.style.height = 'auto';
-    });
+      if (response.data.success) {
+        setShowSuccessPopup(true);
+        localStorage.setItem('weeklyCheckInSubmissionTime', new Date().toISOString());
+      } else {
+        alert('Failed to submit weekly check-in. Please try again.');
+      }
+
+      // Reset form
+      weekRatingRef.current.value = '';
+      achievementRef.current.value = '';
+      learningsRef.current.value = '';
+
+      // Reset textarea heights
+      [achievementRef.current, learningsRef.current].forEach(textarea => {
+        textarea.style.height = 'auto';
+      });
+    } catch (error) {
+      console.error('Error submitting weekly check-in:', error);
+      alert('Failed to submit weekly check-in. Please try again.');
+    }
+  };
+
+  const handleClosePopup = () => {
+    setShowSuccessPopup(false);
+    localStorage.removeItem('weeklyCheckInSubmitted');
+    localStorage.removeItem('weeklyCheckInSubmissionTime');
   };
 
   const containerVariants = {
@@ -123,7 +154,8 @@ const WeeklyCheckIn = () => {
   ), [weeklyStats]);
 
   return (
-    <div className="flex w-screen grow flex-col gap-2 overflow-y-scroll px-4 pb-[20px]">
+    <>
+    <div className={`flex w-screen grow flex-col gap-2 overflow-y-scroll px-4 pb-[20px] ${showSuccessPopup ? 'blur-sm' : ''}`}>
       <h1 className="text-2xl font-bold text-center mt-4">Weekly Check-In</h1>
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
@@ -157,24 +189,24 @@ const WeeklyCheckIn = () => {
             variants={containerVariants}
           >
             <motion.div variants={itemVariants}>
-  <label htmlFor="weekRating" className="block sm:text-lg text-base font-medium text-gray-700">
-    Rate your week out of 10
-  </label>
-  <div className="relative">
-    <select
-      id="weekRating"
-      ref={weekRatingRef}
-      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white p-2 appearance-none"
-      required
-    >
-      <option value="">Select a rating</option>
-      {[...Array(11)].map((_, i) => (
-        <option key={i} value={i}>{i}</option>
-      ))}
-    </select>
-    <HiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-2xl pointer-events-none" />
-  </div>
-</motion.div>
+              <label htmlFor="weekRating" className="block sm:text-lg text-base font-medium text-gray-700">
+                Rate your week out of 10
+              </label>
+              <div className="relative">
+                <select
+                  id="weekRating"
+                  ref={weekRatingRef}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white p-2 appearance-none"
+                  required
+                >
+                  <option value="">Select a rating</option>
+                  {[...Array(11)].map((_, i) => (
+                    <option key={i} value={i}>{i}</option>
+                  ))}
+                </select>
+                <HiChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-2xl pointer-events-none" />
+              </div>
+            </motion.div>
 
             <motion.div variants={itemVariants}>
               <label htmlFor="achievement" className="block sm:text-lg text-base font-medium text-gray-700">
@@ -216,6 +248,12 @@ const WeeklyCheckIn = () => {
         </motion.div>
       )}
     </div>
+    {showSuccessPopup && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <WeeklyCheckInSuccessPopup onClose={handleClosePopup} />
+      </div>
+    )}
+    </>
   );
 };
 
