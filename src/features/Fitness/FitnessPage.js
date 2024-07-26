@@ -128,7 +128,7 @@ const FitnessPage = () => {
   <Link to="/weekly-checkin" className="">
     <div className='flex-col p-4 bg-gradient-to-b from-gradientStart to-gradientEnd rounded-lg'>
       <div className='flex justify-between items-center mb-2'>
-        <span className="inline-block bg-gradient-to-r from-[#388E3C] to-[#1976D2] bg-clip-text text-transparent font-semibold text-2xl">
+        <span className="inline-block anton-black text-transparent font-semibold text-2xl">
           Weekly Check-In
         </span>
         <span>
@@ -136,7 +136,7 @@ const FitnessPage = () => {
         </span>
       </div>
       <div className="flex justify-center">
-        <p className='text-[12px] text-white max-w-[90%] text-center'>
+        <p className='text-[12px] text-[#808080] font-extrabold max-w-[100%]'>
           View this Week's Summary and register your thoughts and rating
         </p>
       </div>
