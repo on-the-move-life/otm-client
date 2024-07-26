@@ -9,7 +9,6 @@ import { useUserContext } from '../../contexts/UserContext';
 import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
 
 import TotalWorkoutFitness from './TotalWorkoutFitness';
-import { AiOutlineRight } from 'react-icons/ai';
 import WeeklyWorkoutReport from './WeeklyWorkoutReport';
 import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
@@ -41,7 +40,7 @@ const FitnessPage = () => {
     function getUserData() {
       setLoader(true);
       axios
-        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
+        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/home`, {
           params: {
             email: user.email,
             day: today,
@@ -120,14 +119,14 @@ const FitnessPage = () => {
                   </h2>
                   <div className="flex gap-3">
                     <h2 className=" rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
-                      Theme
+                      {homeStats.hyperWorkoutParams.theme}
                     </h2>
                     <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      60 mins
+                      {homeStats.hyperWorkoutParams.duration} mins
                     </h2>
                     <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
-                      Knee Rehab
+                      {homeStats.hyperWorkoutParams.calories} cal
                     </h2>
                   </div>
                 </div>
@@ -189,14 +188,14 @@ const FitnessPage = () => {
                   </h2>
                   <div className="flex gap-3">
                     <h2 className=" rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
-                      Theme
+                      {homeStats.flexWorkoutParams.theme}
                     </h2>
                     <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      60 mins
+                      {homeStats.flexWorkoutParams.duration} mins
                     </h2>
                     <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
-                      Knee Rehab
+                      {homeStats.flexWorkoutParams.calories} cal
                     </h2>
                   </div>
                 </div>
