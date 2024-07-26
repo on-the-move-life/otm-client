@@ -43,7 +43,7 @@ const AnalyseMealComp = ({
 
     const [tempMealInfo, setTempMealInfo] = useState(null);
     const [tempMealUrl, setTempMealUrl] = useState(null);
-
+    const [userMealDescription, setUserMealDescription] = useState('no additional context about the uploaded meal provided by the user');
     const formattedDate = getFormattedDate();
     const finalDate = date === null || date === undefined ? formattedDate : date;
 
@@ -186,6 +186,7 @@ const AnalyseMealComp = ({
                 formData.append('date', finalDate);
                 console.log('Selected taskId and date is', selectedTaskId, finalDate);
                 formData.append('taskId', selectedTaskId);
+                formData.append('optionalDescription', userMealDescription);
 
                 const res = await axiosClient.post('/meal-info', formData, {
                     headers: {
@@ -370,6 +371,23 @@ const AnalyseMealComp = ({
 
                                     <div className="flex items-center justify-center rounded-lg  ">
                                         <DropdownComp />
+                                    </div>
+                                    <div className="mb-6 mt-2 ">
+
+                                        <div className="rounded-xl ">
+                                            <p className="mb-2 p-1 text-[14px] text-custompurple">
+
+                                                Describe your meal here (optional)
+                                            </p>
+
+                                            <textarea
+                                                className="w-full bg-black p-2 font-sfpro focus:outline-none border-custompurple border-b-[1px] h-auto textbox-text"
+                                                placeholder="Type here..."
+                                                onChange={(e) => setUserMealDescription(e.target.value)}
+                                            />
+
+
+                                        </div>
                                     </div>
                                     <div className="fixed bottom-4 left-0 w-full px-3">
                                         <button
