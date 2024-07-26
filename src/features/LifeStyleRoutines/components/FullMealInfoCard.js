@@ -9,7 +9,7 @@ const FullMealInfoCard = ({
 }) => {
   console.log('inside FullMealInfoCard mealInfo ', mealInfo);
 
-  const { carbohydrates, fat, protein, calories, feedback } = mealInfo;
+  const { carbohydrates, fat, protein, calories, feedback, mealName } = mealInfo;
 
   return (
     <>
@@ -32,7 +32,7 @@ const FullMealInfoCard = ({
                 )}
               </div>
 
-              {/* <h2 className="text-lg font-semibold">Shrimps & Rice</h2> */}
+              <h2 className="font-sfpro text-[14px] font-medium leading-[16.71px] text-left">{mealName}</h2>
               <p className="truncate-text text-sm text-gray-400">{feedback}</p>
             </div>
           </div>

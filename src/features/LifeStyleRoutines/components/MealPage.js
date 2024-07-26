@@ -34,9 +34,9 @@ const MealPage = ({
               <img
                 src={imageURL} // Replace this with the actual image URL
                 alt="image title"
-                className="float-left mr-3 h-[130px] w-[122px] rounded-lg bg-cover"
+                className="float-left mr-3 max-h-[130px] w-[122px] rounded-lg object-cover"
               />
-              {/* <h2 className="my-1 text-xl font-bold">Shrimps & Rice</h2> */}
+              <h2 className="font-sfpro text-[26px] font-medium leading-[31.03px] text-left">{mealInfo.mealName}</h2>
               <p className="text-gray-400">{mealInfo.feedback || ''}</p>
             </div>
           </div>

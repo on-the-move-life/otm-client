@@ -174,7 +174,7 @@ const AnalyseMealComp = ({
 
     // Meal image post request handling
     const handleMealUploadSubmit = async () => {
-        if (file && finalDate) {
+        if (selectedImage && selectedTaskId && file) {
             setLoader(true);
             try {
                 const formData = new FormData();
@@ -342,7 +342,7 @@ const AnalyseMealComp = ({
                                     </div>
                                 ) : (
                                     <div
-                                        className="mb-6 ml-2 mt-[58px] flex h-[421px]   h-fit w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
+                                        className="mb-6  mt-[58px] flex h-[421px]   h-fit w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
                                         onClick={() => setshowMealPicPopUp(true)}
                                     >
                                         {' '}
