@@ -69,7 +69,7 @@ const FitnessPage = () => {
 
     const checkIfWeekend = () => {
       const presentday = new Date().getDay();
-      setIsWeekend(presentday === 0 || presentday === 6 || presentday === 5); // 0 is Sunday, 6 is Saturday
+      setIsWeekend(presentday === 0 || presentday === 6); // 0 is Sunday, 6 is Saturday
     };
 
     checkIfWeekend();
