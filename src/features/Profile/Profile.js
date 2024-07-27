@@ -10,13 +10,13 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-screen grow">
+    <span className="flex items-center justify-center w-screen ">
       {!showPaymentHistory && (
         <UserDetails showHistory={togglePaymentHistory} />
       )}
 
       {showPaymentHistory && <PaymentHistory onClose={togglePaymentHistory} />}
-    </div>
+    </span>
   );
 };
 

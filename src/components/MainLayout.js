@@ -5,8 +5,8 @@ import { Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col h-screen">
-      <div className="grow">
+    <div className="flex flex-col h-screen ">
+      <div className="relative grow">
         <Outlet />
       </div>
       <Navbar />
