@@ -184,7 +184,7 @@ const FitnessPage = () => {
           <section>
             <div className="flex items-center">
               <Link
-                to="/workout/today"
+                to="/workout/flex"
                 className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
               >
                 <div className="flex h-full flex-col justify-between">
