@@ -13,6 +13,7 @@ import WeeklyWorkoutReport from './WeeklyWorkoutReport';
 import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
 import { TimelineHeading } from '../Timeline/StyledComponents';
+import { AiOutlineRight } from 'react-icons/ai';
 
 const FitnessPage = () => {
   const { setUserData } = useUserContext();
@@ -135,8 +136,8 @@ const FitnessPage = () => {
                 <div className="absolute -top-1 left-[6px]">+</div>
               </div> */}
             </div>
-          </section>{' '}
-          */}
+          </section>
+
           {isWeekend && (
             <Link to="/weekly-checkin" className="">
               <div className="flex-col rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd p-4">
@@ -154,8 +155,8 @@ const FitnessPage = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          </section>
+            </Link>
+          )}
 
           <section>
             <WeeklyWorkoutReport
@@ -170,6 +171,7 @@ const FitnessPage = () => {
               percentile={homeStats?.fitnessPercentileScore}
             />
           </section>
+
           {homeStats?.isPaymentDue && (
             <section>
               <DuePaymentIndicator />
