@@ -14,6 +14,7 @@ import WeeklyWorkoutReport from './WeeklyWorkoutReport';
 import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
 import { TimelineHeading } from '../Timeline/StyledComponents';
+import StepTracker from './StepTracker';
 
 const FitnessPage = () => {
   const { setUserData } = useUserContext();
@@ -84,9 +85,9 @@ const FitnessPage = () => {
       {error && <Error>{error}</Error>}
       {homeStats && (
         <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
-          <section className="pt-5 pb-0">
+          <section className="pb-0 pt-5">
             <div className="flex justify-between">
-              <div className="flex flex-col mt-3">
+              <div className="mt-3 flex flex-col">
                 <TimelineHeading>Fitness</TimelineHeading>
 
                 {/* <h2 className="mt-3 inline-block w-40 bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-lg font-semibold text-transparent">
@@ -124,25 +125,25 @@ const FitnessPage = () => {
               </div>
             </div>
           </section> */}
-           {isWeekend && (
-  <Link to="/weekly-checkin" className="">
-    <div className='flex-col p-4 bg-gradient-to-b from-gradientStart to-gradientEnd rounded-lg'>
-      <div className='flex justify-between items-center mb-2'>
-        <span className="inline-block purple-white-gradient font-semibold text-2xl tracking-wider">
-          Weekly Check-In
-        </span>
-        <span className='font-semibold'>
-          <AiOutlineRight size={26} className="text-white " />
-        </span>
-      </div>
-      <div className="flex justify-center">
-        <p className='text-[12px] text-white font-semibold max-w-[100%] text-left'>
-        View your weekly stats and register your thoughts and rating
-        </p>
-      </div>
-    </div>
-  </Link>
-)}
+          {isWeekend && (
+            <Link to="/weekly-checkin" className="">
+              <div className="flex-col rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd p-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="purple-white-gradient inline-block text-2xl font-semibold tracking-wider">
+                    Weekly Check-In
+                  </span>
+                  <span className="font-semibold">
+                    <AiOutlineRight size={26} className="text-white " />
+                  </span>
+                </div>
+                <div className="flex justify-center">
+                  <p className="max-w-[100%] text-left text-[12px] font-semibold text-white">
+                    View your weekly stats and register your thoughts and rating
+                  </p>
+                </div>
+              </div>
+            </Link>
+          )}
           <section>
             <WeeklyWorkoutReport
               consistencyTrend={homeStats?.consistencyTrend}
@@ -156,6 +157,7 @@ const FitnessPage = () => {
               percentile={homeStats?.fitnessPercentileScore}
             />
           </section>
+          <StepTracker />
           {homeStats?.isPaymentDue && (
             <section>
               <DuePaymentIndicator />
