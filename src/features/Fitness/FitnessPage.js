@@ -88,7 +88,7 @@ const FitnessPage = () => {
             <div className="flex justify-between">
               <div className="mt-3 flex flex-col">
                 <TimelineHeading>Movement</TimelineHeading>
-                {parseInt(homeStats.streak) > 0 && (
+                {/* {parseInt(homeStats.streak) > 0 && (
                   <div className="flex items-center ">
                     <div className="perfect-week my-2 flex w-fit items-center rounded">
                       <img src="assets/star.svg" alt="" />
@@ -97,11 +97,7 @@ const FitnessPage = () => {
                       </span>
                     </div>
                   </div>
-                )}
-
-                {/* <h2 className="mt-3 inline-block w-40 bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-lg font-semibold text-transparent">
-                  Today's Workout
-                </h2> */}
+                )} */}
               </div>
               {homeStats !== null && homeStats?.totalWorkoutsDone > 0 && (
                 <TotalWorkoutFitness apiData={homeStats?.totalWorkoutsDone} />
