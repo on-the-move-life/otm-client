@@ -1,7 +1,8 @@
 //AuthContext.js
+//AuthContext.js
 import { useContext, useReducer, createContext } from 'react';
 import { uiVersion } from '../components/FeatureUpdatePopup';
-
+import Cookies from 'js-cookie';
 import axios from 'axios';
 //create a new context
 const AuthContext = createContext();
@@ -11,6 +12,7 @@ const initialState = {
   isAuthenticated: false,
   isSignUp: null,
   error: null,
+  isAdmin: false,
 };
 
 function reducer(state, action) {
@@ -78,6 +80,17 @@ function reducer(state, action) {
         ...state,
         error: null,
       };
+      case 'adminLogin':
+      return {
+        ...state,
+        isAdmin: true,
+        error: null,
+      };
+    case 'adminLogout':
+      return {
+        ...state,
+        isAdmin: false,
+      };
     default:
       throw new Error('Unknown action');
   }
@@ -85,11 +98,10 @@ function reducer(state, action) {
 
 //create a provider function that will wrap the application
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated, isSignUp, error }, dispatch] = useReducer(
+  const [{ user, isAuthenticated, isSignUp, error, isAdmin }, dispatch] = useReducer(
     reducer,
     initialState,
   );
-
   async function login(body) {
     // api call
     axios
@@ -163,6 +175,43 @@ function AuthProvider({ children }) {
         dispatch({ type: 'error', payload: response.data.msg });
       });
   }
+  async function adminLogin(password) {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/admin-login`, { password });
+      const { success, isAdmin, expiresIn, jwt } = response.data;
+      
+      if (success && isAdmin) {
+        Cookies.set('adminJwt', jwt, { 
+          expires: expiresIn / 86400,
+          secure: true, 
+        });
+        dispatch({ type: 'adminLogin' });
+        return true;
+      } else {
+        throw new Error('Admin login failed');
+      }
+    } catch (error) {
+      console.error('Admin login error:', error);
+      dispatch({ type: 'error', payload: 'Admin login failed' });
+      return false;
+    }
+  }
+  function adminLogout() {
+    Cookies.remove('adminJwt');
+    dispatch({ type: 'adminLogout' });
+  }
+
+  function checkAdminAuth() {
+    const jwt = Cookies.get('adminJwt');
+    if (jwt) {
+      // Calling a dispatch function changes the context and hence a re-render occurs. 
+      // Therefore a check is required to only set the admin true when it's false
+      if(adminLogin === false)
+        dispatch({ type: 'adminLogin' });
+      return true;
+    }
+    return false;
+  }
 
   function logout() {
     localStorage.removeItem('user');
@@ -181,12 +230,13 @@ function AuthProvider({ children }) {
     let user = localStorage.getItem('user');
     if (user && !user.includes('undefined')) {
       user = JSON.parse(user);
-      dispatch({ type: 'getUserFromStorage', payload: user });
+      // Calling a dispatch function causes re-render. 
+      // Thus, call it only when the isAuthenticated flag is false
+      if(isAuthenticated === false)
+        dispatch({ type: 'getUserFromStorage', payload: user });
       return user;
     }
-  }
-  function resetError() {
-    dispatch({ type: 'resetError' });
+    return user;
   }
 
   return (
@@ -203,7 +253,11 @@ function AuthProvider({ children }) {
         logout,
         error,
         reset,
-        resetError,
+        isAdmin,
+        adminLogin,
+        adminLogout,
+        checkAdminAuth
+        
       }}
     >
       {children}

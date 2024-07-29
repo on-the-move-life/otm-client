@@ -28,7 +28,7 @@ function formatPaymentData(data) {
 
 function formatDate(date, isYear2Digit = true) {
   let formattedDate = '-';
-  if (date !== undefined && date.length !== 0 ) {
+  if (date !== undefined && date.length !== 0) {
     date = new Date(date);
 
     const day = date.getDate();

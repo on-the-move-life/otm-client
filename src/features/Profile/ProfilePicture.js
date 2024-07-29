@@ -19,7 +19,7 @@ function ProfilePicture({ inputPic, altText, width, height }) {
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: "easeInOut",
+        ease: 'easeInOut',
       },
     },
   };
@@ -31,7 +31,7 @@ function ProfilePicture({ inputPic, altText, width, height }) {
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: "easeInOut",
+        ease: 'easeInOut',
       },
     },
   };
@@ -41,28 +41,28 @@ function ProfilePicture({ inputPic, altText, width, height }) {
       <motion.img
         src={inputPic}
         alt={altText}
-        className={`w-[${width}] h-[${height}] rounded-full object-cover`}
+        className={` rounded-full object-cover h-[${height}] w-[${width}] `}
         onClick={handleZoom}
         variants={imageVariants}
         initial="hidden"
         animate="visible"
       />
-      {isZoomed &&
+      {isZoomed && (
         <div
-          className='fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md flex justify-center items-center z-50'
+          className="fixed top-0 left-0 z-50 flex items-center justify-center w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md"
           onClick={handleClose}
-
         >
           <motion.img
             src={inputPic}
             alt={altText}
-            className='sm:w-[300px] sm:h-[300px] md:w-[600px] md:h-[600px] aspect-auto object-contain'
+            className="aspect-auto object-contain sm:h-[300px] sm:w-[300px] md:h-[600px] md:w-[600px]"
             initial="hidden"
             animate={isZoomed ? 'visible' : 'hidden'}
             exit="hidden"
             variants={modalVariants}
           />
-        </div>}
+        </div>
+      )}
     </>
   );
 }

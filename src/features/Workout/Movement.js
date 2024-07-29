@@ -3,11 +3,9 @@ import React from 'react';
 import { fetchSwapMovementList } from './WorkoutSlice';
 import { useDispatch } from 'react-redux';
 
-const sectionWithLoadArray = ['ISO', 'MR', 'STR', 'HYP', 'HYP2', 'HYP3'];
-
 const Movement = ({
   movement,
-  sectionCode,
+  isSectionCodeAvailable,
   movementLength,
   openMovementDetail,
   setShowSwapOptions,
@@ -21,12 +19,12 @@ const Movement = ({
           flex-col justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-lg`}
       >
         <div>
-          <div className="text-md mb-1 flex items-center justify-between text-lightGray">
+          <div className="flex items-center justify-between mb-1 text-md text-lightGray">
             <span onClick={() => openMovementDetail(movement)}>
               {movement.fullName}
             </span>
             <div
-              className="flex w-fit cursor-pointer flex-row items-center justify-center gap-1"
+              className="flex flex-row items-center justify-center gap-1 cursor-pointer w-fit"
               onClick={() => {
                 dispatch(fetchSwapMovementList(movement?.code));
                 setShowSwapOptions(true);
@@ -41,8 +39,8 @@ const Movement = ({
               </p>
             </div>
           </div>
-          {sectionWithLoadArray.includes(sectionCode) && (
-            <div className=" flex space-x-2 text-xs font-semibold  text-black">
+          {isSectionCodeAvailable && (
+            <div className="flex space-x-2 text-xs font-semibold text-black ">
               {movement.personalRecord !== null &&
                 movement.personalRecord > 0 && (
                   <span className="w-fit rounded bg-[#F5C563] px-2 py-0.5  -tracking-[0.36px]">
@@ -54,18 +52,18 @@ const Movement = ({
                   Last Workout {movement.lastUsedLoad} KG
                 </span>
               )}
-              {/* <span className="my-1 bg-floYellow p-1">Personal Record 24KG</span>
-            <span className="my-1 bg-blue p-1">Last Workout 12KG</span> */}
+              {/* <span className="p-1 my-1 bg-floYellow">Personal Record 24KG</span>
+            <span className="p-1 my-1 bg-blue">Last Workout 12KG</span> */}
             </div>
           )}
         </div>
         <div
-          className="flex h-fit w-full items-center justify-center p-2"
+          className="flex items-center justify-center w-full p-2 h-fit"
           style={{ maxHeight: '240px' }}
           onClick={() => openMovementDetail(movement)}
         >
           <img
-            className="h-auto w-auto rounded-lg"
+            className="w-auto h-auto rounded-lg"
             style={{ maxHeight: '240px', maxWidth: '250px' }}
             src={movement.link[0]}
             alt="Movement"
