@@ -85,25 +85,31 @@ const FitnessPage = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
-          <section className="pt-5 pb-0">
-            <div className="flex justify-between">
-              <div className="flex flex-col mt-3">
-                <TimelineHeading>Movement</TimelineHeading>
-                {parseInt(homeStats.streak) > 0 && (
-                  <div className="flex items-center ">
-                    <div className="flex items-center my-2 rounded perfect-week w-fit">
-                      <img src="assets/star.svg" alt="" />
-                      <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
-                        Perfect Week x{homeStats.streak}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* <h2 className="mt-3 inline-block w-40 bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-lg font-semibold text-transparent">
-                  Today's Workout
-                </h2> */}
+        <div>
+          <img
+            className="absolute right-0 -z-20 "
+            src="/assets/main-frame.svg"
+          />
+          <img
+            className="absolute right-[85px] top-14 -z-10 "
+            src="/assets/movement-logo.svg"
+          />
+          <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
+            <section className="mt-[76px] pb-0 pt-5">
+              <TimelineHeading>Fitness</TimelineHeading>
+            </section>
+            <div className="flex gap-2 mt-6">
+              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+                <span className="pl-4 w-9">Total workouts</span>
+                <div className="flex min-h-[68px] min-w-[68px] items-center rounded-lg bg-blue pl-6 text-center">
+                  sdf
+                </div>
+              </div>
+              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+                <span className="pl-4 w-9 text-floYellow">Log Activity</span>
+                <div className="flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-floYellow ">
+                  <img src="/assets/fitness-add.svg" />
+                </div>
               </div>
 
               {homeStats !== null && homeStats?.totalWorkoutsDone > 0 && (
@@ -148,8 +154,8 @@ const FitnessPage = () => {
               {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
                 <div className="absolute -top-1 left-[6px]">+</div>
               </div> */}
-            </div>
-          </section>
+              </div>
+            </section>
 
           {isWeekend && (
             <Link to="/weekly-checkin" className="">
@@ -187,9 +193,18 @@ const FitnessPage = () => {
 
           {homeStats?.isPaymentDue && (
             <section>
-              <DuePaymentIndicator />
+              <WeeklyWorkoutReport
+                consistencyTrend={homeStats?.consistencyTrend}
+                suggestedWorkoutPerWeek={homeStats?.frequency}
+                lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
+              />
             </section>
-          )}
+
+            {homeStats?.isPaymentDue && (
+              <section>
+                <DuePaymentIndicator />
+              </section>
+            )}
 
           <section>
             <div className="flex items-center">

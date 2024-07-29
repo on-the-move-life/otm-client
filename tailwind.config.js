@@ -5,6 +5,7 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
+        offwhite: '#F8F8F8',
         gray: '#3B3B3B',
         green: '#5ECC7B',
         lightPurple: '#D6B6F0',
@@ -15,6 +16,7 @@ module.exports = withMT({
         floYellow: '#DDF988',
         blue: '#7E87EF',
         lightGray: '#B1B1B1',
+        gray: '#3B3B3B',
         yellow: '#F5C563',
         mediumGray: '#1C1C1E',
         lightGray: '#929292',
