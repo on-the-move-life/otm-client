@@ -5,26 +5,22 @@ import { useTagAndColor } from '../../hooks/useTagAndColor';
 const Container = styled.div`
   width: auto;
   height: 104px;
-  flex-shrink: 0;
   border-radius: 12px;
-  border: 0.5px solid #383838;
-  background: linear-gradient(180deg, #171717 0%, #0f0f0f 100%);
-  padding: 10px 10px;
+
+  background: var(--mediumGray, #1c1c1e);
+  padding: 8px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  gap: 15px;
 `;
 const Heading = styled.div`
-  color: var(--Light-gray, #b1b1b1);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 8px;
+  color: var(--off-white, #f8f8f8);
+
+  font-size: 14px;
   font-style: normal;
-  font-weight: 510;
-  line-height: normal;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 16.71px;
 `;
 const Score = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -106,7 +102,7 @@ function FitnessScore({ score, percentile }) {
   // Score Indicator component
   const ScoreIndicator = () => {
     return (
-      <div className="flex flex-col items-center justify-center w-full gap-4">
+      <div className="flex w-full flex-col items-center justify-center gap-4">
         <div
           style={{ backgroundColor: color }}
           className="flex h-fit w-fit flex-row items-center justify-center rounded-[4px] px-[5px] py-[1px]"
@@ -132,15 +128,18 @@ function FitnessScore({ score, percentile }) {
   };
   return (
     <Container>
-      <div className="flex flex-row items-center justify-between w-full">
-        <div className="flex flex-col items-center justify-center w-6/12 gap-2">
-          <Heading>Fitness Score</Heading>
+      <div className="flex w-full flex-row items-center justify-between">
+        <div className="flex w-6/12 flex-col items-center justify-center gap-2">
+          <div className="flex gap-2">
+            <img src="/assets/line-graph-logo.svg" />
+            <Heading>Fitness score</Heading>
+          </div>
           {score ? <Score>{score}</Score> : <Score>-</Score>}
           <ScoreDetail>
             Top <Percentile>{percentile}%</Percentile> of the community
           </ScoreDetail>
         </div>
-        <div className="flex flex-col items-center justify-center w-6/12 gap-2">
+        <div className="flex w-6/12 flex-col items-center justify-center gap-2">
           <ScoreIndicator />
         </div>
       </div>
