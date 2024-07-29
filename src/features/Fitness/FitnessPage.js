@@ -112,25 +112,28 @@ const FitnessPage = () => {
             <div className="flex items-center">
               <Link
                 to="/workout/today"
-                className="relative h-[102px] grow rounded-xl bg-gym-workout"
+                className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
               >
-                <div className="absolute bottom-1 left-4">
-                  <h2 className="gradient-text text-2xl font-semibold">
-                    Today's Workout
-                  </h2>
+                <div className="flex h-full flex-col justify-between">
                   <div className="flex gap-3">
-                    <h2 className=" rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
+                    <h2 className=" text-3xl font-medium">Shred</h2>
+                    <img src="/assets/shred-logo.svg" />
+                  </div>
+
+                  <div className="flex gap-3">
+                    <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
                       {homeStats.hyperWorkoutParams.theme}
                     </h2>
-                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {homeStats.hyperWorkoutParams.duration} mins
                     </h2>
-                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
                       {homeStats.hyperWorkoutParams.calories} cal
                     </h2>
                   </div>
                 </div>
+                {/* <h2 className="text-xl font-medium text-floYellow">Start</h2> */}
               </Link>
               {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
                 <div className="absolute -top-1 left-[6px]">+</div>
@@ -181,27 +184,33 @@ const FitnessPage = () => {
           <section>
             <div className="flex items-center">
               <Link
-                to="/workout/flex"
-                className="relative h-[102px] grow rounded-xl bg-gym-workout"
+                to="/workout/today"
+                className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
               >
-                <div className="absolute bottom-1 left-4">
-                  <h2 className="gradient-text text-2xl font-semibold">
-                    Flex Workout
-                  </h2>
+                <div className="flex h-full flex-col justify-between">
                   <div className="flex gap-3">
-                    <h2 className=" rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
+                    <h2 className=" text-3xl font-medium">Flex</h2>
+                    <img src="/assets/flex-logo.svg" />
+                  </div>
+
+                  <div className="flex gap-3">
+                    <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
                       {homeStats.flexWorkoutParams.theme}
                     </h2>
-                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {homeStats.flexWorkoutParams.duration} mins
                     </h2>
-                    <h2 className="rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
                       {' '}
                       {homeStats.flexWorkoutParams.calories} cal
                     </h2>
                   </div>
                 </div>
+                {/* <h2 className="text-xl font-medium text-floYellow">Start</h2> */}
               </Link>
+              {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
+                <div className="absolute -top-1 left-[6px]">+</div>
+              </div> */}
             </div>
           </section>
         </div>
