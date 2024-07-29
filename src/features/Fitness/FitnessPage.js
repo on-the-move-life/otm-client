@@ -116,7 +116,7 @@ const FitnessPage = () => {
               >
                 <div className="flex h-full flex-col justify-between">
                   <div className="flex gap-3">
-                    <h2 className=" text-3xl font-medium">Shred</h2>
+                    <h2 className=" text-3xl font-medium">Today's Workout</h2>
                     <img src="/assets/shred-logo.svg" />
                   </div>
 
