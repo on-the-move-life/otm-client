@@ -1,6 +1,7 @@
 import React from 'react';
 import { MealDoughnut } from './MealDoughnut';
 import MealCrossIcon from './icons/MealCrossIcon';
+import { useLocation } from 'react-router-dom';
 
 const MealPage = ({
   mealInfo = {},
@@ -12,6 +13,25 @@ const MealPage = ({
 
 
   console.log('mealInfo', mealInfo);
+
+
+  // routing
+  const location = useLocation();
+  const handleClick = () => {
+    if (location.pathname !== '/lifestyle-routine') {
+      console.log("inside router", location.pathname);
+      window.location.href = '/nutrition';
+
+    }
+
+    else {
+      setParentVisibilityCheck(true);
+      console.log("default function of router", location.pathname);
+
+
+    }
+  };
+
   return (
     <div className="py-4">
       <div className=" flex w-full flex-row items-center justify-center">
@@ -19,7 +39,7 @@ const MealPage = ({
           {finalDate}
         </p>
 
-        <div onClick={() => setParentVisibilityCheck(true)}
+        <div onClick={handleClick}
           className="absolute right-0 mr-4"
         >
           <MealCrossIcon />
@@ -36,7 +56,7 @@ const MealPage = ({
                 alt="image title"
                 className="float-left mr-3 max-h-[130px] w-[122px] rounded-lg object-cover"
               />
-              <h2 className="font-sfpro text-[26px] font-medium leading-[31.03px] text-left">{mealInfo.mealName}</h2>
+              <h2 className="font-sfpro text-[20px] font-medium leading-[31.03px] text-left">{mealInfo.mealName}</h2>
               <p className="text-gray-400">{mealInfo.feedback || ''}</p>
             </div>
           </div>
@@ -52,7 +72,7 @@ const MealPage = ({
         </div>
       )}
 
-      <div onClick={() => setParentVisibilityCheck(true)} className="fixed bottom-4 left-0 w-full px-3">
+      <div onClick={handleClick} className="fixed bottom-4 left-0 w-full px-3">
         <button
           className="w-full rounded-xl bg-custompurple px-[14px] py-[10px] text-black "
         >

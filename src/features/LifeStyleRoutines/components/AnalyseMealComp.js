@@ -24,6 +24,7 @@ const AnalyseMealComp = ({
     task = null,
     date = null,
     SelectedCircle = null,
+    setIsTitleVisible = null
 }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -219,6 +220,11 @@ const AnalyseMealComp = ({
                     dispatch(handleMealUrlChange(TaskCircle, selectedTaskId, mealUrl));
                     setSelectedImage(null);
                     setshowMealPicPopUp(false);
+                    if (setIsTitleVisible) {
+                        setIsTitleVisible(false);
+
+                    }
+
                 }
             } catch (err) {
                 setLoader(false);
@@ -242,16 +248,15 @@ const AnalyseMealComp = ({
 
     const DropdownComp = () => {
         return (
-            <div className="py-4 w-full">
+            <div className="py-4 pr-[2px] w-full ">
                 <label
-                    className="text-xs tracking-widest text-lightGray"
+                    className="text-xs tracking-widest text-custompurple"
                     htmlFor="taskId"
                 >
                     Select your meal:
                 </label>
-
                 <select
-                    className="block w-full px-4 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
+                    className=" block w-full px-2 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
                     id="taskId"
                     value={selectedTaskId}
                     onChange={handleSelectChange}
@@ -273,6 +278,7 @@ const AnalyseMealComp = ({
 
 
                 </select>
+
             </div>
 
 
@@ -338,7 +344,7 @@ const AnalyseMealComp = ({
                                         onClick={() => setshowMealPicPopUp(true)}
                                     >
                                         <div className=" rounded-lg  p-4 ">
-                                            <p className="text-center">Click here to upload image</p>
+                                            <p className="text-center">Click here to upload an image</p>
                                         </div>{' '}
                                     </div>
                                 ) : (
@@ -381,7 +387,7 @@ const AnalyseMealComp = ({
                                             </p>
 
                                             <textarea
-                                                className="w-full bg-black p-2 font-sfpro focus:outline-none border-custompurple border-b-[1px] h-auto textbox-text"
+                                                className="w-full bg-black p-2 font-sfpro focus:outline-none border-custompurple border-b-[1px] h-auto "
                                                 placeholder="Type here..."
                                                 onChange={(e) => setUserMealDescription(e.target.value)}
                                             />
@@ -391,7 +397,8 @@ const AnalyseMealComp = ({
                                     </div>
                                     <div className="fixed bottom-4 left-0 w-full px-3">
                                         <button
-                                            className="flex w-full flex-row items-center justify-center rounded-xl bg-custompurple p-3 text-black "
+                                            className={`flex w-full flex-row items-center justify-center rounded-xl p-3 text-black ${selectedImage && selectedTaskId ? 'bg-custompurple' : 'bg-gray-500 cursor-not-allowed'
+                                                }`}
                                             onClick={handleMealUploadSubmit}
                                         >
                                             <SparkleIcon />

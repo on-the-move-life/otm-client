@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AnalyseMealComp from './components/AnalyseMealComp';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
@@ -16,11 +16,12 @@ const MealUploadHeading = styled.h1`
 
 const MealUpload = () => {
   const navigate = useNavigate();
+  const [titleVisible, setIsTitleVisible] = useState(true);
 
   return (
     <>
       <div className="flex flex-col justify-center w-full h-screen px-4 py-8">
-        <div className="flex h-fit">
+        {titleVisible && <div className="flex h-fit">
           <div className="flex justify-between w-full">
             <div className="flex flex-col items-start justify-between w-full h-full">
               <div className="mb-4">
@@ -37,9 +38,10 @@ const MealUpload = () => {
             </div>
           </div>
         </div>
+        }
 
         <div className="w-full mx-auto">
-          <AnalyseMealComp />
+          <AnalyseMealComp setIsTitleVisible={setIsTitleVisible} />
         </div>
       </div>
     </>
