@@ -9,6 +9,7 @@ import { axiosClient } from '../apiClient'
 import * as Actions from "./Redux/actions"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PageIndicator from './Components/PageIndicator'
 
 function MainPage() {
     const dispatch = useDispatch();
@@ -23,13 +24,29 @@ function MainPage() {
         currentQuestion: state.questionSectionInfo.currentScreenQuestions
     }))
 
-    useEffect(() => {
+    function fetchQuestions() {
         axiosClient.get('/questionnaire')
             .then(res => {
                 console.log("response : ", res);
                 dispatch(Actions.updateQuestions(res?.data?.questions));
             })
             .catch(err => console.log(err))
+    }
+    function submitQuestions(questionResponse) {
+        axiosClient.post('/questionnaire-response', {
+            data: questionResponse,
+            memberCode: JSON.parse(localStorage.getItem('user'))['code']
+        })
+            .then(res => {
+                console.log(res);
+                dispatch(Actions.updateNutritionPlan(res?.data?.data?.nutPlan));
+                dispatch(Actions.updateSuggestedIngredients(res?.data?.data?.suitableIngredients))
+            })
+            .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        fetchQuestions();
     }, [])
 
 
@@ -82,7 +99,7 @@ function MainPage() {
                 }
                 {
                     sectionName === 'Questions' &&
-                    <div className="w-full mt-1 mb-[4rem]">
+                    <div className="w-full mt-1 mb-[100px]">
                         <Questions validation={validation} setValidation={setValidation} />
                     </div>
                 }
@@ -90,48 +107,57 @@ function MainPage() {
             </div>
             {/* Dynamic Section Ends */}
 
-            <div className='w-full fixed bottom-4 left-0 px-3'>
-                {
-                    sectionName === 'Get Started' && <Button type="mealplanner" text="Get Started" action={() => dispatch(Actions.updateSectionName('Questions'))} />
-                }
-                {
-                    sectionName === 'Questions' && questionScreen === 1 && <Button type="mealplanner" text="Continue" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))} />
-                }
-                {
-                    totalQuestionScreen !== 0 && sectionName === 'Questions' && questionScreen !== 1 && questionScreen <= totalQuestionScreen &&
-                    <div className='w-full grid grid-cols-6 place-items-center gap-2'>
-                        <div className='w-full col-span-2'>
-                            <Button type="mealplannerback" text="Back" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen - 1 }))} />
+            <div className='w-full h-[100px] flex items-center fixed bottom-0 left-0 bg-black/60 backdrop-blur-sm'>
+                <div className='w-full px-3'>
+                    {
+                        sectionName === 'Get Started' && <Button type="mealplanner" text="Get Started" action={() => dispatch(Actions.updateSectionName('Questions'))} />
+                    }
+                    {
+                        sectionName === 'Questions' && questionScreen === 1 &&
+                        <div className='w-full flex flex-col justify-center items-center'>
+                            <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
+                            <Button type="mealplanner" text="Continue" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))} />
                         </div>
-                        <div className="w-full col-span-4">
-                            <Button type="mealplanner" text="Continue" action={() => {
-                                // checking for empty response
-                                if (
-                                    currentQuestion &&
-                                    Object.keys(responses)?.length > 0 &&
-                                    !isAnyEmptyResponse(currentQuestion, responses) &&
-                                    validResponses(validation)
-                                ) {
-                                    // logic when the continue button is pressed
-                                    if(questionScreen < totalQuestionScreen){
-                                        dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))
-                                    }
-                                    else if(questionScreen === totalQuestionScreen){
-                                        // logic to submit the questions
-                                        console.log("questions submitted : ",responses);
-                                    }
-                                    
-                                } else {
-                                    if (isAnyEmptyResponse(currentQuestion, responses)) {
-                                        toast.warn('Please fill in the required fields!');
-                                    } else if (!validResponses(validation)) {
-                                        toast.warn('Please fill in the valid answer!');
-                                    }
-                                }
-                            }} />
+                    }
+                    {
+                        totalQuestionScreen !== 0 && sectionName === 'Questions' && questionScreen !== 1 && questionScreen <= totalQuestionScreen &&
+                        <div className='w-full flex flex-col justify-center items-center'>
+                            <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
+                            <div className='w-full grid grid-cols-6 place-items-center gap-2'>
+                                <div className='w-full col-span-2'>
+                                    <Button type="mealplannerback" text="Back" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen - 1 }))} />
+                                </div>
+                                <div className="w-full col-span-4">
+                                    <Button type="mealplanner" text="Continue" action={() => {
+                                        // checking for empty response
+                                        if (
+                                            currentQuestion &&
+                                            Object.keys(responses)?.length > 0 &&
+                                            !isAnyEmptyResponse(currentQuestion, responses) &&
+                                            validResponses(validation)
+                                        ) {
+                                            // logic when the continue button is pressed
+                                            if (questionScreen < totalQuestionScreen) {
+                                                dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))
+                                            }
+                                            else if (questionScreen === totalQuestionScreen) {
+                                                // logic to submit the questions
+                                                submitQuestions(responses);
+                                            }
+
+                                        } else {
+                                            if (isAnyEmptyResponse(currentQuestion, responses)) {
+                                                toast.warn('Please fill in the required fields!');
+                                            } else if (!validResponses(validation)) {
+                                                toast.warn('Please fill in the valid answer!');
+                                            }
+                                        }
+                                    }} />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     )
