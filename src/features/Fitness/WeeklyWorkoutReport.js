@@ -26,7 +26,7 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
     }, [lastEightWeeksWorkout])
    
     const Bar = ({ progress , isFirstBar }) => {
-        const [basicgreen, advancedgreen, red, yellow, gray, purple] = ['#7FE08A','#119832', '#FA5757', '#F5C563', '#323232','#7E87EF']
+        const [basicgreen, intermediateGreen, advancedgreen, red, yellow, gray, purple] = ['#7FE08A','#29C344','#119832', '#FA5757', '#F5C563', '#323232','#7E87EF']
         const [height, setHeight] = useState(0);
         const [color, setColor] = useState(gray);
         console.log(progress);
@@ -45,8 +45,12 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
     
             if (progressPercentage > 100) {
                 setColor(purple);
-            } else if (progressPercentage > 75) {
-                setColor(advancedgreen);
+            }     
+            else if (progressPercentage == 100) {
+                setColor(advancedgreen); 
+            }
+            else if (progressPercentage > 75) {
+                setColor(intermediateGreen);
             } else if (progressPercentage > 50) {
                 setColor(basicgreen);
             } else if (progressPercentage > 25) {
