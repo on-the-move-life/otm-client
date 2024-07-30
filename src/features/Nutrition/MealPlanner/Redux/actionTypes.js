@@ -10,3 +10,4 @@ export const DELETE_SELECTED_INGREDIENT = 'delete_selected_ingredient';
 
 export const UPDATE_SECTION_NAME = 'update_section_name';
 export const UPDATE_QUESTION_SECTION_INFO = 'update_question_section_info';
+export const RESET_TO_DEFAULT = 'reset_to_default';

@@ -11,9 +11,11 @@ import * as Actions from "./Redux/actions"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PageIndicator from './Components/PageIndicator'
+import { useNavigate } from 'react-router-dom'
 
 function MainPage() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [validation, setValidation] = useState({});
 
     const { questions, responses, sectionName, questionScreen, totalQuestionScreen, currentQuestion } = useSelector((state) => ({
@@ -93,7 +95,11 @@ function MainPage() {
                     theme="dark"
                 />
             </div>
-            <div className='absolute top-4 right-3'>
+            <div className='absolute top-4 right-3' onClick={() => {
+                // reset the redux store before closing this feature
+                dispatch(Actions.resetToDefault());
+                navigate('/nutrition');
+            }}>
                 <CrossIcon />
             </div>
 

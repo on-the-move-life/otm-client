@@ -108,3 +108,11 @@ export const updateQuestionSectionInfo = (info) => {
         })
     }
 }
+
+export const resetToDefault = () => {
+    return dispatch => {
+        dispatch({
+            type: Actions.RESET_TO_DEFAULT,
+        })
+    }
+}

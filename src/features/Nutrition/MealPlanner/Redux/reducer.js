@@ -104,6 +104,21 @@ const reducer = (state = initialState, action) => {
                     }
                 }
             }
+        case Actions.RESET_TO_DEFAULT:
+            return {
+                questions: [],
+                responses: {},
+                nutritionPlan: {},
+                suggestedIngredients: [],
+                selectedIngredients: [],
+                weeklyPlan: [],
+                sectionName: '',
+                questionSectionInfo: {
+                    totalScreens: 0,
+                    screen: 1,
+                    currentScreenQuestions: []
+                }
+            };
         default:
             return state;
     }
