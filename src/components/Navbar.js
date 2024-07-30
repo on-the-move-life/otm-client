@@ -31,7 +31,7 @@ const Navbar = () => {
   const componentsPath = [
     '/home',
     '/nutrition',
-    '/lifestyle',
+    '/lifestyle-routine',
     '/community',
     '/profile',
   ];

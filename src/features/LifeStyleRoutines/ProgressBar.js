@@ -9,34 +9,38 @@ const ProgressBar = ({ progress }) => {
   } else if (progress <= 80) {
     gradient = 'linear-gradient(90deg, #FA5757 0%, #F5C563 50%, #7E87EF 100%)';
   } else {
-    gradient = 'linear-gradient(90deg, #FA5757 0%, #F5C563 50%, #7E87EF 80%, #5ECC7B 100%)';
+    gradient =
+      'linear-gradient(90deg, #FA5757 0%, #F5C563 50%, #7E87EF 80%, #5ECC7B 100%)';
   }
 
-
   return (
-    <div className="w-full ">
-      <div className={`text-[25px] text-[#f7d002]`}>
-        {progress}%
+    <div className="mx-3 pt-4">
+      <div
+        className={`gradient-percentage font-anton t-b mx-1  text-[60px] font-medium leading-[54px]`}
+      >
+        {progress}
+        <span className="font-anton text-[32px] font-bold">%</span>
       </div>
-      <div className="text-blue font-sfpro text-[14px] font-body-condensed-bold mb-2">
-        You completed {progress}% of your perfect day
+      <div className="font-body-condensed-bold relative bottom-2 z-10 mx-1 mb-2 font-sfpro text-[14px] text-lightGray">
+        perfect day complete
       </div>
-      <div className="w-full h-4 bg-[#1C1C1E] rounded-full overflow-hidden">
+      <div className="bg-gray h-4 w-full overflow-hidden rounded-full">
         <motion.div
-          className="h-full rounded-full"
+          className="relative h-full rounded-full p-1"
           style={{ background: gradient, width: `${progress}%` }}
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 1 }}
         >
-
-
+          <div className="absolute right-1 flex ">
+            {/* <span>23</span> */}
+            <span className="  h-2 w-2 rounded-full bg-white"></span>
+          </div>
         </motion.div>
-        <span className="text-white font-bold">{progress}%</span>
-        <div className="w-6 h-6 bg-white border-2 border-gray-400 rounded-full ml-2"></div>
+        <span className="font-bold text-white">{progress}%</span>
+        <div className="ml-2 h-6 w-6 rounded-full border-2 border-gray-400 bg-white"></div>
       </div>
     </div>
-
   );
 };
 export default ProgressBar;
