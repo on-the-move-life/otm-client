@@ -41,23 +41,20 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
             }
     
             // Determine color based on progress percentage
-            const progressPercentage = (progress / suggestedWorkoutPerWeek) * 100;
+
     
-            if (progressPercentage > 100) {
+            if (progress > suggestedWorkoutPerWeek) {
                 setColor(purple);
             }     
-            else if (progressPercentage == 100) {
+            else if (progress == suggestedWorkoutPerWeek) {
                 setColor(advancedgreen); 
             }
-            else if (progressPercentage > 75) {
-                setColor(intermediateGreen);
-            } else if (progressPercentage > 50) {
-                setColor(basicgreen);
-            } else if (progressPercentage > 25) {
-                setColor(yellow);
-            } else {
+            else if (progress==1) {
                 setColor(red);
             }
+            else {
+                setColor(yellow);
+            } 
         }, [progress, suggestedWorkoutPerWeek]);
     
         const barStyles = {
