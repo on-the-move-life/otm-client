@@ -7,7 +7,7 @@ const initialState = {
     suggestedIngredients: [],
     selectedIngredients: [],
     weeklyPlan: [],
-    sectionName: '',
+    sectionName: '', // Possible section names = ['Get Started', 'Questions', 'Ingredients', 'Weekly Plan']
     questionSectionInfo: {
         totalScreens: 0,
         screen: 1,

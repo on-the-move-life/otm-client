@@ -3,6 +3,7 @@ import CrossIcon from '../../../components/CrossIcon'
 import { Button } from '../../../components'
 import GetStarted from './GetStarted'
 import Questions from './Questions'
+import CustomiseIngredients from './CustomiseIngredients'
 import { useDispatch, useSelector } from 'react-redux';
 import { getScreenCounts, isAnyEmptyResponse, validResponses } from '../../LifestyleQuiz/utils/utils';
 import { axiosClient } from '../apiClient'
@@ -41,6 +42,7 @@ function MainPage() {
                 console.log(res);
                 dispatch(Actions.updateNutritionPlan(res?.data?.data?.nutPlan));
                 dispatch(Actions.updateSuggestedIngredients(res?.data?.data?.suitableIngredients))
+                dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))
             })
             .catch(err => console.log(err))
     }
@@ -60,6 +62,12 @@ function MainPage() {
     }, [])
 
     useEffect(() => {
+        if (questionScreen > 1 && questionScreen <= 3) {
+            dispatch(Actions.updateSectionName('Questions'));
+        }
+        else if (questionScreen >= 4) {
+            dispatch(Actions.updateSectionName('Ingredients'));
+        }
         console.log("questions screen : ", questionScreen, totalQuestionScreen)
     }, [questionScreen, totalQuestionScreen])
 
@@ -99,11 +107,16 @@ function MainPage() {
                 }
                 {
                     sectionName === 'Questions' &&
-                    <div className="w-full mt-1 mb-[100px]">
+                    <div className="w-full mt-3 mb-[100px]">
                         <Questions validation={validation} setValidation={setValidation} />
                     </div>
                 }
-
+                {
+                    sectionName === 'Ingredients' &&
+                    <div className="w-full mt-3 mb-[100px]">
+                        <CustomiseIngredients />
+                    </div>
+                }
             </div>
             {/* Dynamic Section Ends */}
 
@@ -151,6 +164,27 @@ function MainPage() {
                                             } else if (!validResponses(validation)) {
                                                 toast.warn('Please fill in the valid answer!');
                                             }
+                                        }
+                                    }} />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    {
+                        sectionName === 'Ingredients' &&
+                        <div className='w-full flex flex-col justify-center items-center'>
+                            <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
+                            <div className='w-full grid grid-cols-6 place-items-center gap-2'>
+                                <div className='w-full col-span-2'>
+                                    <Button type="mealplannerback" text="Back" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen - 1 }))} />
+                                </div>
+                                <div className="w-full col-span-4">
+                                    <Button type="mealplanner" text="Continue" action={() => {
+                                        // checking for empty response
+                                        if (questionScreen === 4) {
+                                            dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }));
+                                        } else {
+                                            // call the API to submit the chosen ingredients
                                         }
                                     }} />
                                 </div>
