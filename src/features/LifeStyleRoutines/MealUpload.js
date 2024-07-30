@@ -20,7 +20,7 @@ const MealUpload = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center w-full h-screen px-4 py-8">
+      <div className="flex flex-col justify-start w-full h-screen px-4 py-8">
         {titleVisible && <div className="flex h-fit">
           <div className="flex justify-between w-full">
             <div className="flex flex-col items-start justify-between w-full h-full">
@@ -40,7 +40,7 @@ const MealUpload = () => {
         </div>
         }
 
-        <div className="w-full mx-auto">
+        <div className=" w-full mx-auto">
           <AnalyseMealComp setIsTitleVisible={setIsTitleVisible} />
         </div>
       </div>

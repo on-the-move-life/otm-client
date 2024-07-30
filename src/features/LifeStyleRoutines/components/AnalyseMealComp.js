@@ -285,6 +285,7 @@ const AnalyseMealComp = ({
         );
     };
 
+
     // file upload
     const handleFileChange = (e) => {
         setLoader(true);
@@ -313,7 +314,7 @@ const AnalyseMealComp = ({
             {isVisible ? (
                 <>
                     {setParentVisibilityCheck && (
-                        <div className="mt-2 flex w-full items-center justify-between text-center">
+                        <div className=" mt-2 flex w-full items-center justify-between text-center">
                             {/* empty div to put other two divs in place */}
                             <div></div>
 
@@ -331,7 +332,7 @@ const AnalyseMealComp = ({
                         </div>
                     )}
 
-                    <div className="  flex max-w-sm items-center space-x-6 rounded-lg  shadow-md  ">
+                    <div className="  flex w-full justify-center items-center space-x-6 rounded-lg  shadow-md  ">
                         <div className="flex items-center justify-center ">
                             <div className="  rounded-lg shadow-lg">
                                 {!selectedImage ? (

@@ -22,7 +22,7 @@ const FullMealInfoCard = ({
             <img
               src={imageURL}
               alt="Meal"
-              className="max-w-20 mr-4 aspect-square max-h-20 rounded-lg"
+              className="max-w-20 mr-4 aspect-square max-h-20 rounded-lg object-cover"
             />
             <div>
               <div className="flex flex-row items-center justify-between">
