@@ -1,20 +1,59 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Error } from '../../components';
 import SectionItem from './Section';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UpdateWorkout from './UpdateWorkout';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { setIndex } from './WorkoutSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AnimatedComponent from '../../components/AnimatedComponent';
 
 const MainPage = () => {
   const [showUpdateWorkout, setShowUpdateWorkout] = useState(false);
+  const [updatedWorkoutProgram, setUpdatedWorkoutProgram] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const params = useParams();
 
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
+
+  useEffect(() => {
+    if (
+      workoutData &&
+      (!workoutData.coolDownSection || !workoutData.warmUpSection)
+    ) {
+      setUpdatedWorkoutProgram(workoutData.program);
+    }
+
+    if (
+      workoutData &&
+      (workoutData.coolDownSection || workoutData.warmUpSection)
+    ) {
+      const workoutArr = [
+        workoutData.warmUpSection,
+        ...workoutData.program,
+        workoutData.coolDownSection,
+      ];
+
+      const arrayFeed = workoutArr.some((item) => item.code === 'FEED');
+
+      if (arrayFeed === true) {
+        const secondLastIndex = workoutArr.length - 2;
+        const lastIndex = workoutArr.length - 1;
+        [workoutArr[secondLastIndex], workoutArr[lastIndex]] = [
+          workoutArr[lastIndex],
+          workoutArr[secondLastIndex],
+        ];
+
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+
+      if (arrayFeed === false) {
+        setUpdatedWorkoutProgram(workoutArr);
+      }
+    }
+  }, [workoutData]);
 
   let memberName = 'Guest';
   let user = localStorage.getItem('user');
@@ -29,7 +68,7 @@ const MainPage = () => {
 
   const handleStart = () => {
     dispatch(setIndex(0));
-    navigate('/section-details');
+    navigate(`/section-details/${params.value}`);
   };
 
   if (status === 'loading') {
@@ -68,21 +107,24 @@ const MainPage = () => {
                       TODAY'S FOCUS
                     </span>
                     <div className="flex items-center justify-between w-full sm:justify-normal sm:gap-5">
-                      <div className="flex items-center gap-2">
-                        <div>
-                          <h2 className="text-xl">{workoutData.theme}</h2>
+                      {workoutData.theme && (
+                        <div className="flex items-center gap-2">
+                          <div>
+                            <h2 className="text-xl">{workoutData.theme}</h2>
+                          </div>
+                          <div className="flex items-center justify-center">
+                            <button
+                              onClick={() => setShowUpdateWorkout(true)}
+                              className="w-fit rounded-[4px] border border-white bg-black p-[3px]"
+                            >
+                              <span className="block rounded-[4px] bg-white px-[2px] py-[1px] text-[10px] font-bold text-black">
+                                Change
+                              </span>
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center justify-center">
-                          <button
-                            onClick={() => setShowUpdateWorkout(true)}
-                            className="w-fit rounded-[4px] border border-white bg-black p-[3px]"
-                          >
-                            <span className="block rounded-[4px] bg-white px-[2px] py-[1px] text-[10px] font-bold text-black">
-                              Change
-                            </span>
-                          </button>
-                        </div>
-                      </div>
+                      )}
+
                       {(workoutData.workoutCalories ||
                         workoutData.workoutDuration) && (
                         <div className="flex flex-col items-end sm:flex-row sm:gap-2">
@@ -114,13 +156,15 @@ const MainPage = () => {
             <AnimatedComponent
               transition={{ duration: 0.8, ease: 'easeInOut' }}
             >
-              {workoutData.program.map((data, index) => (
-                <SectionItem
-                  sectionList={workoutData.program}
-                  index={index}
-                  key={index}
-                />
-              ))}
+              {updatedWorkoutProgram &&
+                updatedWorkoutProgram.length > 0 &&
+                updatedWorkoutProgram.map((data, index) => (
+                  <SectionItem
+                    sectionList={updatedWorkoutProgram}
+                    index={index}
+                    key={index}
+                  />
+                ))}
             </AnimatedComponent>
           </div>
           <footer className="fixed w-full px-4 bottom-4">

@@ -164,8 +164,7 @@ const UserDetails = ({ showHistory }) => {
   };
 
   return (
-    <AnimatedComponent>
-      {/* profile pic update popup */}
+    <>
       {showProfilePicPopup && (
         <motion.div
           className="fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r from-gray-500/30 to-gray-900/60 p-5 backdrop-blur-lg"
@@ -213,14 +212,17 @@ const UserDetails = ({ showHistory }) => {
           </div>
         </motion.div>
       )}
-      {memberData && (
-        <div className="w-screen grow overflow-scroll px-4 pb-[78px] pt-8">
-          {profilePicError && (
-            <div className="fixed top-0 z-50 w-full h-full bg-black">
-              <Error>Oops! Something went wrong...</Error>
-            </div>
-          )}
-          {/* <div className="mb-4">
+      <AnimatedComponent>
+        {/* profile pic update popup */}
+
+        {memberData && (
+          <div className="w-screen grow overflow-scroll px-4 pb-[78px] pt-8">
+            {profilePicError && (
+              <div className="fixed top-0 z-50 w-full h-full bg-black">
+                <Error>Oops! Something went wrong...</Error>
+              </div>
+            )}
+            {/* <div className="mb-4">
             <HiArrowNarrowLeft
               size={20}
               onClick={() => {
@@ -229,14 +231,14 @@ const UserDetails = ({ showHistory }) => {
             />
           </div> */}
 
-          {/* User Profile Pic and Name */}
-          <div className="flex flex-col items-center justify-center">
-            <div className="flex items-center justify-center gap-5 mt-6">
-              <div className="flex flex-col items-center">
-                <div className="text-2xl font-medium capitalize gradient-text text-neutral-400">
-                  {memberData.name}
-                </div>
-                {/* <div>
+            {/* User Profile Pic and Name */}
+            <div className="flex flex-col items-center justify-center">
+              <div className="flex items-center justify-center gap-5 mt-6">
+                <div className="flex flex-col items-center">
+                  <div className="text-2xl font-medium capitalize gradient-text text-neutral-400">
+                    {memberData.name}
+                  </div>
+                  {/* <div>
                   {memberData.avgIntensity > 10 && (
                     <span
                       className={`mx-2 rounded  ${
@@ -247,188 +249,189 @@ const UserDetails = ({ showHistory }) => {
                     </span>
                   )}
                 </div> */}
-              </div>
-              <div className="relative h-[80px] w-[80px] rounded-full">
-                {chosenPic ? (
-                  <ProfilePicture
-                    inputPic={chosenPic}
-                    altText={'profile picture'}
-                    height={'80px'}
-                    width={'80px'}
-                  />
-                ) : memberData && memberData?.profilePicture ? (
-                  <ProfilePicture
-                    inputPic={uniqueImageURLKey}
-                    altText={'profile picture'}
-                    height={'80px'}
-                    width={'80px'}
-                  />
-                ) : (
-                  <FaUserCircle size={80} color={'#91BDF6'} />
-                )}
-                <button
-                  className="absolute bottom-0 right-0 flex h-[30px] w-[30px] flex-row items-center justify-center rounded-full bg-green"
-                  onClick={() => {
-                    setShowProfilePicPopup(true);
-                  }}
-                >
-                  <IoCamera size={20} color="black" />
-                </button>
-                <input
-                  ref={profilePicRef}
-                  type="file"
-                  accept="image/png, image/jpg, image/jpeg"
-                  name="profile image"
-                  hidden
-                  onInput={handlePicChange}
-                ></input>
-                <input
-                  ref={profilePicCameraRef}
-                  type="file"
-                  capture="user"
-                  accept="image/png, image/jpg, image/jpeg"
-                  name="profile image camera"
-                  hidden
-                  onInput={handlePicChange}
-                ></input>
-              </div>
+                </div>
+                <div className="relative  h-[80px] w-[80px] rounded-full">
+                  {chosenPic ? (
+                    <ProfilePicture
+                      inputPic={chosenPic}
+                      altText={'profile picture'}
+                      height={'80px'}
+                      width={'80px'}
+                    />
+                  ) : memberData && memberData?.profilePicture ? (
+                    <ProfilePicture
+                      inputPic={uniqueImageURLKey}
+                      altText={'profile picture'}
+                      height={'80px'}
+                      width={'80px'}
+                    />
+                  ) : (
+                    <FaUserCircle size={80} color={'#91BDF6'} />
+                  )}
+                  <button
+                    className="absolute bottom-0 right-0 flex h-[30px] w-[30px] flex-row items-center justify-center rounded-full bg-green"
+                    onClick={() => {
+                      setShowProfilePicPopup(true);
+                    }}
+                  >
+                    <IoCamera size={20} color="black" />
+                  </button>
+                  <input
+                    ref={profilePicRef}
+                    type="file"
+                    accept="image/png, image/jpg, image/jpeg"
+                    name="profile image"
+                    hidden
+                    onInput={handlePicChange}
+                  ></input>
+                  <input
+                    ref={profilePicCameraRef}
+                    type="file"
+                    capture="user"
+                    accept="image/png, image/jpg, image/jpeg"
+                    name="profile image camera"
+                    hidden
+                    onInput={handlePicChange}
+                  ></input>
+                </div>
 
-              {/* <div className="flex flex-row items-center justify-between w-auto ">
+                {/* <div className="flex flex-row items-center justify-between w-auto ">
                 <div className="perfect-week mr-2 inline-flex h-5 items-center justify-center gap-0.5 rounded border px-2 py-0.5 text-xs text-black">
                   <img src="/assets/star.svg" alt=''/>
                 </div>
 
               </div> */}
-              {/* <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
+                {/* <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
                 <div className="text-xs font-bold text-black capitalize">
                   {memberData.intensity > 100 ? 'Elite' : 'Advanced'}
                 </div>
               </div> */}
-            </div>
+              </div>
 
-            <p className="mt-5">
-              Elevate every step, embrace every challange, and evolve beyond
-              your limits.
-            </p>
+              <p className="mt-5">
+                Elevate every step, embrace every challange, and evolve beyond
+                your limits.
+              </p>
 
-            <div
-              className="w-full h-64 p-4 mx-auto mt-8 profile-program-box rounded-xl"
-              onClick={() => setShowProfilePicPopup(false)}
-            >
-              <div className="flex flex-col justify-around h-full ">
-                <section>
-                  <div className="text-2xl font-medium leading-10 workout-gradient-text">
-                    Membership
-                  </div>
-                  <div
-                    className="pt-2 "
-                    onClick={() => setShowProfilePicPopup(false)}
-                  >
-                    {memberData.isPaymentDue ? (
-                      <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
-                        <div className="relative w-3 h-3">
-                          <img src="/assets/alert-triangle.svg" alt="" />
+              <div
+                className="w-full h-64 p-4 mx-auto mt-8 profile-program-box rounded-xl"
+                onClick={() => setShowProfilePicPopup(false)}
+              >
+                <div className="flex flex-col justify-around h-full ">
+                  <section>
+                    <div className="text-2xl font-medium leading-10 workout-gradient-text">
+                      Membership
+                    </div>
+                    <div
+                      className="pt-2 "
+                      onClick={() => setShowProfilePicPopup(false)}
+                    >
+                      {memberData.isPaymentDue ? (
+                        <div className="inline-flex h-5 w-20 items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
+                          <div className="relative w-3 h-3">
+                            <img src="/assets/alert-triangle.svg" alt="" />
+                          </div>
+                          <div className="text-xs text-black capitalize">
+                            Overdue
+                          </div>
                         </div>
-                        <div className="text-xs text-black capitalize">
-                          Overdue
+                      ) : (
+                        <div className="bg-neutral-700 border-green-400 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                          <ul className="pl-3 list-disc">
+                            <li className="text-xs capitalize text-green">
+                              Next payment due on{' '}
+                              {formatDate(memberData?.paymentDueDate, false)}
+                            </li>
+                          </ul>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="bg-neutral-700 border-green-400 inline-flex h-5 items-center justify-center gap-0.5 rounded border bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-                        <ul className="pl-3 list-disc">
-                          <li className="text-xs capitalize text-green">
-                            Next payment due on{' '}
-                            {formatDate(memberData?.paymentDueDate, false)}
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </section>
-                <section className="flex flex-col items-center ">
-                  {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
+                      )}
+                    </div>
+                  </section>
+                  <section className="flex flex-col items-center ">
+                    {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
                   <div className="text-lg font-medium text-black">Pay now</div>
                 </div> */}
-                  <div
-                    className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
-                    onClick={() => showHistory()}
-                  >
-                    <button className="text-lg font-medium text-white">
-                      Check payment history
-                    </button>
-                  </div>
-                </section>
-              </div>
-            </div>
-
-            {/* <MoveCoins coins={0} /> */}
-
-            {currentDate > 5 && (
-              <section className="flex flex-row items-center justify-center w-full gap-3 mt-8">
-                <MonthlyWrapped />
-              </section>
-            )}
-            <div
-              className="w-full h-64 p-4 mx-auto mt-8 profile-program-box rounded-xl"
-              onClick={() => setShowProfilePicPopup(false)}
-            >
-              <div className="flex flex-col justify-around h-full ">
-                <section>
-                  <div className="text-2xl font-medium leading-10 workout-gradient-text">
-                    Book a Call
-                  </div>
-                  <div
-                    className="pt-2 "
-                    onClick={() => setShowProfilePicPopup(false)}
-                  >
-                    <div className="text-[14px] text-white">
-                      <p>
-                        Easily schedule a one-on-one call with your coach for
-                        personalised guidance and mentoring.
-                      </p>
+                    <div
+                      className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                      onClick={() => showHistory()}
+                    >
+                      <button className="text-lg font-medium text-white">
+                        Check payment history
+                      </button>
                     </div>
-                  </div>
+                  </section>
+                </div>
+              </div>
+
+              {/* <MoveCoins coins={0} /> */}
+
+              {currentDate > 5 && (
+                <section className="flex flex-row items-center justify-center w-full gap-3 mt-8">
+                  <MonthlyWrapped />
                 </section>
-                <section className="flex flex-col items-center ">
-                  <div
-                    className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
-                    onClick={() =>
-                      window.open(
-                        'https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach',
-                        '_blank',
-                      )
-                    }
-                  >
-                    <button className="text-lg font-medium text-white">
-                      Book Here
+              )}
+              <div
+                className="w-full h-64 p-4 mx-auto mt-8 profile-program-box rounded-xl"
+                onClick={() => setShowProfilePicPopup(false)}
+              >
+                <div className="flex flex-col justify-around h-full ">
+                  <section>
+                    <div className="text-2xl font-medium leading-10 workout-gradient-text">
+                      Book a Call
+                    </div>
+                    <div
+                      className="pt-2 "
+                      onClick={() => setShowProfilePicPopup(false)}
+                    >
+                      <div className="text-[14px] text-white">
+                        <p>
+                          Easily schedule a one-on-one call with your coach for
+                          personalised guidance and mentoring.
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                  <section className="flex flex-col items-center ">
+                    <div
+                      className="border-zinc-400 mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                      onClick={() =>
+                        window.open(
+                          'https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach',
+                          '_blank',
+                        )
+                      }
+                    >
+                      <button className="text-lg font-medium text-white">
+                        Book Here
+                      </button>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <div
+                className="flex flex-col w-full mt-8"
+                onClick={() => {
+                  setShowProfilePicPopup(false);
+                  handleLogout();
+                }}
+              >
+                <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
+                  <div className="relative w-5 h-5 origin-top-left">
+                    <img src="./assets/logout.svg" alt="" />
+                  </div>
+                  <div className="text-lg font-medium text-lightGray">
+                    <button className="text-lg font-medium text-lightGray">
+                      Log Out
                     </button>
                   </div>
-                </section>
-              </div>
-            </div>
-
-            <div
-              className="flex flex-col w-full mt-8"
-              onClick={() => {
-                setShowProfilePicPopup(false);
-                handleLogout();
-              }}
-            >
-              <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
-                <div className="relative w-5 h-5 origin-top-left">
-                  <img src="./assets/logout.svg" alt="" />
-                </div>
-                <div className="text-lg font-medium text-lightGray">
-                  <button className="text-lg font-medium text-lightGray">
-                    Log Out
-                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </AnimatedComponent>
+        )}
+      </AnimatedComponent>
+    </>
   );
 };
 
