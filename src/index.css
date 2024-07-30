@@ -32,7 +32,7 @@ body {
   font-size: 0.7em;
   letter-spacing: 0.2em;
 }
-.textbox-kginput::placeholder{
+.textbox-kginput::placeholder {
   font-size: 1em;
   letter-spacing: 0.2em;
   color: #565656;
@@ -488,6 +488,13 @@ button:active {
     --Gradient-purple,
     linear-gradient(95deg, #d6b6f0 2.94%, #7e87ef 96.92%)
   );
+}
+
+.gradient-percentage {
+  background: linear-gradient(to bottom, #f5c563, #fa5f59);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .leaderboard-user-list-item {
