@@ -18,14 +18,15 @@ function MainPage() {
     const navigate = useNavigate();
     const [validation, setValidation] = useState({});
 
-    const { questions, responses, sectionName, questionScreen, totalQuestionScreen, currentQuestion, suggestedIngredients } = useSelector((state) => ({
+    const { questions, responses, sectionName, questionScreen, totalQuestionScreen, currentQuestion, suggestedIngredients, selectedIngredients } = useSelector((state) => ({
         questions: state.questions,
         responses: state.responses,
         sectionName: state.sectionName,
         questionScreen: state.questionSectionInfo.screen,
         totalQuestionScreen: state.questionSectionInfo.totalScreens,
         currentQuestion: state.questionSectionInfo.currentScreenQuestions,
-        suggestedIngredients: state.suggestedIngredients
+        suggestedIngredients: state.suggestedIngredients,
+        selectedIngredients: state.selectedIngredients
     }))
 
     function fetchQuestions() {
@@ -48,6 +49,14 @@ function MainPage() {
                 dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }));
 
             })
+            .catch(err => console.log(err))
+    }
+    function submitSelectedIngredients(){
+        axiosClient.post('/meal-plan', {
+            ingredients: selectedIngredients,
+            memberCode: JSON.parse(localStorage.getItem('user'))['code']
+        })
+            .then(res => console.log(res))
             .catch(err => console.log(err))
     }
 
@@ -205,6 +214,7 @@ function MainPage() {
                                             dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }));
                                         } else {
                                             // call the API to submit the chosen ingredients
+                                            submitSelectedIngredients();
                                         }
                                     }} />
                                 </div>
