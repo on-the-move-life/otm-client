@@ -22,6 +22,11 @@ const WeeklyCheckIn = () => {
   const [weekRating, setWeekRating] = useState('');
   const [achievement, setAchievement] = useState('');
   const [learnings, setLearnings] = useState('');
+  const [weight, setWeight] = useState('');
+  const [frontImage, setFrontImage] = useState(null);
+  const [sideImage, setSideImage] = useState(null);
+  const [frontImageUrl, setFrontImageUrl] = useState(null);
+  const [sideImageUrl, setSideImageUrl] = useState(null);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -95,12 +100,18 @@ const WeeklyCheckIn = () => {
         setWeekRating(checkInData.rating.toString());
         setAchievement(checkInData.achievement);
         setLearnings(checkInData.learning);
+        setWeight(checkInData.weight ? checkInData.weight.toString() : '');
+        setFrontImageUrl(checkInData.frontImageUrl);
+        setSideImageUrl(checkInData.sideImageUrl);
         setIsSubmitted(true);
       } else {
         // Reset form if no data is found
         setWeekRating('');
         setAchievement('');
         setLearnings('');
+        setWeight('');
+        setFrontImageUrl(null);
+        setSideImageUrl(null);
         setIsSubmitted(false);
       }
     } catch (error) {
@@ -112,22 +123,31 @@ const WeeklyCheckIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const weeklyCheckInData = {
-      rating: parseInt(weekRating),
-      achievement,
-      learning: learnings,
-      memberCode: user.code
-    };
+    const formData = new FormData();
+    formData.append('rating', weekRating);
+    formData.append('achievement', achievement);
+    formData.append('learning', learnings);
+    formData.append('memberCode', user.code);
+    formData.append('weight', weight);
+    if (frontImage) formData.append('frontImage', frontImage);
+    if (sideImage) formData.append('sideImage', sideImage);
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-checkin`,
-        weeklyCheckInData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
 
       if (response.data.success) {
         setIsSubmitted(true);
         setShowSuccessPopup(true);
+        setFrontImageUrl(response.data.data.frontImageUrl);
+        setSideImageUrl(response.data.data.sideImageUrl);
         fetchSubmittedData(); // Fetch the submitted data to display
       } else {
         alert('Failed to submit weekly check-in. Please try again.');
@@ -168,16 +188,16 @@ const WeeklyCheckIn = () => {
   return (
     <>
       <div className={`flex w-screen grow flex-col gap-2 overflow-y-scroll px-4 pb-[20px] ${showSuccessPopup ? 'blur-sm' : ''}`}>
-      <div className="flex items-center justify-between mt-4 mb-2">
-        <button 
-          onClick={() => window.location.href = '/home'} 
-          className="text-white hover:text-gray-300 transition-colors"
-        >
-          <IoArrowBackOutline size={24} />
-        </button>
-        <h1 className="text-2xl font-bold text-center flex-grow">Weekly Check-In</h1>
-        <div className="w-6"></div> {/* This empty div helps center the title */}
-      </div>
+        <div className="flex items-center justify-between mt-4 mb-2">
+          <button 
+            onClick={() => window.location.href = '/home'} 
+            className="text-white hover:text-gray-300 transition-colors"
+          >
+            <IoArrowBackOutline size={24} />
+          </button>
+          <h1 className="text-2xl font-bold text-center flex-grow">Weekly Check-In</h1>
+          <div className="w-6"></div>
+        </div>
         {loader && <Loader />}
         {error && <Error>{error}</Error>}
         {!loader && !error && (
@@ -217,7 +237,7 @@ const WeeklyCheckIn = () => {
                     id="weekRating"
                     value={weekRating}
                     onChange={(e) => setWeekRating(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white p-2 appearance-none"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white p-2 appearance-none"
                     required
                     disabled={isSubmitted}
                   >
@@ -241,7 +261,7 @@ const WeeklyCheckIn = () => {
                     setAchievement(e.target.value);
                     handleTextAreaChange(e);
                   }}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white outline-none p-2"
                   required
                   style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
                   readOnly={isSubmitted}
@@ -259,11 +279,64 @@ const WeeklyCheckIn = () => {
                     setLearnings(e.target.value);
                     handleTextAreaChange(e);
                   }}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white outline-none p-2"
                   required
                   style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
                   readOnly={isSubmitted}
                 ></textarea>
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label htmlFor="weight" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Current Weight (in kg)
+                </label>
+                <input
+                  type="number"
+                  id="weight"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white p-2"
+                  required
+                  disabled={isSubmitted}
+                />
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label htmlFor="frontImage" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Front Pose Image (optional)
+                </label>
+                {!isSubmitted ? (
+                  <input
+                    type="file"
+                    id="frontImage"
+                    onChange={(e) => setFrontImage(e.target.files[0])}
+                    className="mt-1 block w-full text-white"
+                    accept="image/*"
+                  />
+                ) : frontImageUrl ? (
+                  <img src={frontImageUrl} alt="Front Pose" className="mt-2 max-w-full h-auto" />
+                ) : (
+                  <p className="mt-1 text-gray-500">No image uploaded</p>
+                )}
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label htmlFor="sideImage" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Side Pose Image (optional)
+                </label>
+                {!isSubmitted ? (
+                  <input
+                    type="file"
+                    id="sideImage"
+                    onChange={(e) => setSideImage(e.target.files[0])}
+                    className="mt-1 block w-full text-white"
+                    accept="image/*"
+                  />
+                ) : sideImageUrl ? (
+                  <img src={sideImageUrl} alt="Side Pose" className="mt-2 max-w-full h-auto" />
+                ) : (
+                  <p className="mt-1 text-gray-500">No image uploaded</p>
+                )}
               </motion.div>
 
               {!isSubmitted && (
