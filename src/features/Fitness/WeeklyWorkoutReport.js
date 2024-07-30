@@ -24,38 +24,37 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
             setCurrentScore(prevValue => Number(0).toFixed(1));
         }
     }, [lastEightWeeksWorkout])
-
+   
     const Bar = ({ progress , isFirstBar }) => {
-        const [basicgreen, intermediategreen, advancedgreen, red, yellow, gray] = ['#119832', '#29C344', '#7FE08A', '#FA5757', '#F5C563', '#323232'] // colors of the bar
+        const [basicgreen, intermediategreen,red, yellow, gray, purple] = ['#DDF988', '#5ECC7B', '#FA5757', '#F5C563', '#323232', '#7E87EF'] // colors of the bar
+        
         const [height, setHeight] = useState(0);
         const [color, setColor] = useState(gray);
 
         useEffect(() => {
-            if (progress >= suggestedWorkoutPerWeek && suggestedWorkoutPerWeek !== 0) {
-                // if workout per week is >= 4 the bar is filled completely
-                setHeight(prev => String(47));
-            }
-            else {
-                // if the workout < 4 then the bar is filled accordingly (out of <suggestedWorkoutPerWeek> scale)
+            // Height calculation
+            if (progress >= suggestedWorkoutPerWeek) {
+                setHeight(47); // Full height when progress is 100% or more
+            } else {
                 const calculatedHeight = (progress / suggestedWorkoutPerWeek) * 47;
-                setHeight(prev => calculatedHeight.toString());
+                setHeight(calculatedHeight);
             }
-            if (progress >= 3 * suggestedWorkoutPerWeek) {
-                setColor(prev => advancedgreen);
+    
+            // Color and additional height logic
+            if (progress >= 2 * suggestedWorkoutPerWeek) {
+                setColor(intermediategreen);
+                setHeight(47); // When a user does twice the time of Suggestedworkouts
+            } else if (progress >= suggestedWorkoutPerWeek) {
+                setColor(purple);
+                setHeight(47); // When a user does the equal amount of Suggestedworkouts indicating a perfect week
+            } else if (progress >= 0.75 * suggestedWorkoutPerWeek) {
+                setColor(basicgreen);// When a user does 75% of the Suggestedworkouts 
+            } else if (progress >= 0.5 * suggestedWorkoutPerWeek) {
+                setColor(yellow);// When a user does 50% of the Suggestedworkouts
+            } else {
+                setColor(red);
             }
-            else if (progress >= 2 * suggestedWorkoutPerWeek) {
-                setColor(prev => intermediategreen);
-            }
-            else if (progress >= suggestedWorkoutPerWeek) {
-                setColor(prev => basicgreen);
-            }
-            else if (progress >= suggestedWorkoutPerWeek / 2 && progress < suggestedWorkoutPerWeek) {
-                setColor(prev => yellow);
-            }
-            else {
-                setColor(prev => red);
-            }
-        }, [progress, color, height, basicgreen, intermediategreen, advancedgreen, red, yellow, gray])
+        }, [progress, suggestedWorkoutPerWeek, basicgreen, intermediategreen, red, yellow, purple]);
 
         const barStyles = {
             height: `${height}px`,
@@ -69,8 +68,8 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                 <div style={barStyles} className='w-full rounded-xl barStyle'></div>
             </div>
             {isFirstBar && (
-                <div className="absolute mt-1 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[8px] w-[4px] h-[4px] bg-white rounded-full"></div>
-            )}
+  <div className="absolute mt-1 bottom-0 right-1/2 transform translate-x-1/2 translate-y-[8px] w-[4px] h-[4px] bg-white rounded-full"></div>
+)}
         </div>
         )
     }
@@ -118,14 +117,15 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                     <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
                 </div>
                 {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
-                    {
-                            [...Array(8).keys()]?.map((item, index) => {
-                                const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
-                                return (
-                                    <Bar progress={progressCount} key={Math.random() * 1000} isFirstBar={index === 0}  />
-                                )
-                            })
-                    }
+                {
+  [...Array(8).keys()].reverse().map((item, index) => {
+    const reversedIndex = 7 - index;
+    const progressCount = lastEightWeeksWorkout[reversedIndex] !== undefined ? lastEightWeeksWorkout[reversedIndex]?.count : 0
+    return (
+      <Bar progress={progressCount} key={Math.random() * 1000} isFirstBar={index === 7}  />
+    )
+  })
+}
                 </div> : <div className='wwc-score wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>-</div>}
             </section>
         </div>
