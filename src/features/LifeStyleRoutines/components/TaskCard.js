@@ -7,7 +7,7 @@ const TaskCard = ({ task, index }) => {
 
   return (
     <div>
-      <div className="p-4 rounded-xl bg-mediumGray">
+      <div className="rounded-xl bg-mediumGray p-4">
         {task?.details.map((task, index) => (
           <div key={index} className="rounded-md ">
             <div className="flex items-center space-x-2">
@@ -21,12 +21,6 @@ const TaskCard = ({ task, index }) => {
             <p className="font-sfpro text-[14px] capitalize text-lightGray">
               {task.description}
             </p>
-            <button
-              className="flex items-center justify-center w-full gap-1 p-1 mt-2 text-sm leading-8 text-black rounded-xl bg-custompurple"
-              onClick={() => navigate('/home')}
-            >
-              Tap to view yout routine <FaArrowRight />
-            </button>
           </div>
         ))}
       </div>
