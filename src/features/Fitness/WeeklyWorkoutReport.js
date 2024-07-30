@@ -26,36 +26,36 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
     }, [lastEightWeeksWorkout])
    
     const Bar = ({ progress , isFirstBar }) => {
-        const [basicgreen, intermediategreen,red, yellow, gray, purple] = ['#DDF988', '#5ECC7B', '#FA5757', '#F5C563', '#323232', '#7E87EF'] // colors of the bar
-        
+        const [basicgreen, advancedgreen, red, yellow, gray, purple] = ['#7FE08A','#119832', '#FA5757', '#F5C563', '#323232','#7E87EF']
         const [height, setHeight] = useState(0);
         const [color, setColor] = useState(gray);
+        console.log(progress);
 
         useEffect(() => {
-            // Height calculation
-            if (progress >= suggestedWorkoutPerWeek) {
-                setHeight(47); // Full height when progress is 100% or more
+            // Calculate height
+            if (progress >= suggestedWorkoutPerWeek && suggestedWorkoutPerWeek !== 0) {
+                setHeight(47);
             } else {
                 const calculatedHeight = (progress / suggestedWorkoutPerWeek) * 47;
                 setHeight(calculatedHeight);
             }
     
-            // Color and additional height logic
-            if (progress > suggestedWorkoutPerWeek) {
+            // Determine color based on progress percentage
+            const progressPercentage = (progress / suggestedWorkoutPerWeek) * 100;
+    
+            if (progressPercentage > 100) {
                 setColor(purple);
-                setHeight(47); // When a user does twice the time of Suggestedworkouts
-            } else if (progress = suggestedWorkoutPerWeek) {
-                setColor(intermediategreen);
-                setHeight(47); // When a user does the equal amount of Suggestedworkouts
-            } else if (progress >= 0.75 * suggestedWorkoutPerWeek) {
-                setColor(basicgreen);// When a user does 75% of the Suggestedworkouts 
-            } else if (progress >= 0.5 * suggestedWorkoutPerWeek) {
-                setColor(yellow);// When a user does 50% of the Suggestedworkouts
+            } else if (progressPercentage > 75) {
+                setColor(advancedgreen);
+            } else if (progressPercentage > 50) {
+                setColor(basicgreen);
+            } else if (progressPercentage > 25) {
+                setColor(yellow);
             } else {
                 setColor(red);
             }
-        }, [progress, suggestedWorkoutPerWeek, basicgreen, intermediategreen, red, yellow, purple]);
-
+        }, [progress, suggestedWorkoutPerWeek]);
+    
         const barStyles = {
             height: `${height}px`,
             backgroundColor: color,
@@ -68,8 +68,8 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                 <div style={barStyles} className='w-full rounded-xl barStyle'></div>
             </div>
             {isFirstBar && (
-  <div className="absolute mt-1 bottom-0 right-1/2 transform translate-x-1/2 translate-y-[8px] w-[4px] h-[4px] bg-white rounded-full"></div>
-)}
+                <div className="absolute mt-1 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[8px] w-[4px] h-[4px] bg-white rounded-full"></div>
+            )}
         </div>
         )
     }
