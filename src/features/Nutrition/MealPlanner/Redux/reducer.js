@@ -4,7 +4,7 @@ const initialState = {
     questions: [],
     responses: {},
     nutritionPlan: {},
-    suggestedIngredients: [],
+    suggestedIngredients: {},
     selectedIngredients: [],
     weeklyPlan: [],
     sectionName: '', // Possible section names = ['Get Started', 'Questions', 'Ingredients', 'Weekly Plan']
@@ -35,7 +35,7 @@ const reducer = (state = initialState, action) => {
         case Actions.UPDATE_SUGGESTED_INGREDIENTS:
             return {
                 ...state,
-                suggestedIngredients: action.payload || []
+                suggestedIngredients: action.payload || {}
             }
         case Actions.UPDATE_WEEKLY_PLAN:
             return {
@@ -109,7 +109,7 @@ const reducer = (state = initialState, action) => {
                 questions: [],
                 responses: {},
                 nutritionPlan: {},
-                suggestedIngredients: [],
+                suggestedIngredients: {},
                 selectedIngredients: [],
                 weeklyPlan: [],
                 sectionName: '',

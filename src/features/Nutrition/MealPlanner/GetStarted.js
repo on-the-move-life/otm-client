@@ -11,7 +11,7 @@ function GetStarted() {
   return (
     <div className='w-full flex flex-col justify-between items-center gap-9'>
         <h3 className="text-[26px] text-[#F8F8F8]" style={{lineHeight: '41.6px'}}>Meal Planning Made Easy</h3>
-        <Carousel carouselComponents={carouselComponents} />
+        <Carousel carouselComponents={carouselComponents} playTime={3}/>
     </div>
   )
 }
