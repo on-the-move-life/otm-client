@@ -41,12 +41,12 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
             }
     
             // Color and additional height logic
-            if (progress >= 2 * suggestedWorkoutPerWeek) {
-                setColor(intermediategreen);
-                setHeight(47); // When a user does twice the time of Suggestedworkouts
-            } else if (progress >= suggestedWorkoutPerWeek) {
+            if (progress > suggestedWorkoutPerWeek) {
                 setColor(purple);
-                setHeight(47); // When a user does the equal amount of Suggestedworkouts indicating a perfect week
+                setHeight(47); // When a user does twice the time of Suggestedworkouts
+            } else if (progress = suggestedWorkoutPerWeek) {
+                setColor(intermediategreen);
+                setHeight(47); // When a user does the equal amount of Suggestedworkouts
             } else if (progress >= 0.75 * suggestedWorkoutPerWeek) {
                 setColor(basicgreen);// When a user does 75% of the Suggestedworkouts 
             } else if (progress >= 0.5 * suggestedWorkoutPerWeek) {
