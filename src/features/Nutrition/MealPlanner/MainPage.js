@@ -18,13 +18,14 @@ function MainPage() {
     const navigate = useNavigate();
     const [validation, setValidation] = useState({});
 
-    const { questions, responses, sectionName, questionScreen, totalQuestionScreen, currentQuestion } = useSelector((state) => ({
+    const { questions, responses, sectionName, questionScreen, totalQuestionScreen, currentQuestion, suggestedIngredients } = useSelector((state) => ({
         questions: state.questions,
         responses: state.responses,
         sectionName: state.sectionName,
         questionScreen: state.questionSectionInfo.screen,
         totalQuestionScreen: state.questionSectionInfo.totalScreens,
-        currentQuestion: state.questionSectionInfo.currentScreenQuestions
+        currentQuestion: state.questionSectionInfo.currentScreenQuestions,
+        suggestedIngredients: state.suggestedIngredients
     }))
 
     function fetchQuestions() {
@@ -43,8 +44,9 @@ function MainPage() {
             .then(res => {
                 console.log(res);
                 dispatch(Actions.updateNutritionPlan(res?.data?.data?.nutPlan));
-                dispatch(Actions.updateSuggestedIngredients(res?.data?.data?.suitableIngredients))
-                dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))
+                dispatch(Actions.updateSuggestedIngredients(res?.data?.data?.ingredientsByGroup));
+                dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }));
+
             })
             .catch(err => console.log(err))
     }
@@ -78,6 +80,18 @@ function MainPage() {
         console.log("maxScreenCount : ", maxScreenCount)
         dispatch(Actions.updateQuestionSectionInfo({ totalScreens: maxScreenCount }))
     }, [questions])
+
+    useEffect(() => {
+        // add the ingredient in the selectedIngredients state in redux
+        if (Object.keys(suggestedIngredients).length > 0) {
+            Object.keys(suggestedIngredients).forEach(category => {
+                suggestedIngredients[category].forEach(ingredient => {
+                    console.log("hello : ", ingredient._id)
+                    dispatch(Actions.addSelectedIngredient(ingredient._id))
+                })
+            })
+        }
+    }, [suggestedIngredients])
 
     return (
         <div className='w-full min-h-screen overflow-y-scroll py-4 px-3 bg-black'>

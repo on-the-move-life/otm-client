@@ -83,7 +83,7 @@ const reducer = (state = initialState, action) => {
             const updatedSelectedIngredients = state.selectedIngredients.filter(item => item !== action.payload);
             return {
                 ...state,
-                selectedIngredients: updatedSelectedIngredients
+                selectedIngredients: [...updatedSelectedIngredients]
             }
         case Actions.UPDATE_SECTION_NAME:
             return {
