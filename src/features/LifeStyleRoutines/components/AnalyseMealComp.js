@@ -248,36 +248,48 @@ const AnalyseMealComp = ({
 
     const DropdownComp = () => {
         return (
-            <div className="py-4 pr-[2px] w-full ">
-                <label
-                    className="text-xs tracking-widest text-custompurple"
-                    htmlFor="taskId"
-                >
-                    Select your meal:
-                </label>
-                <select
-                    className=" block w-full px-2 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
-                    id="taskId"
-                    value={selectedTaskId}
-                    onChange={handleSelectChange}
-                >
-                    <option value="" disabled className='bg-mediumGray text-white w-[10px] '>
-                        Select one option
-                    </option>
+            <div className="py-4  w-full  flex ">
+
+                <div className='w-full'>
+
+                    <label
+                        className="text-xs tracking-widest text-custompurple"
+                        htmlFor="taskId"
+                    >
+                        Select your meal:
+                    </label>
+                    <select
+                        className="appearance-none block w-full px-2 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
+                        id="taskId"
+                        value={selectedTaskId}
+                        onChange={handleSelectChange}
+                    >
+                        <option value="" disabled className='bg-mediumGray text-white w-[10px] '>
+                            Select one option
+                        </option>
 
 
-                    {mealTaskIds != null ? (
-                        mealTaskIds.map((task, index) => (
-                            <option key={index} value={task.taskId} className='bg-mediumGray text-white' >
-                                {task.taskName}
-                            </option>
-                        ))
-                    ) : (
-                        <option value={selectedTaskId}>{selectedTaskName}</option>
-                    )}
+                        {mealTaskIds != null ? (
+                            mealTaskIds.map((task, index) => (
+                                <option key={index} value={task.taskId} className='bg-mediumGray text-white' >
+                                    {task.taskName}
+                                </option>
+                            ))
+                        ) : (
+                            <option value={selectedTaskId}>{selectedTaskName}</option>
+                        )}
 
 
-                </select>
+                    </select>
+
+                </div>
+
+
+                <div className="w-0 pointer-events-none relative right-6 top-8 text-gray-700">
+                    <svg className="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </div>
 
             </div>
 
