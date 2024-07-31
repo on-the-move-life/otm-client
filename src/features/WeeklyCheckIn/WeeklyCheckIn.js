@@ -284,7 +284,7 @@ const WeeklyCheckIn = () => {
 
               <motion.div variants={itemVariants}>
                 <label htmlFor="learnings" className="block sm:text-lg text-base font-medium text-gray-700">
-                  What are your learnings of the week and how can we build the next week better?
+                  What are your learnings of the week and how can we build the next week better ?
                 </label>
                 <textarea
                   id="learnings"
@@ -365,12 +365,6 @@ const WeeklyCheckIn = () => {
                   <p className="mt-1 text-gray-500">No image uploaded</p>
                 )}
               </motion.div>
-
-              {checkInError && (
-                <motion.div variants={itemVariants} className="mt-4">
-                  <p className="text-red-500">{checkInError}</p>
-                </motion.div>
-              )}
 
               {!isSubmitted && (
                 <motion.div variants={itemVariants}>
