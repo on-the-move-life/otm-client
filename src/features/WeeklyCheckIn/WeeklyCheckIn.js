@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error } from '../../components';
 import axios from 'axios';
@@ -13,6 +13,7 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 const WeeklyCheckIn = () => {
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(null);
+  const [checkInError, setCheckInError] = useState(null);
   const [weeklyStats, setWeeklyStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
 
@@ -20,11 +21,17 @@ const WeeklyCheckIn = () => {
   const [completionHistory, setCompletionHistory] = useState([]);
 
   const [weekRating, setWeekRating] = useState('');
-  const [achievement, setAchievement] = useState('');
-  const [learnings, setLearnings] = useState('');
+  const achievementRef = useRef('');
+  const learningsRef = useRef('');
+  const [weight, setWeight] = useState('');
+  const [frontImage, setFrontImage] = useState(null);
+  const [sideImage, setSideImage] = useState(null);
+  const [frontImageUrl, setFrontImageUrl] = useState(null);
+  const [sideImageUrl, setSideImageUrl] = useState(null);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getUserFromStorage();
@@ -93,48 +100,68 @@ const WeeklyCheckIn = () => {
       if (response.data.success && response.data.data && response.data.data.length > 0) {
         const checkInData = response.data.data[0];
         setWeekRating(checkInData.rating.toString());
-        setAchievement(checkInData.achievement);
-        setLearnings(checkInData.learning);
+        achievementRef.current.value = checkInData.achievement;
+        learningsRef.current.value = checkInData.learning;
+        setWeight(checkInData.weight ? checkInData.weight.toString() : '');
+        
+        if (checkInData.imageURLs && checkInData.imageURLs.length > 0) {
+          setFrontImageUrl(checkInData.imageURLs[0]);
+          if (checkInData.imageURLs.length > 1) {
+            setSideImageUrl(checkInData.imageURLs[1]);
+          }
+        }
+        
         setIsSubmitted(true);
+        setCheckInError(null);
       } else {
-        // Reset form if no data is found
-        setWeekRating('');
-        setAchievement('');
-        setLearnings('');
+        setCheckInError('No data found in the response');
         setIsSubmitted(false);
       }
     } catch (error) {
       console.error('Error fetching submitted weekly check-in data:', error);
+      setCheckInError(`Failed to fetch data: ${error.message}`);
       setIsSubmitted(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setCheckInError(null);
     
-    const weeklyCheckInData = {
-      rating: parseInt(weekRating),
-      achievement,
-      learning: learnings,
-      memberCode: user.code
-    };
+    const formData = new FormData();
+    formData.append('rating', weekRating);
+    formData.append('achievement', achievementRef.current.value);
+    formData.append('learning', learningsRef.current.value);
+    formData.append('memberCode', user.code);
+    formData.append('weight', weight);
+    if (frontImage) formData.append('frontImage', frontImage);
+    if (sideImage) formData.append('sideImage', sideImage);
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-checkin`,
-        weeklyCheckInData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
 
       if (response.data.success) {
-        setIsSubmitted(true);
-        setShowSuccessPopup(true);
-        fetchSubmittedData(); // Fetch the submitted data to display
+        await fetchSubmittedData();
+        if (!checkInError) {
+          setShowSuccessPopup(true);
+        }
       } else {
-        alert('Failed to submit weekly check-in. Please try again.');
+        setCheckInError('Server responded with an unsuccessful status');
       }
     } catch (error) {
       console.error('Error submitting weekly check-in:', error);
-      alert('Failed to submit weekly check-in. Please try again.');
+      setCheckInError(`Failed to submit weekly check-in: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -168,16 +195,16 @@ const WeeklyCheckIn = () => {
   return (
     <>
       <div className={`flex w-screen grow flex-col gap-2 overflow-y-scroll px-4 pb-[20px] ${showSuccessPopup ? 'blur-sm' : ''}`}>
-      <div className="flex items-center justify-between mt-4 mb-2">
-        <button 
-          onClick={() => window.location.href = '/home'} 
-          className="text-white hover:text-gray-300 transition-colors"
-        >
-          <IoArrowBackOutline size={24} />
-        </button>
-        <h1 className="text-2xl font-bold text-center flex-grow">Weekly Check-In</h1>
-        <div className="w-6"></div> {/* This empty div helps center the title */}
-      </div>
+        <div className="flex items-center justify-between mt-4 mb-2">
+          <button 
+            onClick={() => window.location.href = '/home'} 
+            className="text-white hover:text-gray-300 transition-colors"
+          >
+            <IoArrowBackOutline size={24} />
+          </button>
+          <h1 className="text-2xl font-bold text-center flex-grow">Weekly Check-In</h1>
+          <div className="w-6"></div>
+        </div>
         {loader && <Loader />}
         {error && <Error>{error}</Error>}
         {!loader && !error && (
@@ -217,7 +244,7 @@ const WeeklyCheckIn = () => {
                     id="weekRating"
                     value={weekRating}
                     onChange={(e) => setWeekRating(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white p-2 appearance-none"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white p-2 appearance-none"
                     required
                     disabled={isSubmitted}
                   >
@@ -236,12 +263,9 @@ const WeeklyCheckIn = () => {
                 </label>
                 <textarea
                   id="achievement"
-                  value={achievement}
-                  onChange={(e) => {
-                    setAchievement(e.target.value);
-                    handleTextAreaChange(e);
-                  }}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
+                  ref={achievementRef}
+                  onChange={handleTextAreaChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white outline-none p-2"
                   required
                   style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
                   readOnly={isSubmitted}
@@ -254,28 +278,101 @@ const WeeklyCheckIn = () => {
                 </label>
                 <textarea
                   id="learnings"
-                  value={learnings}
-                  onChange={(e) => {
-                    setLearnings(e.target.value);
-                    handleTextAreaChange(e);
-                  }}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white outline-none p-2"
+                  ref={learningsRef}
+                  onChange={handleTextAreaChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white outline-none p-2"
                   required
                   style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
                   readOnly={isSubmitted}
                 ></textarea>
               </motion.div>
 
+              <motion.div variants={itemVariants}>
+                <label htmlFor="weight" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Current Weight (in kg)
+                </label>
+                <input
+                  type="number"
+                  id="weight"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white p-2"
+                  required
+                  disabled={isSubmitted}
+                />
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label htmlFor="frontImage" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Front Pose Image (optional)
+                </label>
+                {!isSubmitted ? (
+                  <input
+                    type="file"
+                    id="frontImage"
+                    onChange={(e) => setFrontImage(e.target.files[0])}
+                    className="mt-1 block w-full text-white"
+                    accept="image/*"
+                  />
+                ) : frontImageUrl ? (
+                  <div className="w-full flex justify-center">
+                    <div className="relative w-64 h-64 sm:w-80 sm:h-80 overflow-hidden rounded-lg">
+                      <img 
+                        src={frontImageUrl} 
+                        alt="Front Pose" 
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <p className="mt-1 text-gray-500">No image uploaded</p>
+                )}
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label htmlFor="sideImage" className="block sm:text-lg text-base font-medium text-gray-700">
+                  Side Pose Image (optional)
+                </label>
+                {!isSubmitted ? (
+                  <input
+                    type="file"
+                    id="sideImage"
+                    onChange={(e) => setSideImage(e.target.files[0])}
+                    className="mt-1 block w-full text-white"
+                    accept="image/*"
+                  />
+                ) : sideImageUrl ? (
+                  <div className="w-full flex justify-center">
+                    <div className="relative w-64 h-64 sm:w-80 sm:h-80 overflow-hidden rounded-lg">
+                      <img 
+                        src={sideImageUrl} 
+                        alt="Side Pose" 
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <p className="mt-1 text-gray-500">No image uploaded</p>
+                )}
+              </motion.div>
+
+              {checkInError && (
+                <motion.div variants={itemVariants} className="mt-4">
+                  <p className="text-red-500">{checkInError}</p>
+                </motion.div>
+              )}
+
               {!isSubmitted && (
                 <motion.div variants={itemVariants}>
                   <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue"
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue disabled:opacity-50"
+                    disabled={isLoading}
                   >
-                    Submit Weekly Check-In
-                  </button>
-                </motion.div>
-              )}
+      {isLoading ? 'Submitting...' : 'Submit Weekly Check-In'}
+    </button>
+  </motion.div>
+)}
             </motion.form>
           </motion.div>
         )}
