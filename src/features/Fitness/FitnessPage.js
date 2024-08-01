@@ -102,7 +102,7 @@ const FitnessPage = () => {
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
             <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
               <TimelineHeading>Movement</TimelineHeading>
-              <div className="flex h-[76px] w-1/2  items-center justify-between rounded-lg bg-mediumGray p-1">
+              <div className="flex h-[66px] w-[46%]  items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 text-sm w-9">Total workouts</span>
                 <div
                   className={`
@@ -112,9 +112,9 @@ const FitnessPage = () => {
                     homeStats.totalWorkoutsDone < 999
                       ? 'text-4xl'
                       : 'text-5xl'
-                  } flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-blue text-center  font-anton  text-mediumGray `}
+                  } flex h-full min-w-[68px] items-center justify-center rounded-lg bg-blue text-center  font-anton  text-mediumGray `}
                 >
-                  {formatNumber(homeStats.totalWorkoutsDone)}
+                  {formatNumber(10)}
                 </div>
               </div>
             </section>

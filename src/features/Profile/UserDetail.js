@@ -388,31 +388,26 @@ const UserDetails = ({ showHistory }) => {
                   </div>
                 </div>
 
-                <AnimatedComponent>
-                  <Link
-                    to="/marketplace"
-                    className="my-2 flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
+                <Link
+                  to="/marketplace"
+                  className="my-2 flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
+                >
+                  <div
+                    className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
+                    style={{
+                      backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})`,
+                    }}
                   >
-                    <div
-                      className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
-                      style={{
-                        backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})`,
-                      }}
-                    >
-                      <div>Marketplace </div>
-                      <Movecoins
-                        fontSize={'26px'}
-                        coins={memberData.moveCoins}
-                      />
-                    </div>
-                    <div className="w-full mt-2">
-                      <CoinsIndicator
-                        coins={memberData.moveCoins}
-                        offers={memberData.offers}
-                      />
-                    </div>
-                  </Link>
-                </AnimatedComponent>
+                    <div>Marketplace </div>
+                    <Movecoins fontSize={'26px'} coins={memberData.moveCoins} />
+                  </div>
+                  <div className="w-full mt-2">
+                    <CoinsIndicator
+                      coins={memberData.moveCoins}
+                      offers={memberData.offers}
+                    />
+                  </div>
+                </Link>
 
                 {/* <MoveCoins coins={0} /> */}
 

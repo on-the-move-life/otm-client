@@ -27,18 +27,18 @@ function CalendarTile({
 
   return (
     <div
-      className={`relative flex h-[65px] w-fit grow flex-col items-center justify-center gap-0 rounded-[7.5px]  pt-3 ${
+      className={`relative flex h-[65px] w-fit grow flex-col items-center justify-center gap-0 rounded-[7.5px]  pt-[9px] ${
         isSelected ? 'bg-black' : ''
       }`}
       onClick={() => {
         setSelectedDate(date);
       }}
     >
-      {isToday && isSelected && (
+      {/* {isToday && isSelected && (
         <p className="absolute top-[-1px] mb-1 text-center text-[8px] text-[#929292]">
           Today
         </p>
-      )}
+      )} */}
       <h3
         className={`text-[15px] leading-[17.32px] ${
           isSelected ? 'text-[#7E87EF]' : 'text-[#929292]'
