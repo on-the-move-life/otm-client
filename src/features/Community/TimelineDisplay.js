@@ -41,8 +41,6 @@ const TimelineDisplay = ({ data, timeline }) => {
 
   const navigate = useNavigate();
 
-  console.log(data);
-
   return (
     <div
       className="flex w-full flex-col   gap-[2px] rounded-xl bg-mediumGray px-1 pb-1"
@@ -54,8 +52,8 @@ const TimelineDisplay = ({ data, timeline }) => {
           : 'Community timeline'}
       </h1>
       <div className="flex w-full flex-col rounded-xl  bg-black px-[11px] py-4">
-        <div className="flex w-full flex-row items-center justify-between">
-          <div className="mb-2 flex flex-row items-center justify-center gap-2">
+        <div className="flex flex-row items-center justify-between w-full">
+          <div className="flex flex-row items-center justify-center gap-2 mb-2">
             <CommunityName>{data?.name}</CommunityName>
           </div>
           <div
@@ -67,16 +65,16 @@ const TimelineDisplay = ({ data, timeline }) => {
         </div>
 
         <Date>{formattedDate}</Date>
-        <div className="timeline-tags   flex flex-row flex-wrap text-xs">
+        <div className="timeline-tags mt-[6px] flex flex-row flex-wrap text-xs">
           {/* <InfoTile>Horizontal Pull</InfoTile> */}
           <CommunityTile>{formattedTime}</CommunityTile>
           <CommunityTile>
             Total Workouts {data?.consistency?.total}
           </CommunityTile>
-          <div className="flex items-center justify-center gap-2 rounded border  border-white-opacity-23 bg-[rgba(59,59,59,0.06)] p-0.5 px-2 backdrop-blur-[17px]">
+          <div className=" flex items-center justify-center gap-2 rounded border  border-white-opacity-23 bg-[rgba(59,59,59,0.06)] p-0.5 px-2 backdrop-blur-[17px]">
             <img
               src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`}
-              className="h-4 w-4"
+              className="w-4 h-4"
               alt="move coins logo"
             />
             <p>{data?.moveCoins} Coins</p>

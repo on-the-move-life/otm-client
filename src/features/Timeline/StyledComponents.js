@@ -138,13 +138,13 @@ const PercentChangeText = styled.div`
 
 const CommunityTile = styled.p`
   display: flex;
-  padding: 0px 8px;
+  padding: 10px 8px;
   justify-content: center;
   align-items: center;
-  margin: 4px 6px 0px 0px;
+  margin: 0px 6px 0px 0px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.23);
-  height:;
+  height: 16px;
 `;
 
 const CommunityName = styled.div`

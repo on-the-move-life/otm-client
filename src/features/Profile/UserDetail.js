@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../../components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { formatDate } from '../../utils';
 import { axiosClient } from './apiProfileClient';
 import { FaUserCircle } from 'react-icons/fa';
@@ -165,8 +165,6 @@ const UserDetails = ({ showHistory }) => {
     },
   };
 
-  console.log('xx');
-
   return (
     <>
       {showProfilePicPopup && (
@@ -243,7 +241,7 @@ const UserDetails = ({ showHistory }) => {
           </div> */}
 
             {/* User Profile Pic and Name */}
-            <div className="mt-[80px] flex flex-col items-center justify-center">
+            <div className="mt-[60px] flex flex-col items-center justify-center">
               <div className="flex flex-col items-center justify-center gap-5 mt-6">
                 <div className="relative h-[136px] w-[136px] rounded-full">
                   {chosenPic ? (
@@ -261,7 +259,7 @@ const UserDetails = ({ showHistory }) => {
                       width={'136px'}
                     />
                   ) : (
-                    <FaUserCircle size={80} color={'#91BDF6'} />
+                    <FaUserCircle size={136} color={'#91BDF6'} />
                   )}
                   <button
                     className="absolute bottom-0 right-0 flex h-[30px] w-[30px] flex-row items-center justify-center rounded-full bg-green"
@@ -331,24 +329,24 @@ const UserDetails = ({ showHistory }) => {
               >
                 <div className="flex flex-col h-full ">
                   <section>
-                    <div className="text-sm font-medium">Your Plan</div>
+                    {/* <div className="text-sm font-medium">Your Plan</div> */}
                     <div className="text-2xl font-medium leading-10 text-floYellow">
-                      Shred
+                      Membership
                     </div>
-                    <div className="text-[8px]  tracking-[5px] text-lightGray ">
+                    {/* <div className="text-[8px]  tracking-[5px] text-lightGray ">
                       LIGHTER & AGILE
-                    </div>
+                    </div> */}
                     <div
                       className="flex flex-col pt-2"
                       onClick={() => setShowProfilePicPopup(false)}
                     >
-                      <div className="bg-neutral-700 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-lightGray bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                      {/* <div className="bg-neutral-700 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-lightGray bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
                         <div className="text-xs capitalize text-offwhite">
                           ₹5,000 Renewed Monthly
                         </div>
-                      </div>
+                      </div> */}
                       {memberData.isPaymentDue ? (
-                        <div className="mt-2 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
+                        <div className=" inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
                           <div className="relative w-3 h-3">
                             <img src="/assets/alert-triangle.svg" alt="" />
                           </div>
@@ -357,7 +355,7 @@ const UserDetails = ({ showHistory }) => {
                           </div>
                         </div>
                       ) : (
-                        <div className="bg-neutral-700 mt-2 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-green bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                        <div className="bg-neutral-700  inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-green bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
                           <ul className="pl-3 list-disc">
                             <li className="text-xs capitalize text-green">
                               Next payment due on{' '}
@@ -377,7 +375,7 @@ const UserDetails = ({ showHistory }) => {
                       Make Payment
                     </button> */}
                     <div
-                      className="border-zinc-400 mt-2 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                      className="border-zinc-400 mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
                       onClick={() => showHistory()}
                     >
                       <button className="mt-[2px] text-lg font-medium text-white">
@@ -389,7 +387,10 @@ const UserDetails = ({ showHistory }) => {
               </div>
 
               <AnimatedComponent>
-                <div className="my-2 flex min-h-[210px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray ">
+                <Link
+                  to="/marketplace"
+                  className="my-2 flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
+                >
                   <div
                     className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
                     style={{
@@ -397,12 +398,15 @@ const UserDetails = ({ showHistory }) => {
                     }}
                   >
                     <div>Marketplace </div>
-                    <Movecoins fontSize={'26px'} coins={300} />
+                    <Movecoins fontSize={'26px'} coins={memberData.moveCoins} />
                   </div>
                   <div className="w-full mt-2">
-                    <CoinsIndicator coins={300} offers={[]} />
+                    <CoinsIndicator
+                      coins={memberData.moveCoins}
+                      offers={memberData.offers}
+                    />
                   </div>
-                </div>
+                </Link>
               </AnimatedComponent>
 
               {/* <MoveCoins coins={0} /> */}
