@@ -972,6 +972,7 @@ meter::-webkit-meter-optimum-value{
   background: none;
   background-color: white;
   border-radius: 7px;
+}
 
 .purple-white-gradient {
   font-family: 'Anton', sans-serif;
