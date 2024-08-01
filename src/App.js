@@ -199,7 +199,7 @@ function App() {
           }
         />
         <Route
-          path="/MealPlanner"
+          path="/meal-planner"
           element={
             <Provider store={mealPlannerStore}>
               <RouteMiddleware>
