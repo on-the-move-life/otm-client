@@ -113,7 +113,7 @@ const FitnessPage = () => {
           </section>
           <section>
             {currentDate < 5 && (
-              <section className="flex flex-row items-center justify-center w-full gap-3 mt-8">
+              <section className="flex flex-row items-center justify-center w-full gap-3 ">
                 <MonthlyWrapped />
               </section>
             )}
