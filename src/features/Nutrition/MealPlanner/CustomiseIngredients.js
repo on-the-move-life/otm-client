@@ -1,17 +1,19 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import NutrientsBubble from './Components/NutrientsBubble';
 import IngredientOption from './Components/IngredientOption';
+import * as Selectors from "./Redux/selectors";
 
 function CustomiseIngredients() {
-    const dispatch = useDispatch();
-    const { screen, suggestedIngredients, nutritionPlan } = useSelector((state) => {
-        return {
-            screen: state.questionSectionInfo.screen,
-            suggestedIngredients: state.suggestedIngredients,
-            nutritionPlan: state.nutritionPlan
-        }
-    })
+    const selectSuggestedIngredients = Selectors.makeGetSuggestedIngredients();
+    const selectNutritionPlan = Selectors.makeGetNutritionPlan();
+    const selectQuestionSectionInfo = Selectors.makeGetQuestionSectionInfo();
+
+    const suggestedIngredients = useSelector(selectSuggestedIngredients);
+    const nutritionPlan = useSelector(selectNutritionPlan);
+    const questionSectionInfo = useSelector(selectQuestionSectionInfo);
+    const screen = questionSectionInfo.screen;
+    
     const { calorie, proteins, fats, carbs } = nutritionPlan;
     return (
         <div className='w-full h-full my-11'>

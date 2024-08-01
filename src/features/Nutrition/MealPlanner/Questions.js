@@ -4,14 +4,19 @@ import * as Actions from './Redux/actions';
 import { updateCurrentQuestion, capitalizeFirstLetter } from '../../LifestyleQuiz/utils/utils';
 import InputText from '../../LifestyleQuiz/InputText';
 import Options from '../../LifestyleQuiz/Options';
+import * as Selectors from "./Redux/selectors";
 
 function Questions({ validation, setValidation }) {
     const dispatch = useDispatch();
-    const { questions, responses, screen } = useSelector((state) => ({
-        questions: state.questions,
-        responses: state.responses,
-        screen: state.questionSectionInfo.screen
-    }))
+    const selectQuestions = Selectors.makeGetQuestions();
+    const selectResponses = Selectors.makeGetResponses();
+    const selectQuestionSectionInfo = Selectors.makeGetQuestionSectionInfo();
+
+    const questions = useSelector(selectQuestions);
+    const responses = useSelector(selectResponses);
+    const questionSectionInfo = useSelector(selectQuestionSectionInfo);
+    const screen = questionSectionInfo.screen;
+    
     const [response, setResponse] = useState({});
     const [currentQuestion, setCurrentQuestion] = useState(null);
 

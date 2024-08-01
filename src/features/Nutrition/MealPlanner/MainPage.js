@@ -14,7 +14,8 @@ import PageIndicator from './Components/PageIndicator'
 import { useNavigate } from 'react-router-dom'
 import { Loader } from "../../LifestyleQuiz";
 import { Error } from "../../../components";
-import MealPlanPage from './MealPlanPage'
+import MealPlanPage from './MealPlanPage';
+import * as Selectors from "./Redux/selectors";
 
 function MainPage() {
     const dispatch = useDispatch();
@@ -23,16 +24,23 @@ function MainPage() {
     const [pageLoading, setPageLoading] = useState(false);
     const [pageError, setPageError] = useState(false);
 
-    const { questions, responses, sectionName, questionScreen, totalQuestionScreen, currentQuestion, suggestedIngredients, selectedIngredients } = useSelector((state) => ({
-        questions: state.questions,
-        responses: state.responses,
-        sectionName: state.sectionName,
-        questionScreen: state.questionSectionInfo.screen,
-        totalQuestionScreen: state.questionSectionInfo.totalScreens,
-        currentQuestion: state.questionSectionInfo.currentScreenQuestions,
-        suggestedIngredients: state.suggestedIngredients,
-        selectedIngredients: state.selectedIngredients
-    }))
+    const selectQuestions = Selectors.makeGetQuestions();
+    const selectResponses = Selectors.makeGetResponses();
+    const selectSectionName = Selectors.makeGetSectionName();
+    const selectQuestionSectionInfo = Selectors.makeGetQuestionSectionInfo();
+    const selectSuggestedIngredients = Selectors.makeGetSuggestedIngredients();
+    const selectSelectedIngredients = Selectors.makeGetSelectedIngredients();
+
+    const questions = useSelector(selectQuestions);
+    const responses = useSelector(selectResponses);
+    const sectionName = useSelector(selectSectionName);
+    const questionSectionInfo = useSelector(selectQuestionSectionInfo);
+    const suggestedIngredients = useSelector(selectSuggestedIngredients);
+    const selectedIngredients = useSelector(selectSelectedIngredients);
+
+    const questionScreen = questionSectionInfo.screen;
+    const totalQuestionScreen = questionSectionInfo.totalScreens;
+    const currentQuestion = questionSectionInfo.currentScreenQuestions;
 
     function fetchQuestions() {
         setPageLoading(true);

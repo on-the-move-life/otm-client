@@ -2,14 +2,12 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import * as Actions from "../Redux/actions";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import * as Selectors from "../Redux/selectors";
 
 function IngredientOption({ optionValue, optionID, description }) {
   const dispatch = useDispatch();
-  const { selectedIngredients } = useSelector((state) => {
-    return {
-      selectedIngredients: state.selectedIngredients,
-    }
-  })
+  const selectSelectedIngredients = Selectors.makeGetSelectedIngredients();
+  const selectedIngredients = useSelector(selectSelectedIngredients);
 
   return (
     <div
