@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const axiosClient = axios.create({
-  baseURL: `${process.env.REACT_BACKEND_MODE === 'production' ? process.env.REACT_APP_BASE_URL : 'http://localhost:882'}/api/v1/nutrition`,
+  baseURL: `${process.env.REACT_APP_BACKEND_MODE === 'production' ? process.env.REACT_APP_BASE_URL : 'http://localhost:882'}/api/v1/nutrition`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
