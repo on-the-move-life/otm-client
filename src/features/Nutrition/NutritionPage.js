@@ -14,7 +14,7 @@ const NutritionPage = () => {
         <div className="mt-[76px]">
           <TimelineHeading>Nutrition</TimelineHeading>
         </div>
-        <div className="mt-[105px] flex flex-col gap-2">
+        <div className="mt-[90px] flex flex-col gap-2">
           <Link
             to="/MealUpload"
             className="relative  flex h-[78px] rounded-lg bg-mediumGray"
@@ -22,7 +22,7 @@ const NutritionPage = () => {
             <div className="my-2 ml-4 ">
               <div className="flex gap-2">
                 <img src="/assets/camera-logo.svg" />
-                <h3 className="text-offwhite">Meal Upload</h3>
+                <h3 className="text-offwhite">Meal Analysis</h3>
               </div>
               <div className="mt-1 w-[250px] text-[14px]  leading-[16px] text-lightGray">
                 Let the power of AI breakdown your meal

@@ -135,8 +135,8 @@ const Community = () => {
         <div className="mt-[76px]">
           <TimelineHeading>Community</TimelineHeading>
         </div>
-        <div className="mt-3">
-          <div className="mt-9 flex w-full flex-col gap-2">
+        <div>
+          <div className="flex flex-col w-full gap-2 mt-7">
             {matchingWorkoutUser && (
               <RankDisplay
                 selectedDataType="workout"
@@ -160,7 +160,7 @@ const Community = () => {
               />
             )}
           </div>
-          <div className="mt-9 flex w-full flex-col gap-2">
+          <div className="flex flex-col w-full gap-2 mt-7">
             {data !== null && data.data.length > 0 && (
               <TimelineDisplay data={data.data[0]} timeline={'community'} />
             )}

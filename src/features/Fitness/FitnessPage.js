@@ -94,20 +94,20 @@ const FitnessPage = () => {
       {homeStats && (
         <div>
           <img
-            className="absolute right-0 -z-20 "
+            className="absolute right-0 -top-5 -z-20 "
             src="/assets/main-frame.svg"
           />
           <img
-            className="absolute right-[85px] top-14 -z-10 "
+            className="absolute right-[75px] top-8 -z-10 "
             src="/assets/movement-logo.svg"
           />
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
-            <section className="mt-[76px] pb-0 pt-5">
-              <TimelineHeading>Fitness</TimelineHeading>
+            <section className="mt-[56px] pb-0 pt-5">
+              <TimelineHeading>Movement</TimelineHeading>
             </section>
-            <div className="flex w-full gap-2 mt-6">
+            <div className="flex w-full gap-2 mt-2">
               <div className="flex h-[76px] w-1/2  items-center justify-between rounded-lg bg-mediumGray p-1">
-                <span className="pl-4 w-9">Total workouts</span>
+                <span className="pl-4 text-sm w-9">Total workouts</span>
                 <div
                   className={`
                   
@@ -116,21 +116,23 @@ const FitnessPage = () => {
                     homeStats.totalWorkoutsDone < 999
                       ? 'text-4xl'
                       : 'text-5xl'
-                  } font-anton flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-blue  text-center  text-mediumGray `}
+                  } flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-blue text-center  font-anton  text-mediumGray `}
                 >
                   {formatNumber(homeStats.totalWorkoutsDone)}
                 </div>
               </div>
-              {/* <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
-                <span className="pl-4 w-9 text-floYellow">Log Activity</span>
+              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+                <span className="pl-4 text-sm w-9 text-floYellow">
+                  Log Activity
+                </span>
                 <div className="flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-floYellow ">
                   <img src="/assets/fitness-add.svg" />
                 </div>
-              </div> */}
+              </div>
             </div>
 
-            <h2 className="inline-block mt-2 text-2xl  font-sfpro text-floYellow">
-              Today's Workout
+            <h2 className="inline-block mt-2 text-2xl font-sfpro text-floYellow">
+              Shred
             </h2>
 
             <section>
@@ -145,17 +147,18 @@ const FitnessPage = () => {
                       <img src="/assets/shred-logo.svg" />
                     </div>
 
-                  <div className="flex gap-3">
-                    <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
-                      {homeStats.hyperWorkoutParams.theme}
-                    </h2>
-                    <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {homeStats.hyperWorkoutParams.duration} mins
-                    </h2>
-                    <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {' '}
-                      {homeStats.hyperWorkoutParams.calories} cal
-                    </h2>
+                    <div className="flex gap-3">
+                      <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
+                        {homeStats.hyperWorkoutParams.theme}
+                      </h2>
+                      <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {homeStats.hyperWorkoutParams.duration} mins
+                      </h2>
+                      <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {' '}
+                        {homeStats.hyperWorkoutParams.calories} cal
+                      </h2>
+                    </div>
                   </div>
                 </div>
                 {/* <h2 className="text-xl font-medium text-floYellow">Start</h2> */}
@@ -232,13 +235,13 @@ const FitnessPage = () => {
                     </div>
 
                     <div className="flex gap-3">
-                      <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
+                      <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
                         {homeStats.flexWorkoutParams.theme}
                       </h2>
-                      <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                      <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
                         {homeStats.flexWorkoutParams.duration} mins
                       </h2>
-                      <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                      <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
                         {' '}
                         {homeStats.flexWorkoutParams.calories} cal
                       </h2>
@@ -249,12 +252,12 @@ const FitnessPage = () => {
               </div>
             </section>
 
-            <div className="pt-2 pb-5 pl-4 rounded-xl bg-mediumGray">
+            {/* <div className="pt-2 pb-5 pl-4 rounded-xl bg-mediumGray">
               <p className="text-sm text-red">Injury guide</p>
               <p className="mt-3 text-offwhite">
                 Follow our RSLL protocols to deal with injuries
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
