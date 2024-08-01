@@ -3,7 +3,7 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import CalendarTile from './Components/CalendarTile';
 import MealInfoTile from './Components/MealInfoTile';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as Selectors from "./Redux/selectors";
 import * as Actions from "./Redux/actions";
 
@@ -11,7 +11,7 @@ function MealPlanPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectWeeklyPlans = Selectors.makeGetWeeklyPlan();
-  const weeklyPlan = useSelector(selectWeeklyPlans);
+  const weeklyPlan = useSelector(selectWeeklyPlans, shallowEqual);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [dateWiseWeeklyPlan, setDateWiseWeeklyPlan] = useState(null);

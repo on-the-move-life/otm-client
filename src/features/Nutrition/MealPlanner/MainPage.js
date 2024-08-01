@@ -4,7 +4,7 @@ import { Button } from '../../../components'
 import GetStarted from './GetStarted'
 import Questions from './Questions'
 import CustomiseIngredients from './CustomiseIngredients'
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getScreenCounts, isAnyEmptyResponse, validResponses } from '../../LifestyleQuiz/utils/utils';
 import { axiosClient } from '../apiClient'
 import * as Actions from "./Redux/actions"
@@ -31,12 +31,12 @@ function MainPage() {
     const selectSuggestedIngredients = Selectors.makeGetSuggestedIngredients();
     const selectSelectedIngredients = Selectors.makeGetSelectedIngredients();
 
-    const questions = useSelector(selectQuestions);
-    const responses = useSelector(selectResponses);
-    const sectionName = useSelector(selectSectionName);
-    const questionSectionInfo = useSelector(selectQuestionSectionInfo);
-    const suggestedIngredients = useSelector(selectSuggestedIngredients);
-    const selectedIngredients = useSelector(selectSelectedIngredients);
+    const questions = useSelector(selectQuestions, shallowEqual);
+    const responses = useSelector(selectResponses, shallowEqual);
+    const sectionName = useSelector(selectSectionName, shallowEqual);
+    const questionSectionInfo = useSelector(selectQuestionSectionInfo, shallowEqual);
+    const suggestedIngredients = useSelector(selectSuggestedIngredients, shallowEqual);
+    const selectedIngredients = useSelector(selectSelectedIngredients, shallowEqual);
 
     const questionScreen = questionSectionInfo.screen;
     const totalQuestionScreen = questionSectionInfo.totalScreens;

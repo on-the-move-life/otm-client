@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import NutrientsBubble from './Components/NutrientsBubble';
 import IngredientOption from './Components/IngredientOption';
 import * as Selectors from "./Redux/selectors";
@@ -9,9 +9,9 @@ function CustomiseIngredients() {
     const selectNutritionPlan = Selectors.makeGetNutritionPlan();
     const selectQuestionSectionInfo = Selectors.makeGetQuestionSectionInfo();
 
-    const suggestedIngredients = useSelector(selectSuggestedIngredients);
-    const nutritionPlan = useSelector(selectNutritionPlan);
-    const questionSectionInfo = useSelector(selectQuestionSectionInfo);
+    const suggestedIngredients = useSelector(selectSuggestedIngredients, shallowEqual);
+    const nutritionPlan = useSelector(selectNutritionPlan, shallowEqual);
+    const questionSectionInfo = useSelector(selectQuestionSectionInfo, shallowEqual);
     const screen = questionSectionInfo.screen;
     
     const { calorie, proteins, fats, carbs } = nutritionPlan;

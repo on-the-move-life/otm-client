@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as Actions from "../Redux/actions";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import * as Selectors from "../Redux/selectors";
@@ -7,7 +7,7 @@ import * as Selectors from "../Redux/selectors";
 function IngredientOption({ optionValue, optionID, description }) {
   const dispatch = useDispatch();
   const selectSelectedIngredients = Selectors.makeGetSelectedIngredients();
-  const selectedIngredients = useSelector(selectSelectedIngredients);
+  const selectedIngredients = useSelector(selectSelectedIngredients, shallowEqual);
 
   return (
     <div

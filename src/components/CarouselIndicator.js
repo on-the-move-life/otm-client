@@ -58,15 +58,15 @@ function CarouselIndicator({ numberOfSlides, currentIndex, setCurrentIndex, isHo
                 [...Array(numberOfSlides)].map((item, idx) => {
                     return (
                         currentIndex !== idx ?
-                            <div className='w-[7px] h-[7px] rounded-full bg-[#c3c3c3]/60'></div> :
-                            <meter className='rounded-[7px] meter' value={progress} max={100}></meter>
+                            <div className='w-[7px] h-[7px] rounded-full bg-[#c3c3c3]/60' key={idx}></div> :
+                            <meter className='rounded-[7px] meter' value={progress} max={100} key={idx}></meter>
                     )
                 }) :
                 [...Array(numberOfSlides)].map((item, idx) => {
                     return (
                         currentIndex !== idx ?
-                            <div className='w-[7px] h-[7px] rounded-full bg-[#c3c3c3]/60'></div> :
-                            <div className='w-[7px] h-[7px] rounded-full bg-white'></div>
+                            <div className='w-[7px] h-[7px] rounded-full bg-[#c3c3c3]/60' key={idx}></div> :
+                            <div className='w-[7px] h-[7px] rounded-full bg-white' key={idx}></div>
                     )
                 })
             }
