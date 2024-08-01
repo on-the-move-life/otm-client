@@ -1,4 +1,3 @@
-//FitnessPage.js
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error, Counter } from '../../components';
@@ -13,8 +12,8 @@ import WeeklyWorkoutReport from './WeeklyWorkoutReport';
 import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
 import { TimelineHeading } from '../Timeline/StyledComponents';
-import { AiOutlineRight } from 'react-icons/ai';
 import MonthlyWrapped from '../Profile/MonthlyWrapped';
+import { AiOutlineRight } from 'react-icons/ai';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -29,16 +28,16 @@ const FitnessPage = () => {
   // const [user, getUserFromStorage] = useState({});
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
-
+  const [isWeekend, setIsWeekend] = useState(false);
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
-  const [isWeekend, setIsWeekend] = useState(false);
   const currentDate = new Date().getDate();
-
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
 
   const navigate = useNavigate();
+
+  console.log(homeStats);
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
@@ -80,7 +79,6 @@ const FitnessPage = () => {
       const presentday = new Date().getDay();
       setIsWeekend(presentday === 0 || presentday === 6); // 0 is Sunday, 6 is Saturday
     };
-
     checkIfWeekend();
   }, []);
 
@@ -121,19 +119,27 @@ const FitnessPage = () => {
                   {formatNumber(homeStats.totalWorkoutsDone)}
                 </div>
               </div>
-              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+              {/* <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 text-sm w-9 text-floYellow">
                   Log Activity
                 </span>
                 <div className="flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-floYellow ">
                   <img src="/assets/fitness-add.svg" />
                 </div>
-              </div>
+              </div> */}
             </div>
 
-            <h2 className="inline-block mt-2 text-2xl font-sfpro text-floYellow">
+            {/* <h2 className="inline-block mt-2 text-2xl font-sfpro text-floYellow">
               Shred
-            </h2>
+            </h2> */}
+
+            <section>
+              {currentDate < 5 && (
+                <section className="flex flex-row items-center justify-center w-full gap-3 ">
+                  <MonthlyWrapped />
+                </section>
+              )}
+            </section>
 
             <section>
               <div className="flex items-center">
@@ -143,7 +149,7 @@ const FitnessPage = () => {
                 >
                   <div className="flex flex-col justify-between h-full">
                     <div className="flex gap-3">
-                      <h2 className="text-3xl font-medium ">Shred</h2>
+                      <h2 className="text-3xl font-medium ">Today's Workout</h2>
                       <img src="/assets/shred-logo.svg" />
                     </div>
 
@@ -160,51 +166,38 @@ const FitnessPage = () => {
                       </h2>
                     </div>
                   </div>
-                </div>
-                {/* <h2 className="text-xl font-medium text-floYellow">Start</h2> */}
-              </Link>
-              {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
-                <div className="absolute -top-1 left-[6px]">+</div>
-              </div> */}
+                  <h2 className="text-xl font-medium text-floYellow">Start</h2>
+                </Link>
               </div>
             </section>
 
-          {isWeekend && (
-            <Link to="/weekly-checkin" className="">
-              <div className="flex-col p-4 rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="inline-block text-2xl font-semibold tracking-wider purple-white-gradient">
-                    Weekly Check-In
-                  </span>
-                  <span className="font-semibold">
-                    <AiOutlineRight size={26} className="text-white " />
-                  </span>
+            {isWeekend && (
+              <Link to="/weekly-checkin" className="">
+                <div className="flex-col p-4 rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="inline-block text-2xl font-semibold tracking-wider purple-white-gradient">
+                      Weekly Check-In
+                    </span>
+                    <span className="font-semibold">
+                      <AiOutlineRight size={26} className="text-white " />
+                    </span>
+                  </div>
+                  <div className="flex justify-center">
+                    <p className="max-w-[100%] text-left text-[12px] font-semibold text-white">
+                      View your weekly stats and register your thoughts and
+                      rating
+                    </p>
+                  </div>
                 </div>
-                <div className="flex justify-center">
-                  <p className="max-w-[100%] text-left text-[12px] font-semibold text-white">
-                    View your weekly stats and register your thoughts and rating
-                  </p>
-                </div>
-              </div>
-            </Link>
-          )}
+              </Link>
+            )}
 
-          <section>
-            <WeeklyWorkoutReport
-              consistencyTrend={homeStats?.consistencyTrend}
-              suggestedWorkoutPerWeek={homeStats?.frequency}
-              lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
-            />
-          </section>
-          <section>
-            <FitnessScore
-              score={homeStats?.score}
-              percentile={homeStats?.fitnessPercentileScore}
-            />
-          </section>
-
-          {homeStats?.isPaymentDue && (
             <section>
+              <FitnessScore
+                score={homeStats?.score}
+                percentile={homeStats?.fitnessPercentileScore}
+              />
+
               <WeeklyWorkoutReport
                 consistencyTrend={homeStats?.consistencyTrend}
                 suggestedWorkoutPerWeek={homeStats?.frequency}
