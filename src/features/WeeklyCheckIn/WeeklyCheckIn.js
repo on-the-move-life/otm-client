@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error } from '../../components';
 import axios from 'axios';
@@ -274,7 +275,7 @@ const WeeklyCheckIn = () => {
 
               <motion.div variants={itemVariants}>
                 <label htmlFor="learnings" className="block sm:text-lg text-base font-medium text-gray-700">
-                  What are your learnings of the week and how can we build the next week better?
+                  What are your learnings of the week and how can we build the next week better ?
                 </label>
                 <textarea
   id="learnings"
