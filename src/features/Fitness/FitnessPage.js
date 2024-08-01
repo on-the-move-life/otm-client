@@ -14,6 +14,7 @@ import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
 import { TimelineHeading } from '../Timeline/StyledComponents';
 import { AiOutlineRight } from 'react-icons/ai';
+import MonthlyWrapped from '../Profile/MonthlyWrapped';
 
 const FitnessPage = () => {
   const { setUserData } = useUserContext();
@@ -25,6 +26,7 @@ const FitnessPage = () => {
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
   const [isWeekend, setIsWeekend] = useState(false);
+  const currentDate = new Date().getDate();
 
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
@@ -103,10 +105,18 @@ const FitnessPage = () => {
                   Today's Workout
                 </h2> */}
               </div>
+
               {homeStats !== null && homeStats?.totalWorkoutsDone > 0 && (
                 <TotalWorkoutFitness apiData={homeStats?.totalWorkoutsDone} />
               )}
             </div>
+          </section>
+          <section>
+            {currentDate < 5 && (
+              <section className="flex flex-row items-center justify-center w-full gap-3 mt-8">
+                <MonthlyWrapped />
+              </section>
+            )}
           </section>
           <section>
             <div className="flex items-center">
@@ -213,6 +223,8 @@ const FitnessPage = () => {
               </div> */}
             </div>
           </section>
+
+
         </div>
       )}
     </>
