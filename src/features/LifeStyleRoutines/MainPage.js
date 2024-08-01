@@ -1,3 +1,4 @@
+//MainPage.js
 import React, { useState, useEffect } from 'react';
 import { NavigationTab } from './index';
 import Calendar from './Calendar';
@@ -90,6 +91,7 @@ function MainPage() {
             setReloadCounter={setReloadCounter}
           />
         ) : (
+          
           <Summary circles={circles} date={selectedDate} />
         )}
       </div>

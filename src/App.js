@@ -28,6 +28,7 @@ import { useAuth } from './contexts/AuthContext';
 import MealUpload from './features/LifeStyleRoutines/MealUpload';
 import NutritionPage from './features/Nutrition/NutritionPage';
 import { MealPlanner } from './features/Nutrition/MealPlanner';
+import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -85,7 +86,7 @@ function App() {
           element={<Report />}
         />
         <Route
-          path="/section-details"
+          path="/section-details/:value"
           element={
             <RouteMiddleware>
               <SectionDetail />
@@ -93,7 +94,7 @@ function App() {
           }
         />
         <Route
-          path="/workout"
+          path="/workout/:value"
           element={
             <RouteMiddleware>
               <Workout />
@@ -101,7 +102,7 @@ function App() {
           }
         />
         <Route
-          path="/workout-summary"
+          path="/workout-summary/:value"
           element={
             <RouteMiddleware>
               <WorkoutSummary />
@@ -215,6 +216,14 @@ function App() {
             <AdminRouteMiddleware>
               <AdminDashboard />
             </AdminRouteMiddleware>
+          }
+        />
+        <Route
+          path="/weekly-checkin"
+          element={
+            <RouteMiddleware>
+              <WeeklyCheckIn />
+            </RouteMiddleware>
           }
         />
       </Routes>

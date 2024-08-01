@@ -1,7 +1,7 @@
 //WorkoutSummary.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import MoveCoinsPopUp from './MoveCoinsPopUp.js';
 import { Error, Loader } from '../../components';
 import {
@@ -20,6 +20,7 @@ import useLocalStorage from '../../hooks/useLocalStorage.js';
 import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
+import { axiosflexClient } from './apiFlexClient.js';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -43,6 +44,7 @@ const WorkoutSummary = () => {
   const { user } = useAuth();
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
   const dispatch = useDispatch();
+  const params = useParams();
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
 
@@ -110,36 +112,72 @@ const WorkoutSummary = () => {
     };
 
     dispatch(setStatus('loading'));
-    axiosClient
-      .post('/score', payload)
-      .then((res) => {
-        if (res.data) {
-          dispatch(setStatus('success'));
-          setWorkoutSummary({
-            ...res.data,
-            sectionPerformance: res.data.sectionPerformance.slice(1),
-          });
 
-          setData();
-        }
-      })
-      .catch((err) => {
-        console.log(err.message, 'ERROR');
-        dispatch(setStatus('error'));
-        // Handle error here
-      })
-      .finally(() => {
-        // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
-        const storedInputIds = getStoredInputIds();
-        if (storedInputIds !== null) {
-          storedInputIds.forEach((id) => {
-            window.localStorage.removeItem(id);
-          });
+    if (params.value === 'flex') {
+      axiosflexClient
+        .post('/score', payload)
+        .then((res) => {
+          if (res.data) {
+            dispatch(setStatus('success'));
+            setWorkoutSummary({
+              ...res.data,
+              sectionPerformance: res.data.sectionPerformance.slice(1),
+            });
 
-          // then finally delete the key 'inputIds' from local storage
-          window.localStorage.removeItem('inputIds');
-        }
-      });
+            setData();
+          }
+        })
+        .catch((err) => {
+          console.log(err.message, 'ERROR');
+          dispatch(setStatus('error'));
+          // Handle error here
+        })
+        .finally(() => {
+          // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
+          const storedInputIds = getStoredInputIds();
+          if (storedInputIds !== null) {
+            storedInputIds.forEach((id) => {
+              window.localStorage.removeItem(id);
+            });
+
+            // then finally delete the key 'inputIds' from local storage
+            window.localStorage.removeItem('inputIds');
+          }
+        });
+    }
+
+    if (params.value === 'today') {
+      axiosClient
+        .post('/score', payload)
+        .then((res) => {
+          if (res.data) {
+            dispatch(setStatus('success'));
+            setWorkoutSummary({
+              ...res.data,
+              sectionPerformance: res.data.sectionPerformance.slice(1),
+            });
+
+            setData();
+          }
+        })
+        .catch((err) => {
+          console.log(err.message, 'ERROR');
+          dispatch(setStatus('error'));
+          // Handle error here
+        })
+        .finally(() => {
+          // iteratively delete all the keys from the array stored with the key 'inputIds' in local storage
+          const storedInputIds = getStoredInputIds();
+          if (storedInputIds !== null) {
+            storedInputIds.forEach((id) => {
+              window.localStorage.removeItem(id);
+            });
+
+            // then finally delete the key 'inputIds' from local storage
+            window.localStorage.removeItem('inputIds');
+          }
+        });
+    }
   }
 
   useEffect(() => {
@@ -168,6 +206,12 @@ const WorkoutSummary = () => {
   }, []);
 
   useEffect(() => {
+    if (params.value === 'flex') {
+      setShowAchievemntsPage(false);
+    }
+  }, [params]);
+
+  useEffect(() => {
     status === 'error' &&
       setTimeout(() => {
         navigate('/home');
@@ -181,20 +225,22 @@ const WorkoutSummary = () => {
   return (
     <>
       {status === 'error' && <Error>Oops! Something went wrong...</Error>}
-      {Object.keys(workoutSummary).length > 0 && showAchievemntsPage && (
-        <AchievementPage
-          setShowAchievemntsPage={setShowAchievemntsPage}
-          totalWorkouts={Number(workoutSummary?.consistency?.total) - 1}
-          coinsEarned={workoutSummary?.moveCoins}
-        />
-      )}
+      {params.value !== 'flex' &&
+        Object.keys(workoutSummary).length > 0 &&
+        showAchievemntsPage && (
+          <AchievementPage
+            setShowAchievemntsPage={setShowAchievemntsPage}
+            totalWorkouts={Number(workoutSummary?.consistency?.total) - 1}
+            coinsEarned={workoutSummary?.moveCoins}
+          />
+        )}
       {status === 'loading' && <Loader />}
       {/* {status === 'error' && <Error>Oops! Something Went Wrong</Error>} */}
 
       {status === 'success' &&
         Object.keys(workoutSummary).length > 0 &&
         !showAchievemntsPage && (
-          <div className="w-full h-full px-4 py-8 ">
+          <div className="h-full w-full px-4 py-8 ">
             {/* Movecoins Earned pop-up - Initial Idea */}
             {/* <AnimatePresence>
             {showMoveCoinsPopup && <MoveCoinsPopUp setShowPopUp={setShowMoveCoinsPopup} coins={workoutSummary?.points} />}
@@ -205,7 +251,7 @@ const WorkoutSummary = () => {
                   {today}
                 </p>
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold workout-gradient-text">
+                  <h2 className="workout-gradient-text text-2xl font-bold">
                     Workout Summary
                   </h2>
                   {/* <div className="flex mb-2 space-x-3 ">
@@ -243,7 +289,7 @@ const WorkoutSummary = () => {
                 countToEarnPerfectWeek < 0 && (
                   <p className="my-4">
                     Fitness Pro Alert! You've surpassed the{' '}
-                    <span className="inline-flex items-center rounded perfect-week w-fit">
+                    <span className="perfect-week inline-flex w-fit items-center rounded">
                       <img src="/assets/star.svg" alt="" />
                       <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
                         Perfect Week x{homeStats.streak}
@@ -262,7 +308,7 @@ const WorkoutSummary = () => {
                     <p>
                       Whoa! You just unlocked the{' '}
                       {parseInt(homeStats.streak) > 0 && (
-                        <span className="inline-flex items-center perfect-week">
+                        <span className="perfect-week inline-flex items-center">
                           <img
                             src="/assets/star.svg"
                             alt=""
@@ -280,12 +326,12 @@ const WorkoutSummary = () => {
                 )}
 
               {achievements.length > 0 && (
-                <section className="flex flex-col justify-center my-8 ">
+                <section className="my-8 flex flex-col justify-center ">
                   <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
                     achievements unlocked
                   </h4>
 
-                  <div className="flex items-center justify-between w-full my-2 h-fit">
+                  <div className="my-2 flex h-fit w-full items-center justify-between">
                     <span>
                       <HiOutlineChevronLeft
                         size={25}
@@ -294,7 +340,7 @@ const WorkoutSummary = () => {
                         }}
                       />
                     </span>
-                    <div className="flex flex-row items-center justify-center w-full h-full px-2 ">
+                    <div className="flex h-full w-full flex-row items-center justify-center px-2 ">
                       <div className="h-[60px] w-[60px]">
                         <img
                           className="h-[60px] w-[60px] rounded-full"
@@ -324,12 +370,12 @@ const WorkoutSummary = () => {
               )}
 
               {coachNotes.length > 0 && (
-                <section className="flex flex-col items-start justify-center my-4 ">
+                <section className="my-4 flex flex-col items-start justify-center ">
                   <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                     coach notes
                   </h4>
 
-                  <div className="flex items-center justify-between w-full h-20 my-4">
+                  <div className="my-4 flex h-20 w-full items-center justify-between">
                     <span>
                       <HiOutlineChevronLeft
                         size={25}
@@ -366,13 +412,13 @@ const WorkoutSummary = () => {
                         className="my-4 flex h-24 w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs"
                         key={index}
                       >
-                        <div className="flex flex-col basis-1/2">
+                        <div className="flex basis-1/2 flex-col">
                           <h4 className="text-lg">Assessment</h4>
-                          <p className="overflow-y-auto text-xs break-words text-lightGray">
+                          <p className="overflow-y-auto break-words text-xs text-lightGray">
                             {section?.displayInfo.join(', ')}
                           </p>
                         </div>
-                        <div className="p-2 basis-1/2">
+                        <div className="basis-1/2 p-2">
                           <h4 className="mb-2 justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                             fitness score
                           </h4>
@@ -414,7 +460,7 @@ const WorkoutSummary = () => {
                     ),
                 )}
 
-              <div className="grid grid-cols-2 grid-rows-5 gap-4 mt-8">
+              <div className="mt-8 grid grid-cols-2 grid-rows-5 gap-4">
                 {/* <div className="flex flex-col mt-8"> */}
 
                 {workoutSummary &&
@@ -425,7 +471,7 @@ const WorkoutSummary = () => {
                           className="flex h-28 w-full items-center justify-between overflow-y-auto rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-2"
                           key={index}
                         >
-                          <div className="flex flex-col w-full h-full ">
+                          <div className="flex h-full w-full flex-col ">
                             <div className="mb-2">
                               <div className="flex justify-between">
                                 <h1 className="items-center text-lg ">
@@ -440,7 +486,7 @@ const WorkoutSummary = () => {
                               </p>
                             </div>
                             <div className="overflow-y-auto text-xs text-lightGray">
-                              <ul className="pl-3 list-disc">
+                              <ul className="list-disc pl-3">
                                 {/* {section?.displayInfo.join(', ')} */}
                                 {section?.displayInfo?.map((i, idx) => {
                                   return <li key={idx}>{i}</li>;
