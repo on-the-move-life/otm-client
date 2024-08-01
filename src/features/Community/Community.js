@@ -124,39 +124,52 @@ const Community = () => {
   );
 
   return (
-    <div className="w-screen grow overflow-scroll px-4 pb-[78px] ">
-      <div className="mt-[32px]">
-        <TimelineHeading>Community</TimelineHeading>
+    <div>
+      <img className="absolute right-0 -z-20 " src="/assets/main-frame.svg" />
+      <img
+        className="absolute right-[35px] top-7 -z-10 "
+        src="/assets/community-logo.svg"
+      />
+
+      <div className=" w-screen grow overflow-scroll px-4 pb-[78px]">
+        <div className="mt-[76px]">
+          <TimelineHeading>Community</TimelineHeading>
+        </div>
+        <div className="mt-3">
+          <div className="mt-9 flex w-full flex-col gap-2">
+            {matchingWorkoutUser && (
+              <RankDisplay
+                selectedDataType="workout"
+                name={matchingWorkoutUser?.name}
+                count={matchingWorkoutUser?.workout}
+                rankChange={matchingWorkoutUser?.rankChange}
+                rank={matchingWorkoutUser?.rank}
+                profilePicture={matchingWorkoutUser?.profilePicture}
+                isCurrentUser
+              />
+            )}
+
+            {matchingFitnessUser && (
+              <RankDisplay
+                name={matchingFitnessUser?.name}
+                count={matchingFitnessUser?.totalScore}
+                rankChange={matchingFitnessUser?.rankChange}
+                rank={matchingFitnessUser?.rank}
+                profilePicture={matchingFitnessUser?.profilePicture}
+                isCurrentUser
+              />
+            )}
+          </div>
+          <div className="mt-9 flex w-full flex-col gap-2">
+            {data !== null && data.data.length > 0 && (
+              <TimelineDisplay data={data.data[0]} timeline={'community'} />
+            )}
+            {userData !== null && userData.data.length > 0 && (
+              <TimelineDisplay data={userData.data[0]} timeline={'personal'} />
+            )}
+          </div>
+        </div>
       </div>
-      {matchingWorkoutUser && (
-        <RankDisplay
-          selectedDataType="workout"
-          name={matchingWorkoutUser?.name}
-          count={matchingWorkoutUser?.workout}
-          rankChange={matchingWorkoutUser?.rankChange}
-          rank={matchingWorkoutUser?.rank}
-          profilePicture={matchingWorkoutUser?.profilePicture}
-          isCurrentUser
-        />
-      )}
-
-      {matchingFitnessUser && (
-        <RankDisplay
-          name={matchingFitnessUser?.name}
-          count={matchingFitnessUser?.totalScore}
-          rankChange={matchingFitnessUser?.rankChange}
-          rank={matchingFitnessUser?.rank}
-          profilePicture={matchingFitnessUser?.profilePicture}
-          isCurrentUser
-        />
-      )}
-
-      {data !== null && data.data.length > 0 && (
-        <TimelineDisplay data={data.data[0]} timeline={'community'} />
-      )}
-      {userData !== null && userData.data.length > 0 && (
-        <TimelineDisplay data={userData.data[0]} timeline={'personal'} />
-      )}
     </div>
   );
 };

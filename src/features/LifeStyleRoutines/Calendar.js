@@ -9,6 +9,7 @@ function Calendar({
   selectedDate,
   setSelectedDate,
 }) {
+  console.log(completionHistory, isSummaryPage, selectedDate, setSelectedDate);
   const [reversedCompletionHistory, setReversedCompletionHistory] = useState(
     [],
   );
@@ -49,11 +50,11 @@ function Calendar({
       {selectedDate && (
         <>
           {!isSummaryPage && (
-            <h3 className="text-2xl font-bold" style={{ lineHeight: '41.6px' }}>
+            <h3 className="text-xl " style={{ lineHeight: '41.6px' }}>
               <span className="text-white">
                 {formatDate(selectedDate)[0]},{' '}
               </span>
-              <span className="text-gray-500">
+              <span className="text-darkTextGray">
                 {formatDate(selectedDate)[1]}
               </span>
             </h3>
@@ -85,7 +86,7 @@ function Calendar({
             Let's make today count. Begin by completing your first task
           </p>
         )}
-        <div className="mx-2 mb-2 mt-4 flex  flex-row items-center justify-around">
+        <div className="mb-2 mt-4 flex flex-row  items-center justify-around px-2">
           {reversedCompletionHistory.map((history) => (
             <CalendarTile
               key={history.date}

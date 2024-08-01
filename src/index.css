@@ -750,8 +750,8 @@ button:active {
   width: auto;
   height: 104px;
   border-radius: 12px;
-  border: 0.5px solid #383838;
-  background: linear-gradient(180deg, #171717 0%, #0f0f0f 100%);
+
+  background: var(--White, #1c1c1e);
   display: flex;
   flex-direction: column;
   justify-content: center;

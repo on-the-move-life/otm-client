@@ -14,7 +14,7 @@ const NutritionPage = () => {
         <div className="mt-[76px]">
           <TimelineHeading>Nutrition</TimelineHeading>
         </div>
-        <div className="mt-[120px] flex flex-col gap-2">
+        <div className="mt-[105px] flex flex-col gap-2">
           <Link
             to="/MealUpload"
             className="relative  flex h-[78px] rounded-lg bg-mediumGray"
@@ -38,7 +38,7 @@ const NutritionPage = () => {
             </div>
           </Link>
 
-          <Link className="relative flex h-[78px] rounded-lg bg-mediumGray">
+          {/* <Link className="relative flex h-[78px] rounded-lg bg-mediumGray">
             <div className="my-2 ml-4 ">
               <div className="flex gap-2">
                 <img src="/assets/meal-logo.svg" />
@@ -63,7 +63,7 @@ const NutritionPage = () => {
                 This is a one line description of the feature
               </div>
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

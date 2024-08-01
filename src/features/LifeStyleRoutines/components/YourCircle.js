@@ -31,6 +31,7 @@ function YourCircle({
     }),
     [],
   );
+  console.log('bbnngygygygy', tasksName, tasks, tasks.time);
   const circleTime = useMemo(
     () => ({
       'Morning Circle': '8 AM',
@@ -78,14 +79,14 @@ function YourCircle({
             setReloadCounter(true);
           }}
         >
-          <div className="flex flex-row items-center justify-start w-full gap-5">
+          <div className="flex w-full flex-row items-center justify-start gap-5">
             <div>{circleIcons[name]}</div>
             <div className="flex flex-col items-start justify-center">
               <p
                 className="text-[12px] uppercase text-[#7E87EF]"
                 style={{ fontWeight: 600 }}
               >
-                {time}
+                {circleTime[name]}
               </p>
               <p className="text-[18.5px] capitalize text-[#F8F8F8]">{name}</p>
               <p className="w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-[12px] text-[#545454]">

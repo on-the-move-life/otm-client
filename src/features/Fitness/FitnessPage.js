@@ -16,6 +16,13 @@ import { TimelineHeading } from '../Timeline/StyledComponents';
 import { AiOutlineRight } from 'react-icons/ai';
 import MonthlyWrapped from '../Profile/MonthlyWrapped';
 
+function formatNumber(num) {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'k';
+  }
+  return num.toString();
+}
+
 const FitnessPage = () => {
   const { setUserData } = useUserContext();
   const { logout } = useAuth();
@@ -98,43 +105,45 @@ const FitnessPage = () => {
             <section className="mt-[76px] pb-0 pt-5">
               <TimelineHeading>Fitness</TimelineHeading>
             </section>
-            <div className="flex gap-2 mt-6">
-              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+            <div className="flex w-full gap-2 mt-6">
+              <div className="flex h-[76px] w-1/2  items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 w-9">Total workouts</span>
-                <div className="flex min-h-[68px] min-w-[68px] items-center rounded-lg bg-blue pl-6 text-center">
-                  sdf
+                <div
+                  className={`
+                  
+                  ${
+                    homeStats.totalWorkoutsDone > 99 &&
+                    homeStats.totalWorkoutsDone < 999
+                      ? 'text-4xl'
+                      : 'text-5xl'
+                  } font-anton flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-blue  text-center  text-mediumGray `}
+                >
+                  {formatNumber(homeStats.totalWorkoutsDone)}
                 </div>
               </div>
-              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+              {/* <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 w-9 text-floYellow">Log Activity</span>
                 <div className="flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-floYellow ">
                   <img src="/assets/fitness-add.svg" />
                 </div>
-              </div>
-
-              {homeStats !== null && homeStats?.totalWorkoutsDone > 0 && (
-                <TotalWorkoutFitness apiData={homeStats?.totalWorkoutsDone} />
-              )}
+              </div> */}
             </div>
-          </section>
-          <section>
-            {currentDate < 5 && (
-              <section className="flex flex-row items-center justify-center w-full gap-3 ">
-                <MonthlyWrapped />
-              </section>
-            )}
-          </section>
-          <section>
-            <div className="flex items-center">
-              <Link
-                to="/workout/today"
-                className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-              >
-                <div className="flex flex-col justify-between h-full">
-                  <div className="flex gap-3">
-                    <h2 className="text-3xl font-medium ">Today's Workout</h2>
-                    <img src="/assets/shred-logo.svg" />
-                  </div>
+
+            <h2 className="inline-block mt-2 text-2xl  font-sfpro text-floYellow">
+              Today's Workout
+            </h2>
+
+            <section>
+              <div className="flex items-center">
+                <Link
+                  to="/workout/today"
+                  className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                >
+                  <div className="flex flex-col justify-between h-full">
+                    <div className="flex gap-3">
+                      <h2 className="text-3xl font-medium ">Shred</h2>
+                      <img src="/assets/shred-logo.svg" />
+                    </div>
 
                   <div className="flex gap-3">
                     <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
@@ -206,38 +215,47 @@ const FitnessPage = () => {
               </section>
             )}
 
-          <section>
-            <div className="flex items-center">
-              <Link
-                to="/workout/flex"
-                className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-              >
-                <div className="flex flex-col justify-between h-full">
-                  <div className="flex gap-3">
-                    <h2 className="text-3xl font-medium ">Flex</h2>
-                    <img src="/assets/flex-logo.svg" />
-                  </div>
-
-                  <div className="flex gap-3">
-                    <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
-                      {homeStats.flexWorkoutParams.theme}
-                    </h2>
-                    <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {homeStats.flexWorkoutParams.duration} mins
-                    </h2>
-                    <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {' '}
-                      {homeStats.flexWorkoutParams.calories} cal
-                    </h2>
-                  </div>
-                </div>
-                {/* <h2 className="text-xl font-medium text-floYellow">Start</h2> */}
-              </Link>
-              {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
-                <div className="absolute -top-1 left-[6px]">+</div>
-              </div> */}
+            <div className="text-sm text-offwhite ">
+              Follow this module to workout your core
             </div>
-          </section>
+
+            <section>
+              <div className="flex items-center">
+                <Link
+                  to="/workout/flex"
+                  className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                >
+                  <div className="flex flex-col justify-between h-full">
+                    <div className="flex gap-3">
+                      <h2 className="text-3xl font-medium ">Flex</h2>
+                      <img src="/assets/flex-logo.svg" />
+                    </div>
+
+                    <div className="flex gap-3">
+                      <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
+                        {homeStats.flexWorkoutParams.theme}
+                      </h2>
+                      <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {homeStats.flexWorkoutParams.duration} mins
+                      </h2>
+                      <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {' '}
+                        {homeStats.flexWorkoutParams.calories} cal
+                      </h2>
+                    </div>
+                  </div>
+                  <h2 className="text-xl font-medium text-floYellow">Start</h2>
+                </Link>
+              </div>
+            </section>
+
+            <div className="pt-2 pb-5 pl-4 rounded-xl bg-mediumGray">
+              <p className="text-sm text-red">Injury guide</p>
+              <p className="mt-3 text-offwhite">
+                Follow our RSLL protocols to deal with injuries
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </>

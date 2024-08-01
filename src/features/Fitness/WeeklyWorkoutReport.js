@@ -1,7 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEightWeeksWorkout }) {
-    const [currentScore, setCurrentScore] = useState(0);
+const Heading = styled.div`
+  color: var(--off-white, #f8f8f8);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16.71px;
+`;
+
+const ScoreDetail = styled.div`
+  color: #929292;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14.32px;
+`;
+
+function WeeklyWorkoutReport({
+  consistencyTrend,
+  suggestedWorkoutPerWeek,
+  lastEightWeeksWorkout,
+}) {
+  const [currentScore, setCurrentScore] = useState(0);
 
     //let test = 'improving';
     //let test1 = 'maintaining';
@@ -63,59 +86,74 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
             '--calculated-height': `${height}px`,
         };
 
-        return (
-            <div className='h-[47px] w-[6px] rounded-xl bg-[#323232] relative'>
-            <div className='w-full h-full bg-transparent flex flex-col justify-end items-center'>
-                <div style={barStyles} className='w-full rounded-xl barStyle'></div>
-            </div>
-            {isFirstBar && (
-                <div className="absolute mt-1 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[8px] w-[4px] h-[4px] bg-white rounded-full"></div>
-            )}
-        </div>
-        )
-    }
-    const getTrendTextColor = (trend) => {
-        switch (trend) {
-            case 'decreasing':
-                return 'text-[#FA5757]';
-            case 'maintaining':
-                return 'text-[#F5C563]';
-            case 'improving':
-                return 'text-[#7FE08A]';
-            default:
-                return 'text-gray-500';
-        }
-    }
-    const getTrendBorderColor = (trend) => {
-        switch (trend) {
-            case 'decreasing':
-                return 'border-[#FA5757]';
-            case 'maintaining':
-                return 'border-[#F5C563]';
-            case 'improving':
-                return 'border-[#7FE08A]';
-            default:
-                return 'border-gray-500';
-        }
-    }
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
     return (
-        <div className="weekly-workout-consistency">
-            <section className='w-full flex flex-row justify-between items-center'>
-                <div className='weekly-workout-consistency-heading'>weekly workout consistency</div>
-                <div className='wwc-weeks'>last 8 weeks</div>
-            </section>
-            <section className='w-full flex flex-row justify-between items-center'>
-                <div className='w-fit flex flex-col justify-center items-center gap-1'>
-                <div className='flex items-center'>
-                        <div className='wwc-score'>{currentScore}</div>
-                        <div className={`ml-2 sm:text-[10px] text-[8px] ${getTrendBorderColor(consistencyTrend)} border-[1px] sm:px-[6px] sm:py-[3px] px-[6px] py-[3px] rounded-[6px] ${getTrendTextColor(consistencyTrend)}`}>
-                            {capitalizeFirstLetter(consistencyTrend)}
-                        </div>
-                    </div>
-                    <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
+      <div className="relative h-[60px] w-[6px] rounded-xl bg-[#323232]">
+        <div className="flex flex-col items-center justify-end w-full h-full bg-transparent">
+          <div style={barStyles} className="w-full barStyle rounded-xl"></div>
+        </div>
+        {isFirstBar && (
+          <div className="absolute bottom-0 left-1/2 mt-1 h-[4px] w-[4px] -translate-x-1/2 translate-y-[8px] transform rounded-full bg-white"></div>
+        )}
+      </div>
+    );
+  };
+  const getTrendTextColor = (trend) => {
+    switch (trend) {
+      case 'decreasing':
+        return 'text-[#FA5757]';
+      case 'maintaining':
+        return 'text-[#F5C563]';
+      case 'improving':
+        return 'text-[#7FE08A]';
+      default:
+        return 'text-gray-500';
+    }
+  };
+  const getTrendBorderColor = (trend) => {
+    switch (trend) {
+      case 'decreasing':
+        return 'border-[#FA5757]';
+      case 'maintaining':
+        return 'border-[#F5C563]';
+      case 'improving':
+        return 'border-[#7FE08A]';
+      default:
+        return 'border-gray-500';
+    }
+  };
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+  return (
+    <div className="mt-3 weekly-workout-consistency">
+      <div className="flex w-full h-full">
+        <div className="flex flex-col justify-between">
+          <section className="flex flex-row items-center justify-between w-full">
+            <div className="flex gap-2">
+              <img src="/assets/bar-graph-logo.svg" />
+              <Heading>Weekly workout consistency</Heading>
+            </div>
+          </section>
+          <section className="flex flex-row items-center justify-between w-full">
+            <div className="flex flex-col ">
+              <div className="flex items-end">
+                {currentScore ? (
+                  <div className="h-[45px] font-sfpro text-[32px] text-blue">
+                    {currentScore}
+                  </div>
+                ) : (
+                  <div className="h-[45px] font-sfpro text-[32px] text-blue">
+                    -
+                  </div>
+                )}
+                <div
+                  className={`mb-2 ml-2 text-[8px] sm:text-[10px] ${getTrendBorderColor(
+                    consistencyTrend,
+                  )} h-min rounded-[6px] border-[1px] px-[6px] py-[3px] sm:px-[6px] sm:py-[3px] ${getTrendTextColor(
+                    consistencyTrend,
+                  )}`}
+                >
+                  {capitalizeFirstLetter(consistencyTrend)}
                 </div>
                 {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
                 {
@@ -130,7 +168,35 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                 </div> : <div className='wwc-score wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>-</div>}
             </section>
         </div>
-    )
+        <div className="flex flex-col items-center justify-end grow">
+          <div>
+            {lastEightWeeksWorkout ? (
+              <div className=" flex flex-row items-center justify-center gap-[6px]">
+                {[...Array(8).keys()]?.map((item, index) => {
+                  const progressCount =
+                    lastEightWeeksWorkout[index] !== undefined
+                      ? lastEightWeeksWorkout[index]?.count
+                      : 0;
+                  return (
+                    <Bar
+                      progress={progressCount}
+                      key={Math.random() * 1000}
+                      isFirstBar={index === 0}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="wwc-score wwc-chart-container flex flex-row items-center justify-center gap-[6px]">
+                -
+              </div>
+            )}
+          </div>
+          <ScoreDetail> last 8 weeks</ScoreDetail>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default WeeklyWorkoutReport
+export default WeeklyWorkoutReport;
