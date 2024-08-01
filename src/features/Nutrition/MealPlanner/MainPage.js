@@ -14,6 +14,7 @@ import PageIndicator from './Components/PageIndicator'
 import { useNavigate } from 'react-router-dom'
 import { Loader } from "../../LifestyleQuiz";
 import { Error } from "../../../components";
+import MealPlanPage from './MealPlanPage'
 
 function MainPage() {
     const dispatch = useDispatch();
@@ -58,8 +59,9 @@ function MainPage() {
                 console.log(res);
                 dispatch(Actions.updateNutritionPlan(res?.data?.data?.nutPlan));
                 dispatch(Actions.updateSuggestedIngredients(res?.data?.data?.ingredientsByGroup));
+                // questionScreen 4-5 belongs to the sectionName = 'Ingredients'
                 dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }));
-
+                dispatch(Actions.updateSectionName('Ingredients'));
             })
             .catch(err => {
                 console.log(err);
@@ -75,7 +77,11 @@ function MainPage() {
             ingredients: selectedIngredients,
             memberCode: JSON.parse(localStorage.getItem('user'))['code']
         })
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res);
+                dispatch(Actions.updateWeeklyPlan(res?.data?.plan));
+                dispatch(Actions.updateSectionName('Weekly Plan'));
+            })
             .catch(err => {
                 console.log(err);
                 setPageError(true);
@@ -83,6 +89,32 @@ function MainPage() {
             .finally(() => {
                 setPageLoading(false);
             })
+    }
+
+    function checkAndValidate() {
+        // checking for empty response and validations
+        if (
+            currentQuestion &&
+            Object.keys(responses)?.length > 0 &&
+            !isAnyEmptyResponse(currentQuestion, responses) &&
+            validResponses(validation)
+        ) {
+            // logic when the continue button is pressed
+            if (questionScreen < totalQuestionScreen) {
+                dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))
+            }
+            else if (questionScreen === totalQuestionScreen) {
+                // logic to submit the questions
+                submitQuestions(responses);
+            }
+
+        } else {
+            if (isAnyEmptyResponse(currentQuestion, responses)) {
+                toast.warn('Please fill in the required fields!');
+            } else if (!validResponses(validation)) {
+                toast.warn('Please fill in the valid answer!');
+            }
+        }
     }
 
     useEffect(() => {
@@ -100,13 +132,16 @@ function MainPage() {
     }, [])
 
     useEffect(() => {
-        if (questionScreen > 1 && questionScreen <= 3) {
-            dispatch(Actions.updateSectionName('Questions'));
+        // this useEffect changes the sectionName with change in the questionScreen
+        if(sectionName !== 'Weekly Plan' && sectionName !== 'Get Started'){
+            if (questionScreen > 1 && questionScreen <= 3) {
+                dispatch(Actions.updateSectionName('Questions'));
+            }
+            else if (questionScreen >= 4 && questionScreen <= 5) {
+                dispatch(Actions.updateSectionName('Ingredients'));
+            }
+            console.log("questions screen : ", questionScreen, totalQuestionScreen)
         }
-        else if (questionScreen >= 4) {
-            dispatch(Actions.updateSectionName('Ingredients'));
-        }
-        console.log("questions screen : ", questionScreen, totalQuestionScreen)
     }, [questionScreen, totalQuestionScreen])
 
     useEffect(() => {
@@ -139,7 +174,7 @@ function MainPage() {
                     <Error>Some Error Occurred</Error>
                 </div>
             }
-            {   !pageLoading && !pageError &&
+            {!pageLoading && !pageError &&
                 <div className='w-full min-h-screen overflow-y-scroll py-4 px-3 bg-black'>
                     <div className="fixed top-0 ">
                         <ToastContainer
@@ -155,13 +190,15 @@ function MainPage() {
                             theme="dark"
                         />
                     </div>
-                    <div className='absolute top-4 right-3' onClick={() => {
-                        // reset the redux store before closing this feature
-                        dispatch(Actions.resetToDefault());
-                        navigate('/nutrition');
-                    }}>
-                        <CrossIcon />
-                    </div>
+                    {sectionName !== 'Weekly Plan' &&
+                        <div className='absolute top-4 right-3' onClick={() => {
+                            // reset the redux store before closing this feature
+                            dispatch(Actions.resetToDefault());
+                            navigate('/nutrition');
+                        }}>
+                            <CrossIcon />
+                        </div>
+                    }
 
                     {/* Dynamic Section Starts */}
                     <div className='w-full overflow-y-scroll'>
@@ -183,83 +220,69 @@ function MainPage() {
                                 <CustomiseIngredients />
                             </div>
                         }
+                        {
+                            sectionName === 'Weekly Plan' &&
+                            <div className='w-full mt-3'>
+                                <MealPlanPage />
+                            </div>
+                        }
                     </div>
                     {/* Dynamic Section Ends */}
 
-                    <div className='w-full h-[100px] flex items-center fixed bottom-0 left-0 bg-black/60 backdrop-blur-sm'>
-                        <div className='w-full px-3'>
-                            {
-                                sectionName === 'Get Started' && <Button type="mealplanner" text="Get Started" action={() => dispatch(Actions.updateSectionName('Questions'))} />
-                            }
-                            {
-                                sectionName === 'Questions' && questionScreen === 1 &&
-                                <div className='w-full flex flex-col justify-center items-center'>
-                                    <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
-                                    <Button type="mealplanner" text="Continue" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))} />
-                                </div>
-                            }
-                            {
-                                totalQuestionScreen !== 0 && sectionName === 'Questions' && questionScreen !== 1 && questionScreen <= totalQuestionScreen &&
-                                <div className='w-full flex flex-col justify-center items-center'>
-                                    <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
-                                    <div className='w-full grid grid-cols-6 place-items-center gap-2'>
-                                        <div className='w-full col-span-2'>
-                                            <Button type="mealplannerback" text="Back" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen - 1 }))} />
-                                        </div>
-                                        <div className="w-full col-span-4">
-                                            <Button type="mealplanner" text="Continue" action={() => {
-                                                // checking for empty response
-                                                if (
-                                                    currentQuestion &&
-                                                    Object.keys(responses)?.length > 0 &&
-                                                    !isAnyEmptyResponse(currentQuestion, responses) &&
-                                                    validResponses(validation)
-                                                ) {
-                                                    // logic when the continue button is pressed
-                                                    if (questionScreen < totalQuestionScreen) {
-                                                        dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))
-                                                    }
-                                                    else if (questionScreen === totalQuestionScreen) {
-                                                        // logic to submit the questions
-                                                        submitQuestions(responses);
-                                                    }
-
-                                                } else {
-                                                    if (isAnyEmptyResponse(currentQuestion, responses)) {
-                                                        toast.warn('Please fill in the required fields!');
-                                                    } else if (!validResponses(validation)) {
-                                                        toast.warn('Please fill in the valid answer!');
-                                                    }
-                                                }
-                                            }} />
+                    {sectionName !== 'Weekly Plan' &&
+                        <div className='w-full h-[100px] flex items-center fixed bottom-0 left-0 bg-black/60 backdrop-blur-sm'>
+                            <div className='w-full px-3'>
+                                {
+                                    sectionName === 'Get Started' && <Button type="mealplanner" text="Get Started" action={() => dispatch(Actions.updateSectionName('Questions'))} />
+                                }
+                                {
+                                    sectionName === 'Questions' && questionScreen === 1 &&
+                                    <div className='w-full flex flex-col justify-center items-center'>
+                                        <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
+                                        <Button type="mealplanner" text="Continue" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }))} />
+                                    </div>
+                                }
+                                {
+                                    totalQuestionScreen !== 0 && sectionName === 'Questions' && questionScreen !== 1 && questionScreen <= totalQuestionScreen &&
+                                    <div className='w-full flex flex-col justify-center items-center'>
+                                        <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
+                                        <div className='w-full grid grid-cols-6 place-items-center gap-2'>
+                                            <div className='w-full col-span-2'>
+                                                <Button type="mealplannerback" text="Back" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen - 1 }))} />
+                                            </div>
+                                            <div className="w-full col-span-4">
+                                                <Button type="mealplanner" text="Continue" action={() => {
+                                                    checkAndValidate();
+                                                }} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                            {
-                                sectionName === 'Ingredients' &&
-                                <div className='w-full flex flex-col justify-center items-center'>
-                                    <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
-                                    <div className='w-full grid grid-cols-6 place-items-center gap-2'>
-                                        <div className='w-full col-span-2'>
-                                            <Button type="mealplannerback" text="Back" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen - 1 }))} />
-                                        </div>
-                                        <div className="w-full col-span-4">
-                                            <Button type="mealplanner" text="Continue" action={() => {
-                                                // checking for empty response
-                                                if (questionScreen === 4) {
-                                                    dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }));
-                                                } else {
-                                                    // call the API to submit the chosen ingredients
-                                                    submitSelectedIngredients();
-                                                }
-                                            }} />
+                                }
+                                {
+                                    sectionName === 'Ingredients' &&
+                                    <div className='w-full flex flex-col justify-center items-center'>
+                                        <PageIndicator currentPage={questionScreen} totalNumberOfPages={totalQuestionScreen + 2} />
+                                        <div className='w-full grid grid-cols-6 place-items-center gap-2'>
+                                            <div className='w-full col-span-2'>
+                                                <Button type="mealplannerback" text="Back" action={() => dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen - 1 }))} />
+                                            </div>
+                                            <div className="w-full col-span-4">
+                                                <Button type="mealplanner" text="Continue" action={() => {
+                                                    // checking for empty response
+                                                    if (questionScreen === 4) {
+                                                        dispatch(Actions.updateQuestionSectionInfo({ screen: questionScreen + 1 }));
+                                                    } else {
+                                                        // call the API to submit the chosen ingredients
+                                                        submitSelectedIngredients();
+                                                    }
+                                                }} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             }
         </>
