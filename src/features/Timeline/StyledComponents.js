@@ -136,6 +136,28 @@ const PercentChangeText = styled.div`
   text-transform: lowercase;
 `;
 
+const CommunityTile = styled.p`
+  display: flex;
+  padding: 0px 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 4px 6px 0px 0px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.23);
+  height:;
+`;
+
+const CommunityName = styled.div`
+  color: var(--New-blue, #7e87ef);
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 160% */
+  text-transform: capitalize;
+`;
+
 export {
   Container,
   WorkoutTileHeading,
@@ -151,4 +173,6 @@ export {
   FitnessScore,
   Score,
   PercentChangeText,
+  CommunityTile,
+  CommunityName,
 };

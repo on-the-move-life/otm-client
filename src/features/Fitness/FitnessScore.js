@@ -8,7 +8,7 @@ const Container = styled.div`
   border-radius: 12px;
 
   background: var(--mediumGray, #1c1c1e);
-  padding: 8px 16px;
+  padding: 10px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,31 +37,17 @@ const Score = styled.div`
   -webkit-text-fill-color: transparent;
 `;
 const ScoreDetail = styled.div`
-  color: #545454;
+  color: #929292;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 9.333px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
+  line-height: 14.32px;
 `;
-const Percentile = styled.span`
-  background: var(
-    --Green-purple-gradient,
-    linear-gradient(96deg, #9bf2c0 1.49%, #91bdf6 103.49%)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  /* Card body */
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 9.333px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-`;
+
 const HorizontalBar = styled.div`
   --color: ${(props) => props.color};
-  width: 20px;
+  width: 29px;
   height: 3px;
   border-radius: 5px;
   background: var(--color);
@@ -128,16 +114,25 @@ function FitnessScore({ score, percentile }) {
   };
   return (
     <Container>
-      <div className="flex w-full flex-row items-center justify-between">
-        <div className="flex w-6/12 flex-col items-center justify-center gap-2">
+      <div className="flex h-full w-full flex-row  justify-between">
+        <div className="flex w-6/12 flex-col justify-between ">
           <div className="flex gap-2">
             <img src="/assets/line-graph-logo.svg" />
             <Heading>Fitness score</Heading>
           </div>
-          {score ? <Score>{score}</Score> : <Score>-</Score>}
-          <ScoreDetail>
-            Top <Percentile>{percentile}%</Percentile> of the community
-          </ScoreDetail>
+          <div className="flex flex-col">
+            {score ? (
+              <div className="h-[45px] font-sfpro text-[32px] text-blue">
+                {score}
+              </div>
+            ) : (
+              <div className="h-[45px] font-sfpro text-[32px] text-blue">-</div>
+            )}
+            <ScoreDetail>
+              Top <span className="text-blue">{percentile}%</span> of the
+              community
+            </ScoreDetail>
+          </div>
         </div>
         <div className="flex w-6/12 flex-col items-center justify-center gap-2">
           <ScoreIndicator />

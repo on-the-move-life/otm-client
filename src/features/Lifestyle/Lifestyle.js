@@ -66,7 +66,7 @@ const Lifestryle = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll  px-4 pb-[78px]">
+        <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll  px-4 pb-[130px]">
           <div className="mt-[32px]">
             <TimelineHeading>Lifestyle</TimelineHeading>
           </div>
