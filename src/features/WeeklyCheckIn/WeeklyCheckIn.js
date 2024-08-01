@@ -356,12 +356,6 @@ const WeeklyCheckIn = () => {
                 )}
               </motion.div>
 
-              {checkInError && (
-                <motion.div variants={itemVariants} className="mt-4">
-                  <p className="text-red-500">{checkInError}</p>
-                </motion.div>
-              )}
-
               {!isSubmitted && (
                 <motion.div variants={itemVariants}>
                   <button
