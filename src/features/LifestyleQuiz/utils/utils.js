@@ -147,7 +147,7 @@ export function validatePositiveInteger(inputValue) {
         return inputValue === "" ? true : positiveIntegerRegex.test(inputValue);
     }
     else if(typeof(inputValue) === 'number'){
-        return inputValue >= 0;
+        return inputValue > 0;
     }
     // return false for any other data type
     return false;

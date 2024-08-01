@@ -59,8 +59,17 @@ function MainPage() {
     }
     function submitQuestions(questionResponse) {
         setPageLoading(true);
+
+        // filtering out empty responses
+        const filteredQuestions = {};
+        Object.keys(questionResponse).map(key => {
+            if(questionResponse[key][0] !== ""){
+                filteredQuestions[key] = questionResponse[key];
+            }
+        })
+        console.log("filtered questions : ", filteredQuestions);
         axiosClient.post('/questionnaire-response', {
-            data: questionResponse,
+            data: filteredQuestions,
             memberCode: JSON.parse(localStorage.getItem('user'))['code']
         })
             .then(res => {

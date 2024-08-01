@@ -59,7 +59,7 @@ function InputText({ questionCode, response, setResponse, inputType, placeholder
                 return (
                   {
                     ...prev,
-                    [questionCode]: [e.target.value === "" ? 0 : parseInt(e.target.value)]
+                    [questionCode]: [e.target.value === "" ? "" : parseInt(e.target.value)]
                   }
                 )
               })

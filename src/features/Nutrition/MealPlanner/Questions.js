@@ -26,7 +26,7 @@ function Questions({ validation, setValidation }) {
             setResponse((prev) => {
                 const newResponse = {};
                 questions && questions.forEach((ques) => {
-                    ques?.inputType === 'number' ? newResponse[ques.code] = [0] : newResponse[ques.code] = [''];
+                    newResponse[ques.code] = [''];
                 });
                 return newResponse;
               });
