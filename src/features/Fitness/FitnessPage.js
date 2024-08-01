@@ -114,7 +114,7 @@ const FitnessPage = () => {
                       : 'text-5xl'
                   } flex h-full min-w-[68px] items-center justify-center rounded-lg bg-blue text-center  font-anton  text-mediumGray `}
                 >
-                  {formatNumber(10)}
+                  {formatNumber(homeStats?.totalWorkoutsDone)}
                 </div>
               </div>
             </section>
