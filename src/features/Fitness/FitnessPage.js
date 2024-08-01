@@ -100,10 +100,8 @@ const FitnessPage = () => {
             src="/assets/movement-logo.svg"
           />
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
-            <section className="mt-[56px] pb-0 pt-5">
+            <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
               <TimelineHeading>Movement</TimelineHeading>
-            </section>
-            <div className="flex w-full gap-2 mt-2">
               <div className="flex h-[76px] w-1/2  items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 text-sm w-9">Total workouts</span>
                 <div
@@ -119,15 +117,17 @@ const FitnessPage = () => {
                   {formatNumber(homeStats.totalWorkoutsDone)}
                 </div>
               </div>
-              {/* <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+            </section>
+            {/* <div className="flex w-full gap-2 mt-2">
+              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 text-sm w-9 text-floYellow">
                   Log Activity
                 </span>
                 <div className="flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-floYellow ">
                   <img src="/assets/fitness-add.svg" />
                 </div>
-              </div> */}
-            </div>
+              </div>
+            </div> */}
 
             {/* <h2 className="inline-block mt-2 text-2xl font-sfpro text-floYellow">
               Shred
@@ -149,7 +149,7 @@ const FitnessPage = () => {
                 >
                   <div className="flex flex-col justify-between h-full">
                     <div className="flex gap-3">
-                      <h2 className="text-3xl font-medium ">Today's Workout</h2>
+                      <h2 className="text-2xl font-medium ">Today's Workout</h2>
                       <img src="/assets/shred-logo.svg" />
                     </div>
 
