@@ -46,7 +46,7 @@ function Calendar({
   }, [completionHistory, selectedDate]);
 
   return (
-    <div className="flex w-full flex-col items-start justify-center">
+    <div className="flex flex-col items-start justify-center w-full">
       {selectedDate && (
         <>
           {!isSummaryPage && (
@@ -62,8 +62,8 @@ function Calendar({
           {isSummaryPage && (
             <>
               <h3
-                className="text-[26px] text-[#FFF]"
-                style={{ lineHeight: '40px' }}
+                className="text-lg text-[#FFF]"
+                style={{ lineHeight: '30px' }}
               >
                 Summary
               </h3>
@@ -86,7 +86,7 @@ function Calendar({
             Let's make today count. Begin by completing your first task
           </p>
         )}
-        <div className="mb-2 mt-4 flex flex-row  items-center justify-around px-2">
+        <div className="flex flex-row items-center justify-around px-2 mt-4 mb-2">
           {reversedCompletionHistory.map((history) => (
             <CalendarTile
               key={history.date}
