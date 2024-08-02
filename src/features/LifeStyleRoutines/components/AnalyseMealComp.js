@@ -24,6 +24,7 @@ const AnalyseMealComp = ({
     task = null,
     date = null,
     SelectedCircle = null,
+    setIsTitleVisible = null
 }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -43,7 +44,7 @@ const AnalyseMealComp = ({
 
     const [tempMealInfo, setTempMealInfo] = useState(null);
     const [tempMealUrl, setTempMealUrl] = useState(null);
-
+    const [userMealDescription, setUserMealDescription] = useState('no additional context about the uploaded meal provided by the user');
     const formattedDate = getFormattedDate();
     const finalDate = date === null || date === undefined ? formattedDate : date;
 
@@ -106,10 +107,16 @@ const AnalyseMealComp = ({
         setLoader(true);
 
         try {
+            // const mealObject = [
+            //     { taskId: '1', taskName: 'Breakfast' },
+            //     { taskId: '2', taskName: 'Lunch' },
+            //     { taskId: '3', taskName: 'Dinner' },
+            // ];
+
             const mealObject = [
-                { taskId: '1', taskName: 'Breakfast' },
-                { taskId: '2', taskName: 'Lunch' },
-                { taskId: '3', taskName: 'Dinner' },
+                { taskId: `Breakfast${Math.floor(Math.random() * 1000)}`, taskName: 'Breakfast' },
+                { taskId: `Lunch${Math.floor(Math.random() * 1000)}`, taskName: 'Lunch' },
+                { taskId: `Dinner${Math.floor(Math.random() * 1000)}`, taskName: 'Dinner' },
             ];
             setmealTaskIds(mealObject);
         } catch (error) {
@@ -168,7 +175,7 @@ const AnalyseMealComp = ({
 
     // Meal image post request handling
     const handleMealUploadSubmit = async () => {
-        if (file && finalDate) {
+        if (selectedImage && selectedTaskId && file) {
             setLoader(true);
             try {
                 const formData = new FormData();
@@ -180,6 +187,7 @@ const AnalyseMealComp = ({
                 formData.append('date', finalDate);
                 console.log('Selected taskId and date is', selectedTaskId, finalDate);
                 formData.append('taskId', selectedTaskId);
+                formData.append('optionalDescription', userMealDescription);
 
                 const res = await axiosClient.post('/meal-info', formData, {
                     headers: {
@@ -212,6 +220,11 @@ const AnalyseMealComp = ({
                     dispatch(handleMealUrlChange(TaskCircle, selectedTaskId, mealUrl));
                     setSelectedImage(null);
                     setshowMealPicPopUp(false);
+                    if (setIsTitleVisible) {
+                        setIsTitleVisible(false);
+
+                    }
+
                 }
             } catch (err) {
                 setLoader(false);
@@ -231,49 +244,59 @@ const AnalyseMealComp = ({
             setTaskCircle(selectedTask.circleName);
         }
 
-        if (task == null) {
-            setselectedTaskId(undefined);
-        }
     };
 
     const DropdownComp = () => {
         return (
-            <div className="py-4 w-full">
-                <label
-                    className="text-xs tracking-widest text-lightGray"
-                    htmlFor="taskId"
-                >
-                    Select your meal:
-                </label>
+            <div className="py-4  w-full  flex ">
 
-                <select
-                    className="block w-full px-4 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
-                    id="taskId"
-                    value={selectedTaskId}
-                    onChange={handleSelectChange}
-                >
-                    <option value="" disabled className='bg-mediumGray text-white w-[10px] '>
-                        Select one option
-                    </option>
+                <div className='w-full'>
 
-
-                    {mealTaskIds != null ? (
-                        mealTaskIds.map((task, index) => (
-                            <option key={index} value={task.taskId} className='bg-mediumGray text-white' >
-                                {task.taskName}
-                            </option>
-                        ))
-                    ) : (
-                        <option value={selectedTaskId}>{selectedTaskName}</option>
-                    )}
+                    <label
+                        className="text-xs tracking-widest text-custompurple"
+                        htmlFor="taskId"
+                    >
+                        Select your meal:
+                    </label>
+                    <select
+                        className="appearance-none block w-full px-2 py-2 border border-[#2A2A2A] bg-transparent focus:outline-none rounded-lg border-[1px] border-[solid] border-[#2A2A2A] gap-[8px]"
+                        id="taskId"
+                        value={selectedTaskId}
+                        onChange={handleSelectChange}
+                    >
+                        <option value="" disabled className='bg-mediumGray text-white w-[10px] '>
+                            Select one option
+                        </option>
 
 
-                </select>
+                        {mealTaskIds != null ? (
+                            mealTaskIds.map((task, index) => (
+                                <option key={index} value={task.taskId} className='bg-mediumGray text-white' >
+                                    {task.taskName}
+                                </option>
+                            ))
+                        ) : (
+                            <option value={selectedTaskId}>{selectedTaskName}</option>
+                        )}
+
+
+                    </select>
+
+                </div>
+
+
+                <div className="w-0 pointer-events-none relative right-6 top-8 text-gray-700">
+                    <svg className="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                </div>
+
             </div>
 
 
         );
     };
+
 
     // file upload
     const handleFileChange = (e) => {
@@ -303,25 +326,25 @@ const AnalyseMealComp = ({
             {isVisible ? (
                 <>
                     {setParentVisibilityCheck && (
-                        <div className="mt-2 flex w-full flex-row items-center justify-center text-center align-middle">
+                        <div className=" mt-2 flex w-full items-center justify-between text-center">
                             {/* empty div to put other two divs in place */}
                             <div></div>
 
-                            <div className=" flex flex-row items-center  text-center">
+                            <div className="flex flex-row items-center text-center mx-auto">
                                 <MealImageicon />
 
-                                <div className="ml-15 font-sfpro text-[14px]  font-medium text-lightGray">
+                                <div className="ml-3 font-sfpro text-[14px]  font-medium text-lightGray">
                                     Upload meal photo
                                 </div>
                             </div>
 
-                            <div className="mr-4" onClick={handleClose}>
+                            <div className="mr-4 flex-shrink-0" onClick={handleClose}>
                                 <MealCrossIcon />{' '}
                             </div>
                         </div>
                     )}
 
-                    <div className="  flex max-w-sm items-center space-x-6 rounded-lg  shadow-md  ">
+                    <div className="  flex w-full justify-center items-center space-x-6 rounded-lg  shadow-md  ">
                         <div className="flex items-center justify-center ">
                             <div className="  rounded-lg shadow-lg">
                                 {!selectedImage ? (
@@ -334,12 +357,12 @@ const AnalyseMealComp = ({
                                         onClick={() => setshowMealPicPopUp(true)}
                                     >
                                         <div className=" rounded-lg  p-4 ">
-                                            <p className="text-center">Click here to upload image</p>
+                                            <p className="text-center">Click here to upload an image</p>
                                         </div>{' '}
                                     </div>
                                 ) : (
                                     <div
-                                        className="mb-6 ml-2 mt-[58px] flex h-[421px]   h-fit w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
+                                        className="mb-6  mt-[58px] flex h-[421px]   h-fit w-[358px] items-center justify-center rounded-lg border-gray-400 bg-mediumGray bg-cover "
                                         onClick={() => setshowMealPicPopUp(true)}
                                     >
                                         {' '}
@@ -368,9 +391,27 @@ const AnalyseMealComp = ({
                                     <div className="flex items-center justify-center rounded-lg  ">
                                         <DropdownComp />
                                     </div>
+                                    <div className="mb-6 mt-2 ">
+
+                                        <div className="rounded-xl ">
+                                            <p className="mb-2 p-1 text-[14px] text-custompurple">
+
+                                                Describe your meal here (optional)
+                                            </p>
+
+                                            <textarea
+                                                className="w-full bg-black p-2 font-sfpro focus:outline-none border-custompurple border-b-[1px] h-auto "
+                                                placeholder="Type here..."
+                                                onChange={(e) => setUserMealDescription(e.target.value)}
+                                            />
+
+
+                                        </div>
+                                    </div>
                                     <div className="fixed bottom-4 left-0 w-full px-3">
                                         <button
-                                            className="flex w-full flex-row items-center justify-center rounded-xl bg-custompurple p-3 text-black "
+                                            className={`flex w-full flex-row items-center justify-center rounded-xl p-3 text-black ${selectedImage && selectedTaskId ? 'bg-custompurple' : 'bg-gray-500 cursor-not-allowed'
+                                                }`}
                                             onClick={handleMealUploadSubmit}
                                         >
                                             <SparkleIcon />
