@@ -1,10 +1,9 @@
 import styled, { keyframes } from 'styled-components';
 import { RiRunFill } from 'react-icons/ri';
 import { AiOutlineClose } from 'react-icons/ai';
-import { useState } from 'react';
-import axios from 'axios';
-import { useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa6';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const SlideDown = keyframes`
   from {
@@ -27,13 +26,21 @@ const StepTracker = () => {
   const [showInput, setShowInput] = useState(false);
   const [stepCount, setStepCount] = useState('');
   const [showStepCount, setShowStepCount] = useState(false);
-  const stepTrackerData = JSON.parse(localStorage.getItem('stepTracker'));
+  const [stepTrackerData, setStepTrackerData] = useState(
+    JSON.parse(localStorage.getItem('stepTracker')),
+  );
+  const userData = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
+    if (userData?.code !== stepTrackerData?.memberCode) {
+      localStorage.removeItem('stepTracker');
+      setStepCount('');
+      setStepTrackerData(null);
+    }
     const today = new Date().toISOString().split('T')[0];
-
     setShowStepCount(false);
     if (stepTrackerData) {
+      setStepCount(stepTrackerData.stepCount);
       const lastStepTrackerUpdate = stepTrackerData.date.split('T')[0];
       if (lastStepTrackerUpdate !== today) {
         localStorage.removeItem('stepTracker');
@@ -44,28 +51,27 @@ const StepTracker = () => {
     if (!stepTrackerData) {
       setShowStepCount(true);
     }
-  }, []);
+  }, [stepTrackerData]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (stepCount) {
       const today = new Date();
-
+      setShowStepCount(false);
+      setShowInput(false);
       try {
-        axios
+        await axios
           .post(`${process.env.REACT_APP_BASE_URL}/api/v1/member/step-count`, {
             stepCount: stepCount,
             memberCode: JSON.parse(localStorage.getItem('user'))['code'],
             date: today,
           })
           .then((res) => {
-            console.log('its done', res);
+            console.log('Submission successful', res);
             localStorage.setItem('stepTracker', JSON.stringify(res.data));
-            setShowInput(false);
-            setShowStepCount(false);
           })
           .catch((err) => {
-            console.log('some error occured');
+            console.error('An error occurred', err);
           });
       } catch (error) {
         console.error('Error submitting step count:', error);
@@ -76,35 +82,36 @@ const StepTracker = () => {
   };
 
   const handleShowInput = () => {
-    if (showStepCount === true) {
-      setShowInput(true);
-    }
+    setShowInput(true);
   };
 
   return (
     <div>
       <div
-        className={`${
-          showInput && 'rounded-t-2xl bg-mediumGray'
-        }   relative   `}
+        className={`relative ${showInput ? 'rounded-t-2xl bg-mediumGray' : ''}`}
       >
-        <div
-          className={`    to-blue-500 relative  rounded-full bg-gradient-to-r from-[#f45c43] to-[#eb3349] px-4 py-2`}
-        >
-          <div className="flex items-center justify-between ">
-            <div
-              className="flex items-center gap-2 grow"
-              onClick={() => handleShowInput()}
-            >
+        <div className="to-blue-500 relative rounded-full bg-gradient-to-r from-[#f45c43] to-[#eb3349] px-4 py-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 grow">
               <RiRunFill className="text-xl" />
               <div className="w-full error__title">
                 {showStepCount ? (
-                  'Log your daily step count'
+                  <div onClick={handleShowInput}>Log your daily step count</div>
                 ) : (
                   <div className="flex justify-between">
-                    Today's Step Count{' '}
-                    <span className="mr-2 font-bold">
-                      {stepTrackerData?.stepCount}
+                    <div className="w-full" onClick={handleShowInput}>
+                      {' '}
+                      Today's Step Count
+                    </div>
+                    <span className="flex items-center font-bold ">
+                      {showInput ? (
+                        <AiOutlineClose
+                          className="font-semibold"
+                          onClick={() => setShowInput(false)}
+                        />
+                      ) : (
+                        stepCount
+                      )}
                     </span>
                   </div>
                 )}
@@ -122,10 +129,10 @@ const StepTracker = () => {
           </div>
         </div>
       </div>
-      {showStepCount && showInput && (
+      {showInput && (
         <InputContainer>
           <form
-            className="flex items-end w-full px-2 pb-2 rounded-b-lg top-3 bg-mediumGray "
+            className="flex items-end w-full px-2 pb-2 rounded-b-lg bg-mediumGray"
             onSubmit={handleSubmit}
           >
             <input
@@ -141,14 +148,12 @@ const StepTracker = () => {
               type="submit"
               disabled={!stepCount}
               style={{
-                backgroundColor:
-                  stepCount && stepCount !== ''
-                    ? '#5ECC7B'
-                    : 'rgba(61, 61, 61, 0.3)',
-
-                color: stepCount && stepCount !== '' ? 'black' : '#b1b1b1', // Green when enabled, gray when disabled
+                backgroundColor: stepCount
+                  ? '#5ECC7B'
+                  : 'rgba(61, 61, 61, 0.3)',
+                color: stepCount ? 'black' : '#b1b1b1',
               }}
-              className="h-[30px] rounded   px-2 font-medium text-black"
+              className="h-[30px] rounded px-2 font-medium"
             >
               Done
             </button>
