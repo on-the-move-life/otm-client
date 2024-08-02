@@ -57,25 +57,23 @@ const WorkoutSummary = () => {
         
         // Create share text
         const shareText = "Check out my workout summary!";
-  
-        // Function to open WhatsApp
-        const openWhatsApp = (text, imageUrl) => {
-          const encodedText = encodeURIComponent(text);
-          const encodedImage = encodeURIComponent(imageUrl);
-          const whatsappUrl = `whatsapp://send?text=${encodedText}%20${encodedImage}`;
-          window.location.href = whatsappUrl;
-        };
-  
-        // Try to open WhatsApp app
-        openWhatsApp(shareText, dataUrl);
-  
-        // Fallback for desktop or if WhatsApp app isn't installed
-        setTimeout(() => {
-          const webWhatsAppUrl = `https://web.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
-          window.open(webWhatsAppUrl, '_blank');
-        }, 300);
-  
-      } catch (error) {
+
+        // Check if Web Share API is supported
+        if (navigator.share) {
+          const blob = await (await fetch(dataUrl)).blob();
+          const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
+          
+          await navigator.share({
+            text: shareText,
+            files: [file],
+          });
+        } else {
+          // Fallback for desktop browsers
+          const encodedText = encodeURIComponent(shareText);
+          const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
+          window.open(whatsappUrl, '_blank');
+        }
+      }catch (error) {
         console.error('Error capturing or sharing screenshot:', error);
       }
     }
