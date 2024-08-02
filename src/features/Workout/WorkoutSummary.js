@@ -1,5 +1,5 @@
 //WorkoutSummary.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import MoveCoinsPopUp from './MoveCoinsPopUp.js';
@@ -21,6 +21,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 import { axiosflexClient } from './apiFlexClient.js';
+import domtoimage from 'dom-to-image';
 
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -47,6 +48,28 @@ const WorkoutSummary = () => {
   const params = useParams();
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
+  const summaryRef = useRef(null);
+  const captureAndShare = async () => {
+    if (summaryRef.current) {
+      try {
+        // Capture screenshot
+        const dataUrl = await domtoimage.toPng(summaryRef.current);
+        
+        // Create share text
+        const shareText = "Check out my workout summary!";
+        
+        // Generate WhatsApp share link
+        const encodedText = encodeURIComponent(shareText);
+        const encodedImage = encodeURIComponent(dataUrl);
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedText}%20${encodedImage}`;
+
+        // Open WhatsApp share link
+        window.open(whatsappUrl, '_blank');
+      } catch (error) {
+        console.error('Error capturing or sharing screenshot:', error);
+      }
+    }
+  };
 
   const getInputValuesFromLocalStorage = () => {
     const storedInputValues = {};
@@ -240,7 +263,7 @@ const WorkoutSummary = () => {
       {status === 'success' &&
         Object.keys(workoutSummary).length > 0 &&
         !showAchievemntsPage && (
-          <div className="h-full w-full px-4 py-8 ">
+          <div ref={summaryRef} className="h-full w-full px-4 py-8 ">
             {/* Movecoins Earned pop-up - Initial Idea */}
             {/* <AnimatePresence>
             {showMoveCoinsPopup && <MoveCoinsPopUp setShowPopUp={setShowMoveCoinsPopup} coins={workoutSummary?.points} />}
@@ -498,6 +521,14 @@ const WorkoutSummary = () => {
                       ),
                   )}
               </div>
+              <div className="mt-8 flex justify-center">
+              <button 
+                onClick={captureAndShare}
+                className="rounded-full bg-green px-4 py-2 text-black font-bold"
+              >
+                Share with coach
+              </button>
+            </div>
             </AnimatedComponent>
           </div>
         )}
