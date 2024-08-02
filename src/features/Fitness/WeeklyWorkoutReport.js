@@ -24,39 +24,39 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
             setCurrentScore(prevValue => Number(0).toFixed(1));
         }
     }, [lastEightWeeksWorkout])
-
+   
     const Bar = ({ progress , isFirstBar }) => {
-        const [basicgreen, intermediategreen, advancedgreen, red, yellow, gray] = ['#119832', '#29C344', '#7FE08A', '#FA5757', '#F5C563', '#323232'] // colors of the bar
+        const [basicgreen, intermediateGreen, advancedgreen, red, yellow, gray, purple] = ['#7FE08A','#29C344','#119832', '#FA5757', '#F5C563', '#323232','#7E87EF']
         const [height, setHeight] = useState(0);
         const [color, setColor] = useState(gray);
+        console.log(progress);
 
         useEffect(() => {
+            // Calculate height
             if (progress >= suggestedWorkoutPerWeek && suggestedWorkoutPerWeek !== 0) {
-                // if workout per week is >= 4 the bar is filled completely
-                setHeight(prev => String(47));
-            }
-            else {
-                // if the workout < 4 then the bar is filled accordingly (out of <suggestedWorkoutPerWeek> scale)
+                setHeight(47);
+            } else {
                 const calculatedHeight = (progress / suggestedWorkoutPerWeek) * 47;
-                setHeight(prev => calculatedHeight.toString());
+                setHeight(calculatedHeight);
             }
-            if (progress >= 3 * suggestedWorkoutPerWeek) {
-                setColor(prev => advancedgreen);
+    
+            // Determine color based on progress percentage
+
+    
+            if (progress > suggestedWorkoutPerWeek) {
+                setColor(purple);
+            }     
+            else if (progress == suggestedWorkoutPerWeek) {
+                setColor(advancedgreen); 
             }
-            else if (progress >= 2 * suggestedWorkoutPerWeek) {
-                setColor(prev => intermediategreen);
-            }
-            else if (progress >= suggestedWorkoutPerWeek) {
-                setColor(prev => basicgreen);
-            }
-            else if (progress >= suggestedWorkoutPerWeek / 2 && progress < suggestedWorkoutPerWeek) {
-                setColor(prev => yellow);
+            else if (progress==1) {
+                setColor(red);
             }
             else {
-                setColor(prev => red);
-            }
-        }, [progress, color, height, basicgreen, intermediategreen, advancedgreen, red, yellow, gray])
-
+                setColor(yellow);
+            } 
+        }, [progress, suggestedWorkoutPerWeek]);
+    
         const barStyles = {
             height: `${height}px`,
             backgroundColor: color,
@@ -118,14 +118,15 @@ function WeeklyWorkoutReport({ consistencyTrend ,suggestedWorkoutPerWeek, lastEi
                     <p className='wwc-suggestion-text'>Suggested workouts per week <span className='wwc-suggested-count'>{suggestedWorkoutPerWeek}</span></p>
                 </div>
                 {lastEightWeeksWorkout ? <div className='wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>
-                    {
-                            [...Array(8).keys()]?.map((item, index) => {
-                                const progressCount = lastEightWeeksWorkout[index] !== undefined ? lastEightWeeksWorkout[index]?.count : 0
-                                return (
-                                    <Bar progress={progressCount} key={Math.random() * 1000} isFirstBar={index === 0}  />
-                                )
-                            })
-                    }
+                {
+  [...Array(8).keys()].reverse().map((item, index) => {
+    const reversedIndex = 7 - index;
+    const progressCount = lastEightWeeksWorkout[reversedIndex] !== undefined ? lastEightWeeksWorkout[reversedIndex]?.count : 0
+    return (
+      <Bar progress={progressCount} key={Math.random() * 1000} isFirstBar={index === 7}  />
+    )
+  })
+}
                 </div> : <div className='wwc-score wwc-chart-container flex flex-row justify-center items-center gap-[6px]'>-</div>}
             </section>
         </div>

@@ -21,7 +21,9 @@ const RankDisplay = ({
   return (
     <div className="mt-8">
       <h1 className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-xl font-semibold text-transparent">
-        {selectedDataType === 'workout' ? 'WORKOUTS' : 'FITNESS'}
+        {selectedDataType === 'workout'
+          ? 'Consistency Leaderboard'
+          : 'Fitness Leaderboard'}
       </h1>
       <div className="flex flex-row justify-between p-2 text-[8px] uppercase tracking-[3px] text-lightGray">
         <span className="">RANK</span>

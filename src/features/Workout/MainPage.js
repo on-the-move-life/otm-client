@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader, Error } from '../../components';
 import SectionItem from './Section';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UpdateWorkout from './UpdateWorkout';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { setIndex } from './WorkoutSlice';
@@ -13,6 +13,7 @@ const MainPage = () => {
   const [updatedWorkoutProgram, setUpdatedWorkoutProgram] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const params = useParams();
 
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
@@ -67,7 +68,7 @@ const MainPage = () => {
 
   const handleStart = () => {
     dispatch(setIndex(0));
-    navigate('/section-details');
+    navigate(`/section-details/${params.value}`);
   };
 
   if (status === 'loading') {
@@ -106,21 +107,24 @@ const MainPage = () => {
                       TODAY'S FOCUS
                     </span>
                     <div className="flex items-center justify-between w-full sm:justify-normal sm:gap-5">
-                      <div className="flex items-center gap-2">
-                        <div>
-                          <h2 className="text-xl">{workoutData.theme}</h2>
+                      {workoutData.theme && (
+                        <div className="flex items-center gap-2">
+                          <div>
+                            <h2 className="text-xl">{workoutData.theme}</h2>
+                          </div>
+                          <div className="flex items-center justify-center">
+                            <button
+                              onClick={() => setShowUpdateWorkout(true)}
+                              className="w-fit rounded-[4px] border border-white bg-black p-[3px]"
+                            >
+                              <span className="block rounded-[4px] bg-white px-[2px] py-[1px] text-[10px] font-bold text-black">
+                                Change
+                              </span>
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center justify-center">
-                          <button
-                            onClick={() => setShowUpdateWorkout(true)}
-                            className="w-fit rounded-[4px] border border-white bg-black p-[3px]"
-                          >
-                            <span className="block rounded-[4px] bg-white px-[2px] py-[1px] text-[10px] font-bold text-black">
-                              Change
-                            </span>
-                          </button>
-                        </div>
-                      </div>
+                      )}
+
                       {(workoutData.workoutCalories ||
                         workoutData.workoutDuration) && (
                         <div className="flex flex-col items-end sm:flex-row sm:gap-2">
