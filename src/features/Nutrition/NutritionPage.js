@@ -47,8 +47,8 @@ const NutritionPage = () => {
                 <img src="/assets/meal-logo.svg" />
                 <h3 className="text-offwhite">Meal Planner</h3>
               </div>
-              <div className="mt-1 w-[250px] text-[14px]  leading-[16px] text-lightGray">
-                This is a one line description of the feature
+              <div className="mt-1 w-[280px] text-[14px]  leading-[16px] text-lightGray">
+                Your Weekly Meal Plan according to your goals and preferences
               </div>
             </div>
           </Link>
