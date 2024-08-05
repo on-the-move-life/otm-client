@@ -43,7 +43,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_BACKEND_MODE=production react-scripts start",
+    "start": "react-scripts start",
     "dev": "REACT_APP_BACKEND_MODE=local react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
