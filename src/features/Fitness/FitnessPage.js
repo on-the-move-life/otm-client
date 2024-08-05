@@ -1,4 +1,3 @@
-//FitnessPage.js
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader, Error, Counter } from '../../components';
@@ -13,8 +12,15 @@ import WeeklyWorkoutReport from './WeeklyWorkoutReport';
 import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
 import { TimelineHeading } from '../Timeline/StyledComponents';
-import { AiOutlineRight } from 'react-icons/ai';
 import MonthlyWrapped from '../Profile/MonthlyWrapped';
+import { AiOutlineRight } from 'react-icons/ai';
+
+function formatNumber(num) {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'k';
+  }
+  return num.toString();
+}
 
 const FitnessPage = () => {
   const { setUserData } = useUserContext();
@@ -22,16 +28,16 @@ const FitnessPage = () => {
   // const [user, getUserFromStorage] = useState({});
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
-
+  const [isWeekend, setIsWeekend] = useState(false);
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
-  const [isWeekend, setIsWeekend] = useState(false);
   const currentDate = new Date().getDate();
-
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
 
   const navigate = useNavigate();
+
+  console.log(homeStats);
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
@@ -73,7 +79,6 @@ const FitnessPage = () => {
       const presentday = new Date().getDay();
       setIsWeekend(presentday === 0 || presentday === 6); // 0 is Sunday, 6 is Saturday
     };
-
     checkIfWeekend();
   }, []);
 
@@ -85,146 +90,168 @@ const FitnessPage = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
-          <section className="pb-0 pt-5">
-            <div className="flex justify-between">
-              <div className="mt-3 flex flex-col">
-                <TimelineHeading>Movement</TimelineHeading>
-                {parseInt(homeStats.streak) > 0 && (
-                  <div className="flex items-center ">
-                    <div className="perfect-week my-2 flex w-fit items-center rounded">
-                      <img src="assets/star.svg" alt="" />
-                      <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
-                        Perfect Week x{homeStats.streak}
-                      </span>
+        <div>
+          <img
+            className="absolute right-0 -top-5 -z-20 "
+            src="/assets/main-frame.svg"
+          />
+          <img
+            className="absolute right-[75px] top-8 -z-10 "
+            src="/assets/movement-logo.svg"
+          />
+          <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
+            <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
+              <TimelineHeading>Movement</TimelineHeading>
+              <div className="flex h-[66px] w-[46%]  items-center justify-between rounded-lg bg-mediumGray p-1">
+                <span className="pl-4 text-sm w-9">Total workouts</span>
+                <div
+                  className={`
+                  
+                  ${
+                    homeStats.totalWorkoutsDone > 99 &&
+                    homeStats.totalWorkoutsDone < 999
+                      ? 'text-4xl'
+                      : 'text-5xl'
+                  } flex h-full min-w-[68px] items-center justify-center rounded-lg bg-blue text-center  font-anton  text-mediumGray `}
+                >
+                  {formatNumber(homeStats?.totalWorkoutsDone)}
+                </div>
+              </div>
+            </section>
+            {/* <div className="flex w-full gap-2 mt-2">
+              <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
+                <span className="pl-4 text-sm w-9 text-floYellow">
+                  Log Activity
+                </span>
+                <div className="flex min-h-[68px] min-w-[68px] items-center justify-center rounded-lg bg-floYellow ">
+                  <img src="/assets/fitness-add.svg" />
+                </div>
+              </div>
+            </div> */}
+
+            {/* <h2 className="inline-block mt-2 text-2xl font-sfpro text-floYellow">
+              Shred
+            </h2> */}
+
+            <section>
+              {currentDate < 5 && (
+                <section className="flex flex-row items-center justify-center w-full gap-3 ">
+                  <MonthlyWrapped />
+                </section>
+              )}
+            </section>
+
+            <section>
+              <div className="flex items-center">
+                <Link
+                  to="/workout/today"
+                  className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                >
+                  <div className="flex flex-col justify-between h-full">
+                    <div className="flex gap-3">
+                      <h2 className="text-2xl font-medium ">Today's Workout</h2>
+                      <img src="/assets/shred-logo.svg" />
+                    </div>
+
+                    <div className="flex gap-3">
+                      <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
+                        {homeStats.hyperWorkoutParams.theme}
+                      </h2>
+                      <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {homeStats.hyperWorkoutParams.duration} mins
+                      </h2>
+                      <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {' '}
+                        {homeStats.hyperWorkoutParams.calories} cal
+                      </h2>
                     </div>
                   </div>
-                )}
-
-                {/* <h2 className="mt-3 inline-block w-40 bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6]  bg-clip-text text-lg font-semibold text-transparent">
-                  Today's Workout
-                </h2> */}
+                  <h2 className="text-xl font-medium text-floYellow">Start</h2>
+                </Link>
               </div>
+            </section>
 
-              {homeStats !== null && homeStats?.totalWorkoutsDone > 0 && (
-                <TotalWorkoutFitness apiData={homeStats?.totalWorkoutsDone} />
-              )}
-            </div>
-          </section>
-          <section>
-            {currentDate < 5 && (
-              <section className="flex flex-row items-center justify-center w-full gap-3 ">
-                <MonthlyWrapped />
+            {isWeekend && (
+              <Link to="/weekly-checkin" className="">
+                <div className="flex-col p-4 rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="inline-block text-2xl font-semibold tracking-wider purple-white-gradient">
+                      Weekly Check-In
+                    </span>
+                    <span className="font-semibold">
+                      <AiOutlineRight size={26} className="text-white " />
+                    </span>
+                  </div>
+                  <div className="flex justify-center">
+                    <p className="max-w-[100%] text-left text-[12px] font-semibold text-white">
+                      View your weekly stats and register your thoughts and
+                      rating
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            )}
+
+            <section>
+              <FitnessScore
+                score={homeStats?.score}
+                percentile={homeStats?.fitnessPercentileScore}
+              />
+
+              <WeeklyWorkoutReport
+                consistencyTrend={homeStats?.consistencyTrend}
+                suggestedWorkoutPerWeek={homeStats?.frequency}
+                lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
+              />
+            </section>
+
+            {homeStats?.isPaymentDue && (
+              <section>
+                <DuePaymentIndicator />
               </section>
             )}
-          </section>
-          <section>
-            <div className="flex items-center">
-              <Link
-                to="/workout/today"
-                className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-              >
-                <div className="flex h-full flex-col justify-between">
-                  <div className="flex gap-3">
-                    <h2 className=" text-3xl font-medium">Today's Workout</h2>
-                    <img src="/assets/shred-logo.svg" />
-                  </div>
 
-                  <div className="flex gap-3">
-                    <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
-                      {homeStats.hyperWorkoutParams.theme}
-                    </h2>
-                    <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {homeStats.hyperWorkoutParams.duration} mins
-                    </h2>
-                    <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {' '}
-                      {homeStats.hyperWorkoutParams.calories} cal
-                    </h2>
-                  </div>
-                </div>
-                {/* <h2 className="text-xl font-medium text-floYellow">Start</h2> */}
-              </Link>
-              {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
-                <div className="absolute -top-1 left-[6px]">+</div>
-              </div> */}
+            <div className="text-sm text-offwhite ">
+              Follow this module to workout your core
             </div>
-          </section>
 
-          {isWeekend && (
-            <Link to="/weekly-checkin" className="">
-              <div className="flex-col rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd p-4">
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="purple-white-gradient inline-block text-2xl font-semibold tracking-wider">
-                    Weekly Check-In
-                  </span>
-                  <span className="font-semibold">
-                    <AiOutlineRight size={26} className="text-white " />
-                  </span>
-                </div>
-                <div className="flex justify-center">
-                  <p className="max-w-[100%] text-left text-[12px] font-semibold text-white">
-                    View your weekly stats and register your thoughts and rating
-                  </p>
-                </div>
-              </div>
-            </Link>
-          )}
-
-          <section>
-            <WeeklyWorkoutReport
-              consistencyTrend={homeStats?.consistencyTrend}
-              suggestedWorkoutPerWeek={homeStats?.frequency}
-              lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
-            />
-          </section>
-          <section>
-            <FitnessScore
-              score={homeStats?.score}
-              percentile={homeStats?.fitnessPercentileScore}
-            />
-          </section>
-
-          {homeStats?.isPaymentDue && (
             <section>
-              <DuePaymentIndicator />
+              <div className="flex items-center">
+                <Link
+                  to="/workout/flex"
+                  className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                >
+                  <div className="flex flex-col justify-between h-full">
+                    <div className="flex gap-3">
+                      <h2 className="text-3xl font-medium ">Flex</h2>
+                      <img src="/assets/flex-logo.svg" />
+                    </div>
+
+                    <div className="flex gap-3">
+                      <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
+                        {homeStats.flexWorkoutParams.theme}
+                      </h2>
+                      <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {homeStats.flexWorkoutParams.duration} mins
+                      </h2>
+                      <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                        {' '}
+                        {homeStats.flexWorkoutParams.calories} cal
+                      </h2>
+                    </div>
+                  </div>
+                  <h2 className="text-xl font-medium text-floYellow">Start</h2>
+                </Link>
+              </div>
             </section>
-          )}
 
-          <section>
-            <div className="flex items-center">
-              <Link
-                to="/workout/flex"
-                className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-              >
-                <div className="flex h-full flex-col justify-between">
-                  <div className="flex gap-3">
-                    <h2 className=" text-3xl font-medium">Flex</h2>
-                    <img src="/assets/flex-logo.svg" />
-                  </div>
-
-                  <div className="flex gap-3">
-                    <h2 className="bg-gray rounded-md border border-white px-2 py-[2px] font-sfpro text-[12px] text-white">
-                      {homeStats.flexWorkoutParams.theme}
-                    </h2>
-                    <h2 className="bg-gray  rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {homeStats.flexWorkoutParams.duration} mins
-                    </h2>
-                    <h2 className=" bg-gray rounded-md border border-white px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                      {' '}
-                      {homeStats.flexWorkoutParams.calories} cal
-                    </h2>
-                  </div>
-                </div>
-                {/* <h2 className="text-xl font-medium text-floYellow">Start</h2> */}
-              </Link>
-              {/* <div className="relative w-8 h-8 ml-2 text-3xl text-center rounded-full background-gray-gradient text-white-opacity-23">
-                <div className="absolute -top-1 left-[6px]">+</div>
-              </div> */}
-            </div>
-          </section>
-
-
+            {/* <div className="pt-2 pb-5 pl-4 rounded-xl bg-mediumGray">
+              <p className="text-sm text-red">Injury guide</p>
+              <p className="mt-3 text-offwhite">
+                Follow our RSLL protocols to deal with injuries
+              </p>
+            </div> */}
+          </div>
         </div>
       )}
     </>

@@ -32,7 +32,7 @@ body {
   font-size: 0.7em;
   letter-spacing: 0.2em;
 }
-.textbox-kginput::placeholder{
+.textbox-kginput::placeholder {
   font-size: 1em;
   letter-spacing: 0.2em;
   color: #565656;
@@ -497,6 +497,13 @@ button:active {
   );
 }
 
+.gradient-percentage {
+  background: linear-gradient(to bottom, #f5c563, #fa5f59);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .leaderboard-user-list-item {
   border-radius: 12px;
   border: 1.5px solid var(--Light-purple, #d6b6f0);
@@ -743,8 +750,8 @@ button:active {
   width: auto;
   height: 104px;
   border-radius: 12px;
-  border: 0.5px solid #383838;
-  background: linear-gradient(180deg, #171717 0%, #0f0f0f 100%);
+
+  background: var(--White, #1c1c1e);
   display: flex;
   flex-direction: column;
   justify-content: center;

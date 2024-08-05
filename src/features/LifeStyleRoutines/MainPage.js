@@ -12,6 +12,7 @@ import { Loader } from '../LifestyleQuiz';
 import { Error } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInitialStateSuccess } from './ReduxStore/actions';
+import { TimelineHeading } from '../Timeline/StyledComponents';
 
 function MainPage() {
   // Defining states for the fetched data
@@ -75,7 +76,10 @@ function MainPage() {
     }
 
     return (
-      <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5 mb-9 mt-7">
+      <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5 mb-9 ">
+        <TimelineHeading className="mt-[70px] w-full text-left">
+          Lifestyle
+        </TimelineHeading>
         {completionHistory && (
           <Calendar
             completionHistory={completionHistory}
@@ -100,14 +104,22 @@ function MainPage() {
 
   return (
     <>
-      <BackButton
-        size={30}
-        className="absolute cursor-pointer left-3 top-2 w-fit"
-        action={() => navigate('/lifestyle')}
+      <img
+        className="absolute right-0 -top-4 -z-20 "
+        src="/assets/main-frame.svg"
       />
-      {renderContent()}
-      <div className="fixed bottom-0 left-0 w-full py-4 bg-black/20 backdrop-blur-sm">
-        <NavigationTab selectedIndex={section} setSelectedIndex={setSection} />
+      <img
+        className="absolute right-[55px] top-10 -z-10 "
+        src="/assets/lifestyle-logo.svg"
+      />
+      <div className="pb-[78px]">
+        {renderContent()}
+        <div className="left-0 w-full py-4 bg-black/20 backdrop-blur-sm">
+          <NavigationTab
+            selectedIndex={section}
+            setSelectedIndex={setSection}
+          />
+        </div>
       </div>
     </>
   );

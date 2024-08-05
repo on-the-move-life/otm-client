@@ -49,7 +49,7 @@ function ProfilePicture({ inputPic, altText, width, height }) {
       />
       {isZoomed && (
         <div
-          className="fixed top-0 left-0 z-50 flex items-center justify-center w-screen h-screen bg-black bg-opacity-50 backdrop-blur-md"
+          className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-50 backdrop-blur-md"
           onClick={handleClose}
         >
           <motion.img

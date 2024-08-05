@@ -9,6 +9,7 @@ import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
 import LifeStyleScore from './LifeStyleScore';
 import LifeStyleRoutine from './LifeStyleRoutine';
 import { TimelineHeading } from '../Timeline/StyledComponents';
+import MainPage from '../LifeStyleRoutines/MainPage';
 
 const Lifestryle = () => {
   const { setUserData } = useUserContext();
@@ -65,13 +66,15 @@ const Lifestryle = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {homeStats && (
-        <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll  px-4 pb-[78px]">
+        <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll  px-4 pb-[130px]">
           <div className="mt-[32px]">
             <TimelineHeading>Lifestyle</TimelineHeading>
           </div>
 
+          <MainPage />
+
           {homeStats?.showLifestyle === true && (
-            <section className="flex flex-col items-center justify-center w-full gap-3">
+            <section className="flex w-full flex-col items-center justify-center gap-3">
               <LifeStyleScore
                 completionPercentage={homeStats?.routineProgress}
               />

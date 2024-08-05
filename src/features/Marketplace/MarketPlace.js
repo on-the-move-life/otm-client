@@ -88,10 +88,10 @@ function MarketPlace() {
                 }}
               >
                 <Name>Hello {name},</Name>
-                <Movecoins fontSize={'26px'} coins={data?.moveCoins} />
+                <Movecoins fontSize={'26px'} coins={data.moveCoins} />
               </div>
               <div className="w-full mt-2">
-                <CoinsIndicator coins={data?.moveCoins} offers={data?.offers} />
+                <CoinsIndicator coins={data.moveCoins} offers={data.offers} />
               </div>
             </div>
           </AnimatedComponent>

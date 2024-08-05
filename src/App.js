@@ -131,16 +131,6 @@ function App() {
           element={<JourneyReflectionPage />}
         />
         <Route
-          path="/lifestyle-routine"
-          element={
-            <Provider store={store}>
-              <RouteMiddleware>
-                <LifeStyleRoutine />
-              </RouteMiddleware>
-            </Provider>
-          }
-        />
-        <Route
           path="/leaderboard/:value"
           element={
             <RouteMiddleware>
@@ -149,6 +139,16 @@ function App() {
           }
         />{' '}
         <Route element={<MainLayout />}>
+          <Route
+            path="/lifestyle-routine"
+            element={
+              <Provider store={store}>
+                <RouteMiddleware>
+                  <LifeStyleRoutine />
+                </RouteMiddleware>
+              </Provider>
+            }
+          />
           <Route
             path="/nutrition"
             element={
@@ -182,14 +182,14 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="/lifestyle"
             element={
               <RouteMiddleware>
                 <Lifestyle />
               </RouteMiddleware>
             }
-          />
+          /> */}
         </Route>
         <Route
           path="/MealUpload"

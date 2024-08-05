@@ -13,16 +13,12 @@ function MonthlyWrapped() {
       }}
       onClick={() => navigate('/monthly-wrapped')}
     >
-      <div className="flex min-h-[113px] w-full flex-col items-start justify-between gap-3 overflow-hidden rounded-[12px] bg-gradient-to-r from-[#1c1c1e] to-transparent backdrop-blur-xl backdrop-brightness-150">
-        <div className="flex flex-col items-start justify-center w-full gap-0">
-          <h3 className="px-3 py-2 text-[14px] text-[#f8f8f8]">
-            Monthly Wrapped
-          </h3>
-          <div className="h-[1px] w-full bg-black" />
-        </div>
-        <div className="flex flex-row items-center justify-between w-full px-3">
+      <div className="flex min-h-[103px] w-full flex-col items-start justify-between  overflow-hidden rounded-[12px] bg-gradient-to-r from-[#1c1c1e] to-transparent backdrop-blur-xl backdrop-brightness-150">
+        <h3 className="px-3 py-2 text-[14px] text-[#f8f8f8]">OTM Wrapped</h3>
+
+        <div className="flex w-full flex-row items-center justify-between pl-2">
           <img src={'/assets/monthly_wrapped_tile_stars.png'} alt="stars" />
-          <div className="flex flex-row items-center justify-center gap-1">
+          <div className="relative right-[0] ml-4 mt-[10px] flex flex-row items-center justify-center gap-1">
             <h3 className="relative top-[0.5rem] text-[32.3px] text-white/90">
               {month}
             </h3>

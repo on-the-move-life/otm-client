@@ -5,6 +5,7 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
+        offwhite: '#F8F8F8',
         gray: '#3B3B3B',
         green: '#5ECC7B',
         lightPurple: '#D6B6F0',
@@ -15,12 +16,14 @@ module.exports = withMT({
         floYellow: '#DDF988',
         blue: '#7E87EF',
         lightGray: '#B1B1B1',
+        gray: '#3B3B3B',
         yellow: '#F5C563',
         mediumGray: '#1C1C1E',
-        lightGray: '#929292',
+        darkTextGray: '#929292',
         custompurple: '#7E87EF',
         customGray: '#545454',
         gradientStart: '#7E87EF',
+        progressGray: '#A8A8A8',
         gradientEnd: '#B0B5F8',
         'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
       },
@@ -43,6 +46,7 @@ module.exports = withMT({
       fontFamily: {
         serif: ['Inter', 'sans-serif'],
         sfpro: ['"SF Pro Display"', 'sans-serif'],
+        anton: ['Anton'],
       },
       backgroundSize: {
         '25%': '25%',

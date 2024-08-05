@@ -4,26 +4,71 @@ import { TimelineHeading } from '../Timeline/StyledComponents';
 
 const NutritionPage = () => {
   return (
-    <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4 pb-[78px] ">
-      <div className="mt-[32px]">
-        <TimelineHeading>Nutrition</TimelineHeading>
+    <div>
+      <img className="absolute right-0 -z-20 " src="/assets/main-frame.svg" />
+      <img
+        className="absolute right-[85px] top-14 -z-10 "
+        src="/assets/nutrition-logo.svg"
+      />
+      <div className="flex w-screen grow flex-col overflow-y-scroll px-4 pb-[78px] ">
+        <div className="mt-[76px]">
+          <TimelineHeading>Nutrition</TimelineHeading>
+        </div>
+        <div className="mt-[90px] flex flex-col gap-2">
+          <Link
+            to="/MealUpload"
+            className="relative  flex h-[78px] rounded-lg bg-mediumGray"
+          >
+            <div className="my-2 ml-4 ">
+              <div className="flex gap-2">
+                <img src="/assets/camera-logo.svg" />
+                <h3 className="text-offwhite">Meal Analysis</h3>
+              </div>
+              <div className="mt-1 w-[250px] text-[14px]  leading-[16px] text-lightGray">
+                Let the power of AI breakdown your meal
+              </div>
+            </div>
+
+            <div>
+              <img className="absolute right-0 " src="/assets/spiral.svg" />
+              <img
+                className="absolute right-[16px]   "
+                src="/assets/meal-photo.png"
+              />
+            </div>
+          </Link>
+
+          <Link
+            to="/meal-planner"
+            className="relative flex h-[78px] rounded-lg bg-mediumGray"
+          >
+            <div className="my-2 ml-4 ">
+              <div className="flex gap-2">
+                <img src="/assets/meal-logo.svg" />
+                <h3 className="text-offwhite">Meal Planner</h3>
+              </div>
+              <div className="mt-1 w-[250px] text-[14px]  leading-[16px] text-lightGray">
+                This is a one line description of the feature
+              </div>
+            </div>
+          </Link>
+
+          {/* <Link
+            to="/MealUpload"
+            className="relative flex h-[78px] rounded-lg bg-mediumGray"
+          >
+            <div className="my-2 ml-4 ">
+              <div className="flex gap-2">
+                <img src="/assets/supplement.svg" />
+                <h3 className="text-offwhite">Supplements</h3>
+              </div>
+              <div className="mt-1 w-[250px] text-[14px] leading-[16px] text-lightGray">
+                This is a one line description of the feature
+              </div>
+            </div>
+          </Link> */}
+        </div>
       </div>
-      <Link to="/MealUpload" className="main-cta">
-        <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-          Meal Upload
-        </span>
-        <span>
-          <AiOutlineRight size={22} />
-        </span>
-      </Link>
-      <Link to="/meal-planner" className="main-cta">
-        <span className="inline-block bg-gradient-to-r from-[#9BF2C0] to-[#91BDF6] bg-clip-text text-transparent">
-          Meal Planner
-        </span>
-        <span>
-          <AiOutlineRight size={22} />
-        </span>
-      </Link>
     </div>
   );
 };

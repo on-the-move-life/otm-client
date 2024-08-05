@@ -13,17 +13,22 @@ const Arrow = ({ value }) => {
     ) : (
       <div className="bg-white-300 h-7 w-4" />
     );
-  const arrowText = value !== 0 ? (isPositive ? `+${!integer ? value?.toFixed(1) : toInteger(value)}` : `${!integer ? value?.toFixed(1) : toInteger(value)}`) : '';
+  const arrowText =
+    value !== 0
+      ? isPositive
+        ? `+${!integer ? value?.toFixed(1) : toInteger(value)}`
+        : `${!integer ? value?.toFixed(1) : toInteger(value)}`
+      : '';
 
   return (
     <div className="mr-2 inline-flex h-7 w-4 flex-col items-center justify-start">
-      <div className="relative origin-top-left w-3 h-3">{arrowImage}</div>
+      <div className="relative h-3 w-3 origin-top-left">{arrowImage}</div>
       <div
         className={`text-${
           isPositive ? 'green' : 'red'
-        } text-[10px] font-bold lowercase tracking-tight`}
+        } text-[11.69px] font-bold lowercase tracking-tight`}
       >
-        {arrowText}
+        {arrowText}%
       </div>
     </div>
   );
