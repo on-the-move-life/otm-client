@@ -36,13 +36,15 @@
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
+    "reselect": "^5.1.1",
     "rsuite": "^5.40.0",
     "styled-components": "^6.1.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_BACKEND_MODE=production react-scripts start",
+    "dev": "REACT_APP_BACKEND_MODE=local react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

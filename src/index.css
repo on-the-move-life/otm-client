@@ -313,6 +313,13 @@ button:active {
     0px 2.5px 4px 0px rgba(0, 0, 0, 0.15),
     0px 14px 14px 0px rgba(0, 0, 0, 0.09);
 }
+.mealplanner-gradient-button {
+  background-color: #7E87EF;
+}
+.mealplannerback-gradient-button {
+  background-color: #343434;
+  color: white;
+}
 
 .marketplace-gradient-button {
   background: var(
@@ -950,6 +957,21 @@ button:active {
 
 .background-gray-gradient {
   background: linear-gradient(180deg, #171717 0%, #0f0f0f 100%);
+}
+meter{
+  width: 61px;
+  height: 7px;
+}
+meter::-webkit-meter-bar{
+  background: none; /* Required to get rid of the default background property */
+  width: 61px;
+  height: 7px;
+  background-color: rgba(195, 195, 195, 0.6);
+}
+meter::-webkit-meter-optimum-value{
+  background: none;
+  background-color: white;
+  border-radius: 7px;
 }
 
 .purple-white-gradient {

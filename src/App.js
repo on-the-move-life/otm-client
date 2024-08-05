@@ -15,6 +15,7 @@ import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from './features/LifeStyleRoutines';
+import { mealPlannerStore } from './features/Nutrition/MealPlanner'
 import MainLayout from './components/MainLayout';
 import FitnessPage from './features/Fitness/FitnessPage';
 import { Community } from './features/Community';
@@ -26,6 +27,7 @@ import { useAuth } from './contexts/AuthContext';
 
 import MealUpload from './features/LifeStyleRoutines/MealUpload';
 import NutritionPage from './features/Nutrition/NutritionPage';
+import { MealPlanner } from './features/Nutrition/MealPlanner';
 import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 
 function App() {
@@ -195,6 +197,16 @@ function App() {
             <RouteMiddleware>
               <MealUpload />
             </RouteMiddleware>
+          }
+        />
+        <Route
+          path="/meal-planner"
+          element={
+            <Provider store={mealPlannerStore}>
+              <RouteMiddleware>
+                <MealPlanner />
+              </RouteMiddleware>
+            </Provider>
           }
         />
         <Route path="/admin-login" element={<AdminLogin />} />

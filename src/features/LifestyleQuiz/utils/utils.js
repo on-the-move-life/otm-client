@@ -143,7 +143,14 @@ export function validatePositiveInteger(inputValue) {
     const positiveIntegerRegex = /^[1-9]\d*$/;
 
     // Check if the inputValue matches the regex pattern
-    return inputValue === "" ? true : positiveIntegerRegex.test(inputValue);
+    if(typeof(inputValue) === 'string'){
+        return inputValue === "" ? true : positiveIntegerRegex.test(inputValue);
+    }
+    else if(typeof(inputValue) === 'number'){
+        return inputValue > 0;
+    }
+    // return false for any other data type
+    return false;
 }
 
 // function to get the percent completion of the question in lifestyle questionnaire
