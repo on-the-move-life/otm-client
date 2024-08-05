@@ -27,9 +27,9 @@ const Arrow = ({ value }) => {
         <div
           className={`text-${
             isPositive ? 'green' : 'red'
-          } text-[11.69px] font-bold lowercase tracking-tight`}
+          } pr-[4px] text-[11.69px] font-bold lowercase tracking-tight `}
         >
-          {arrowText}%
+          {arrowText}
         </div>
       )}
     </div>
