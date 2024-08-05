@@ -442,7 +442,7 @@ const UserDetails = ({ showHistory }) => {
                         className=" mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg  "
                         onClick={() =>
                           window.open(
-                            'https://calendly.com/rishisolanki1995/1-on-1-call-with-your-coach',
+                            'https://calendly.com/rishisolanki1995/30mincallwithrishi',
                             '_blank',
                           )
                         }
