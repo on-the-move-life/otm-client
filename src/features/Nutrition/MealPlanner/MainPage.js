@@ -134,19 +134,37 @@ function MainPage() {
         }
     }
 
-    useEffect(() => {
-        fetchQuestions();
-    }, [])
-
 
     // update the section name
     useEffect(() => {
+        setPageLoading(true);
         // if the meal is already planned then set the section name to 'Weekly Plan'
-        // Implementation
-
-        // else start with the 'Get Started'
-        dispatch(Actions.updateSectionName('Get Started'));
+        const memberCode = JSON.parse(localStorage.getItem('user'))['code'];
+        axiosClient.get(`/meal-plan?memberCode=${memberCode}`)
+            .then(res => {
+                console.log("response /meal-plan : ", res.data);
+                if(res?.data?.success === true && res?.data?.data.length !== 0){
+                    dispatch(Actions.updateWeeklyPlan(res?.data?.data));
+                    dispatch(Actions.updateSectionName('Weekly Plan'));
+                }
+                else{
+                    // else start with the 'Get Started'
+                    dispatch(Actions.updateSectionName('Get Started'));
+                }
+            })
+            .catch(err => {
+                // else start with the 'Get Started'
+                dispatch(Actions.updateSectionName('Get Started'));
+                console.log(err);
+            })
+            .finally(() => setPageLoading(false))
     }, [])
+
+    useEffect(() => {
+        if(sectionName === "Get Started"){
+            fetchQuestions();
+        }
+    }, [sectionName])
 
     useEffect(() => {
         // this useEffect changes the sectionName with change in the questionScreen
