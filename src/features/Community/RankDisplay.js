@@ -20,15 +20,11 @@ const RankDisplay = ({
   } w-full flex flex-row justify-between px-auto`;
 
   return (
-    <div
+    <Link
       className="flex w-full flex-col   gap-[2px] rounded-xl bg-mediumGray px-1 pb-1"
-      onClick={() =>
-        Navigate(
-          `/leaderboard/${
-            selectedDataType === 'workout' ? 'workout' : 'fitness_score'
-          }`,
-        )
-      }
+      to={`/leaderboard/${
+        selectedDataType === 'workout' ? 'workout' : 'fitness_score'
+      } `}
     >
       <h1 className=" flex  h-[32px]  items-center pl-5 text-sm ">
         {selectedDataType === 'workout'
@@ -63,7 +59,7 @@ const RankDisplay = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

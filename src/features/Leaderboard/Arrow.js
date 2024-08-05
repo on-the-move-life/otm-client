@@ -11,7 +11,7 @@ const Arrow = ({ value }) => {
         alt={isPositive ? 'Up Arrow' : 'Down Arrow'}
       />
     ) : (
-      <div className="bg-white-300 h-7 w-4" />
+      <div className="w-4 bg-white-300 h-7" />
     );
   const arrowText =
     value !== 0
@@ -21,15 +21,17 @@ const Arrow = ({ value }) => {
       : '';
 
   return (
-    <div className="mr-2 inline-flex h-7 w-4 flex-col items-center justify-start">
-      <div className="relative h-3 w-3 origin-top-left">{arrowImage}</div>
-      <div
-        className={`text-${
-          isPositive ? 'green' : 'red'
-        } text-[11.69px] font-bold lowercase tracking-tight`}
-      >
-        {arrowText}%
-      </div>
+    <div className="inline-flex flex-col items-center justify-start w-4 mr-2 h-7">
+      <div className="relative w-3 h-3 origin-top-left">{arrowImage}</div>
+      {arrowText && (
+        <div
+          className={`text-${
+            isPositive ? 'green' : 'red'
+          } text-[11.69px] font-bold lowercase tracking-tight`}
+        >
+          {arrowText}%
+        </div>
+      )}
     </div>
   );
 };

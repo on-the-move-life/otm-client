@@ -320,7 +320,7 @@ const UserDetails = ({ showHistory }) => {
               </div> */}
                 </div>
 
-                <p className="text-center align-middle text-[14px]  text-darkTextGray">
+                <p className="text-darkTextGray text-center align-middle  text-[14px]">
                   Fitness is not a destination. It's a journey of self
                   improvement, one workout at a time.
                 </p>
@@ -411,7 +411,7 @@ const UserDetails = ({ showHistory }) => {
 
                 {/* <MoveCoins coins={0} /> */}
 
-                {currentDate > 5 && (
+                {currentDate >= 5 && (
                   <section className="flex flex-row items-center justify-center w-full gap-3 mt-1">
                     <MonthlyWrapped />
                   </section>
