@@ -38,7 +38,10 @@ const NutritionPage = () => {
             </div>
           </Link>
 
-          {/* <Link className="relative flex h-[78px] rounded-lg bg-mediumGray">
+          <Link
+            to="/meal-planner"
+            className="relative flex h-[78px] rounded-lg bg-mediumGray"
+          >
             <div className="my-2 ml-4 ">
               <div className="flex gap-2">
                 <img src="/assets/meal-logo.svg" />
@@ -50,7 +53,7 @@ const NutritionPage = () => {
             </div>
           </Link>
 
-          <Link
+          {/* <Link
             to="/MealUpload"
             className="relative flex h-[78px] rounded-lg bg-mediumGray"
           >
