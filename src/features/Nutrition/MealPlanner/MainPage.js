@@ -23,6 +23,7 @@ function MainPage() {
     const [validation, setValidation] = useState({});
     const [pageLoading, setPageLoading] = useState(false);
     const [pageError, setPageError] = useState(false);
+    const [loadingWeeklyPlan, setLoadingWeeklyPlan] = useState(false);
 
     const selectQuestions = Selectors.makeGetQuestions();
     const selectResponses = Selectors.makeGetResponses();
@@ -89,6 +90,7 @@ function MainPage() {
             })
     }
     function submitSelectedIngredients() {
+        setLoadingWeeklyPlan(true);
         setPageLoading(true);
         axiosClient.post('/meal-plan', {
             ingredients: selectedIngredients,
@@ -105,6 +107,7 @@ function MainPage() {
             })
             .finally(() => {
                 setPageLoading(false);
+                setLoadingWeeklyPlan(false);
             })
     }
 
@@ -201,7 +204,7 @@ function MainPage() {
         <>
             {pageLoading &&
                 <div className="fixed top-0 left-0 z-50 w-full bg-black">
-                    <Loader className="w-full h-screen" />
+                    <Loader className="w-full h-screen" message={loadingWeeklyPlan ? 'It takes 15-20 sec to generate meal plan' : undefined}/>
                 </div>
             }
             {pageError &&
