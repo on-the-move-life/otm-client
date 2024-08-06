@@ -56,16 +56,19 @@ const StepTracker = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (stepCount) {
-      const today = new Date();
+      const today = new Date().toLocaleDateString();
       setShowStepCount(false);
       setShowInput(false);
       try {
         await axios
-          .post(`${process.env.REACT_APP_BASE_URL}/api/v1/member/step-count`, {
-            stepCount: stepCount,
-            memberCode: JSON.parse(localStorage.getItem('user'))['code'],
-            date: today,
-          })
+          .post(
+            `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/step-count`,
+            {
+              stepCount: stepCount,
+              user: JSON.parse(localStorage.getItem('user'))['code'],
+              date: today,
+            },
+          )
           .then((res) => {
             console.log('Submission successful', res);
             localStorage.setItem('stepTracker', JSON.stringify(res.data));
