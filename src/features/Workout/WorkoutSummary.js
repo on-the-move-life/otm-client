@@ -515,7 +515,7 @@ const WorkoutSummary = () => {
             <div className="fixed bottom-0 left-0 right-0 px-3 py-2 z-10">
               <button 
                 onClick={captureAndShareToWhatsApp}
-                className="w-full rounded-lg bg-green px-4 py-2 text-black font-bold"
+                className="w-full rounded-lg bg-green px-4 py-2 text-black font-semibold"
               >
                 Share with coach
               </button>
