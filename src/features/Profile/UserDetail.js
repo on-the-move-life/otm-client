@@ -19,7 +19,10 @@ import { motion } from 'framer-motion';
 import MoveCoins from './MoveCoins';
 import MonthlyWrapped from './MonthlyWrapped';
 import { CoinsIndicator, Movecoins } from '../Marketplace';
+import { RxCross1 } from 'react-icons/rx';
+
 import { Name } from '../LifestyleQuiz';
+import { WhatsappShareButton } from 'react-share';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -54,6 +57,8 @@ const UserDetails = ({ showHistory }) => {
   const [profilePicFile, setProfilePicFile] = useState(null);
   const [uniqueImageURLKey, setUniqueImageURLKey] = useState(null);
   const [profilePicError, setProfilePicError] = useState(false);
+  const [showReferralLinkPopup, setShowReferralLinkPopup] = useState(false);
+  const [showReferralWorkPopup, setShowReferralWorkPopup] = useState(false);
   const currentDate = new Date().getDate();
 
   const navigate = useNavigate();
@@ -168,6 +173,137 @@ const UserDetails = ({ showHistory }) => {
   return (
     <>
       {/* profile pic update popup */}
+      {showReferralWorkPopup && (
+        <div className="from-gray-500/30 to-gray-900/60  fixed bottom-0 left-0 z-[60] h-[100vh] w-full  bg-gradient-to-r pt-5 backdrop-blur-2xl">
+          <motion.div
+            initial="hidden"
+            animate={showReferralWorkPopup ? 'visible' : 'hidden'}
+            variants={modalVariants}
+            className="absolute bottom-0 flex flex-col items-center w-full px-4 pb-5 bg-black"
+          >
+            <div
+              onClick={() => setShowReferralWorkPopup(false)}
+              className=" absolute right-3 top-2 flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray text-center"
+            >
+              <RxCross1 className="mr-[2px]" />
+            </div>
+            <h5 className="pb-3 pt-4 text-[18px] text-custompurple ">
+              How it works
+            </h5>
+            <div className="mx-[45px] my-10 flex flex-col gap-5">
+              <div className="flex">
+                <img src="./assets/referral-profile.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium leading-[19px] text-[#F8F8F8]/[0.8]">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+              </div>
+              <div className="flex">
+                <img src="./assets/referral-link.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod.
+                </p>
+              </div>
+              <div className="flex">
+                <img src="./assets/referral-percentage.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor.
+                </p>
+              </div>
+              <div className="flex">
+                <img src="./assets/referral-wallet.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
+            </div>
+            <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+              WhatsApp your Link
+            </button>
+          </motion.div>
+        </div>
+      )}
+
+      {showReferralLinkPopup && (
+        <motion.div
+          initial="hidden"
+          animate={showReferralLinkPopup ? 'visible' : 'hidden'}
+          variants={modalVariants}
+          className="from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 max-h-[90vh] w-full rounded-t-[30px] bg-gradient-to-r pt-5 backdrop-blur-2xl"
+        >
+          <div className="px-5">
+            <div className="flex">
+              <h2 className=" font-sfpro text-[20px] text-[#F8F8F8]/[0.8]">
+                Refer a friend and get Lorem ipsum dolor sit amet.
+              </h2>
+              <div
+                onClick={() => setShowReferralLinkPopup(false)}
+                className="flex h-[37px] min-w-[37px] items-center justify-center rounded-full bg-darkGray text-center"
+              >
+                <RxCross1 className="mr-[2px]" />
+              </div>
+            </div>
+            <div className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
+              Help someone you know live stronger and better
+            </div>
+
+            <div className="flex flex-col gap-5 mb-16 mt-14">
+              <div>
+                <h3 className="font-sfpro text-[20px]  text-[#F8F8F8]/[0.8] ">
+                  You Get
+                </h3>
+                <div className="flex">
+                  <img src="./assets/surprise.svg" alt="" />
+                  <div className="ml-2">
+                    <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
+                      Lorem ipsum dolor sit amet, consectetur
+                    </p>
+                    <p className="font-sfpro text-[12px] font-light text-[#F8F8F8]/[0.3]">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 className="font-sfpro text-[20px]  text-[#F8F8F8]/[0.8] ">
+                  They Get
+                </h3>
+                <div className="flex">
+                  <img src="./assets/mail.svg" alt="" />
+                  <div className="ml-2">
+                    <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
+                      Lorem ipsum dolor sit amet, consectetur
+                    </p>
+                    <p className="font-sfpro text-[12px] font-light text-[#F8F8F8]/[0.3]">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center w-full px-4 pb-5 bg-black">
+            <h5
+              onClick={() => setShowReferralWorkPopup(true)}
+              className="pb-3 pt-4 text-[18px] text-custompurple underline underline-offset-4"
+            >
+              How it works
+            </h5>
+            <WhatsappShareButton
+              className=""
+              url="www.google.com"
+              title="Sharing COntent"
+            >
+              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+                WhatsApp your Link
+              </button>
+            </WhatsappShareButton>
+          </div>
+        </motion.div>
+      )}
       {showProfilePicPopup && (
         <motion.div
           className="from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r p-5 backdrop-blur-lg"
@@ -386,6 +522,14 @@ const UserDetails = ({ showHistory }) => {
                       </div>
                     </section>
                   </div>
+                </div>
+
+                <div
+                  onClick={() => setShowReferralLinkPopup(true)}
+                  className="mt-2 flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm text-floYellow"
+                >
+                  <img src="./assets/gifts-small.svg" alt="" />
+                  <div className="pl-2">Refer a friend</div>
                 </div>
 
                 <Link
