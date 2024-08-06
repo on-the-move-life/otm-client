@@ -114,8 +114,8 @@ function FitnessScore({ score, percentile }) {
   };
   return (
     <Container>
-      <div className="flex h-full w-full flex-row  justify-between">
-        <div className="flex w-6/12 flex-col justify-between ">
+      <div className="flex h-full w-full flex-row justify-between">
+        <div className="flex flex-col justify-between ">
           <div className="flex gap-2">
             <img src="/assets/line-graph-logo.svg" />
             <Heading>Fitness score</Heading>
@@ -134,7 +134,7 @@ function FitnessScore({ score, percentile }) {
             </ScoreDetail>
           </div>
         </div>
-        <div className="flex w-6/12 flex-col items-center justify-center gap-2">
+        <div className="flex flex-col items-center justify-center">
           <ScoreIndicator />
         </div>
       </div>
