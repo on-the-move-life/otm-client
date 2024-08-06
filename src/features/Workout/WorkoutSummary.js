@@ -41,7 +41,6 @@ const WorkoutSummary = () => {
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
   const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
-  const [homeStats, setHomeStats] = useState(null);
   const { user } = useAuth();
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
   const dispatch = useDispatch();
@@ -91,32 +90,6 @@ const WorkoutSummary = () => {
   };
 
   const inputValues = getInputValuesFromLocalStorage();
-
-  useEffect(() => {
-    const today = new Date().toLocaleDateString('en-GB');
-
-    function getUserData() {
-      axios
-        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`, {
-          params: {
-            email: user.email,
-            day: today,
-          },
-        })
-        .then((res) => {
-          if (res.data) {
-            setHomeStats(res.data);
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    }
-
-    if (user && user.email) {
-      getUserData();
-    }
-  }, [user]);
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
@@ -314,7 +287,7 @@ const WorkoutSummary = () => {
                         <span className="perfect-week inline-flex w-fit items-center rounded">
                           <img src="/assets/star.svg" alt="" />
                           <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
-                            Perfect Week x{homeStats.streak}
+                            Perfect Week x{workoutSummary?.consistency?.streak}
                           </span>
                         </span>{' '}
                         goal with{' '}
@@ -329,7 +302,7 @@ const WorkoutSummary = () => {
                       <div className="my-4">
                         <p>
                           Whoa! You just unlocked the{' '}
-                          {parseInt(homeStats.streak) > 0 && (
+                          {parseInt(workoutSummary?.consistency?.streak) > 0 && (
                             <span className="perfect-week inline-flex items-center">
                               <img
                                 src="/assets/star.svg"
@@ -337,7 +310,7 @@ const WorkoutSummary = () => {
                                 className="inline-block"
                               />
                               <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
-                                Perfect Week x{homeStats.streak}
+                                Perfect Week x{workoutSummary?.consistency?.streak}
                               </span>
                             </span>
                           )}{' '}
