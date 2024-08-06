@@ -17,15 +17,18 @@ const NutritionPage = () => {
         <div className="mt-[90px] flex flex-col gap-2">
           <Link
             to="/MealUpload"
-            className="relative  flex h-[78px] rounded-lg bg-mediumGray"
+            className="relative  flex min-h-[78px] rounded-lg bg-mediumGray"
           >
             <div className="my-2 ml-4 ">
               <div className="flex gap-2">
                 <img src="/assets/camera-logo.svg" />
                 <h3 className="text-offwhite">Meal Analysis</h3>
               </div>
-              <div className="mt-1 w-[250px] text-[14px]  leading-[16px] text-lightGray">
+              <div className="mt-1 max-w-[250px] text-[14px]  leading-[16px] text-lightGray">
                 Let the power of AI breakdown your meal
+                <div className="mt-2 w-min rounded-sm border border-lightGray px-2 text-center text-[10px]">
+                  BETA
+                </div>
               </div>
             </div>
 
@@ -40,15 +43,18 @@ const NutritionPage = () => {
 
           <Link
             to="/meal-planner"
-            className="relative flex h-[78px] rounded-lg bg-mediumGray"
+            className="relative flex min-h-[78px] rounded-lg bg-mediumGray"
           >
             <div className="my-2 ml-4 ">
               <div className="flex gap-2">
                 <img src="/assets/meal-logo.svg" />
                 <h3 className="text-offwhite">Meal Planner</h3>
               </div>
-              <div className="mt-1 w-[280px] text-[14px]  leading-[16px] text-lightGray">
+              <div className="mt-1 max-w-[280px] text-[14px]  leading-[16px] text-lightGray">
                 Your Weekly Meal Plan according to your goals and preferences
+                <div className="mt-2 w-min rounded-sm border border-lightGray px-2 text-center text-[10px]">
+                  BETA
+                </div>
               </div>
             </div>
           </Link>
