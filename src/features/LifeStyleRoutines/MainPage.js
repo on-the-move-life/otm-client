@@ -61,8 +61,8 @@ function MainPage() {
   const renderContent = () => {
     if (pageLoading) {
       return (
-        <div className="fixed top-0 left-0 z-50 w-full bg-black">
-          <Loader className="w-full h-screen" />
+        <div className="fixed top-0 left-0 z-50 w-full h-screen bg-black">
+          <Loader className="w-full h-full" />
         </div>
       );
     }
@@ -76,7 +76,7 @@ function MainPage() {
     }
 
     return (
-      <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5 mb-9 ">
+      <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5">
         <TimelineHeading className="mt-[70px] w-full text-left">
           Lifestyle
         </TimelineHeading>
@@ -104,6 +104,7 @@ function MainPage() {
 
   return (
     <>
+     <div className="relative h-screen overflow-hidden">
       <img
         className="absolute right-0 -top-4 -z-20 "
         src="/assets/main-frame.svg"
@@ -112,14 +113,20 @@ function MainPage() {
         className="absolute right-[55px] top-10 -z-10 "
         src="/assets/lifestyle-logo.svg"
       />
-      <div className="pb-[78px]">
+      <div className="h-full overflow-y-auto">
         {renderContent()}
-        <div className="left-0 w-full py-4 bg-black/20 backdrop-blur-sm">
+        {section === 0 ? (
+          <div className='sm:h-[400px] h-[250px]'></div>
+        ) : (     
+          <div className='h-[500px]'></div>
+        )}
+        <div className="fixed bottom-[65px] left-0 w-full py-4 bg-black/20 backdrop-blur-sm z-50">
           <NavigationTab
             selectedIndex={section}
             setSelectedIndex={setSection}
           />
         </div>
+      </div>
       </div>
     </>
   );

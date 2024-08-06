@@ -14,9 +14,9 @@ const ProgressBar = ({ progress }) => {
   }
 
   return (
-    <div className="mx-3 pt-4">
+    <div className="pt-4">
       <div
-        className={`gradient-percentage font-anton t-b mx-1  text-[60px] font-medium leading-[54px]`}
+        className={`gradient-percentage font-anton t-b text-[60px] font-medium leading-[54px]`}
       >
         {progress}
         <span className="font-anton text-[32px] font-bold">%</span>
