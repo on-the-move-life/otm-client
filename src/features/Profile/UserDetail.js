@@ -63,13 +63,13 @@ const UserDetails = ({ showHistory }) => {
 
   const shareUrl = 'https://www.google.com';
   const imageUrl =
-    'https://c.tenor.com/qQjMyMdaVP0AAAAM/pants-bear-grocery-shopping.gif';
+    'https://storage.googleapis.com/otm_client_profile_pictures/DUAAKA3938_Dummy_Aakash_7921.jpg';
   const title = 'Check out this amazing content!';
 
   const navigate = useNavigate();
 
   const { getUserFromStorage, logout } = useAuth();
-  const baseURL = `${window.location.protocol}//${window.location.host}/abx`;
+  const baseURL = `${window.location.protocol}//${window.location.host}/referral-user`;
 
   console.log(baseURL);
 
@@ -304,6 +304,7 @@ const UserDetails = ({ showHistory }) => {
               className="w-full"
               url={baseURL}
               title={`${title} ${imageUrl}`}
+              img={imageUrl}
               separator=":: "
             >
               <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
