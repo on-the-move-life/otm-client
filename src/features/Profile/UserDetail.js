@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../../components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { formatDate } from '../../utils';
 import { axiosClient } from './apiProfileClient';
 import { FaUserCircle } from 'react-icons/fa';
@@ -61,9 +61,17 @@ const UserDetails = ({ showHistory }) => {
   const [showReferralWorkPopup, setShowReferralWorkPopup] = useState(false);
   const currentDate = new Date().getDate();
 
+  const shareUrl = 'https://www.google.com';
+  const imageUrl =
+    'https://c.tenor.com/qQjMyMdaVP0AAAAM/pants-bear-grocery-shopping.gif';
+  const title = 'Check out this amazing content!';
+
   const navigate = useNavigate();
 
   const { getUserFromStorage, logout } = useAuth();
+  const baseURL = `${window.location.protocol}//${window.location.host}/abx`;
+
+  console.log(baseURL);
 
   useEffect(() => {
     const user = getUserFromStorage();
@@ -293,9 +301,10 @@ const UserDetails = ({ showHistory }) => {
               How it works
             </h5>
             <WhatsappShareButton
-              className=""
-              url="www.google.com"
-              title="Sharing COntent"
+              className="w-full"
+              url={baseURL}
+              title={`${title} ${imageUrl}`}
+              separator=":: "
             >
               <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
                 WhatsApp your Link
