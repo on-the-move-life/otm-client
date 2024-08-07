@@ -26,32 +26,33 @@ const StepTracker = () => {
   const [showInput, setShowInput] = useState(false);
   const [stepCount, setStepCount] = useState('');
   const [showStepCount, setShowStepCount] = useState(false);
-  const [stepTrackerData, setStepTrackerData] = useState(
-    JSON.parse(localStorage.getItem('stepTracker')),
-  );
-  const userData = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    if (userData?.code !== stepTrackerData?.memberCode) {
-      localStorage.removeItem('stepTracker');
-      setStepCount('');
-      setStepTrackerData(null);
+    setShowStepCount(true);
+    function getUserData() {
+      axios
+        .get(
+          `${
+            process.env.REACT_APP_BASE_URL
+          }/api/v1/lifestyle/step-count?memberCode=${
+            JSON.parse(localStorage.getItem('user'))['code']
+          }`,
+        )
+        .then((res) => {
+          if (res.data) {
+            console.log('ress', res.data);
+            setStepCount(res.data.data.stepCount);
+          }
+          if (res.data.success === true) {
+            setShowStepCount(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
-    const today = new Date().toISOString().split('T')[0];
-    setShowStepCount(false);
-    if (stepTrackerData) {
-      setStepCount(stepTrackerData.stepCount);
-      const lastStepTrackerUpdate = stepTrackerData.date.split('T')[0];
-      if (lastStepTrackerUpdate !== today) {
-        localStorage.removeItem('stepTracker');
-        setShowStepCount(true);
-      }
-    }
-
-    if (!stepTrackerData) {
-      setShowStepCount(true);
-    }
-  }, [stepTrackerData]);
+    getUserData();
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -64,14 +65,13 @@ const StepTracker = () => {
           .post(
             `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/step-count`,
             {
-              stepCount: stepCount,
-              user: JSON.parse(localStorage.getItem('user'))['code'],
+              stepCount: Number(stepCount),
+              memberCode: JSON.parse(localStorage.getItem('user'))['code'],
               date: today,
             },
           )
           .then((res) => {
             console.log('Submission successful', res);
-            localStorage.setItem('stepTracker', JSON.stringify(res.data));
           })
           .catch((err) => {
             console.error('An error occurred', err);
