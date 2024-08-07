@@ -267,7 +267,7 @@ const WeeklyCheckIn = () => {
   onChange={(e) => setAchievement(e.target.value)}
   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white outline-none p-2"
   required
-  style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
+  style={{minHeight: '120px', resize: 'none', overflow: 'hidden'}}
   readOnly={isSubmitted}
 ></textarea>
               </motion.div>
@@ -280,9 +280,9 @@ const WeeklyCheckIn = () => {
   id="learnings"
   value={learnings}
   onChange={(e) => setLearnings(e.target.value)}
-  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white outline-none p-2"
+  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white text-base outline-none p-2"
   required
-  style={{minHeight: '40px', resize: 'none', overflow: 'hidden'}}
+  style={{minHeight: '120px', resize: 'none', overflow: 'hidden'}}
   readOnly={isSubmitted}
 ></textarea>
               </motion.div>
@@ -316,11 +316,11 @@ const WeeklyCheckIn = () => {
                   />
                 ) : frontImageUrl ? (
                   <div className="w-full flex justify-center">
-                    <div className="relative w-64 h-64 sm:w-80 sm:h-80 overflow-hidden rounded-lg">
+                    <div className="relative w-64 h-72 sm:w-80 sm:h-80 overflow-hidden rounded-lg flex justify-center items-center py-2">
                       <img 
                         src={frontImageUrl} 
                         alt="Front Pose" 
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full object-cover mt-2"
+                        className="absolute w-84 h-auto mt-2"
                       />
                     </div>
                   </div>
@@ -343,11 +343,11 @@ const WeeklyCheckIn = () => {
                   />
                 ) : sideImageUrl ? (
                   <div className="w-full flex justify-center">
-                    <div className="relative w-64 h-64 sm:w-80 sm:h-80 overflow-hidden rounded-lg">
+                    <div className="relative w-64 h-72 sm:w-80 sm:h-80 overflow-hidden rounded-lg flex justify-center items-center">
                       <img 
                         src={sideImageUrl} 
                         alt="Side Pose" 
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full object-cover mt-2"
+                        className="absolute w-84 h-auto mt-2"
                       />
                     </div>
                   </div>
