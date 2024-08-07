@@ -206,6 +206,8 @@ const FitnessPage = () => {
               />
             </section>
 
+            <StepTracker />
+
             {homeStats?.isPaymentDue && (
               <section>
                 <DuePaymentIndicator />
