@@ -13,6 +13,7 @@ import FitnessScore from './FitnessScore';
 import DuePaymentIndicator from './DuePaymentIndicator';
 import { TimelineHeading } from '../Timeline/StyledComponents';
 import MonthlyWrapped from '../Profile/MonthlyWrapped';
+import StepTracker from './StepTracker';
 import { AiOutlineRight } from 'react-icons/ai';
 
 function formatNumber(num) {
@@ -193,18 +194,19 @@ const FitnessPage = () => {
             )}
 
             <section>
-              <FitnessScore
-                score={homeStats?.score}
-                percentile={homeStats?.fitnessPercentileScore}
-              />
-
               <WeeklyWorkoutReport
                 consistencyTrend={homeStats?.consistencyTrend}
                 suggestedWorkoutPerWeek={homeStats?.frequency}
                 lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
               />
             </section>
-
+            <section>
+              <FitnessScore
+                score={homeStats?.score}
+                percentile={homeStats?.fitnessPercentileScore}
+              />
+            </section>
+            <StepTracker />
             {homeStats?.isPaymentDue && (
               <section>
                 <DuePaymentIndicator />
