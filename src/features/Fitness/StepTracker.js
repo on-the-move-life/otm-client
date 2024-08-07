@@ -60,7 +60,7 @@ const StepTracker = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (stepCount) {
-      const today = new Date().toLocaleDateString();
+      const today = new Date();
       setShowStepCount(false);
       setShowInput(false);
       try {
