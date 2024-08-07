@@ -26,7 +26,7 @@ const StepTracker = () => {
   const [showInput, setShowInput] = useState(false);
   const [stepCount, setStepCount] = useState('');
   const [showStepCount, setShowStepCount] = useState(false);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     setShowStepCount(true);
@@ -45,10 +45,12 @@ const StepTracker = () => {
           console.log('ress', res.data);
           setStepCount(res.data.data.stepCount);
         }
+        if (res.data.success === true) {
+          setShowStepCount(false);
+        }
       } catch (err) {
         console.error(err.message);
       } finally {
-        setShowStepCount(false);
         setLoader(false);
       }
     }
@@ -88,47 +90,50 @@ const StepTracker = () => {
       <div
         className={`relative ${showInput ? 'rounded-t-2xl bg-mediumGray' : ''}`}
       >
-        <div className="to-blue-500 relative rounded-full bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 grow">
-              <RiRunFill className="text-xl" />
-              <div className="w-full error__title">
-                {loader === false &&
-                  (showStepCount ? (
-                    <div onClick={handleShowInput}>
-                      Log your daily step count
-                    </div>
-                  ) : (
-                    <div className="flex justify-between">
-                      <div className="w-full" onClick={handleShowInput}>
-                        Today's Step Count
+        <InputContainer>
+          <div className="to-blue-500 relative h-[40px] rounded-full bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
+            {loader === false && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 grow">
+                  <RiRunFill className="text-xl" />
+                  <div className="w-full error__title">
+                    {showStepCount ? (
+                      <div onClick={handleShowInput}>
+                        Log your daily step count
                       </div>
-                      <span className="flex items-center font-bold">
-                        {showInput ? (
-                          <AiOutlineClose
-                            className="font-semibold"
-                            onClick={() => setShowInput(false)}
-                          />
-                        ) : (
-                          stepCount
-                        )}
-                      </span>
-                    </div>
-                  ))}{' '}
+                    ) : (
+                      <div className="flex justify-between">
+                        <div className="w-full" onClick={handleShowInput}>
+                          Today's Step Count
+                        </div>
+                        <span className="flex items-center font-bold">
+                          {showInput ? (
+                            <AiOutlineClose
+                              className="font-semibold"
+                              onClick={() => setShowInput(false)}
+                            />
+                          ) : (
+                            stepCount
+                          )}
+                        </span>
+                      </div>
+                    )}{' '}
+                  </div>
+                </div>
+
+                {showStepCount &&
+                  (showInput ? (
+                    <AiOutlineClose
+                      className="font-semibold"
+                      onClick={() => setShowInput(false)}
+                    />
+                  ) : (
+                    <FaArrowRight />
+                  ))}
               </div>
-            </div>
-            {loader === false &&
-              showStepCount &&
-              (showInput ? (
-                <AiOutlineClose
-                  className="font-semibold"
-                  onClick={() => setShowInput(false)}
-                />
-              ) : (
-                <FaArrowRight />
-              ))}
+            )}
           </div>
-        </div>
+        </InputContainer>
       </div>
       {showInput && (
         <InputContainer>

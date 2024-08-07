@@ -194,26 +194,6 @@ const FitnessPage = () => {
             )}
 
             <section>
-              <FitnessScore
-                score={homeStats?.score}
-                percentile={homeStats?.fitnessPercentileScore}
-              />
-
-              <WeeklyWorkoutReport
-                consistencyTrend={homeStats?.consistencyTrend}
-                suggestedWorkoutPerWeek={homeStats?.frequency}
-                lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
-              />
-            </section>
-
-            <StepTracker />
-
-            {homeStats?.isPaymentDue && (
-              <section>
-                <DuePaymentIndicator />
-              </section>
-            )}
-            <section>
               <WeeklyWorkoutReport
                 consistencyTrend={homeStats?.consistencyTrend}
                 suggestedWorkoutPerWeek={homeStats?.frequency}
