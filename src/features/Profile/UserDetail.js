@@ -23,6 +23,7 @@ import { RxCross1 } from 'react-icons/rx';
 
 import { Name } from '../LifestyleQuiz';
 import { WhatsappShareButton } from 'react-share';
+import GiftCard from '../ReferralUser/GiftCard';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -191,11 +192,11 @@ const UserDetails = ({ showHistory }) => {
           >
             <div
               onClick={() => setShowReferralWorkPopup(false)}
-              className=" absolute right-3 top-2 flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray text-center"
+              className=" absolute right-3 top-4 flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray text-center"
             >
-              <RxCross1 className="mr-[2px]" />
+              <RxCross1 className="mr-[2px] " />
             </div>
-            <h5 className="pb-3 pt-4 text-[18px] text-custompurple ">
+            <h5 className="pb-3 pt-7 text-[18px] text-custompurple ">
               How it works
             </h5>
             <div className="mx-[45px] my-10 flex flex-col gap-5">
@@ -227,9 +228,16 @@ const UserDetails = ({ showHistory }) => {
                 </p>
               </div>
             </div>
-            <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
-              WhatsApp your Link
-            </button>
+            <WhatsappShareButton
+              className="w-full"
+              url={baseURL}
+              title={`${title}`}
+              img={imageUrl}
+            >
+              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+                WhatsApp your Link
+              </button>
+            </WhatsappShareButton>
           </motion.div>
         </div>
       )}
@@ -253,11 +261,19 @@ const UserDetails = ({ showHistory }) => {
                 <RxCross1 className="mr-[2px]" />
               </div>
             </div>
-            <div className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
+            <div className="flex justify-center w-full">
+              <GiftCard
+                subscriptionText={
+                  ' Your peak mental and physical form everyday'
+                }
+                info={' 20% discount on first subsription    '}
+              />
+            </div>
+            <div className="mt-5 font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
               Help someone you know live stronger and better
             </div>
 
-            <div className="flex flex-col gap-5 mb-16 mt-14">
+            <div className="flex flex-col gap-5 mt-10 mb-16">
               <div>
                 <h3 className="font-sfpro text-[20px]  text-[#F8F8F8]/[0.8] ">
                   You Get
@@ -303,9 +319,8 @@ const UserDetails = ({ showHistory }) => {
             <WhatsappShareButton
               className="w-full"
               url={baseURL}
-              title={`${title} ${imageUrl}`}
+              title={`${title}`}
               img={imageUrl}
-              separator=":: "
             >
               <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
                 WhatsApp your Link
