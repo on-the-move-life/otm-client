@@ -244,7 +244,7 @@ const WeeklyCheckIn = () => {
                     id="weekRating"
                     value={weekRating}
                     onChange={(e) => setWeekRating(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white p-2 appearance-none"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694]  p-2 appearance-none"
                     required
                     disabled={isSubmitted}
                   >
@@ -264,28 +264,34 @@ const WeeklyCheckIn = () => {
                 <textarea
   id="achievement"
   value={achievement}
-  onChange={(e) => setAchievement(e.target.value)}
-  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white outline-none p-2"
+  onChange={(e) => {
+    setAchievement(e.target.value);
+    handleTextAreaChange(e);
+  }}
+  className="textarea-no-scrollbar mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694] outline-none p-2"
   required
-  style={{minHeight: '120px', resize: 'none', overflow: 'hidden'}}
+  style={{ minHeight:'100px', resize: 'none', overflow: 'auto' }}
   readOnly={isSubmitted}
-></textarea>
+/>
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label htmlFor="learnings" className="block sm:text-lg text-base font-medium text-gray-700">
-                  What are your learnings of the week and how can we build the next week better ?
-                </label>
-                <textarea
+  <label htmlFor="learnings" className="block sm:text-lg text-base font-medium text-gray-700">
+    What are your learnings of the week and how can we build the next week better ?
+  </label>
+  <textarea
   id="learnings"
   value={learnings}
-  onChange={(e) => setLearnings(e.target.value)}
-  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white text-base outline-none p-2"
+  onChange={(e) => {
+    setLearnings(e.target.value);
+    handleTextAreaChange(e);
+  }}
+  className="textarea-no-scrollbar mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694] text-base outline-none p-2"
   required
-  style={{minHeight: '120px', resize: 'none', overflow: 'hidden'}}
+  style={{ minHeight:'100px', resize: 'none', overflow: 'auto' }}
   readOnly={isSubmitted}
-></textarea>
-              </motion.div>
+/>
+</motion.div>
 
               <motion.div variants={itemVariants}>
                 <label htmlFor="weight" className="block sm:text-lg text-base font-medium text-gray-700">
@@ -296,7 +302,7 @@ const WeeklyCheckIn = () => {
                   id="weight"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-white p-2"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694]  p-2"
                   required
                   disabled={isSubmitted}
                 />
