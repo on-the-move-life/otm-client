@@ -192,11 +192,11 @@ const UserDetails = ({ showHistory }) => {
           >
             <div
               onClick={() => setShowReferralWorkPopup(false)}
-              className=" absolute right-3 top-4 flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray text-center"
+              className=" absolute right-3 top-5 flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray text-center"
             >
               <RxCross1 className="mr-[2px] " />
             </div>
-            <h5 className="pb-3 pt-7 text-[18px] text-custompurple ">
+            <h5 className=" pt-7 text-[18px] text-custompurple ">
               How it works
             </h5>
             <div className="mx-[45px] my-10 flex flex-col gap-5">
@@ -234,7 +234,8 @@ const UserDetails = ({ showHistory }) => {
               title={`${title}`}
               img={imageUrl}
             >
-              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-semibold leading-8 text-black">
+                <img src="./assets/whatsapp-logo.svg" alt="" className="mr-1" />
                 WhatsApp your Link
               </button>
             </WhatsappShareButton>
@@ -247,11 +248,11 @@ const UserDetails = ({ showHistory }) => {
           initial="hidden"
           animate={showReferralLinkPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
-          className=" from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 max-h-[90vh] w-full rounded-t-[30px] bg-black bg-gradient-to-r pt-5"
+          className=" from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 max-h-[90vh] w-full overflow-y-scroll rounded-t-[30px] bg-black bg-gradient-to-r pt-5"
         >
           <img
             src="./assets/referral-frame.svg"
-            className="absolute top-0 w-full opacity-50"
+            className="absolute top-0 h-[700px] w-full opacity-50"
             alt=""
           />
           <div className="px-5">
@@ -261,7 +262,7 @@ const UserDetails = ({ showHistory }) => {
               </h2>
               <div
                 onClick={() => setShowReferralLinkPopup(false)}
-                className="flex h-[37px] min-w-[37px] items-center justify-center rounded-full bg-darkGray text-center"
+                className="relative z-[30] flex h-[37px] min-w-[37px] items-center justify-center rounded-full bg-darkGray text-center"
               >
                 <RxCross1 className="mr-[2px]" />
               </div>

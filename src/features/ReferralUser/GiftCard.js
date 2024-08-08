@@ -7,9 +7,9 @@ const GiftCard = ({ info, subscriptionText }) => {
         boxShadow:
           '0 0 10px 5px rgba(155, 161, 233, 0.2), 0 0 20px 10px rgba(155, 161, 233, 0.2), 0 0 30px 15px rgba(155, 161, 233, 0.2)',
       }}
-      className="relative  mt-8 flex h-[172px] w-[350px] overflow-hidden rounded-lg"
+      className="relative  mt-8 flex min-h-[172px] max-w-[350px] overflow-hidden rounded-lg pb-2 pr-2"
     >
-      <img className="relative bottom-0" src="./assets/gifts-big.svg" alt="" />
+      <img className="relative -bottom-2" src="./assets/gifts-big.svg" alt="" />
       <div className="flex flex-col gap-3 mt-5">
         <img src="./assets/otm-blue.svg" className="h-[11px] w-min" alt="" />
         <h2 className="font-sfpro text-[20px] font-medium leading-6 text-[#3F4A8D]">
