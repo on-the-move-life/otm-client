@@ -102,7 +102,7 @@ const FitnessPage = () => {
           />
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
             <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
-              <div className="">
+              <div>
                 <TimelineHeading>Movement</TimelineHeading>
                 <div className="flex items-center">
                   {parseInt(homeStats.streak) > 0 && (
