@@ -27,7 +27,7 @@ function CalendarTile({
 
   return (
     <div
-      className={`relative flex h-[65px] w-fit grow flex-col items-center justify-center gap-0 rounded-[7.5px]  pt-[9px] ${
+      className={`relative flex h-[65px] w-fit grow flex-col items-center justify-center gap-0 rounded-[7.5px] pt-[9px] ${
         isSelected ? 'bg-black' : ''
       }`}
       onClick={() => {

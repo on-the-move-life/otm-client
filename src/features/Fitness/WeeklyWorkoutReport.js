@@ -140,7 +140,7 @@ function WeeklyWorkoutReport({
   };
   return (
     <div className="mt-3 weekly-workout-consistency">
-      <div className="flex w-full h-full">
+      <div className="flex w-full h-full justify-between">
         <div className="flex flex-col justify-between">
           <section className="flex flex-row items-center justify-between w-full">
             <div className="flex gap-2">
@@ -174,7 +174,7 @@ function WeeklyWorkoutReport({
             </div>
           </section>
         </div>
-        <div className="flex flex-col items-center justify-start grow">
+        <div className="flex flex-col items-center">
           {lastEightWeeksWorkout ? (
             <div>
               <ScoreDetail className="mt-1 text-center">

@@ -1,5 +1,5 @@
 //MainPage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { NavigationTab } from './index';
 import Calendar from './Calendar';
 import { axiosClient } from './apiClient';
@@ -21,7 +21,8 @@ function MainPage() {
   const [pageLoading, setPageLoading] = useState(true);
   const [pageError, setPageError] = useState(false);
   const [reloadCounter, setReloadCounter] = useState(false);
-
+  const contentAreaRef = useRef(null);
+  const [contentAreaHeight, setContentAreaHeight] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -50,6 +51,29 @@ function MainPage() {
       setPageLoading(false);
     }
   };
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      if (contentAreaRef.current) {
+        // Get the height of the navigation elements
+        const globalNavHeight = 78; // Height of the global Navbar
+        const localNavHeight = 60; // Height of the NavigationTab
+
+        // Calculate the available height for the content area
+        const availableHeight = window.innerHeight - globalNavHeight - localNavHeight;
+
+        // Set the content area height
+        setContentAreaHeight(availableHeight);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   // this will call the API whenever the date is changed
   useEffect(() => {
@@ -61,8 +85,8 @@ function MainPage() {
   const renderContent = () => {
     if (pageLoading) {
       return (
-        <div className="fixed top-0 left-0 z-50 w-full bg-black">
-          <Loader className="w-full h-screen" />
+        <div className="fixed top-0 left-0 z-50 w-full h-screen bg-black">
+          <Loader className="w-full h-full" />
         </div>
       );
     }
@@ -76,7 +100,7 @@ function MainPage() {
     }
 
     return (
-      <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5 mb-9 ">
+      <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5">
         <TimelineHeading className="mt-[70px] w-full text-left">
           Lifestyle
         </TimelineHeading>
@@ -104,6 +128,7 @@ function MainPage() {
 
   return (
     <>
+     <div className="relative h-screen overflow-hidden">
       <img
         className="absolute right-0 -top-4 -z-20 "
         src="/assets/main-frame.svg"
@@ -112,14 +137,18 @@ function MainPage() {
         className="absolute right-[55px] top-10 -z-10 "
         src="/assets/lifestyle-logo.svg"
       />
-      <div className="pb-[78px]">
+      <div className="h-full overflow-y-auto content-area" ref={contentAreaRef}
+          style={{
+            height: `${contentAreaHeight}px`,
+          }}>
         {renderContent()}
-        <div className="left-0 w-full py-4 bg-black/20 backdrop-blur-sm">
+        <div className="fixed bottom-[78px] left-0 w-full py-4 bg-black/20 backdrop-blur-sm z-50">
           <NavigationTab
             selectedIndex={section}
             setSelectedIndex={setSection}
           />
         </div>
+      </div>
       </div>
     </>
   );
