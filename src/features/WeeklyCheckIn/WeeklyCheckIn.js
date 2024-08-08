@@ -244,7 +244,7 @@ const WeeklyCheckIn = () => {
                     id="weekRating"
                     value={weekRating}
                     onChange={(e) => setWeekRating(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694]  p-2 appearance-none"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-lightGray   p-2 appearance-none"
                     required
                     disabled={isSubmitted}
                   >
@@ -268,7 +268,7 @@ const WeeklyCheckIn = () => {
     setAchievement(e.target.value);
     handleTextAreaChange(e);
   }}
-  className="textarea-no-scrollbar mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694] outline-none p-2"
+  className="textarea-no-scrollbar mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-lightGray outline-none p-2"
   required
   style={{ minHeight:'100px', resize: 'none', overflow: 'auto' }}
   readOnly={isSubmitted}
@@ -286,7 +286,7 @@ const WeeklyCheckIn = () => {
     setLearnings(e.target.value);
     handleTextAreaChange(e);
   }}
-  className="textarea-no-scrollbar mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694] text-base outline-none p-2"
+  className="textarea-no-scrollbar mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-lightGray  text-base outline-none p-2"
   required
   style={{ minHeight:'100px', resize: 'none', overflow: 'auto' }}
   readOnly={isSubmitted}
@@ -302,7 +302,7 @@ const WeeklyCheckIn = () => {
                   id="weight"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-[#758694]  p-2"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-[#2B2B28] text-lightGray   p-2"
                   required
                   disabled={isSubmitted}
                 />
