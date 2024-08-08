@@ -82,7 +82,7 @@ function Calendar({
 
         {(percentCompletionOfSelectedDate === null ||
           percentCompletionOfSelectedDate === 0) && (
-          <p className="font-body-condensed-bold mx-3 mt-3 font-sfpro text-[14px] text-lightGray">
+          <p className="font-body-condensed-bold mt-3 font-sfpro text-[14px] text-lightGray">
             Let's make today count. Begin by completing your first task
           </p>
         )}
