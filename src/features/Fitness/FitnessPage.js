@@ -102,7 +102,21 @@ const FitnessPage = () => {
           />
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
             <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
-              <TimelineHeading>Movement</TimelineHeading>
+              <div className="">
+                <TimelineHeading>Movement</TimelineHeading>
+                <div className="flex items-center">
+                  {parseInt(homeStats.streak) > 0 && (
+                    <div className="flex items-center ">
+                      <div className="flex items-center my-2 rounded perfect-week w-fit">
+                        <img src="assets/star.svg" alt="" />
+                        <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
+                          Perfect Week x{homeStats.streak}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="flex h-[66px] w-[46%]  items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 text-sm w-9">Total workouts</span>
                 <div
