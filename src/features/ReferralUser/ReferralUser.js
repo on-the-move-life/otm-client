@@ -51,7 +51,7 @@ const ReferralUser = () => {
             '_blank',
           )
         }
-        className=" mt-[30px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-semibold leading-8 text-black"
+        className="relative z-20 mt-[30px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-semibold leading-8 text-black"
       >
         Get Started
       </button>
