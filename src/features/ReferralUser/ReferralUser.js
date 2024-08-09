@@ -1,7 +1,38 @@
+import axios from 'axios';
+import { useEffect } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import GiftCard from './GiftCard';
 
 const ReferralUser = () => {
+  useEffect(() => {
+    // setShowStepCount(true);
+    // setLoader(true);
+    async function getUserData() {
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/referral`,
+          {
+            params: {
+              memberCode: JSON.parse(localStorage.getItem('user'))['code'],
+            },
+          },
+        );
+        if (res.data) {
+          console.log('ress', res.data);
+          // setStepCount(res.data.data.stepCount);
+        }
+        if (res.data.success === true) {
+          // setShowStepCount(false);
+        }
+      } catch (err) {
+        console.error(err.message);
+      } finally {
+        // setLoader(false);
+      }
+    }
+    getUserData();
+  }, []);
+
   return (
     <div className="relative flex flex-col items-center w-full px-5 pb-10 h-vh">
       <img

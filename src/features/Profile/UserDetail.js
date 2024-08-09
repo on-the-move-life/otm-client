@@ -199,7 +199,7 @@ const UserDetails = ({ showHistory }) => {
             <h5 className=" pt-7 text-[18px] text-custompurple ">
               How it works
             </h5>
-            <div className="mx-[45px] my-10 flex flex-col gap-5">
+            <div className="mx-[34px] my-10 flex flex-col gap-5">
               <div className="flex">
                 <img src="./assets/referral-profile.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium leading-[19px] text-[#F8F8F8]/[0.8]">
@@ -234,7 +234,7 @@ const UserDetails = ({ showHistory }) => {
               title={`${title}`}
               img={imageUrl}
             >
-              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-semibold leading-8 text-black">
+              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg  leading-8 text-black">
                 <img src="./assets/whatsapp-logo.svg" alt="" className="mr-1" />
                 WhatsApp your Link
               </button>
@@ -244,11 +244,11 @@ const UserDetails = ({ showHistory }) => {
       )}
 
       {showReferralLinkPopup && (
-        <motion.div
+        <div
           initial="hidden"
           animate={showReferralLinkPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
-          className=" from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 max-h-[90vh] w-full overflow-y-scroll rounded-t-[30px] bg-black bg-gradient-to-r pt-5"
+          className=" from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 h-[100vh] w-full overflow-y-scroll rounded-t-[30px] bg-black bg-gradient-to-r pt-5"
         >
           <img
             src="./assets/referral-frame.svg"
@@ -279,7 +279,7 @@ const UserDetails = ({ showHistory }) => {
               Help someone you know live stronger and better
             </div>
 
-            <div className="flex flex-col gap-5 mt-10 mb-16">
+            <div className="mb-16 mt-[31px] flex flex-col gap-[32px]">
               <div>
                 <h3 className="font-sfpro text-[20px]  text-[#F8F8F8]/[0.8] ">
                   You Get
@@ -315,7 +315,7 @@ const UserDetails = ({ showHistory }) => {
             </div>
           </div>
 
-          <div className="relative z-[10] flex w-full flex-col items-center bg-black px-4 pb-5">
+          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center bg-black px-4 pb-5">
             <h5
               onClick={() => setShowReferralWorkPopup(true)}
               className="pb-3 pt-4 text-[18px] text-custompurple underline underline-offset-4"
@@ -328,13 +328,13 @@ const UserDetails = ({ showHistory }) => {
               title={`${title}`}
               img={imageUrl}
             >
-              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-semibold leading-8 text-black">
+              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg  leading-8 text-black">
                 <img src="./assets/whatsapp-logo.svg" alt="" className="mr-1" />
                 WhatsApp your Link
               </button>
             </WhatsappShareButton>
           </div>
-        </motion.div>
+        </div>
       )}
       {showProfilePicPopup && (
         <motion.div
@@ -558,10 +558,12 @@ const UserDetails = ({ showHistory }) => {
 
                 <div
                   onClick={() => setShowReferralLinkPopup(true)}
-                  className="mt-2 flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm text-floYellow"
+                  className="mt-2 flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm "
                 >
                   <img src="./assets/gifts-small.svg" alt="" />
-                  <div className="pl-2">Refer a friend</div>
+                  <div className="pl-2 text-[#F8F8F8]/[0.8] ">
+                    Refer a friend
+                  </div>
                 </div>
 
                 <Link
