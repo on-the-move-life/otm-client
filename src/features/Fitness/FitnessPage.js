@@ -117,8 +117,8 @@ const FitnessPage = () => {
                   )}
                 </div>
               </div>
-              <div className="flex h-[66px] w-[46%]  items-center justify-between rounded-lg bg-mediumGray p-1">
-                <span className="pl-4 text-sm w-9">Total workouts</span>
+              <div className="flex h-[66px] min-w-[148px]  items-center justify-between rounded-lg bg-mediumGray p-1">
+                <span className="pl-2 text-sm w-9">Total workouts</span>
                 <div
                   className={`
                   
@@ -127,7 +127,7 @@ const FitnessPage = () => {
                     homeStats.totalWorkoutsDone < 999
                       ? 'text-4xl'
                       : 'text-5xl'
-                  } flex h-full min-w-[68px] items-center justify-center rounded-lg bg-blue text-center  font-anton  text-mediumGray `}
+                  } flex h-full w-[61px]  items-center justify-center rounded-lg bg-blue text-center  font-anton  text-mediumGray `}
                 >
                   {formatNumber(homeStats?.totalWorkoutsDone)}
                 </div>
@@ -181,7 +181,6 @@ const FitnessPage = () => {
                       </h2>
                     </div>
                   </div>
-                  <h2 className="text-xl font-medium text-floYellow">Start</h2>
                 </Link>
               </div>
             </section>
@@ -256,7 +255,6 @@ const FitnessPage = () => {
                       </h2>
                     </div>
                   </div>
-                  <h2 className="text-xl font-medium text-floYellow">Start</h2>
                 </Link>
               </div>
             </section>
