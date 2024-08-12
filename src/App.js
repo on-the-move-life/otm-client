@@ -1,5 +1,11 @@
 //App.js
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import Timeline from './features/Timeline/Timeline';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
@@ -119,14 +125,7 @@ function App() {
           }
         />
         <Route path="*" element={<PageNotFound />} />
-        <Route
-          path="/referral-user"
-          element={
-            <RouteMiddleware>
-              <ReferralUser />
-            </RouteMiddleware>
-          }
-        />
+        <Route path="/referral-user" element={<ReferralUser />} />
         <Route
           path="/monthly-wrapped"
           element={

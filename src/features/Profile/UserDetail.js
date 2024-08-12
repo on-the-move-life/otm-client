@@ -62,17 +62,16 @@ const UserDetails = ({ showHistory }) => {
   const [showReferralWorkPopup, setShowReferralWorkPopup] = useState(false);
   const currentDate = new Date().getDate();
 
-  const shareUrl = 'https://www.google.com';
   const imageUrl =
     'https://storage.googleapis.com/otm_client_profile_pictures/DUAAKA3938_Dummy_Aakash_7921.jpg';
-  const title = 'Check out this amazing content!';
 
   const navigate = useNavigate();
 
-  const { getUserFromStorage, logout } = useAuth();
-  const baseURL = `${window.location.protocol}//${window.location.host}/referral-user`;
+  const code = JSON.parse(localStorage.getItem('user')).code;
 
-  console.log(baseURL);
+  const { getUserFromStorage, logout } = useAuth();
+  const title = `Check out this amazing content! `;
+  const baseURL = `${window.location.protocol}//${window.location.host}/referral-user?memberCode=${code}`;
 
   useEffect(() => {
     const user = getUserFromStorage();
@@ -228,10 +227,11 @@ const UserDetails = ({ showHistory }) => {
                 </p>
               </div>
             </div>
+
             <WhatsappShareButton
               className="w-full"
               url={baseURL}
-              title={`${title}`}
+              title={title}
               img={imageUrl}
             >
               <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg  leading-8 text-black">
@@ -248,7 +248,7 @@ const UserDetails = ({ showHistory }) => {
           initial="hidden"
           animate={showReferralLinkPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
-          className=" from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 h-[100vh] w-full overflow-y-scroll rounded-t-[30px] bg-black bg-gradient-to-r pt-5"
+          className=" from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 h-[100vh] w-full overflow-y-scroll  bg-black bg-gradient-to-r pt-5"
         >
           <img
             src="./assets/referral-frame.svg"
@@ -488,7 +488,7 @@ const UserDetails = ({ showHistory }) => {
               </div> */}
                 </div>
 
-                <p className="text-darkTextGray text-center align-middle  text-[14px]">
+                <p className="text-center align-middle text-[14px]  text-darkTextGray">
                   Fitness is not a destination. It's a journey of self
                   improvement, one workout at a time.
                 </p>
