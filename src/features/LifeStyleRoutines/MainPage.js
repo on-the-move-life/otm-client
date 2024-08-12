@@ -23,6 +23,7 @@ function MainPage() {
   const [reloadCounter, setReloadCounter] = useState(false);
   const contentAreaRef = useRef(null);
   const [contentAreaHeight, setContentAreaHeight] = useState(0);
+  const [isCircleOpen, setIsCircleOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -117,6 +118,7 @@ function MainPage() {
             circles={circles}
             date={selectedDate}
             setReloadCounter={setReloadCounter}
+            setIsCircleOpen={setIsCircleOpen}
           />
         ) : (
           
@@ -142,12 +144,14 @@ function MainPage() {
             height: `${contentAreaHeight}px`,
           }}>
         {renderContent()}
-        <div className="fixed bottom-[78px] left-0 w-full py-4 bg-black/20 backdrop-blur-sm z-50">
-          <NavigationTab
-            selectedIndex={section}
-            setSelectedIndex={setSection}
-          />
-        </div>
+        {!isCircleOpen && (
+  <div className="fixed bottom-[78px] left-0 w-full py-4 bg-black/20 backdrop-blur-sm z-50">
+    <NavigationTab
+      selectedIndex={section}
+      setSelectedIndex={setSection}
+    />
+  </div>
+)}
       </div>
       </div>
     </>

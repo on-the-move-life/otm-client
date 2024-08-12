@@ -6,7 +6,6 @@ import {
   NightCircleIcon,
   AlwaysActiveIcon,
 } from '../index';
-// Import react-circular-progressbar module and styles
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import CircleTask from './CircleTask';
@@ -18,9 +17,11 @@ function YourCircle({
   date,
   setReloadCounter,
   time,
+  setIsCircleOpen,
 }) {
   const [tasksName, setTasksName] = useState('');
   const [showCircleDetails, setShowCircleDetails] = useState(false);
+
   const circleIcons = useMemo(
     () => ({
       'Morning Circle': <MorningCircleIcon />,
@@ -31,7 +32,7 @@ function YourCircle({
     }),
     [],
   );
-  console.log('bbnngygygygy', tasksName, tasks, tasks.time);
+
   const circleTime = useMemo(
     () => ({
       'Morning Circle': '8 AM',
@@ -42,6 +43,7 @@ function YourCircle({
     }),
     [],
   );
+
   const colors = useMemo(
     () => [
       { threshold: 25, color: '#e74c3c' },
@@ -51,14 +53,14 @@ function YourCircle({
     ],
     [],
   );
-  // Determine the color based on the percentage
+
   const getColor = () => {
     for (let i = 0; i < colors.length; i++) {
       if (percentCompletion <= colors[i].threshold) {
         return colors[i].color;
       }
     }
-    return colors[colors.length - 1].color; // Default to the last color if not matched
+    return colors[colors.length - 1].color;
   };
 
   const color = getColor();
@@ -77,6 +79,7 @@ function YourCircle({
           onClick={() => {
             setShowCircleDetails(true);
             setReloadCounter(true);
+            setIsCircleOpen(true);
           }}
         >
           <div className="flex w-full flex-row items-center justify-start gap-5">
@@ -118,6 +121,7 @@ function YourCircle({
           date={date}
           setShowCircleDetails={setShowCircleDetails}
           setReloadCounter={setReloadCounter}
+          setIsCircleOpen={setIsCircleOpen}
         />
       )}
     </>
