@@ -70,7 +70,10 @@ const UserDetails = ({ showHistory }) => {
   const code = JSON.parse(localStorage.getItem('user')).code;
 
   const { getUserFromStorage, logout } = useAuth();
-  const title = `Check out this amazing content! `;
+  const title = `I've been using OTM to improve my lifestyle and I absolutely love it.
+Here's a 20% off discount because I'd love for you to get healthy too!
+
+ `;
   const baseURL = `${window.location.protocol}//${window.location.host}/referral-user?memberCode=${code}`;
 
   useEffect(() => {
@@ -202,28 +205,25 @@ const UserDetails = ({ showHistory }) => {
               <div className="flex">
                 <img src="./assets/referral-profile.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium leading-[19px] text-[#F8F8F8]/[0.8]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  WhatsApp your referral link to your friends.
                 </p>
               </div>
               <div className="flex">
                 <img src="./assets/referral-link.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod.
+                  Your friend must click and accept the referral gift.
                 </p>
               </div>
               <div className="flex">
                 <img src="./assets/referral-percentage.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
+                  Your friend gets 20% on their first subscription with OTM.
                 </p>
               </div>
               <div className="flex">
                 <img src="./assets/referral-wallet.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  You get additional 20% off on your next OTM bill.
                 </p>
               </div>
             </div>
@@ -252,13 +252,13 @@ const UserDetails = ({ showHistory }) => {
         >
           <img
             src="./assets/referral-frame.svg"
-            className="absolute top-0 h-[700px] w-full opacity-50"
+            className="absolute top-0 w-full h-screen opacity-50"
             alt=""
           />
           <div className="px-5">
             <div className="flex justify-between">
               <h2 className=" mt-2 font-sfpro text-[20px] text-[#F8F8F8]/[0.8]">
-                Refer a friend and get Lorem ipsum dolor sit amet.
+                Refer a friend and unlock rewards.
               </h2>
               <div
                 onClick={() => setShowReferralLinkPopup(false)}
@@ -275,7 +275,7 @@ const UserDetails = ({ showHistory }) => {
                 info={' 20% discount on first subsription    '}
               />
             </div>
-            <div className="mt-5 font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
+            <div className="mt-5 text-center font-sfpro text-[18px] text-[#F8F8F8]/[0.8]">
               Help someone you know live stronger and better
             </div>
 
@@ -286,12 +286,13 @@ const UserDetails = ({ showHistory }) => {
                 </h3>
                 <div className="flex">
                   <img src="./assets/surprise.svg" alt="" />
-                  <div className="ml-2">
+                  <div className="mt-2 ml-2">
                     <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
-                      Lorem ipsum dolor sit amet, consectetur
+                      20% off on your next bill
                     </p>
                     <p className="font-sfpro text-[12px] font-light text-[#F8F8F8]/[0.3]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing
+                      your referral reward is only valid after your friend has
+                      unlocked an OTM subscription
                     </p>
                   </div>
                 </div>
@@ -302,12 +303,13 @@ const UserDetails = ({ showHistory }) => {
                 </h3>
                 <div className="flex">
                   <img src="./assets/mail.svg" alt="" />
-                  <div className="ml-2">
+                  <div className="mt-2 ml-2">
                     <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
-                      Lorem ipsum dolor sit amet, consectetur
+                      20% off on their first subscription
                     </p>
                     <p className="font-sfpro text-[12px] font-light text-[#F8F8F8]/[0.3]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing
+                      referral benefits can be availed only within 30 days of
+                      your friend accepting your gift
                     </p>
                   </div>
                 </div>
@@ -315,7 +317,7 @@ const UserDetails = ({ showHistory }) => {
             </div>
           </div>
 
-          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center bg-black px-4 pb-5">
+          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center  px-4 pb-5">
             <h5
               onClick={() => setShowReferralWorkPopup(true)}
               className="pb-3 pt-4 text-[18px] text-custompurple underline underline-offset-4"
@@ -336,7 +338,7 @@ const UserDetails = ({ showHistory }) => {
           </div>
         </div>
       )}
-      {showProfilePicPopup && (
+      {showReferralLinkPopup === false && showProfilePicPopup && (
         <motion.div
           className="from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r p-5 backdrop-blur-lg"
           initial="hidden"
@@ -384,7 +386,7 @@ const UserDetails = ({ showHistory }) => {
         </motion.div>
       )}
       <AnimatedComponent>
-        {memberData && (
+        {showReferralLinkPopup === false && memberData && (
           <div>
             <img
               className="absolute left-0 right-0 -z-20"
@@ -408,10 +410,10 @@ const UserDetails = ({ showHistory }) => {
                 navigate('/home');
               }}
             />
-          </div> */}
+            </div> */}
 
               {/* User Profile Pic and Name */}
-              <div className="mt-[60px] flex flex-col items-center justify-center">
+              <div className="mt-[30px] flex flex-col items-center justify-center">
                 <div className="flex flex-col items-center justify-center gap-5 mt-6">
                   <div className="relative h-[136px] w-[136px] rounded-full">
                     {chosenPic ? (
@@ -480,12 +482,12 @@ const UserDetails = ({ showHistory }) => {
                   <img src="/assets/star.svg" alt=''/>
                 </div>
 
-              </div> */}
+               </div> */}
                   {/* <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
                 <div className="text-xs font-bold text-black capitalize">
                   {memberData.intensity > 100 ? 'Elite' : 'Advanced'}
                 </div>
-              </div> */}
+               </div> */}
                 </div>
 
                 <p className="text-center align-middle text-[14px]  text-darkTextGray">
@@ -493,146 +495,153 @@ const UserDetails = ({ showHistory }) => {
                   improvement, one workout at a time.
                 </p>
 
-                <div
-                  className="w-full px-4 py-3 mx-auto mt-8 max-h-max rounded-xl bg-mediumGray"
-                  onClick={() => setShowProfilePicPopup(false)}
-                >
-                  <div className="flex flex-col h-full ">
-                    <section>
-                      {/* <div className="text-sm font-medium">Your Plan</div> */}
-                      <div className="text-2xl font-medium leading-10 text-floYellow">
-                        Membership
-                      </div>
-                      {/* <div className="text-[8px]  tracking-[5px] text-lightGray ">
+                <div className="mt-[15px] flex flex-col gap-[10px]">
+                  <div
+                    className="w-full px-4 py-3 mx-auto max-h-max rounded-xl bg-mediumGray"
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
+                    <div className="flex flex-col h-full ">
+                      <section>
+                        {/* <div className="text-sm font-medium">Your Plan</div> */}
+                        <div className="text-2xl font-medium leading-10 text-floYellow">
+                          Membership
+                        </div>
+                        {/* <div className="text-[8px]  tracking-[5px] text-lightGray ">
                       LIGHTER & AGILE
                     </div> */}
-                      <div
-                        className="flex flex-col pt-2"
-                        onClick={() => setShowProfilePicPopup(false)}
-                      >
-                        {/* <div className="bg-neutral-700 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-lightGray bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                        <div
+                          className="flex flex-col pt-2"
+                          onClick={() => setShowProfilePicPopup(false)}
+                        >
+                          {/* <div className="bg-neutral-700 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-lightGray bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
                         <div className="text-xs capitalize text-offwhite">
                           ₹5,000 Renewed Monthly
                         </div>
                       </div> */}
-                        {memberData.isPaymentDue ? (
-                          <div className=" inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
-                            <div className="relative w-3 h-3">
-                              <img src="/assets/alert-triangle.svg" alt="" />
+                          {memberData.isPaymentDue ? (
+                            <div className=" inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
+                              <div className="relative w-3 h-3">
+                                <img src="/assets/alert-triangle.svg" alt="" />
+                              </div>
+                              <div className="text-xs text-black capitalize">
+                                Overdue
+                              </div>
                             </div>
-                            <div className="text-xs text-black capitalize">
-                              Overdue
+                          ) : (
+                            <div className="bg-neutral-700  inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-green bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                              <ul className="pl-3 list-disc">
+                                <li className="text-xs capitalize text-green">
+                                  Next payment due on{' '}
+                                  {formatDate(
+                                    memberData?.paymentDueDate,
+                                    false,
+                                  )}
+                                </li>
+                              </ul>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="bg-neutral-700  inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-green bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-                            <ul className="pl-3 list-disc">
-                              <li className="text-xs capitalize text-green">
-                                Next payment due on{' '}
-                                {formatDate(memberData?.paymentDueDate, false)}
-                              </li>
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    </section>
-                    <section className="flex flex-col items-center ">
-                      {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
-                  <div className="text-lg font-medium text-black">Pay now</div>
-                </div> */}
+                          )}
+                        </div>
+                      </section>
+                      <section className="flex flex-col items-center ">
+                        {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
+                    <div className="text-lg font-medium text-black">Pay now</div>
+                    </div> */}
 
-                      {/* <button className="mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+                        {/* <button className="mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
                       Make Payment
                     </button> */}
-                      <div
-                        className="border-zinc-400 mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
-                        onClick={() => showHistory()}
-                      >
-                        <button className="mt-[2px] text-lg font-medium text-white">
-                          Check payment history
-                        </button>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-
-                <div
-                  onClick={() => setShowReferralLinkPopup(true)}
-                  className="mt-2 flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm "
-                >
-                  <img src="./assets/gifts-small.svg" alt="" />
-                  <div className="pl-2 text-[#F8F8F8]/[0.8] ">
-                    Refer a friend
-                  </div>
-                </div>
-
-                <Link
-                  to="/marketplace"
-                  className="my-2 flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
-                >
-                  <div
-                    className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
-                    style={{
-                      backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})`,
-                    }}
-                  >
-                    <div>Marketplace </div>
-                    <Movecoins fontSize={'26px'} coins={memberData.moveCoins} />
-                  </div>
-                  <div className="w-full mt-2">
-                    <CoinsIndicator
-                      coins={memberData.moveCoins}
-                      offers={memberData.offers}
-                    />
-                  </div>
-                </Link>
-
-                {/* <MoveCoins coins={0} /> */}
-
-                {currentDate >= 5 && (
-                  <section className="flex flex-row items-center justify-center w-full gap-3 mt-1">
-                    <MonthlyWrapped />
-                  </section>
-                )}
-                <div
-                  className=" mx-auto mt-1 min-h-[142px] w-full rounded-xl bg-mediumGray px-4 py-3"
-                  onClick={() => setShowProfilePicPopup(false)}
-                >
-                  <div className="flex flex-col justify-between h-full ">
-                    <section>
-                      <div className="text-sm font-medium text-white font-sfpro ">
-                        Book a Call
-                      </div>
-                      <div
-                        className="pt-1 "
-                        onClick={() => setShowProfilePicPopup(false)}
-                      >
-                        <div className="font-sfpro text-[14px] font-medium  text-white">
-                          <p>
-                            Easily schedule a one-on-one call with your coach
-                            for personalised guidance and mentoring.
-                          </p>
+                        <div
+                          className="border-zinc-400 mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                          onClick={() => showHistory()}
+                        >
+                          <button className="mt-[2px] text-lg font-medium text-white">
+                            Check payment history
+                          </button>
                         </div>
-                      </div>
+                      </section>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={() => setShowReferralLinkPopup(true)}
+                    className=" flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm "
+                  >
+                    <img src="./assets/gifts-small.svg" alt="" />
+                    <div className="pl-2 text-[18px] text-[#F8F8F8]/[0.8] ">
+                      Refer a friend
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/marketplace"
+                    className=" flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
+                  >
+                    <div
+                      className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
+                      style={{
+                        backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})`,
+                      }}
+                    >
+                      <div>Marketplace </div>
+                      <Movecoins
+                        fontSize={'26px'}
+                        coins={memberData.moveCoins}
+                      />
+                    </div>
+                    <div className="w-full mt-2">
+                      <CoinsIndicator
+                        coins={memberData.moveCoins}
+                        offers={memberData.offers}
+                      />
+                    </div>
+                  </Link>
+
+                  {/* <MoveCoins coins={0} /> */}
+
+                  {currentDate >= 5 && (
+                    <section className="flex flex-row items-center justify-center w-full ">
+                      <MonthlyWrapped />
                     </section>
-                    <section className="flex flex-col items-center ">
-                      <div
-                        className=" mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg  "
-                        onClick={() =>
-                          window.open(
-                            'https://calendly.com/rishisolanki1995/30mincallwithrishi',
-                            '_blank',
-                          )
-                        }
-                      >
-                        <button className="flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
-                          Book Now
-                        </button>
-                      </div>
-                    </section>
+                  )}
+                  <div
+                    className=" mx-auto  min-h-[142px] w-full rounded-xl bg-mediumGray px-4 py-3"
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
+                    <div className="flex flex-col justify-between h-full ">
+                      <section>
+                        <div className="text-sm font-medium text-white font-sfpro ">
+                          Book a Call
+                        </div>
+                        <div
+                          className="pt-1 "
+                          onClick={() => setShowProfilePicPopup(false)}
+                        >
+                          <div className="font-sfpro text-[14px] font-medium  text-white">
+                            <p>
+                              Easily schedule a one-on-one call with your coach
+                              for personalised guidance and mentoring.
+                            </p>
+                          </div>
+                        </div>
+                      </section>
+                      <section className="flex flex-col items-center ">
+                        <div
+                          className=" mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg  "
+                          onClick={() =>
+                            window.open(
+                              'https://calendly.com/rishisolanki1995/30mincallwithrishi',
+                              '_blank',
+                            )
+                          }
+                        >
+                          <button className="flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+                            Book Now
+                          </button>
+                        </div>
+                      </section>
+                    </div>
                   </div>
                 </div>
-
                 <div
                   className="flex flex-col w-full mt-8"
                   onClick={() => {

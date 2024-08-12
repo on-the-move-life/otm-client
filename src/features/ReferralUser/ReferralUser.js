@@ -6,8 +6,9 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import GiftCard from './GiftCard';
 
 const ReferralUser = () => {
-  const [referrerName, setReferrerName] = useState('');
+  const [referreeName, setRefereeName] = useState('');
   const [referrerCode, setReferrerCode] = useState(null);
+  const [referrerName, setReferrerName] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const numberOfImages = 5;
 
@@ -28,6 +29,7 @@ const ReferralUser = () => {
         );
         if (res.data) {
           setReferrerCode(res.data.data.referralCode);
+          setReferrerName(res.data.data.referredBy);
         }
       } catch (err) {
         console.error(err.message);
@@ -38,11 +40,11 @@ const ReferralUser = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (referrerName && referrerCode) {
+    if (referreeName && referrerCode) {
       try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/referral`, {
           referralCode: referrerCode,
-          referee: referrerName,
+          referee: referreeName,
         });
         console.log('Submission successful');
       } catch (error) {
@@ -62,15 +64,21 @@ const ReferralUser = () => {
       />
       <img src="./assets/otm-gray.svg" className="mt-[81px]" alt="" />
       <div className="mt-[18px] w-full text-center font-sfpro text-[20px] font-medium text-[#F8F8F8]/[0.8]">
-        Your Peak Mental And Physical Form Everyday
+        Unlock your peak mental And physical form Everyday
       </div>
-      <GiftCard
-        subscriptionText={'your first on the move subscription'}
-        info={'Vrinda gifted you 20% off'}
-      />
+      {referrerName && (
+        <GiftCard
+          subscriptionText={'on your first OTM subscription'}
+          info={`${referrerName} gifted you 20% off`}
+        />
+      )}
+
       <div className="relative z-[10] mr-2   flex  flex-col items-center  gap-[2px] rounded-xl   px-1 pb-1">
         <div className="flex max-w-[350px]  justify-end">
-          <div className="talkbubble ml-14 mt-4  flex w-full flex-col rounded-xl px-[11px] py-4 font-sfpro text-[14px]   leading-4 text-[#F8F8F8]/[0.8]">
+          <div
+            style={{ letterSpacing: '0.5px' }}
+            className="talkbubble ml-14 mt-4  flex w-full flex-col rounded-xl px-[11px] py-4 font-sfpro text-[14px]   leading-4 text-[#F8F8F8]/[0.8]"
+          >
             For a lack of a better word, OTM was life changing for me. It gave
             me the motivation I didn't believe I could achieve. I have literally
             changed my lifestyle upside down.
@@ -108,33 +116,35 @@ const ReferralUser = () => {
           </div>
         </div>
       </div>
-      <div className="mt-8 w-full text-center font-sfpro text-[20px] font-medium text-[#F8F8F8]/[0.8]">
-        If you’re interested, we’d like to ask you a few questions
+      <div className="mt-8 w-full  font-sfpro text-[18px] font-medium text-[#F8F8F8]/[0.8]">
+        If you’re convinced, let's get you started on this journey
       </div>
       <div className="w-full">
         <form
           className="relative z-20 flex flex-col items-end w-full "
           onSubmit={handleSubmit}
         >
-          <div className="w-full px-3 py-3 pt-0 mt-3 rounded-lg">
+          <div className="w-full py-3 pt-0 mt-3 rounded-lg">
             <input
               style={{ borderColor: 'rgb(155, 161, 233)' }}
               className="textbox "
               type="text"
-              placeholder=" Enter your Name"
+              placeholder="Tell us your name"
               required
-              value={referrerName}
-              onChange={(e) => setReferrerName(e.target.value)}
+              value={referreeName}
+              onChange={(e) => setRefereeName(e.target.value)}
             />
           </div>
 
           <button
             type="submit"
-            disabled={referrerName === ''}
+            disabled={referreeName === ''}
             style={{
               backgroundColor:
-                referrerName !== '' ? ' rgb(126,135,239)' : '#1C1C1E',
-              color: referrerName === '' ? 'rgba(61, 61, 61)' : 'black',
+                referreeName !== ''
+                  ? ' rgb(126,135,239)'
+                  : 'rgba(0, 0, 0, 0.4)',
+              color: referreeName === '' ? 'rgba(61, 61, 61)' : 'black',
             }}
             onClick={() =>
               window.open(
