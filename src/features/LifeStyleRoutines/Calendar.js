@@ -61,12 +61,6 @@ function Calendar({
           )}
           {isSummaryPage && (
             <>
-              <h3
-                className="text-lg text-[#FFF]"
-                style={{ lineHeight: '30px' }}
-              >
-                Summary
-              </h3>
               <h5 className="text-lg text-gray-500">
                 {formatDate(selectedDate).join(', ')}
               </h5>
