@@ -64,7 +64,7 @@ const ReferralUser = () => {
       />
       <img src="./assets/otm-gray.svg" className="mt-[81px]" alt="" />
       <div className="mt-[18px] w-full text-center font-sfpro text-[20px] font-medium text-[#F8F8F8]/[0.8]">
-        Unlock your peak mental And physical form Everyday
+        Unlock your peak mental And physical form everyday
       </div>
       {referrerName && (
         <GiftCard
@@ -154,7 +154,7 @@ const ReferralUser = () => {
             }
             className="relative z-30 mt-[30px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-semibold leading-8 text-black"
           >
-            Get Started
+            Book an intro call
           </button>
           {/* <button
             type="submit"
