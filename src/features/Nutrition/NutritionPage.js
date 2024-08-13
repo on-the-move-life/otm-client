@@ -1,7 +1,48 @@
+import { useEffect, useState } from 'react';
 import { AiOutlineRight } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { axiosClient } from './apiClient';
+import * as Actions from './MealPlanner/Redux/actions';
+import * as Selectors from './MealPlanner/Redux/selectors';
 
 const NutritionPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [validation, setValidation] = useState({});
+  const [pageLoading, setPageLoading] = useState(false);
+  const [pageError, setPageError] = useState(false);
+  const [loadingWeeklyPlan, setLoadingWeeklyPlan] = useState(false);
+  const selectSectionName = Selectors.makeGetSectionName();
+  const sectionName = useSelector(selectSectionName, shallowEqual);
+
+  console.log(sectionName);
+
+  useEffect(() => {
+    setPageLoading(true);
+    // if the meal is already planned then set the section name to 'Weekly Plan'
+    const memberCode = JSON.parse(localStorage.getItem('user'))['code'];
+    axiosClient
+      .get(`/meal-plan?memberCode=${memberCode}`)
+      .then((res) => {
+        console.log('response /meal-plan : ', res.data);
+        if (res?.data?.success === true && res?.data?.data.length !== 0) {
+          dispatch(Actions.updateWeeklyPlan(res?.data?.data));
+          dispatch(Actions.updateSectionName('Weekly Plan'));
+        } else {
+          console.log('1');
+          // else start wiponse /meal-plan : ', res.datath the 'Get Started'
+          dispatch(Actions.updateSectionName('Get Started'));
+        }
+      })
+      .catch((err) => {
+        // else start with the 'Get Started'
+        dispatch(Actions.updateSectionName('Get Started'));
+        console.log(err);
+      })
+      .finally(() => setPageLoading(false));
+  }, []);
+
   return (
     <div className="relative h-full bg-[#161513]">
       <img
