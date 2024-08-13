@@ -31,20 +31,20 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
         <div className="flex flex-col items-start justify-start w-full gap-2">
           <div className="flex flex-col items-start justify-start w-full gap-2">
             <h3
-              className="flex items-start font-sfpro text-[14px] font-semibold text-offwhite"
+              className="flex items-start font-sfpro text-[14px]  capitalize text-offwhite"
               style={{ lineHeight: '16.71px' }}
             >
-              {'Breakfast Suggestion'}
+              {`${meal} Suggestion`}
             </h3>
             <div className="flex">
               <h3
-                className="font-sfpro text-[20px] font-semibold text-offwhite"
+                className="font-sfpro text-[20px]  text-offwhite"
                 style={{ lineHeight: '22px' }}
               >
                 {name}
               </h3>
               <h5
-                className="text-white-opacity-50 flex w-[60px]  grow items-end pl-2 font-sfpro text-[12px] font-bold"
+                className="text-white-opacity-50 flex w-[110px] grow  items-end pl-2 font-sfpro text-[12px] uppercase "
                 style={{ lineHeight: '12.76px' }}
               >
                 {calories}
@@ -175,7 +175,7 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
   };
 
   return (
-    <motion.div className="w-full rounded-[12px] bg-[rgba(0,0,0,0.45)] py-2 pl-5 pr-3 ">
+    <motion.div className="w-full rounded-[12px] bg-[rgba(0,0,0,0.45)] px-4 py-2 ">
       <AnimatePresence>
         {isCollapsed ? (
           <Collapsed key="collapsed" />

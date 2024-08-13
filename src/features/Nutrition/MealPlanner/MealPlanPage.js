@@ -16,6 +16,7 @@ function MealPlanPage() {
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [dateWiseWeeklyPlan, setDateWiseWeeklyPlan] = useState(null);
+  const [mealSelected, setMealSelected] = useState('Breakfast');
 
   const str = '3308 kcal';
   const idealCalorie = parseInt(str, 10);
@@ -23,6 +24,7 @@ function MealPlanPage() {
   const completedCalorie = 3309;
 
   const completedCaloriePercentage = (completedCalorie / idealCalorie) * 100;
+  const foodPerDay = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 
   console.log(dateWiseWeeklyPlan);
 
@@ -53,11 +55,15 @@ function MealPlanPage() {
     console.log('date wise weekly plan :', dateWiseWeeklyPlan);
   }, [selectedDate]);
 
+  const handleMealDay = (item) => {
+    console.log('rrrtrtrtrtrtrtr', item);
+  };
+
   return (
     dateWiseWeeklyPlan && (
       <div className="">
         <img
-          className="absolute top-0 left-0 z-0 w-full "
+          className="absolute top-0 left-0 z-0 w-full h-screen"
           src="/assets/nutrition-bg.svg"
         />
         <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 gap-7">
@@ -140,12 +146,42 @@ function MealPlanPage() {
               <div className="w-6 h-6 ml-2 bg-white border-2 border-gray-400 rounded-full"></div>
             </div>
           </div>
+
+          <div
+            className={`flex h-[38px] w-full items-center rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
+          >
+            {foodPerDay.map((item) => (
+              <div
+                style={{
+                  border:
+                    item === mealSelected
+                      ? '0.5px solid rgba(221, 249, 136, 0.50)'
+                      : '',
+                  borderRadius: '7px',
+                }}
+                className={`${
+                  item === mealSelected
+                    ? `bg-[rgba(77,77,77,0.4)] text-floYellow`
+                    : 'text-white-opacity-50 '
+                } flex h-full grow items-center justify-center `}
+                onClick={() => setMealSelected(item)}
+              >
+                {item}{' '}
+              </div>
+            ))}
+          </div>
           <div className="flex flex-col items-center justify-start w-full gap-3 my-5">
             {dateWiseWeeklyPlan &&
-              dateWiseWeeklyPlan?.plan.map((item) => {
-                if (item.meal === 'breakfast') {
+              dateWiseWeeklyPlan.plan.map((item) => {
+                const isSnack =
+                  mealSelected.toLowerCase() === 'snack' &&
+                  (item.meal.toLowerCase() === 'morning snack' ||
+                    item.meal.toLowerCase() === 'evening snack');
+
+                if (item.meal === mealSelected.toLowerCase() || isSnack) {
                   return (
                     <MealInfoTile
+                      key={item.id} // Add a unique key for each element
                       name={item?.name}
                       meal={item?.meal}
                       calories={item?.calories}
@@ -154,7 +190,7 @@ function MealPlanPage() {
                     />
                   );
                 } else {
-                  return <></>;
+                  return null;
                 }
               })}
           </div>
