@@ -975,7 +975,7 @@ meter::-webkit-meter-bar {
   height: 7px;
   background-color: rgba(195, 195, 195, 0.6);
 }
-meter::-webkit-meter-optimum-value {
+
 meter::-webkit-meter-optimum-value {
   background: none;
   background-color: white;
