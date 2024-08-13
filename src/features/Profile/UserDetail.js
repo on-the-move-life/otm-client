@@ -248,7 +248,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
           initial="hidden"
           animate={showReferralLinkPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
-          className=" from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 h-[100vh] w-full overflow-y-scroll  bg-black bg-gradient-to-r pt-5"
+          className="fixed bottom-0 left-0 z-50 w-full h-screen pt-5 overflow-y-scroll bg-black from-gray-500/30 to-gray-900/60 bg-gradient-to-r"
         >
           <img
             src="./assets/referral-frame.svg"

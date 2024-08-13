@@ -10,11 +10,10 @@ const GiftCard = ({ info, subscriptionText }) => {
   }, []);
 
   return (
-    <>
+    <div style={{ marginBlock: '32px' }}>
       {isSvgLoaded === true ? (
         <div
           style={{
-            marginBlock: '32px',
             background:
               'linear-gradient(135deg, #9BA1E9 0%, #D3C2D6 50%, #9BA1E9 100%)',
             boxShadow:
@@ -44,7 +43,7 @@ const GiftCard = ({ info, subscriptionText }) => {
       ) : (
         <div className="mt-8 h-[172px] w-[350px] animate-pulse rounded-xl bg-mediumGray"></div>
       )}
-    </>
+    </div>
   );
 };
 
