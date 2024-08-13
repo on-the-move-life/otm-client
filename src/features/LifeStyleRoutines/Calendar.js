@@ -49,7 +49,7 @@ function Calendar({
     <div className="flex flex-col items-start justify-center w-full">
       {selectedDate && (
         <>
-          {!isSummaryPage && (
+          {(
             <h3 className="text-xl " style={{ lineHeight: '41.6px' }}>
               <span className="text-white">
                 {formatDate(selectedDate)[0]},{' '}
@@ -59,13 +59,7 @@ function Calendar({
               </span>
             </h3>
           )}
-          {isSummaryPage && (
-            <>
-              <h5 className="text-lg text-gray-500">
-                {formatDate(selectedDate).join(', ')}
-              </h5>
-            </>
-          )}
+          
         </>
       )}
       <div className="w-full rounded-lg">
