@@ -64,7 +64,7 @@ const ReferralUser = () => {
       />
       <img src="./assets/otm-gray.svg" className="mt-[81px]" alt="" />
       <div className="mt-[18px] w-full text-center font-sfpro text-[20px] font-medium text-[#F8F8F8]/[0.8]">
-        Unlock your peak mental And physical form everyday
+        Unlock your peak Mental and Physical form everyday
       </div>
       {referrerName && (
         <GiftCard
@@ -77,9 +77,9 @@ const ReferralUser = () => {
         <div className="flex max-w-[350px]  justify-end">
           <div
             style={{ letterSpacing: '0.5px' }}
-            className="talkbubble ml-14 mt-4  flex w-full flex-col rounded-xl px-[11px] py-4 font-sfpro text-[14px]   leading-4 text-[#F8F8F8]/[0.8]"
+            className="talkbubble ml-14  flex w-full flex-col rounded-xl px-[11px] py-4 font-sfpro text-[14px]   leading-4 text-[#F8F8F8]/[0.8]"
           >
-            For a lack of a better word, OTM was life changing for me. It gave
+            For the lack of a better word, OTM was life changing for me. It gave
             me the motivation I didn't believe I could achieve. I have literally
             changed my lifestyle upside down.
           </div>
@@ -152,7 +152,7 @@ const ReferralUser = () => {
                 '_blank',
               )
             }
-            className="relative z-30 mt-[30px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-semibold leading-8 text-black"
+            className="relative z-30 mt-[30px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg  leading-8 text-black"
           >
             Book an intro call
           </button>

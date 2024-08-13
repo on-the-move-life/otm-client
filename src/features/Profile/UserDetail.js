@@ -70,10 +70,10 @@ const UserDetails = ({ showHistory }) => {
   const code = JSON.parse(localStorage.getItem('user')).code;
 
   const { getUserFromStorage, logout } = useAuth();
-  const title = `I've been using OTM to improve my lifestyle and I absolutely love it.
+  const title = `I've been using OTM to improve my lifestyle and I absolutely love it!
 Here's a 20% off discount because I'd love for you to get healthy too!
 
- `;
+`;
   const baseURL = `${window.location.protocol}//${window.location.host}/referral-user?memberCode=${code}`;
 
   useEffect(() => {
@@ -205,25 +205,25 @@ Here's a 20% off discount because I'd love for you to get healthy too!
               <div className="flex">
                 <img src="./assets/referral-profile.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium leading-[19px] text-[#F8F8F8]/[0.8]">
-                  WhatsApp your referral link to your friends.
+                  WhatsApp your referral link to your friends
                 </p>
               </div>
               <div className="flex">
                 <img src="./assets/referral-link.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
-                  Your friend must click and accept the referral gift.
+                  Your friend must click and accept the referral gift
                 </p>
               </div>
               <div className="flex">
                 <img src="./assets/referral-percentage.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
-                  Your friend gets 20% on their first subscription with OTM.
+                  Your friend gets 20% on their first subscription with OTM
                 </p>
               </div>
               <div className="flex">
                 <img src="./assets/referral-wallet.svg" alt="" />
                 <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
-                  You get additional 20% off on your next OTM bill.
+                  You get additional 20% off on your next OTM bill
                 </p>
               </div>
             </div>
@@ -258,7 +258,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
           <div className="px-5">
             <div className="flex justify-between">
               <h2 className=" mt-2 font-sfpro text-[20px] text-[#F8F8F8]/[0.8]">
-                Refer a friend and unlock rewards.
+                Refer a friend and unlock rewards
               </h2>
               <div
                 onClick={() => setShowReferralLinkPopup(false)}
@@ -275,7 +275,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 info={' 20% discount on first subsription    '}
               />
             </div>
-            <div className="mt-5 text-center font-sfpro text-[18px] text-[#F8F8F8]/[0.8]">
+            <div className=" text-center font-sfpro text-[18px] text-[#F8F8F8]/[0.8]">
               Help someone you know live stronger and better
             </div>
 
@@ -327,7 +327,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
             <WhatsappShareButton
               className="w-full"
               url={baseURL}
-              title={`${title}`}
+              title={title}
               img={imageUrl}
             >
               <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg  leading-8 text-black">
