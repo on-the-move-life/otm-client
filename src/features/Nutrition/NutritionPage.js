@@ -1,36 +1,51 @@
 import { AiOutlineRight } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { TimelineHeading } from '../Timeline/StyledComponents';
 
 const NutritionPage = () => {
   return (
-    <div className="relative h-full bg-darkGray">
+    <div className="relative h-full bg-[#161513]">
       <img
-        className="absolute top-0 left-0 z-10 w-full "
+        className="absolute top-0 left-0 z-0 w-full "
         src="/assets/nutrition-bg.svg"
       />
       <div className="relative z-20 flex w-screen grow flex-col overflow-y-scroll px-4 pb-[78px] ">
-        <div className="mt-[76px]">
-          <TimelineHeading>Nutrition</TimelineHeading>
+        <h3 className="mt-[77px] font-sfpro text-[14px] text-offwhite">
+          Good Morning Rishi
+        </h3>
+
+        <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
+          Nutrition
+        </h2>
+
+        <div className="text-white-opacity-50 font-sfpro text-[14px]">
+          Everyday is an opportunity to do some main character shit.
         </div>
-        <div className="mt-[90px] flex flex-col items-center gap-2">
+        <div className="mt-[24px] flex flex-col items-center gap-2">
           <div
             style={{
-              background: 'radial-gradient(circle at top, #97EBAD, #439258 )',
+              background:
+                'radial-gradient(circle at top left, #97EBAD 0%, #439258 60%)',
             }}
-            className="flex max-w-[291px] flex-col items-center rounded-xl px-[14px] pb-[14px] pt-[34px]"
+            className="flex w-full flex-col items-center justify-between rounded-xl px-[8px] pb-[8px]"
           >
-            <img src="/assets/arrow-board.svg" className="ml-4" />
-            <h3 className="mt-6 text-center font-sfpro text-[20px] font-medium text-offwhite">
-              Find Your Plan
-            </h3>
-            <p className="text-white-opacity-50 mt-2 text-center font-sfpro text-[14px] font-medium">
-              Take our quick text and we will find the perfect plan for you
-            </p>
+            <div className="flex">
+              <img
+                src="/assets/arrow-board.svg"
+                className="h-[150px] w-[150px]"
+              />
+              <div className="flex flex-col justify-center">
+                <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
+                  Find Your Plan
+                </h3>
+                <p className="text-white-opacity-50 relative z-10 mt-2  font-sfpro text-[14px] font-medium">
+                  Take our quick text and we will find the perfect plan for you
+                </p>
+              </div>
+            </div>
             <Link
               to="/meal-planner"
               style={{ backgroundColor: 'rgba(31, 31, 31, 0.2)' }} // camelCase for backgroundColor
-              className="mt-3 w-full rounded-lg p-2.5 text-center font-sfpro text-[18px] font-medium" // Replaced p-[10px] with Tailwind equivalent
+              className=" w-full rounded-lg p-2.5 text-center font-sfpro text-[18px] font-medium text-offwhite" // Replaced p-[10px] with Tailwind equivalent
             >
               Let's Go
             </Link>
