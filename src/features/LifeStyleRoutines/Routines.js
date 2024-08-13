@@ -1,7 +1,7 @@
 import React from 'react';
 import YourCircle from './components/YourCircle';
 
-function Routines({ circles, date, setReloadCounter }) {
+function Routines({ circles, date, setReloadCounter, setIsCircleOpen }) {
   return (
     <div className="flex w-full flex-col items-start justify-center gap-3">
       <h3
@@ -20,6 +20,7 @@ function Routines({ circles, date, setReloadCounter }) {
               date={date}
               setReloadCounter={setReloadCounter}
               time={circle?.tasks?.time}
+              setIsCircleOpen={setIsCircleOpen}
             />
           );
         })}

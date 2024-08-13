@@ -23,6 +23,7 @@ function MainPage() {
   const [reloadCounter, setReloadCounter] = useState(false);
   const contentAreaRef = useRef(null);
   const [contentAreaHeight, setContentAreaHeight] = useState(0);
+  const [isCircleOpen, setIsCircleOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -100,35 +101,44 @@ function MainPage() {
     }
 
     return (
-      <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5">
-        <TimelineHeading className="mt-[70px] w-full text-left">
-          Lifestyle
-        </TimelineHeading>
-        {completionHistory && (
-          <Calendar
-            completionHistory={completionHistory}
-            isSummaryPage={section === 1}
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-          />
+      <>
+        <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5">
+          <TimelineHeading className="mt-[70px] w-full text-left">
+            Lifestyle
+          </TimelineHeading>
+          {completionHistory && (
+            <Calendar
+              completionHistory={completionHistory}
+              isSummaryPage={section === 1}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
+          )}
+          {section === 0 ? (
+            <Routines
+              circles={circles}
+              date={selectedDate}
+              setReloadCounter={setReloadCounter}
+              setIsCircleOpen={setIsCircleOpen}
+            />
+          ) : (
+            <Summary circles={circles} date={selectedDate} />
+          )}
+        </div>
+        {!isCircleOpen && (
+          <div className="fixed bottom-[78px] left-0 w-full py-4 bg-black/20 backdrop-blur-sm z-50">
+            <NavigationTab
+              selectedIndex={section}
+              setSelectedIndex={setSection}
+            />
+          </div>
         )}
-        {section === 0 ? (
-          <Routines
-            circles={circles}
-            date={selectedDate}
-            setReloadCounter={setReloadCounter}
-          />
-        ) : (
-          
-          <Summary circles={circles} date={selectedDate} />
-        )}
-      </div>
+      </>
     );
   };
 
   return (
-    <>
-     <div className="relative h-screen overflow-hidden">
+    <div className="relative h-screen overflow-hidden">
       <img
         className="absolute right-0 -top-4 -z-20 "
         src="/assets/main-frame.svg"
@@ -137,20 +147,16 @@ function MainPage() {
         className="absolute right-[55px] top-10 -z-10 "
         src="/assets/lifestyle-logo.svg"
       />
-      <div className="h-full overflow-y-auto content-area" ref={contentAreaRef}
-          style={{
-            height: `${contentAreaHeight}px`,
-          }}>
+      <div 
+        className="h-full overflow-y-auto content-area" 
+        ref={contentAreaRef}
+        style={{
+          height: `${contentAreaHeight}px`,
+        }}
+      >
         {renderContent()}
-        <div className="fixed bottom-[78px] left-0 w-full py-4 bg-black/20 backdrop-blur-sm z-50">
-          <NavigationTab
-            selectedIndex={section}
-            setSelectedIndex={setSection}
-          />
-        </div>
       </div>
-      </div>
-    </>
+    </div>
   );
 }
 
