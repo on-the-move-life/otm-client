@@ -160,9 +160,11 @@ function App() {
           <Route
             path="/nutrition"
             element={
-              <RouteMiddleware>
-                <NutritionPage />
-              </RouteMiddleware>
+              <Provider store={mealPlannerStore}>
+                <RouteMiddleware>
+                  <NutritionPage />
+                </RouteMiddleware>
+              </Provider>
             }
           />
           <Route

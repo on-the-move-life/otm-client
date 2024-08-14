@@ -44,7 +44,7 @@ export const makeGetSectionName = () =>
   createSelector(
     [selectSelf],
     (state) => {
-      console.log('xxxxxx', state.sectionName);
+      console.log('xxxxxx', state);
       return state.sectionName;
     }, // No transformation needed here, just returning the string
   );

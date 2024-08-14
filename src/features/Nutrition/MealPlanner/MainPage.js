@@ -39,6 +39,9 @@ function MainPage() {
   const questions = useSelector(selectQuestions, shallowEqual);
   const responses = useSelector(selectResponses, shallowEqual);
   const sectionName = useSelector(selectSectionName, shallowEqual);
+
+  console.log(sectionName);
+
   const questionSectionInfo = useSelector(
     selectQuestionSectionInfo,
     shallowEqual,

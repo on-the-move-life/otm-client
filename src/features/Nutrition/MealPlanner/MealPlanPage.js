@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CalendarTile from './Components/CalendarTile';
 import MealInfoTile from './Components/MealInfoTile';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as Selectors from './Redux/selectors';
 import * as Actions from './Redux/actions';
 import { motion } from 'framer-motion';
+import MealUploadTile from './Components/MealUploadTile';
 
 function MealPlanPage() {
   const navigate = useNavigate();
@@ -66,24 +67,8 @@ function MealPlanPage() {
           className="absolute top-0 left-0 z-0 w-full h-screen"
           src="/assets/nutrition-bg.svg"
         />
-        <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 gap-7">
-          <div
-            className="absoulte left-3 top-4"
-            onClick={() => {
-              dispatch(Actions.resetToDefault());
-              navigate('/nutrition');
-            }}
-          >
-            <MdOutlineKeyboardArrowLeft color="#929292" size={30} />
-          </div>
-          <h3
-            className="text-[26px] text-[#f8f8f8]"
-            style={{ lineHeight: '41.6px' }}
-          >
-            Today's Meal Plan
-          </h3>
-
-          <div className="flex flex-row items-center justify-between w-full">
+        <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 ">
+          <div className="flex flex-row items-center justify-between w-full ">
             {weeklyPlan &&
               weeklyPlan.map((item) => {
                 const slicedDay = item.day.substr(0, 3);
@@ -99,7 +84,7 @@ function MealPlanPage() {
                 );
               })}
           </div>
-          <div className="flex h-fit w-full flex-col items-center justify-center rounded-[12px] bg-[rgba(0,0,0,0.45)] px-4 py-2">
+          <div className="mt-2 flex h-fit w-full flex-col items-center justify-center rounded-[12px] bg-[rgba(0,0,0,0.45)] px-4 py-2">
             <div className="w-full">
               <h5
                 className="font-sfpro text-[14px] font-medium text-offwhite"
@@ -136,7 +121,7 @@ function MealPlanPage() {
                 transition={{ duration: 1 }}
               >
                 <div className="absolute flex right-1 ">
-                  {/* <span>23</span> */}
+                  <span>23</span>
                   <span className="w-2 h-2 bg-white rounded-full "></span>
                 </div>
               </motion.div>
@@ -148,7 +133,7 @@ function MealPlanPage() {
           </div>
 
           <div
-            className={`flex h-[38px] w-full items-center rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
+            className={`mt-[26px] flex h-[38px] w-full items-center rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
           >
             {foodPerDay.map((item) => (
               <div
@@ -170,7 +155,7 @@ function MealPlanPage() {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-center justify-start w-full gap-3 my-5">
+          <div className="flex flex-col items-center justify-start w-full gap-2 my-2">
             {dateWiseWeeklyPlan &&
               dateWiseWeeklyPlan.plan.map((item) => {
                 const isSnack =
@@ -194,6 +179,21 @@ function MealPlanPage() {
                 }
               })}
           </div>
+
+          <Link to="/MealUpload" className="flex w-full gap-2 mt-2">
+            <div className="flex h-[65px] grow items-center justify-between rounded-lg bg-[rgba(0,0,0,0.45)] p-1">
+              <div className="ml-[20px] flex items-center">
+                <img src="/assets/food.svg" />
+                <span className="ml-[20px] text-xl  text-offwhite">
+                  Add Breakfast
+                </span>
+              </div>
+              <div className="flex min-h-[55px] min-w-[55px] items-center justify-center rounded-lg bg-floYellow ">
+                <img src="/assets/fitness-add.svg" />
+              </div>
+            </div>
+          </Link>
+          <MealUploadTile />
         </div>
       </div>
     )
