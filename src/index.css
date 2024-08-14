@@ -975,6 +975,7 @@ meter::-webkit-meter-bar {
   height: 7px;
   background-color: rgba(195, 195, 195, 0.6);
 }
+
 meter::-webkit-meter-optimum-value {
   background: none;
   background-color: white;
@@ -1001,17 +1002,24 @@ meter::-webkit-meter-optimum-value {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+html,
+body,
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 
 ::-webkit-scrollbar {
-  width: 0px; /* Adjust the width of the scrollbar */
+  width: 0px; /* Safari and Chrome */
+  height: 0px; /* For horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* Make the scrollbar track transparent */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Make the scrollbar thumb transparent */
+  background-color: transparent;
   border-radius: 10px;
   border: 2px solid transparent;
 }

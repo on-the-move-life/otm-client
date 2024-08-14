@@ -186,14 +186,16 @@ const MainPage = () => {
              }
             `}
             </style>
-            <button
-              className="animate-backgroundMove relative mt-2 flex h-12 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border-none bg-gradient-to-r from-[#d1d1d1] via-[#FFFFFF] to-[#d1d1d1] bg-[length:250%] bg-left text-[#FFFFFF]"
-              onClick={() => setShowUpdateWorkout(true)}
-            >
-              <span className="animate-backgroundMove absolute flex h-[90%] w-[97%] items-center justify-center rounded-md bg-black bg-opacity-90 text-[#ffffff]">
-                Customise Workout
-              </span>
-            </button>
+            {params.value === 'today' && (
+              <button
+                className="animate-backgroundMove relative mt-2 flex h-12 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border-none bg-gradient-to-r from-[#d1d1d1] via-[#FFFFFF] to-[#d1d1d1] bg-[length:250%] bg-left text-[#FFFFFF]"
+                onClick={() => setShowUpdateWorkout(true)}
+              >
+                <span className="animate-backgroundMove absolute flex h-[90%] w-[97%] items-center justify-center rounded-md bg-black bg-opacity-90 text-[#ffffff]">
+                  Customise Workout
+                </span>
+              </button>
+            )}
           </footer>
         </>
       )}
