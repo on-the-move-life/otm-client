@@ -56,9 +56,12 @@ const WorkoutSummary = () => {
         
         // Create share text
         const shareText = "Check out my workout summary!";
-
-        // Check if Web Share API is supported
-        if (navigator.share) {
+  
+        // Check if it's a mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+        if (isMobile && navigator.share) {
+          // Mobile sharing
           const blob = await (await fetch(dataUrl)).blob();
           const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
           
@@ -67,12 +70,19 @@ const WorkoutSummary = () => {
             files: [file],
           });
         } else {
-          // Fallback for desktop browsers
+          // Desktop functionality
+          // Download the image
+          const link = document.createElement('a');
+          link.download = 'workout-summary.png';
+          link.href = dataUrl;
+          link.click();
+  
+          // Open WhatsApp Web in a new tab
           const encodedText = encodeURIComponent(shareText);
           const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
           window.open(whatsappUrl, '_blank');
         }
-      }catch (error) {
+      } catch (error) {
         console.error('Error capturing or sharing screenshot:', error);
       }
     }
