@@ -190,7 +190,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
             initial="hidden"
             animate={showReferralWorkPopup ? 'visible' : 'hidden'}
             variants={modalVariants}
-            className="absolute bottom-0 flex flex-col items-center w-full px-4 pb-5 bg-black"
+            className="absolute bottom-0 flex w-full flex-col items-center bg-black px-4 pb-5"
           >
             <div
               onClick={() => setShowReferralWorkPopup(false)}
@@ -248,14 +248,14 @@ Here's a 20% off discount because I'd love for you to get healthy too!
           initial="hidden"
           animate={showReferralLinkPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
-          className="fixed bottom-0 left-0 z-50 w-full h-screen pt-5 overflow-y-scroll bg-black from-gray-500/30 to-gray-900/60 bg-gradient-to-r"
+          className="from-gray-500/30 to-gray-900/60 relative  left-0 h-screen w-full overflow-y-scroll bg-black bg-gradient-to-r pb-[141px] pt-12"
         >
           <img
             src="./assets/referral-frame.svg"
-            className="absolute top-0 w-full h-screen opacity-50"
+            className="absolute top-0  z-10 h-full w-full opacity-50"
             alt=""
           />
-          <div className="px-5">
+          <div className="px-5 ">
             <div className="flex justify-between">
               <h2 className=" mt-2 font-sfpro text-[20px] text-[#F8F8F8]/[0.8]">
                 Refer a friend and unlock rewards
@@ -267,7 +267,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 <RxCross1 className="mr-[2px]" />
               </div>
             </div>
-            <div className="flex justify-center w-full">
+            <div className="flex w-full justify-center">
               <GiftCard
                 subscriptionText={
                   ' Your peak mental and physical form everyday'
@@ -286,7 +286,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 </h3>
                 <div className="flex">
                   <img src="./assets/surprise.svg" alt="" />
-                  <div className="mt-2 ml-2">
+                  <div className="ml-2 mt-2">
                     <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
                       20% off on your next bill
                     </p>
@@ -303,7 +303,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 </h3>
                 <div className="flex">
                   <img src="./assets/mail.svg" alt="" />
-                  <div className="mt-2 ml-2">
+                  <div className="ml-2 mt-2">
                     <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
                       20% off on their first subscription
                     </p>
@@ -317,7 +317,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
             </div>
           </div>
 
-          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center  px-4 pb-5">
+          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center   px-4 pb-5">
             <h5
               onClick={() => setShowReferralWorkPopup(true)}
               className="pb-3 pt-4 text-[18px] text-custompurple underline underline-offset-4"
@@ -351,11 +351,11 @@ Here's a 20% off discount because I'd love for you to get healthy too!
           >
             <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
           </button>
-          <div className="flex flex-col items-start justify-around w-full h-full mt-3 ">
+          <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
             <ProfilePicHeading>Profile photo</ProfilePicHeading>
             <div className="flex w-full flex-row items-center justify-start gap-[40px]">
               <div
-                className="flex flex-col items-center justify-center gap-1 w-fit"
+                className="flex w-fit flex-col items-center justify-center gap-1"
                 onClick={() => profilePicCameraRef.current.click()}
               >
                 <button className="border-gray-500 cursor-pointer rounded-full border-[0.5px] p-3">
@@ -364,7 +364,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 <IconLabel>Camera</IconLabel>
               </div>
               <div
-                className="flex flex-col items-center justify-center gap-1 w-fit"
+                className="flex w-fit flex-col items-center justify-center gap-1"
                 onClick={() => profilePicRef.current.click()}
               >
                 <button className="border-gray-500 cursor-pointer rounded-full border-[0.5px] p-3">
@@ -373,7 +373,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 <IconLabel>Gallery</IconLabel>
               </div>
               <div
-                className="flex flex-col items-center justify-center gap-1 w-fit"
+                className="flex w-fit flex-col items-center justify-center gap-1"
                 onClick={handlePicDelete}
               >
                 <button className="border-gray-500 cursor-pointer rounded-full border-[0.5px] p-3">
@@ -399,7 +399,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
             />
             <div className="w-screen grow overflow-scroll px-4 pb-[78px] pt-8">
               {profilePicError && (
-                <div className="fixed top-0 z-50 w-full h-full bg-black">
+                <div className="fixed top-0 z-50 h-full w-full bg-black">
                   <Error>Oops! Something went wrong...</Error>
                 </div>
               )}
@@ -414,7 +414,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
 
               {/* User Profile Pic and Name */}
               <div className="mt-[30px] flex flex-col items-center justify-center">
-                <div className="flex flex-col items-center justify-center gap-5 mt-6">
+                <div className="mt-6 flex flex-col items-center justify-center gap-5">
                   <div className="relative h-[136px] w-[136px] rounded-full">
                     {chosenPic ? (
                       <ProfilePicture
@@ -497,10 +497,10 @@ Here's a 20% off discount because I'd love for you to get healthy too!
 
                 <div className="mt-[15px] flex flex-col gap-[10px]">
                   <div
-                    className="w-full px-4 py-3 mx-auto max-h-max rounded-xl bg-mediumGray"
+                    className="mx-auto max-h-max w-full rounded-xl bg-mediumGray px-4 py-3"
                     onClick={() => setShowProfilePicPopup(false)}
                   >
-                    <div className="flex flex-col h-full ">
+                    <div className="flex h-full flex-col ">
                       <section>
                         {/* <div className="text-sm font-medium">Your Plan</div> */}
                         <div className="text-2xl font-medium leading-10 text-floYellow">
@@ -520,16 +520,16 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                       </div> */}
                           {memberData.isPaymentDue ? (
                             <div className=" inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
-                              <div className="relative w-3 h-3">
+                              <div className="relative h-3 w-3">
                                 <img src="/assets/alert-triangle.svg" alt="" />
                               </div>
-                              <div className="text-xs text-black capitalize">
+                              <div className="text-xs capitalize text-black">
                                 Overdue
                               </div>
                             </div>
                           ) : (
                             <div className="bg-neutral-700  inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-green bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-                              <ul className="pl-3 list-disc">
+                              <ul className="list-disc pl-3">
                                 <li className="text-xs capitalize text-green">
                                   Next payment due on{' '}
                                   {formatDate(
@@ -588,7 +588,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                         coins={memberData.moveCoins}
                       />
                     </div>
-                    <div className="w-full mt-2">
+                    <div className="mt-2 w-full">
                       <CoinsIndicator
                         coins={memberData.moveCoins}
                         offers={memberData.offers}
@@ -599,7 +599,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                   {/* <MoveCoins coins={0} /> */}
 
                   {currentDate >= 5 && (
-                    <section className="flex flex-row items-center justify-center w-full ">
+                    <section className="flex w-full flex-row items-center justify-center ">
                       <MonthlyWrapped />
                     </section>
                   )}
@@ -607,9 +607,9 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                     className=" mx-auto  min-h-[142px] w-full rounded-xl bg-mediumGray px-4 py-3"
                     onClick={() => setShowProfilePicPopup(false)}
                   >
-                    <div className="flex flex-col justify-between h-full ">
+                    <div className="flex h-full flex-col justify-between ">
                       <section>
-                        <div className="text-sm font-medium text-white font-sfpro ">
+                        <div className="font-sfpro text-sm font-medium text-white ">
                           Book a Call
                         </div>
                         <div
@@ -643,14 +643,14 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                   </div>
                 </div>
                 <div
-                  className="flex flex-col w-full mt-8"
+                  className="mt-8 flex w-full flex-col"
                   onClick={() => {
                     setShowProfilePicPopup(false);
                     handleLogout();
                   }}
                 >
                   <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
-                    <div className="relative w-5 h-5 origin-top-left">
+                    <div className="relative h-5 w-5 origin-top-left">
                       <img src="./assets/logout.svg" alt="" />
                     </div>
                     <div className="text-lg font-medium text-lightGray">
