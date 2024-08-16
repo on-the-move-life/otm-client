@@ -42,13 +42,33 @@ function MainPage() {
     if (contentAreaRef.current) {
       try {
         console.log("Attempting to capture image");
+        
+        // Store original styles
+        const originalStyles = {
+          height: contentAreaRef.current.style.height,
+          overflow: contentAreaRef.current.style.overflow,
+          position: contentAreaRef.current.style.position
+        };
+        
+        // Temporarily modify styles for full capture
+        contentAreaRef.current.style.height = 'auto';
+        contentAreaRef.current.style.overflow = 'visible';
+        contentAreaRef.current.style.position = 'static';
+  
         // Capture screenshot
-        const dataUrl = await domtoimage.toPng(contentAreaRef.current);
+        const dataUrl = await domtoimage.toPng(contentAreaRef.current, {
+          width: contentAreaRef.current.scrollWidth,
+          height: contentAreaRef.current.scrollHeight
+        });
+        
+        // Restore original styles
+        Object.assign(contentAreaRef.current.style, originalStyles);
+  
         console.log("Image captured successfully");
-
+  
         // Create share text
         const shareText = 'Check out my lifestyle summary!';
-
+  
         // Check if Web Share API is supported
         if (navigator.share) {
           console.log("Web Share API is supported");
@@ -56,7 +76,7 @@ function MainPage() {
           const file = new File([blob], 'lifestyle-summary.png', {
             type: 'image/png',
           });
-
+  
           await navigator.share({
             text: shareText,
             files: [file],
