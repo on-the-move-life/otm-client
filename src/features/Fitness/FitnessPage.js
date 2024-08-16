@@ -38,8 +38,6 @@ const FitnessPage = () => {
 
   const navigate = useNavigate();
 
-  console.log(homeStats);
-
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../../components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { formatDate } from '../../utils';
 import { axiosClient } from './apiProfileClient';
 import { FaUserCircle } from 'react-icons/fa';
@@ -19,7 +19,11 @@ import { motion } from 'framer-motion';
 import MoveCoins from './MoveCoins';
 import MonthlyWrapped from './MonthlyWrapped';
 import { CoinsIndicator, Movecoins } from '../Marketplace';
+import { RxCross1 } from 'react-icons/rx';
+
 import { Name } from '../LifestyleQuiz';
+import { WhatsappShareButton } from 'react-share';
+import GiftCard from '../ReferralUser/GiftCard';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -54,11 +58,23 @@ const UserDetails = ({ showHistory }) => {
   const [profilePicFile, setProfilePicFile] = useState(null);
   const [uniqueImageURLKey, setUniqueImageURLKey] = useState(null);
   const [profilePicError, setProfilePicError] = useState(false);
+  const [showReferralLinkPopup, setShowReferralLinkPopup] = useState(false);
+  const [showReferralWorkPopup, setShowReferralWorkPopup] = useState(false);
   const currentDate = new Date().getDate();
+
+  const imageUrl =
+    'https://storage.googleapis.com/otm_client_profile_pictures/DUAAKA3938_Dummy_Aakash_7921.jpg';
 
   const navigate = useNavigate();
 
+  const code = JSON.parse(localStorage.getItem('user')).code;
+
   const { getUserFromStorage, logout } = useAuth();
+  const title = `I've been using OTM to improve my lifestyle and I absolutely love it!
+Here's a 20% off discount because I'd love for you to get healthy too!
+
+`;
+  const baseURL = `${window.location.protocol}//${window.location.host}/referral-user?memberCode=${code}`;
 
   useEffect(() => {
     const user = getUserFromStorage();
@@ -168,7 +184,161 @@ const UserDetails = ({ showHistory }) => {
   return (
     <>
       {/* profile pic update popup */}
-      {showProfilePicPopup && (
+      {showReferralWorkPopup && (
+        <div className="from-gray-500/30 to-gray-900/60  fixed bottom-0 left-0 z-[60] h-[100vh] w-full  bg-gradient-to-r pt-5 backdrop-blur-2xl">
+          <motion.div
+            initial="hidden"
+            animate={showReferralWorkPopup ? 'visible' : 'hidden'}
+            variants={modalVariants}
+            className="absolute bottom-0 flex flex-col items-center w-full px-4 pb-5 bg-black"
+          >
+            <div
+              onClick={() => setShowReferralWorkPopup(false)}
+              className=" absolute right-3 top-5 flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray text-center"
+            >
+              <RxCross1 className="mr-[2px] " />
+            </div>
+            <h5 className=" pt-7 text-[18px] text-custompurple ">
+              How it works
+            </h5>
+            <div className="mx-[34px] my-10 flex flex-col gap-5">
+              <div className="flex">
+                <img src="./assets/referral-profile.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium leading-[19px] text-[#F8F8F8]/[0.8]">
+                  WhatsApp your referral link to your friends
+                </p>
+              </div>
+              <div className="flex">
+                <img src="./assets/referral-link.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
+                  Your friend must click and accept the referral gift
+                </p>
+              </div>
+              <div className="flex">
+                <img src="./assets/referral-percentage.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
+                  Your friend gets 20% on their first subscription with OTM
+                </p>
+              </div>
+              <div className="flex">
+                <img src="./assets/referral-wallet.svg" alt="" />
+                <p className="ml-3 font-sfpro text-[14px] font-medium  leading-[19px] text-[#F8F8F8]/[0.8] ">
+                  You get additional 20% off on your next OTM bill
+                </p>
+              </div>
+            </div>
+
+            <WhatsappShareButton
+              className="w-full"
+              url={baseURL}
+              title={title}
+              img={imageUrl}
+            >
+              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg  leading-8 text-black">
+                <img src="./assets/whatsapp-logo.svg" alt="" className="mr-1" />
+                WhatsApp your Link
+              </button>
+            </WhatsappShareButton>
+          </motion.div>
+        </div>
+      )}
+
+      {showReferralLinkPopup && (
+        <div
+          initial="hidden"
+          animate={showReferralLinkPopup ? 'visible' : 'hidden'}
+          variants={modalVariants}
+          className="fixed bottom-0 left-0 z-50 w-full h-screen pt-5 overflow-y-scroll bg-black from-gray-500/30 to-gray-900/60 bg-gradient-to-r"
+        >
+          <img
+            src="./assets/referral-frame.svg"
+            className="absolute top-0 w-full h-screen opacity-50"
+            alt=""
+          />
+          <div className="px-5">
+            <div className="flex justify-between">
+              <h2 className=" mt-2 font-sfpro text-[20px] text-[#F8F8F8]/[0.8]">
+                Refer a friend and unlock rewards
+              </h2>
+              <div
+                onClick={() => setShowReferralLinkPopup(false)}
+                className="relative z-[30] flex h-[37px] min-w-[37px] items-center justify-center rounded-full bg-darkGray text-center"
+              >
+                <RxCross1 className="mr-[2px]" />
+              </div>
+            </div>
+            <div className="flex justify-center w-full">
+              <GiftCard
+                subscriptionText={
+                  ' Your peak mental and physical form everyday'
+                }
+                info={' 20% discount on first subsription    '}
+              />
+            </div>
+            <div className=" text-center font-sfpro text-[18px] text-[#F8F8F8]/[0.8]">
+              Help someone you know live stronger and better
+            </div>
+
+            <div className="mb-16 mt-[31px] flex flex-col gap-[32px]">
+              <div>
+                <h3 className="font-sfpro text-[20px]  text-[#F8F8F8]/[0.8] ">
+                  You Get
+                </h3>
+                <div className="flex">
+                  <img src="./assets/surprise.svg" alt="" />
+                  <div className="mt-2 ml-2">
+                    <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
+                      20% off on your next bill
+                    </p>
+                    <p className="font-sfpro text-[12px] font-light text-[#F8F8F8]/[0.3]">
+                      your referral reward is only valid after your friend has
+                      unlocked an OTM subscription
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 className="font-sfpro text-[20px]  text-[#F8F8F8]/[0.8] ">
+                  They Get
+                </h3>
+                <div className="flex">
+                  <img src="./assets/mail.svg" alt="" />
+                  <div className="mt-2 ml-2">
+                    <p className="font-sfpro text-[14px] text-[#F8F8F8]/[0.8]">
+                      20% off on their first subscription
+                    </p>
+                    <p className="font-sfpro text-[12px] font-light text-[#F8F8F8]/[0.3]">
+                      referral benefits can be availed only within 30 days of
+                      your friend accepting your gift
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center  px-4 pb-5">
+            <h5
+              onClick={() => setShowReferralWorkPopup(true)}
+              className="pb-3 pt-4 text-[18px] text-custompurple underline underline-offset-4"
+            >
+              How it works
+            </h5>
+            <WhatsappShareButton
+              className="w-full"
+              url={baseURL}
+              title={title}
+              img={imageUrl}
+            >
+              <button className="mb-[10px] mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg  leading-8 text-black">
+                <img src="./assets/whatsapp-logo.svg" alt="" className="mr-1" />
+                WhatsApp your Link
+              </button>
+            </WhatsappShareButton>
+          </div>
+        </div>
+      )}
+      {showReferralLinkPopup === false && showProfilePicPopup && (
         <motion.div
           className="from-gray-500/30 to-gray-900/60 fixed bottom-0 left-0 z-50 h-[200px] w-full rounded-t-[30px] bg-gradient-to-r p-5 backdrop-blur-lg"
           initial="hidden"
@@ -216,7 +386,7 @@ const UserDetails = ({ showHistory }) => {
         </motion.div>
       )}
       <AnimatedComponent>
-        {memberData && (
+        {showReferralLinkPopup === false && memberData && (
           <div>
             <img
               className="absolute left-0 right-0 -z-20"
@@ -240,10 +410,10 @@ const UserDetails = ({ showHistory }) => {
                 navigate('/home');
               }}
             />
-          </div> */}
+            </div> */}
 
               {/* User Profile Pic and Name */}
-              <div className="mt-[60px] flex flex-col items-center justify-center">
+              <div className="mt-[30px] flex flex-col items-center justify-center">
                 <div className="flex flex-col items-center justify-center gap-5 mt-6">
                   <div className="relative h-[136px] w-[136px] rounded-full">
                     {chosenPic ? (
@@ -312,149 +482,166 @@ const UserDetails = ({ showHistory }) => {
                   <img src="/assets/star.svg" alt=''/>
                 </div>
 
-              </div> */}
+               </div> */}
                   {/* <div className="inline-flex h-5 w-auto items-center justify-center rounded bg-indigo-400 px-2 py-0.5">
                 <div className="text-xs font-bold text-black capitalize">
                   {memberData.intensity > 100 ? 'Elite' : 'Advanced'}
                 </div>
-              </div> */}
+               </div> */}
                 </div>
 
-                <p className="text-darkTextGray text-center align-middle  text-[14px]">
+                <p className="text-center align-middle text-[14px]  text-darkTextGray">
                   Fitness is not a destination. It's a journey of self
                   improvement, one workout at a time.
                 </p>
 
-                <div
-                  className="w-full px-4 py-3 mx-auto mt-8 max-h-max rounded-xl bg-mediumGray"
-                  onClick={() => setShowProfilePicPopup(false)}
-                >
-                  <div className="flex flex-col h-full ">
-                    <section>
-                      {/* <div className="text-sm font-medium">Your Plan</div> */}
-                      <div className="text-2xl font-medium leading-10 text-floYellow">
-                        Membership
-                      </div>
-                      {/* <div className="text-[8px]  tracking-[5px] text-lightGray ">
+                <div className="mt-[15px] flex flex-col gap-[10px]">
+                  <div
+                    className="w-full px-4 py-3 mx-auto max-h-max rounded-xl bg-mediumGray"
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
+                    <div className="flex flex-col h-full ">
+                      <section>
+                        {/* <div className="text-sm font-medium">Your Plan</div> */}
+                        <div className="text-2xl font-medium leading-10 text-floYellow">
+                          Membership
+                        </div>
+                        {/* <div className="text-[8px]  tracking-[5px] text-lightGray ">
                       LIGHTER & AGILE
                     </div> */}
-                      <div
-                        className="flex flex-col pt-2"
-                        onClick={() => setShowProfilePicPopup(false)}
-                      >
-                        {/* <div className="bg-neutral-700 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-lightGray bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                        <div
+                          className="flex flex-col pt-2"
+                          onClick={() => setShowProfilePicPopup(false)}
+                        >
+                          {/* <div className="bg-neutral-700 inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-lightGray bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
                         <div className="text-xs capitalize text-offwhite">
                           ₹5,000 Renewed Monthly
                         </div>
                       </div> */}
-                        {memberData.isPaymentDue ? (
-                          <div className=" inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
-                            <div className="relative w-3 h-3">
-                              <img src="/assets/alert-triangle.svg" alt="" />
+                          {memberData.isPaymentDue ? (
+                            <div className=" inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded bg-red bg-opacity-70 px-2 py-0.5">
+                              <div className="relative w-3 h-3">
+                                <img src="/assets/alert-triangle.svg" alt="" />
+                              </div>
+                              <div className="text-xs text-black capitalize">
+                                Overdue
+                              </div>
                             </div>
-                            <div className="text-xs text-black capitalize">
-                              Overdue
+                          ) : (
+                            <div className="bg-neutral-700  inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-green bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
+                              <ul className="pl-3 list-disc">
+                                <li className="text-xs capitalize text-green">
+                                  Next payment due on{' '}
+                                  {formatDate(
+                                    memberData?.paymentDueDate,
+                                    false,
+                                  )}
+                                </li>
+                              </ul>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="bg-neutral-700  inline-flex h-5 max-w-max items-center justify-center gap-0.5 rounded border border-green bg-opacity-5 px-2 py-0.5 backdrop-blur-[34px]">
-                            <ul className="pl-3 list-disc">
-                              <li className="text-xs capitalize text-green">
-                                Next payment due on{' '}
-                                {formatDate(memberData?.paymentDueDate, false)}
-                              </li>
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    </section>
-                    <section className="flex flex-col items-center ">
-                      {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
-                  <div className="text-lg font-medium text-black">Pay now</div>
-                </div> */}
+                          )}
+                        </div>
+                      </section>
+                      <section className="flex flex-col items-center ">
+                        {/* <div className="inline-flex h-10 w-[334px] items-center justify-center gap-2.5 rounded-lg bg-white p-2.5">
+                    <div className="text-lg font-medium text-black">Pay now</div>
+                    </div> */}
 
-                      {/* <button className="mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+                        {/* <button className="mt-[10px] flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
                       Make Payment
                     </button> */}
-                      <div
-                        className="border-zinc-400 mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
-                        onClick={() => showHistory()}
-                      >
-                        <button className="mt-[2px] text-lg font-medium text-white">
-                          Check payment history
-                        </button>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-
-                <Link
-                  to="/marketplace"
-                  className="my-2 flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
-                >
-                  <div
-                    className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
-                    style={{
-                      backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})`,
-                    }}
-                  >
-                    <div>Marketplace </div>
-                    <Movecoins fontSize={'26px'} coins={memberData.moveCoins} />
-                  </div>
-                  <div className="w-full mt-2">
-                    <CoinsIndicator
-                      coins={memberData.moveCoins}
-                      offers={memberData.offers}
-                    />
-                  </div>
-                </Link>
-
-                {/* <MoveCoins coins={0} /> */}
-
-                {currentDate >= 5 && (
-                  <section className="flex flex-row items-center justify-center w-full gap-3 mt-1">
-                    <MonthlyWrapped />
-                  </section>
-                )}
-                <div
-                  className=" mx-auto mt-1 min-h-[142px] w-full rounded-xl bg-mediumGray px-4 py-3"
-                  onClick={() => setShowProfilePicPopup(false)}
-                >
-                  <div className="flex flex-col justify-between h-full ">
-                    <section>
-                      <div className="text-sm font-medium text-white font-sfpro ">
-                        Book a Call
-                      </div>
-                      <div
-                        className="pt-1 "
-                        onClick={() => setShowProfilePicPopup(false)}
-                      >
-                        <div className="font-sfpro text-[14px] font-medium  text-white">
-                          <p>
-                            Easily schedule a one-on-one call with your coach
-                            for personalised guidance and mentoring.
-                          </p>
+                        <div
+                          className="border-zinc-400 mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                          onClick={() => showHistory()}
+                        >
+                          <button className="mt-[2px] text-lg font-medium text-white">
+                            Check payment history
+                          </button>
                         </div>
-                      </div>
+                      </section>
+                    </div>
+                  </div>
+
+                  <div
+                    onClick={() => setShowReferralLinkPopup(true)}
+                    className=" flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm "
+                  >
+                    <img src="./assets/gifts-small.svg" alt="" />
+                    <div className="pl-2 text-[18px] text-[#F8F8F8]/[0.8] ">
+                      Refer a friend
+                    </div>
+                  </div>
+
+                  <Link
+                    to="/marketplace"
+                    className=" flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
+                  >
+                    <div
+                      className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
+                      style={{
+                        backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})`,
+                      }}
+                    >
+                      <div>Marketplace </div>
+                      <Movecoins
+                        fontSize={'26px'}
+                        coins={memberData.moveCoins}
+                      />
+                    </div>
+                    <div className="w-full mt-2">
+                      <CoinsIndicator
+                        coins={memberData.moveCoins}
+                        offers={memberData.offers}
+                      />
+                    </div>
+                  </Link>
+
+                  {/* <MoveCoins coins={0} /> */}
+
+                  {currentDate >= 5 && (
+                    <section className="flex flex-row items-center justify-center w-full ">
+                      <MonthlyWrapped />
                     </section>
-                    <section className="flex flex-col items-center ">
-                      <div
-                        className=" mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg  "
-                        onClick={() =>
-                          window.open(
-                            'https://calendly.com/rishisolanki1995/30mincallwithrishi',
-                            '_blank',
-                          )
-                        }
-                      >
-                        <button className="flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
-                          Book Now
-                        </button>
-                      </div>
-                    </section>
+                  )}
+                  <div
+                    className=" mx-auto  min-h-[142px] w-full rounded-xl bg-mediumGray px-4 py-3"
+                    onClick={() => setShowProfilePicPopup(false)}
+                  >
+                    <div className="flex flex-col justify-between h-full ">
+                      <section>
+                        <div className="text-sm font-medium text-white font-sfpro ">
+                          Book a Call
+                        </div>
+                        <div
+                          className="pt-1 "
+                          onClick={() => setShowProfilePicPopup(false)}
+                        >
+                          <div className="font-sfpro text-[14px] font-medium  text-white">
+                            <p>
+                              Easily schedule a one-on-one call with your coach
+                              for personalised guidance and mentoring.
+                            </p>
+                          </div>
+                        </div>
+                      </section>
+                      <section className="flex flex-col items-center ">
+                        <div
+                          className=" mt-4 inline-flex h-10 w-full items-center justify-center gap-2.5 rounded-lg  "
+                          onClick={() =>
+                            window.open(
+                              'https://calendly.com/rishisolanki1995/30mincallwithrishi',
+                              '_blank',
+                            )
+                          }
+                        >
+                          <button className="flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg font-medium leading-8 text-black">
+                            Book Now
+                          </button>
+                        </div>
+                      </section>
+                    </div>
                   </div>
                 </div>
-
                 <div
                   className="flex flex-col w-full mt-8"
                   onClick={() => {

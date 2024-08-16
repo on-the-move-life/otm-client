@@ -1,5 +1,11 @@
 //App.js
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from 'react-router-dom';
 import { Login, PageNotFound } from './pages';
 import Timeline from './features/Timeline/Timeline';
 import { SectionDetail, WorkoutSummary, Workout } from './features/Workout';
@@ -15,7 +21,7 @@ import { LifeStyleRoutine } from './features/LifeStyleRoutines';
 import { MonthlyWrapped } from './features/MonthlyWrapped';
 import { Provider } from 'react-redux';
 import { store } from './features/LifeStyleRoutines';
-import { mealPlannerStore } from './features/Nutrition/MealPlanner'
+import { mealPlannerStore } from './features/Nutrition/MealPlanner';
 import MainLayout from './components/MainLayout';
 import FitnessPage from './features/Fitness/FitnessPage';
 import { Community } from './features/Community';
@@ -29,6 +35,7 @@ import MealUpload from './features/LifeStyleRoutines/MealUpload';
 import NutritionPage from './features/Nutrition/NutritionPage';
 import { MealPlanner } from './features/Nutrition/MealPlanner';
 import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
+import ReferralUser from './features/ReferralUser/ReferralUser';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -118,6 +125,7 @@ function App() {
           }
         />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/referral-user" element={<ReferralUser />} />
         <Route
           path="/monthly-wrapped"
           element={

@@ -82,7 +82,7 @@ function YourCircle({
             setIsCircleOpen(true);
           }}
         >
-          <div className="flex w-full flex-row items-center justify-start gap-5">
+          <div className="flex flex-row items-center justify-start w-full gap-5">
             <div>{circleIcons[name]}</div>
             <div className="flex flex-col items-start justify-center">
               <p
