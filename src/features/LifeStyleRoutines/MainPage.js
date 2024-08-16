@@ -13,6 +13,8 @@ import { Error } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInitialStateSuccess } from './ReduxStore/actions';
 import { TimelineHeading } from '../Timeline/StyledComponents';
+import { FiUpload } from "react-icons/fi";
+import domtoimage from 'dom-to-image';
 
 function MainPage() {
   // Defining states for the fetched data
@@ -26,6 +28,7 @@ function MainPage() {
   const [isCircleOpen, setIsCircleOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const pageRef = useRef(null);
 
   const { completionHistory, circles, percentCompletion } = useSelector(
     (state) => ({
@@ -34,6 +37,41 @@ function MainPage() {
       percentCompletion: state.lifeStyleDetails?.completionHistory,
     }),
   );
+
+  const captureAndSharePage = async () => {
+    if (contentAreaRef.current) {
+      try {
+        console.log("Attempting to capture image");
+        // Capture screenshot
+        const dataUrl = await domtoimage.toPng(contentAreaRef.current);
+        console.log("Image captured successfully");
+
+        // Create share text
+        const shareText = 'Check out my lifestyle summary!';
+
+        // Check if Web Share API is supported
+        if (navigator.share) {
+          console.log("Web Share API is supported");
+          const blob = await (await fetch(dataUrl)).blob();
+          const file = new File([blob], 'lifestyle-summary.png', {
+            type: 'image/png',
+          });
+
+          await navigator.share({
+            text: shareText,
+            files: [file],
+          });
+        } else {
+          // Fallback for desktop browsers or unsupported devices
+          const encodedText = encodeURIComponent(shareText);
+          const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
+          window.open(whatsappUrl, '_blank');
+        }
+      } catch (error) {
+        console.error('Error capturing or sharing screenshot:', error);
+      }
+    }
+  };
 
   const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
 
@@ -114,6 +152,13 @@ function MainPage() {
               setSelectedDate={setSelectedDate}
             />
           )}
+          { section == 1 ? (
+          <div className='flex justify-between w-full px-3'>
+            <p className='text-lg'>Summary</p>
+            <button className='bg-black px-4 text-white flex gap-2 text-sm mt-[4px] cursor-pointer' onClick={captureAndSharePage}>Share With Coach <span className='text-[#DEF988] text-[18px]'><FiUpload /></span></button>
+          </div>
+          ): null
+           }
           {section === 0 ? (
             <Routines
               circles={circles}
