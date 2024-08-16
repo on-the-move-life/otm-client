@@ -39,38 +39,47 @@ function MainPage() {
   );
 
   const captureAndSharePage = async () => {
-    if (contentAreaRef.current) {
+    const contentArea = contentAreaRef.current;
+    if (contentArea) {
       try {
         console.log("Attempting to capture image");
         
         // Store original styles
         const originalStyles = {
-          height: contentAreaRef.current.style.height,
-          overflow: contentAreaRef.current.style.overflow,
-          position: contentAreaRef.current.style.position
+          height: contentArea.style.height,
+          overflow: contentArea.style.overflow,
+          position: contentArea.style.position
         };
         
-        // Temporarily modify styles for full capture
-        contentAreaRef.current.style.height = 'auto';
-        contentAreaRef.current.style.overflow = 'visible';
-        contentAreaRef.current.style.position = 'static';
+        // Find the NavigationTab
+        const navTab = contentArea.querySelector('div[class*="fixed bottom-[78px]"]');
+        const navTabOriginalDisplay = navTab ? navTab.style.display : null;
+        
+        // Temporarily modify styles for full capture and hide NavigationTab
+        contentArea.style.height = 'auto';
+        contentArea.style.overflow = 'visible';
+        contentArea.style.position = 'static';
+        if (navTab) navTab.style.display = 'none';
   
         // Capture screenshot
-        const dataUrl = await domtoimage.toPng(contentAreaRef.current, {
-          width: contentAreaRef.current.scrollWidth,
-          height: contentAreaRef.current.scrollHeight
+        const dataUrl = await domtoimage.toPng(contentArea, {
+          width: contentArea.scrollWidth,
+          height: contentArea.scrollHeight - (navTab ? navTab.offsetHeight : 0)
         });
         
-        // Restore original styles
-        Object.assign(contentAreaRef.current.style, originalStyles);
+        // Restore original styles and visibility
+        Object.assign(contentArea.style, originalStyles);
+        if (navTab) navTab.style.display = navTabOriginalDisplay;
   
         console.log("Image captured successfully");
   
         // Create share text
         const shareText = 'Check out my lifestyle summary!';
   
-        // Check if Web Share API is supported
-        if (navigator.share) {
+        // Check if it's a mobile device
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+        if (isMobile && navigator.share) {
           console.log("Web Share API is supported");
           const blob = await (await fetch(dataUrl)).blob();
           const file = new File([blob], 'lifestyle-summary.png', {
@@ -82,10 +91,11 @@ function MainPage() {
             files: [file],
           });
         } else {
-          // Fallback for desktop browsers or unsupported devices
-          const encodedText = encodeURIComponent(shareText);
-          const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
-          window.open(whatsappUrl, '_blank');
+          // Download image for desktop devices
+          const link = document.createElement('a');
+          link.download = 'lifestyle-summary.png';
+          link.href = dataUrl;
+          link.click();
         }
       } catch (error) {
         console.error('Error capturing or sharing screenshot:', error);
