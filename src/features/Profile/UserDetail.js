@@ -248,7 +248,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
           initial="hidden"
           animate={showReferralLinkPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
-          className="from-gray-500/30 to-gray-900/60 relative left-0   z-40  min-h-max w-full overflow-y-scroll bg-black bg-gradient-to-r pb-[100px] pt-12"
+          className="from-gray-500/30 to-gray-900/60 relative left-0   z-40 max-h-full  min-h-max w-full overflow-y-scroll bg-black bg-gradient-to-r pb-[100px] pt-12"
         >
           <img
             src="./assets/referral-frame.svg"
@@ -317,7 +317,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
             </div>
           </div>
 
-          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center   px-4 pb-5  ">
+          <div className="fixed bottom-0 z-[10] flex w-full flex-col items-center   px-4 pb-5  backdrop-blur-md">
             <h5
               onClick={() => setShowReferralWorkPopup(true)}
               className="pb-3 pt-4 text-[18px] text-custompurple underline underline-offset-4"
