@@ -30,28 +30,31 @@ const AdditionalActivity = () => {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight / 2;
+      const itemHeight = containerRef.current.clientHeight / 5; // 5 items visible at a time
+      containerRef.current.scrollTop =
+        containerRef.current.scrollHeight / 2 - itemHeight * 2;
     }
   }, []);
 
   const handleScroll = (e) => {
     const container = e.target;
-    const itemHeight = container.clientHeight / 5; // Adjust to match your total visible items
+    const itemHeight = container.clientHeight / 5;
     const totalItems = items.length;
 
     if (
       container.scrollTop + container.clientHeight >=
       container.scrollHeight
     ) {
-      container.scrollTop = container.scrollHeight / 2 - container.clientHeight;
+      container.scrollTop =
+        container.scrollHeight / 2 - container.clientHeight + itemHeight * 2;
     }
 
     if (container.scrollTop <= 0) {
-      container.scrollTop = container.scrollHeight / 2;
+      container.scrollTop = container.scrollHeight / 2 - itemHeight * 2;
     }
 
     const currentIndex =
-      Math.round(container.scrollTop / itemHeight) % totalItems;
+      (Math.round(container.scrollTop / itemHeight) % totalItems) + 2;
     setScrollPosition(currentIndex);
   };
 
@@ -85,7 +88,7 @@ const AdditionalActivity = () => {
   //   }, []);
 
   return (
-    <div className="to-blue-500 relative h-[40px] rounded-full bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
+    <div className="to-blue-500 relative bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
       <div
         className="picker-container"
         ref={containerRef}
@@ -94,9 +97,11 @@ const AdditionalActivity = () => {
         {items.concat(items, items).map((item, index) => {
           const position = (index % items.length) - scrollPosition;
 
-          let className = 'picker-item ';
+          console.log(index, items.length, scrollPosition, position);
+
+          let className = 'picker-item';
           if (position === 0) {
-            className += ' bg-red selected';
+            className += ' selected';
           } else if (position === 1 || position === -1) {
             className += ' adjacent';
           } else if (position === 2 || position === -2) {

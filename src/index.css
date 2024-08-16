@@ -1068,12 +1068,13 @@ body,
 
 .picker-container {
   width: 100px;
-  height: 250px; /* Adjust to display 5 items at a time */
+  height: 250px; /* 5 items visible, with the middle one centered */
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .picker-container::-webkit-scrollbar {
@@ -1083,12 +1084,12 @@ body,
 .picker-item {
   height: 50px;
   line-height: 50px;
-  font-size: 14px; /* Base font size for the farthest items */
-  color: #ccc; /* Lighter color for the farthest items */
+  font-size: 14px;
+  color: #ccc;
   background-color: #333;
   transition:
     font-size 0.2s,
-    color 0.2s; /* Smooth transition for size and color */
+    color 0.2s;
 }
 
 .picker-item.selected {
@@ -1098,11 +1099,11 @@ body,
 }
 
 .picker-item.adjacent {
-  font-size: 18px; /* Medium size for items adjacent to the selected item */
-  color: #ddd; /* Slightly lighter color */
+  font-size: 18px;
+  color: #ddd;
 }
 
 .picker-item.far {
-  font-size: 16px; /* Slightly smaller size */
-  color: #bbb; /* Lighter color */
+  font-size: 16px;
+  color: #bbb;
 }
