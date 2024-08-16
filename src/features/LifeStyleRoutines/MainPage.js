@@ -185,7 +185,7 @@ function MainPage() {
           { section == 1 ? (
           <div className='flex justify-between w-full px-3'>
             <p className='text-lg'>Summary</p>
-            <button className='bg-black px-4 text-white flex gap-2 text-sm mt-[4px] cursor-pointer' onClick={captureAndSharePage}>Share With Coach <span className='text-[#DEF988] text-[18px]'><FiUpload /></span></button>
+            <button className='border-blue-gray-400 border-[1px] rounded-md py-2 px-4 text-white flex gap-2 text-sm cursor-pointer' onClick={captureAndSharePage}>Share With Coach <span className='text-[#DEF988] text-[18px]'><FiUpload /></span></button>
           </div>
           ): null
            }
