@@ -248,7 +248,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
           initial="hidden"
           animate={showReferralLinkPopup ? 'visible' : 'hidden'}
           variants={modalVariants}
-          className="rom-gray-500/30 to-gray-900/60 relative left-0   z-40 min-h-max w-full overflow-y-scroll bg-black bg-gradient-to-r pb-[141px] pt-12"
+          className="from-gray-500/30 to-gray-900/60 relative left-0   z-40  min-h-max w-full overflow-y-scroll bg-black bg-gradient-to-r pb-[100px] pt-12"
         >
           <img
             src="./assets/referral-frame.svg"
@@ -270,7 +270,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
             <div className="flex w-full justify-center">
               <GiftCard
                 subscriptionText={
-                  ' Your peak mental and physical form everyday'
+                  ' Unlock your peak mental and physical form everyday'
                 }
                 info={' 20% discount on first subsription    '}
               />

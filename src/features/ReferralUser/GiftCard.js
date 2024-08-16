@@ -26,7 +26,7 @@ const GiftCard = ({ info, subscriptionText }) => {
             src="./assets/gifts-big.svg"
             alt=""
           />
-          <div className="flex flex-col gap-3 mt-5 mb-2">
+          <div className="mb-2 mt-5 flex flex-col gap-3">
             <img
               src="./assets/otm-blue.svg"
               className="h-[13px] w-min"
@@ -41,7 +41,7 @@ const GiftCard = ({ info, subscriptionText }) => {
           </div>
         </div>
       ) : (
-        <div className="mt-8 h-[172px] w-[350px] animate-pulse rounded-xl bg-mediumGray"></div>
+        <div className=" h-[172px] w-[350px] animate-pulse rounded-xl bg-mediumGray"></div>
       )}
     </div>
   );
