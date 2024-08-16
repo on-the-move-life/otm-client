@@ -13,6 +13,8 @@ import { Error } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInitialStateSuccess } from './ReduxStore/actions';
 import { TimelineHeading } from '../Timeline/StyledComponents';
+import { FiUpload } from "react-icons/fi";
+import domtoimage from 'dom-to-image';
 
 function MainPage() {
   // Defining states for the fetched data
@@ -26,6 +28,7 @@ function MainPage() {
   const [isCircleOpen, setIsCircleOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const pageRef = useRef(null);
 
   const { completionHistory, circles, percentCompletion } = useSelector(
     (state) => ({
@@ -34,6 +37,71 @@ function MainPage() {
       percentCompletion: state.lifeStyleDetails?.completionHistory,
     }),
   );
+
+  const captureAndSharePage = async () => {
+    const contentArea = contentAreaRef.current;
+    if (contentArea) {
+      try {
+        console.log("Attempting to capture image");
+        
+        // Store original styles
+        const originalStyles = {
+          height: contentArea.style.height,
+          overflow: contentArea.style.overflow,
+          position: contentArea.style.position
+        };
+        
+        // Find the NavigationTab
+        const navTab = contentArea.querySelector('div[class*="fixed bottom-[78px]"]');
+        const navTabOriginalDisplay = navTab ? navTab.style.display : null;
+        
+        // Temporarily modify styles for full capture and hide NavigationTab
+        contentArea.style.height = 'auto';
+        contentArea.style.overflow = 'visible';
+        contentArea.style.position = 'static';
+        if (navTab) navTab.style.display = 'none';
+  
+        // Capture screenshot
+        const dataUrl = await domtoimage.toPng(contentArea, {
+          width: contentArea.scrollWidth,
+          height: contentArea.scrollHeight - (navTab ? navTab.offsetHeight : 0)
+        });
+        
+        // Restore original styles and visibility
+        Object.assign(contentArea.style, originalStyles);
+        if (navTab) navTab.style.display = navTabOriginalDisplay;
+  
+        console.log("Image captured successfully");
+  
+        // Create share text
+        const shareText = 'Check out my lifestyle summary!';
+  
+        // Check if it's a mobile device
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+        if (isMobile && navigator.share) {
+          console.log("Web Share API is supported");
+          const blob = await (await fetch(dataUrl)).blob();
+          const file = new File([blob], 'lifestyle-summary.png', {
+            type: 'image/png',
+          });
+  
+          await navigator.share({
+            text: shareText,
+            files: [file],
+          });
+        } else {
+          // Download image for desktop devices
+          const link = document.createElement('a');
+          link.download = 'lifestyle-summary.png';
+          link.href = dataUrl;
+          link.click();
+        }
+      } catch (error) {
+        console.error('Error capturing or sharing screenshot:', error);
+      }
+    }
+  };
 
   const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
 
@@ -114,6 +182,13 @@ function MainPage() {
               setSelectedDate={setSelectedDate}
             />
           )}
+          { section == 1 ? (
+          <div className='flex justify-between items-center w-full px-3'>
+            <p className='text-lg'>Summary</p>
+            <button className='border-blue-gray-400 border-[1px] rounded-md py-2 px-4 text-white flex gap-2 text-sm cursor-pointer' onClick={captureAndSharePage}>Share With Coach <span className='text-[#DEF988] text-[18px]'><FiUpload /></span></button>
+          </div>
+          ): null
+           }
           {section === 0 ? (
             <Routines
               circles={circles}
