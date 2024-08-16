@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FaArrowRight } from 'react-icons/fa6';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRef } from 'react';
 
 const SlideDown = keyframes`
   from {
@@ -23,91 +24,91 @@ const InputContainer = styled.div`
 `;
 
 const AdditionalActivity = () => {
-  const [showInput, setShowInput] = useState(false);
-  const [stepCount, setStepCount] = useState('');
-  const [showStepCount, setShowStepCount] = useState(false);
-  const [loader, setLoader] = useState(true);
-
-  const [selectedTime, setSelectedTime] = useState(25);
-
-  const times = Array.from({ length: 60 }, (_, i) => i * 5); // Generate times in 5 min increments
-
-  const handleTimeChange = (e) => {
-    setSelectedTime(parseInt(e.target.value, 10));
-  };
+  const items = Array.from({ length: 100 }, (_, i) => i + 1);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    setShowStepCount(true);
-    setLoader(true);
-    async function getUserData() {
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/step-count`,
-          {
-            params: {
-              memberCode: JSON.parse(localStorage.getItem('user'))['code'],
-            },
-          },
-        );
-        if (res.data) {
-          console.log('ress', res.data);
-          setStepCount(res.data.data.stepCount);
-        }
-        if (res.data.success === true) {
-          setShowStepCount(false);
-        }
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoader(false);
-      }
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight / 2;
     }
-    getUserData();
   }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (stepCount) {
-      const today = new Date();
-      setShowStepCount(false);
-      setShowInput(false);
-      try {
-        await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/step-count`,
-          {
-            stepCount: Number(stepCount),
-            memberCode: JSON.parse(localStorage.getItem('user'))['code'],
-            date: today,
-          },
-        );
-        console.log('Submission successful');
-      } catch (error) {
-        console.error('An error occurred:', error);
-      }
-    } else {
-      console.warn('Please enter a step count before submitting');
+  const handleScroll = (e) => {
+    const container = e.target;
+    const itemHeight = container.clientHeight / 5; // Adjust to match your total visible items
+    const totalItems = items.length;
+
+    if (
+      container.scrollTop + container.clientHeight >=
+      container.scrollHeight
+    ) {
+      container.scrollTop = container.scrollHeight / 2 - container.clientHeight;
     }
+
+    if (container.scrollTop <= 0) {
+      container.scrollTop = container.scrollHeight / 2;
+    }
+
+    const currentIndex =
+      Math.round(container.scrollTop / itemHeight) % totalItems;
+    setScrollPosition(currentIndex);
   };
 
-  const handleShowInput = () => {
-    setShowInput(true);
-  };
+  //   useEffect(() => {
+  //     setShowStepCount(true);
+  //     setLoader(true);
+  //     async function getUserData() {
+  //       try {
+  //         const res = await axios.get(
+  //           `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/step-count`,
+  //           {
+  //             params: {
+  //               memberCode: JSON.parse(localStorage.getItem('user'))['code'],
+  //             },
+  //           },
+  //         );
+  //         if (res.data) {
+  //           console.log('ress', res.data);
+  //           setStepCount(res.data.data.stepCount);
+  //         }
+  //         if (res.data.success === true) {
+  //           setShowStepCount(false);
+  //         }
+  //       } catch (err) {
+  //         console.error(err.message);
+  //       } finally {
+  //         setLoader(false);
+  //       }
+  //     }
+  //     getUserData();
+  //   }, []);
 
   return (
     <div className="to-blue-500 relative h-[40px] rounded-full bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
-      <div className="time-picker">
-        <select
-          className="time-picker-select"
-          value={selectedTime}
-          onChange={handleTimeChange}
-          size={60} // This will show 5 options at a time, like a wheel
-        >
-          {times.map((time) => (
-            <option key={time} value={time}>
-              {time} mins
-            </option>
-          ))}
-        </select>
+      <div
+        className="picker-container"
+        ref={containerRef}
+        onScroll={handleScroll}
+      >
+        {items.concat(items, items).map((item, index) => {
+          const position = (index % items.length) - scrollPosition;
+
+          let className = 'picker-item ';
+          if (position === 0) {
+            className += ' bg-red selected';
+          } else if (position === 1 || position === -1) {
+            className += ' adjacent';
+          } else if (position === 2 || position === -2) {
+            className += ' far';
+          }
+
+          return (
+            <div key={index} className={className}>
+              {item}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
