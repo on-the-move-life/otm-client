@@ -38,14 +38,14 @@ const StepTracker = () => {
           {
             params: {
               memberCode: JSON.parse(localStorage.getItem('user'))['code'],
+              date: new Date(),
             },
           },
         );
         if (res.data) {
-          console.log('ress', res.data);
-          setStepCount(res.data.data.stepCount);
+          setStepCount(res.data.data[0].stepCount);
         }
-        if (res.data.success === true) {
+        if (res.data.success === true && res.data.data[0].stepCount > 0) {
           setShowStepCount(false);
         }
       } catch (err) {
@@ -94,9 +94,9 @@ const StepTracker = () => {
           <div className="to-blue-500 relative h-[40px] rounded-full bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
             {loader === false && (
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 grow">
+                <div className="flex grow items-center gap-2">
                   <RiRunFill className="text-xl" />
-                  <div className="w-full error__title">
+                  <div className="error__title w-full">
                     {showStepCount ? (
                       <div onClick={handleShowInput}>
                         Log your daily step count
@@ -138,12 +138,12 @@ const StepTracker = () => {
       {showInput && (
         <InputContainer>
           <form
-            className="flex items-end w-full px-2 pb-2 rounded-b-lg bg-mediumGray"
+            className="flex w-full items-end rounded-b-lg bg-mediumGray px-2 pb-2"
             onSubmit={handleSubmit}
           >
             <input
               style={{ borderColor: '#5ECC7B' }}
-              className="pt-0 mr-6 textbox"
+              className="textbox mr-6 pt-0"
               type="number"
               placeholder="STEP COUNT (In Number)"
               required
