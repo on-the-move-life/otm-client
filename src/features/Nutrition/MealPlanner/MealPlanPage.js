@@ -42,7 +42,12 @@ function MealPlanPage() {
 
   useEffect(() => {
     if (weeklyPlan !== null && weeklyPlan.length > 0) {
-      setSelectedDate(weeklyPlan[0]['day']);
+      const todayDate = new Date().getDate();
+
+      // Find the plan for today
+      const todayPlan = weeklyPlan.find((plan) => plan.date === todayDate);
+      console.log('todayPlan  : ', todayPlan, weeklyPlan[0]['day']);
+      setSelectedDate(todayPlan['day']);
     }
     console.log('weekly plan : ', weeklyPlan);
   }, [weeklyPlan]);
@@ -64,14 +69,15 @@ function MealPlanPage() {
     dateWiseWeeklyPlan && (
       <div className="">
         <img
-          className="absolute top-0 left-0 z-0 w-full h-screen"
+          className="absolute left-0 top-0 z-0 h-screen w-full"
           src="/assets/nutrition-bg.svg"
         />
-        <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 ">
-          <div className="flex flex-row items-center justify-between w-full ">
+        <div className="relative z-10 my-4 flex h-full w-full flex-col items-start justify-start ">
+          <div className="flex w-full flex-row items-center justify-between ">
             {weeklyPlan &&
               weeklyPlan.map((item) => {
                 const slicedDay = item.day.substr(0, 3);
+                console.log(slicedDay);
                 return (
                   <div onClick={() => setSelectedDate(item.day)}>
                     <CalendarTile
@@ -109,9 +115,9 @@ function MealPlanPage() {
               It looks like you’re going to exceed today’s calorie count. Let’s
               get an extra 25 min walk in.
             </h5>
-            <div className="w-full h-3 mt-2 overflow-hidden rounded-full bg-gray">
+            <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray">
               <motion.div
-                className="relative h-full rounded-full p-[2px]"
+                className="relative h-full rounded-full px-[2px]"
                 style={{
                   background: gradient,
                   width: `${completedCaloriePercentage}%`,
@@ -120,15 +126,17 @@ function MealPlanPage() {
                 animate={{ width: `${completedCaloriePercentage}%` }}
                 transition={{ duration: 1 }}
               >
-                <div className="absolute flex right-1 ">
-                  <span>23</span>
-                  <span className="w-2 h-2 bg-white rounded-full "></span>
+                <div className="absolute right-1 top-0 flex pt-[1px]">
+                  <span className="mr-[2px] pb-1 text-[10px] leading-[10px]">
+                    23
+                  </span>
+                  <span className="mt-[1px] h-2 w-2 rounded-full  bg-white"></span>
                 </div>
               </motion.div>
               <span className="font-bold text-white">
                 {completedCaloriePercentage}%
               </span>
-              <div className="w-6 h-6 ml-2 bg-white border-2 border-gray-400 rounded-full"></div>
+              <div className="border-gray-400 ml-2 h-6 w-6 rounded-full border-2 bg-white"></div>
             </div>
           </div>
 
@@ -155,7 +163,7 @@ function MealPlanPage() {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-center justify-start w-full gap-2 my-2">
+          <div className="my-2 flex w-full flex-col items-center justify-start gap-2">
             {dateWiseWeeklyPlan &&
               dateWiseWeeklyPlan.plan.map((item) => {
                 const isSnack =
@@ -180,7 +188,7 @@ function MealPlanPage() {
               })}
           </div>
 
-          <Link to="/MealUpload" className="flex w-full gap-2 mt-2">
+          <Link to="/MealUpload" className="mt-2 flex w-full gap-2">
             <div className="flex h-[65px] grow items-center justify-between rounded-lg bg-[rgba(0,0,0,0.45)] p-1">
               <div className="ml-[20px] flex items-center">
                 <img src="/assets/food.svg" />
