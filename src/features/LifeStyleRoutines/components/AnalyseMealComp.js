@@ -18,6 +18,7 @@ import MealPage from './MealPage';
 import { Loader } from '../../../components';
 import MealImageicon from './icons/MealImageicon';
 import MealCrossIcon from './icons/MealCrossIcon';
+import { useSearchParams } from 'react-router-dom';
 
 const AnalyseMealComp = ({
   setParentVisibilityCheck = null,
@@ -62,8 +63,9 @@ const AnalyseMealComp = ({
   );
   const formattedDate = getFormattedDate();
   const finalDate = date === null || date === undefined ? formattedDate : date;
-  const queryParams = new URLSearchParams();
-  console.log(queryParams, selectedTaskId, mealTaskIds);
+  const [searchParams] = useSearchParams();
+  const meal = searchParams.get('meal');
+  console.log(meal, selectedTaskId, mealTaskIds);
   // console.log();
   console.log('task and date are', task, date);
 
@@ -98,10 +100,6 @@ const AnalyseMealComp = ({
     return myTask ? myTask.mealUrl : '';
   });
 
-  console.log('storedMealUrlField', storedMealUrlField);
-  console.log('storedMealInfoField', storedMealInfoField);
-  // checking if arguments are empty
-
   useEffect(() => {
     if (storedMealInfoField) {
       setIsVisible(false);
@@ -109,6 +107,21 @@ const AnalyseMealComp = ({
       setIsVisible(true);
     }
   }, [storedMealInfoField]);
+
+  console.log('storedMealUrlField', storedMealUrlField);
+  console.log('storedMealInfoField', storedMealInfoField);
+  // checking if arguments are empty
+
+  useEffect(() => {
+    if (meal) {
+      const paramsMeal = mealTaskIds.find((item) => item.taskName === meal);
+      if (paramsMeal) {
+        console.log('xxxxxxxx', paramsMeal);
+        setselectedTaskId(paramsMeal.taskId);
+        setselectedTaskName(meal);
+      }
+    }
+  }, [meal]);
 
   useEffect(() => {
     if (task == null) {
@@ -226,10 +239,10 @@ const AnalyseMealComp = ({
 
   const handleSelectChange = (event) => {
     const taskId = event.target.value;
-    console.log('selected task is', taskId);
 
     setselectedTaskId(taskId);
     const selectedTask = mealTaskIds.find((task) => task.taskId === taskId);
+    console.log('selected task is', selectedTask);
     if (selectedTask) {
       setTaskCircle(selectedTask.circleName);
     }
@@ -246,9 +259,9 @@ const AnalyseMealComp = ({
             Select your meal:
           </label>
           <select
-            className="block w-full appearance-none gap-[8px] rounded-lg border border-[1px] border-[#2A2A2A] border-[#2A2A2A] border-[solid] bg-transparent px-2 py-2 focus:outline-none"
+            className="block w-full appearance-none gap-[8px] rounded-lg border-[1px] border-[#2A2A2A] border-[solid] bg-transparent px-2 py-2 focus:outline-none"
             id="taskId"
-            value={selectedTaskId}
+            value={selectedTaskName} // Set initial value for the <select>
             onChange={handleSelectChange}
           >
             <option
@@ -258,20 +271,15 @@ const AnalyseMealComp = ({
             >
               Select one option
             </option>
-
-            {mealTaskIds != null ? (
-              mealTaskIds.map((task, index) => (
-                <option
-                  key={index}
-                  value={task.taskId}
-                  className="text-white bg-mediumGray"
-                >
-                  {task.taskName}
-                </option>
-              ))
-            ) : (
-              <option value={selectedTaskId}>{selectedTaskName}</option>
-            )}
+            {mealTaskIds.map((task, index) => (
+              <option
+                key={index}
+                value={task.taskId}
+                className="text-white bg-mediumGray"
+              >
+                {task.taskName}
+              </option>
+            ))}
           </select>
         </div>
 
