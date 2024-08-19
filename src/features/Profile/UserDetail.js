@@ -272,7 +272,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 subscriptionText={
                   ' Your peak mental and physical form everyday'
                 }
-                info={' 20% discount on first subsription    '}
+                info={' 20% discount on first subscription    '}
               />
             </div>
             <div className=" text-center font-sfpro text-[18px] text-[#F8F8F8]/[0.8]">
