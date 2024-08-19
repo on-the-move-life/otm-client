@@ -69,11 +69,11 @@ function MealPlanPage() {
     dateWiseWeeklyPlan && (
       <div className="">
         <img
-          className="absolute left-0 top-0 z-0 h-screen w-full"
+          className="absolute top-0 left-0 z-0 w-full h-screen"
           src="/assets/nutrition-bg.svg"
         />
-        <div className="relative z-10 my-4 flex h-full w-full flex-col items-start justify-start ">
-          <div className="flex w-full flex-row items-center justify-between ">
+        <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 ">
+          <div className="flex flex-row items-center justify-between w-full ">
             {weeklyPlan &&
               weeklyPlan.map((item) => {
                 const slicedDay = item.day.substr(0, 3);
@@ -115,7 +115,7 @@ function MealPlanPage() {
               It looks like you’re going to exceed today’s calorie count. Let’s
               get an extra 25 min walk in.
             </h5>
-            <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-gray">
+            <div className="w-full h-3 mt-2 overflow-hidden rounded-full bg-gray">
               <motion.div
                 className="relative h-full rounded-full px-[2px]"
                 style={{
@@ -136,7 +136,7 @@ function MealPlanPage() {
               <span className="font-bold text-white">
                 {completedCaloriePercentage}%
               </span>
-              <div className="border-gray-400 ml-2 h-6 w-6 rounded-full border-2 bg-white"></div>
+              <div className="w-6 h-6 ml-2 bg-white border-2 border-gray-400 rounded-full"></div>
             </div>
           </div>
 
@@ -163,7 +163,7 @@ function MealPlanPage() {
               </div>
             ))}
           </div>
-          <div className="my-2 flex w-full flex-col items-center justify-start gap-2">
+          <div className="flex flex-col items-center justify-start w-full gap-2 my-2">
             {dateWiseWeeklyPlan &&
               dateWiseWeeklyPlan.plan.map((item) => {
                 const isSnack =
@@ -188,12 +188,15 @@ function MealPlanPage() {
               })}
           </div>
 
-          <Link to="/MealUpload" className="mt-2 flex w-full gap-2">
+          <Link
+            to={`/MealUpload?meal=${mealSelected}`}
+            className="flex w-full gap-2 mt-2"
+          >
             <div className="flex h-[65px] grow items-center justify-between rounded-lg bg-[rgba(0,0,0,0.45)] p-1">
               <div className="ml-[20px] flex items-center">
                 <img src="/assets/food.svg" />
                 <span className="ml-[20px] text-xl  text-offwhite">
-                  Add Breakfast
+                  Track {mealSelected}
                 </span>
               </div>
               <div className="flex min-h-[55px] min-w-[55px] items-center justify-center rounded-lg bg-floYellow ">
