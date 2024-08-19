@@ -5,7 +5,8 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        offwhite: '#F8F8F8',
+        offwhite: 'rgba(248, 248, 248, 0.8)',
+        customWhite: '#F8F8F8',
         gray: '#3B3B3B',
         green: '#5ECC7B',
         lightPurple: '#D6B6F0',
@@ -25,7 +26,9 @@ module.exports = withMT({
         gradientStart: '#7E87EF',
         progressGray: '#A8A8A8',
         gradientEnd: '#B0B5F8',
+        'white-opacity-50': 'rgba(222, 222, 222, 0.5)',
         'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
+        customBlack: '#1F1F1F',
       },
       backgroundImage: {
         'mealInfo-gradient':
@@ -42,6 +45,7 @@ module.exports = withMT({
         elipse: "url('../public/assets/elipse.svg')",
         'profile-bg': "url('../public/assets/profile-bg.png')",
         'achievements-cover': "url('../public/assets/achievements-bg.png')",
+        'movement-frame': "url('../public/assets/movement-frame.svg')",
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],
