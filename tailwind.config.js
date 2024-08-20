@@ -28,6 +28,7 @@ module.exports = withMT({
         gradientEnd: '#B0B5F8',
         'white-opacity-50': 'rgba(222, 222, 222, 0.5)',
         'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
+        'white-opacity-08': 'rgba(221, 221, 221, 0.08)',
         customBlack: '#1F1F1F',
       },
       backgroundImage: {

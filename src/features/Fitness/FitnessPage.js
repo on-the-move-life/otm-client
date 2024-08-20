@@ -91,7 +91,7 @@ const FitnessPage = () => {
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
       {showActivity === true && (
-        <AdditionalActivity showActivity={showActivity} />
+        <AdditionalActivity setShowActivity={setShowActivity} />
       )}
 
       {showActivity === false && homeStats && (
@@ -161,7 +161,7 @@ const FitnessPage = () => {
             </section>
             <div
               onClick={() => setShowActivity(true)}
-              className="to-blue-500 relative bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2"
+              className="to-blue-500 relative rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
             >
               Additional Activity
             </div>
