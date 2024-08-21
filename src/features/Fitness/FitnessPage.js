@@ -16,6 +16,7 @@ import MonthlyWrapped from '../Profile/MonthlyWrapped';
 import StepTracker from './StepTracker';
 import { AiOutlineRight } from 'react-icons/ai';
 import AdditionalActivity from './AdditionalActivity';
+import { CgGym } from 'react-icons/cg';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -159,12 +160,7 @@ const FitnessPage = () => {
                 </section>
               )}
             </section>
-            <div
-              onClick={() => setShowActivity(true)}
-              className="to-blue-500 relative rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
-            >
-              Additional Activity
-            </div>
+
             <section>
               <div className="flex items-center">
                 <Link
@@ -193,6 +189,14 @@ const FitnessPage = () => {
                 </Link>
               </div>
             </section>
+
+            <div
+              onClick={() => setShowActivity(true)}
+              className="to-blue-500 relative flex gap-2 rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
+            >
+              <CgGym className="text-xl" />
+              Additional Activity
+            </div>
 
             {isWeekend && (
               <Link to="/weekly-checkin" className="">

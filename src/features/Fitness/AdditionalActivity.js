@@ -65,18 +65,18 @@ const AdditionalActivity = ({ setShowActivity }) => {
     const container = e.target;
     const itemHeight = itemHeightRef.current;
     const totalItems = items.length;
+    const maxScrollIndex = 60; // Corresponds to i === 62
 
     const currentIndex = Math.round(container.scrollTop / itemHeight);
-    console.log(currentIndex, itemHeight, totalItems, container.scrollTop);
-    // Stop scrolling at the first or last item
+
     if (currentIndex < 0) {
       container.scrollTop = 0;
       setScrollPosition(0);
       setSelectedValue(items[0]);
-    } else if (currentIndex >= totalItems - 7) {
-      container.scrollTop = itemHeight * (totalItems - 7);
-      setScrollPosition(totalItems - 7);
-      setSelectedValue(items[totalItems - 7]);
+    } else if (currentIndex > maxScrollIndex) {
+      container.scrollTop = itemHeight * maxScrollIndex;
+      setScrollPosition(maxScrollIndex);
+      setSelectedValue(items[maxScrollIndex + 3]);
     } else {
       setScrollPosition(currentIndex);
       const selectedIndex = currentIndex + 3;
@@ -216,7 +216,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
               onClick={() => setAnotherActivity(true)}
               className="to-blue-500 relative mt-4 rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
             >
-              Add Another Activity
+              Log an additional activity
             </div>
           </div>
         )}
@@ -245,7 +245,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                         return (
                           <option
                             onClick={(e) => handleActivityType(e)}
-                            className="mr-9  flex h-[45px] items-center border-b border-b-darkGray underline-offset-1"
+                            className="mr-9  flex h-[45px] items-center border-b border-b-darkGray text-[#929292] underline-offset-1"
                             key={index}
                           >
                             {item}
@@ -365,13 +365,13 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   selectedValue !== 'Please enter' &&
                   activityDescription !== ''
                     ? '#F8F8F8'
-                    : 'rgba(0,0,0, 0.8)',
+                    : 'rgba(221,221,221,0.08)',
                 color:
                   selectedActivityType !== 'Please enter type' &&
                   selectedValue !== 'Please enter' &&
                   activityDescription !== ''
                     ? 'rgba(0,0,0)'
-                    : 'black',
+                    : 'rgba(248,248,248,0.8)',
               }}
               className="relative z-30 mt-10  flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg leading-8  text-black backdrop-blur-md"
             >
