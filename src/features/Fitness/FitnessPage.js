@@ -16,7 +16,8 @@ import MonthlyWrapped from '../Profile/MonthlyWrapped';
 import StepTracker from './StepTracker';
 import { AiOutlineRight } from 'react-icons/ai';
 import AdditionalActivity from './AdditionalActivity';
-import { CgGym } from 'react-icons/cg';
+import { TbSwimming } from 'react-icons/tb';
+import { FaArrowRight } from 'react-icons/fa6';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -98,7 +99,7 @@ const FitnessPage = () => {
       {showActivity === false && homeStats && (
         <div>
           <img
-            className="absolute right-0 -top-5 -z-20 "
+            className="absolute -top-5 right-0 -z-20 "
             src="/assets/main-frame.svg"
           />
           <img
@@ -112,7 +113,7 @@ const FitnessPage = () => {
                 <div className="flex items-center">
                   {parseInt(homeStats.streak) > 0 && (
                     <div className="flex items-center ">
-                      <div className="flex items-center my-2 rounded perfect-week w-fit">
+                      <div className="perfect-week my-2 flex w-fit items-center rounded">
                         <img src="assets/star.svg" alt="" />
                         <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
                           Perfect Week x{homeStats.streak}
@@ -123,7 +124,7 @@ const FitnessPage = () => {
                 </div>
               </div>
               <div className="flex h-[66px] min-w-[148px]  items-center justify-between rounded-lg bg-mediumGray p-1">
-                <span className="pl-2 text-sm w-9">Total workouts</span>
+                <span className="w-9 pl-2 text-sm">Total workouts</span>
                 <div
                   className={`
                   
@@ -155,7 +156,7 @@ const FitnessPage = () => {
 
             <section>
               {currentDate < 5 && (
-                <section className="flex flex-row items-center justify-center w-full gap-3 ">
+                <section className="flex w-full flex-row items-center justify-center gap-3 ">
                   <MonthlyWrapped />
                 </section>
               )}
@@ -167,7 +168,7 @@ const FitnessPage = () => {
                   to="/workout/today"
                   className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
                 >
-                  <div className="flex flex-col justify-between h-full">
+                  <div className="flex h-full flex-col justify-between">
                     <div className="flex gap-3">
                       <h2 className="text-2xl font-medium ">Today's Workout</h2>
                       <img src="/assets/shred-logo.svg" />
@@ -192,17 +193,20 @@ const FitnessPage = () => {
 
             <div
               onClick={() => setShowActivity(true)}
-              className="to-blue-500 relative flex gap-2 rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
+              className="to-blue-500 relative flex items-center justify-between rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
             >
-              <CgGym className="text-xl" />
-              Additional Activity
+              <div className="flex gap-2">
+                <TbSwimming className="text-xl" />
+                Log an additional activity
+              </div>
+              <FaArrowRight />
             </div>
 
             {isWeekend && (
               <Link to="/weekly-checkin" className="">
-                <div className="flex-col p-4 rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="inline-block text-2xl font-semibold tracking-wider purple-white-gradient">
+                <div className="flex-col rounded-lg bg-gradient-to-b from-gradientStart to-gradientEnd p-4">
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="purple-white-gradient inline-block text-2xl font-semibold tracking-wider">
                       Weekly Check-In
                     </span>
                     <span className="font-semibold">
@@ -249,7 +253,7 @@ const FitnessPage = () => {
                   to="/workout/flex"
                   className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
                 >
-                  <div className="flex flex-col justify-between h-full">
+                  <div className="flex h-full flex-col justify-between">
                     <div className="flex gap-3">
                       <h2 className="text-3xl font-medium ">Flex</h2>
                       <img src="/assets/flex-logo.svg" />

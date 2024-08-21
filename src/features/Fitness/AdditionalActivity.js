@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRef } from 'react';
 import { RxCross1 } from 'react-icons/rx';
+import { TbSwimming } from 'react-icons/tb';
+import { toast, ToastContainer } from 'react-toastify';
 
 const SlideDown = keyframes`
   from {
@@ -25,11 +27,12 @@ const InputContainer = styled.div`
 `;
 
 const AdditionalActivity = ({ setShowActivity }) => {
-  const items = Array.from({ length: 66 }, (_, i) => {
-    if (i === 0 || i === 1 || i === 2 || i === 65 || i === 64 || i === 63) {
+  const items = Array.from({ length: 42 }, (_, i) => {
+    if (i === 0 || i === 1 || i === 2 || i === 41 || i === 40 || i === 39) {
       return '';
     } else {
-      return i - 2;
+      const number = i - 2;
+      return number * 5;
     }
   });
 
@@ -50,8 +53,6 @@ const AdditionalActivity = ({ setShowActivity }) => {
   const [selectedActivity, setSelectedActivity] = useState('');
   const [referrerCode, setReferrerCode] = useState(null);
 
-  console.log('bbbbbbbbbbffffffff', activityDescription);
-
   useEffect(() => {
     setAnotherActivity(false);
     setShowTimeInput(false);
@@ -65,7 +66,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
     const container = e.target;
     const itemHeight = itemHeightRef.current;
     const totalItems = items.length;
-    const maxScrollIndex = 60; // Corresponds to i === 62
+    const maxScrollIndex = 36; // Corresponds to i === 40
 
     const currentIndex = Math.round(container.scrollTop / itemHeight);
 
@@ -93,13 +94,15 @@ const AdditionalActivity = ({ setShowActivity }) => {
           {
             memberCode: JSON.parse(localStorage.getItem('user'))['code'],
             activity: selectedActivityType,
-            date: '2024-08-16T00:00:00Z',
+            date: '2024-08-21T00:00:00Z',
             activityDuration: selectedValue.toString(),
             description: activityDescription,
           },
         );
+        toast.success('Activity Submitted sucessfully');
         console.log('Submission successful');
       } catch (error) {
+        toast.error('Something went wrong');
         console.error('An error occurred:', error);
       }
     } else {
@@ -163,6 +166,20 @@ const AdditionalActivity = ({ setShowActivity }) => {
 
   return (
     <div className="mb-[78px] h-[calc(100vh-78px)] w-full ">
+      <div className="fixed top-0 ">
+        <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeButton={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+      </div>
       {}
       <img
         src="assets/movement-frame.svg"
@@ -212,11 +229,16 @@ const AdditionalActivity = ({ setShowActivity }) => {
                 </div>
               </div>
             )}
+
             <div
               onClick={() => setAnotherActivity(true)}
-              className="to-blue-500 relative mt-4 rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
+              className="to-blue-500 relative mt-4 flex items-center justify-between rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
             >
-              Log an additional activity
+              <div className="flex gap-2">
+                <TbSwimming className="text-xl" />
+                Log an additional activity
+              </div>
+              <FaArrowRight />
             </div>
           </div>
         )}
@@ -332,44 +354,43 @@ const AdditionalActivity = ({ setShowActivity }) => {
                 Description
               </div>
 
-              <textarea
-                style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                  minHeight: '87px',
-                  borderRadius: '8px',
-                  padding: '12px',
-                  boxSizing: 'border-box',
-                  lineHeight: '1.5',
-                  width: '100%', // Ensures the textarea takes full width of its container
-                  resize: 'vertical', // Allows vertical resizing
-                  overflow: 'scroll', // Adds scrollbar when content overflows
-                  border: 'none', // Removes the border
-                  outline: 'none', // Removes the default focus outline
-                }}
-                className="mt-1 text-white-opacity-50"
-                placeholder="Tell your answer here..."
-                value={activityDescription}
-                onChange={(e) => setActivityDescription(e.target.value)}
-              />
+              <div className="overflow-hidden rounded-xl">
+                <textarea
+                  style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    minHeight: '87px',
+                    borderRadius: '8px',
+                    padding: '12px',
+                    boxSizing: 'border-box',
+                    lineHeight: '1.5',
+                    width: '100%', // Ensures the textarea takes full width of its container
+                    resize: 'vertical', // Allows vertical resizing
+                    overflow: 'scroll', // Adds scrollbar when content overflows
+                    border: 'none', // Removes the border
+                    outline: 'none', // Removes the default focus outline
+                  }}
+                  className="mt-1 text-white-opacity-50"
+                  placeholder="Anything you would like to note..."
+                  value={activityDescription}
+                  onChange={(e) => setActivityDescription(e.target.value)}
+                />
+              </div>
             </div>
             <button
               type="submit"
               disabled={
                 selectedActivityType === 'Please enter type' ||
-                selectedValue === 'Please enter' ||
-                activityDescription === ''
+                selectedValue === 'Please enter'
               }
               style={{
                 backgroundColor:
                   selectedActivityType !== 'Please enter type' &&
-                  selectedValue !== 'Please enter' &&
-                  activityDescription !== ''
+                  selectedValue !== 'Please enter'
                     ? '#F8F8F8'
                     : 'rgba(221,221,221,0.08)',
                 color:
                   selectedActivityType !== 'Please enter type' &&
-                  selectedValue !== 'Please enter' &&
-                  activityDescription !== ''
+                  selectedValue !== 'Please enter'
                     ? 'rgba(0,0,0)'
                     : 'rgba(248,248,248,0.8)',
               }}
