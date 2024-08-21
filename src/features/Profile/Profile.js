@@ -10,7 +10,7 @@ const Profile = () => {
   };
 
   return (
-    <span className="flex items-center justify-center w-screen ">
+    <span className="flex h-full w-screen items-center justify-center">
       {!showPaymentHistory && (
         <UserDetails showHistory={togglePaymentHistory} />
       )}
