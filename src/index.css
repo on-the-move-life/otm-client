@@ -1071,6 +1071,7 @@ body,
   height: 168px; /* 7 items visible, with the middle one centered */
   overflow-y: scroll;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
   position: relative;
   text-align: center;

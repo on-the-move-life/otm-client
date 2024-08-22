@@ -10,23 +10,6 @@ import { TbSwimming } from 'react-icons/tb';
 import { toast, ToastContainer } from 'react-toastify';
 import { Loader } from '../../components';
 
-const SlideDown = keyframes`
-  from {
-    max-height: 0;
-    opacity: 0;
-  }
-  to {
-    max-height: 100px; /* Adjust as needed */
-    opacity: 1;
-  }
-`;
-
-const InputContainer = styled.div`
-  overflow: hidden;
-  animation: ${SlideDown} 0.5s ease-out forwards;
-  max-height: 100px; /* Adjust as needed */
-`;
-
 const AdditionalActivity = ({ setShowActivity }) => {
   const items = Array.from({ length: 42 }, (_, i) => {
     if (i === 0 || i === 1 || i === 2 || i === 41 || i === 40 || i === 39) {
