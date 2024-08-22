@@ -9,11 +9,11 @@
 <feGaussianBlur stdDeviation="23.3371" result="effect1_foregroundBlur_6888_41101"/>
 </filter>
 <linearGradient id="paint0_linear_6888_41101" x1="195.79" y1="52.7628" x2="182.019" y2="162.712" gradientUnits="userSpaceOnUse">
-<stop stop-color="#4C6653"/>
-<stop offset="0.24863" stop-color="#5E7965"/>
-<stop offset="0.332299" stop-color="#7F9E87"/>
-<stop offset="0.72523" stop-color="#7F9E87"/>
-<stop offset="0.961604" stop-color="#89A02D"/>
+<stop stop-color="#368036"/>
+<stop offset="0.24863" stop-color="#368036"/>
+<stop offset="0.332299" stop-color="#000000"/>
+<stop offset="0.72523" stop-color="#368036"/>
+<stop offset="0.961604" stop-color="#000000"/>
 </linearGradient>
 </defs>
 </svg>

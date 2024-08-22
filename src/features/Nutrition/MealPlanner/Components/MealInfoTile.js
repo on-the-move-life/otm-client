@@ -4,6 +4,9 @@ import { useContainerDimensions } from '../../../../hooks/useContainerDimensions
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import NutrientsBubble from './NutrientsBubble';
 import { useEffect } from 'react';
+import BreakfastGuide from './BreakfastGuide';
+import LunchDinnerGuide from './LunchDinnerGuide';
+import SnackGuide from './SnackGuide';
 
 function MealInfoTile({ meal, name, calories, ingredients, macros }) {
   const [isCollapsed, setCollapsed] = useState(true);
@@ -35,35 +38,62 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
 
     return (
       <motion.div
-        className="flex flex-row items-start justify-around w-full "
+        className="flex flex-row items-start w-full "
         initial={{ opacity: 0, height: 0 }}
         animate={{ opacity: 1, height: 'auto' }}
         exit={{ opacity: 0, height: 0 }}
         transition={{ opacity: { duration: 0.3 }, height: { duration: 0.3 } }}
       >
-        <div>
-          <div>
-            <h1>${meal} Guide</h1>
-            <img src="./assets/guide-bg.svg" className="ml-auto mr-auto" />
+        <div className="relative w-full">
+          <div className="relative">
+            <h1 className="ml-[7px] text-sm capitalize text-offwhite">
+              {meal} Guide
+            </h1>
+            <div className="absolute top-0 flex justify-center w-full">
+              <img src="./assets/guide-bg.svg" className="     h-[150px]" />
+            </div>
+            <div className="mt-2 ml-3">
+              {meal === 'breakfast' && <BreakfastGuide />}
+              {(meal === 'lunch' || meal === 'dinner') && <LunchDinnerGuide />}
+              {meal === 'morning snack' ||
+                (meal === 'evening snack' && <SnackGuide />)}
 
-            <img src={mealImage} className="ml-auto mr-auto" />
+              <div className="relative z-50 ml-auto mr-auto h-[95px] w-[95px] overflow-hidden rounded-full ">
+                <img
+                  src={mealImage}
+                  className="relative -mt-[4px] ml-1 h-[128px] w-[127px] max-w-max object-cover "
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex h-[106px] w-full items-start justify-start gap-2 rounded-[12px]  bg-[rgba(0,0,0,0.40)] p-2">
+          <div className="mt-3 flex min-h-[106px] w-full items-start justify-start gap-2 rounded-[12px]  bg-[rgba(0,0,0,0.40)] p-2">
+            <div className="h-[91px] w-[77px]">
+              <img src="./assets/suggested-meal.svg" />
+            </div>
             <div className="flex flex-col items-start justify-start w-full gap-2">
-              <h3
-                className="flex items-start font-sfpro text-[11px]  capitalize text-darkTextGray"
-                style={{ lineHeight: '16.71px' }}
-              >
-                Meal Suggestion
+              <div className="flex justify-between w-full">
+                <h3
+                  className="flex items-start font-sfpro text-[11px]  capitalize text-darkTextGray"
+                  style={{ lineHeight: '16.71px' }}
+                >
+                  Meal Suggestion
+                </h3>
+                <h5
+                  className="flex w-[110px] grow items-end  justify-end pl-2 font-sfpro text-[12px] uppercase  text-yellow"
+                  style={{ lineHeight: '12.76px' }}
+                >
+                  {calories}
+                </h5>
+              </div>
+              <h3 className="mt-1 font-sfpro text-[14px] leading-[14px]  text-offwhite">
+                {name}
               </h3>
-
-              <h3 className="font-sfpro text-[14px]  text-offwhite">{name}</h3>
-              <div className="flex w-full max-w-[200px] items-start  gap-1">
+              <div className="flex w-full max-w-[200px] flex-wrap items-start  gap-1">
                 {ingredients &&
                   ingredients.map((item) => {
                     return (
                       <p
-                        className="text-white"
+                        className="text-darkTextGray"
                         style={{ fontSize: '9.33px', lineHeight: '11.14px' }}
                       >
                         {item}
@@ -72,12 +102,7 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
                   })}
               </div>
             </div>
-            <h5
-              className="flex w-[110px] grow items-end  justify-end pl-2 font-sfpro text-[12px] uppercase  text-yellow"
-              style={{ lineHeight: '12.76px' }}
-            >
-              {calories}
-            </h5>
+
             {/* <div
             ref={barRef}
             className="flex flex-row items-center justify-start w-full gap-1"

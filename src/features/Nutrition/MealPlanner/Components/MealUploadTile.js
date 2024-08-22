@@ -28,37 +28,39 @@ function MealUploadTile({ meal, name, calories, ingredients, macros }) {
         exit={{ opacity: 0, height: 0 }}
         transition={{ opacity: { duration: 0.3 }, height: { duration: 0.3 } }}
       >
-        <div className="flex flex-col items-start justify-start w-full gap-2">
+        <div className="flex items-start justify-start w-full gap-2">
           <div className="flex flex-col items-start justify-start w-full gap-2">
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between w-full ">
               <h3
-                className="text-customBlack flex items-start rounded-[4.5px] bg-green p-[3.5px] font-sfpro text-[12px]  font-medium capitalize"
+                className=" flex items-start rounded-[4.5px] bg-[rgba(94,204,123,0.12)] px-[8px] py-[3.5px]  font-sfpro text-[12px] font-medium capitalize text-green"
                 style={{ lineHeight: '16.71px' }}
               >
-                <img src="./assets/correct.svg" className="mr-1" />
+                <img src="./assets/correct.svg" className="mr-[4px]" />
                 Completed Breakfast
               </h3>
               <h3
-                className=" flex items-start font-sfpro text-[20px]  capitalize text-offwhite"
+                className=" flex items-start font-sfpro text-[20px]  capitalize text-yellow"
                 style={{ lineHeight: '16.71px' }}
               >
                 {`650KCAL`}
               </h3>
             </div>
-            <div>
-              <img />
-              <div>
-                <p className="font-sfpro text-[9.3px] font-medium text-white-opacity-50">
-                  7 June 2024
-                </p>
-                <p className="text-customWhite font-sfpro text-[14px] font-medium">
+            <div className="flex">
+              <div className="h-[99px] w-[84px] grow">
+                <img
+                  src="./assets/suggested-meal.svg"
+                  className="object-cover"
+                />
+              </div>
+              <span className="ml-4 w-[200px]">
+                <p className="font-sfpro text-[14px] font-medium text-customWhite">
                   Shrimps & Rice
                 </p>
                 <p className="font-sfpro text-[10px] font-medium text-darkTextGray">
                   AI generated feedback on how well the plate is prepared
                   according to their goals and restrictions
                 </p>
-              </div>
+              </span>
             </div>
             <div className="flex">
               <h3
@@ -74,43 +76,6 @@ function MealUploadTile({ meal, name, calories, ingredients, macros }) {
                 {calories}
               </h5>
             </div>
-          </div>
-          <div
-            ref={barRef}
-            className="flex flex-row items-center justify-start w-full gap-1"
-          >
-            <div
-              style={{
-                width: percentageToFloat('50%') * width,
-                height: '7px',
-                borderRadius: '7px',
-                backgroundColor: '#FA5757',
-              }}
-            ></div>
-            <div
-              style={{
-                width: percentageToFloat('30%') * width,
-                height: '7px',
-                borderRadius: '7px',
-                backgroundColor: '#7E87EF',
-              }}
-            ></div>
-            <div
-              style={{
-                width: percentageToFloat('20%') * width,
-                height: '7px',
-                borderRadius: '7px',
-                backgroundColor: '#5ECC7B',
-              }}
-            ></div>
-          </div>
-          <div
-            className="flex flex-row items-center justify-start w-full gap-2"
-            style={{ fontSize: '9.33px', lineHeight: '11.14px' }}
-          >
-            <p style={{ color: '#FA5757' }}>{'10%'} carbs</p>
-            <p style={{ color: '#7E87EF' }}>{'10%'} fats</p>
-            <p style={{ color: '#5ECC7B' }}>{'10%'} proteins</p>
           </div>
         </div>
       </motion.div>

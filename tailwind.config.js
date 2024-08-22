@@ -29,6 +29,7 @@ module.exports = withMT({
         'white-opacity-50': 'rgba(222, 222, 222, 0.5)',
         'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
         'white-opacity-08': 'rgba(221, 221, 221, 0.08)',
+        'white-opacity-70': 'rgba(222, 222, 222, 0.7)',
         customBlack: '#1F1F1F',
       },
       backgroundImage: {
@@ -52,6 +53,7 @@ module.exports = withMT({
         serif: ['Inter', 'sans-serif'],
         sfpro: ['"SF Pro Display"', 'sans-serif'],
         anton: ['Anton'],
+        Future: ['Futura XBlkCnIt BT'],
       },
       backgroundSize: {
         '25%': '25%',

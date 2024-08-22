@@ -18,6 +18,9 @@ const NutritionPage = () => {
   const [loadingWeeklyPlan, setLoadingWeeklyPlan] = useState(false);
   const [weeklyPlan, setWeeklyPlan] = useState(null);
 
+  const fullName = JSON.parse(localStorage.getItem('user'))['name'];
+  const firstName = fullName.split(' ')[0];
+
   useEffect(() => {
     setLoading(true);
     // if the meal is already planned then set the section name to 'Weekly Plan'
@@ -49,25 +52,25 @@ const NutritionPage = () => {
       {loading === true ? (
         <Loader />
       ) : (
-        <div className="relative h-full overflow-y-scroll bg-[#161513]">
+        <div className="relative h-screen overflow-y-scroll bg-[#161513]">
           <img
-            className="absolute left-0 top-0 z-0 w-full "
+            className="absolute top-0 left-0 z-0 w-full h-screen"
             src="/assets/nutrition-bg.svg"
             style={{
               height: '-webkit-fill-available',
               filter: 'brightness(0.5)',
             }}
           />
-          <div className="relative z-20 flex w-screen grow flex-col overflow-y-scroll px-4 pb-[78px] ">
+          <div className="relative z-20 flex w-screen  flex-col  bg-transparent px-4 pb-[78px] ">
             <h3 className="mt-[77px] font-sfpro text-[14px] text-offwhite">
-              Good Morning Rishi
+              Good Morning {firstName}
             </h3>
 
             <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
               Nutrition
             </h2>
 
-            <div className="text-white-opacity-50 font-sfpro text-[14px]">
+            <div className="font-sfpro text-[14px] text-white-opacity-50">
               Everyday is an opportunity to do some main character shit.
             </div>
             {weeklyPlan === null ? (
@@ -88,7 +91,7 @@ const NutritionPage = () => {
                       <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
                         Find Your Plan
                       </h3>
-                      <p className="text-white-opacity-50 relative z-10 mt-2  font-sfpro text-[14px] font-medium">
+                      <p className="relative z-10 mt-2 font-sfpro  text-[14px] font-medium text-white-opacity-50">
                         Take our quick text and we will find the perfect plan
                         for you
                       </p>

@@ -15,14 +15,26 @@ function MealPlanPage() {
   const selectWeeklyPlans = Selectors.makeGetWeeklyPlan();
   const weeklyPlan = useSelector(selectWeeklyPlans, shallowEqual);
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
   const [dateWiseWeeklyPlan, setDateWiseWeeklyPlan] = useState(null);
   const [mealSelected, setMealSelected] = useState('Breakfast');
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isTrackerVisible, setIsTrackerVisible] = useState(null);
+
+  useEffect(() => {
+    if (selectedPlan) {
+      const trackerVisible = selectedPlan.some(
+        (item) => item.day === selectedDay,
+      );
+      setIsTrackerVisible(trackerVisible);
+    }
+  }, [selectedPlan, selectedDay]);
 
   const str = '3308 kcal';
   const idealCalorie = parseInt(str, 10);
 
-  const completedCalorie = 3309;
+  const completedCalorie = 3000;
 
   const completedCaloriePercentage = (completedCalorie / idealCalorie) * 100;
   const foodPerDay = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
@@ -44,68 +56,69 @@ function MealPlanPage() {
     if (weeklyPlan !== null && weeklyPlan.length > 0) {
       const todayDate = new Date().getDate();
 
+      // Create array of selected plan fwhich are equal or less than today date.
+      const startIndex = weeklyPlan.findIndex(
+        (item) => item.date === todayDate,
+      );
+      const planTillToday = weeklyPlan.slice(0, startIndex + 1);
+      setSelectedPlan(planTillToday);
+
       // Find the plan for today
       const todayPlan = weeklyPlan.find((plan) => plan.date === todayDate);
       console.log('todayPlan  : ', todayPlan, weeklyPlan[0]['day']);
-      setSelectedDate(todayPlan['day']);
+      setSelectedDay(todayPlan['day']);
+      setSelectedDate(todayPlan['date']);
     }
     console.log('weekly plan : ', weeklyPlan);
   }, [weeklyPlan]);
 
   useEffect(() => {
     const requiredWeeklyPlan = weeklyPlan.filter(
-      (item) => item?.day === selectedDate,
+      (item) => item?.day === selectedDay,
     );
     console.log('requiredWeeklyPlan : ', requiredWeeklyPlan[0]);
     setDateWiseWeeklyPlan(requiredWeeklyPlan[0]);
     console.log('date wise weekly plan :', dateWiseWeeklyPlan);
-  }, [selectedDate]);
-
-  const handleMealDay = (item) => {
-    console.log('rrrtrtrtrtrtrtr', item);
-  };
+  }, [selectedDay]);
 
   return (
     dateWiseWeeklyPlan && (
-      <div className="">
-        <img
-          className="absolute top-0 left-0 z-0 w-full h-screen"
-          src="/assets/nutrition-bg.svg"
-        />
-        <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 ">
-          <div className="flex flex-row items-center justify-between w-full ">
-            {weeklyPlan &&
-              weeklyPlan.map((item) => {
-                const slicedDay = item.day.substr(0, 3);
-                console.log(slicedDay);
-                return (
-                  <div onClick={() => setSelectedDate(item.day)}>
-                    <CalendarTile
-                      date={item.date}
-                      day={slicedDay}
-                      isSelected={item.day === dateWiseWeeklyPlan.day}
-                      selectedDay={dateWiseWeeklyPlan.day}
-                    />
-                  </div>
-                );
-              })}
-          </div>
+      <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 ">
+        <div className="flex flex-row items-center justify-between w-full ">
+          {weeklyPlan &&
+            weeklyPlan.map((item) => {
+              const slicedDay = item.day.substr(0, 3);
+              console.log(slicedDay);
+              return (
+                <div onClick={() => setSelectedDay(item.day)}>
+                  <CalendarTile
+                    date={item.date}
+                    day={slicedDay}
+                    isSelected={item.day === dateWiseWeeklyPlan.day}
+                    selectedDay={dateWiseWeeklyPlan.day}
+                  />
+                </div>
+              );
+            })}
+        </div>
+        {isTrackerVisible && (
           <div className="mt-2 flex h-fit w-full flex-col items-center justify-center rounded-[12px] bg-[rgba(0,0,0,0.45)] px-4 py-2">
             <div className="w-full">
               <h5
                 className="font-sfpro text-[14px] font-medium text-offwhite"
                 style={{ lineHeight: '16.71px' }}
               >
-                Suggested Calories
+                Track Calories
               </h5>
               <p
+                className=" text-offwhite"
                 style={{
                   fontSize: '20.61px',
                   lineHeight: '25.77px',
-                  color: '#F5C563',
                 }}
               >
-                {dateWiseWeeklyPlan['totalCalorie']}
+                <span className="text-[#F5C563]">3000</span> / 3308 Kcal
+                {/* {dateWiseWeeklyPlan['totalCalorie']} */}
               </p>
             </div>
             <h5
@@ -127,9 +140,6 @@ function MealPlanPage() {
                 transition={{ duration: 1 }}
               >
                 <div className="absolute right-1 top-0 flex pt-[1px]">
-                  <span className="mr-[2px] pb-1 text-[10px] leading-[10px]">
-                    23
-                  </span>
                   <span className="mt-[1px] h-2 w-2 rounded-full  bg-white"></span>
                 </div>
               </motion.div>
@@ -139,55 +149,56 @@ function MealPlanPage() {
               <div className="w-6 h-6 ml-2 bg-white border-2 border-gray-400 rounded-full"></div>
             </div>
           </div>
+        )}
 
-          <div
-            className={`mt-[26px] flex h-[38px] w-full items-center rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
-          >
-            {foodPerDay.map((item) => (
-              <div
-                style={{
-                  border:
-                    item === mealSelected
-                      ? '0.5px solid rgba(221, 249, 136, 0.50)'
-                      : '',
-                  borderRadius: '7px',
-                }}
-                className={`${
+        <div
+          className={`mt-[26px] flex h-[38px] w-full items-center rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
+        >
+          {foodPerDay.map((item) => (
+            <div
+              style={{
+                border:
                   item === mealSelected
-                    ? `bg-[rgba(77,77,77,0.4)] text-floYellow`
-                    : 'text-white-opacity-50 '
-                } flex h-full grow items-center justify-center `}
-                onClick={() => setMealSelected(item)}
-              >
-                {item}{' '}
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-col items-center justify-start w-full gap-2 my-2">
-            {dateWiseWeeklyPlan &&
-              dateWiseWeeklyPlan.plan.map((item) => {
-                const isSnack =
-                  mealSelected.toLowerCase() === 'snack' &&
-                  (item.meal.toLowerCase() === 'morning snack' ||
-                    item.meal.toLowerCase() === 'evening snack');
+                    ? '0.5px solid rgba(221, 249, 136, 0.50)'
+                    : '',
+                borderRadius: '7px',
+              }}
+              className={`${
+                item === mealSelected
+                  ? `bg-[rgba(77,77,77,0.4)] text-floYellow`
+                  : 'text-white-opacity-50 '
+              } flex h-full grow items-center justify-center `}
+              onClick={() => setMealSelected(item)}
+            >
+              {item}{' '}
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col items-center justify-start w-full gap-2 my-2">
+          {dateWiseWeeklyPlan &&
+            dateWiseWeeklyPlan.plan.map((item) => {
+              const isSnack =
+                mealSelected.toLowerCase() === 'snack' &&
+                (item.meal.toLowerCase() === 'morning snack' ||
+                  item.meal.toLowerCase() === 'evening snack');
 
-                if (item.meal === mealSelected.toLowerCase() || isSnack) {
-                  return (
-                    <MealInfoTile
-                      key={item.id} // Add a unique key for each element
-                      name={item?.name}
-                      meal={item?.meal}
-                      calories={item?.calories}
-                      macros={item?.macros}
-                      ingredients={item?.items}
-                    />
-                  );
-                } else {
-                  return null;
-                }
-              })}
-          </div>
-
+              if (item.meal === mealSelected.toLowerCase() || isSnack) {
+                return (
+                  <MealInfoTile
+                    key={item.id} // Add a unique key for each element
+                    name={item?.name}
+                    meal={item?.meal}
+                    calories={item?.calories}
+                    macros={item?.macros}
+                    ingredients={item?.items}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+        </div>
+        {isTrackerVisible && (
           <Link
             to={`/MealUpload?meal=${mealSelected}`}
             className="flex w-full gap-2 mt-2"
@@ -204,8 +215,9 @@ function MealPlanPage() {
               </div>
             </div>
           </Link>
-          <MealUploadTile />
-        </div>
+        )}
+
+        <MealUploadTile />
       </div>
     )
   );
