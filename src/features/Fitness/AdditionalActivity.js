@@ -262,13 +262,13 @@ const AdditionalActivity = ({ setShowActivity }) => {
                       {activityType.length > 0 &&
                         activityType.map((item, index) => {
                           return (
-                            <option
+                            <div
                               onClick={(e) => handleActivityType(e)}
                               className="mr-9  flex h-[45px] items-center border-b border-b-darkGray text-[#929292] underline-offset-1"
                               key={index}
                             >
                               {item}
-                            </option>
+                            </div>
                           );
                         })}
                     </div>
@@ -393,7 +393,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                       ? 'rgba(0,0,0)'
                       : 'rgba(248,248,248,0.8)',
                 }}
-                className="relative z-30 mt-10  flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg leading-8  text-black backdrop-blur-md"
+                className="relative  mt-10  flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg leading-8  text-black backdrop-blur-md"
               >
                 Submit
               </button>
