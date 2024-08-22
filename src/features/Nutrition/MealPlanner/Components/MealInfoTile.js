@@ -33,9 +33,6 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
   }
 
   const Collapsed = () => {
-    const barRef = useRef();
-    const { width } = useContainerDimensions(barRef);
-
     return (
       <motion.div
         className="flex flex-row items-start w-full "

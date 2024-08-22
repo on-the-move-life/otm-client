@@ -16,18 +16,18 @@ function MealUploadTile({ meal, name, calories, ingredients, macros }) {
     return floatVal / 100;
   }
 
-  const Collapsed = () => {
-    const barRef = useRef();
-    const { width } = useContainerDimensions(barRef);
+  // const Collapsed = () => {
+  //   const barRef = useRef();
+  //   const { width } = useContainerDimensions(barRef);
 
-    return (
-      <motion.div
-        className="flex flex-row items-start justify-around w-full "
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 1, height: 'auto' }}
-        exit={{ opacity: 0, height: 0 }}
-        transition={{ opacity: { duration: 0.3 }, height: { duration: 0.3 } }}
-      >
+  //   return (
+
+  //   );
+  // };
+
+  return (
+    <div className="mt-2 w-full rounded-[12px] bg-[rgba(0,0,0,0.45)] px-4 py-2">
+      <div className="flex flex-row items-start justify-around w-full ">
         <div className="flex items-start justify-start w-full gap-2">
           <div className="flex flex-col items-start justify-start w-full gap-2">
             <div className="flex items-center justify-between w-full ">
@@ -78,16 +78,8 @@ function MealUploadTile({ meal, name, calories, ingredients, macros }) {
             </div>
           </div>
         </div>
-      </motion.div>
-    );
-  };
-
-  return (
-    <motion.div className="mt-2 w-full rounded-[12px] bg-[rgba(0,0,0,0.45)] px-4 py-2">
-      <AnimatePresence>
-        <Collapsed key="collapsed" />
-      </AnimatePresence>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
