@@ -233,7 +233,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
               >
                 <div className="flex gap-2">
                   <TbSwimming className="text-xl" />
-                  Log an additional activity
+                  Log another activity
                 </div>
                 <FaArrowRight />
               </div>
@@ -254,7 +254,10 @@ const AdditionalActivity = ({ setShowActivity }) => {
                         onClick={() => setShowTypeInput(false)}
                       />
                     ) : (
-                      <img src="./assets/down-arrow-white.svg" />
+                      <img
+                        onClick={() => setShowTypeInput(true)}
+                        src="./assets/down-arrow-white.svg"
+                      />
                     )}
                   </div>
                   {showTypeInput === true ? (
