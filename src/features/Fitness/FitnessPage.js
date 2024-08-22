@@ -206,7 +206,7 @@ const FitnessPage = () => {
             >
               <div className="flex gap-2">
                 <TbSwimming className="text-xl" />
-                Log an additional activity
+                Log an additional activity (BETA)
               </div>
               <FaArrowRight />
             </div>
