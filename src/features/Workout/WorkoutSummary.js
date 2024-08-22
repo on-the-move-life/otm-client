@@ -262,11 +262,11 @@ const WorkoutSummary = () => {
                     </div>
                   </div>
             
-                  <div className="text-center text-lightGray mx-10 flex flex-col items-center justify-center">
+                  <div className="text-lightGray flex flex-col items-start">
             <h4 className="text-[10px] uppercase tracking-[3px]">
               total workouts
             </h4>
-            <div className="w-24">
+            <div className="w-24 mx-4">
             <Counter currentValue={Number(workoutSummary?.consistency?.total) - 1} />
             </div>
           </div>
