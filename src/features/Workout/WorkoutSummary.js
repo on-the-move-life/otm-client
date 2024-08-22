@@ -11,10 +11,9 @@ import {
 } from 'react-icons/hi';
 
 import { FaArrowUp, FaArrowDown, FaPlus, FaMinus } from 'react-icons/fa';
-
+import styled from 'styled-components';
 import { axiosClient } from './apiClient';
 import { setStatus } from './WorkoutSlice';
-import AchievementPage from './AchievementPage.js';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import useLocalStorage from '../../hooks/useLocalStorage.js';
 import { AnimatePresence } from 'framer-motion';
@@ -22,7 +21,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 import { axiosflexClient } from './apiFlexClient.js';
 import domtoimage from 'dom-to-image';
-
+import Counter from '../../components/Counter';
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
   month: 'short',
@@ -40,7 +39,6 @@ const WorkoutSummary = () => {
   const [achievementsIndex, setAchievementsIndex] = useState(0);
   const [coachNotes, setCoachNotes] = useState([]);
   const [notesIndex, setNotesIndex] = useState(0);
-  const [showAchievemntsPage, setShowAchievemntsPage] = useState(true);
   const { user } = useAuth();
   // const [showMoveCoinsPopup, setShowMoveCoinsPopup] = useState(false);
   const dispatch = useDispatch();
@@ -92,6 +90,23 @@ const WorkoutSummary = () => {
   };
 
   const inputValues = getInputValuesFromLocalStorage();
+
+  const GradientText = styled.span`
+  /* Small shadow */
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+
+  /* H1 */
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  background: var(
+    --Gradient-purple,
+    linear-gradient(95deg, #d6b6f0 2.94%, #7e87ef 96.92%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
 
   function setIndexes(newAchievementIndex, newCoachIndex) {
     if (newAchievementIndex >= 0 && newAchievementIndex < achievements.length)
@@ -209,11 +224,6 @@ const WorkoutSummary = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (params.value === 'flex') {
-      setShowAchievemntsPage(false);
-    }
-  }, [params]);
 
   useEffect(() => {
     status === 'error' &&
@@ -224,25 +234,16 @@ const WorkoutSummary = () => {
     // status === 'success' && !showAchievemntsPage && setTimeout(() => {
     //   setShowMoveCoinsPopup(true);
     // }, 1500)
-  }, [status, navigate, showAchievemntsPage]);
+  }, [status, navigate]);
 
   return (
     <>
       {status === 'error' && <Error>Oops! Something went wrong...</Error>}
-      {params.value !== 'flex' &&
-        Object.keys(workoutSummary).length > 0 &&
-        showAchievemntsPage && (
-          <AchievementPage
-            setShowAchievemntsPage={setShowAchievemntsPage}
-            totalWorkouts={Number(workoutSummary?.consistency?.total) - 1}
-            coinsEarned={workoutSummary?.moveCoins}
-          />
-        )}
       {status === 'loading' && <Loader />}
 
       {status === 'success' &&
         Object.keys(workoutSummary).length > 0 &&
-        !showAchievemntsPage && (
+         (
           <div className="relative flex flex-col w-full h-full">
             <div className="flex-1 pb-16 overflow-y-auto">
               <div ref={summaryRef} className="px-4 py-8">
@@ -260,14 +261,15 @@ const WorkoutSummary = () => {
                       </Link>
                     </div>
                   </div>
-                  <div>
-                    <span className=" rounded-lg border border-lightGray bg-[#1B1B1B] p-2 text-sm text-white">
-                      Total Workouts{' '}
-                      <span className="text-lg font-bold text-[#5ECC7B]">
-                        {workoutSummary.consistency?.total}
-                      </span>
-                    </span>
-                  </div>
+            
+                  <div className="text-center text-lightGray mx-10 flex flex-col items-center justify-center">
+            <h4 className="text-[10px] uppercase tracking-[3px]">
+              total workouts
+            </h4>
+            <div className="w-24">
+            <Counter currentValue={Number(workoutSummary?.consistency?.total) - 1} />
+            </div>
+          </div>
 
                   {countToEarnPerfectWeek !== null &&
                     countToEarnPerfectWeek > 0 && (
@@ -282,7 +284,7 @@ const WorkoutSummary = () => {
 
                   {countToEarnPerfectWeek !== null &&
                     countToEarnPerfectWeek < 0 && (
-                      <p className="my-4">
+                      <p className="mb-4">
                         Fitness Pro Alert! You've surpassed the{' '}
                         <span className="inline-flex items-center rounded perfect-week w-fit">
                           <img src="/assets/star.svg" alt="" />
@@ -392,6 +394,32 @@ const WorkoutSummary = () => {
                       </div>
                     </section>
                   )}
+
+<div className="flex h-fit w-full flex-col items-center justify-center gap-5">
+            <div className="flex min-h-[100px] w-full flex-row items-center justify-center rounded-[20px] bg-[#121212]">
+              <div
+                className="h-full w-full rounded-[12px] border-[0.5px] border-[#383838]  bg-right  bg-no-repeat  p-3 backdrop-blur-[1px]"
+                style={{ backgroundImage: `url('/assets/coins_popup_bg.svg')` }}
+              >
+                <div className="text-[16px] text-[#D6B6F0]">• Movecoins</div>
+
+                <div className="text-[14px] text-lightGray">
+                  You earned
+                  <img
+                    className="mx-1 inline-block w-4"
+                    src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`}
+                    alt="MoveCoins Logo"
+                  />
+                  <GradientText>{workoutSummary?.moveCoins}</GradientText> MoveCoins! <br />
+                  Head to the marketplace and <GradientText>treat yourself </GradientText>
+                  to something special!
+                </div>
+                {/* <p className="text-slate-500 break-words font-normal leading-normal">
+                  {' '}
+                </p> */}
+              </div>
+            </div>
+          </div>
 
                   {workoutSummary &&
                     workoutSummary.sectionPerformance?.map(
