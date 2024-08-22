@@ -262,13 +262,13 @@ const AdditionalActivity = ({ setShowActivity }) => {
                       {activityType.length > 0 &&
                         activityType.map((item, index) => {
                           return (
-                            <div
+                            <option
                               onClick={(e) => handleActivityType(e)}
                               className="mr-9  flex h-[45px] items-center border-b border-b-darkGray text-[#929292] underline-offset-1"
                               key={index}
                             >
                               {item}
-                            </div>
+                            </option>
                           );
                         })}
                     </div>
