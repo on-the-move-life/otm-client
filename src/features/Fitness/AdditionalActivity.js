@@ -244,7 +244,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                     )}
                   </div>
                   {showTypeInput === true ? (
-                    <div className=" bg-white-opacity-08 max-h-[224px] w-full overflow-y-scroll  rounded-xl px-[6px] pl-4">
+                    <div className=" bg-white-opacity-08 max-h-[224px] min-h-[100px] w-full overflow-y-scroll  rounded-xl px-[6px] pl-4">
                       {activityType.length > 0 &&
                         activityType.map((item, index) => {
                           return (
