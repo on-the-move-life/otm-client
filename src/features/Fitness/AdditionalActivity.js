@@ -145,6 +145,8 @@ const AdditionalActivity = ({ setShowActivity }) => {
         }
       } catch (err) {
         console.error(err.message);
+      } finally {
+        setAnotherActivityLoader(false);
       }
     }
     getUserData();
