@@ -15,6 +15,9 @@ import { TimelineHeading } from '../Timeline/StyledComponents';
 import MonthlyWrapped from '../Profile/MonthlyWrapped';
 import StepTracker from './StepTracker';
 import { AiOutlineRight } from 'react-icons/ai';
+import AdditionalActivity from './AdditionalActivity';
+import { TbSwimming } from 'react-icons/tb';
+import { FaArrowRight } from 'react-icons/fa6';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -32,10 +35,11 @@ const FitnessPage = () => {
   const [isWeekend, setIsWeekend] = useState(false);
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
+  const [showActivity, setShowActivity] = useState(false);
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
-
+  console.log(showActivity);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -88,7 +92,11 @@ const FitnessPage = () => {
       )}
       {loader && <Loader />}
       {error && <Error>{error}</Error>}
-      {homeStats && (
+      {showActivity === true && (
+        <AdditionalActivity setShowActivity={setShowActivity} />
+      )}
+
+      {showActivity === false && homeStats && (
         <div>
           <img
             className="absolute right-0 -top-5 -z-20 "
@@ -160,28 +168,50 @@ const FitnessPage = () => {
                   to="/workout/today"
                   className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
                 >
-                  <div className="flex flex-col justify-between h-full">
-                    <div className="flex gap-3">
-                      <h2 className="text-2xl font-medium ">Today's Workout</h2>
-                      <img src="/assets/shred-logo.svg" />
-                    </div>
+                  <div className="flex flex-col justify-center h-full">
+                    <h2 className="text-xl font-medium ">Strength Training</h2>
 
-                    <div className="flex gap-3">
-                      <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
-                        {homeStats.hyperWorkoutParams.theme}
-                      </h2>
-                      <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
+                    <div className="flex gap-3 mt-2">
+                      <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
+                        <img
+                          src="/assets/yellowTimer.svg"
+                          className="mr-[2px]"
+                        />
                         {homeStats.hyperWorkoutParams.duration} mins
                       </h2>
-                      <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                        {' '}
+                      <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
+                        <img
+                          src="/assets/yellow-power.svg"
+                          className="mr-[2px]"
+                        />
                         {homeStats.hyperWorkoutParams.calories} cal
                       </h2>
                     </div>
                   </div>
+                  <img
+                    className="rounded-xl"
+                    style={{
+                      boxShadow:
+                        '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                    }}
+                    src="/assets/yellow-play.svg"
+                  />
                 </Link>
               </div>
             </section>
+
+            <div
+              onClick={() => setShowActivity(true)}
+              className="to-blue-500 relative flex items-center justify-between rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
+            >
+              <div className="flex gap-2">
+                <TbSwimming className="text-xl" />
+                Log an additional activity
+              </div>
+              <FaArrowRight />
+            </div>
+
+            <StepTracker />
 
             {isWeekend && (
               <Link to="/weekly-checkin" className="">
@@ -217,7 +247,7 @@ const FitnessPage = () => {
                 percentile={homeStats?.fitnessPercentileScore}
               />
             </section>
-            <StepTracker />
+
             {homeStats?.isPaymentDue && (
               <section>
                 <DuePaymentIndicator />

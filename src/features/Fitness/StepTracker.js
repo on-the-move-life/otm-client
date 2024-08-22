@@ -94,9 +94,9 @@ const StepTracker = () => {
           <div className="to-blue-500 relative h-[40px] rounded-full bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
             {loader === false && (
               <div className="flex items-center justify-between">
-                <div className="flex grow items-center gap-2">
+                <div className="flex items-center gap-2 grow">
                   <RiRunFill className="text-xl" />
-                  <div className="error__title w-full">
+                  <div className="w-full error__title">
                     {showStepCount ? (
                       <div onClick={handleShowInput}>
                         Log your daily step count
@@ -138,12 +138,12 @@ const StepTracker = () => {
       {showInput && (
         <InputContainer>
           <form
-            className="flex w-full items-end rounded-b-lg bg-mediumGray px-2 pb-2"
+            className="flex items-end w-full px-2 pb-2 rounded-b-lg bg-mediumGray"
             onSubmit={handleSubmit}
           >
             <input
               style={{ borderColor: '#5ECC7B' }}
-              className="textbox mr-6 pt-0"
+              className="pt-0 mr-6 textbox"
               type="number"
               placeholder="STEP COUNT (In Number)"
               required

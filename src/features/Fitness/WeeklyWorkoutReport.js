@@ -139,8 +139,8 @@ function WeeklyWorkoutReport({
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
   return (
-    <div className="mt-3 weekly-workout-consistency">
-      <div className="flex w-full h-full justify-between">
+    <div className=" weekly-workout-consistency">
+      <div className="flex justify-between w-full h-full">
         <div className="flex flex-col justify-between">
           <section className="flex flex-row items-center justify-between w-full">
             <div className="flex gap-2">
