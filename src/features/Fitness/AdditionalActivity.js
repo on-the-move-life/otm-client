@@ -136,7 +136,8 @@ const AdditionalActivity = ({ setShowActivity }) => {
   }, []);
 
   const handleActivityType = (e) => {
-    setSelectedActivityType(e.target.value);
+    console.log('ccxxccc', e, e.target.innerText);
+    setSelectedActivityType(e.target.innerText);
     setShowTypeInput(false);
   };
 
@@ -248,13 +249,13 @@ const AdditionalActivity = ({ setShowActivity }) => {
                       {activityType.length > 0 &&
                         activityType.map((item, index) => {
                           return (
-                            <option
+                            <div
                               onClick={(e) => handleActivityType(e)}
                               className="mr-9  flex h-[45px] items-center border-b border-b-darkGray text-[#929292] underline-offset-1"
                               key={index}
                             >
                               {item}
-                            </option>
+                            </div>
                           );
                         })}
                     </div>
@@ -293,9 +294,9 @@ const AdditionalActivity = ({ setShowActivity }) => {
 
                         // console.log(index, items.length, scrollPosition, position);
 
-                        let className = 'picker-item';
+                        let className = 'flex justify-center picker-item';
                         if (position === 0) {
-                          className += ' selected pl-[39px] ';
+                          className += ' selected pl-[53px] ';
                         } else if (position === 1 || position === -1) {
                           className += ' adjacent';
                         } else if (position === 2 || position === -2) {
@@ -305,7 +306,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                         }
 
                         return (
-                          <option
+                          <div
                             onClick={
                               position === 0
                                 ? () => setShowTimeInput(false)
@@ -316,10 +317,8 @@ const AdditionalActivity = ({ setShowActivity }) => {
                           >
                             {item}
                             {'    '}
-                            {position === 0 && (
-                              <div className="pl-10">mins</div>
-                            )}
-                          </option>
+                            {position === 0 && <div className="pl-5">mins</div>}
+                          </div>
                         );
                       })}
                     </div>
