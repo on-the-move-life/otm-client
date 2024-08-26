@@ -36,11 +36,45 @@ const FitnessPage = () => {
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
   const [showActivity, setShowActivity] = useState(false);
+  const [showInstallButton, setShowInstallButton] = useState(false);
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
   console.log(showActivity);
   const navigate = useNavigate();
+
+  let deferredPrompt;
+
+  useEffect(() => {
+    let deferredPrompt;
+  
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setShowInstallButton(true);  // Show the install button when prompt is available
+    };
+  
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        setShowInstallButton(false);
+        deferredPrompt = null;
+      });
+    }
+  };
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
@@ -153,7 +187,17 @@ const FitnessPage = () => {
             {/* <h2 className="inline-block mt-2 text-2xl font-sfpro text-floYellow">
               Shred
             </h2> */}
-
+           <section>
+           {showInstallButton && (
+  <button 
+    onClick={handleInstallClick}
+    className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg"
+  >
+    Install App
+  </button>
+)}
+           </section>
+           
             <section>
               {currentDate < 5 && (
                 <section className="flex flex-row items-center justify-center w-full gap-3 ">

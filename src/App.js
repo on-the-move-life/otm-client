@@ -36,6 +36,7 @@ import NutritionPage from './features/Nutrition/NutritionPage';
 import { MealPlanner } from './features/Nutrition/MealPlanner';
 import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 import ReferralUser from './features/ReferralUser/ReferralUser';
+import { useEffect } from 'react';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
