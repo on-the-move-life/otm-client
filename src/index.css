@@ -556,7 +556,7 @@ button:active {
 .countdown .countdown__box {
   box-sizing: border-box;
   overflow: hidden;
-  height: 8rem;
+  height: 6rem;
 
   /* border-radius: 0.2rem; */
   /* border: 1px solid black; */

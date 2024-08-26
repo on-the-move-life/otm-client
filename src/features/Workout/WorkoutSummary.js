@@ -263,24 +263,24 @@ const WorkoutSummary = () => {
                   </div>
             
                   <div className="text-lightGray flex flex-col items-start">
-            <h4 className="text-[10px] uppercase tracking-[3px]">
-              total workouts
-            </h4>
-            <div className="w-24 mx-4">
-            <Counter currentValue={Number(workoutSummary?.consistency?.total) - 1} />
-            </div>
-          </div>
+  <h4 className="text-[10px] uppercase tracking-[3px]">
+    total workouts
+  </h4>
+  <div className="w-24 mx-4">
+    <Counter currentValue={Number(workoutSummary?.consistency?.total) - 1} />
+  </div>
+</div>
 
-                  {countToEarnPerfectWeek !== null &&
-                    countToEarnPerfectWeek > 0 && (
-                      <div className="my-4">
-                        Complete{' '}
-                        <span className="text-[#F5C563]">
-                          {countToEarnPerfectWeek} more
-                        </span>{' '}
-                        workout(s) this week to earn the perfect week badge
-                      </div>
-                    )}
+{countToEarnPerfectWeek !== null &&
+  countToEarnPerfectWeek > 0 && (
+    <div className="mb-4">
+      Complete{' '}
+      <span className="text-[#F5C563]">
+        {countToEarnPerfectWeek} more
+      </span>{' '}
+      workout(s) this week to earn the perfect week badge
+    </div>
+  )}
 
                   {countToEarnPerfectWeek !== null &&
                     countToEarnPerfectWeek < 0 && (
@@ -301,7 +301,7 @@ const WorkoutSummary = () => {
 
                   {countToEarnPerfectWeek !== null &&
                     countToEarnPerfectWeek === 0 && (
-                      <div className="my-4">
+                      <div className="mb-4">
                         <p>
                           Whoa! You just unlocked the{' '}
                           {parseInt(workoutSummary?.consistency?.streak) >
