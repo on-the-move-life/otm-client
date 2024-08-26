@@ -142,7 +142,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
   };
 
   return (
-    <div className="mb-[78px] h-[calc(100vh-78px)] w-full ">
+    <div className="relative z-40 h-full w-full bg-black pb-[40px] ">
       <div className="fixed top-0 ">
         <ToastContainer
           position="top-center"
@@ -180,7 +180,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                 activityList.map((item, index) => (
                   <div
                     key={index}
-                    className="bg-white-opacity-08 mt-3 flex flex-col gap-4 rounded-xl px-[21px] py-[11px]"
+                    className="mt-3 flex flex-col gap-4 rounded-xl bg-white-opacity-08 px-[21px] py-[11px]"
                   >
                     <div>
                       <h4 className="font-sfpro text-[14px] text-offwhite ">
@@ -245,7 +245,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                     )}
                   </div>
                   {showTypeInput === true ? (
-                    <div className=" bg-white-opacity-08 max-h-[224px] min-h-[100px] w-full overflow-y-scroll  rounded-xl px-[6px] pl-4">
+                    <div className=" max-h-[224px] min-h-[100px] w-full overflow-y-scroll rounded-xl  bg-white-opacity-08 px-[6px] pl-4">
                       {activityType.length > 0 &&
                         activityType.map((item, index) => {
                           return (
@@ -262,7 +262,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   ) : (
                     <div
                       onClick={() => setShowTypeInput(true)}
-                      className="bg-white-opacity-08 flex h-[48px] w-full items-center rounded-xl px-6 text-white-opacity-50"
+                      className="flex h-[48px] w-full items-center rounded-xl bg-white-opacity-08 px-6 text-white-opacity-50"
                     >
                       {selectedActivityType}
                     </div>
@@ -284,7 +284,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   </div>
                   {showTimeInput === true ? (
                     <div
-                      className="picker-container bg-white-opacity-08 w-full rounded-xl px-[6px]"
+                      className="picker-container w-full rounded-xl bg-white-opacity-08 px-[6px]"
                       ref={containerRef}
                       onScroll={handleScroll}
                     >
@@ -325,7 +325,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   ) : (
                     <div
                       onClick={() => setShowTimeInput(true)}
-                      className="bg-white-opacity-08 flex h-[48px] w-full items-center rounded-xl px-6 text-white-opacity-50 "
+                      className="flex h-[48px] w-full items-center rounded-xl bg-white-opacity-08 px-6 text-white-opacity-50 "
                     >
                       {selectedValue} mins
                     </div>
