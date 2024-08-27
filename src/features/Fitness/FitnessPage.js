@@ -20,7 +20,6 @@ import { TbSwimming } from 'react-icons/tb';
 import { FaArrowRight } from 'react-icons/fa6';
 import InstallPopup from '../../components/InstallPopup';
 
-
 function formatNumber(num) {
   if (num >= 1000) {
     return (num / 1000).toFixed(1) + 'k';
@@ -98,6 +97,7 @@ const FitnessPage = () => {
       {showActivity === true && (
         <AdditionalActivity setShowActivity={setShowActivity} />
       )}
+
       {showActivity === false && homeStats && (
         <div>
           <img
