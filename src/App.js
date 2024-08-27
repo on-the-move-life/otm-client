@@ -36,10 +36,26 @@ import NutritionPage from './features/Nutrition/NutritionPage';
 import { MealPlanner } from './features/Nutrition/MealPlanner';
 import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 import ReferralUser from './features/ReferralUser/ReferralUser';
+import React , {useEffect } from 'react';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
   const { checkAdminAuth, getUserFromStorage } = useAuth();
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      // Prevent Chrome 76+ from automatically showing the prompt
+      e.preventDefault();
+      // Stash the event so it can be triggered later if needed
+      window.deferredPrompt = e;
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
 
   function RouteMiddleware({ children }) {
     console.log('RouteMiddleware called');
