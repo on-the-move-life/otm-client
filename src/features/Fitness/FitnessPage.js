@@ -37,6 +37,7 @@ const FitnessPage = () => {
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
   const [showActivity, setShowActivity] = useState(false);
+  const [showInstallPopup, setShowInstallPopup] = useState(false);
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
@@ -86,9 +87,18 @@ const FitnessPage = () => {
     checkIfWeekend();
   }, []);
 
+  useEffect(() => {
+    // Check if the app is already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setShowInstallPopup(false);
+    } else {
+      setShowInstallPopup(true);
+    }
+  }, []);
+
   return (
     <>
-      <InstallPopup/>
+      {showInstallPopup && <InstallPopup />}
       {!loader && !error && (
         <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion} />
       )}
@@ -111,7 +121,7 @@ const FitnessPage = () => {
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
             <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
               <div>
-                <TimelineHeading>Movement</TimelineHeading>
+                <TimelineHeading>Movemen</TimelineHeading>
                 <div className="flex items-center">
                   {parseInt(homeStats.streak) > 0 && (
                     <div className="flex items-center ">
