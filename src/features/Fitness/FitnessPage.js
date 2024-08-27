@@ -18,7 +18,8 @@ import { AiOutlineRight } from 'react-icons/ai';
 import AdditionalActivity from './AdditionalActivity';
 import { TbSwimming } from 'react-icons/tb';
 import { FaArrowRight } from 'react-icons/fa6';
-import InstallBanner from '../../components/InstallBanner';
+import InstallPopup from '../../components/InstallPopup';
+
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -88,7 +89,7 @@ const FitnessPage = () => {
 
   return (
     <>
-     <InstallBanner /> 
+      <InstallPopup/>
       {!loader && !error && (
         <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion} />
       )}
@@ -97,7 +98,6 @@ const FitnessPage = () => {
       {showActivity === true && (
         <AdditionalActivity setShowActivity={setShowActivity} />
       )}
-
       {showActivity === false && homeStats && (
         <div>
           <img
