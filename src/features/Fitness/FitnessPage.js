@@ -36,7 +36,6 @@ const FitnessPage = () => {
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
   const [showActivity, setShowActivity] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
@@ -86,39 +85,8 @@ const FitnessPage = () => {
     checkIfWeekend();
   }, []);
 
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
-  }, []);
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-      }
-      setDeferredPrompt(null);
-    }
-  };
-
   return (
     <>
-    {deferredPrompt && (
-        <button
-          onClick={handleInstallClick}
-          className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Install App
-        </button>
-      )}
       {!loader && !error && (
         <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion} />
       )}
