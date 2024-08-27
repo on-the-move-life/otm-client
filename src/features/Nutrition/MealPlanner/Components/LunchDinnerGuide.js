@@ -6,7 +6,7 @@ const LunchDinnerGuide = () => {
           <span className="rounded bg-yellow px-1 text-[10px] text-[rgba(0,0,0,0.80)]">
             25% Raw Veggies
           </span>{' '}
-          <span className="w-[60px] border-b border-yellow"></span>
+          <span className="w-[50px] border-b border-yellow"></span>
         </div>
         <div className="flex items-center mt-9 ">
           <span className="rounded bg-green px-1 text-[10px] text-[rgba(0,0,0,0.80)]">
@@ -17,13 +17,13 @@ const LunchDinnerGuide = () => {
       </div>
       <div className="flex flex-col w-1/2 ">
         <div className="flex items-center mt-4 ">
-          <span className="w-[50px] border-b border-red"></span>
+          <span className="w-[60px] border-b border-red"></span>
           <span className="rounded bg-red px-1 text-[10px] text-[rgba(0,0,0,0.80)]">
             25% Protien
           </span>{' '}
         </div>
         <div className="flex items-center mt-9 ">
-          <span className="w-[50px] border-b border-blue"></span>
+          <span className="w-[70px] border-b border-blue"></span>
           <span className="rounded bg-blue px-1 text-[10px] text-[rgba(0,0,0,0.80)]">
             25% Carbs
           </span>{' '}

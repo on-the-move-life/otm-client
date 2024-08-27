@@ -13,7 +13,11 @@ const NutritionPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [validation, setValidation] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [mealLoading, setMealLoading] = useState(false);
+  const [mealData, setMealData] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [previousSelectedDate, setPreviousSelectedDate] = useState(null);
   const [pageError, setPageError] = useState(false);
   const [loadingWeeklyPlan, setLoadingWeeklyPlan] = useState(false);
   const [weeklyPlan, setWeeklyPlan] = useState(null);
@@ -34,8 +38,6 @@ const NutritionPage = () => {
           dispatch(Actions.updateSectionName('Weekly Plan'));
           setWeeklyPlan('Weekly Plan');
         } else {
-          console.log('1');
-          // else start wiponse /meal-plan : ', res.datath the 'Get Started'
           dispatch(Actions.updateSectionName('Get Started'));
         }
       })
@@ -47,9 +49,30 @@ const NutritionPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    setMealLoading(true);
+    // if the meal is already planned then set the section name to 'Weekly Plan'
+    if (selectedDate && selectedDate !== previousSelectedDate) {
+      const memberCode = JSON.parse(localStorage.getItem('user'))['code'];
+      axiosClient
+        .get(`/meals?memberCode=${memberCode}&date=${selectedDate}`)
+        .then((res) => {
+          console.log('response /meal-plan : ', res.data);
+          if (res?.data?.success === true) {
+            setMealData(res.data.data);
+            setPreviousSelectedDate(selectedDate);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    setMealLoading(false);
+  }, [selectedDate, previousSelectedDate]);
+
   return (
     <>
-      {loading === true ? (
+      {mealLoading === true || loading === true ? (
         <Loader />
       ) : (
         <div className="relative h-screen overflow-y-scroll bg-[#161513]">
@@ -136,7 +159,10 @@ const NutritionPage = () => {
               </div>
             ) : (
               <>
-                <MealPlanPage />
+                <MealPlanPage
+                  mealData={mealData}
+                  setSelectedDate={setSelectedDate}
+                />
               </>
             )}
           </div>

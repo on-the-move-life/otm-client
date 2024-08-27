@@ -17,7 +17,7 @@ const BreakfastGuide = () => {
       </div>
       <div className="flex flex-col w-1/2 ">
         <div className="flex items-center mt-8 ">
-          <span className="w-[50px] border-b border-red"></span>
+          <span className="w-[65px] border-b border-red"></span>
           <span className="rounded bg-red px-1 text-[10px] text-[rgba(0,0,0,0.80)]">
             50% Protien
           </span>{' '}

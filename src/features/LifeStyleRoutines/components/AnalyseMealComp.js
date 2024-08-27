@@ -39,15 +39,25 @@ const AnalyseMealComp = ({
   const [apiResponse, setApiResponse] = useState(null);
   const [mealTaskIds, setmealTaskIds] = useState([
     {
-      taskId: `Breakfast${Math.floor(Math.random() * 1000)}`,
+      taskId: `breakfast`,
       taskName: 'Breakfast',
     },
     {
-      taskId: `Lunch${Math.floor(Math.random() * 1000)}`,
-      taskName: 'Lunch',
+      taskId: `morningSnack`,
+      taskName: 'Morning Snack',
     },
     {
-      taskId: `Dinner${Math.floor(Math.random() * 1000)}`,
+      taskId: `lunch`,
+      taskName: 'Lunch',
+    },
+
+    {
+      taskId: `eveningSnack`,
+      taskName: 'Evening Snack',
+    },
+
+    {
+      taskId: `dinner`,
       taskName: 'Dinner',
     },
   ]);
@@ -65,8 +75,6 @@ const AnalyseMealComp = ({
   const finalDate = date === null || date === undefined ? formattedDate : date;
   const [searchParams] = useSearchParams();
   const meal = searchParams.get('meal');
-  console.log(meal, selectedTaskId, mealTaskIds);
-  // console.log();
   console.log('task and date are', task, date);
 
   // redux implementation
@@ -116,9 +124,22 @@ const AnalyseMealComp = ({
     if (meal) {
       const paramsMeal = mealTaskIds.find((item) => item.taskName === meal);
       if (paramsMeal) {
-        console.log('xxxxxxxx', paramsMeal);
         setselectedTaskId(paramsMeal.taskId);
         setselectedTaskName(meal);
+      }
+
+      if (meal === 'Snack') {
+        setmealTaskIds([
+          {
+            taskId: `morningSnack`,
+            taskName: 'Morning Snack',
+          },
+
+          {
+            taskId: `eveningSnack`,
+            taskName: 'Evening Snack',
+          },
+        ]);
       }
     }
   }, [meal]);
@@ -180,7 +201,8 @@ const AnalyseMealComp = ({
 
   // Meal image post request handling
   const handleMealUploadSubmit = async () => {
-    if (selectedImage && selectedTaskId && file) {
+    console.log(selectedTaskName);
+    if (selectedImage && selectedTaskName && file) {
       setLoader(true);
       try {
         const formData = new FormData();
@@ -191,7 +213,8 @@ const AnalyseMealComp = ({
         );
         formData.append('date', finalDate);
         console.log('Selected taskId and date is', selectedTaskId, finalDate);
-        formData.append('taskId', selectedTaskId);
+        formData.append('mealType', selectedTaskId);
+        formData.append('functionType', 'mealUpload');
         formData.append('optionalDescription', userMealDescription);
 
         const res = await axiosClient.post('/meal-info', formData, {
@@ -238,13 +261,13 @@ const AnalyseMealComp = ({
   };
 
   const handleSelectChange = (event) => {
-    const taskId = event.target.value;
+    const meal = event.target.value;
+    setselectedTaskName(meal);
 
-    setselectedTaskId(taskId);
-    const selectedTask = mealTaskIds.find((task) => task.taskId === taskId);
-    console.log('selected task is', selectedTask);
+    const selectedTask = mealTaskIds.find((task) => task.taskName === meal);
+
     if (selectedTask) {
-      setTaskCircle(selectedTask.circleName);
+      setselectedTaskId(selectedTask.taskId);
     }
   };
 
@@ -259,22 +282,21 @@ const AnalyseMealComp = ({
             Select your meal:
           </label>
           <select
+            disabled={
+              meal === 'Breakfast' || meal === 'Lunch' || meal === 'Dinner'
+            }
             className="block w-full appearance-none gap-[8px] rounded-lg border-[1px] border-[#2A2A2A] border-[solid] bg-transparent px-2 py-2 focus:outline-none"
             id="taskId"
             value={selectedTaskName} // Set initial value for the <select>
             onChange={handleSelectChange}
           >
-            <option
-              value=""
-              disabled
-              className="w-[10px] bg-mediumGray text-white "
-            >
+            <option value="" className="w-[10px] bg-mediumGray text-white ">
               Select one option
             </option>
             {mealTaskIds.map((task, index) => (
               <option
                 key={index}
-                value={task.taskId}
+                value={task.taskName}
                 className="text-white bg-mediumGray"
               >
                 {task.taskName}
@@ -283,15 +305,17 @@ const AnalyseMealComp = ({
           </select>
         </div>
 
-        <div className="relative w-0 text-gray-700 pointer-events-none right-6 top-8">
-          <svg
-            className="w-6 h-6 fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-          </svg>
-        </div>
+        {(meal !== 'Breakfast' || meal !== 'Lunch' || meal !== 'Dinner') && (
+          <div className="relative w-0 text-gray-700 pointer-events-none right-6 top-8">
+            <svg
+              className="w-6 h-6 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+            </svg>
+          </div>
+        )}
       </div>
     );
   };
@@ -407,7 +431,7 @@ const AnalyseMealComp = ({
                   <div className="fixed left-0 w-full px-3 bottom-4">
                     <button
                       className={`flex w-full flex-row items-center justify-center rounded-xl p-3 text-black ${
-                        selectedImage && selectedTaskId
+                        selectedImage && selectedTaskName
                           ? 'bg-custompurple'
                           : 'bg-gray-500 cursor-not-allowed'
                       }`}

@@ -18,7 +18,7 @@ import PageIndicator from './Components/PageIndicator';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../../LifestyleQuiz';
 import { Error } from '../../../components';
-import MealPlanPage from './MealPlanPage';
+
 import * as Selectors from './Redux/selectors';
 
 function MainPage() {
@@ -26,6 +26,7 @@ function MainPage() {
   const navigate = useNavigate();
   const [validation, setValidation] = useState({});
   const [pageLoading, setPageLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   const [pageError, setPageError] = useState(false);
   const [loadingWeeklyPlan, setLoadingWeeklyPlan] = useState(false);
 
@@ -116,6 +117,7 @@ function MainPage() {
   function submitSelectedIngredients() {
     setLoadingWeeklyPlan(true);
     setPageLoading(true);
+    setFormLoading(true);
     axiosClient
       .post('/meal-plan', {
         ingredients: selectedIngredients,
@@ -133,6 +135,7 @@ function MainPage() {
       .finally(() => {
         setPageLoading(false);
         setLoadingWeeklyPlan(false);
+        setFormLoading(false);
       });
   }
 
@@ -191,6 +194,9 @@ function MainPage() {
     if (sectionName === 'Get Started') {
       fetchQuestions();
     }
+    if (sectionName === 'Weekly Plan') {
+      navigate('/nutrition');
+    }
   }, [sectionName]);
 
   useEffect(() => {
@@ -227,16 +233,27 @@ function MainPage() {
 
   return (
     <>
-      {pageLoading && (
-        <div className="fixed top-0 left-0 z-50 w-full bg-black">
-          <Loader
-            className="w-full h-screen"
-            message={
-              loadingWeeklyPlan
-                ? 'It takes 15-20 sec to generate meal plan'
-                : undefined
-            }
+      {formLoading === true && (
+        <div className="fixed left-0 top-0 z-50 flex h-full w-full  items-center overflow-y-scroll  px-[14px]">
+          <img
+            className="absolute top-0 left-0 z-0 w-full h-screen"
+            src="/assets/nutrition-bg.svg"
+            style={{
+              height: '-webkit-fill-available',
+              filter: 'brightness(1)',
+            }}
           />
+          <div className="relative z-20 mb-16 mt-14 flex h-min flex-col items-center rounded-xl bg-[rgba(0,0,0,0.45)] px-4 py-8">
+            <img src="./assets/ricebowl.svg" />
+            <p className="relative text-3xl text-center text-offwhite ">
+              We're designing the blueprint for your nutrition success!
+            </p>
+            <p className="mt-4 text-sm text-center text-white-opacity-50">
+              Give us 2 minutes while our AI chefs prepare your personalized
+              meal plan. In the meantime, feel free to grab a glass of water or
+              do a quick stretch{' '}
+            </p>
+          </div>
         </div>
       )}
       {pageError && (
@@ -244,7 +261,7 @@ function MainPage() {
           <Error>Some Error Occurred</Error>
         </div>
       )}
-      {!pageLoading && !pageError && (
+      {!pageLoading === true && !pageError && (
         <div className="w-full min-h-screen px-3 py-4 overflow-y-scroll bg-darkGray">
           <div className="fixed top-0 ">
             <ToastContainer
@@ -277,7 +294,7 @@ function MainPage() {
           <div className="w-full overflow-y-scroll">
             {sectionName === 'Get Started' && (
               <div className="mt-[5rem] w-full">
-                <GetStarted />
+                <GetStarted />{' '}
               </div>
             )}
             {sectionName === 'Questions' && (
@@ -291,11 +308,6 @@ function MainPage() {
             {sectionName === 'Ingredients' && (
               <div className="mb-[100px] mt-3 w-full">
                 <CustomiseIngredients />
-              </div>
-            )}
-            {sectionName === 'Weekly Plan' && (
-              <div className="w-full mt-3">
-                <MealPlanPage />
               </div>
             )}
           </div>

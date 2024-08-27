@@ -8,7 +8,14 @@ import BreakfastGuide from './BreakfastGuide';
 import LunchDinnerGuide from './LunchDinnerGuide';
 import SnackGuide from './SnackGuide';
 
-function MealInfoTile({ meal, name, calories, ingredients, macros }) {
+function MealInfoTile({
+  meal,
+  name,
+  calories,
+  ingredients,
+  macros,
+  mealSuggestionImage,
+}) {
   const [isCollapsed, setCollapsed] = useState(true);
   const [mealImage, setMealImage] = useState('');
 
@@ -34,7 +41,7 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
 
   const Collapsed = () => {
     return (
-      <motion.div
+      <div
         className="flex flex-row items-start w-full "
         initial={{ opacity: 0, height: 0 }}
         animate={{ opacity: 1, height: 'auto' }}
@@ -49,34 +56,42 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
             <div className="absolute top-0 flex justify-center w-full">
               <img src="./assets/guide-bg.svg" className="     h-[150px]" />
             </div>
-            <div className="mt-2 ml-3">
+            <div className="px-1 mt-2">
               {meal === 'breakfast' && <BreakfastGuide />}
               {(meal === 'lunch' || meal === 'dinner') && <LunchDinnerGuide />}
-              {meal === 'morning snack' ||
-                (meal === 'evening snack' && <SnackGuide />)}
+              {(meal === 'morning snack' || meal === 'evening snack') && (
+                <SnackGuide />
+              )}
 
-              <div className="relative z-50 ml-auto mr-auto h-[95px] w-[95px] overflow-hidden rounded-full ">
+              <div
+                className={`relative z-50 ml-auto mr-auto h-[127px] w-[127px] overflow-hidden rounded-e-full   ${
+                  meal === 'breakfast' && 'pl-4'
+                }  ${
+                  (meal === 'morning snack' || meal === 'evening snack') &&
+                  'pl-4'
+                }  ${(meal === 'lunch' || meal === 'dinner') && 'pl-[18px]'}`}
+              >
                 <img
                   src={mealImage}
-                  className="relative -mt-[4px] ml-1 h-[128px] w-[127px] max-w-max object-cover "
+                  className={`relative  h-[128px] w-[127px] max-w-max object-cover`}
                 />
               </div>
             </div>
           </div>
           <div className="mt-3 flex min-h-[106px] w-full items-start justify-start gap-2 rounded-[12px]  bg-[rgba(0,0,0,0.40)] p-2">
-            <div className="h-[91px] w-[77px]">
-              <img src="./assets/suggested-meal.svg" />
+            <div className="  h-[60px] w-[60px] rounded-lg">
+              <img src={mealSuggestionImage} />
             </div>
             <div className="flex flex-col items-start justify-start w-full gap-2">
               <div className="flex justify-between w-full">
                 <h3
-                  className="flex items-start font-sfpro text-[11px]  capitalize text-darkTextGray"
+                  className="flex items-start font-sfpro text-[12px]  capitalize text-darkTextGray"
                   style={{ lineHeight: '16.71px' }}
                 >
                   Meal Suggestion
                 </h3>
                 <h5
-                  className="flex w-[110px] grow items-end  justify-end pl-2 font-sfpro text-[12px] uppercase  text-yellow"
+                  className="flex w-[110px] grow items-end  justify-end pl-2 font-sfpro text-[20px] uppercase  text-yellow"
                   style={{ lineHeight: '12.76px' }}
                 >
                   {calories}
@@ -91,7 +106,7 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
                     return (
                       <p
                         className="text-darkTextGray"
-                        style={{ fontSize: '9.33px', lineHeight: '11.14px' }}
+                        style={{ fontSize: '11px', lineHeight: '14px' }}
                       >
                         {item}
                       </p>
@@ -145,7 +160,7 @@ function MealInfoTile({ meal, name, calories, ingredients, macros }) {
           <MdKeyboardArrowDown color={'#929292'} size={30} />
         </div> */}
         </div>
-      </motion.div>
+      </div>
     );
   };
 

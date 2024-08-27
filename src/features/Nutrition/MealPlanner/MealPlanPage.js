@@ -9,17 +9,54 @@ import * as Actions from './Redux/actions';
 import { motion } from 'framer-motion';
 import MealUploadTile from './Components/MealUploadTile';
 
-function MealPlanPage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+function getCurrentWeek() {
+  const today = new Date();
+  const dayOfWeek = today.getDay(); // Day of the week (0-6) with 0 being Sunday
+  // Calculate the date of Monday of the current week
+  const firstDayOfWeek =
+    today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+  const currentWeek = [];
+
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      firstDayOfWeek + i,
+    );
+    currentWeek.push(date);
+  }
+
+  return currentWeek;
+}
+
+// Function to check if a given day is in the current week
+function isDateInCurrentWeek(day) {
+  const currentWeek = getCurrentWeek();
+
+  // Find if the day exists in the current week
+  const matchedDate = currentWeek.find((date) => date.getDate() === day);
+
+  if (matchedDate) {
+    return matchedDate; // Return the Date object if found
+  }
+
+  return null; // Return null if not found
+}
+
+function MealPlanPage({ mealData, setSelectedDate }) {
   const selectWeeklyPlans = Selectors.makeGetWeeklyPlan();
   const weeklyPlan = useSelector(selectWeeklyPlans, shallowEqual);
-
   const [selectedDay, setSelectedDay] = useState(null);
   const [dateWiseWeeklyPlan, setDateWiseWeeklyPlan] = useState(null);
   const [mealSelected, setMealSelected] = useState('Breakfast');
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [takenCalorie, setTakenCalorie] = useState(null);
+
+  console.log(mealData, takenCalorie);
+  useEffect(() => {
+    setTakenCalorie(mealData.totalCalories);
+  }, [mealData]);
+
   const [isTrackerVisible, setIsTrackerVisible] = useState(null);
 
   useEffect(() => {
@@ -31,15 +68,24 @@ function MealPlanPage() {
     }
   }, [selectedPlan, selectedDay]);
 
-  const str = '3308 kcal';
-  const idealCalorie = parseInt(str, 10);
+  useEffect(() => {
+    if (
+      dateWiseWeeklyPlan?.date !== undefined &&
+      dateWiseWeeklyPlan?.date !== null
+    ) {
+      // Ensure the prop is valid
+      const result = isDateInCurrentWeek(dateWiseWeeklyPlan?.date);
+      setSelectedDate(result);
+    }
+  }, [dateWiseWeeklyPlan]);
 
-  const completedCalorie = 3000;
+  const totalCalories = dateWiseWeeklyPlan?.totalCalorie;
+  const idealCalorie = parseInt(totalCalories, 10);
+
+  const completedCalorie = takenCalorie ? takenCalorie : 0;
 
   const completedCaloriePercentage = (completedCalorie / idealCalorie) * 100;
   const foodPerDay = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
-
-  console.log(dateWiseWeeklyPlan);
 
   let gradient;
 
@@ -67,7 +113,7 @@ function MealPlanPage() {
       const todayPlan = weeklyPlan.find((plan) => plan.date === todayDate);
       console.log('todayPlan  : ', todayPlan, weeklyPlan[0]['day'], weeklyPlan);
       setSelectedDay(todayPlan['day']);
-      setSelectedDate(todayPlan['date']);
+      // setSelectedDate(todayPlan['date']);
     }
     console.log('weekly plan : ', weeklyPlan);
   }, [weeklyPlan]);
@@ -102,7 +148,8 @@ function MealPlanPage() {
                 );
               })}
           </div>
-          {isTrackerVisible && (
+
+          {takenCalorie >= 0 && totalCalories && isTrackerVisible && (
             <div className="mt-2 flex h-fit w-full flex-col items-center justify-center rounded-[12px] bg-[rgba(0,0,0,0.45)] px-4 py-2">
               <div className="w-full">
                 <h5
@@ -112,24 +159,24 @@ function MealPlanPage() {
                   Track Calories
                 </h5>
                 <p
-                  className=" text-offwhite"
+                  className=" my-[4px] text-offwhite"
                   style={{
                     fontSize: '20.61px',
                     lineHeight: '25.77px',
                   }}
                 >
-                  <span className="text-[#F5C563]">3000</span> / 3308 Kcal
-                  {/* {dateWiseWeeklyPlan['totalCalorie']} */}
+                  <span className="text-[#F5C563]">{takenCalorie}</span> /
+                  {dateWiseWeeklyPlan['totalCalorie']}
                 </p>
               </div>
               <h5
-                className="mt-2 text-[14px] text-[#929292]"
+                className=" text-[14px] text-[#929292]"
                 style={{ lineHeight: '16.71px' }}
               >
                 It looks like you’re going to exceed today’s calorie count.
                 Let’s get an extra 25 min walk in.
               </h5>
-              <div className="w-full h-3 mt-2 overflow-hidden rounded-full bg-gray">
+              <div className="w-full h-3 my-1 overflow-hidden rounded-full bg-gray">
                 <motion.div
                   className="relative h-full rounded-full px-[2px]"
                   style={{
@@ -151,9 +198,8 @@ function MealPlanPage() {
               </div>
             </div>
           )}
-
           <div
-            className={`mt-[26px] flex h-[38px] w-full items-center rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
+            className={`my-[20px] flex h-[38px] w-full items-center rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
           >
             {foodPerDay.map((item) => (
               <div
@@ -175,7 +221,7 @@ function MealPlanPage() {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-center justify-start w-full gap-2 my-2">
+          <div className="flex flex-col items-center justify-start w-full gap-2 ">
             {dateWiseWeeklyPlan &&
               dateWiseWeeklyPlan.plan.map((item) => {
                 const isSnack =
@@ -193,6 +239,7 @@ function MealPlanPage() {
                         calories={item?.calories}
                         macros={item?.macros}
                         ingredients={item?.items}
+                        mealSuggestionImage={item?.mealImage}
                       />
                     </>
                   );
@@ -208,7 +255,19 @@ function MealPlanPage() {
             >
               <div className="flex h-[65px] grow items-center justify-between rounded-lg bg-[rgba(0,0,0,0.45)] p-1">
                 <div className="ml-[20px] flex items-center">
-                  <img src="/assets/food.svg" />
+                  {mealSelected.toLowerCase() === 'breakfast' && (
+                    <img src="/assets/trackbreakfast.svg" />
+                  )}
+                  {mealSelected.toLowerCase() === 'lunch' && (
+                    <img src="/assets/tracklunch.svg" />
+                  )}
+                  {mealSelected.toLowerCase() === 'snack' && (
+                    <img src="/assets/tracksnack.svg" />
+                  )}
+                  {mealSelected.toLowerCase() === 'dinner' && (
+                    <img src="/assets/tracklunch.svg" />
+                  )}
+
                   <span className="ml-[20px] text-xl  text-offwhite">
                     Track {mealSelected}
                   </span>
@@ -220,7 +279,30 @@ function MealPlanPage() {
             </Link>
           )}
 
-          <MealUploadTile />
+          {mealData &&
+            mealData.meals.map((item) => {
+              const isSnack =
+                mealSelected.toLowerCase() === 'snack' &&
+                (item.mealType === 'morningSnack' ||
+                  item.mealType === 'eveningSnack');
+
+              if (
+                item.mealType.toLowerCase() === mealSelected.toLowerCase() ||
+                isSnack
+              ) {
+                return (
+                  <div className="w-full" key={item._id}>
+                    <MealUploadTile
+                      mealType={item.mealType}
+                      mealUrl={item.mealUrl}
+                      mealNutritionAnalysis={item.mealNutritionAnalysis}
+                    />
+                  </div>
+                );
+              } else {
+                return <></>;
+              }
+            })}
         </div>
       )}
     </>
