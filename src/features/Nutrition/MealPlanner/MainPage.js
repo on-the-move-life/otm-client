@@ -60,6 +60,14 @@ function MainPage() {
   const totalQuestionScreen = questionSectionInfo.totalScreens;
   const currentQuestion = questionSectionInfo.currentScreenQuestions;
 
+  const [isSvgLoaded, setIsSvgLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = '/assets/nutrition-bg.svg';
+    img.onload = () => setIsSvgLoaded(true);
+  }, []);
+
   function fetchQuestions() {
     setPageLoading(true);
     axiosClient
@@ -233,7 +241,7 @@ function MainPage() {
 
   return (
     <>
-      {formLoading === true && (
+      {isSvgLoaded && formLoading === true && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full  items-center overflow-y-scroll  px-[14px]">
           <img
             className="absolute top-0 left-0 z-0 w-full h-screen"

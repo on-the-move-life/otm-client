@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useContainerDimensions } from '../../../../hooks/useContainerDimensions';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import NutrientsBubble from './NutrientsBubble';
 import { useEffect } from 'react';
@@ -15,20 +14,33 @@ function MealInfoTile({
   ingredients,
   macros,
   mealSuggestionImage,
+  mealPreference,
+  dietPreference,
 }) {
   const [isCollapsed, setCollapsed] = useState(true);
   const [mealImage, setMealImage] = useState('');
+  const [isSvgLoaded, setIsSvgLoaded] = useState(false);
 
   useEffect(() => {
-    if (meal === 'breakfast') {
-      setMealImage('./assets/breakfast-nonVeg.svg');
+    // if (meal === 'breakfast') {
+    //   setMealImage('./assets/breakfast-nonVeg.svg');
+    // }
+    if (meal === 'lunch') {
+      setMealImage('./assets/lunch-nonVeg-weightGain.svg');
     }
-    if (meal === 'lunch' || meal === 'dinner') {
-      setMealImage('./assets/lunch-nonVeg-weightLoss.svg');
+    if (meal === 'dinner') {
+      setMealImage('./assets/lunch-veg-weightGain.svg');
     }
-    if (meal === 'morning snack' || meal === 'evening snack')
-      setMealImage('./assets/snack.svg');
+
+    // if (meal === 'morning snack' || meal === 'evening snack')
+    //   setMealImage('./assets/snack.svg');
   }, [meal]);
+
+  // useEffect(() => {
+  //   const img = new Image();
+  //   img.src = './assets/nutrition-bg.svg';
+  //   img.onload = () => setIsSvgLoaded(true);
+  // }, []);
 
   function percentageToFloat(percentage) {
     // Remove the '%' symbol and convert the string to a float
@@ -49,40 +61,49 @@ function MealInfoTile({
         transition={{ opacity: { duration: 0.3 }, height: { duration: 0.3 } }}
       >
         <div className="relative w-full">
-          <div className="relative">
-            <h1 className="ml-[7px] text-sm capitalize text-offwhite">
-              {meal} Guide
-            </h1>
-            <div className="absolute top-0 flex justify-center w-full">
-              <img src="./assets/guide-bg.svg" className="     h-[150px]" />
-            </div>
-            <div className="px-1 mt-2">
-              {meal === 'breakfast' && <BreakfastGuide />}
-              {(meal === 'lunch' || meal === 'dinner') && <LunchDinnerGuide />}
-              {(meal === 'morning snack' || meal === 'evening snack') && (
-                <SnackGuide />
-              )}
+          {(meal === 'lunch' || meal === 'dinner') && (
+            <div className="relative">
+              <h1 className="ml-[7px] text-sm capitalize text-offwhite">
+                {meal} Guide
+              </h1>
+              <div className="absolute top-0 flex justify-center w-full">
+                <img src="./assets/guide-bg.svg" className="     h-[150px]" />
+              </div>
+              <div className="px-1 mt-2">
+                {(meal === 'lunch' || meal === 'dinner') && (
+                  <LunchDinnerGuide meal={meal} />
+                )}
 
-              <div
-                className={`relative z-50 ml-auto mr-auto h-[127px] w-[127px] overflow-hidden rounded-e-full   ${
-                  meal === 'breakfast' && 'pl-4'
-                }  ${
-                  (meal === 'morning snack' || meal === 'evening snack') &&
-                  'pl-4'
-                }  ${(meal === 'lunch' || meal === 'dinner') && 'pl-[18px]'}`}
-              >
-                <img
-                  src={mealImage}
-                  className={`relative  h-[128px] w-[127px] max-w-max object-cover`}
-                />
+                <div
+                  className={`relative z-50 ml-auto mr-auto h-[127px] w-[127px] overflow-hidden rounded-e-full   ${
+                    meal === 'breakfast' && 'pl-4'
+                  }  ${
+                    (meal === 'morning snack' || meal === 'evening snack') &&
+                    'pl-4'
+                  }  ${(meal === 'lunch' || meal === 'dinner') && 'pl-[18px]'}`}
+                >
+                  {meal === 'lunch' && (
+                    <img
+                      src="./assets/lunch-nonVeg-weightGain.svg"
+                      className={`relative  h-[128px] w-[127px] max-w-max object-cover`}
+                    />
+                  )}
+                  {meal === 'dinner' && (
+                    <img
+                      src="./assets/lunch-veg-weightGain.svg"
+                      className={`relative  h-[128px] w-[127px] max-w-max object-cover`}
+                    />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="mt-3 flex min-h-[106px] w-full items-start justify-start gap-2 rounded-[12px]  bg-[rgba(0,0,0,0.40)] p-2">
-            <div className="  h-[60px] w-[60px] rounded-lg">
-              <img src={mealSuggestionImage} />
+          )}
+
+          <div className=" flex w-full items-start justify-start gap-2 rounded-[12px]  bg-[rgba(0,0,0,0.40)] p-2">
+            <div className="  block  w-[77px] rounded-lg">
+              <img src={mealSuggestionImage} className="rounded-lg" />
             </div>
-            <div className="flex flex-col items-start justify-start w-full gap-2">
+            <div className="flex flex-col items-start justify-start gap-2 w-max grow">
               <div className="flex justify-between w-full">
                 <h3
                   className="flex items-start font-sfpro text-[12px]  capitalize text-darkTextGray"
@@ -100,13 +121,13 @@ function MealInfoTile({
               <h3 className="mt-1 font-sfpro text-[14px] leading-[14px]  text-offwhite">
                 {name}
               </h3>
-              <div className="flex w-full max-w-[200px] flex-wrap items-start  gap-1">
+              <div className="flex w-full max-w-[200px] flex-wrap  items-start">
                 {ingredients &&
                   ingredients.map((item) => {
                     return (
                       <p
-                        className="text-darkTextGray"
-                        style={{ fontSize: '11px', lineHeight: '14px' }}
+                        className="pr-1 text-darkTextGray"
+                        style={{ fontSize: '11px', lineHeight: '12px' }}
                       >
                         {item}
                       </p>

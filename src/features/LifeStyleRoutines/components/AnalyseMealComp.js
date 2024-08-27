@@ -20,6 +20,21 @@ import MealImageicon from './icons/MealImageicon';
 import MealCrossIcon from './icons/MealCrossIcon';
 import { useSearchParams } from 'react-router-dom';
 
+const correctFormatDate = (longDate) => {
+  // Create a new Date object
+  const date = new Date(longDate);
+
+  // Extract day, month, and year
+  const day = date.getDate();
+  const month = date.toLocaleString('default', { month: 'short' }); // Get abbreviated month name
+  const year = date.getFullYear();
+
+  // Format the date as "26 Aug 2024"
+  const formattedDate = `${day} ${month} ${year}`;
+
+  return formattedDate;
+};
+
 const AnalyseMealComp = ({
   setParentVisibilityCheck = null,
   task = null,
@@ -75,6 +90,8 @@ const AnalyseMealComp = ({
   const finalDate = date === null || date === undefined ? formattedDate : date;
   const [searchParams] = useSearchParams();
   const meal = searchParams.get('meal');
+  const paramsDate = searchParams.get('date');
+
   console.log('task and date are', task, date);
 
   // redux implementation
@@ -119,10 +136,11 @@ const AnalyseMealComp = ({
   console.log('storedMealUrlField', storedMealUrlField);
   console.log('storedMealInfoField', storedMealInfoField);
   // checking if arguments are empty
-
+  console.log('xxxxxxxxx', selectedTaskId);
   useEffect(() => {
     if (meal) {
       const paramsMeal = mealTaskIds.find((item) => item.taskName === meal);
+
       if (paramsMeal) {
         setselectedTaskId(paramsMeal.taskId);
         setselectedTaskName(meal);
@@ -145,7 +163,7 @@ const AnalyseMealComp = ({
   }, [meal]);
 
   useEffect(() => {
-    if (task == null) {
+    if (task == null && !meal) {
       setselectedTaskId('');
     } else if (!storedMealInfoField) {
       setIsVisible(true);
@@ -211,10 +229,10 @@ const AnalyseMealComp = ({
           'user',
           JSON.parse(localStorage.getItem('user'))['code'],
         );
-        formData.append('date', finalDate);
+        formData.append('date', paramsDate ? paramsDate : finalDate);
         console.log('Selected taskId and date is', selectedTaskId, finalDate);
         formData.append('mealType', selectedTaskId);
-        formData.append('functionType', 'mealUpload');
+        formData.append('functionType', meal ? 'mealUpload' : 'mealAnalyse');
         formData.append('optionalDescription', userMealDescription);
 
         const res = await axiosClient.post('/meal-info', formData, {
@@ -386,7 +404,7 @@ const AnalyseMealComp = ({
                   </div>
                 ) : (
                   <div
-                    className="border-gray-400  mb-6 mt-[58px] flex   h-[421px] h-fit w-[358px] items-center justify-center rounded-lg bg-mediumGray bg-cover "
+                    className="border-gray-400  mb-6 mt-[58px] flex   h-fit w-[358px] items-center justify-center rounded-lg bg-mediumGray bg-cover "
                     onClick={() => setshowMealPicPopUp(true)}
                   >
                     {' '}
@@ -433,7 +451,7 @@ const AnalyseMealComp = ({
                       className={`flex w-full flex-row items-center justify-center rounded-xl p-3 text-black ${
                         selectedImage && selectedTaskName
                           ? 'bg-custompurple'
-                          : 'bg-gray-500 cursor-not-allowed'
+                          : 'bg-mediumGray'
                       }`}
                       onClick={handleMealUploadSubmit}
                     >
@@ -450,7 +468,7 @@ const AnalyseMealComp = ({
         </>
       ) : (
         <MealPage
-          finalDate={finalDate}
+          finalDate={paramsDate ? correctFormatDate(paramsDate) : formattedDate}
           mealInfo={storedMealInfoField ? storedMealInfoField : tempMealInfo}
           imageURL={storedMealUrlField ? storedMealUrlField : tempMealUrl}
           setParentVisibilityCheck={

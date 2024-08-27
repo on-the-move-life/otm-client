@@ -162,6 +162,7 @@ const NutritionPage = () => {
                 <MealPlanPage
                   mealData={mealData}
                   setSelectedDate={setSelectedDate}
+                  selectedDate={selectedDate}
                 />
               </>
             )}

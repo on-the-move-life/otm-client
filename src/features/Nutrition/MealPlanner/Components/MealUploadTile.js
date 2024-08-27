@@ -32,11 +32,20 @@ function MealUploadTile({ mealType, mealUrl, mealNutritionAnalysis }) {
           <div className="flex flex-col items-start justify-start w-full gap-2">
             <div className="flex items-center justify-between w-full ">
               <h3
-                className=" flex items-start rounded-[4.5px] bg-[rgba(94,204,123,0.12)] px-[8px] py-[3.5px]  font-sfpro text-[12px] font-medium capitalize text-green"
+                className="flex items-start rounded-[4.5px] bg-[rgba(94,204,123,0.12)] px-[8px] py-[3.5px] font-sfpro text-[12px] font-medium capitalize text-green"
                 style={{ lineHeight: '16.71px' }}
               >
-                <img src="./assets/correct.svg" className="mr-[4px]" />
-                Completed {mealType}
+                <img
+                  src="./assets/correct.svg"
+                  className="mr-[4px]"
+                  alt="Completed"
+                />
+                Completed {mealType === 'eveningSnack' && 'Evening Snack'}
+                {mealType === 'morningSnack' && 'Morning Snack'}
+                {(mealType === 'lunch' ||
+                  mealType === 'breakfast' ||
+                  mealType === 'dinner') &&
+                  mealType}
               </h3>
               <h3
                 className=" flex items-start font-sfpro text-[20px]  capitalize text-yellow"

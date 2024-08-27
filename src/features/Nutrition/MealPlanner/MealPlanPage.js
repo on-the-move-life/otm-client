@@ -43,7 +43,7 @@ function isDateInCurrentWeek(day) {
   return null; // Return null if not found
 }
 
-function MealPlanPage({ mealData, setSelectedDate }) {
+function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
   const selectWeeklyPlans = Selectors.makeGetWeeklyPlan();
   const weeklyPlan = useSelector(selectWeeklyPlans, shallowEqual);
   const [selectedDay, setSelectedDay] = useState(null);
@@ -54,7 +54,7 @@ function MealPlanPage({ mealData, setSelectedDate }) {
 
   console.log(mealData, takenCalorie);
   useEffect(() => {
-    setTakenCalorie(mealData.totalCalories);
+    setTakenCalorie(mealData?.totalCalories);
   }, [mealData]);
 
   const [isTrackerVisible, setIsTrackerVisible] = useState(null);
@@ -169,13 +169,13 @@ function MealPlanPage({ mealData, setSelectedDate }) {
                   {dateWiseWeeklyPlan['totalCalorie']}
                 </p>
               </div>
-              <h5
+              {/* <h5
                 className=" text-[14px] text-[#929292]"
                 style={{ lineHeight: '16.71px' }}
               >
                 It looks like you’re going to exceed today’s calorie count.
                 Let’s get an extra 25 min walk in.
-              </h5>
+              </h5> */}
               <div className="w-full h-3 my-1 overflow-hidden rounded-full bg-gray">
                 <motion.div
                   className="relative h-full rounded-full px-[2px]"
@@ -240,6 +240,8 @@ function MealPlanPage({ mealData, setSelectedDate }) {
                         macros={item?.macros}
                         ingredients={item?.items}
                         mealSuggestionImage={item?.mealImage}
+                        mealPreference={dateWiseWeeklyPlan.mealPreference}
+                        dietPreference={dateWiseWeeklyPlan.dietPreference}
                       />
                     </>
                   );
@@ -250,7 +252,7 @@ function MealPlanPage({ mealData, setSelectedDate }) {
           </div>
           {isTrackerVisible && (
             <Link
-              to={`/MealUpload?meal=${mealSelected}`}
+              to={`/MealUpload?meal=${mealSelected}&date=${selectedDate}`}
               className="flex w-full gap-2 mt-2"
             >
               <div className="flex h-[65px] grow items-center justify-between rounded-lg bg-[rgba(0,0,0,0.45)] p-1">
@@ -265,7 +267,7 @@ function MealPlanPage({ mealData, setSelectedDate }) {
                     <img src="/assets/tracksnack.svg" />
                   )}
                   {mealSelected.toLowerCase() === 'dinner' && (
-                    <img src="/assets/tracklunch.svg" />
+                    <img src="/assets/trackdinner.svg" />
                   )}
 
                   <span className="ml-[20px] text-xl  text-offwhite">

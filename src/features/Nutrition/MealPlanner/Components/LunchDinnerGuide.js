@@ -1,4 +1,4 @@
-const LunchDinnerGuide = () => {
+const LunchDinnerGuide = ({ meal }) => {
   return (
     <div className="absolute z-30 flex w-full h-full">
       <div className="flex flex-col items-end w-1/2 ">
@@ -25,7 +25,7 @@ const LunchDinnerGuide = () => {
         <div className="flex items-center mt-9 ">
           <span className="w-[70px] border-b border-blue"></span>
           <span className="rounded bg-blue px-1 text-[10px] text-[rgba(0,0,0,0.80)]">
-            25% Carbs
+            25% {meal === 'lunch' ? 'Fat' : 'Carbs'}
           </span>{' '}
         </div>
       </div>
