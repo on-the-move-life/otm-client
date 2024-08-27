@@ -18,7 +18,6 @@ import { AiOutlineRight } from 'react-icons/ai';
 import AdditionalActivity from './AdditionalActivity';
 import { TbSwimming } from 'react-icons/tb';
 import { FaArrowRight } from 'react-icons/fa6';
-import InstallPopup from '../../components/InstallPopup';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -37,7 +36,7 @@ const FitnessPage = () => {
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
   const [showActivity, setShowActivity] = useState(false);
-  const [showInstallPopup, setShowInstallPopup] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
@@ -88,17 +87,38 @@ const FitnessPage = () => {
   }, []);
 
   useEffect(() => {
-    // Check if the app is already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setShowInstallPopup(false);
-    } else {
-      setShowInstallPopup(true);
-    }
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
   }, []);
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      }
+      setDeferredPrompt(null);
+    }
+  };
 
   return (
     <>
-      {showInstallPopup && <InstallPopup />}
+    {deferredPrompt && (
+        <button
+          onClick={handleInstallClick}
+          className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Install App
+        </button>
+      )}
       {!loader && !error && (
         <FeatureUpdatePopup backendVersion={homeStats?.lastSeenUiVersion} />
       )}
@@ -121,7 +141,7 @@ const FitnessPage = () => {
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
             <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
               <div>
-                <TimelineHeading>Movemen</TimelineHeading>
+                <TimelineHeading>Movement</TimelineHeading>
                 <div className="flex items-center">
                   {parseInt(homeStats.streak) > 0 && (
                     <div className="flex items-center ">
