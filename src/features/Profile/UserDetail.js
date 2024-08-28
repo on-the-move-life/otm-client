@@ -24,7 +24,6 @@ import { RxCross1 } from 'react-icons/rx';
 import { Name } from '../LifestyleQuiz';
 import { WhatsappShareButton } from 'react-share';
 import GiftCard from '../ReferralUser/GiftCard';
-import InstallApp from '../../components/InstallApp';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -562,8 +561,6 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                       </section>
                     </div>
                   </div>
-
-                  <InstallApp/>
 
                   <div
                     onClick={() => setShowReferralLinkPopup(true)}
