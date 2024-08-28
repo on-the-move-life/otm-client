@@ -58,12 +58,12 @@ const InstallApp = () => {
       </div>
 
       {showInstallPopup && (
-        <div className="fixed h-auto inset-0 z-50 flex items-center bg-black">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={modalVariants}
-            className="h-full w-full overflow-y-auto bg-black p-6"
+            className={`bg-black p-6 rounded-lg ${selectedPlatform ? 'w-full h-full overflow-y-auto' : 'w-80'}`}
           >
             <div className="mb-4 flex justify-between">
               <h2 className="text-xl font-bold text-white">Install Our App</h2>
@@ -109,7 +109,7 @@ const InstallApp = () => {
                     </li>
                   ))}
                 </ol>
-                
+
                 <button
                   onClick={() => setSelectedPlatform(null)}
                   className="mt-6 rounded-lg bg-green p-2 text-black w-full"
