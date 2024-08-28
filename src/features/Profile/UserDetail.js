@@ -24,6 +24,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { Name } from '../LifestyleQuiz';
 import { WhatsappShareButton } from 'react-share';
 import GiftCard from '../ReferralUser/GiftCard';
+import InstallPWA from '../../components/InstallPWA';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -489,10 +490,10 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 </div>
                </div> */}
                 </div>
-
+                <InstallPWA/>
                 <p className="text-center align-middle text-[14px]  text-darkTextGray">
                   Fitness is not a destination. It's a journey of self
-                  improvement, one workout at a time.
+                  improvement, one workout at a tim
                 </p>
 
                 <div className="mt-[15px] flex flex-col gap-[10px]">
