@@ -1128,3 +1128,10 @@ body,
   padding-top: 0; /* Remove any top padding from the placeholder */
   margin: 0; /* Ensure no extra margin is applied */
 }
+
+.transparent-frame {
+  height: min-content;
+  background: rgba(0, 0, 0, 0.45);
+
+  border-radius: 12px;
+}
