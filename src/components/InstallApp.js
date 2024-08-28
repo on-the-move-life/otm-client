@@ -94,7 +94,7 @@ const InstallApp = () => {
                 </h3>
                 {selectedPlatform === 'ios' && (
                   <p className="mt-4 text-yellow-400">
-                    Note: Please Use Safari for installation, Apple doesn't allow third party browsers like Chrome to install apps.
+                    Note: Please Use Safari for installation, Apple doesn't allow third party browsers like Chrome to install apps
                   </p>
                 )}
                 <ol className="list-decimal space-y-6 pl-5 text-white mt-4">
