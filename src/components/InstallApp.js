@@ -58,7 +58,7 @@ const InstallApp = () => {
       </div>
 
       {showInstallPopup && (
-        <div className="fixed h-full inset-0 z-50 flex items-center justify-center bg-black">
+        <div className="fixed h-auto inset-0 z-50 flex items-center bg-black">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -88,7 +88,7 @@ const InstallApp = () => {
                 </button>
               </div>
             ) : (
-              <div>
+              <div className='pb-20'>
                 <h3 className="mb-4 text-lg font-semibold text-white">
                   {selectedPlatform === 'android' ? 'Android' : 'iOS'} Installation Steps:
                 </h3>
@@ -112,7 +112,7 @@ const InstallApp = () => {
                 
                 <button
                   onClick={() => setSelectedPlatform(null)}
-                  className="mt-6 rounded-lg bg-gray-600 p-2 text-white"
+                  className="mt-6 rounded-lg bg-green p-2 text-black w-full"
                 >
                   Back to Platform Selection
                 </button>
