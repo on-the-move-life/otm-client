@@ -1,43 +1,3 @@
-/* eslint-disable no-restricted-globals */
-const CACHE_NAME = `your-app-cache-${new Date().getTime()}`;
-const urlsToCache = [
-  "/",
-  "/index.html",
-  "/static/js/main.chunk.js",
-  "/static/js/0.chunk.js",
-  "/static/js/bundle.js",
-  "/static/css/main.chunk.css",
-  "/manifest.json"
-];
-
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
-  );
-});
-
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(event.request);
-    })
-  );
-});
-
 export function register() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -46,7 +6,26 @@ export function register() {
         .register(swUrl)
         .then((registration) => {
           console.log('Service Worker registered:', registration);
-          registration.update();
+
+          registration.onupdatefound = () => {
+            const installingWorker = registration.installing;
+            if (installingWorker == null) {
+              return;
+            }
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) {
+                  console.log('New content is available; please refresh.');
+                  // Optional: Show a notification to the user
+                  if (window.confirm('New version available! Click OK to refresh.')) {
+                    window.location.reload();
+                  }
+                } else {
+                  console.log('Content is cached for offline use.');
+                }
+              }
+            };
+          };
         })
         .catch((error) => {
           console.error('Error registering Service Worker:', error);
