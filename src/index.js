@@ -8,6 +8,7 @@ import App from './App';
 import { ThemeProvider } from '@material-tailwind/react';
 import { AuthProvider } from './contexts/AuthContext';
 import { UserContextProvider } from './contexts/UserContext';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -22,3 +23,5 @@ root.render(
     </ThemeProvider>
   </Provider>,
 );
+
+serviceWorkerRegistration.register();
