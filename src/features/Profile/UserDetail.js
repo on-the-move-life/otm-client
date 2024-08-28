@@ -568,7 +568,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                   >
                     <img src="./assets/gifts-small.svg" alt="" />
                     <div className="pl-2 text-[18px] text-[#F8F8F8]/[0.8] ">
-                      Refer a friend
+                      Refer your friends
                     </div>
                   </div>
 
