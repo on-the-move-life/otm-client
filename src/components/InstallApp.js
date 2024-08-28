@@ -50,7 +50,7 @@ const InstallApp = () => {
       </div>
 
       {showInstallPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <div className="fixed h-screen inset-0 z-50 flex items-center justify-center bg-black">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -74,7 +74,7 @@ const InstallApp = () => {
                 </button>
                 <button
                   onClick={() => setSelectedPlatform('ios')}
-                  className="rounded-lg bg-blue-500 p-3 text-white"
+                  className="rounded-lg bg-green p-3 text-black"
                 >
                   iOS
                 </button>
@@ -92,11 +92,11 @@ const InstallApp = () => {
                 <ol className="list-decimal space-y-6 pl-5 text-white mt-4">
                   {installInstructions[selectedPlatform].map((step, index) => (
                     <li key={index} className="mb-2">
-                      <p className="mb-2">{step}</p>
+                      <p className="mb-4">{step}</p>
                       <img
                         src={`/assets/${selectedPlatform}${index + 1}.jpg`}
                         alt={`${selectedPlatform.charAt(0).toUpperCase() + selectedPlatform.slice(1)} Step ${index + 1}`}
-                        className="rounded-lg w-24 sm:w-40 mx-auto"
+                        className="rounded-lg w-40 sm:w-48 mx-auto"
                       />
                     </li>
                   ))}
