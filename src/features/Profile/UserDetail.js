@@ -24,7 +24,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { Name } from '../LifestyleQuiz';
 import { WhatsappShareButton } from 'react-share';
 import GiftCard from '../ReferralUser/GiftCard';
-import InstallPWA from '../../components/InstallPWA';
+import InstallApp from '../../components/InstallApp';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -243,6 +243,8 @@ Here's a 20% off discount because I'd love for you to get healthy too!
           </motion.div>
         </div>
       )}
+
+
 
       {showReferralLinkPopup && (
         <div
@@ -490,7 +492,6 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 </div>
                </div> */}
                 </div>
-                <InstallPWA/>
                 <p className="text-center align-middle text-[14px]  text-darkTextGray">
                   Fitness is not a destination. It's a journey of self
                   improvement, one workout at a tim
@@ -563,6 +564,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                     </div>
                   </div>
 
+                   <InstallApp/>
                   <div
                     onClick={() => setShowReferralLinkPopup(true)}
                     className=" flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm "
