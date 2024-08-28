@@ -7,8 +7,16 @@ const InstallApp = () => {
   const [selectedPlatform, setSelectedPlatform] = useState(null);
 
   const modalVariants = {
-    hidden: { opacity: 0, y: '100%' },
-    visible: { opacity: 1, y: 0, transition: { type: 'tween', duration: 0.5, ease: 'easeInOut' } },
+    hidden: { opacity: 0, y: '50%' },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        type: 'spring', 
+        damping: 25, 
+        stiffness: 500 
+      } 
+    },
   };
 
   const installInstructions = {
@@ -50,7 +58,7 @@ const InstallApp = () => {
       </div>
 
       {showInstallPopup && (
-        <div className="fixed h-screen inset-0 z-50 flex items-center justify-center bg-black">
+        <div className="fixed h-full inset-0 z-50 flex items-center justify-center bg-black">
           <motion.div
             initial="hidden"
             animate="visible"

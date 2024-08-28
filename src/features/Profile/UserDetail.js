@@ -494,7 +494,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 </div>
                 <p className="text-center align-middle text-[14px]  text-darkTextGray">
                   Fitness is not a destination. It's a journey of self
-                  improvement, one workout at a tim
+                  improvement, one workout at a time.
                 </p>
 
                 <div className="mt-[15px] flex flex-col gap-[10px]">
