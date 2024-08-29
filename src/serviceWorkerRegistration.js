@@ -7,6 +7,11 @@ export function register() {
         .then((registration) => {
           console.log('Service Worker registered:', registration);
 
+          // Check for updates every 5 minutes
+          setInterval(() => {
+            registration.update();
+          }, 5 * 60 * 1000);
+
           registration.onupdatefound = () => {
             const installingWorker = registration.installing;
             if (installingWorker == null) {
