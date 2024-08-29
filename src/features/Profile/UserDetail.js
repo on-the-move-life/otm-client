@@ -563,6 +563,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                     </div>
                   </div>
                   <InstallApp/>
+                  <p>Test Text</p>
                   <div
                     onClick={() => setShowReferralLinkPopup(true)}
                     className=" flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm "
