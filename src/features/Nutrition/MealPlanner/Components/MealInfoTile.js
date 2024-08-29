@@ -18,29 +18,11 @@ function MealInfoTile({
   dietPreference,
 }) {
   const [isCollapsed, setCollapsed] = useState(true);
-  const [mealImage, setMealImage] = useState('');
+
   const [isSvgLoaded, setIsSvgLoaded] = useState(false);
 
-  useEffect(() => {
-    // if (meal === 'breakfast') {
-    //   setMealImage('./assets/breakfast-nonVeg.svg');
-    // }
-    if (meal === 'lunch') {
-      setMealImage('./assets/lunch-nonVeg-weightGain.svg');
-    }
-    if (meal === 'dinner') {
-      setMealImage('./assets/lunch-veg-weightGain.svg');
-    }
 
-    // if (meal === 'morning snack' || meal === 'evening snack')
-    //   setMealImage('./assets/snack.svg');
-  }, [meal]);
-
-  // useEffect(() => {
-  //   const img = new Image();
-  //   img.src = './assets/nutrition-bg.svg';
-  //   img.onload = () => setIsSvgLoaded(true);
-  // }, []);
+ 
 
   function percentageToFloat(percentage) {
     // Remove the '%' symbol and convert the string to a float
@@ -84,7 +66,7 @@ function MealInfoTile({
                 >
                   {meal === 'lunch' && (
                     <img
-                      src="./assets/lunch-nonVeg-weightGain.svg"
+                      src="./assets/lunch-nonVeg-weightLoss.svg"
                       className={`relative  h-[128px] w-[127px] max-w-max object-cover`}
                     />
                   )}
