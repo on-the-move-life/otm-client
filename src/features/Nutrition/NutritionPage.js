@@ -115,7 +115,7 @@ const NutritionPage = () => {
                         Find Your Plan
                       </h3>
                       <p className="relative z-10 mt-2 font-sfpro  text-[14px] font-medium text-white-opacity-50">
-                        Take our quick text and we will find the perfect plan
+                        Take our quick test and we will find the perfect plan
                         for you
                       </p>
                     </div>
