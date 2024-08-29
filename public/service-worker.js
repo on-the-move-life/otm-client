@@ -1,6 +1,6 @@
   /* eslint-disable no-restricted-globals */
 
-const CACHE_VERSION = 2; // Increment this when you want to force a cache update
+const CACHE_VERSION = 3; // Increment this when you want to force a cache update
 const CACHE_NAME = `your-app-cache-v${CACHE_VERSION}`;
 
 self.addEventListener("install", (event) => {
