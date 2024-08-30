@@ -8,6 +8,7 @@ import App from './App';
 import { ThemeProvider } from '@material-tailwind/react';
 import { AuthProvider } from './contexts/AuthContext';
 import { UserContextProvider } from './contexts/UserContext';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -20,5 +21,20 @@ root.render(
         </UserContextProvider>
       </AuthProvider>
     </ThemeProvider>
-  </Provider>,
+  </Provider>
 );
+
+serviceWorkerRegistration.register({
+  onUpdate: (registration) => {
+    const waitingServiceWorker = registration.waiting;
+
+    if (waitingServiceWorker) {
+      waitingServiceWorker.addEventListener("statechange", event => {
+        if (event.target.state === "activated") {
+          window.location.reload();
+        }
+      });
+      waitingServiceWorker.postMessage({ type: "SKIP_WAITING" });
+    }
+  },
+});
