@@ -127,11 +127,13 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
     console.log('date wise weekly plan :', dateWiseWeeklyPlan);
   }, [selectedDay]);
 
+  console.log('xxxxx', weeklyPlan);
+
   return (
     <>
       {dateWiseWeeklyPlan && (
-        <div className="relative z-10 flex flex-col items-start justify-start w-full h-full my-4 ">
-          <div className="flex flex-row items-center justify-between w-full ">
+        <div className="relative z-10 my-4 flex h-full w-full flex-col items-start justify-start ">
+          <div className="flex w-full flex-row items-center justify-between ">
             {weeklyPlan &&
               weeklyPlan.map((item) => {
                 const slicedDay = item.day.substr(0, 3);
@@ -176,7 +178,7 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
                 It looks like you’re going to exceed today’s calorie count.
                 Let’s get an extra 25 min walk in.
               </h5> */}
-              <div className="w-full h-3 my-1 overflow-hidden rounded-full bg-gray">
+              <div className="my-1 h-3 w-full overflow-hidden rounded-full bg-gray">
                 <motion.div
                   className="relative h-full rounded-full px-[2px]"
                   style={{
@@ -194,7 +196,7 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
                 <span className="font-bold text-white">
                   {completedCaloriePercentage}%
                 </span>
-                <div className="w-6 h-6 ml-2 bg-white border-2 border-gray-400 rounded-full"></div>
+                <div className="border-gray-400 ml-2 h-6 w-6 rounded-full border-2 bg-white"></div>
               </div>
             </div>
           )}
@@ -221,7 +223,7 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-center justify-start w-full gap-2 ">
+          <div className="flex w-full flex-col items-center justify-start gap-2 ">
             {dateWiseWeeklyPlan &&
               dateWiseWeeklyPlan.plan.map((item) => {
                 const isSnack =
@@ -253,7 +255,7 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
           {isTrackerVisible && (
             <Link
               to={`/MealUpload?meal=${mealSelected}&date=${selectedDate}`}
-              className="flex w-full gap-2 mt-2"
+              className="mt-2 flex w-full gap-2"
             >
               <div className="flex h-[65px] grow items-center justify-between rounded-lg bg-[rgba(0,0,0,0.45)] p-1">
                 <div className="ml-[20px] flex items-center">
