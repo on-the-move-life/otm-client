@@ -929,6 +929,9 @@ const FitnessPage = () => {
             practices with minimal restrictions and effort!
           </p>
           <div className=" bg-black-opacity-40 flex flex-col items-center rounded-lg">
+           
+           
+           
             <p className="text-[10px] text-white-opacity-50">
               ₹21,000 per person billed quarterly
             </p>
