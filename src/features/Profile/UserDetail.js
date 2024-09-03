@@ -468,15 +468,15 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                       {memberData.avgIntensity > 10 && (
                         <span
                           className={`mx-2 rounded  ${showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
-                            } px-2  py-0.5 text-[13px] font-extrabold text-black`}
+                            } px-2 text-[13px] font-extrabold text-black`}
                         >
                           {showElite ? 'Elite' : 'Advanced'}
                         </span>
                       )}
                       {memberData.isLegend && (
                         <div className="flex items-center ">
-                          <div className="flex items-center my-2 rounded perfect-week w-fit">
-                            <img src="assets/star.svg" alt="" />
+                          <div className="flex items-center my-2 rounded legend-tag w-fit">
+                            <img src="assets/medal.svg" alt="" />
                             <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
                               LEGEND
                             </span>

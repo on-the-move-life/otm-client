@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const axiosClient = axios.create({
   // baseURL: `http://localhost:3001`,
-  baseURL: `${'http://localhost:3000'}/client`,
+  baseURL: `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client`,
 
   headers: {
     Accept: 'application/json',
