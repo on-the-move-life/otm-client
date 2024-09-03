@@ -517,7 +517,7 @@ const FitnessPage = () => {
                     <div
                       className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
                     >
-                      {/* {homeStats && formatNumber(homeStats?.totalWorkoutsDone)} */}
+                      {homeStats && formatNumber(homeStats?.totalWorkouts)}
                     </div>
                   </div>
                 </div>
