@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import InputText from '../LifestyleQuiz/InputText';
 import {
   capitalizeFirstLetter,
   decreaseScreenAndRank,
@@ -11,6 +10,7 @@ import Options from '../Questionnaire/Components/inputs/Options';
 import BackButton from '../../components/BackButton';
 import { Button } from '../../components';
 import { useNavigate } from 'react-router-dom';
+import InputText from '../Questionnaire/Components/inputs/InputText';
 
 const FtnesssQuestionare = () => {
   const [questions, setQuestions] = useState(null);
@@ -55,7 +55,7 @@ const FtnesssQuestionare = () => {
       .catch((err) => {
         console.log(err.message);
       })
-      .finally(() => navigate('/home'));
+      .finally(() => navigate('/home?evolve=evolve'));
   };
 
   return (
@@ -99,8 +99,10 @@ const FtnesssQuestionare = () => {
                           {capitalizeFirstLetter(ques?.description)}
                         </p>
                       </div>
-                      {(ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
-                        ques?.inputType?.toUpperCase() === 'MULTICHOICE') && (
+                      {ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
+                      ques?.inputType?.toUpperCase() === 'MULTICHOICE' ||
+                      ques?.inputType?.toUpperCase() ===
+                        'SINGLECHOICEANDOTHER' ? (
                         <Options
                           questionCode={ques?.code}
                           options={ques?.options}
@@ -111,6 +113,20 @@ const FtnesssQuestionare = () => {
                           }
                           setResponse={setResponse}
                         />
+                      ) : (
+                        <div>
+                          <InputText
+                            questionCode={ques?.code}
+                            response={
+                              Object.keys(response)?.length > 0 && response
+                            }
+                            setResponse={setResponse}
+                            key={ques?.code}
+                            inputType={ques?.inputType}
+                            placeholder={ques?.content}
+                            isRequired={ques?.isRequired}
+                          />
+                        </div>
                       )}
                     </div>
                   </div>

@@ -34,6 +34,7 @@ module.exports = withMT({
         'black-opacity-40': 'rgba(0, 0, 0, 0.40)',
         'green-opacity-12': 'rgba(94, 204, 123, 0.12)',
         'browm-opacity-12': 'rgba(245, 197, 99, 0.12)',
+        'red-opacity-12': 'rgba(250, 87, 87, 0.12)',
         customBlack: '#1F1F1F',
       },
       backgroundImage: {

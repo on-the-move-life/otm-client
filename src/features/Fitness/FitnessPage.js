@@ -36,608 +36,6 @@ function formatNumber(num) {
   return num.toString();
 }
 
-const dummyCalender = [
-  {
-    day: 'Monday',
-    totalCalorie: '3050 kcal',
-    mealPreference: 'vegetarian',
-    dietPreference: 'Build muscle',
-    plan: [
-      {
-        meal: 'breakfast',
-        name: 'Moong Dal Pancakes with Avocado and Greek Yogurt',
-        items: ['Moong Dal', 'Greek Yogurt', 'Avocado'],
-        calories: '700 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Monday_breakfast.jpg',
-      },
-      {
-        meal: 'morning snack',
-        name: 'Mixed Nuts and Fruit Bowl',
-        items: ['Almonds', 'Walnuts', 'Apple', 'Banana'],
-        calories: '350 kcal',
-        macros: {
-          carbs: '40%',
-          fats: '50%',
-          protein: '10%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Monday_morning snack.jpg',
-      },
-      {
-        meal: 'lunch',
-        name: 'Quinoa Lentil Salad with Roasted Vegetables',
-        items: [
-          'Quinoa',
-          'Lentils',
-          'Cauliflower',
-          'Beetroot',
-          'Carrots',
-          'Balsamic Dressing',
-        ],
-        calories: '750 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Monday_lunch.jpg',
-      },
-      {
-        meal: 'evening snack',
-        name: 'Greek Yogurt with Honey and Chia Seeds',
-        items: ['Greek Yogurt', 'Honey', 'Chia Seeds'],
-        calories: '250 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '40%',
-          protein: '25%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Monday_evening snack.jpg',
-      },
-      {
-        meal: 'dinner',
-        name: 'Stuffed Bell Peppers with Paneer and Brown Rice',
-        items: ['Bell Peppers', 'Paneer', 'Brown Rice', 'Tomatoes', 'Spinach'],
-        calories: '1000 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Monday_dinner.jpg',
-      },
-    ],
-    date: 26,
-  },
-  {
-    day: 'Tuesday',
-    totalCalorie: '3050 kcal',
-    mealPreference: 'vegetarian',
-    dietPreference: 'Build muscle',
-    plan: [
-      {
-        meal: 'breakfast',
-        name: 'Oats and Moong Dal Chilla with Avocado Greek Yogurt Spread',
-        items: ['Oats', 'Moong Dal', 'Avocado', 'Greek Yogurt'],
-        calories: '650 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Tuesday_breakfast.jpg',
-      },
-      {
-        meal: 'morning snack',
-        name: 'Mixed Nuts and Fruit Platter',
-        items: ['Almonds', 'Walnuts', 'Apple', 'Banana'],
-        calories: '400 kcal',
-        macros: {
-          carbs: '40%',
-          fats: '50%',
-          protein: '10%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Tuesday_morning snack.jpg',
-      },
-      {
-        meal: 'lunch',
-        name: 'Quinoa Lentil Salad with Grilled Veggies',
-        items: [
-          'Quinoa',
-          'Lentils',
-          'Eggplant (Brinjal)',
-          'Zucchini',
-          'Red Bell Peppers',
-          'Olive Oil',
-          'Lemon Dressing',
-        ],
-        calories: '750 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '30%',
-          protein: '35%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Tuesday_lunch.jpg',
-      },
-      {
-        meal: 'evening snack',
-        name: 'Cucumber and Carrot Sticks with Hummus',
-        items: ['Cucumber', 'Carrots', 'Hummus'],
-        calories: '300 kcal',
-        macros: {
-          carbs: '30%',
-          fats: '50%',
-          protein: '20%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Tuesday_evening snack.jpg',
-      },
-      {
-        meal: 'dinner',
-        name: 'Mung Beans and Brown Rice with Sauteed Greens',
-        items: [
-          'Mung Beans',
-          'Brown Rice',
-          'Kale',
-          'Spinach',
-          'Garlic',
-          'Olive Oil',
-        ],
-        calories: '950 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '30%',
-          protein: '35%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Tuesday_dinner.jpg',
-      },
-    ],
-    date: 27,
-  },
-  {
-    day: 'Wednesday',
-    totalCalorie: '3050 kcal',
-    mealPreference: 'vegetarian',
-    dietPreference: 'Build muscle',
-    plan: [
-      {
-        meal: 'breakfast',
-        name: 'Moong Dal Pancakes with Avocado and Greek Yogurt',
-        items: ['Moong Dal', 'Avocado', 'Greek Yogurt'],
-        calories: '650 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Wednesday_breakfast.jpg',
-      },
-      {
-        meal: 'morning snack',
-        name: 'Mixed Nuts and Fruit Bowl',
-        items: ['Almonds', 'Walnuts', 'Apple', 'Banana'],
-        calories: '450 kcal',
-        macros: {
-          carbs: '40%',
-          fats: '40%',
-          protein: '20%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Wednesday_morning snack.jpg',
-      },
-      {
-        meal: 'lunch',
-        name: 'Quinoa Salad with Beetroot and Roasted Cauliflower',
-        items: ['Quinoa', 'Beetroot', 'Cauliflower'],
-        calories: '750 kcal',
-        macros: {
-          carbs: '40%',
-          fats: '30%',
-          protein: '30%',
-        },
-      },
-      {
-        meal: 'evening snack',
-        name: 'Greek Yogurt with Honey and Chia Seeds',
-        items: ['Greek Yogurt', 'Honey', 'Chia Seeds'],
-        calories: '300 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Wednesday_evening snack.jpg',
-      },
-      {
-        meal: 'dinner',
-        name: 'Lentil and Veggie Stir-fry over Brown Rice',
-        items: ['Lentils', 'Green Beans', 'Cauliflower', 'Brown Rice'],
-        calories: '900 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Wednesday_dinner.jpg',
-      },
-    ],
-    date: 28,
-  },
-  {
-    day: 'Thursday',
-    totalCalorie: '3050 kcal',
-    mealPreference: 'vegetarian',
-    dietPreference: 'Build muscle',
-    plan: [
-      {
-        meal: 'breakfast',
-        name: 'Moong Dal Pancakes with Avocado and Greek Yogurt Topping',
-        items: ['Moong Dal', 'Avocado', 'Greek Yogurt'],
-        calories: '600 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Thursday_breakfast.jpg',
-      },
-      {
-        meal: 'morning snack',
-        name: 'Mixed Nuts and Fruit Bowl',
-        items: ['Almonds', 'Walnuts', 'Blueberries', 'Apple'],
-        calories: '300 kcal',
-        macros: {
-          carbs: '40%',
-          fats: '40%',
-          protein: '20%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Thursday_morning snack.jpg',
-      },
-      {
-        meal: 'lunch',
-        name: 'Lentil Quinoa Buddha Bowl with Roasted Veggies',
-        items: [
-          'Lentils',
-          'Quinoa',
-          'Bok Choy',
-          'Cauliflower',
-          'Beets',
-          'Avocado dressing',
-        ],
-        calories: '750 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Thursday_lunch.jpg',
-      },
-      {
-        meal: 'evening snack',
-        name: 'Greek Yogurt with Honey and Mixed Seeds',
-        items: [
-          'Greek Yogurt',
-          'Honey',
-          'Chia Seeds',
-          'Flaxseeds',
-          'Pumpkin Seeds',
-        ],
-        calories: '300 kcal',
-        macros: {
-          carbs: '25%',
-          fats: '45%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Thursday_evening snack.jpg',
-      },
-      {
-        meal: 'dinner',
-        name: 'Stuffed Bell Peppers with Paneer and Mushroom',
-        items: ['Bell Peppers', 'Paneer', 'Mushrooms', 'Brown Rice'],
-        calories: '1100 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Thursday_dinner.jpg',
-      },
-    ],
-    date: 29,
-  },
-  {
-    day: 'Friday',
-    totalCalorie: '3050 kcal',
-    mealPreference: 'vegetarian',
-    dietPreference: 'Build muscle',
-    plan: [
-      {
-        meal: 'breakfast',
-        name: 'Moong Dal Pancakes with Avocado Spread',
-        items: ['Moong Dal', 'Avocado', 'Greek Yogurt'],
-        calories: '700 kcal',
-        macros: {
-          carbs: '30%',
-          fats: '40%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Friday_breakfast.jpg',
-      },
-      {
-        meal: 'morning snack',
-        name: 'Mixed Nuts and Fruit Bowl',
-        items: ['Almonds', 'Walnuts', 'Apple', 'Banana'],
-        calories: '350 kcal',
-        macros: {
-          carbs: '40%',
-          fats: '45%',
-          protein: '15%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Friday_morning snack.jpg',
-      },
-      {
-        meal: 'lunch',
-        name: 'Quinoa Bean Salad with Grilled Veggies',
-        items: ['Quinoa', 'Chickpeas', 'Zucchini', 'Bell Peppers', 'Bok Choy'],
-        calories: '850 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '30%',
-          protein: '35%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Friday_lunch.jpg',
-      },
-      {
-        meal: 'evening snack',
-        name: 'Greek Yogurt with Honey and Walnuts',
-        items: ['Greek Yogurt', 'Honey', 'Walnuts'],
-        calories: '300 kcal',
-        macros: {
-          carbs: '20%',
-          fats: '50%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Friday_evening snack.jpg',
-      },
-      {
-        meal: 'dinner',
-        name: 'Lentil and Vegetable Stuffed Peppers',
-        items: [
-          'Lentils',
-          'Bell Peppers',
-          'Cauliflower',
-          'Carrots',
-          'Tomatoes',
-        ],
-        calories: '850 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '30%',
-          protein: '35%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Friday_dinner.jpg',
-      },
-    ],
-    date: 30,
-  },
-  {
-    day: 'Saturday',
-    totalCalorie: '3050 kcal',
-    mealPreference: 'vegetarian',
-    dietPreference: 'Build muscle',
-    plan: [
-      {
-        meal: 'breakfast',
-        name: 'Moong Dal Pancakes with Avocado and Greek Yogurt',
-        items: ['Moong Dal', 'Avocado', 'Greek Yogurt'],
-        calories: '600 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Saturday_breakfast.jpg',
-      },
-      {
-        meal: 'morning snack',
-        name: 'Mixed Nuts and Seeds with Fruit Salad',
-        items: ['Almonds', 'Walnuts', 'Chia Seeds', 'Apple', 'Banana'],
-        calories: '400 kcal',
-        macros: {
-          carbs: '40%',
-          fats: '45%',
-          protein: '15%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Saturday_morning snack.jpg',
-      },
-      {
-        meal: 'lunch',
-        name: 'Quinoa Lentil Salad with Steamed Green Veggies',
-        items: [
-          'Quinoa',
-          'Lentils',
-          'Broccoli',
-          'Brussels Sprouts',
-          'Bok Choy',
-        ],
-        calories: '800 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '30%',
-          protein: '35%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Saturday_lunch.jpg',
-      },
-      {
-        meal: 'evening snack',
-        name: 'Greek Yogurt with Honey and Mixed Berries',
-        items: ['Greek Yogurt', 'Honey', 'Mixed Berries'],
-        calories: '350 kcal',
-        macros: {
-          carbs: '45%',
-          fats: '25%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Saturday_evening snack.jpg',
-      },
-      {
-        meal: 'dinner',
-        name: 'Stuffed Bell Peppers with Paneer and Brown Rice',
-        items: ['Bell Peppers', 'Paneer', 'Brown Rice', 'Spices'],
-        calories: '900 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Saturday_dinner.jpg',
-      },
-    ],
-    date: 31,
-  },
-  {
-    day: 'Sunday',
-    totalCalorie: '3050 kcal',
-    mealPreference: 'vegetarian',
-    dietPreference: 'Build muscle',
-    plan: [
-      {
-        meal: 'breakfast',
-        name: 'Moong Dal Pancakes with Greek Yogurt and Avocado',
-        items: ['Moong Dal', 'Greek Yogurt', 'Avocado'],
-        calories: '600 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Sunday_breakfast.jpg',
-      },
-      {
-        meal: 'lunch',
-        name: 'Quinoa Chickpea Buddha Bowl',
-        items: [
-          'Quinoa',
-          'Chickpeas',
-          'Avocado',
-          'Spinach',
-          'Cucumber',
-          'Carrots',
-        ],
-        calories: '750 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Sunday_lunch.jpg',
-      },
-      {
-        meal: 'evening snack',
-        name: 'Fruit and Nut Mix',
-        items: ['Almonds', 'Walnuts', 'Dried Cranberries', 'Apple Slices'],
-        calories: '300 kcal',
-        macros: {
-          carbs: '30%',
-          fats: '40%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Sunday_evening snack.jpg',
-      },
-      {
-        meal: 'dinner',
-        name: 'Stuffed Bell Peppers with Paneer and Vegetables',
-        items: [
-          'Bell Peppers',
-          'Paneer',
-          'Bok Choy',
-          'Mushrooms',
-          'Brown Rice',
-        ],
-        calories: '1000 kcal',
-        macros: {
-          carbs: '35%',
-          fats: '35%',
-          protein: '30%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Sunday_dinner.jpg',
-      },
-      {
-        meal: 'morning snack',
-        name: 'Oats and Chia Seeds Pudding',
-        items: ['Oats', 'Chia Seeds', 'Greek Yogurt', 'Honey'],
-        calories: '400 kcal',
-        macros: {
-          carbs: '35%',
-          fats: 'sa',
-          protein: '35%',
-        },
-        mealImage:
-          'https://storage.googleapis.com/otm_client_meal_pictures/Sunday_morning snack.jpg',
-      },
-    ],
-    date: 1,
-  },
-];
-
-const WeeklySchedule = [
-  {
-    num: 4,
-    text: 'workouts',
-    taskDetail: ['3 done', '1 left'],
-  },
-  {
-    num: 1,
-    text: 'areobic session',
-    taskDetail: ['completed'],
-  },
-  {
-    num: 1,
-    text: 'walk',
-    taskDetail: ['not started'],
-  },
-  {
-    num: 6,
-    text: 'strechers',
-    taskDetail: ['not started'],
-  },
-];
-
 const FitnessPage = () => {
   const [showQuestion, setShowQuestion] = useState(false);
   const { setUserData } = useUserContext();
@@ -649,11 +47,19 @@ const FitnessPage = () => {
   const [homeStats, setHomeStats] = useState(null);
   const { getUserFromStorage, user } = useAuth();
   const [showActivity, setShowActivity] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(null);
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
 
   const navigate = useNavigate();
+  const queryString = window.location.search;
+
+  // Initialize URLSearchParams with the query string
+  const queryParams = new URLSearchParams(queryString);
+
+  // Get the value of the 'evolve' parameter
+  const evolve = queryParams.get('evolve');
 
   const data = [
     { name: 'Page A', uv: 1000, pv: 2400, amt: 2400 },
@@ -677,7 +83,111 @@ const FitnessPage = () => {
   const firstName = fullName.split(' ')[0];
 
   const smallArr = [1, 2, 3, 4];
-  console.log(homeStats);
+
+  useEffect(() => {
+    const today = new Date();
+
+    // Use Intl.DateTimeFormat to get the full day name
+    const dayName = new Intl.DateTimeFormat('en-US', {
+      weekday: 'long',
+    }).format(today);
+
+    setSelectedDay(dayName);
+  }, []);
+
+  function getCurrentWeek() {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // Day of the week (0-6) with 0 being Sunday
+
+    // Calculate the date of Monday of the current week
+    const firstDayOfWeek =
+      today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+    const currentWeek = [];
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        firstDayOfWeek + i,
+      );
+      // Get only the day of the month
+      const dayOfMonth = date.getDate();
+      currentWeek.push(dayOfMonth);
+    }
+
+    return currentWeek;
+  }
+  console.log(
+    'aasfsdfrwesdfsdf',
+    homeStats?.weeklyWorkout[selectedDay]['Morning Zone']['movements'][0],
+  );
+
+  const currentWeekDates = getCurrentWeek();
+
+  // function isDateInCurrentWeek(day) {
+  //   const currentWeek = getCurrentWeek();
+  //   console.log('xxccxcvddvdvdvdvqqqwwewwwwwwwew', currentWeek);
+  //   // Find if the day exists in the current week
+  //   const matchedDate = currentWeek.find((date) => date.getDate() === day);
+
+  //   if (matchedDate) {
+  //     return matchedDate; // Return the Date object if found
+  //   }
+
+  //   return null; // Return null if not found
+  // }
+
+  // console.log('xcxcxc', isDateInCurrentWeek(3));
+
+  const getUserData = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout?memberCode=${code}`,
+      )
+      .then((res) => {
+        if (res.data) {
+          setUserData(res.data);
+          setHomeStats(res.data);
+
+          setError(null);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setHomeStats(null);
+        setShowQuestion(true);
+      })
+      .finally(() => {
+        setLoader(false);
+      });
+  };
+
+  const postUserData = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout`,
+        {
+          memberCode: code,
+        },
+      )
+      .then((res) => {
+        if (res.data) {
+          setUserData(res.data);
+          setHomeStats(res.data);
+
+          setError(null);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setHomeStats(null);
+        setShowQuestion(true);
+      })
+      .finally(() => {
+        setLoader(false);
+      });
+  };
+
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
 
@@ -692,30 +202,13 @@ const FitnessPage = () => {
 
     getUserFromStorage();
 
-    if (user === null) navigate('/');
-
-    function getUserData() {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout?memberCode=${code}`,
-        )
-        .then((res) => {
-          if (res.data) {
-            setUserData(res.data);
-            setHomeStats(res.data);
-            setLoader(false);
-            setError(null);
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-          setHomeStats(null);
-          setShowQuestion(true);
-        });
-    }
-
     if (user && user.email) {
-      getUserData();
+      console.log('xxxxxx', evolve);
+      if (evolve) {
+        postUserData();
+      } else {
+        getUserData();
+      }
     } else {
       setError('Please login first');
     }
@@ -727,7 +220,7 @@ const FitnessPage = () => {
     checkIfWeekend();
   }, []);
 
-  const chargeArray = ['', '', '', '', '', '2', '3'];
+  const chargeArray = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     // <>
@@ -941,320 +434,363 @@ const FitnessPage = () => {
     //     </div>
     //   )}
     // </>
-    <div>
+
+    <div className="h-screen overflow-y-scroll pb-[78px]">
+      {loader && <Loader />}
       <img
         src="assets/movement-frame.svg"
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
-      <div className="px-[16px]">
-        <h2 className="mt-[70px] w-4/5 text-lg text-offwhite">
-          Based on your answers, we’ve designed your personalised journey
-        </h2>
-        <div className="mt-[22px] rounded-xl bg-black-opacity-45 p-1 ">
-          <div className="flex items-end gap-[10px] px-3">
-            <img src="./assets/evolve.svg" />
-            <h5 className="h-min rounded bg-browm-opacity-12 px-2 text-xs text-yellow">
-              Level 2
-            </h5>
+      {evolve && (
+        <div className=" px-[16px] ">
+          <h2 className="mt-[60px] w-4/5 text-lg text-offwhite">
+            Based on your answers, we’ve designed your personalised journey
+          </h2>
+          <div className="mt-[22px] rounded-xl bg-black-opacity-45 p-1 ">
+            <div className="flex items-end gap-[10px] px-3">
+              <img src="./assets/evolve.svg" />
+              <h5 className="h-min rounded bg-browm-opacity-12 px-2 text-xs text-yellow">
+                Level 1
+              </h5>
+            </div>
+            <p className="mt-[10px] w-11/12 px-3 text-sm text-white-opacity-50">
+              We'll focus on sustainable integration of fitness and wellbeing
+              practices with minimal restrictions and effort!
+            </p>
           </div>
-          <p className="mt-[10px] w-11/12 px-3 text-sm text-white-opacity-50">
-            We'll focus on sustainable integration of fitness and wellbeing
-            practices with minimal restrictions and effort!
-          </p>
+          <LineChart width={300} height={300} data={data}>
+            <XAxis hide />
+            <YAxis hide />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="linear"
+              dataKey="uv"
+              stroke="#8884d8"
+              strokeDasharray="5 5"
+            />
+          </LineChart>
+
+          <button
+            type="submit"
+            onClick={() => {
+              navigate('/home');
+              getUserData();
+            }}
+            style={{
+              backgroundColor: '#F8F8F8',
+
+              color: 'rgba(0,0,0)',
+            }}
+            className="relative  mb-10 mt-10  flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg leading-8  text-black backdrop-blur-md"
+          >
+            Get Started Your journey
+          </button>
         </div>
-        <LineChart width={300} height={300} data={data}>
-          <XAxis hide />
-          <YAxis hide />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="linear"
-            dataKey="uv"
-            stroke="#8884d8"
-            strokeDasharray="5 5"
-          />
-        </LineChart>
-        <img className="rounded-tr-2xl" src="./assets/evolve-level.svg" />
-        <button
-          type="submit"
-          style={{
-            backgroundColor: '#F8F8F8',
-
-            color: 'rgba(0,0,0)',
-          }}
-          className="relative  mt-10  flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg leading-8  text-black backdrop-blur-md"
-        >
-          Get Started Your journey
-        </button>
-      </div>
-
-      {showActivity === true && (
-        <AdditionalActivity setShowActivity={setShowActivity} />
       )}
 
-      <div className="overflow-y-scroll px-4">
-        <div className="mt-[77px] flex w-full items-end">
-          <div className="flex-1">
-            <h3 className=" font-sfpro text-[14px] text-offwhite">
-              Good Morning {firstName}
-            </h3>
-
-            <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
-              Nutrition
-            </h2>
-
-            <div className="font-sfpro text-[14px] text-white-opacity-50">
-              Everyday is an opportunity to do some main character shit.
-            </div>
-          </div>
-          {showQuestion === false && (
-            <div className="flex flex-1 justify-end">
-              <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
-                <span className=" pl-2  text-sm">Total workouts</span>
-                <div
-                  className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
-                >
-                  {/* {homeStats && formatNumber(homeStats?.totalWorkoutsDone)} */}
-                </div>
-              </div>
-            </div>
+      {!evolve && (
+        <>
+          {showActivity === true && (
+            <AdditionalActivity setShowActivity={setShowActivity} />
           )}
-        </div>
 
-        {showQuestion === true && (
-          <div className="mt-[24px] flex flex-col items-center gap-2">
-            <div
-              style={{
-                background:
-                  'radial-gradient(circle at top left, #97EBAD 0%, #439258 60%)',
-              }}
-              className="flex w-full flex-col items-center justify-between rounded-xl px-[8px] pb-[8px]"
-            >
-              <div className="flex w-full justify-between">
-                <img
-                  src="/assets/arrow-board.svg"
-                  className="h-[150px] w-[150px]"
-                />
-                <div className="flex w-full flex-1 flex-col justify-center">
-                  <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
-                    Find Your Plan
-                  </h3>
-                  <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
-                    Take our quick test and we will find the perfect plan for
-                    you.
-                  </p>
+          <div className="overflow-y-scroll px-4">
+            <div className="mt-[77px] flex w-full items-end">
+              <div className="flex-1">
+                <h3 className=" font-sfpro text-[14px] text-offwhite">
+                  Good Morning {firstName}
+                </h3>
+
+                <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
+                  Movement
+                </h2>
+
+                <div className="font-sfpro text-[14px] text-white-opacity-50">
+                  Everyday is an opportunity to do some main character shit.
                 </div>
               </div>
-              <Link
-                to="/fintess-qustioniore"
-                style={{ backgroundColor: 'rgba(31, 31, 31, 0.2)' }} // camelCase for backgroundColor
-                className=" w-full rounded-lg p-2.5 text-center font-sfpro text-[18px] font-medium text-offwhite" // Replaced p-[10px] with Tailwind equivalent
-              >
-                Let's Go
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {showQuestion === false && (
-          <>
-            <div className="my-4 flex justify-center">
-              {dummyCalender &&
-                dummyCalender.map((item) => {
-                  const slicedDay = item.day.substr(0, 3);
-                  console.log(slicedDay);
-                  return (
-                    <div>
-                      <CalendarTile
-                        date={item.date}
-                        day={slicedDay}
-                        isSelected={item.day === dummyCalender.day}
-                        selectedDay={dummyCalender.day}
-                      />
+              {showQuestion === false && (
+                <div className="flex flex-1 justify-end">
+                  <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
+                    <span className=" pl-2  text-sm">Total workouts</span>
+                    <div
+                      className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
+                    >
+                      {/* {homeStats && formatNumber(homeStats?.totalWorkoutsDone)} */}
                     </div>
-                  );
-                })}
-            </div>
-
-            <div className="flex gap-2">
-              <div className="h-fit w-full rounded-xl bg-black-opacity-45 py-2">
-                <div className="mx-3  flex justify-between">
-                  <h4 className="text-sm text-offwhite">
-                    Your weekly schedule
-                  </h4>
-                  <img src="./assets/maximize-schedule.svg" />
-                </div>
-                <div className="mt-5">
-                  {homeStats &&
-                    homeStats.stats.map((item, index) => (
-                      <div
-                        className={`flex h-[25px] justify-between   ${
-                          homeStats.stats.length - 1 !== index &&
-                          'border-b-[1px] border-b-white-opacity-50 border-opacity-80'
-                        }  px-2`}
-                      >
-                        <div className="flex items-center gap-1">
-                          <h5 className="text-sm text-blue">{item.total}</h5>{' '}
-                          <h5 className="text-[10px] text-offwhite">
-                            {item.name}
-                          </h5>
-                        </div>
-
-                        {/* <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
-                            {item.name}
-                          </div>
-                        */}
-                      </div>
-                    ))}
-                </div>
-              </div>
-              <div className="flex flex-col items-center rounded-xl bg-black-opacity-45 px-4 py-2">
-                <div className="flex">
-                  <img src="./assets/yellow-bg-power.svg" />
-                  <h4 className="text-sm text-yellow ">
-                    Level {homeStats?.level}
-                  </h4>
-                  <img src="./assets/level-question.svg" className="ml-1" />
-                </div>
-                <div className="my-2 flex flex-col items-center">
-                  {chargeArray.map((item, index) => {
-                    console.log(item);
-
-                    return (
-                      <div
-                        style={{
-                          boxShadow:
-                            index > chargeArray.length - homeStats?.level - 1 &&
-                            '0 2px 4px   rgba(245 ,197, 99 , 0.2), 0 -4px 6px rgba(245 ,197, 99 , 0.2), 4px 0 6px rgba(221, 249, 136, 0.2), -4px 0 6px rgba(221, 249, 136, 0.2)',
-                        }}
-                        className={`mb-[1px]    ${
-                          index > chargeArray.length - homeStats?.level - 1
-                            ? 'bg-yellow'
-                            : 'bg-white-opacity-50 opacity-50'
-                        }  ${
-                          index === 0
-                            ? 'h-[6px] w-[11px]  rounded-t-[4px] '
-                            : 'h-[11px] w-[38px]  rounded '
-                        }`}
-                      ></div>
-                    );
-                  })}
-                </div>
-                <p className="text-center text-[10px] text-white-opacity-50">
-                  Charge up to unlock next level
-                </p>
-              </div>
-            </div>
-          </>
-        )}
-
-        {showQuestion === false && (
-          <>
-            <div className="my-4 flex w-full items-center justify-between">
-              <h3>Today's Plan</h3>
-
-              <div className=" flex   " onClick={() => setShowActivity(true)}>
-                <div className="flex h-[34px] grow items-center justify-between rounded-lg bg-black-opacity-45 p-1">
-                  <span className="ml-[15px] mr-[12px]  text-sm text-floYellow">
-                    Log Activity
-                  </span>
-                  <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
-                    <img
-                      src="/assets/fitness-add.svg"
-                      className="h-[30px] w-[30px]"
-                    />
                   </div>
                 </div>
+              )}
+            </div>
+
+            {showQuestion === true && (
+              <div className="mt-[24px] flex flex-col items-center gap-2">
+                <div
+                  style={{
+                    background:
+                      'radial-gradient(circle at top left, #97EBAD 0%, #439258 60%)',
+                  }}
+                  className="flex w-full flex-col items-center justify-between rounded-xl px-[8px] pb-[8px]"
+                >
+                  <div className="flex w-full justify-between">
+                    <img
+                      src="/assets/arrow-board.svg"
+                      className="h-[150px] w-[150px]"
+                    />
+                    <div className="flex w-full flex-1 flex-col justify-center">
+                      <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
+                        Find Your Plan
+                      </h3>
+                      <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
+                        Take our quick test and we will find the perfect plan
+                        for you.
+                      </p>
+                    </div>
+                  </div>
+                  <Link
+                    to="/fintess-qustioniore"
+                    style={{ backgroundColor: 'rgba(31, 31, 31, 0.2)' }} // camelCase for backgroundColor
+                    className=" w-full rounded-lg p-2.5 text-center font-sfpro text-[18px] font-medium text-offwhite" // Replaced p-[10px] with Tailwind equivalent
+                  >
+                    Let's Go
+                  </Link>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <StepTracker />
+            )}
 
-              <section>
-                <div className="flex items-center">
-                  <Link
-                    to="/workout/flex"
-                    className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+            {showQuestion === false && (
+              <>
+                <div className="my-4 flex justify-center">
+                  {homeStats &&
+                    Object.keys(homeStats.weeklyWorkout).map((item, index) => {
+                      const slicedDay = item.substr(0, 3);
+                      console.log(homeStats);
+                      return (
+                        <div onClick={() => setSelectedDay(item)}>
+                          <CalendarTile
+                            date={currentWeekDates[index]}
+                            day={slicedDay}
+                            isSelected={item === selectedDay}
+                          />
+                        </div>
+                      );
+                    })}
+                </div>
+
+                <div className="flex gap-2">
+                  <div className="h-fit w-full rounded-xl bg-black-opacity-45 py-2">
+                    <div className="mx-3  flex justify-between">
+                      <h4 className="text-sm text-offwhite">
+                        Your weekly schedule
+                      </h4>
+                      <img src="./assets/maximize-schedule.svg" />
+                    </div>
+                    <div className="mt-5">
+                      {homeStats &&
+                        homeStats.stats.map((item, index) => (
+                          <div
+                            className={`flex h-[25px] justify-between   ${
+                              homeStats.stats.length - 1 !== index &&
+                              'border-b-[1px] border-b-white-opacity-50 border-opacity-80'
+                            }  px-2`}
+                          >
+                            <div className="flex items-center gap-1">
+                              <h5 className="text-sm text-blue">
+                                {item.total}
+                              </h5>{' '}
+                              <h5 className="text-[10px] text-offwhite">
+                                {item.name}
+                              </h5>
+                            </div>
+                            <div className="flex items-center">
+                              {item.total === item.completed && (
+                                <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
+                                  completed
+                                </div>
+                              )}
+                              {item.completed > 0 &&
+                                item.completed < item.total && (
+                                  <div className="flex gap-1">
+                                    <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
+                                      {item.completed} done
+                                    </div>
+                                    <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
+                                      {item.total - item.completed} left
+                                    </div>
+                                  </div>
+                                )}
+                              {item.completed === 0 && (
+                                <div className="bg-red-opacity-12 h-[15px] rounded-[3px] px-1 text-[10px] text-red">
+                                  not started
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center rounded-xl bg-black-opacity-45 px-4 py-2">
+                    <div className="flex">
+                      <img src="./assets/yellow-bg-power.svg" />
+                      <h4 className="text-sm text-yellow ">
+                        Level {homeStats?.level}
+                      </h4>
+                      <img src="./assets/level-question.svg" className="ml-1" />
+                    </div>
+                    <div className="my-2 flex flex-col items-center">
+                      {chargeArray.map((item, index) => {
+                        console.log(item);
+
+                        return (
+                          <div
+                            style={{
+                              boxShadow:
+                                index >
+                                  chargeArray.length - homeStats?.level - 1 &&
+                                '0 2px 4px   rgba(245 ,197, 99 , 0.2), 0 -4px 6px rgba(245 ,197, 99 , 0.2), 4px 0 6px rgba(221, 249, 136, 0.2), -4px 0 6px rgba(221, 249, 136, 0.2)',
+                            }}
+                            className={`mb-[1px]    ${
+                              index > chargeArray.length - homeStats?.level - 1
+                                ? 'bg-yellow'
+                                : 'bg-white-opacity-50 opacity-50'
+                            }  ${
+                              index === 0
+                                ? 'h-[6px] w-[11px]  rounded-t-[4px] '
+                                : 'h-[11px] w-[38px]  rounded '
+                            }`}
+                          ></div>
+                        );
+                      })}
+                    </div>
+                    <p className="text-center text-[10px] text-white-opacity-50">
+                      Charge up to unlock next level
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {showQuestion === false && (
+              <>
+                <div className="my-4 flex w-full items-center justify-between">
+                  <h3>Today's Plan</h3>
+
+                  <div
+                    className=" flex   "
+                    onClick={() => setShowActivity(true)}
                   >
-                    <div className="flex h-full flex-col justify-center">
-                      <h5 className="text-sm font-light text-white-opacity-50">
-                        Evening Zone
-                      </h5>
-                      <h2 className="text-xl  ">Active Recovery</h2>
-
-                      <div className="mt-1 flex gap-3">
-                        <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
-                          <img
-                            src="/assets/yellowTimer.svg"
-                            className="mr-[2px]"
-                          />
-                          {/* {homeStats?.hyperWorkoutParams.duration} mins */}
-                        </h2>
-                        <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
-                          <img
-                            src="/assets/yellow-power.svg"
-                            className="mr-[2px]"
-                          />
-                          {/* {homeStats?.hyperWorkoutParams.calories} cal */}
-                        </h2>
+                    <div className="flex h-[34px] grow items-center justify-between rounded-lg bg-black-opacity-45 p-1">
+                      <span className="ml-[15px] mr-[12px]  text-sm text-floYellow">
+                        Log Activity
+                      </span>
+                      <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
+                        <img
+                          src="/assets/fitness-add.svg"
+                          className="h-[30px] w-[30px]"
+                        />
                       </div>
                     </div>
-                    <img
-                      className="rounded-xl"
-                      style={{
-                        boxShadow:
-                          '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
-                      }}
-                      src="/assets/yellow-play.svg"
-                    />
-                  </Link>
+                  </div>
                 </div>
-              </section>
+                <div className="flex flex-col gap-2">
+                  <StepTracker />
 
-              <section>
-                <div className="flex items-center">
-                  <Link
-                    to="/workout/today"
-                    className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-                  >
-                    <div className="flex h-full flex-col justify-center">
-                      <h5 className="text-sm font-light text-white-opacity-50">
-                        Morning Zone
-                      </h5>
-                      <h2 className="text-xl  ">Strength Training</h2>
+                  <section>
+                    <div className="flex items-center">
+                      <Link
+                        to="/workout/flex"
+                        className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                      >
+                        <div className="flex h-full flex-col justify-center">
+                          <h5 className="text-sm font-light text-white-opacity-50">
+                            Evening Zone
+                          </h5>
+                          <h2 className="text-xl  ">
+                            {' '}
+                            {
+                              homeStats?.weeklyWorkout[selectedDay][
+                                'Evening Zone'
+                              ]['movements'][0].movementName
+                            }
+                          </h2>
 
-                      <div className="mt-1 flex gap-3">
-                        <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
-                          <img
-                            src="/assets/yellowTimer.svg"
-                            className="mr-[2px]"
-                          />
-                          {/* {homeStats?.hyperWorkoutParams.duration} mins */}
-                        </h2>
-                        <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
-                          <img
-                            src="/assets/yellow-power.svg"
-                            className="mr-[2px]"
-                          />
-                          {/* {homeStats?.hyperWorkoutParams.calories} cal */}
-                        </h2>
-                      </div>
+                          <div className="mt-1 flex gap-3">
+                            <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
+                              <img
+                                src="/assets/yellowTimer.svg"
+                                className="mr-[2px]"
+                              />
+                              {
+                                homeStats?.weeklyWorkout[selectedDay][
+                                  'Evening Zone'
+                                ]['movements'][0].time
+                              }
+                            </h2>
+                          </div>
+                        </div>
+                        <img
+                          className="rounded-xl"
+                          style={{
+                            boxShadow:
+                              '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                          }}
+                          src="/assets/yellow-play.svg"
+                        />
+                      </Link>
                     </div>
-                    <img
-                      className="rounded-xl"
-                      style={{
-                        boxShadow:
-                          '0 4px 6px rgba(94, 204, 123, 0.2), 0 -4px 6px rgba(94, 204, 123, 0.2), 4px 0 6px rgba(94, 204, 123, 0.2), -4px 0 6px rgba(94, 204, 123, 0.2)',
-                      }}
-                      src="/assets/green-tick-big.svg"
-                    />
-                  </Link>
+                  </section>
+
+                  <section>
+                    <div className="flex items-center">
+                      <Link
+                        to="/workout/today"
+                        className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                      >
+                        <div className="flex h-full flex-col justify-center">
+                          <h5 className="text-sm font-light text-white-opacity-50">
+                            Morning Zone
+                          </h5>
+                          <h2 className="text-xl  ">
+                            {' '}
+                            {
+                              homeStats?.weeklyWorkout[selectedDay][
+                                'Morning Zone'
+                              ]['movements'][0].movementName
+                            }
+                          </h2>
+
+                          <div className="mt-1 flex gap-3">
+                            <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
+                              <img
+                                src="/assets/yellowTimer.svg"
+                                className="mr-[2px]"
+                              />
+                              {
+                                homeStats?.weeklyWorkout[selectedDay][
+                                  'Morning Zone'
+                                ]['movements'][0].time
+                              }
+                            </h2>
+                          </div>
+                        </div>
+                        <img
+                          className="rounded-xl"
+                          style={{
+                            boxShadow:
+                              '0 4px 6px rgba(94, 204, 123, 0.2), 0 -4px 6px rgba(94, 204, 123, 0.2), 4px 0 6px rgba(94, 204, 123, 0.2), -4px 0 6px rgba(94, 204, 123, 0.2)',
+                          }}
+                          src="/assets/green-tick-big.svg"
+                        />
+                      </Link>
+                    </div>
+                  </section>
                 </div>
-              </section>
-            </div>
-          </>
-        )}
-      </div>
+              </>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

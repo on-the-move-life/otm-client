@@ -1,13 +1,13 @@
 import React from 'react';
 
-function CalendarTile({ date, day, isSelected, selectedDay }) {
+function CalendarTile({ date, day, isSelected }) {
   return (
     <div
       className={`relative z-10 flex max-h-[74px] min-h-[54px] w-[47px] max-w-[70px] flex-col items-center   gap-1 rounded-[7.5px] ${
         isSelected && 'bg-[rgba(0,0,0,0.45)] '
       }`}
     >
-      <div className="flex flex-col items-center justify-start w-full mt-2">
+      <div className="mt-2 flex w-full flex-col items-center justify-start">
         <h3
           className="capitalize"
           style={{
