@@ -94,11 +94,11 @@ const InstallApp = () => {
           variants={topPopupVariants}
           className="fixed top-0 left-0 right-0 z-50 bg-black p-4 shadow-lg"
         >
-          <div className="container mx-auto flex items-center justify-between">
+          <div className="container mx-auto flex items-start justify-between">
             <div className="flex items-center space-x-4">
               <img src="/assets/updated-logo.svg" alt="App Icon" className="w-12 h-12"/>
               <div>
-                <h2 className="text-xl font-bold text-white">Install Our App</h2>
+                <h2 className="text-xl font-[600] text-white">Install Our App</h2>
                 <p className="text-white sm:text-sm text-xs">Get the best experience on your device</p>
               </div>
             </div>
@@ -126,7 +126,7 @@ const InstallApp = () => {
             className={`bg-black p-6 rounded-lg ${selectedPlatform ? 'w-full h-full overflow-y-auto' : 'w-80'}`}
           >
             <div className="mb-4 flex justify-between">
-              <h2 className="text-xl font-bold text-white">Install Our App</h2>
+              <h2 className="text-xl font-[600] text-white">Install Our App</h2>
               <button onClick={handleClosePopup}>
                 <RxCross1 className="text-white" />
               </button>
@@ -136,13 +136,13 @@ const InstallApp = () => {
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => setSelectedPlatform('android')}
-                  className="rounded-lg bg-green p-3 text-black"
+                  className="rounded-lg bg-blue p-3 text-black"
                 >
                   Android
                 </button>
                 <button
                   onClick={() => setSelectedPlatform('ios')}
-                  className="rounded-lg bg-green p-3 text-black"
+                  className="rounded-lg bg-blue p-3 text-black"
                 >
                   iOS
                 </button>
@@ -172,7 +172,7 @@ const InstallApp = () => {
 
                 <button
                   onClick={() => setSelectedPlatform(null)}
-                  className="mt-6 rounded-lg bg-green p-2 text-black w-full"
+                  className="mt-6 rounded-lg bg-blue p-2 text-black w-full"
                 >
                   Back to Platform Selection
                 </button>
