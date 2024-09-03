@@ -53,6 +53,8 @@ module.exports = withMT({
         'profile-bg': "url('../public/assets/profile-bg.png')",
         'achievements-cover': "url('../public/assets/achievements-bg.png')",
         'movement-frame': "url('../public/assets/movement-frame.svg')",
+        'evening-zone': "url('../public/assets/evening-zone.svg')",
+        'morning-zone': "url('../public/assets/morning-zone.svg')",
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],

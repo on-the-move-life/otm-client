@@ -514,7 +514,9 @@ const FitnessPage = () => {
               {showQuestion === false && (
                 <div className="flex flex-1 justify-end">
                   <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
-                    <span className=" pl-2  text-sm">Total workouts</span>
+                    <span className=" pl-2 text-sm  text-offwhite">
+                      Total workouts
+                    </span>
                     <div
                       className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
                     >
@@ -569,8 +571,12 @@ const FitnessPage = () => {
                       const slicedDay = item.substr(0, 3);
                       console.log(homeStats);
                       return (
-                        <div onClick={() => setSelectedDay(item)}>
+                        <div
+                          className="flex w-full flex-row items-center justify-between"
+                          onClick={() => setSelectedDay(item)}
+                        >
                           <CalendarTile
+                            color={`rgb(126,135,239)`}
                             date={currentWeekDates[index]}
                             day={slicedDay}
                             isSelected={item === selectedDay}
@@ -702,7 +708,7 @@ const FitnessPage = () => {
                     <div className="flex items-center">
                       <Link
                         to="/workout/flex"
-                        className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                        className="bg-evening-zone relative flex h-[85px] w-full grow items-center justify-between rounded-xl py-2 pl-4 pr-7 "
                       >
                         <div className="flex h-full flex-col justify-center">
                           <h5 className="text-sm font-light text-white-opacity-50">
@@ -747,7 +753,7 @@ const FitnessPage = () => {
                     <div className="flex items-center">
                       <Link
                         to="/workout/today"
-                        className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                        className="bg-morning-zone relative flex h-[85px] w-full grow items-center justify-between rounded-xl py-2 pl-4 pr-7 "
                       >
                         <div className="flex h-full flex-col justify-center">
                           <h5 className="text-sm font-light text-white-opacity-50">

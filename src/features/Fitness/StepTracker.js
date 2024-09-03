@@ -163,6 +163,7 @@ const StepTracker = () => {
                 backgroundColor: 'rgba(0,0,0,0.45)',
                 height: '38px',
                 paddingTop: '3px',
+                borderRadius: '8px 8px 0px 0px',
               }}
               className="textbox mr-6 rounded-lg bg-mediumGray px-1 pt-0"
               type="number"
