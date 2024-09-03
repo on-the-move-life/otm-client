@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { RxCross1 } from 'react-icons/rx';
+
+const useIsPWA = () => {
+  const [isPWA, setIsPWA] = useState(false);
+
+  useEffect(() => {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const isInWebAppiOS = window.navigator.standalone === true;
+    const isInWebAppChrome = window.matchMedia('(display-mode: standalone)').matches;
+
+    setIsPWA(isStandalone || isInWebAppiOS || isInWebAppChrome);
+  }, []);
+
+  return isPWA;
+};
 
 const InstallApp = () => {
   const [showInstallPopup, setShowInstallPopup] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState(null);
+  const isPWA = useIsPWA();
 
   const modalVariants = {
     hidden: { opacity: 0, y: '50%' },
@@ -44,6 +59,11 @@ const InstallApp = () => {
     setShowInstallPopup(false);
     setSelectedPlatform(null);
   };
+
+  if (isPWA) {
+    return null; // Don't render anything if it's a PWA
+  }
+
 
   return (
     <>
