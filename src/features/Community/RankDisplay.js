@@ -21,17 +21,17 @@ const RankDisplay = ({
 
   return (
     <Link
-      className="flex w-full flex-col   gap-[2px] rounded-xl bg-mediumGray px-1 pb-1"
+      className="flex w-full flex-col   gap-[2px] rounded-xl bg-[rgba(0,0,0,0.45)] px-1 pb-1"
       to={`/leaderboard/${
         selectedDataType === 'workout' ? 'workout' : 'fitness_score'
       } `}
     >
-      <h1 className=" flex  h-[32px]  items-center pl-5 text-sm ">
+      <h1 className=" flex  h-[32px]  items-center pl-5 text-sm text-offwhite ">
         {selectedDataType === 'workout'
-          ? 'Your Workout leaderboard'
-          : 'Your Fitness Score leaderboard'}
+          ? 'Workout leaderboard'
+          : 'Fitness Score leaderboard'}
       </h1>
-      <div className="flex h-[70px] w-full flex-col justify-center rounded-xl  bg-black px-[11px] py-4">
+      <div className="flex h-[70px] w-full flex-col justify-center rounded-xl  bg-[rgba(0,0,0,0.40)] px-[11px] py-4">
         <div className="flex w-full flex-row items-center justify-start gap-2 pl-[10px] ">
           <div className="flex basis-[13%] flex-row items-center justify-start text-blue">
             {rank}
@@ -48,11 +48,11 @@ const RankDisplay = ({
           ) : (
             <FaUserCircle size={30} color={'#91BDF6'} />
           )}
-          <div className="ml-[5px] basis-4/6 text-lg font-normal text-blue">
+          <div className="ml-[5px] basis-4/6 text-lg font-normal text-offwhite">
             {name}
           </div>
           <div className="flex flex-row items-center justify-around px-4">
-            <span className="mr-4 flex h-5 w-5 flex-row items-center justify-center text-[21.47px] font-bold  text-floYellow">
+            <span className="mr-4 flex h-5 w-5 flex-row items-center justify-center text-[21.47px] font-bold  text-offwhite">
               {count}
             </span>
             <Arrow value={rankChange} />
