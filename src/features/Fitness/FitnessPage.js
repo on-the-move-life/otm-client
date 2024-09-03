@@ -28,6 +28,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
+import PathVisualization from './PathVisualisation';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -526,6 +527,7 @@ const FitnessPage = () => {
 
             {showQuestion === true && (
               <div className="mt-[24px] flex flex-col items-center gap-2">
+                {/* <PathVisualization/> */}
                 <div
                   style={{
                     background:
@@ -592,7 +594,7 @@ const FitnessPage = () => {
                           <div
                             className={`flex h-[25px] justify-between   ${
                               homeStats.stats.length - 1 !== index &&
-                              'border-b-[1px] border-b-white-opacity-50 border-opacity-80'
+                              '   border-b  border-b-white-opacity-23  border-opacity-80'
                             }  px-2`}
                           >
                             <div className="flex items-center gap-1">
