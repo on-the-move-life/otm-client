@@ -18,6 +18,7 @@ import { AiOutlineRight } from 'react-icons/ai';
 import AdditionalActivity from './AdditionalActivity';
 import { TbSwimming } from 'react-icons/tb';
 import { FaArrowRight } from 'react-icons/fa6';
+import InstallApp from '../../components/InstallPWA';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -212,6 +213,7 @@ const FitnessPage = () => {
             </div>
 
             <StepTracker />
+            <InstallApp/>
 
             {isWeekend && (
               <Link to="/weekly-checkin" className="">
