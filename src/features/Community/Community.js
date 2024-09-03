@@ -144,7 +144,11 @@ const Community = () => {
           </div>
         </div>
         <div>
-          <div className="mb-3 mt-7 text-[20px] text-offwhite">Leaderboard</div>
+          {matchingWorkoutUser && (
+            <div className="mb-3 mt-7 text-[20px] text-offwhite">
+              Leaderboard
+            </div>
+          )}
           <div className=" flex w-full flex-col gap-2">
             {matchingWorkoutUser && (
               <RankDisplay
@@ -169,7 +173,9 @@ const Community = () => {
               />
             )}
           </div>
-          <div className="mb-3 mt-7 text-[20px] text-offwhite">Community</div>
+          {data !== null && data.data.length > 0 && (
+            <div className="mb-3 mt-7 text-[20px] text-offwhite">Community</div>
+          )}
           <div className=" flex w-full flex-col gap-2">
             {data !== null && data.data.length > 0 && (
               <TimelineDisplay data={data.data[0]} timeline={'community'} />

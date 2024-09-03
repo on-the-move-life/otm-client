@@ -63,15 +63,15 @@ const TimelineDisplay = ({ data, timeline }) => {
         </div>
 
         <div className="text-[15px] text-white-opacity-50">{formattedDate}</div>
-        <div className="timeline-tags mt-[6px] flex flex-row flex-wrap gap-2 text-xs">
+        <div className="timeline-tags mt-[6px] flex flex-row flex-wrap gap-[6px] text-xs">
           {/* <InfoTile>Horizontal Pull</InfoTile> */}
-          <div className="flex items-center justify-center gap-2 rounded border border-white-opacity-23  bg-[rgba(59,59,59,0.06)] p-0.5 px-2 text-white-opacity-50 backdrop-blur-[17px]">
+          <div className="flex items-center justify-center gap-[6px] rounded border border-white-opacity-23  bg-[rgba(59,59,59,0.06)] p-0.5 px-2 text-white-opacity-50 backdrop-blur-[17px]">
             {formattedTime}
           </div>
-          <div className="flex items-center justify-center gap-2 rounded border border-white-opacity-23  bg-[rgba(59,59,59,0.06)] p-0.5 px-2 text-white-opacity-50 backdrop-blur-[17px]">
+          <div className="flex items-center justify-center gap-[6px] rounded border border-white-opacity-23  bg-[rgba(59,59,59,0.06)] p-0.5 px-2 text-white-opacity-50 backdrop-blur-[17px]">
             Total Workouts {data?.consistency?.total}
           </div>
-          <div className="flex items-center justify-center gap-2 rounded border border-white-opacity-23  bg-[rgba(59,59,59,0.06)] p-0.5 px-2 text-white-opacity-50 backdrop-blur-[17px]">
+          <div className="flex items-center justify-center gap-[6px] rounded border border-white-opacity-23  bg-[rgba(59,59,59,0.06)] p-0.5 px-2 text-white-opacity-50 backdrop-blur-[17px]">
             <img
               src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`}
               className="h-4 w-4"
