@@ -19,6 +19,15 @@ import AdditionalActivity from './AdditionalActivity';
 import { TbSwimming } from 'react-icons/tb';
 import { FaArrowRight } from 'react-icons/fa6';
 import CalendarTile from '../Nutrition/MealPlanner/Components/CalendarTile';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -630,11 +639,11 @@ const WeeklySchedule = [
 ];
 
 const FitnessPage = () => {
-  const [showQuestion, setShowQuestion] = useState(true);
+  const [showQuestion, setShowQuestion] = useState(false);
   const { setUserData } = useUserContext();
   const { logout } = useAuth();
   // const [user, getUserFromStorage] = useState({});
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [error, setError] = useState(false);
   const [isWeekend, setIsWeekend] = useState(false);
   const [homeStats, setHomeStats] = useState(null);
@@ -643,30 +652,53 @@ const FitnessPage = () => {
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
-  console.log(showActivity);
+
   const navigate = useNavigate();
 
+  const data = [
+    { name: 'Page A', uv: 1000, pv: 2400, amt: 2400 },
+    { name: 'Page B', uv: 1250, pv: 1398, amt: 2210 },
+    { name: 'Page C', uv: 1450, pv: 9800, amt: 2290 },
+    { name: 'Page D', uv: 1500, pv: 1908, amt: 200 },
+    { name: 'Page E', uv: 1890, pv: 4800, amt: 2181 },
+    { name: 'Page F', uv: 2390, pv: 3800, amt: 2500 },
+  ];
+
+  const workoutStatus = () => {
+    const num = 1;
+    const total = 5;
+    if (num === 0) {
+      return 'not completed';
+    }
+  };
+
   const fullName = JSON.parse(localStorage.getItem('user'))['name'];
+  const code = JSON.parse(localStorage.getItem('user'))['code'];
   const firstName = fullName.split(' ')[0];
 
   const smallArr = [1, 2, 3, 4];
-
+  console.log(homeStats);
   useEffect(() => {
     const today = new Date().toLocaleDateString('en-GB');
+
+    const axiosClient = axios.create({
+      //baseURL: `${process.env.REACT_APP_BACKEND_MODE === 'production' ? process.env.REACT_APP_BASE_URL : 'http://localhost:882'}/api/v1/nutrition`,
+      baseURL: `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement`,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
 
     getUserFromStorage();
 
     if (user === null) navigate('/');
 
     function getUserData() {
-      setLoader(true);
       axios
-        .get(`${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/client/home`, {
-          params: {
-            email: user.email,
-            day: today,
-          },
-        })
+        .get(
+          `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout?memberCode=${code}`,
+        )
         .then((res) => {
           if (res.data) {
             setUserData(res.data);
@@ -678,6 +710,7 @@ const FitnessPage = () => {
         .catch((err) => {
           console.log(err.message);
           setHomeStats(null);
+          setShowQuestion(true);
         });
     }
 
@@ -920,7 +953,7 @@ const FitnessPage = () => {
         <div className="mt-[22px] rounded-xl bg-black-opacity-45 p-1 ">
           <div className="flex items-end gap-[10px] px-3">
             <img src="./assets/evolve.svg" />
-            <h5 className="bg-browm-opacity-12 h-min rounded px-2 text-xs text-yellow">
+            <h5 className="h-min rounded bg-browm-opacity-12 px-2 text-xs text-yellow">
               Level 2
             </h5>
           </div>
@@ -928,39 +961,19 @@ const FitnessPage = () => {
             We'll focus on sustainable integration of fitness and wellbeing
             practices with minimal restrictions and effort!
           </p>
-          <div className=" bg-black-opacity-40 flex flex-col items-center rounded-lg">
-           
-           
-           
-            <p className="text-[10px] text-white-opacity-50">
-              ₹21,000 per person billed quarterly
-            </p>
-            <div className="mt-3 flex gap-3">
-              <div>
-                {smallArr.map(() => (
-                  <div className="flex gap-1">
-                    <img src="./assets/check-purpule.svg" />{' '}
-                    <p className="text-[10px] text-offwhite">
-                      {' '}
-                      Lorem ipsum dolor
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <div>
-                {smallArr.map(() => (
-                  <div className="flex gap-1">
-                    <img src="./assets/check-purpule.svg" />{' '}
-                    <p className="text-[10px] text-offwhite">
-                      {' '}
-                      Lorem ipsum dolor
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
+        <LineChart width={300} height={300} data={data}>
+          <XAxis hide />
+          <YAxis hide />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="linear"
+            dataKey="uv"
+            stroke="#8884d8"
+            strokeDasharray="5 5"
+          />
+        </LineChart>
         <img className="rounded-tr-2xl" src="./assets/evolve-level.svg" />
         <button
           type="submit"
@@ -975,7 +988,11 @@ const FitnessPage = () => {
         </button>
       </div>
 
-      {/* <div className="overflow-y-scroll px-4">
+      {showActivity === true && (
+        <AdditionalActivity setShowActivity={setShowActivity} />
+      )}
+
+      <div className="overflow-y-scroll px-4">
         <div className="mt-[77px] flex w-full items-end">
           <div className="flex-1">
             <h3 className=" font-sfpro text-[14px] text-offwhite">
@@ -990,49 +1007,55 @@ const FitnessPage = () => {
               Everyday is an opportunity to do some main character shit.
             </div>
           </div>
-
-          <div className="flex flex-1 justify-end">
-            <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
-              <span className=" pl-2  text-sm">Total workouts</span>
-              <div
-                className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
-              >
-                {homeStats && formatNumber(homeStats?.totalWorkoutsDone)}
+          {showQuestion === false && (
+            <div className="flex flex-1 justify-end">
+              <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
+                <span className=" pl-2  text-sm">Total workouts</span>
+                <div
+                  className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
+                >
+                  {/* {homeStats && formatNumber(homeStats?.totalWorkoutsDone)} */}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
-        <div className="mt-[24px] flex flex-col items-center gap-2">
-          <div
-            style={{
-              background:
-                'radial-gradient(circle at top left, #97EBAD 0%, #439258 60%)',
-            }}
-            className="flex w-full flex-col items-center justify-between rounded-xl px-[8px] pb-[8px]"
-          >
-            <div className="flex w-full justify-between">
-              <img
-                src="/assets/arrow-board.svg"
-                className="h-[150px] w-[150px]"
-              />
-              <div className="flex w-full flex-1 flex-col justify-center">
-                <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
-                  Find Your Plan
-                </h3>
-                <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
-                  Take our quick test and we will find the perfect plan for you.
-                </p>
-              </div>
-            </div>
-            <Link
-              style={{ backgroundColor: 'rgba(31, 31, 31, 0.2)' }} // camelCase for backgroundColor
-              className=" w-full rounded-lg p-2.5 text-center font-sfpro text-[18px] font-medium text-offwhite" // Replaced p-[10px] with Tailwind equivalent
+        {showQuestion === true && (
+          <div className="mt-[24px] flex flex-col items-center gap-2">
+            <div
+              style={{
+                background:
+                  'radial-gradient(circle at top left, #97EBAD 0%, #439258 60%)',
+              }}
+              className="flex w-full flex-col items-center justify-between rounded-xl px-[8px] pb-[8px]"
             >
-              Let's Go
-            </Link>
+              <div className="flex w-full justify-between">
+                <img
+                  src="/assets/arrow-board.svg"
+                  className="h-[150px] w-[150px]"
+                />
+                <div className="flex w-full flex-1 flex-col justify-center">
+                  <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
+                    Find Your Plan
+                  </h3>
+                  <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
+                    Take our quick test and we will find the perfect plan for
+                    you.
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/fintess-qustioniore"
+                style={{ backgroundColor: 'rgba(31, 31, 31, 0.2)' }} // camelCase for backgroundColor
+                className=" w-full rounded-lg p-2.5 text-center font-sfpro text-[18px] font-medium text-offwhite" // Replaced p-[10px] with Tailwind equivalent
+              >
+                Let's Go
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
+
         {showQuestion === false && (
           <>
             <div className="my-4 flex justify-center">
@@ -1054,7 +1077,7 @@ const FitnessPage = () => {
             </div>
 
             <div className="flex gap-2">
-              <div className="w-full rounded-xl bg-black-opacity-45 py-2">
+              <div className="h-fit w-full rounded-xl bg-black-opacity-45 py-2">
                 <div className="mx-3  flex justify-between">
                   <h4 className="text-sm text-offwhite">
                     Your weekly schedule
@@ -1062,35 +1085,35 @@ const FitnessPage = () => {
                   <img src="./assets/maximize-schedule.svg" />
                 </div>
                 <div className="mt-5">
-                  {WeeklySchedule.map((item, index) => (
-                    <div
-                      className={`flex h-[25px] justify-between   ${
-                        WeeklySchedule.length - 1 !== index &&
-                        'border-b-[1px] border-b-white-opacity-50 border-opacity-80'
-                      }  px-2`}
-                    >
-                      <div className="flex items-center gap-1">
-                        <h5 className="text-sm text-blue">{item.num}</h5>{' '}
-                        <h5 className="text-[10px] text-offwhite">
-                          {item.text}
-                        </h5>
-                      </div>
-                      <div className="flex  items-center ">
-                        {' '}
-                        {item.taskDetail.map((data) => (
-                          <div className="bg-green-opacity-12 h-[15px] rounded-[3px] px-1 text-[10px] text-green">
-                            {data}
+                  {homeStats &&
+                    homeStats.stats.map((item, index) => (
+                      <div
+                        className={`flex h-[25px] justify-between   ${
+                          homeStats.stats.length - 1 !== index &&
+                          'border-b-[1px] border-b-white-opacity-50 border-opacity-80'
+                        }  px-2`}
+                      >
+                        <div className="flex items-center gap-1">
+                          <h5 className="text-sm text-blue">{item.total}</h5>{' '}
+                          <h5 className="text-[10px] text-offwhite">
+                            {item.name}
+                          </h5>
+                        </div>
+
+                        {/* <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
+                            {item.name}
                           </div>
-                        ))}
+                        */}
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
               <div className="flex flex-col items-center rounded-xl bg-black-opacity-45 px-4 py-2">
                 <div className="flex">
                   <img src="./assets/yellow-bg-power.svg" />
-                  <h4 className="text-sm text-yellow ">Level 2</h4>
+                  <h4 className="text-sm text-yellow ">
+                    Level {homeStats?.level}
+                  </h4>
                   <img src="./assets/level-question.svg" className="ml-1" />
                 </div>
                 <div className="my-2 flex flex-col items-center">
@@ -1101,11 +1124,11 @@ const FitnessPage = () => {
                       <div
                         style={{
                           boxShadow:
-                            item !== '' &&
+                            index > chargeArray.length - homeStats?.level - 1 &&
                             '0 2px 4px   rgba(245 ,197, 99 , 0.2), 0 -4px 6px rgba(245 ,197, 99 , 0.2), 4px 0 6px rgba(221, 249, 136, 0.2), -4px 0 6px rgba(221, 249, 136, 0.2)',
                         }}
                         className={`mb-[1px]    ${
-                          item !== ''
+                          index > chargeArray.length - homeStats?.level - 1
                             ? 'bg-yellow'
                             : 'bg-white-opacity-50 opacity-50'
                         }  ${
@@ -1125,111 +1148,113 @@ const FitnessPage = () => {
           </>
         )}
 
-        <div className="my-4 flex w-full items-center justify-between">
-          <h3>Today's Plan</h3>
+        {showQuestion === false && (
+          <>
+            <div className="my-4 flex w-full items-center justify-between">
+              <h3>Today's Plan</h3>
 
-          <div className=" flex   " onClick={() => setShowActivity(true)}>
-            <div className="flex h-[34px] grow items-center justify-between rounded-lg bg-black-opacity-45 p-1">
-              <span className="ml-[15px] mr-[12px]  text-sm text-floYellow">
-                Log Activity
-              </span>
-              <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
-                <img
-                  src="/assets/fitness-add.svg"
-                  className="h-[30px] w-[30px]"
-                />
+              <div className=" flex   " onClick={() => setShowActivity(true)}>
+                <div className="flex h-[34px] grow items-center justify-between rounded-lg bg-black-opacity-45 p-1">
+                  <span className="ml-[15px] mr-[12px]  text-sm text-floYellow">
+                    Log Activity
+                  </span>
+                  <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
+                    <img
+                      src="/assets/fitness-add.svg"
+                      className="h-[30px] w-[30px]"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        {showQuestion === false && (
-          <div className="flex flex-col gap-2">
-            <StepTracker />
+            <div className="flex flex-col gap-2">
+              <StepTracker />
 
-            <section>
-              <div className="flex items-center">
-                <Link
-                  to="/workout/flex"
-                  className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-                >
-                  <div className="flex h-full flex-col justify-center">
-                    <h5 className="text-sm font-light text-white-opacity-50">
-                      Evening Zone
-                    </h5>
-                    <h2 className="text-xl  ">Active Recovery</h2>
+              <section>
+                <div className="flex items-center">
+                  <Link
+                    to="/workout/flex"
+                    className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                  >
+                    <div className="flex h-full flex-col justify-center">
+                      <h5 className="text-sm font-light text-white-opacity-50">
+                        Evening Zone
+                      </h5>
+                      <h2 className="text-xl  ">Active Recovery</h2>
 
-                    <div className="mt-1 flex gap-3">
-                      <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
-                        <img
-                          src="/assets/yellowTimer.svg"
-                          className="mr-[2px]"
-                        />
-                        {homeStats?.hyperWorkoutParams.duration} mins
-                      </h2>
-                      <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
-                        <img
-                          src="/assets/yellow-power.svg"
-                          className="mr-[2px]"
-                        />
-                        {homeStats?.hyperWorkoutParams.calories} cal
-                      </h2>
+                      <div className="mt-1 flex gap-3">
+                        <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
+                          <img
+                            src="/assets/yellowTimer.svg"
+                            className="mr-[2px]"
+                          />
+                          {/* {homeStats?.hyperWorkoutParams.duration} mins */}
+                        </h2>
+                        <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
+                          <img
+                            src="/assets/yellow-power.svg"
+                            className="mr-[2px]"
+                          />
+                          {/* {homeStats?.hyperWorkoutParams.calories} cal */}
+                        </h2>
+                      </div>
                     </div>
-                  </div>
-                  <img
-                    className="rounded-xl"
-                    style={{
-                      boxShadow:
-                        '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
-                    }}
-                    src="/assets/yellow-play.svg"
-                  />
-                </Link>
-              </div>
-            </section>
+                    <img
+                      className="rounded-xl"
+                      style={{
+                        boxShadow:
+                          '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                      }}
+                      src="/assets/yellow-play.svg"
+                    />
+                  </Link>
+                </div>
+              </section>
 
-            <section>
-              <div className="flex items-center">
-                <Link
-                  to="/workout/today"
-                  className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-                >
-                  <div className="flex h-full flex-col justify-center">
-                    <h5 className="text-sm font-light text-white-opacity-50">
-                      Morning Zone
-                    </h5>
-                    <h2 className="text-xl  ">Strength Training</h2>
+              <section>
+                <div className="flex items-center">
+                  <Link
+                    to="/workout/today"
+                    className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                  >
+                    <div className="flex h-full flex-col justify-center">
+                      <h5 className="text-sm font-light text-white-opacity-50">
+                        Morning Zone
+                      </h5>
+                      <h2 className="text-xl  ">Strength Training</h2>
 
-                    <div className="mt-1 flex gap-3">
-                      <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
-                        <img
-                          src="/assets/yellowTimer.svg"
-                          className="mr-[2px]"
-                        />
-                        {homeStats?.hyperWorkoutParams.duration} mins
-                      </h2>
-                      <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
-                        <img
-                          src="/assets/yellow-power.svg"
-                          className="mr-[2px]"
-                        />
-                        {homeStats?.hyperWorkoutParams.calories} cal
-                      </h2>
+                      <div className="mt-1 flex gap-3">
+                        <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
+                          <img
+                            src="/assets/yellowTimer.svg"
+                            className="mr-[2px]"
+                          />
+                          {/* {homeStats?.hyperWorkoutParams.duration} mins */}
+                        </h2>
+                        <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
+                          <img
+                            src="/assets/yellow-power.svg"
+                            className="mr-[2px]"
+                          />
+                          {/* {homeStats?.hyperWorkoutParams.calories} cal */}
+                        </h2>
+                      </div>
                     </div>
-                  </div>
-                  <img
-                    className="rounded-xl"
-                    style={{
-                      boxShadow:
-                        '0 4px 6px rgba(94, 204, 123, 0.2), 0 -4px 6px rgba(94, 204, 123, 0.2), 4px 0 6px rgba(94, 204, 123, 0.2), -4px 0 6px rgba(94, 204, 123, 0.2)',
-                    }}
-                    src="/assets/green-tick-big.svg"
-                  />
-                </Link>
-              </div>
-            </section>
-          </div>
+                    <img
+                      className="rounded-xl"
+                      style={{
+                        boxShadow:
+                          '0 4px 6px rgba(94, 204, 123, 0.2), 0 -4px 6px rgba(94, 204, 123, 0.2), 4px 0 6px rgba(94, 204, 123, 0.2), -4px 0 6px rgba(94, 204, 123, 0.2)',
+                      }}
+                      src="/assets/green-tick-big.svg"
+                    />
+                  </Link>
+                </div>
+              </section>
+            </div>
+          </>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

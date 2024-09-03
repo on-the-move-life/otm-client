@@ -36,6 +36,7 @@ import NutritionPage from './features/Nutrition/NutritionPage';
 import { MealPlanner } from './features/Nutrition/MealPlanner';
 import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 import ReferralUser from './features/ReferralUser/ReferralUser';
+import FtnesssQuestionare from './features/FitnessQuestionaire/FintessQuesrionire';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -138,6 +139,7 @@ function App() {
           path="/journey-reflection/:reportId"
           element={<JourneyReflectionPage />}
         />
+        <Route path="/fintess-qustioniore" element={<FtnesssQuestionare />} />
         <Route
           path="/leaderboard/:value"
           element={
