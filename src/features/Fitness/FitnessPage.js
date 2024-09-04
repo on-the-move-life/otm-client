@@ -443,34 +443,25 @@ const FitnessPage = () => {
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
       {evolve && (
-        <div className=" px-[16px] ">
-          <h2 className="mt-[60px] w-4/5 text-lg text-offwhite">
-            Based on your answers, we’ve designed your personalised journey
-          </h2>
-          <div className="mt-[22px] rounded-xl bg-black-opacity-45 p-1 ">
-            <div className="flex items-end gap-[10px] px-3">
-              <img src="./assets/evolve.svg" />
-              <h5 className="h-min rounded bg-browm-opacity-12 px-2 text-xs text-yellow">
-                Level 1
-              </h5>
+        <div className=" flex h-full flex-col justify-between overflow-y-scroll px-[16px] ">
+          <div>
+            <h2 className="mt-[60px] w-4/5 text-lg text-offwhite">
+              Based on your answers, we’ve designed your personalised journey
+            </h2>
+            <div className="mt-[22px] rounded-xl bg-black-opacity-45 p-1 ">
+              <div className="flex items-end gap-[10px] px-3">
+                <img src="./assets/evolve.svg" />
+                <h5 className="h-min rounded bg-browm-opacity-12 px-2 text-xs text-yellow">
+                  Level 1
+                </h5>
+              </div>
+              <p className="mt-[10px] w-11/12 px-3 text-sm text-white-opacity-50">
+                We'll focus on sustainable integration of fitness and wellbeing
+                practices with minimal restrictions and effort!
+              </p>
             </div>
-            <p className="mt-[10px] w-11/12 px-3 text-sm text-white-opacity-50">
-              We'll focus on sustainable integration of fitness and wellbeing
-              practices with minimal restrictions and effort!
-            </p>
+            <PathVisualization />
           </div>
-          <LineChart width={300} height={300} data={data}>
-            <XAxis hide />
-            <YAxis hide />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="linear"
-              dataKey="uv"
-              stroke="#8884d8"
-              strokeDasharray="5 5"
-            />
-          </LineChart>
 
           <button
             type="submit"
@@ -529,7 +520,6 @@ const FitnessPage = () => {
 
             {showQuestion === true && (
               <div className="mt-[24px] flex flex-col items-center gap-2">
-                {/* <PathVisualization/> */}
                 <div
                   style={{
                     background:
@@ -623,13 +613,13 @@ const FitnessPage = () => {
                                     <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
                                       {item.completed} done
                                     </div>
-                                    <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
+                                    <div className="h-[15px] rounded-[3px] bg-red-opacity-12 px-1 text-[10px] text-red">
                                       {item.total - item.completed} left
                                     </div>
                                   </div>
                                 )}
                               {item.completed === 0 && (
-                                <div className="bg-red-opacity-12 h-[15px] rounded-[3px] px-1 text-[10px] text-red">
+                                <div className="h-[15px] rounded-[3px] bg-red-opacity-12 px-1 text-[10px] text-red">
                                   not started
                                 </div>
                               )}
@@ -708,7 +698,7 @@ const FitnessPage = () => {
                     <div className="flex items-center">
                       <Link
                         to="/workout/flex"
-                        className="bg-evening-zone relative flex h-[85px] w-full grow items-center justify-between rounded-xl py-2 pl-4 pr-7 "
+                        className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-evening-zone py-2 pl-4 pr-7 "
                       >
                         <div className="flex h-full flex-col justify-center">
                           <h5 className="text-sm font-light text-white-opacity-50">
@@ -753,7 +743,7 @@ const FitnessPage = () => {
                     <div className="flex items-center">
                       <Link
                         to="/workout/today"
-                        className="bg-morning-zone relative flex h-[85px] w-full grow items-center justify-between rounded-xl py-2 pl-4 pr-7 "
+                        className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone py-2 pl-4 pr-7 "
                       >
                         <div className="flex h-full flex-col justify-center">
                           <h5 className="text-sm font-light text-white-opacity-50">
