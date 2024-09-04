@@ -99,10 +99,10 @@ function LandingPage() {
           if (screen === 1) {
             setShowBMIScreen(true);
           }
-          else if (screen === 7) {
+          else if (screen === maxScreenCount-1) {
             setShowAssessmentScreen(true);
           }
-          else if (screen === 8) {
+          else if (screen === maxScreenCount) {
             // redirect to the fitness score page
             navigate('/questionnaire/fitness-score');
           }
