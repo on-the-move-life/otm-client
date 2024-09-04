@@ -48,51 +48,35 @@ function WeeklyWorkoutReport({
   }, [lastEightWeeksWorkout]);
 
   const Bar = ({ progress, isFirstBar }) => {
-    const [
-      basicgreen,
-      intermediateGreen,
-      advancedgreen,
-      red,
-      yellow,
-      gray,
-      purple,
-    ] = [
-      '#7FE08A',
-      '#29C344',
-      '#119832',
-      '#FA5757',
-      '#F5C563',
-      '#323232',
-      '#7E87EF',
-    ];
+    const [basicgreen, advancedgreen, red, yellow, gray, purple] = ['#7FE08A','#119832', '#FA5757', '#F5C563', '#323232','#7E87EF']
     const [height, setHeight] = useState(0);
     const [color, setColor] = useState(gray);
     console.log(progress);
 
     useEffect(() => {
       // Calculate height
-      if (
-        progress >= suggestedWorkoutPerWeek &&
-        suggestedWorkoutPerWeek !== 0
-      ) {
-        setHeight(48);
+      if (progress >= suggestedWorkoutPerWeek && suggestedWorkoutPerWeek !== 0) {
+          setHeight(47);
       } else {
-        const calculatedHeight = (progress / suggestedWorkoutPerWeek) * 48;
-        setHeight(calculatedHeight);
+          const calculatedHeight = (progress / suggestedWorkoutPerWeek) * 47;
+          setHeight(calculatedHeight);
       }
 
       // Determine color based on progress percentage
+      const progressPercentage = (progress / suggestedWorkoutPerWeek) * 100;
 
-      if (progress > suggestedWorkoutPerWeek) {
-        setColor(purple);
-      } else if (progress == suggestedWorkoutPerWeek) {
-        setColor(advancedgreen);
-      } else if (progress == 1) {
-        setColor(red);
+      if (progressPercentage > 100) {
+          setColor(purple);
+      } else if (progressPercentage > 75) {
+          setColor(advancedgreen);
+      } else if (progressPercentage > 50) {
+          setColor(basicgreen);
+      } else if (progressPercentage > 25) {
+          setColor(yellow);
       } else {
-        setColor(yellow);
+          setColor(red);
       }
-    }, [progress, suggestedWorkoutPerWeek]);
+  }, [progress, suggestedWorkoutPerWeek]);
 
     const barStyles = {
       height: `${height}px`,
