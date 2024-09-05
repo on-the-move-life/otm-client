@@ -100,17 +100,9 @@ function LandingPage() {
           // open the BMI screen, Assessment screen, or the Fitness Score screen based on the next button clicked on relevant screen
           if (screen === 1) {
             setShowBMIScreen(true);
-<<<<<<< HEAD
-          }
-          else if (screen === maxScreenCount-1) {
+          } else if (screen === maxScreenCount - 1) {
             setShowAssessmentScreen(true);
-          }
-          else if (screen === maxScreenCount) {
-=======
-          } else if (screen === 7) {
-            setShowAssessmentScreen(true);
-          } else if (screen === 8) {
->>>>>>> c8af92d (Movement UI Completed)
+          } else if (screen === maxScreenCount) {
             // redirect to the fitness score page
             navigate('/questionnaire/fitness-score');
           }
