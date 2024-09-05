@@ -1,17 +1,17 @@
 import React from 'react';
 
-const PathVisualization = () => {
+const PathVisualization = ({ level }) => {
   // Define the coordinates and labels for each point, including the image
   const points = [
     { x: 15, y: 70, label: '1', description: 'You are here' },
-    { x: 35, y: 50, label: '2' },
-    { x: 55, y: 55, label: '3' },
-    { x: 80, y: 50, label: '4' },
-    { x: 70, y: 30, label: '5' },
+    { x: 35, y: 50, label: '2', description: 'You are here' },
+    { x: 55, y: 55, label: '3', description: 'You are here' },
+    { x: 80, y: 50, label: '4', description: 'You are here' },
+    { x: 65, y: 33, label: '5', description: 'You are here' },
     {
       x: 85,
       y: 20,
-      label: '',
+      label: '6',
       description: 'Your ideal self',
       isImage: true,
     }, // Use an image instead of text
@@ -85,7 +85,7 @@ const PathVisualization = () => {
           )}
 
           {/* Description */}
-          {point.description && (
+          {point.label === level.toString() && point.description && (
             <>
               <text
                 x={`${point.x - 0}`}
@@ -96,27 +96,37 @@ const PathVisualization = () => {
               >
                 {point.description}
               </text>
-              {point.label === '1' && (
-                <>
-                  <image
-                    href="./assets/location-yellow.svg" // Replace with the actual path to your image
-                    className="relative z-50"
-                    x={`${point.x - 2.5}`} // Adjust position to center the image
-                    y={`${point.y - 8}`} // Adjust position to center the image
-                    width="5%"
-                    height="5%"
-                  />
-                  <image
-                    href="./assets/movement-yellow-bg.svg" // Replace with the actual path to your image
-                    className="relative z-50"
-                    x={`${point.x - 20}`} // Adjust position to center the image
-                    y={`${point.y - 20}`} // Adjust position to center the image
-                    width="40%"
-                    height="40%"
-                  />
-                </>
-              )}
+
+              <>
+                <image
+                  href="./assets/location-yellow.svg" // Replace with the actual path to your image
+                  className="relative z-50"
+                  x={`${point.x - 2.5}`} // Adjust position to center the image
+                  y={`${point.y - 8}`} // Adjust position to center the image
+                  width="5%"
+                  height="5%"
+                />
+                <image
+                  href="./assets/movement-yellow-bg.svg" // Replace with the actual path to your image
+                  className="relative z-50"
+                  x={`${point.x - 20}`} // Adjust position to center the image
+                  y={`${point.y - 20}`} // Adjust position to center the image
+                  width="40%"
+                  height="40%"
+                />
+              </>
             </>
+          )}
+          {point.label === '6' && (
+            <text
+              x={`${point.x - 0}`}
+              y={point.label === '' ? `${point.y - 8}` : `${point.y - 10}`}
+              fill="rgba(248, 248, 248, 0.8)"
+              fontSize="2.5"
+              textAnchor="middle"
+            >
+              {point.description}
+            </text>
           )}
         </g>
       ))}

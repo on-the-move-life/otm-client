@@ -127,8 +127,6 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
     console.log('date wise weekly plan :', dateWiseWeeklyPlan);
   }, [selectedDay]);
 
-  console.log('xxxxx', weeklyPlan);
-
   return (
     <>
       {dateWiseWeeklyPlan && (

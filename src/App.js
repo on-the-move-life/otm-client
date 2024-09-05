@@ -139,7 +139,7 @@ function App() {
           path="/journey-reflection/:reportId"
           element={<JourneyReflectionPage />}
         />
-        <Route path="/fintess-qustioniore" element={<FtnesssQuestionare />} />
+        <Route path="/fitness-plan" element={<FtnesssQuestionare />} />
         <Route
           path="/leaderboard/:value"
           element={

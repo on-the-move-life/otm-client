@@ -86,8 +86,6 @@ export const deleteSelectedIngredient = (ingredientId) => {
 
 export const updateSectionName = (sectionName) => {
   // Possible section names = ['Get Started', 'Questions', 'Ingredients', 'Weekly Plan']
-
-  console.log('xxxxxx', sectionName);
   return (dispatch) => {
     dispatch({
       type: Actions.UPDATE_SECTION_NAME,

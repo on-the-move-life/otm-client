@@ -136,7 +136,6 @@ const AdditionalActivity = ({ setShowActivity }) => {
   }, []);
 
   const handleActivityType = (e) => {
-    console.log('ccxxccc', e, e.target.innerText);
     setSelectedActivityType(e.target.innerText);
     setShowTypeInput(false);
   };

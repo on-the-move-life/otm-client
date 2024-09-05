@@ -85,12 +85,10 @@ const StepTracker = () => {
     setShowInput(true);
   };
 
-  console.log('dfvdfdfdf', showInput);
-
   return (
     <div>
       <div
-        className={`relative  bg-black-opacity-45  ${
+        className={`relative  flex h-[50px] flex-col justify-center bg-black-opacity-45  ${
           showInput ? ' rounded-t-2xl' : 'rounded-xl'
         }`}
       >
@@ -143,6 +141,7 @@ const StepTracker = () => {
                       <img
                         src="/assets/fitness-add.svg"
                         className="h-[30px] w-[30px]"
+                        onClick={handleShowInput}
                       />
                     </div>
                   ))}

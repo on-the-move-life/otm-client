@@ -92,7 +92,6 @@ const reducer = (state = initialState, action) => {
         selectedIngredients: [...updatedSelectedIngredients],
       };
     case Actions.UPDATE_SECTION_NAME:
-      console.log('yuyuyuyu', action.payload);
       return {
         ...state,
         sectionName: action.payload || '',
