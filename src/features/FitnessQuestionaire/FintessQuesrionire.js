@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   capitalizeFirstLetter,
   decreaseScreenAndRank,
@@ -77,38 +77,46 @@ const FtnesssQuestionare = () => {
       .finally(() => navigate('/home?evolve=evolve'));
   };
 
+  const isFormValid = useMemo(
+    () => isAnyEmptyResponseFitness(currentQuestion, response),
+    [currentQuestion, response],
+  );
+
+  console.log('xxxccdfdfd', isFormValid);
+
   return (
     <div className="h-screen  px-6 py-8">
       {questions &&
         questions?.map((ques, idx) => {
           return (
-            <>
-              <ToastContainer
-                position="top-center"
-                autoClose={1000}
-                hideProgressBar={true}
-                newestOnTop={false}
-                closeButton={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-              />
+            <div className="h-full">
+              <div className="fixed top-0 z-40">
+                <ToastContainer
+                  position="top-center"
+                  autoClose={1000}
+                  hideProgressBar={true}
+                  newestOnTop={false}
+                  closeButton={false}
+                  theme="dark"
+                />
+              </div>
               {ques.screen === screen && (
-                <div className="flex h-full flex-col justify-between overflow-y-scroll">
+                <div className="relative flex h-full flex-col justify-between overflow-y-scroll">
                   <div className="">
                     <div className="flex flex-col items-center justify-center gap-5">
                       <div className="mx-auto my-4 flex w-full items-center justify-center">
-                        {screen > 1 && (
-                          <BackButton
-                            size={30}
-                            action={() =>
-                              decreaseScreenAndRank(screen, setScreen)
+                        <BackButton
+                          size={30}
+                          action={() => {
+                            if (screen > 1) {
+                              decreaseScreenAndRank(screen, setScreen);
                             }
-                            className="absolute left-[5%] w-fit cursor-pointer"
-                          />
-                        )}
+                            if (screen === 1) {
+                              navigate('/home');
+                            }
+                          }}
+                          className="absolute left-0 w-fit cursor-pointer"
+                        />
 
                         <ProgressBar
                           className="w-[250px]"
@@ -163,13 +171,21 @@ const FtnesssQuestionare = () => {
                   </div>
                   <div className="flex w-full flex-col justify-center gap-1">
                     <Button
-                      style={{ fontWeight: 500 }}
+                      style={{
+                        fontWeight: 500,
+                        backgroundColor: !isFormValid
+                          ? 'rgba(61,61,61,0.3)'
+                          : undefined, // Use backgroundColor for solid color
+                        backgroundImage: isFormValid
+                          ? 'var(--Gradient-purple, linear-gradient(95deg, #d6b6f0 2.94%, #848ce9 74.36%))'
+                          : undefined, // Use backgroundImage for gradient
+                      }}
                       text={questions.length === screen ? 'Submit' : 'Next'}
-                      type="lifestyle"
+                      type=""
                       action={() => {
                         if (
                           currentQuestion[0].isRequired === true &&
-                          !isAnyEmptyResponseFitness(currentQuestion, response)
+                          !isFormValid
                         ) {
                           toast.warn('Please fill in the required fields!');
                         } else {
@@ -184,7 +200,7 @@ const FtnesssQuestionare = () => {
                   </div>
                 </div>
               )}
-            </>
+            </div>
           );
         })}
     </div>

@@ -96,7 +96,6 @@ export function updateCurrentQuestion(questions, screen, setCurrentQuestion) {
 // function to check for empty response in the current screen
 export function isAnyEmptyResponse(currentQuestion, response) {
   let isEmpty = false;
-  console.log('uuppuuppuuppuuppuuppuupp', currentQuestion, response);
   if (currentQuestion && currentQuestion !== null) {
     isEmpty = currentQuestion.some((ques, idx) => {
       return ques?.isRequired === true && response[ques?.code][0] === '';
@@ -115,7 +114,11 @@ export function isAnyEmptyResponseFitness(currentQuestion, response) {
   );
   if (currentQuestion && Object.keys(response).length !== 0) {
     isEmpty = currentQuestion.some((ques, idx) => {
-      return ques?.isRequired === true && response[ques?.code][0] !== '';
+      if (!ques.isRequired) {
+        return true;
+      } else {
+        return ques?.isRequired === true && response[ques?.code][0] !== '';
+      }
     });
   }
   return isEmpty;

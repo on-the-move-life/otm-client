@@ -19,16 +19,10 @@ import AdditionalActivity from './AdditionalActivity';
 import { TbSwimming } from 'react-icons/tb';
 import { FaArrowRight } from 'react-icons/fa6';
 import CalendarTile from '../Nutrition/MealPlanner/Components/CalendarTile';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts';
-import PathVisualization from './PathVisualisation';
+import EvolveScreen from './EvolveScreen';
+import WeeklySchedule from './WeeklySchedule';
+import WorkoutTile from './WorkoutTile';
+import BatteryLevel from './BatteryLevel';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -48,13 +42,13 @@ const SlideDown = keyframes`
   }
 `;
 
-const InputContainer = styled.div`
+const WokoutTileContainer = styled.div`
   animation: ${SlideDown} 0.5s ease-out forwards;
   max-height: 100px; /* Adjust as needed */
 `;
 
 const FitnessPage = () => {
-  const [showQuestion, setShowQuestion] = useState(false);
+  const [showInitialScreen, setShowInitialScreen] = useState(false);
   const { setUserData } = useUserContext();
   const { logout } = useAuth();
   // const [user, getUserFromStorage] = useState({});
@@ -173,7 +167,7 @@ const FitnessPage = () => {
         }
       })
       .catch((err) => {
-        setShowQuestion(true);
+        setShowInitialScreen(true);
         console.log(err.message);
         setHomeStats(null);
       })
@@ -201,7 +195,7 @@ const FitnessPage = () => {
       .catch((err) => {
         console.log(err.message);
         setHomeStats(null);
-        setShowQuestion(true);
+        setShowInitialScreen(true);
       })
       .finally(() => {
         setLoader(false);
@@ -238,8 +232,6 @@ const FitnessPage = () => {
     };
     checkIfWeekend();
   }, []);
-
-  const chargeArray = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     // <>
@@ -458,7 +450,7 @@ const FitnessPage = () => {
       {loader && !evolve && <Loader />}
       {showLoader && (
         <>
-          {(loader || evolve) && (
+          {evolve && (
             <div className="relative z-50 flex h-screen w-full  items-center bg-[#161513] px-5">
               <img
                 src="assets/movement-frame.svg"
@@ -485,128 +477,97 @@ const FitnessPage = () => {
         </>
       )}
 
-      {!showLoader && homeStats && evolve && (
-        <div className="relative z-50 flex h-screen flex-col justify-between overflow-y-scroll bg-[#161513] px-[16px] ">
-          <img
-            src="assets/movement-frame.svg"
-            className="absolute left-0 top-0 -z-10 h-full w-full"
-          />
-          <div>
-            <h2 className="mt-[60px] w-4/5 text-lg text-offwhite">
-              Based on your answers, we’ve designed your personalised journey
-            </h2>
-            <div className="mt-[22px] rounded-xl bg-black-opacity-45 p-1 ">
-              <div className="flex items-end gap-[10px] px-3">
-                <img src="./assets/evolve.svg" />
-
-                <h5 className="h-min rounded bg-browm-opacity-12 px-2 text-xs text-yellow">
-                  Level {homeStats.level}
-                </h5>
-              </div>
-              <p className="mt-[10px] w-11/12 px-3 text-sm text-white-opacity-50">
-                We'll focus on sustainable integration of fitness and wellbeing
-                practices with minimal restrictions and effort!
-              </p>
-            </div>
-            <PathVisualization level={homeStats.level} />
-          </div>
-
-          <button
-            type="submit"
-            onClick={() => {
-              navigate('/home');
-              getUserData();
-            }}
-            style={{
-              backgroundColor: '#F8F8F8',
-
-              color: 'rgba(0,0,0)',
-            }}
-            className="relative  mb-10 mt-10  flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg leading-8  text-black backdrop-blur-md"
-          >
-            Let's get On The Move
-          </button>
-        </div>
+      {!loader && !showLoader && homeStats && evolve && (
+        <EvolveScreen homeStats={homeStats} getUserData={getUserData} />
       )}
 
-      {showActivity === true && (
+      {!loader && showActivity === true && (
         <AdditionalActivity setShowActivity={setShowActivity} />
       )}
       <img
         src="assets/movement-frame.svg"
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
-      {showActivity === false && (
+      {!loader && showActivity === false && (
         <>
           {!evolve && (
             <>
-              <div className="h-full overflow-y-scroll px-4">
-                <div className="mt-[77px] flex w-full items-end">
-                  <div className="flex-1">
-                    <h3 className=" font-sfpro text-[14px] text-offwhite">
-                      Good Morning {firstName}
-                    </h3>
+              <div className=" h-full overflow-y-scroll  px-4 pt-[77px]">
+                <>
+                  <h3 className=" font-sfpro text-[14px] text-offwhite">
+                    Good Morning {firstName}
+                  </h3>
+                  <div className="flex w-full items-end">
+                    <div className="flex-1">
+                      <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
+                        Movement
+                      </h2>
 
-                    <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
-                      Movement
-                    </h2>
-
-                    <div className="font-sfpro text-[14px] text-white-opacity-50">
-                      Everyday is an opportunity to do some main character shit.
-                    </div>
-                  </div>
-                  {showQuestion === false && (
-                    <div className="flex flex-1 justify-end">
-                      <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
-                        <span className=" pl-2 text-sm  text-offwhite">
-                          Total workouts
-                        </span>
-                        <div
-                          className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
-                        >
-                          {homeStats && formatNumber(homeStats?.totalWorkouts)}
-                        </div>
+                      <div className="font-sfpro text-[14px] text-white-opacity-50">
+                        Everyday is an opportunity to do some main character
+                        shit.
                       </div>
                     </div>
-                  )}
-                </div>
-
-                {showQuestion === true && (
+                    {showInitialScreen === false && (
+                      <div className="flex flex-1 justify-end">
+                        <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
+                          <span className=" pl-2 text-sm  text-offwhite">
+                            Total workouts
+                          </span>
+                          <div
+                            className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
+                          >
+                            {homeStats &&
+                              formatNumber(homeStats?.totalWorkouts)}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
+                {showInitialScreen === true && (
                   <div className="mt-[24px] flex flex-col items-center gap-2">
                     <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
                       <div className="flex w-full justify-between">
                         <img
                           src="/assets/purple-arm.svg"
-                          className="h-[140px] w-[140px] p-4"
+                          className="h-[120px] w-[120px] p-4"
                         />
                         <div className="flex w-full flex-1 flex-col justify-center">
                           <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
-                            Find Your Plan
+                            New Weekly Format!
                           </h3>
                           <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
-                            Take our quick test and we will find the perfect
-                            plan for you.
+                            Take this short quiz to create your weekly workout
+                            schedule
                           </p>
                         </div>
                       </div>
                       <Link
                         to="/fitness-plan"
-                        className=" w-full rounded-lg bg-white p-2.5 text-center font-sfpro text-[18px] font-medium text-black" // Replaced p-[10px] with Tailwind equivalent
+                        className=" w-full rounded-lg bg-white p-2.5 text-center font-sfpro text-[14px] font-medium text-black" // Replaced p-[10px] with Tailwind equivalent
                       >
                         Let's Go
                       </Link>
                     </div>
                   </div>
                 )}
+                {showInitialScreen === true && (
+                  <div className=" mt-3 w-full">
+                    <p className=" mt-2  font-sfpro  text-[14px] font-medium text-white-opacity-50">
+                      Don't worry, you can update your schedule anytime with
+                      your coach
+                    </p>
+                  </div>
+                )}
 
-                {showQuestion === false && (
+                {showInitialScreen === false && (
                   <>
                     <div className="my-4 flex justify-center">
                       {homeStats &&
                         Object.keys(homeStats.weeklyWorkout).map(
                           (item, index) => {
                             const slicedDay = item.substr(0, 3);
-                            console.log(homeStats);
                             return (
                               <div
                                 className="flex w-full flex-row items-center justify-between"
@@ -625,107 +586,14 @@ const FitnessPage = () => {
                     </div>
 
                     <div className="flex gap-2">
-                      <div className="h-fit w-full rounded-xl bg-black-opacity-45 py-2">
-                        <div className="mx-3  flex justify-between">
-                          <h4 className="text-sm text-offwhite">
-                            Your weekly schedule
-                          </h4>
-                          {/* <img src="./assets/maximize-schedule.svg" /> */}
-                        </div>
-                        <div className="mt-5">
-                          {homeStats &&
-                            homeStats.stats.map((item, index) => (
-                              <div
-                                className="flex h-[25px] justify-between  px-2"
-                                style={{
-                                  borderBottom:
-                                    homeStats.stats.length - 1 !== index
-                                      ? '0.5px solid rgba(255, 255, 255, 0.13)'
-                                      : 'none',
-                                }}
-                              >
-                                <div className="flex items-center gap-1">
-                                  <h5 className="text-sm text-blue">
-                                    {item.total}
-                                  </h5>{' '}
-                                  <h5 className="text-[10px] text-offwhite">
-                                    {item.name}
-                                  </h5>
-                                </div>
-                                <div className="flex items-center">
-                                  {item.total === item.completed && (
-                                    <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
-                                      completed
-                                    </div>
-                                  )}
-                                  {item.completed > 0 &&
-                                    item.completed < item.total && (
-                                      <div className="flex gap-1">
-                                        <div className="h-[15px] rounded-[3px] bg-green-opacity-12 px-1 text-[10px] text-green">
-                                          {item.completed} done
-                                        </div>
-                                        <div className="h-[15px] rounded-[3px] bg-red-opacity-12 px-1 text-[10px] text-red">
-                                          {item.total - item.completed} left
-                                        </div>
-                                      </div>
-                                    )}
-                                  {item.completed === 0 && (
-                                    <div className="h-[15px] rounded-[3px] bg-red-opacity-12 px-1 text-[10px] text-red">
-                                      not started
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            ))}
-                        </div>
-                      </div>
+                      <WeeklySchedule homeStats={homeStats} />
                       {/* This is battery level will lead in future */}
-                      <div className="flex flex-col items-center rounded-xl bg-black-opacity-45 px-4 py-2">
-                        <div className="flex">
-                          <img src="./assets/yellow-bg-power.svg" />
-                          <h4 className="text-sm text-yellow ">
-                            Level {homeStats?.level}
-                          </h4>
-                          <img
-                            src="./assets/level-question.svg"
-                            className="ml-1"
-                          />
-                        </div>
-                        <div className="my-2 flex flex-col items-center">
-                          {chargeArray.map((item, index) => {
-                            return (
-                              <div
-                                style={{
-                                  boxShadow:
-                                    index >
-                                      chargeArray.length -
-                                        homeStats?.level -
-                                        1 &&
-                                    '0 2px 4px   rgba(245 ,197, 99 , 0.2), 0 -4px 6px rgba(245 ,197, 99 , 0.2), 4px 0 6px rgba(221, 249, 136, 0.2), -4px 0 6px rgba(221, 249, 136, 0.2)',
-                                }}
-                                className={`mb-[1px]    ${
-                                  index >
-                                  chargeArray.length - homeStats?.level - 1
-                                    ? 'bg-yellow'
-                                    : 'bg-white-opacity-50 opacity-50'
-                                }  ${
-                                  index === 0
-                                    ? 'h-[6px] w-[11px]  rounded-t-[4px] '
-                                    : 'h-[11px] w-[38px]  rounded '
-                                }`}
-                              ></div>
-                            );
-                          })}
-                        </div>
-                        <p className="text-center text-[10px] text-white-opacity-50">
-                          Charge up to unlock next level
-                        </p>
-                      </div>
+                      {/* <BatteryLevel homeStats={homeStats} /> */}
                     </div>
                   </>
                 )}
 
-                {showQuestion === false && (
+                {showInitialScreen === false && (
                   <>
                     <div className="my-4 flex w-full items-center justify-between">
                       <h3>Today's Plan</h3>
@@ -747,124 +615,54 @@ const FitnessPage = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <StepTracker />
-                      <InputContainer
-                        key={selectedDay}
-                        className="flex flex-col gap-2"
-                      >
-                        <section>
-                          <div
-                            className="flex items-center"
-                            style={{
-                              opacity: isDisabled ? 0.5 : 1,
-                              pointerEvents: isDisabled ? 'none' : 'auto',
-                              cursor: isDisabled ? 'not-allowed' : 'default',
-                            }}
-                          >
-                            <Link
-                              to="/workout/today"
-                              className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone py-2 pl-4 pr-7 "
-                            >
-                              <div className="flex h-full flex-col justify-center">
-                                <h5 className="text-sm font-light text-white-opacity-50">
-                                  Morning Zone
-                                </h5>
-                                <h2 className="text-xl  ">
-                                  {' '}
-                                  {
-                                    homeStats?.weeklyWorkout[selectedDay][
-                                      'Morning Zone'
-                                    ]['movements'][0].movementName
-                                  }
-                                </h2>
-
-                                <div className="mt-1 flex gap-3">
-                                  <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
-                                    <img
-                                      src="/assets/yellowTimer.svg"
-                                      className="mr-[2px]"
-                                    />
-                                    {
-                                      homeStats?.weeklyWorkout[selectedDay][
-                                        'Morning Zone'
-                                      ]['movements'][0].time
-                                    }
-                                  </h2>
-                                </div>
-                              </div>
-                              <img
-                                className="rounded-xl"
-                                style={{
-                                  boxShadow:
-                                    '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
-                                }}
-                                src={
-                                  homeStats?.weeklyWorkout[selectedDay][
-                                    'Evening Zone'
-                                  ]['movements'][0].completed === true
-                                    ? '/assets/green-tick-big.svg'
-                                    : '/assets/yellow-play.svg'
-                                }
-                              />
-                            </Link>
-                          </div>
-                        </section>
-
-                        <section>
-                          <div className="flex items-center">
-                            <Link
-                              to="/workout/flex"
-                              className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-evening-zone py-2 pl-4 pr-7 "
-                            >
-                              <div className="flex h-full flex-col justify-center">
-                                <h5 className="text-sm font-light text-white-opacity-50">
-                                  Evening Zone
-                                </h5>
-                                <h2 className="text-xl  ">
-                                  {' '}
-                                  {
-                                    homeStats?.weeklyWorkout[selectedDay][
-                                      'Evening Zone'
-                                    ]['movements'][0].movementName
-                                  }
-                                </h2>
-
-                                <div className="mt-1 flex gap-3">
-                                  <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
-                                    <img
-                                      src="/assets/yellowTimer.svg"
-                                      className="mr-[2px]"
-                                    />
-                                    {
-                                      homeStats?.weeklyWorkout[selectedDay][
-                                        'Evening Zone'
-                                      ]['movements'][0].time
-                                    }
-                                  </h2>
-                                </div>
-                              </div>
-                              <img
-                                className="rounded-xl"
-                                style={{
-                                  boxShadow:
-                                    '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
-                                }}
-                                src={
-                                  homeStats?.weeklyWorkout[selectedDay][
-                                    'Evening Zone'
-                                  ]['movements'][0].completed === true
-                                    ? '/assets/green-tick-big.svg'
-                                    : '/assets/yellow-play.svg'
-                                }
-                              />
-                            </Link>
-                          </div>
-                        </section>
-                      </InputContainer>
-                    </div>
                   </>
                 )}
+
+                <div className=" flex flex-col gap-4">
+                  {showInitialScreen === true && (
+                    <section>
+                      <div
+                        className="mt-8 flex items-center"
+                        style={{
+                          opacity: isDisabled ? 0.5 : 1,
+                          pointerEvents: isDisabled ? 'none' : 'auto',
+                          cursor: isDisabled ? 'not-allowed' : 'default',
+                        }}
+                      >
+                        <Link
+                          to="/workout/today"
+                          className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone py-2 pl-4 pr-7 "
+                        >
+                          <div className="flex h-full flex-col justify-center">
+                            <h2 className="text-xl  ">Strength Training</h2>
+                          </div>
+                          <img
+                            className="h-[55px] w-[55px] rounded-xl"
+                            style={{
+                              boxShadow:
+                                '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                            }}
+                            src={'/assets/yellow-play.svg'}
+                          />
+                        </Link>
+                      </div>
+                    </section>
+                  )}
+                  <StepTracker />
+
+                  <WokoutTileContainer
+                    key={selectedDay}
+                    className="flex flex-col gap-2"
+                  >
+                    {showInitialScreen === false && (
+                      <WorkoutTile
+                        homeStats={homeStats}
+                        isDisabled={isDisabled}
+                        selectedDay={selectedDay}
+                      />
+                    )}
+                  </WokoutTileContainer>
+                </div>
               </div>
             </>
           )}
