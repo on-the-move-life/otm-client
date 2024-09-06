@@ -85,23 +85,13 @@ const FtnesssQuestionare = () => {
   console.log('xxxccdfdfd', isFormValid);
 
   return (
-    <div className="h-screen  px-6 py-8">
+    <div className="h-screen overflow-y-scroll  px-6 py-8">
       {questions &&
         questions?.map((ques, idx) => {
           return (
-            <div className="h-full">
-              <div className="fixed top-0 z-40">
-                <ToastContainer
-                  position="top-center"
-                  autoClose={1000}
-                  hideProgressBar={true}
-                  newestOnTop={false}
-                  closeButton={false}
-                  theme="dark"
-                />
-              </div>
+            <div className="">
               {ques.screen === screen && (
-                <div className="relative flex h-full flex-col justify-between overflow-y-scroll">
+                <div className="relative flex h-full flex-col justify-between ">
                   <div className="">
                     <div className="flex flex-col items-center justify-center gap-5">
                       <div className="mx-auto my-4 flex w-full items-center justify-center">
@@ -173,12 +163,11 @@ const FtnesssQuestionare = () => {
                     <Button
                       style={{
                         fontWeight: 500,
-                        backgroundColor: !isFormValid
-                          ? 'rgba(61,61,61,0.3)'
-                          : undefined, // Use backgroundColor for solid color
-                        backgroundImage: isFormValid
-                          ? 'var(--Gradient-purple, linear-gradient(95deg, #d6b6f0 2.94%, #848ce9 74.36%))'
-                          : undefined, // Use backgroundImage for gradient
+
+                        backgroundImage:
+                          'var(--Gradient-purple, linear-gradient(95deg, #d6b6f0 2.94%, #848ce9 74.36%))',
+
+                        opacity: !isFormValid ? 0.4 : 1,
                       }}
                       text={questions.length === screen ? 'Submit' : 'Next'}
                       type=""

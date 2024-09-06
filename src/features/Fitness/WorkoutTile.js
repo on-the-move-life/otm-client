@@ -13,7 +13,7 @@ const WorkoutTile = ({ homeStats, isDisabled, selectedDay }) => {
           }}
         >
           <Link
-            to="/workout/today"
+            to={`/workout/today?movemnentId=${homeStats?.weeklyWorkout[selectedDay]['Morning Zone']['movements'][0].movementId}`}
             className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone py-2 pl-4 pr-7 "
           >
             <div className="flex h-full flex-col justify-center">
@@ -61,7 +61,7 @@ const WorkoutTile = ({ homeStats, isDisabled, selectedDay }) => {
       <section>
         <div className="flex items-center">
           <Link
-            to="/workout/today"
+            to={`/workout/today?movemnentId=${homeStats?.weeklyWorkout[selectedDay]['Morning Zone']['movements'][0].movementId}`}
             className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-evening-zone py-2 pl-4 pr-7 "
           >
             <div className="flex h-full flex-col justify-center">

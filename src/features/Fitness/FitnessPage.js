@@ -63,8 +63,6 @@ const FitnessPage = () => {
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
-
-  const navigate = useNavigate();
   const queryString = window.location.search;
   const [showLoader, setShowLoader] = useState(true);
   // Initialize URLSearchParams with the query string
@@ -76,10 +74,12 @@ const FitnessPage = () => {
   const fullName = JSON.parse(localStorage.getItem('user'))['name'];
   const code = JSON.parse(localStorage.getItem('user'))['code'];
   const firstName = fullName.split(' ')[0];
-  useEffect(() => {
-    const today = new Date();
 
+  console.log('xxcvxfsdfcvsfsxcvsfs', selectedDay);
+
+  useEffect(() => {
     // Use Intl.DateTimeFormat to get the full day name
+    const today = new Date();
     const dayName = new Intl.DateTimeFormat('en-US', {
       weekday: 'long',
     }).format(today);
@@ -462,11 +462,11 @@ const FitnessPage = () => {
                   className="w-full pb-[27px] "
                 />
                 <p className="w-full text-center text-[32px] text-blue">
-                  Hand tight
+                  Hang tight!
                 </p>
                 <p className="mx-auto w-11/12 text-center text-[14px] text-white-opacity-50">
-                  Hang tight! We're shaping your weekly fitness plan with our
-                  coach's expert touch
+                  We're shaping your weekly fitness plan with our coach's expert
+                  touch
                 </p>
                 <p className="mx-auto  w-11/12 text-center text-[14px] text-offwhite">
                   your personalized schedule is nearly ready!
@@ -636,14 +636,6 @@ const FitnessPage = () => {
                           <div className="flex h-full flex-col justify-center">
                             <h2 className="text-xl  ">Strength Training</h2>
                           </div>
-                          <img
-                            className="h-[55px] w-[55px] rounded-xl"
-                            style={{
-                              boxShadow:
-                                '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
-                            }}
-                            src={'/assets/yellow-play.svg'}
-                          />
                         </Link>
                       </div>
                     </section>

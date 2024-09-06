@@ -18,6 +18,10 @@ const SectionDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
+  const queryString = window.location.search;
+  const queryParams = new URLSearchParams(queryString);
+  const movemnentId = queryParams.get('movemnentId');
+  console.log(' ttyyrtrtytty', movemnentId);
 
   const [updatedWorkoutProgram, setUpdatedWorkoutProgram] = useState(null);
   const { workout, index } = useSelector((store) => store.workoutReducer);
@@ -158,7 +162,9 @@ const SectionDetail = () => {
     setShowAlertDialog(false);
 
     if (confirm) {
-      navigate(`/workout-summary/${params.value}`, { replace: true });
+      navigate(`/workout-summary/${params.value}?movemnentId=${movemnentId}`, {
+        replace: true,
+      });
     }
   };
 
@@ -181,7 +187,7 @@ const SectionDetail = () => {
             !showMvmtDetail &&
             Object.keys(workout).length !== 0 &&
             !showSwapOptions && (
-              <div className="w-screen h-screen pt-8 overflow-x-hidden max-h-fit">
+              <div className="h-screen max-h-fit w-screen overflow-x-hidden pt-8">
                 <AnimatedComponent
                   key={Math.random() * 1000}
                   animation={sectionPageAnimation}
@@ -213,7 +219,7 @@ const SectionDetail = () => {
                               viewBox="0 0 24 24"
                               stroke="currentColor"
                               strokeWidth={2}
-                              className="pb-1 cursor-pointer h-7 w-7 text-green"
+                              className="h-7 w-7 cursor-pointer pb-1 text-green"
                             >
                               <path
                                 strokeLinecap="round"
@@ -223,7 +229,7 @@ const SectionDetail = () => {
                             </svg>
                           </Tooltip>
                         </div>
-                        <h1 className="pb-2 text-3xl workout-gradient-text">
+                        <h1 className="workout-gradient-text pb-2 text-3xl">
                           {name}
                         </h1>
                       </div>
@@ -237,12 +243,12 @@ const SectionDetail = () => {
 
                     <div className="h-0 w-screen border-b-[0.5px] border-[#2E2E2E]"></div>
                     {code === 'METCON' && (
-                      <div className="flex flex-col my-6">
+                      <div className="my-6 flex flex-col">
                         <span className="text-sm tracking-widest text-green">
                           TODAY'S FORMAT
                         </span>
                         <div className="flex flex-col">
-                          <span className="text-2xl uppercase workout-gradient-text">
+                          <span className="workout-gradient-text text-2xl uppercase">
                             {formatInfo?.name}
                           </span>
                           {formatInfo?.name !== 'EMOM' &&
@@ -281,7 +287,7 @@ const SectionDetail = () => {
                         </div>
                       )}
 
-                    <div className="flex my-12 rounded-lg max-w-10/12 max-h-20">
+                    <div className="max-w-10/12 my-12 flex max-h-20 rounded-lg">
                       <div className="flex items-center justify-center">
                         {movements && movementLength > 1 && (
                           <div className="h-fit w-fit">
@@ -312,7 +318,7 @@ const SectionDetail = () => {
                         code !== 'FEED' &&
                         code !== 'WUP' &&
                         code !== 'COD' && (
-                          <div className="flex items-center justify-around w-1/6 grow text-green">
+                          <div className="flex w-1/6 grow items-center justify-around text-green">
                             {movements && movementLength > 1 && (
                               <div>
                                 <img src={'/assets/bracket-arrow.svg'} alt="" />
@@ -331,7 +337,7 @@ const SectionDetail = () => {
                           setShowLevel(true);
                         }}
                       >
-                        <span className="text-sm tracking-wider text-center ">
+                        <span className="text-center text-sm tracking-wider ">
                           Check Skill Progression
                         </span>
                         <span className="mx-1">
@@ -341,19 +347,19 @@ const SectionDetail = () => {
                     )}
 
                     {code === 'METCON' && (
-                      <div className="flex justify-around my-6">
+                      <div className="my-6 flex justify-around">
                         <div className="w-26 flex h-16 flex-col items-center justify-center rounded-lg border border-[#323232] p-2">
                           <span className="text-xs text-lightGray">
                             {formatInfo?.name === 'AMRAP'
                               ? 'Target Rounds'
                               : 'Target Time'}
                           </span>
-                          <div className="flex items-center justify-center w-full h-full text-green">
+                          <div className="flex h-full w-full items-center justify-center text-green">
                             <span className="text-3xl">
                               {formatInfo.target}
                             </span>
                             {formatInfo?.name !== 'AMRAP' && (
-                              <span className="pt-3 pl-1 text-xs tracking-widest">
+                              <span className="pl-1 pt-3 text-xs tracking-widest">
                                 MINS
                               </span>
                             )}
@@ -364,11 +370,11 @@ const SectionDetail = () => {
                           <span className="text-xs text-lightGray">
                             Current Intensity
                           </span>
-                          <div className="flex items-center justify-center w-full h-full text-green">
+                          <div className="flex h-full w-full items-center justify-center text-green">
                             <span className="text-3xl">
                               {formatInfo?.currentIntensity}
                             </span>
-                            <span className="pt-3 pl-1 tracking-widest text-md">
+                            <span className="text-md pl-1 pt-3 tracking-widest">
                               %
                             </span>
                           </div>
@@ -378,11 +384,11 @@ const SectionDetail = () => {
                           <span className="text-xs text-lightGray">
                             Target Intensity
                           </span>
-                          <div className="flex items-center justify-center w-full h-full text-green">
+                          <div className="flex h-full w-full items-center justify-center text-green">
                             <span className="text-3xl">
                               {formatInfo?.targetIntensity}
                             </span>
-                            <span className="pt-3 pl-1 tracking-widest text-md">
+                            <span className="text-md pl-1 pt-3 tracking-widest">
                               %
                             </span>
                           </div>
@@ -390,7 +396,7 @@ const SectionDetail = () => {
                       </div>
                     )}
 
-                    <div className="gap-3 scrolling-wrapper">
+                    <div className="scrolling-wrapper gap-3">
                       {movements.map((movement) => {
                         return (
                           <Movement
@@ -408,7 +414,7 @@ const SectionDetail = () => {
                       (code === 'ASMT' && notes.length > 0)) && (
                       <div className="mt-4 rounded-xl border-[0.5px] border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4">
                         <p className="mb-2 text-xs tracking-[3px]">NOTES</p>
-                        <ul className="pl-3 list-disc">
+                        <ul className="list-disc pl-3">
                           {notes.map((note, idx) => (
                             <li
                               className="my-2 text-xs font-light tracking-wider text-lightGray"
@@ -433,7 +439,7 @@ const SectionDetail = () => {
                     )}
 
                     <div>
-                      <h2 className="my-4 text-2xl workout-gradient-text">
+                      <h2 className="workout-gradient-text my-4 text-2xl">
                         Data Inputs
                       </h2>
                       {code === 'GYM'
@@ -485,8 +491,8 @@ const SectionDetail = () => {
                           <p className="mb-2 text-sm tracking-[3px] sm:text-[15px]">
                             MAX EFFORT TEST
                           </p>
-                          <div className="flex flex-col items-center mt-4 mb-4 sm:mt-4">
-                            <p className="mb-2 text-sm font-semibold text-center sm:text-base">
+                          <div className="mb-4 mt-4 flex flex-col items-center sm:mt-4">
+                            <p className="mb-2 text-center text-sm font-semibold sm:text-base">
                               {assessmentMovement?.name}
                             </p>
                             {assessmentMovement?.link &&
@@ -516,7 +522,7 @@ const SectionDetail = () => {
                                 : null
                             }
                           />
-                          <ul className="pl-5 mt-4 list-disc">
+                          <ul className="mt-4 list-disc pl-5">
                             <li className="my-2 text-xs font-light tracking-wider text-lightGray">
                               Enter the number of reps
                             </li>
@@ -585,7 +591,7 @@ const SectionDetail = () => {
 
                   {lastPage ? (
                     <div
-                      className="flex flex-col items-center justify-center w-3/4 h-full bg-theme"
+                      className="flex h-full w-3/4 flex-col items-center justify-center bg-theme"
                       onClick={() => setShowAlertDialog(true)}
                     >
                       <span className="text-2xl tracking-widest text-green">
@@ -593,7 +599,7 @@ const SectionDetail = () => {
                       </span>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center w-3/4 h-full bg-theme">
+                    <div className="flex h-full w-3/4 flex-col items-center justify-center bg-theme">
                       <span className="text-xs tracking-widest text-lightGray">
                         SECTION
                       </span>
