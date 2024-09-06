@@ -78,7 +78,7 @@ export function AdminDashboard() {
           <input
             type="text"
             placeholder="Search users..."
-            className="w-full p-2 mb-4 bg-gray-700 rounded text-white"
+            className="w-full p-2 mb-4 bg-gray-700 rounded text-black"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
