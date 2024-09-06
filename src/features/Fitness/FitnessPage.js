@@ -75,8 +75,6 @@ const FitnessPage = () => {
   const code = JSON.parse(localStorage.getItem('user'))['code'];
   const firstName = fullName.split(' ')[0];
 
-  console.log('xxcvxfsdfcvsfsxcvsfs', selectedDay);
-
   useEffect(() => {
     // Use Intl.DateTimeFormat to get the full day name
     const today = new Date();
@@ -158,18 +156,22 @@ const FitnessPage = () => {
       )
       .then((res) => {
         if (res.data) {
-          setUserData(res.data);
-          setHomeStats(res.data);
+          if (Object.keys(res.data.weeklyWorkout).length > 0) {
+            setUserData(res.data.data);
+            setHomeStats(res.data.data);
+          }
+          if (Object.keys(res.data.weeklyWorkout).length === 0) {
+            setShowInitialScreen(true);
 
+            setHomeStats(null);
+          }
           setError(null);
           if (res.success === false) {
           }
         }
       })
       .catch((err) => {
-        setShowInitialScreen(true);
         console.log(err.message);
-        setHomeStats(null);
       })
       .finally(() => {
         setLoader(false);
@@ -648,9 +650,9 @@ const FitnessPage = () => {
                   >
                     {showInitialScreen === false && (
                       <WorkoutTile
-                        homeStats={homeStats}
+                        homeStats={homeStats?.weeklyWorkout[selectedDay]}
                         isDisabled={isDisabled}
-                        selectedDay={selectedDay}
+                        setHomeStats={setHomeStats}
                       />
                     )}
                   </WokoutTileContainer>

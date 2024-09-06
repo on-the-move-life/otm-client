@@ -46,7 +46,7 @@ const WorkoutSummary = () => {
 
   const queryString = window.location.search;
   const queryParams = new URLSearchParams(queryString);
-  const movemnentId = queryParams.get('movemnentId');
+  const movementId = queryParams.get('movementId');
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
@@ -134,7 +134,7 @@ const WorkoutSummary = () => {
       code: workout.memberCode,
       day: workout.day,
       batch: 'HYPER',
-      workoutId: movemnentId,
+      workoutId: movementId,
     };
 
     dispatch(setStatus('loading'));

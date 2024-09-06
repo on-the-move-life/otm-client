@@ -16,11 +16,11 @@ const MainPage = () => {
   const params = useParams();
   const queryString = window.location.search;
   const queryParams = new URLSearchParams(queryString);
-  const movemnentId = queryParams.get('movemnentId');
+  const movementId = queryParams.get('movementId');
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
-  console.log('xccvcvc', movemnentId);
+  console.log('xccvcvc', movementId);
 
   useEffect(() => {
     if (
@@ -72,7 +72,7 @@ const MainPage = () => {
 
   const handleStart = () => {
     dispatch(setIndex(0));
-    navigate(`/section-details/${params.value}?movemnentId=${movemnentId}`);
+    navigate(`/section-details/${params.value}?movementId=${movementId}`);
   };
 
   if (status === 'loading') {
@@ -164,7 +164,7 @@ const MainPage = () => {
                 updatedWorkoutProgram.length > 0 &&
                 updatedWorkoutProgram.map((data, index) => (
                   <SectionItem
-                    movemnentId={movemnentId}
+                    movementId={movementId}
                     sectionList={updatedWorkoutProgram}
                     index={index}
                     key={index}

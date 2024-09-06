@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setIndex } from './WorkoutSlice';
 
-const Section = ({ sectionList, index, isReport, movemnentId }) => {
+const Section = ({ sectionList, index, isReport, movementId }) => {
   const [section, setSection] = useState(sectionList[index]);
 
   const params = useParams();
@@ -14,7 +14,7 @@ const Section = ({ sectionList, index, isReport, movemnentId }) => {
   const handleClick = (index) => {
     dispatch(setIndex(index));
 
-    navigate(`/section-details/${params.value}?movemnentId=${movemnentId}`);
+    navigate(`/section-details/${params.value}?movementId=${movementId}`);
   };
 
   return (

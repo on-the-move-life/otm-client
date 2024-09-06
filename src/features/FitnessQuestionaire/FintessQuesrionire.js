@@ -82,8 +82,6 @@ const FtnesssQuestionare = () => {
     [currentQuestion, response],
   );
 
-  console.log('xxxccdfdfd', isFormValid);
-
   return (
     <div className="h-screen overflow-y-scroll  px-6 py-8">
       {questions &&
