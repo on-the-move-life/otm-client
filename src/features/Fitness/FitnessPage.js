@@ -160,7 +160,7 @@ const FitnessPage = () => {
             setUserData(res.data.data);
             setHomeStats(res.data.data);
           }
-          if (Object.keys(res.data.weeklyWorkout).length === 0) {
+          if (Object.keys(res.data.data.weeklyWorkout).length === 0) {
             setShowInitialScreen(true);
 
             setHomeStats(null);
