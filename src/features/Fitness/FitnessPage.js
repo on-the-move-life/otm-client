@@ -156,7 +156,7 @@ const FitnessPage = () => {
       )
       .then((res) => {
         if (res.data) {
-          if (Object.keys(res.data.weeklyWorkout).length > 0) {
+          if (Object.keys(res.data.data.weeklyWorkout).length > 0) {
             setUserData(res.data.data);
             setHomeStats(res.data.data);
           }
