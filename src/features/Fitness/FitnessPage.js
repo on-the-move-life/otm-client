@@ -97,21 +97,6 @@ const FitnessPage = () => {
     }
   }, [evolve]);
 
-  useEffect(() => {
-    if (
-      homeStats?.weeklyWorkout[selectedDay]['Evening Zone']['movements'][0]
-        .movementName === 'Rest'
-    ) {
-      setIsDisabled(true);
-    }
-    if (
-      homeStats?.weeklyWorkout[selectedDay]['Evening Zone']['movements'][0]
-        .movementName !== 'Rest'
-    ) {
-      setIsDisabled(false);
-    }
-  }, [homeStats]);
-
   function getCurrentWeek() {
     const today = new Date();
     const dayOfWeek = today.getDay(); // Day of the week (0-6) with 0 being Sunday
@@ -155,19 +140,21 @@ const FitnessPage = () => {
         `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout?memberCode=${code}`,
       )
       .then((res) => {
-        if (res.data) {
-          if (Object.keys(res.data.data.weeklyWorkout).length > 0) {
-            setUserData(res.data.data);
-            setHomeStats(res.data.data);
-          }
-          if (Object.keys(res.data.data.weeklyWorkout).length === 0) {
-            setShowInitialScreen(true);
+        if (
+          Object.hasOwn(res.data, 'data') === false &&
+          Object.keys(res.data.weeklyWorkout).length === 0
+        ) {
+          setShowInitialScreen(true);
 
-            setHomeStats(null);
-          }
-          setError(null);
-          if (res.success === false) {
-          }
+          setHomeStats(null);
+        }
+        console.log('88888');
+        if (
+          Object.hasOwn(res.data, 'data') &&
+          Object.keys(res.data.data.weeklyWorkout).length > 0
+        ) {
+          setUserData(res.data.data);
+          setHomeStats(res.data.data);
         }
       })
       .catch((err) => {
@@ -234,6 +221,8 @@ const FitnessPage = () => {
     };
     checkIfWeekend();
   }, []);
+
+  console.log('innininin', showInitialScreen);
 
   return (
     // <>
@@ -648,7 +637,7 @@ const FitnessPage = () => {
                     key={selectedDay}
                     className="flex flex-col gap-2"
                   >
-                    {showInitialScreen === false && (
+                    {homeStats && showInitialScreen === false && (
                       <WorkoutTile
                         homeStats={homeStats?.weeklyWorkout[selectedDay]}
                         isDisabled={isDisabled}
