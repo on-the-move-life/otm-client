@@ -625,7 +625,7 @@ const FitnessPage = () => {
                       </div>
                     </section>
                   )}
-                  <StepTracker />
+                  {/* <StepTracker /> */}
 
                   <WokoutTileContainer
                     key={selectedDay}
