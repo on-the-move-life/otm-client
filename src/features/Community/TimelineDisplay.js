@@ -47,7 +47,7 @@ const TimelineDisplay = ({ data, timeline }) => {
       onClick={() => navigate(`/timeline/${timeline}`)}
     >
       <h1 className=" flex  h-[32px] items-center  pl-5 text-sm text-offwhite ">
-        {timeline === 'personal' ? 'Personal timeline' : 'Community timeline'}
+        {timeline === 'personal' ? 'Personal' : 'Community'}
       </h1>
       <div className="flex w-full flex-col rounded-xl  bg-[rgba(0,0,0,0.40)] px-[11px] py-4">
         <div className="flex w-full flex-row items-center justify-between">

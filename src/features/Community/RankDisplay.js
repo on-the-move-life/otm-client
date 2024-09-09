@@ -27,9 +27,7 @@ const RankDisplay = ({
       } `}
     >
       <h1 className=" flex  h-[32px]  items-center pl-5 text-sm text-offwhite ">
-        {selectedDataType === 'workout'
-          ? 'Workout leaderboard'
-          : 'Fitness Score leaderboard'}
+        {selectedDataType === 'workout' ? 'Workout' : 'Fitness Score'}
       </h1>
       <div className="flex h-[70px] w-full flex-col justify-center rounded-xl  bg-[rgba(0,0,0,0.40)] px-[11px] py-4">
         <div className="flex w-full flex-row items-center justify-start gap-2 pl-[10px] ">

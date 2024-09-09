@@ -129,7 +129,7 @@ const Community = () => {
     <div>
       <img className="absolute -z-10  w-full " src="/assets/community-bg.svg" />
 
-      <div className=" w-screen grow overflow-scroll px-4 pb-[78px]">
+      <div className=" h-screen w-screen grow overflow-y-scroll px-4 pb-[95px]">
         <div className="mt-[76px]">
           <h3 className=" font-sfpro text-[14px] text-offwhite">
             Good Morning {firstName}
@@ -174,14 +174,14 @@ const Community = () => {
             )}
           </div>
           {data !== null && data.data.length > 0 && (
-            <div className="mb-3 mt-7 text-[20px] text-offwhite">Community</div>
+            <div className="mb-3 mt-7 text-[20px] text-offwhite">Timeline</div>
           )}
           <div className=" flex w-full flex-col gap-2">
-            {data !== null && data.data.length > 0 && (
-              <TimelineDisplay data={data.data[0]} timeline={'community'} />
-            )}
             {userData !== null && userData.data.length > 0 && (
               <TimelineDisplay data={userData.data[0]} timeline={'personal'} />
+            )}
+            {data !== null && data.data.length > 0 && (
+              <TimelineDisplay data={data.data[0]} timeline={'community'} />
             )}
           </div>
         </div>
