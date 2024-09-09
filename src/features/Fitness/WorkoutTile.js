@@ -76,6 +76,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
         movementId: id,
         memberCode: memberCode,
         isCompleted: true,
+        action: 'update_completion_status',
       })
       .then((res) => {
         setHomeStats(res.data.data);

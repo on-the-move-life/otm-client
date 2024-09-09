@@ -44,7 +44,6 @@ const SlideDown = keyframes`
 
 const WokoutTileContainer = styled.div`
   animation: ${SlideDown} 0.5s ease-out forwards;
-  max-height: 100px; /* Adjust as needed */
 `;
 
 const FitnessPage = () => {
@@ -140,19 +139,13 @@ const FitnessPage = () => {
         `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout?memberCode=${code}`,
       )
       .then((res) => {
-        if (
-          Object.hasOwn(res.data, 'data') === false &&
-          Object.keys(res.data.weeklyWorkout).length === 0
-        ) {
+        if (Object.keys(res.data.data.weeklyWorkout).length === 0) {
           setShowInitialScreen(true);
 
           setHomeStats(null);
         }
-        console.log('88888');
-        if (
-          Object.hasOwn(res.data, 'data') &&
-          Object.keys(res.data.data.weeklyWorkout).length > 0
-        ) {
+
+        if (Object.keys(res.data.data.weeklyWorkout).length > 0) {
           setUserData(res.data.data);
           setHomeStats(res.data.data);
         }
@@ -609,7 +602,7 @@ const FitnessPage = () => {
                   </>
                 )}
 
-                <div className=" flex flex-col gap-4">
+                <div className=" flex h-fit flex-col gap-4">
                   {showInitialScreen === true && (
                     <section>
                       <div
@@ -635,7 +628,7 @@ const FitnessPage = () => {
 
                   <WokoutTileContainer
                     key={selectedDay}
-                    className="flex flex-col gap-2"
+                    className="flex max-h-max flex-col gap-2"
                   >
                     {homeStats && showInitialScreen === false && (
                       <WorkoutTile
