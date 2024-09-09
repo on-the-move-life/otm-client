@@ -616,7 +616,7 @@ const FitnessPage = () => {
                       >
                         <Link
                           to="/workout/today"
-                          className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone py-2 pl-4 pr-7 "
+                          className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
                         >
                           <div className="flex h-full flex-col justify-center">
                             <h2 className="text-xl  ">Strength Training</h2>
