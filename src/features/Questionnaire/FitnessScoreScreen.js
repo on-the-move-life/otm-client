@@ -275,18 +275,18 @@ function FitnessScorePage() {
             </div>
           </div>
           <div
-            className="mt-9 flex w-full flex-col items-center justify-start gap-2"
-            style={{ paddingBottom: isIPhone() ? '100px' : '20px' }}
+            className="mt-9 flex w-full flex-col items-end gap-2"
+            style={{ paddingBottom: isIPhone() ? '20px' : '20px' }}
           >
             <p
-              className="text-[16px] text-[#5ecc7b] "
+              className="text-[16px] text-blue "
               style={{
                 fontWeight: 500,
                 lineHeight: '22px',
                 textShadow: '0px 3px 3px rgba(0,0,0,0.15)',
               }}
             >
-              It’s a journey, we emphasise on longterm lifestyle changes instead
+              It’s a journey, we emphasize on longterm lifestyle changes instead
               of quick fixes
             </p>
             <motion.button

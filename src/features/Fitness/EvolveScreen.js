@@ -24,7 +24,7 @@ const EvolveScreen = ({ homeStats, getUserData }) => {
               </p>
 
               <h5 className="h-min rounded bg-browm-opacity-12 px-2 text-xs text-yellow">
-                Level {homeStats.level}
+                Level {homeStats?.level}
               </h5>
             </div>
           </div>
@@ -33,7 +33,7 @@ const EvolveScreen = ({ homeStats, getUserData }) => {
             practices with minimal restrictions and effort!
           </p>
         </div>
-        <PathVisualization level={homeStats.level} />
+        <PathVisualization level={homeStats?.level} />
       </div>
 
       <button
