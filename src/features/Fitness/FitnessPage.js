@@ -144,7 +144,6 @@ const FitnessPage = () => {
 
           setHomeStats(null);
         }
-        console.log('zxxczxczxc', res.data.data);
 
         if (Object.keys(res.data.data.weeklyWorkout).length > 0) {
           setUserData(res.data.data);
@@ -215,8 +214,6 @@ const FitnessPage = () => {
     };
     checkIfWeekend();
   }, []);
-
-  console.log('innininin', showInitialScreen);
 
   return (
     // <>
