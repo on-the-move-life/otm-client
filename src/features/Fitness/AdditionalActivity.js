@@ -158,6 +158,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
       </div>
       {}
       <img
+        loading="lazy"
         src="assets/movement-frame.svg"
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
@@ -233,11 +234,13 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   <div className="absolute right-6 top-4 z-20 ">
                     {showTypeInput === true ? (
                       <img
+                        loading="lazy"
                         src="./assets/up-arrow-white.svg"
                         onClick={() => setShowTypeInput(false)}
                       />
                     ) : (
                       <img
+                        loading="lazy"
                         onClick={() => setShowTypeInput(true)}
                         src="./assets/down-arrow-white.svg"
                       />
@@ -274,11 +277,12 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   <div className="absolute right-6 top-4 z-20 ">
                     {showTimeInput === true ? (
                       <img
+                        loading="lazy"
                         src="./assets/up-arrow-white.svg"
                         onClick={() => setShowTimeInput(false)}
                       />
                     ) : (
-                      <img src="./assets/down-arrow-white.svg" />
+                      <img loading="lazy" src="./assets/down-arrow-white.svg" />
                     )}
                   </div>
                   {showTimeInput === true ? (

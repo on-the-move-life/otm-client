@@ -23,6 +23,7 @@ import EvolveScreen from './EvolveScreen';
 import WeeklySchedule from './WeeklySchedule';
 import WorkoutTile from './WorkoutTile';
 import BatteryLevel from './BatteryLevel';
+import DynamicStretchScreen from './DynamicStretchScreen';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -59,6 +60,7 @@ const FitnessPage = () => {
   const [showActivity, setShowActivity] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [dynamicStretchScreen, setDynamicStretchScreen] = useState(false);
   const currentDate = new Date().getDate();
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
@@ -438,11 +440,13 @@ const FitnessPage = () => {
           {evolve && (
             <div className="relative z-50 flex h-screen w-full  items-center bg-[#161513] px-5">
               <img
+                loading="lazy"
                 src="assets/movement-frame.svg"
                 className="absolute left-0 top-0 -z-10 h-full w-full"
               />
               <div className="my-auto rounded-lg bg-black-opacity-45 pb-[16px] pt-[47px]">
                 <img
+                  loading="lazy"
                   src="./assets/movement-ai-bg.svg"
                   className="w-full pb-[27px] "
                 />
@@ -469,11 +473,19 @@ const FitnessPage = () => {
       {!loader && showActivity === true && (
         <AdditionalActivity setShowActivity={setShowActivity} />
       )}
+
+      {!loader && dynamicStretchScreen === true && (
+        <DynamicStretchScreen
+          setDynamicStretchScreen={setDynamicStretchScreen}
+        />
+      )}
+
       <img
-        src="assets/movement-frame.svg"
+        loading="lazy"
+        src="assets/Movement-Frame.png?v=1"
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
-      {!loader && showActivity === false && (
+      {!loader && showActivity === false && dynamicStretchScreen === false && (
         <>
           {!evolve && (
             <>
@@ -515,6 +527,7 @@ const FitnessPage = () => {
                     <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
                       <div className="flex w-full justify-between">
                         <img
+                          loading="lazy"
                           src="/assets/purple-arm.svg"
                           className="h-[120px] w-[120px] p-4"
                         />
@@ -593,6 +606,7 @@ const FitnessPage = () => {
                           </span>
                           <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
                             <img
+                              loading="lazy"
                               src="/assets/fitness-add.svg"
                               className="h-[30px] w-[30px]"
                             />
@@ -625,7 +639,7 @@ const FitnessPage = () => {
                       </div>
                     </section>
                   )}
-                  {/* <StepTracker /> */}
+                  <StepTracker />
 
                   <WokoutTileContainer
                     key={selectedDay}
@@ -636,6 +650,7 @@ const FitnessPage = () => {
                         homeStats={homeStats?.weeklyWorkout[selectedDay]}
                         isDisabled={isDisabled}
                         setHomeStats={setHomeStats}
+                        setDynamicStretchScreen={setDynamicStretchScreen}
                       />
                     )}
                   </WokoutTileContainer>

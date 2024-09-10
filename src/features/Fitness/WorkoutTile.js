@@ -21,7 +21,12 @@ const SlideContainer = styled.div`
   max-height: 100px; /* Adjust as needed */
 `;
 
-const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
+const WorkoutTile = ({
+  homeStats,
+  isDisabled,
+  setHomeStats,
+  setDynamicStretchScreen,
+}) => {
   const navigate = useNavigate();
   const [morningInput, setMorningInput] = useState(false);
   const [eveningInput, setEveningInput] = useState(false);
@@ -44,9 +49,18 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
       }
 
       if (
+        homeStats['Morning Zone']['movements'][0].movementName ===
+        'Dynamic Stretch'
+      ) {
+        setDynamicStretchScreen(true);
+      }
+
+      if (
         homeStats['Morning Zone']['movements'][0].movementName !== 'Workout' &&
         homeStats['Morning Zone']['movements'][0].movementName !== 'Flex' &&
-        homeStats['Morning Zone']['movements'][0].movementName !== 'Rest'
+        homeStats['Morning Zone']['movements'][0].movementName !== 'Rest' &&
+        homeStats['Morning Zone']['movements'][0].movementName !==
+          'Dynamic Stretch'
       ) {
         setMorningInput(!morningInput);
       }
@@ -70,9 +84,18 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
       }
 
       if (
+        homeStats['Evening Zone']['movements'][0].movementName ===
+        'Dynamic Stretch'
+      ) {
+        setDynamicStretchScreen(true);
+      }
+
+      if (
         homeStats['Evening Zone']['movements'][0].movementName !== 'Workout' &&
         homeStats['Evening Zone']['movements'][0].movementName !== 'Flex' &&
-        homeStats['Evening Zone']['movements'][0].movementName !== 'Rest'
+        homeStats['Evening Zone']['movements'][0].movementName !== 'Rest' &&
+        homeStats['Evening Zone']['movements'][0].movementName !==
+          'Dynamic Stretch'
       ) {
         setEveningInput(!eveningInput);
       }
@@ -138,6 +161,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                       <div className="mt-1 flex gap-3">
                         <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
                           <img
+                            loading="lazy"
                             src="/assets/yellowTimer.svg"
                             className="mr-[2px]"
                           />
@@ -148,6 +172,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                   </div>
                   {item.movementName !== 'Rest' && (
                     <img
+                      loading="lazy"
                       className="h-[55px] w-[55px] rounded-xl"
                       style={{
                         boxShadow:
@@ -215,6 +240,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                       <div className="mt-1 flex gap-3">
                         <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
                           <img
+                            loading="lazy"
                             src="/assets/yellowTimer.svg"
                             className="mr-[2px] "
                           />
@@ -225,12 +251,13 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                   </div>
                   {item.movementName !== 'Rest' && (
                     <img
+                      loading="lazy"
                       className="h-[55px] w-[55px] rounded-xl"
                       style={{
                         boxShadow:
                           item.completed === true
-                            ? '0 4px 6px rgba(94, 204, 123, 1), 0 -4px 6px rgba(94, 204, 123, 1), 4px 0 6px rgba(94, 204, 123, 1), -4px 0 6px rgba(94, 204, 123, 1)'
-                            : '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                            ? '0 4px 6px rgba(94, 204, 123, 0.2), 0 -4px 6px rgba(94, 204, 123, 0.2), 4px 0 6px rgba(94, 204, 123, 0.2), -4px 0 6px rgba(94, 204, 123, 0.2)'
+                            : '0 4px 6px rgba(221, 249, 136, 0.2), 0 -4px 6px rgba(221, 249, 136, 0.2), 4px 0 6px rgba(221, 249, 136, 0.2), -4px 0 6px rgba(221, 249, 136, 0.2)',
                       }}
                       src={
                         item.completed === true
