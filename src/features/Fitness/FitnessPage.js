@@ -151,6 +151,7 @@ const FitnessPage = () => {
         }
       })
       .catch((err) => {
+        toast.error('Error with updating workout');
         console.log(err.message);
       })
       .finally(() => {
@@ -176,6 +177,7 @@ const FitnessPage = () => {
       })
       .catch((err) => {
         console.log(err.message);
+        toast.error('Error with updating workout');
         setHomeStats(null);
         setShowInitialScreen(true);
       })
