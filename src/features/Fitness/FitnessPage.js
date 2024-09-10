@@ -75,6 +75,8 @@ const FitnessPage = () => {
   const code = JSON.parse(localStorage.getItem('user'))['code'];
   const firstName = fullName.split(' ')[0];
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Use Intl.DateTimeFormat to get the full day name
     const today = new Date();
@@ -178,9 +180,11 @@ const FitnessPage = () => {
       })
       .catch((err) => {
         console.log(err.message);
+
         toast.error('Error with updating workout');
         setHomeStats(null);
         setShowInitialScreen(true);
+        navigate('/home');
       })
       .finally(() => {
         setLoader(false);
