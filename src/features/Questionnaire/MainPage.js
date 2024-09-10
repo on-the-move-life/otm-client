@@ -12,7 +12,7 @@ import {
   updateCurrentQuestion,
   isAnyEmptyResponse,
   getGeneralScreen,
-  getFitnessScreen
+  getFitnessScreen,
 } from '../LifestyleQuiz';
 import InputText from './Components/inputs/InputText';
 import { useNavigate } from 'react-router-dom';
@@ -42,7 +42,8 @@ function LandingPage() {
     color: var(--New-White, rgba(255, 255, 255, 0.26));
     /* H1 */
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: ${props => props.fontSize !== undefined ? props.fontSize : '32px'};
+    font-size: ${(props) =>
+      props.fontSize !== undefined ? props.fontSize : '32px'};
     font-style: normal;
     font-weight: 500;
     line-height: 40px; /* 125% */
@@ -58,7 +59,7 @@ function LandingPage() {
   // sending response to the backend
   function submitResponse() {
     // set the state to loading
-    setPageLoading(true)
+    setPageLoading(true);
 
     // close the BMI screen, and the assessment screen if opened
     // redirect the user to the home page if the finish button is clicked on the FitnessScore screen
@@ -66,13 +67,13 @@ function LandingPage() {
       setTimeout(() => {
         setPageLoading(false);
         setShowBMIScreen(false);
-      }, 700)
+      }, 700);
     }
     if (showAssessmentScreen) {
       setTimeout(() => {
         setPageLoading(false);
         setShowAssessmentScreen(false);
-      }, 700)
+      }, 700);
     }
 
     // preparing a response for the current screen questions
@@ -85,7 +86,8 @@ function LandingPage() {
           answer: response[ques?.code],
         });
       });
-    !showAssessmentScreen && !showBMIScreen &&
+    !showAssessmentScreen &&
+      !showBMIScreen &&
       axiosClient
         .post('/', {
           email: JSON.parse(localStorage.getItem('user'))['email'],
@@ -93,16 +95,14 @@ function LandingPage() {
           response: responseBody,
         })
         .then((res) => {
-          console.log("POST Response : ", res);
+          console.log('POST Response : ', res);
 
           // open the BMI screen, Assessment screen, or the Fitness Score screen based on the next button clicked on relevant screen
           if (screen === 1) {
             setShowBMIScreen(true);
-          }
-          else if (screen === maxScreenCount-1) {
+          } else if (screen === maxScreenCount - 1) {
             setShowAssessmentScreen(true);
-          }
-          else if (screen === maxScreenCount) {
+          } else if (screen === maxScreenCount) {
             // redirect to the fitness score page
             navigate('/questionnaire/fitness-score');
           }
@@ -165,8 +165,9 @@ function LandingPage() {
 
   return (
     <div
-      className={`flex min-h-screen flex-col justify-between ${screen === 0 ? '' : 'px-6 py-8'
-        }`}
+      className={`flex min-h-screen flex-col justify-between ${
+        screen === 0 ? '' : 'px-6 py-8'
+      }`}
       style={{
         fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
       }}
@@ -192,8 +193,7 @@ function LandingPage() {
         />
       </div>
       <div className="hide-scrollbar flex flex-col justify-center gap-3 overflow-y-scroll">
-        {
-          showBMIScreen &&
+        {showBMIScreen && (
           <BMIScreen
             response={response}
             submitResponse={submitResponse}
@@ -204,9 +204,8 @@ function LandingPage() {
             decreaseScreenAndRank={decreaseScreenAndRank}
             setShowBMIScreen={setShowBMIScreen}
           />
-        }
-        {
-          showAssessmentScreen &&
+        )}
+        {showAssessmentScreen && (
           <AssessmentScreen
             submitResponse={submitResponse}
             screen={screen}
@@ -216,7 +215,7 @@ function LandingPage() {
             decreaseScreenAndRank={decreaseScreenAndRank}
             setShowAssessmentScreen={setShowAssessmentScreen}
           />
-        }
+        )}
         {screen >= 1 && !showBMIScreen && !showAssessmentScreen && (
           <div className="flex flex-col items-center justify-center gap-5">
             <div className="mx-auto my-4 flex w-full items-center justify-center">
@@ -245,21 +244,21 @@ function LandingPage() {
               General Information
             </h1>
           )}
-          {
-            screen === fitnessScreen && (
-              <div>
-                <h1 className="mt-3 text-[26px] text-[#7e87ef]">
-                  Fitness Test
-                </h1>
-                <p className='text-[18px] text-[#545454] my-2' style={{ fontWeight: 400, lineHeight: '25px' }}>How many max reps of each
-                  movement can you perform in one minute</p>
-              </div>
-            )
-          }
+          {screen === fitnessScreen && (
+            <div>
+              <h1 className="mt-3 text-[26px] text-[#7e87ef]">Fitness Test</h1>
+              <p
+                className="my-2 text-[18px] text-[#545454]"
+                style={{ fontWeight: 400, lineHeight: '25px' }}
+              >
+                How many max reps of each movement can you perform in one minute
+              </p>
+            </div>
+          )}
           <div>
             {screen >= 1 &&
               currentQuestion &&
-              !showBMIScreen && 
+              !showBMIScreen &&
               !showAssessmentScreen &&
               currentQuestion?.map((ques, idx) => {
                 return (
@@ -267,18 +266,31 @@ function LandingPage() {
                     <div className="flex flex-col justify-center">
                       <div className="my-5 w-full">
                         {/* Question */}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content !== "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] text-[#7e87ef] mt-[20px] mb-[10px]">
-                          {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
-                            }`}
-                        </h1>}
-                        {(!['text', 'number'].includes(ques?.inputType)) && ques?.content === "Gender" && !showBMIScreen && !showAssessmentScreen && <h1 className="text-[22px] textbox-text uppercase mt-[20px] mb-[10px]">
-                          {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
-                            }`}
-                        </h1>}
+                        {!['text', 'number'].includes(ques?.inputType) &&
+                          ques?.content !== 'Gender' &&
+                          !showBMIScreen &&
+                          !showAssessmentScreen && (
+                            <h1 className="mb-[10px] mt-[20px] text-[22px] text-[#7e87ef]">
+                              {`${capitalizeFirstLetter(ques?.content)}${
+                                ques?.isRequired ? ' *' : ''
+                              }`}
+                            </h1>
+                          )}
+                        {!['text', 'number'].includes(ques?.inputType) &&
+                          ques?.content === 'Gender' &&
+                          !showBMIScreen &&
+                          !showAssessmentScreen && (
+                            <h1 className="textbox-text mb-[10px] mt-[20px] text-[22px] uppercase">
+                              {`${capitalizeFirstLetter(ques?.content)}${
+                                ques?.isRequired ? ' *' : ''
+                              }`}
+                            </h1>
+                          )}
                       </div>
-                      {(ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
-                        ques?.inputType?.toUpperCase() === 'MULTICHOICE' ||
-                        ques?.inputType?.toUpperCase() === 'SINGLECHOICEANDOTHER') ? (
+                      {ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
+                      ques?.inputType?.toUpperCase() === 'MULTICHOICE' ||
+                      ques?.inputType?.toUpperCase() ===
+                        'SINGLECHOICEANDOTHER' ? (
                         <Options
                           questionCode={ques?.code}
                           options={ques?.options}
@@ -306,11 +318,20 @@ function LandingPage() {
                   </>
                 );
               })}
-            {
-              screen === fitnessScreen &&
-              <p className='text-[18px] text-[#545454]' style={{ fontWeight: 400, lineHeight: '25px', marginBlock: '20px' }}>We'll use your results to calculate your fitness score on a scale of 1-10.</p>
-            }
-            {(screen === 0) && (
+            {screen === fitnessScreen && (
+              <p
+                className="text-[18px] text-[#545454]"
+                style={{
+                  fontWeight: 400,
+                  lineHeight: '25px',
+                  marginBlock: '20px',
+                }}
+              >
+                We'll use your results to calculate your fitness score on a
+                scale of 1-10.
+              </p>
+            )}
+            {screen === 0 && (
               <div
                 className="h-screen w-full"
                 style={{
@@ -326,32 +347,42 @@ function LandingPage() {
                     <img
                       src={'/assets/otm_logo_lifestyle.svg'}
                       alt="otm logo"
-                      className='px-[20px] py-[10px]'
+                      className="px-[20px] py-[10px]"
                     />
                   </div>
                   <div className="flex flex-col items-center justify-center gap-9">
-                    {screen === 0 && <div className='w-full'>
-                      <StarterText style={{
-                        background:
-                          'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                        backgroundClip: 'text',
-                      }}
-                        className='px-[20px]'
-                      >
-                        Welcome, {JSON.parse(localStorage.getItem('user'))["name"]}
-                      </StarterText>
-                      <p
-                        style={{
-                          fontSize: '18px',
-                          fontWeight: '400',
-                          color: `rgba(255,255,255,0.46)`
-                        }}
-                        className='px-[20px]'
-                      >Your account has been created</p>
-                    </div>}
                     {screen === 0 && (
-                      <StarterText className='px-[20px] py-[10px]' fontSize="26px">
-                        Shape your  <span
+                      <div className="w-full">
+                        <StarterText
+                          style={{
+                            background:
+                              'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                            backgroundClip: 'text',
+                          }}
+                          className="px-[20px]"
+                        >
+                          Welcome,{' '}
+                          {JSON.parse(localStorage.getItem('user'))['name']}
+                        </StarterText>
+                        <p
+                          style={{
+                            fontSize: '18px',
+                            fontWeight: '400',
+                            color: `rgba(255,255,255,0.46)`,
+                          }}
+                          className="px-[20px]"
+                        >
+                          Your account has been created
+                        </p>
+                      </div>
+                    )}
+                    {screen === 0 && (
+                      <StarterText
+                        className="px-[20px] py-[10px]"
+                        fontSize="26px"
+                      >
+                        Shape your{' '}
+                        <span
                           style={{
                             background:
                               'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
@@ -359,7 +390,9 @@ function LandingPage() {
                           }}
                         >
                           fitness journey
-                        </span> with a personalized workout program and gain insights  <span
+                        </span>{' '}
+                        with a personalized workout program and gain insights{' '}
+                        <span
                           style={{
                             background:
                               'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
@@ -370,7 +403,7 @@ function LandingPage() {
                         </span>
                       </StarterText>
                     )}
-                    <div className='w-full flex flex-col justify-center gap-1'>
+                    <div className="flex w-full flex-col justify-center gap-1">
                       <Button
                         style={{ fontWeight: 500 }}
                         text="Craft your journey"
@@ -389,27 +422,32 @@ function LandingPage() {
           </div>
         </div>
         {screen >= 1 && (
-            <Button
-              style={{ fontWeight: 500 }}
-              text={screen === maxScreenCount ? "Finish" : currentQuestion[0]?.target === "ASSESSMENT" ? "Take Assessment" : "Next"}
-              type="lifestyle"
-              action={() => {
-                // checking for empty response
-                if (
-                  currentQuestion &&
-                  Object.keys(response)?.length > 0 &&
-                  !isAnyEmptyResponse(currentQuestion, response)
-                ) {
-                  // API function call for submittin response on every next/submit button press
-                  submitResponse();
+          <Button
+            style={{ fontWeight: 500 }}
+            text={
+              screen === maxScreenCount
+                ? 'Finish'
+                : currentQuestion[0]?.target === 'ASSESSMENT'
+                ? 'Take Assessment'
+                : 'Next'
+            }
+            type="lifestyle"
+            action={() => {
+              // checking for empty response
+              if (
+                currentQuestion &&
+                Object.keys(response)?.length > 0 &&
+                !isAnyEmptyResponse(currentQuestion, response)
+              ) {
+                // API function call for submittin response on every next/submit button press
+                submitResponse();
+              } else {
+                if (isAnyEmptyResponse(currentQuestion, response)) {
+                  toast.warn('Please fill in the required fields!');
                 }
-                else {
-                  if (isAnyEmptyResponse(currentQuestion, response)) {
-                    toast.warn('Please fill in the required fields!');
-                  }
-                }
-              }}
-            />
+              }
+            }}
+          />
         )}
       </div>
     </div>

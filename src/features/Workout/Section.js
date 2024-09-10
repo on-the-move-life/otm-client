@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setIndex } from './WorkoutSlice';
 
-const Section = ({ sectionList, index, isReport }) => {
+const Section = ({ sectionList, index, isReport, movementId }) => {
   const [section, setSection] = useState(sectionList[index]);
 
   const params = useParams();
@@ -14,7 +14,7 @@ const Section = ({ sectionList, index, isReport }) => {
   const handleClick = (index) => {
     dispatch(setIndex(index));
 
-    navigate(`/section-details/${params.value}`);
+    navigate(`/section-details/${params.value}?movementId=${movementId}`);
   };
 
   return (
@@ -23,12 +23,12 @@ const Section = ({ sectionList, index, isReport }) => {
         className="flex h-fit w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 px-4  text-3xl"
         onClick={() => handleClick(index)}
       >
-        <div className="flex flex-col w-2/3">
-          <h1 className="items-center text-lg font-bold workout-gradient-text">
+        <div className="flex w-2/3 flex-col">
+          <h1 className="workout-gradient-text items-center text-lg font-bold">
             {sectionList.name || section.name}
           </h1>
           {isReport && (
-            <p className="text-xs break-words text-lightGray">
+            <p className="break-words text-xs text-lightGray">
               {sectionList?.displayInfo.join(', ')}
             </p>
           )}
@@ -38,7 +38,7 @@ const Section = ({ sectionList, index, isReport }) => {
             <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
           )}
           {!isReport && (
-            <div className="flex flex-col items-start justify-center tags">
+            <div className="tags flex flex-col items-start justify-center">
               {section.meta?.todaysMetconIntensity &&
                 section.meta?.todaysMetconIntensity > 75 && (
                   <span className="bg-[#172339]  p-0.5 text-[10px] text-[#C2D3FA]">

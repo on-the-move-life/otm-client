@@ -24,7 +24,7 @@ const InputContainer = styled.div`
 
 const StepTracker = () => {
   const [showInput, setShowInput] = useState(false);
-  const [stepCount, setStepCount] = useState('');
+  const [stepCount, setStepCount] = useState(null);
   const [showStepCount, setShowStepCount] = useState(false);
   const [loader, setLoader] = useState(true);
 
@@ -88,47 +88,62 @@ const StepTracker = () => {
   return (
     <div>
       <div
-        className={`relative ${showInput ? 'rounded-t-2xl bg-mediumGray' : ''}`}
+        className={`relative  flex h-[50px] flex-col justify-center bg-black-opacity-45  ${
+          showInput ? ' rounded-t-2xl' : 'rounded-xl'
+        }`}
       >
         <InputContainer>
-          <div className="to-blue-500 relative h-[40px] rounded-full bg-gradient-to-r from-[#eb7967] to-[#bd1226] px-4 py-2">
+          <div className="to-blue-500 relative flex h-[40px] items-center rounded-full pl-4 pr-3 ">
             {loader === false && (
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 grow">
+              <div className="flex w-full items-center ">
+                <div className="flex grow items-center gap-2">
                   <RiRunFill className="text-xl" />
-                  <div className="w-full error__title">
+                  <div className=" flex w-full items-start">
                     {showStepCount ? (
-                      <div onClick={handleShowInput}>
+                      <div
+                        className="w-full flex-1  text-sm text-offwhite"
+                        onClick={handleShowInput}
+                      >
                         Log your daily step count
                       </div>
                     ) : (
-                      <div className="flex justify-between">
-                        <div className="w-full" onClick={handleShowInput}>
+                      <div className=" flex w-full justify-between">
+                        <div
+                          className="flex w-full items-center  text-sm text-offwhite"
+                          onClick={handleShowInput}
+                        >
                           Today's Step Count
                         </div>
-                        <span className="flex items-center font-bold">
-                          {showInput ? (
-                            <AiOutlineClose
-                              className="font-semibold"
-                              onClick={() => setShowInput(false)}
-                            />
-                          ) : (
-                            stepCount
-                          )}
-                        </span>
+
+                        {showInput ? (
+                          <AiOutlineClose
+                            className="font-semibold"
+                            onClick={() => setShowInput(false)}
+                          />
+                        ) : (
+                          <span className="flex items-center font-bold text-offwhite">
+                            {stepCount}
+                          </span>
+                        )}
                       </div>
                     )}{' '}
                   </div>
                 </div>
 
                 {showStepCount &&
-                  (showInput ? (
+                  (showInput === true ? (
                     <AiOutlineClose
                       className="font-semibold"
                       onClick={() => setShowInput(false)}
                     />
                   ) : (
-                    <FaArrowRight />
+                    <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
+                      <img
+                        src="/assets/fitness-add.svg"
+                        className="h-[30px] w-[30px]"
+                        onClick={handleShowInput}
+                      />
+                    </div>
                   ))}
               </div>
             )}
@@ -138,14 +153,20 @@ const StepTracker = () => {
       {showInput && (
         <InputContainer>
           <form
-            className="flex items-end w-full px-2 pb-2 rounded-b-lg bg-mediumGray"
+            className="flex w-full items-end rounded-b-lg bg-black-opacity-45 px-2 pb-2"
             onSubmit={handleSubmit}
           >
             <input
-              style={{ borderColor: '#5ECC7B' }}
-              className="pt-0 mr-6 textbox"
+              style={{
+                borderColor: '#5ECC7B',
+                backgroundColor: 'rgba(0,0,0,0.45)',
+                height: '38px',
+                paddingTop: '3px',
+                borderRadius: '8px 8px 0px 0px',
+              }}
+              className="textbox mr-6 rounded-lg bg-mediumGray px-1 pt-0"
               type="number"
-              placeholder="STEP COUNT (In Number)"
+              placeholder="Step Count (in number)"
               required
               value={stepCount}
               onChange={(e) => setStepCount(e.target.value)}
@@ -153,15 +174,9 @@ const StepTracker = () => {
             <button
               type="submit"
               disabled={!stepCount}
-              style={{
-                backgroundColor: stepCount
-                  ? '#5ECC7B'
-                  : 'rgba(61, 61, 61, 0.3)',
-                color: stepCount ? 'black' : '#b1b1b1',
-              }}
               className="h-[30px] rounded px-2 font-medium"
             >
-              Done
+              <img src="./assets/tick-green.svg" />
             </button>
           </form>
         </InputContainer>

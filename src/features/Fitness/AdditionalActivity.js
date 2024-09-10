@@ -136,7 +136,6 @@ const AdditionalActivity = ({ setShowActivity }) => {
   }, []);
 
   const handleActivityType = (e) => {
-    console.log('ccxxccc', e, e.target.innerText);
     setSelectedActivityType(e.target.innerText);
     setShowTypeInput(false);
   };
@@ -160,14 +159,14 @@ const AdditionalActivity = ({ setShowActivity }) => {
       {}
       <img
         src="assets/movement-frame.svg"
-        className="absolute top-0 left-0 w-full h-full -z-10"
+        className="absolute left-0 top-0 -z-10 h-full w-full"
       />
       {activityListLoader || anotherActivityLoader ? (
         <Loader />
       ) : (
         <div className=" h-full w-full overflow-y-scroll bg-[rgba(0,0,0,0.71)] px-4 pt-[28px]">
           <div className="mx-[9px] mb-[66px] flex justify-between">
-            <h3 className="text-xl font-sfpro text-offwhite">
+            <h3 className="font-sfpro text-xl text-offwhite">
               Log Activity Details
             </h3>
             <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray ">
@@ -231,7 +230,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
               <div className="flex flex-col ">
                 <div className="font-sfpro text-[20px] text-offwhite">Type</div>
                 <div className="relative mt-1 max-h-[224px] w-full  rounded-lg py-3 pt-0">
-                  <div className="absolute z-20 right-6 top-4 ">
+                  <div className="absolute right-6 top-4 z-20 ">
                     {showTypeInput === true ? (
                       <img
                         src="./assets/up-arrow-white.svg"
@@ -271,8 +270,8 @@ const AdditionalActivity = ({ setShowActivity }) => {
                 <div className="mt-[30px] font-sfpro text-[20px] text-offwhite">
                   Time
                 </div>
-                <div className="relative w-full py-3 pt-0 mt-1 rounded-lg">
-                  <div className="absolute z-20 right-6 top-4 ">
+                <div className="relative mt-1 w-full rounded-lg py-3 pt-0">
+                  <div className="absolute right-6 top-4 z-20 ">
                     {showTimeInput === true ? (
                       <img
                         src="./assets/up-arrow-white.svg"

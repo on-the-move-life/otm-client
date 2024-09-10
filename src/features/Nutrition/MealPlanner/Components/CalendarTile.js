@@ -1,19 +1,23 @@
 import React from 'react';
 
-function CalendarTile({ date, day, isSelected, selectedDay }) {
+function CalendarTile({ date, day, isSelected, color }) {
   return (
     <div
       className={`relative z-10 flex max-h-[74px] min-h-[54px] w-[47px] max-w-[70px] flex-col items-center   gap-1 rounded-[7.5px] ${
         isSelected && 'bg-[rgba(0,0,0,0.45)] '
       }`}
     >
-      <div className="flex flex-col items-center justify-start w-full mt-2">
+      <div className="mt-2 flex w-full flex-col items-center justify-start">
         <h3
           className="capitalize"
           style={{
             fontSize: '14.87px',
             lineHeight: '17.75px',
-            color: isSelected ? '#5ECC7B' : 'rgba(222,222,222,0.70)',
+            color: isSelected
+              ? color
+                ? color
+                : '#5ECC7B'
+              : 'rgba(222,222,222,0.70)',
           }}
         >
           {day}
@@ -23,7 +27,11 @@ function CalendarTile({ date, day, isSelected, selectedDay }) {
         style={{
           fontSize: '17.85px',
           lineHeight: '21.3px',
-          color: isSelected ? '#5ECC7B' : 'rgba(222,222,222,0.70)',
+          color: isSelected
+            ? color
+              ? color
+              : '#5ECC7B'
+            : 'rgba(222,222,222,0.70)',
         }}
       >
         {date}

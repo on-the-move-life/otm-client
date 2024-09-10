@@ -30,6 +30,11 @@ module.exports = withMT({
         'white-opacity-23': 'rgba(255, 255, 255, 0.23)',
         'white-opacity-08': 'rgba(221, 221, 221, 0.08)',
         'white-opacity-70': 'rgba(222, 222, 222, 0.7)',
+        'black-opacity-45': 'rgba(0, 0, 0, 0.45)',
+        'black-opacity-40': 'rgba(0, 0, 0, 0.40)',
+        'green-opacity-12': 'rgba(94, 204, 123, 0.12)',
+        'browm-opacity-12': 'rgba(245, 197, 99, 0.12)',
+        'red-opacity-12': 'rgba(250, 87, 87, 0.12)',
         customBlack: '#1F1F1F',
       },
       backgroundImage: {
@@ -48,6 +53,8 @@ module.exports = withMT({
         'profile-bg': "url('../public/assets/profile-bg.png')",
         'achievements-cover': "url('../public/assets/achievements-bg.png')",
         'movement-frame': "url('../public/assets/movement-frame.svg')",
+        'evening-zone': "url('../public/assets/evening-zone.svg')",
+        'morning-zone': "url('../public/assets/morning-zone.svg')",
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],

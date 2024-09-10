@@ -136,7 +136,6 @@ const AnalyseMealComp = ({
   console.log('storedMealUrlField', storedMealUrlField);
   console.log('storedMealInfoField', storedMealInfoField);
   // checking if arguments are empty
-  console.log('xxxxxxxxx', selectedTaskId);
   useEffect(() => {
     if (meal) {
       const paramsMeal = mealTaskIds.find((item) => item.taskName === meal);
@@ -315,7 +314,7 @@ const AnalyseMealComp = ({
               <option
                 key={index}
                 value={task.taskName}
-                className="text-white bg-mediumGray"
+                className="bg-mediumGray text-white"
               >
                 {task.taskName}
               </option>
@@ -324,9 +323,9 @@ const AnalyseMealComp = ({
         </div>
 
         {(meal !== 'Breakfast' || meal !== 'Lunch' || meal !== 'Dinner') && (
-          <div className="relative w-0 text-gray-700 pointer-events-none right-6 top-8">
+          <div className="text-gray-700 pointer-events-none relative right-6 top-8 w-0">
             <svg
-              className="w-6 h-6 fill-current"
+              className="h-6 w-6 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
@@ -366,11 +365,11 @@ const AnalyseMealComp = ({
       {isVisible ? (
         <>
           {setParentVisibilityCheck && (
-            <div className="flex items-center justify-between w-full mt-2 text-center ">
+            <div className="mt-2 flex w-full items-center justify-between text-center ">
               {/* empty div to put other two divs in place */}
               <div></div>
 
-              <div className="flex flex-row items-center mx-auto text-center">
+              <div className="mx-auto flex flex-row items-center text-center">
                 <MealImageicon />
 
                 <div className="ml-3 font-sfpro text-[14px]  font-medium text-lightGray">
@@ -378,13 +377,13 @@ const AnalyseMealComp = ({
                 </div>
               </div>
 
-              <div className="flex-shrink-0 mr-4" onClick={handleClose}>
+              <div className="mr-4 flex-shrink-0" onClick={handleClose}>
                 <MealCrossIcon />{' '}
               </div>
             </div>
           )}
 
-          <div className="flex items-center justify-center w-full space-x-6 rounded-lg shadow-md ">
+          <div className="flex w-full items-center justify-center space-x-6 rounded-lg shadow-md ">
             <div className="flex items-center justify-center ">
               <div className="rounded-lg shadow-lg ">
                 {!selectedImage ? (
@@ -396,7 +395,7 @@ const AnalyseMealComp = ({
                     className=" border-gray-400 mb-6 mt-[58px] flex h-[421px] w-[358px] items-center justify-center rounded-lg bg-mediumGray bg-cover "
                     onClick={() => setshowMealPicPopUp(true)}
                   >
-                    <div className="p-4 rounded-lg ">
+                    <div className="rounded-lg p-4 ">
                       <p className="text-center">
                         Click here to upload an image
                       </p>
@@ -424,7 +423,7 @@ const AnalyseMealComp = ({
                   ) : (
                     <button
                       onClick={() => setshowMealPicPopUp(true)}
-                      className="w-full mb-4 text-center underline font-sfpro text-lightGray"
+                      className="mb-4 w-full text-center font-sfpro text-lightGray underline"
                     >
                       pick a different image
                     </button>
@@ -433,7 +432,7 @@ const AnalyseMealComp = ({
                   <div className="flex items-center justify-center rounded-lg ">
                     <DropdownComp />
                   </div>
-                  <div className="mt-2 mb-6 ">
+                  <div className="mb-6 mt-2 ">
                     <div className="rounded-xl ">
                       <p className="mb-2 p-1 text-[14px] text-custompurple">
                         Describe your meal here (optional)
@@ -446,7 +445,7 @@ const AnalyseMealComp = ({
                       />
                     </div>
                   </div>
-                  <div className="fixed left-0 w-full px-3 bottom-4">
+                  <div className="fixed bottom-4 left-0 w-full px-3">
                     <button
                       className={`flex w-full flex-row items-center justify-center rounded-xl p-3 text-black ${
                         selectedImage && selectedTaskName
@@ -490,11 +489,11 @@ const AnalyseMealComp = ({
           >
             <MdOutlineKeyboardArrowDown size={30} color="#D7D7D7" />
           </button>
-          <div className="flex flex-col items-start justify-around w-full h-full mt-3 ">
+          <div className="mt-3 flex h-full w-full flex-col items-start justify-around ">
             <ProfilePicHeading>Meal photo</ProfilePicHeading>
             <div className="flex w-full flex-row items-center justify-start gap-[40px]">
               <div
-                className="flex flex-col items-center justify-center gap-1 w-fit"
+                className="flex w-fit flex-col items-center justify-center gap-1"
                 onClick={handleCameraClick}
               >
                 <input
@@ -511,7 +510,7 @@ const AnalyseMealComp = ({
                 <IconLabel>Camera</IconLabel>
               </div>
               <div
-                className="flex flex-col items-center justify-center gap-1 w-fit"
+                className="flex w-fit flex-col items-center justify-center gap-1"
                 onClick={() => profilePicRef.current.click()}
               >
                 <input
@@ -535,9 +534,9 @@ const AnalyseMealComp = ({
       {/* loading component */}
 
       {loading && (
-        <div className="flex items-center max-w-sm p-3 mx-auto mb-2 space-x-6 rounded-lg shadow-md bg-mediumGray ">
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div className="p-6 rounded-lg shadow-lg ">
+        <div className="mx-auto mb-2 flex max-w-sm items-center space-x-6 rounded-lg bg-mediumGray p-3 shadow-md ">
+          <div className="bg-gray-800 fixed inset-0 z-50 flex items-center justify-center bg-opacity-75">
+            <div className="rounded-lg p-6 shadow-lg ">
               <Loader />
             </div>
           </div>
