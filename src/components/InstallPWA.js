@@ -94,7 +94,7 @@ const InstallApp = () => {
           variants={topPopupVariants}
           className="fixed top-0 left-0 right-0 z-50 bg-black-opacity-45 p-4 shadow-lg rounded-b-xl "
         >
-          <div className="container mx-auto flex items-start justify-between">
+          <div className="container mx-auto flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <img src="/assets/updated-logo.svg" alt="App Icon" className="w-10 h-10"/>
               <div>
