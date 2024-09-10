@@ -28,23 +28,26 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
   const [tileId, setTileId] = useState(null);
   const memberCode = JSON.parse(localStorage.getItem('user'))['code'];
 
-  const handleMorningTile = (Id) => {
-    if (homeStats['Morning Zone']['movements'][0].movementName === 'Workout') {
+  const handleMorningTile = (Id, index) => {
+    if (
+      homeStats['Morning Zone']['movements'][index].movementName === 'Workout'
+    ) {
       navigate(
-        `/workout/today?movementId=${homeStats['Morning Zone']['movements'][0].movementId}`,
+        `/workout/today?movementId=${homeStats['Morning Zone']['movements'][index].movementId}`,
       );
     }
 
-    if (homeStats['Morning Zone']['movements'][0].movementName === 'Flex') {
+    if (homeStats['Morning Zone']['movements'][index].movementName === 'Flex') {
       navigate(
-        `/workout/flex?movementId=${homeStats['Morning Zone']['movements'][0].movementId}`,
+        `/workout/flex?movementId=${homeStats['Morning Zone']['movements'][index].movementId}`,
       );
     }
 
     if (
-      homeStats['Morning Zone']['movements'][0].movementName !== 'Workout' &&
-      homeStats['Morning Zone']['movements'][0].movementName !== 'Flex' &&
-      homeStats['Morning Zone']['movements'][0].movementName !== 'Rest'
+      homeStats['Morning Zone']['movements'][index].movementName !==
+        'Workout' &&
+      homeStats['Morning Zone']['movements'][index].movementName !== 'Flex' &&
+      homeStats['Morning Zone']['movements'][index].movementName !== 'Rest'
     ) {
       if (tileId === Id) {
         setMorningInput(!morningInput);
@@ -56,29 +59,32 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
     }
   };
 
-  const handleEveningTile = (Id) => {
-    if (homeStats['Evening Zone']['movements'][0].completed !== true) {
+  const handleEveningTile = (Id, index) => {
+    if (homeStats['Evening Zone']['movements'][index].completed !== true) {
       if (
-        homeStats['Evening Zone']['movements'][0].movementName === 'Workout'
+        homeStats['Evening Zone']['movements'][index].movementName === 'Workout'
       ) {
         navigate(
-          `/workout/today?movementId=${homeStats['Evening Zone']['movements'][0].movementId}`,
-        );
-      }
-
-      if (homeStats['Evening Zone']['movements'][0].movementName === 'Flex') {
-        navigate(
-          `/workout/flex?movementId=${homeStats['Evening Zone']['movements'][0].movementId}`,
+          `/workout/today?movementId=${homeStats['Evening Zone']['movements'][index].movementId}`,
         );
       }
 
       if (
-        homeStats['Evening Zone']['movements'][0].movementName !== 'Workout' &&
-        homeStats['Evening Zone']['movements'][0].movementName !== 'Flex' &&
-        homeStats['Evening Zone']['movements'][0].movementName !== 'Rest'
+        homeStats['Evening Zone']['movements'][index].movementName === 'Flex'
+      ) {
+        navigate(
+          `/workout/flex?movementId=${homeStats['Evening Zone']['movements'][index].movementId}`,
+        );
+      }
+
+      if (
+        homeStats['Evening Zone']['movements'][index].movementName !==
+          'Workout' &&
+        homeStats['Evening Zone']['movements'][index].movementName !== 'Flex' &&
+        homeStats['Evening Zone']['movements'][index].movementName !== 'Rest'
       ) {
         if (tileId === Id) {
-          setEveningInput(!morningInput);
+          setEveningInput(!eveningInput);
         }
         if (tileId !== Id) {
           setTileId(Id);
@@ -132,7 +138,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                   <div
                     onClick={() => {
                       item.completed !== true &&
-                        handleMorningTile(item.movementId);
+                        handleMorningTile(item.movementId, index);
                     }}
                     className="relative z-10 flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
                   >
@@ -210,11 +216,11 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
 
       {Object.keys(homeStats['Evening Zone']['movements']).length > 0 && (
         <>
-          {homeStats['Evening Zone']['movements'].map((item) => (
+          {homeStats['Evening Zone']['movements'].map((item, index) => (
             <section>
               <div className="flex flex-col items-center">
                 <div
-                  onClick={() => handleEveningTile()}
+                  onClick={() => handleEveningTile(item.movementId, index)}
                   className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-evening-zone bg-cover py-2 pl-4 pr-7 "
                 >
                   <div className="flex h-full flex-col justify-center">
@@ -251,7 +257,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                     />
                   )}
                 </div>
-                {eveningInput === true && (
+                {tileId === item.movementId && eveningInput === true && (
                   <SlideContainer className="relative -top-3 w-full rounded-b-xl bg-black-opacity-45 px-3 pb-3 pt-7">
                     <p className="text-center text-offwhite">
                       Have you completed this?
@@ -269,7 +275,10 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                         Yes
                       </button>
                       <button
-                        onClick={() => setEveningInput(false)} // Use button and attach onClick here
+                        onClick={() => {
+                          setEveningInput(false);
+                          setTileId(null);
+                        }} // Use button and attach onClick here
                         className="w-14 rounded bg-red text-black"
                       >
                         No
