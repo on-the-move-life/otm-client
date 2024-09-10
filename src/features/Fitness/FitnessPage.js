@@ -23,6 +23,7 @@ import EvolveScreen from './EvolveScreen';
 import WeeklySchedule from './WeeklySchedule';
 import WorkoutTile from './WorkoutTile';
 import BatteryLevel from './BatteryLevel';
+import InstallApp from '../../components/InstallPWA';
 import { toast } from 'react-toastify';
 
 function formatNumber(num) {
@@ -542,6 +543,7 @@ const FitnessPage = () => {
                     </div>
                   </div>
                 )}
+                <InstallApp />
                 {showInitialScreen === true && (
                   <div className=" mt-3 w-full">
                     <p className=" mt-2  font-sfpro  text-[14px] font-medium text-white-opacity-50">
