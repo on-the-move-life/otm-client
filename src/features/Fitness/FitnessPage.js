@@ -470,8 +470,9 @@ const FitnessPage = () => {
         <AdditionalActivity setShowActivity={setShowActivity} />
       )}
       <img
-        src="assets/movement-frame.svg"
-        className="absolute left-0 top-0 -z-10 h-full w-full"
+        loading="lazy"
+        src="assets/Movement-Frame.png"
+        className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
       />
       {!loader && showActivity === false && (
         <>

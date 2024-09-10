@@ -152,8 +152,8 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                       style={{
                         boxShadow:
                           item.completed === true
-                            ? '0 4px 6px rgba(94, 204, 123, 1), 0 -4px 6px rgba(94, 204, 123, 1), 4px 0 6px rgba(94, 204, 123, 1), -4px 0 6px rgba(94, 204, 123, 1)'
-                            : '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                            ? '0 4px 6px rgba(94, 204, 123, 0.2), 0 -4px 6px rgba(94, 204, 123, 0.2), 4px 0 6px rgba(94, 204, 123, 0.2), -4px 0 6px rgba(94, 204, 123,0.2)'
+                            : '0 4px 6px rgba(221, 249, 136, 0.2), 0 -4px 6px rgba(221, 249, 136, 0.2), 4px 0 6px rgba(221, 249, 136, 0.2), -4px 0 6px rgba(221, 249, 136, 0.2)',
                       }}
                       src={
                         item.completed === true
@@ -229,8 +229,8 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                       style={{
                         boxShadow:
                           item.completed === true
-                            ? '0 4px 6px rgba(94, 204, 123, 1), 0 -4px 6px rgba(94, 204, 123, 1), 4px 0 6px rgba(94, 204, 123, 1), -4px 0 6px rgba(94, 204, 123, 1)'
-                            : '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                            ? '0 4px 6px rgba(94, 204, 123, 0.2), 0 -4px 6px rgba(94, 204, 123, 0.2), 4px 0 6px rgba(94, 204, 123, 0.2), -4px 0 6px rgba(94, 204, 123, 0.2)'
+                            : '0 4px 6px rgba(221, 249, 136, 0.2), 0 -4px 6px rgba(221, 249, 136, 0.2), 4px 0 6px rgba(221, 249, 136, 0.2), -4px 0 6px rgba(221, 249, 136, 0.2)',
                       }}
                       src={
                         item.completed === true
