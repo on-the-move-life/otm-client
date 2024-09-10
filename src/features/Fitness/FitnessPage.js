@@ -23,6 +23,7 @@ import EvolveScreen from './EvolveScreen';
 import WeeklySchedule from './WeeklySchedule';
 import WorkoutTile from './WorkoutTile';
 import BatteryLevel from './BatteryLevel';
+import { toast } from 'react-toastify';
 
 function formatNumber(num) {
   if (num >= 1000) {
