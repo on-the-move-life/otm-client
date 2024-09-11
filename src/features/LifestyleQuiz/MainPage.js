@@ -93,7 +93,7 @@ function LandingPage() {
         toast.error('Submission Failed! Please Try Again.');
       })
       .finally(() => {
-          setPageLoading(false);
+        setPageLoading(false);
       });
   }
 
@@ -146,8 +146,9 @@ function LandingPage() {
 
   return (
     <div
-      className={`flex min-h-screen flex-col justify-between ${screen === 0 || screen === -1 ? '' : 'px-6 py-8'
-        }`}
+      className={`flex min-h-screen flex-col justify-between ${
+        screen === 0 || screen === -1 ? '' : 'px-6 py-8'
+      }`}
       style={{
         fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
       }}
@@ -158,20 +159,7 @@ function LandingPage() {
           <Loader className={'h-screen w-full'} />
         </div>
       )}
-      <div className="fixed top-0 ">
-        <ToastContainer
-          position="top-center"
-          autoClose={1000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeButton={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-      </div>
+      <div className="fixed top-0 "></div>
       <div className="hide-scrollbar flex flex-col justify-center gap-3 overflow-y-scroll">
         {screen >= 1 && (
           <div className="flex flex-col items-center justify-center gap-5">
@@ -211,8 +199,9 @@ function LandingPage() {
                       <div className="my-3 w-full">
                         {/* Question */}
                         <h1 className="text-[20px] text-[#7e87ef]">
-                          {`${capitalizeFirstLetter(ques?.content)}${ques?.isRequired ? ' *' : ''
-                            }`}
+                          {`${capitalizeFirstLetter(ques?.content)}${
+                            ques?.isRequired ? ' *' : ''
+                          }`}
                         </h1>
                         {/* Description */}
                         <p className="my-2 space-x-2 text-[14px] text-[#b1b1b1]">
@@ -220,7 +209,7 @@ function LandingPage() {
                         </p>
                       </div>
                       {ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
-                        ques?.inputType?.toUpperCase() === 'MULTICHOICE' ? (
+                      ques?.inputType?.toUpperCase() === 'MULTICHOICE' ? (
                         <Options
                           questionCode={ques?.code}
                           options={ques?.options}

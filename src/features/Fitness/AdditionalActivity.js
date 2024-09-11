@@ -10,7 +10,7 @@ import { TbSwimming } from 'react-icons/tb';
 import { toast, ToastContainer } from 'react-toastify';
 import { Loader } from '../../components';
 
-const AdditionalActivity = ({ setShowActivity }) => {
+const AdditionalActivity = ({ setShowActivity, date }) => {
   const items = Array.from({ length: 42 }, (_, i) => {
     if (i === 0 || i === 1 || i === 2 || i === 41 || i === 40 || i === 39) {
       return '';
@@ -76,7 +76,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
           {
             memberCode: memberCode,
             activity: selectedActivityType,
-            date: new Date(),
+            date: date,
             activityDuration: selectedValue.toString(),
             description: activityDescription,
           },
@@ -120,7 +120,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
       try {
         const today = new Date();
         const res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker?memberCode=${memberCode}&date=${today}`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker?memberCode=${memberCode}&date=${date}`,
         );
         if (res.data && res.data.data.activityList.length > 0) {
           setActivityList(res.data.data.activityList);
