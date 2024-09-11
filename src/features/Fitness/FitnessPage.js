@@ -31,6 +31,8 @@ import {
   getDeviceTimezone,
   getGreeting,
 } from './utils';
+import InstallApp from '../../components/InstallPWA';
+import { toast } from 'react-toastify';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -90,6 +92,8 @@ const FitnessPage = () => {
     const greetingMessage = getGreeting(currentHour);
     setGreeting(greetingMessage);
   }, []);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Use Intl.DateTimeFormat to get the full day name
@@ -164,6 +168,7 @@ const FitnessPage = () => {
         }
       })
       .catch((err) => {
+        toast.error('Error with updating workout');
         console.log(err.message);
       })
       .finally(() => {
@@ -189,8 +194,11 @@ const FitnessPage = () => {
       })
       .catch((err) => {
         console.log(err.message);
+
+        toast.error('Error with updating workout');
         setHomeStats(null);
         setShowInitialScreen(true);
+        navigate('/home');
       })
       .finally(() => {
         setLoader(false);
@@ -483,8 +491,8 @@ const FitnessPage = () => {
 
       <img
         loading="lazy"
-        src="assets/movement-frame.svg"
-        className="absolute left-0 top-0 -z-10 h-full w-full"
+        src="assets/Movement-Frame.png"
+        className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
       />
       {!loader && showActivity === false && (
         <>
@@ -555,6 +563,7 @@ const FitnessPage = () => {
                     </div>
                   </div>
                 )}
+                <InstallApp />
                 {showInitialScreen === true && (
                   <div className=" mt-3 w-full">
                     <p className=" mt-2  font-sfpro  text-[14px] font-medium text-white-opacity-50">

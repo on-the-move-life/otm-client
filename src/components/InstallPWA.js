@@ -1,10 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { RxCross1 } from 'react-icons/rx';
 
+const useIsPWA = () => {
+  const [isPWA, setIsPWA] = useState(false);
+
+  useEffect(() => {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const isInWebAppiOS = window.navigator.standalone === true;
+    const isInWebAppChrome = window.matchMedia('(display-mode: standalone)').matches;
+
+    setIsPWA(isStandalone || isInWebAppiOS || isInWebAppChrome);
+  }, []);
+
+  return isPWA;
+};
+
 const InstallApp = () => {
-  const [showInstallPopup, setShowInstallPopup] = useState(false);
+  const [showInitialPopup, setShowInitialPopup] = useState(false);
+  const [showPlatformSelection, setShowPlatformSelection] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState(null);
+  const isPWA = useIsPWA();
+
+  useEffect(() => {
+    // Show popup on page load if it's not a PWA
+    if (!isPWA) {
+      setShowInitialPopup(true);
+    }
+  }, [isPWA]);
+
+  const handleInstallClick = () => {
+    setShowInitialPopup(false);
+    setShowPlatformSelection(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowInitialPopup(false);
+    setShowPlatformSelection(false);
+    setSelectedPlatform(null);
+  };
 
   const modalVariants = {
     hidden: { opacity: 0, y: '50%' },
@@ -34,30 +68,56 @@ const InstallApp = () => {
       "You will see the OTM app with your existing apps, login if you haven't already, to use the platform.",
     ]
   };
-
-  const handleOpenPopup = () => {
-    setShowInstallPopup(true);
-    setSelectedPlatform(null);
+  const topPopupVariants = {
+    hidden: { opacity: 0, y: '-100%' },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        type: 'spring', 
+        damping: 25, 
+        stiffness: 500 
+      } 
+    },
   };
 
-  const handleClosePopup = () => {
-    setShowInstallPopup(false);
-    setSelectedPlatform(null);
-  };
+  if (isPWA) {
+    return null; // Don't render anything if it's a PWA
+  }
 
   return (
     <>
-      <div
-        onClick={handleOpenPopup}
-        className="flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray text-sm gap-6"
-      >
-        <img src="/maskable.png" alt="App Icon" className='w-12 ml-2'/>
-        <div className="pl-2 text-[18px] text-[#F8F8F8]/[0.8]">
-          Install our app
-        </div>
-      </div>
-
-      {showInstallPopup && (
+     {showInitialPopup && (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={topPopupVariants}
+          className="fixed top-0 left-0 right-0 z-50 bg-black-opacity-45 p-4 shadow-lg rounded-b-xl "
+        >
+          <div className="container mx-auto flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <img src="/assets/updated-logo.svg" alt="App Icon" className="w-10 h-10"/>
+              <div>
+                <h2 className="sm:text-lg font-[600] text-white text-[16px]">Install Our App</h2>
+                <p className="text-white sm:text-sm text-[12px]">Get the best experience on your device</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={handleInstallClick}
+                className="rounded-lg bg-blue px-3 py-2 text-black font-semibold sm:text-sm text-[16px]"
+              >
+                Install
+              </button>
+              <button onClick={handleClosePopup}>
+                <RxCross1 className="text-white text-xl" />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+          
+      {showPlatformSelection && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <motion.div
             initial="hidden"
@@ -66,7 +126,7 @@ const InstallApp = () => {
             className={`bg-black p-6 rounded-lg ${selectedPlatform ? 'w-full h-full overflow-y-auto' : 'w-80'}`}
           >
             <div className="mb-4 flex justify-between">
-              <h2 className="text-xl font-bold text-white">Install Our App</h2>
+              <h2 className="text-xl font-[600] text-white">Install Our App</h2>
               <button onClick={handleClosePopup}>
                 <RxCross1 className="text-white" />
               </button>
@@ -76,13 +136,13 @@ const InstallApp = () => {
               <div className="flex flex-col gap-4">
                 <button
                   onClick={() => setSelectedPlatform('android')}
-                  className="rounded-lg bg-green p-3 text-black"
+                  className="rounded-lg bg-blue p-3 text-black"
                 >
                   Android
                 </button>
                 <button
                   onClick={() => setSelectedPlatform('ios')}
-                  className="rounded-lg bg-green p-3 text-black"
+                  className="rounded-lg bg-blue p-3 text-black"
                 >
                   iOS
                 </button>
@@ -112,7 +172,7 @@ const InstallApp = () => {
 
                 <button
                   onClick={() => setSelectedPlatform(null)}
-                  className="mt-6 rounded-lg bg-green p-2 text-black w-full"
+                  className="mt-6 rounded-lg bg-blue p-2 text-black w-full"
                 >
                   Back to Platform Selection
                 </button>
@@ -126,4 +186,3 @@ const InstallApp = () => {
 };
 
 export default InstallApp;
-
