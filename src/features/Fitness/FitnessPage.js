@@ -24,6 +24,7 @@ import WeeklySchedule from './WeeklySchedule';
 import WorkoutTile from './WorkoutTile';
 import BatteryLevel from './BatteryLevel';
 import InstallApp from '../../components/InstallPWA';
+import { toast } from 'react-toastify';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -74,6 +75,8 @@ const FitnessPage = () => {
   const fullName = JSON.parse(localStorage.getItem('user'))['name'];
   const code = JSON.parse(localStorage.getItem('user'))['code'];
   const firstName = fullName.split(' ')[0];
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Use Intl.DateTimeFormat to get the full day name
@@ -145,7 +148,6 @@ const FitnessPage = () => {
 
           setHomeStats(null);
         }
-        console.log('zxxczxczxc', res.data.data);
 
         if (Object.keys(res.data.data.weeklyWorkout).length > 0) {
           setUserData(res.data.data);
@@ -153,6 +155,7 @@ const FitnessPage = () => {
         }
       })
       .catch((err) => {
+        toast.error('Error with updating workout');
         console.log(err.message);
       })
       .finally(() => {
@@ -178,8 +181,11 @@ const FitnessPage = () => {
       })
       .catch((err) => {
         console.log(err.message);
+
+        toast.error('Error with updating workout');
         setHomeStats(null);
         setShowInitialScreen(true);
+        navigate('/home');
       })
       .finally(() => {
         setLoader(false);
@@ -216,8 +222,6 @@ const FitnessPage = () => {
     };
     checkIfWeekend();
   }, []);
-
-  console.log('innininin', showInitialScreen);
 
   return (
     // <>
@@ -539,7 +543,7 @@ const FitnessPage = () => {
                     </div>
                   </div>
                 )}
-                <InstallApp/>
+                <InstallApp />
                 {showInitialScreen === true && (
                   <div className=" mt-3 w-full">
                     <p className=" mt-2  font-sfpro  text-[14px] font-medium text-white-opacity-50">
