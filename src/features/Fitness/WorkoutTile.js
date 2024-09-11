@@ -42,6 +42,14 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
         `/workout/flex?movementId=${homeStats['Morning Zone']['movements'][index].movementId}`,
       );
     }
+    if (
+      homeStats['Morning Zone']['movements'][index].movementName ===
+      'Dynamic Stretch'
+    ) {
+      navigate(
+        `/warm-up?movementId=${homeStats['Morning Zone']['movements'][index].movementId}&movementName=${homeStats['Morning Zone']['movements'][index].movementName}`,
+      );
+    }
 
     if (
       homeStats['Morning Zone']['movements'][index].movementName !==
@@ -74,6 +82,14 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
       ) {
         navigate(
           `/workout/flex?movementId=${homeStats['Evening Zone']['movements'][index].movementId}`,
+        );
+      }
+      if (
+        homeStats['Evening Zone']['movements'][index].movementName ===
+        'Dynamic Stretch'
+      ) {
+        navigate(
+          `/warm-up?movementId=${homeStats['Evening Zone']['movements'][index].movementId}&movementName=${homeStats['Evening Zone']['movements'][index].movementName}`,
         );
       }
 
