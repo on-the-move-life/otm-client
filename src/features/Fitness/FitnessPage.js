@@ -457,7 +457,7 @@ const FitnessPage = () => {
               <img
                 loading="lazy"
                 src="assets/movement-frame.svg"
-                className="absolute left-0 top-0 -z-10 h-full w-full"
+                className="absolute top-0 left-0 w-full h-full -z-10"
               />
               <div className="my-auto rounded-lg bg-black-opacity-45 pb-[16px] pt-[47px]">
                 <img
@@ -492,7 +492,7 @@ const FitnessPage = () => {
       <img
         loading="lazy"
         src="assets/Movement-Frame.png"
-        className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
+        className="absolute top-0 left-0 w-full h-full -z-10 saturate-150"
       />
       {!loader && showActivity === false && (
         <>
@@ -503,7 +503,7 @@ const FitnessPage = () => {
                   <h3 className=" font-sfpro text-[14px] text-offwhite">
                     {greeting} {firstName}
                   </h3>
-                  <div className="flex w-full items-end">
+                  <div className="flex items-end w-full">
                     <div className="flex-1">
                       <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
                         Movement
@@ -515,9 +515,9 @@ const FitnessPage = () => {
                       </div>
                     </div>
                     {showInitialScreen === false && (
-                      <div className="flex flex-1 justify-end">
+                      <div className="flex justify-end flex-1">
                         <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
-                          <span className=" pl-2 text-sm  text-offwhite">
+                          <span className="pl-2 text-sm text-offwhite">
                             Total workouts
                           </span>
                           <div
@@ -538,13 +538,13 @@ const FitnessPage = () => {
                 {showInitialScreen === true && (
                   <div className="mt-[24px] flex flex-col items-center gap-2">
                     <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
-                      <div className="flex w-full justify-between">
+                      <div className="flex justify-between w-full">
                         <img
                           loading="lazy"
                           src="/assets/purple-arm.svg"
                           className="h-[120px] w-[120px] p-4"
                         />
-                        <div className="flex w-full flex-1 flex-col justify-center">
+                        <div className="flex flex-col justify-center flex-1 w-full">
                           <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
                             New Weekly Format!
                           </h3>
@@ -565,7 +565,7 @@ const FitnessPage = () => {
                 )}
                 <InstallApp />
                 {showInitialScreen === true && (
-                  <div className=" mt-3 w-full">
+                  <div className="w-full mt-3 ">
                     <p className=" mt-2  font-sfpro  text-[14px] font-medium text-white-opacity-50">
                       Don't worry, you can update your schedule anytime with
                       your coach
@@ -575,7 +575,7 @@ const FitnessPage = () => {
 
                 {showInitialScreen === false && (
                   <>
-                    <div className="my-4 flex justify-center">
+                    <div className="flex justify-center my-4">
                       {homeStats &&
                         Object.keys(homeStats.weeklyWorkout).map(
                           (item, index) => {
@@ -583,7 +583,7 @@ const FitnessPage = () => {
                             return (
                               <div
                                 key={slicedDay}
-                                className="flex w-full flex-row items-center justify-between"
+                                className="flex flex-row items-center justify-between w-full"
                                 onClick={() => setSelectedDay(item)}
                               >
                                 <CalendarTile
@@ -608,18 +608,18 @@ const FitnessPage = () => {
 
                 {showInitialScreen === false && (
                   <>
-                    <div className="my-4 flex w-full items-center justify-between">
+                    <div className="flex items-center justify-between w-full my-4">
                       <h3>Today's Plan</h3>
 
                       <div
-                        className=" flex   "
+                        className="flex "
                         onClick={() => setShowActivity(true)}
                       >
                         <div className="flex h-[34px] grow items-center justify-between rounded-lg bg-black-opacity-45 p-1">
                           <span className="ml-[15px] mr-[12px]  text-sm text-floYellow">
                             Log Activity
                           </span>
-                          <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
+                          <div className="flex items-center justify-center rounded-lg bg-floYellow ">
                             <img
                               loading="lazy"
                               src="/assets/fitness-add.svg"
@@ -632,11 +632,11 @@ const FitnessPage = () => {
                   </>
                 )}
 
-                <div className=" flex h-fit flex-col gap-4">
+                <div className="flex flex-col gap-4 h-fit">
                   {showInitialScreen === true && (
                     <section>
                       <div
-                        className="mt-8 flex items-center"
+                        className="flex items-center mt-8"
                         style={{
                           opacity: isDisabled ? 0.5 : 1,
                           pointerEvents: isDisabled ? 'none' : 'auto',
@@ -647,8 +647,8 @@ const FitnessPage = () => {
                           to="/workout/today"
                           className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
                         >
-                          <div className="flex h-full flex-col justify-center">
-                            <h2 className="text-xl  ">Strength Training</h2>
+                          <div className="flex flex-col justify-center h-full">
+                            <h2 className="text-xl ">Strength Training</h2>
                           </div>
                         </Link>
                       </div>
@@ -658,10 +658,11 @@ const FitnessPage = () => {
 
                   <WokoutTileContainer
                     key={selectedDay}
-                    className="flex max-h-max flex-col gap-2"
+                    className="flex flex-col gap-2 max-h-max"
                   >
                     {homeStats && showInitialScreen === false && (
                       <WorkoutTile
+                        date={date[0]}
                         homeStats={homeStats?.weeklyWorkout[selectedDay]}
                         isDisabled={isDisabled}
                         setHomeStats={setHomeStats}
