@@ -156,7 +156,12 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                       item.completed !== true &&
                         handleMorningTile(item.movementId, index);
                     }}
-                    className="relative z-10 flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
+                    className={`1 relative z-10 flex h-[85px] w-full grow items-center justify-between  rounded-xl bg-cover py-2 pl-4 pr-7 ${
+                      item.movementName === 'Flex' ||
+                      item.movementName === 'Workout'
+                        ? 'bg-morning-zone'
+                        : 'bg-evening-zone'
+                    } `}
                   >
                     <div className="flex h-full flex-col justify-center">
                       <h5 className="text-sm font-light text-white-opacity-50">
@@ -238,7 +243,12 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
               <div className="flex flex-col items-center">
                 <div
                   onClick={() => handleEveningTile(item.movementId, index)}
-                  className=" relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-evening-zone bg-cover py-2 pl-4 pr-7 "
+                  className={` relative flex h-[85px] w-full grow items-center justify-between rounded-xl ${
+                    item.movementName === 'Flex' ||
+                    item.movementName === 'Workout'
+                      ? 'bg-morning-zone'
+                      : 'bg-evening-zone'
+                  } bg-cover py-2 pl-4 pr-7 `}
                 >
                   <div className="flex h-full flex-col justify-center">
                     <h5 className="text-sm font-light text-white-opacity-50">
