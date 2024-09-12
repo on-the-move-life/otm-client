@@ -21,7 +21,7 @@ const SlideContainer = styled.div`
   max-height: 100px; /* Adjust as needed */
 `;
 
-const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
+const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
   const navigate = useNavigate();
   const [morningInput, setMorningInput] = useState(false);
   const [eveningInput, setEveningInput] = useState(false);
@@ -40,6 +40,14 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
     if (homeStats['Morning Zone']['movements'][index].movementName === 'Flex') {
       navigate(
         `/workout/flex?movementId=${homeStats['Morning Zone']['movements'][index].movementId}`,
+      );
+    }
+    if (
+      homeStats['Morning Zone']['movements'][index].movementName ===
+      'Dynamic Stretch'
+    ) {
+      navigate(
+        `/warm-up?movementId=${homeStats['Morning Zone']['movements'][index].movementId}&movementName=${homeStats['Morning Zone']['movements'][index].movementName}&date=${date}`,
       );
     }
 
@@ -76,6 +84,14 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
           `/workout/flex?movementId=${homeStats['Evening Zone']['movements'][index].movementId}`,
         );
       }
+      if (
+        homeStats['Evening Zone']['movements'][index].movementName ===
+        'Dynamic Stretch'
+      ) {
+        navigate(
+          `/warm-up?movementId=${homeStats['Evening Zone']['movements'][index].movementId}&movementName=${homeStats['Evening Zone']['movements'][index].movementName}&date=${date}`,
+        );
+      }
 
       if (
         homeStats['Evening Zone']['movements'][index].movementName !==
@@ -94,7 +110,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
     }
   };
 
-  const postWorkoutData = ({ id, text }) => {
+  const postWorkoutData = ({ id, text, name }) => {
     if (text === 'Morning Zone') {
       setMorningInput(false);
     }
@@ -106,8 +122,9 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
       .put(`${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout`, {
         movementId: id,
         memberCode: memberCode,
-        isCompleted: true,
+        movementName: name,
         action: 'update_completion_status',
+        createdAt: date,
       })
       .then((res) => {
         setHomeStats(res.data.data);
@@ -121,7 +138,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
   };
 
   return (
-    <div className="flex h-max flex-col gap-2 pb-4">
+    <div className="flex flex-col gap-2 pb-4 h-max">
       {Object.keys(homeStats['Morning Zone']['movements']).length > 0 && (
         <>
           {homeStats['Morning Zone']['movements'].map((item, index) => {
@@ -140,16 +157,21 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                       item.completed !== true &&
                         handleMorningTile(item.movementId, index);
                     }}
-                    className="relative z-10 flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
+                    className={`1 relative z-10 flex h-[85px] w-full grow items-center justify-between  rounded-xl bg-cover py-2 pl-4 pr-7 ${
+                      item.movementName === 'Flex' ||
+                      item.movementName === 'Workout'
+                        ? 'bg-morning-zone'
+                        : 'bg-evening-zone'
+                    } `}
                   >
-                    <div className="flex h-full flex-col justify-center">
+                    <div className="flex flex-col justify-center h-full">
                       <h5 className="text-sm font-light text-white-opacity-50">
                         Morning Zone
                       </h5>
-                      <h2 className="text-xl  "> {item.movementName}</h2>
+                      <h2 className="text-xl "> {item.movementName}</h2>
 
                       {item.movementName !== 'Rest' && (
-                        <div className="mt-1 flex gap-3">
+                        <div className="flex gap-3 mt-1">
                           <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
                             <img
                               src="/assets/yellowTimer.svg"
@@ -179,19 +201,20 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                   </div>
 
                   {tileId === item.movementId && morningInput === true && (
-                    <SlideContainer className="relative -top-3 w-full rounded-b-xl bg-black-opacity-45 px-3 pb-3 pt-7">
+                    <SlideContainer className="relative w-full px-3 pb-3 -top-3 rounded-b-xl bg-black-opacity-45 pt-7">
                       <p className="text-center text-offwhite">
                         Have you completed this?
                       </p>
-                      <div className="mt-3 flex w-full justify-center gap-8">
+                      <div className="flex justify-center w-full gap-8 mt-3">
                         <button
                           onClick={() =>
                             postWorkoutData({
                               id: item.movementId,
                               text: 'Morning Zone',
+                              name: item.movementName,
                             })
                           }
-                          className="w-14 rounded bg-green text-black"
+                          className="text-black rounded w-14 bg-green"
                         >
                           Yes
                         </button>
@@ -200,7 +223,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                             setMorningInput(false);
                             setTileId(null);
                           }} // Use button and attach onClick here
-                          className="w-14 rounded bg-red text-black"
+                          className="text-black rounded w-14 bg-red"
                         >
                           No
                         </button>
@@ -221,15 +244,20 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
               <div className="flex flex-col items-center">
                 <div
                   onClick={() => handleEveningTile(item.movementId, index)}
-                  className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-evening-zone bg-cover py-2 pl-4 pr-7 "
+                  className={` relative flex h-[85px] w-full grow items-center justify-between rounded-xl ${
+                    item.movementName === 'Flex' ||
+                    item.movementName === 'Workout'
+                      ? 'bg-morning-zone'
+                      : 'bg-evening-zone'
+                  } bg-cover py-2 pl-4 pr-7 `}
                 >
-                  <div className="flex h-full flex-col justify-center">
+                  <div className="flex flex-col justify-center h-full">
                     <h5 className="text-sm font-light text-white-opacity-50">
                       Evening Zone
                     </h5>
-                    <h2 className="text-xl  "> {item.movementName}</h2>
+                    <h2 className="text-xl "> {item.movementName}</h2>
                     {item.movementName !== 'Rest' && (
-                      <div className="mt-1 flex gap-3">
+                      <div className="flex gap-3 mt-1">
                         <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
                           <img
                             src="/assets/yellowTimer.svg"
@@ -258,11 +286,11 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                   )}
                 </div>
                 {tileId === item.movementId && eveningInput === true && (
-                  <SlideContainer className="relative -top-3 w-full rounded-b-xl bg-black-opacity-45 px-3 pb-3 pt-7">
+                  <SlideContainer className="relative w-full px-3 pb-3 -top-3 rounded-b-xl bg-black-opacity-45 pt-7">
                     <p className="text-center text-offwhite">
                       Have you completed this?
                     </p>
-                    <div className="mt-3 flex w-full justify-center gap-8">
+                    <div className="flex justify-center w-full gap-8 mt-3">
                       <button
                         onClick={() =>
                           postWorkoutData({
@@ -270,7 +298,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                             text: 'Evening Zone',
                           })
                         }
-                        className="w-14 rounded bg-green text-black"
+                        className="text-black rounded w-14 bg-green"
                       >
                         Yes
                       </button>
@@ -279,7 +307,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats }) => {
                           setEveningInput(false);
                           setTileId(null);
                         }} // Use button and attach onClick here
-                        className="w-14 rounded bg-red text-black"
+                        className="text-black rounded w-14 bg-red"
                       >
                         No
                       </button>

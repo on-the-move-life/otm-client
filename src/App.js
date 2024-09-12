@@ -38,6 +38,7 @@ import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 import ReferralUser from './features/ReferralUser/ReferralUser';
 import FtnesssQuestionare from './features/FitnessQuestionaire/FintessQuesrionire';
 import { ToastContainer } from 'react-toastify';
+import DynamicStretchScreen from './features/DynamicStretchScreen/DynamicStretchScreen';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -100,6 +101,14 @@ function App() {
             element={
               <RouteMiddleware>
                 <SectionDetail />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/warm-up"
+            element={
+              <RouteMiddleware>
+                <DynamicStretchScreen />
               </RouteMiddleware>
             }
           />

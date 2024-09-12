@@ -4,9 +4,13 @@ const BatteryLevel = ({ homeStats }) => {
   return (
     <div className="flex flex-col items-center rounded-xl bg-black-opacity-45 px-4 py-2">
       <div className="flex">
-        <img src="./assets/yellow-bg-power.svg" />
+        <img loading="lazy" src="./assets/yellow-bg-power.svg" />
         <h4 className="text-sm text-yellow ">Level {homeStats?.level}</h4>
-        <img src="./assets/level-question.svg" className="ml-1" />
+        <img
+          loading="lazy"
+          src="./assets/level-question.svg"
+          className="ml-1"
+        />
       </div>
       <div className="my-2 flex flex-col items-center">
         {chargeArray.map((item, index) => {

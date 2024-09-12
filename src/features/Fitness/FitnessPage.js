@@ -23,6 +23,14 @@ import EvolveScreen from './EvolveScreen';
 import WeeklySchedule from './WeeklySchedule';
 import WorkoutTile from './WorkoutTile';
 import BatteryLevel from './BatteryLevel';
+import { format } from 'date-fns';
+import {
+  getCurrentHourInTimezone,
+  getCurrentWeekDates,
+  getCurrentWeekFullDate,
+  getDeviceTimezone,
+  getGreeting,
+} from './utils';
 import InstallApp from '../../components/InstallPWA';
 import { toast } from 'react-toastify';
 
@@ -68,6 +76,8 @@ const FitnessPage = () => {
   const [showLoader, setShowLoader] = useState(true);
   // Initialize URLSearchParams with the query string
   const queryParams = new URLSearchParams(queryString);
+  const [greeting, setGreeting] = useState('');
+  const [date, setDate] = useState(null);
 
   // Get the value of the 'evolve' parameter
   const evolve = queryParams.get('evolve');
@@ -75,6 +85,13 @@ const FitnessPage = () => {
   const fullName = JSON.parse(localStorage.getItem('user'))['name'];
   const code = JSON.parse(localStorage.getItem('user'))['code'];
   const firstName = fullName.split(' ')[0];
+
+  useEffect(() => {
+    const timezone = getDeviceTimezone();
+    const currentHour = getCurrentHourInTimezone(timezone);
+    const greetingMessage = getGreeting(currentHour);
+    setGreeting(greetingMessage);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -100,30 +117,27 @@ const FitnessPage = () => {
     }
   }, [evolve]);
 
-  function getCurrentWeek() {
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // Day of the week (0-6) with 0 being Sunday
+  useEffect(() => {
+    // Set a timeout to hide the loader after 5 seconds (5000 ms)
+    if (evolve) {
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 5000);
 
-    // Calculate the date of Monday of the current week
-    const firstDayOfWeek =
-      today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
-    const currentWeek = [];
-
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        firstDayOfWeek + i,
-      );
-      // Get only the day of the month
-      const dayOfMonth = date.getDate();
-      currentWeek.push(dayOfMonth);
+      // Cleanup the timer if the component is unmounted
+      return () => clearTimeout(timer);
     }
+  }, [evolve]);
 
-    return currentWeek;
-  }
+  const currentWeekDates = getCurrentWeekDates();
+  const currentWeekFullDate = getCurrentWeekFullDate();
 
-  const currentWeekDates = getCurrentWeek();
+  useEffect(() => {
+    const selectCountDate = currentWeekFullDate.filter(
+      (item) => format(item, 'EEEE') === selectedDay,
+    );
+    setDate(selectCountDate);
+  }, [selectedDay]);
 
   // function isDateInCurrentWeek(day) {
   //   const currentWeek = getCurrentWeek();
@@ -145,7 +159,6 @@ const FitnessPage = () => {
       .then((res) => {
         if (Object.keys(res.data.data.weeklyWorkout).length === 0) {
           setShowInitialScreen(true);
-
           setHomeStats(null);
         }
 
@@ -196,7 +209,6 @@ const FitnessPage = () => {
     const today = new Date().toLocaleDateString('en-GB');
 
     const axiosClient = axios.create({
-      //baseURL: `${process.env.REACT_APP_BACKEND_MODE === 'production' ? process.env.REACT_APP_BASE_URL : 'http://localhost:882'}/api/v1/nutrition`,
       baseURL: `${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement`,
       headers: {
         Accept: 'application/json',
@@ -443,11 +455,13 @@ const FitnessPage = () => {
           {evolve && (
             <div className="relative z-50 flex h-screen w-full  items-center bg-[#161513] px-5">
               <img
+                loading="lazy"
                 src="assets/movement-frame.svg"
-                className="absolute left-0 top-0 -z-10 h-full w-full"
+                className="absolute top-0 left-0 w-full h-full -z-10"
               />
               <div className="my-auto rounded-lg bg-black-opacity-45 pb-[16px] pt-[47px]">
                 <img
+                  loading="lazy"
                   src="./assets/movement-ai-bg.svg"
                   className="w-full pb-[27px] "
                 />
@@ -472,12 +486,13 @@ const FitnessPage = () => {
       )}
 
       {!loader && showActivity === true && (
-        <AdditionalActivity setShowActivity={setShowActivity} />
+        <AdditionalActivity setShowActivity={setShowActivity} date={date[0]} />
       )}
+
       <img
         loading="lazy"
         src="assets/Movement-Frame.png"
-        className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
+        className="absolute top-0 left-0 w-full h-full -z-10 saturate-150"
       />
       {!loader && showActivity === false && (
         <>
@@ -486,9 +501,9 @@ const FitnessPage = () => {
               <div className=" h-full overflow-y-scroll  px-4 pt-[77px]">
                 <>
                   <h3 className=" font-sfpro text-[14px] text-offwhite">
-                    Good Morning {firstName}
+                    {greeting} {firstName}
                   </h3>
-                  <div className="flex w-full items-end">
+                  <div className="flex items-end w-full">
                     <div className="flex-1">
                       <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
                         Movement
@@ -500,16 +515,20 @@ const FitnessPage = () => {
                       </div>
                     </div>
                     {showInitialScreen === false && (
-                      <div className="flex flex-1 justify-end">
+                      <div className="flex justify-end flex-1">
                         <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
-                          <span className=" pl-2 text-sm  text-offwhite">
+                          <span className="pl-2 text-sm text-offwhite">
                             Total workouts
                           </span>
                           <div
                             className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
                           >
                             {homeStats &&
-                              formatNumber(homeStats?.totalWorkouts)}
+                              formatNumber(
+                                homeStats?.totalWorkouts
+                                  ? homeStats?.totalWorkouts
+                                  : 0,
+                              )}
                           </div>
                         </div>
                       </div>
@@ -519,12 +538,13 @@ const FitnessPage = () => {
                 {showInitialScreen === true && (
                   <div className="mt-[24px] flex flex-col items-center gap-2">
                     <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
-                      <div className="flex w-full justify-between">
+                      <div className="flex justify-between w-full">
                         <img
+                          loading="lazy"
                           src="/assets/purple-arm.svg"
                           className="h-[120px] w-[120px] p-4"
                         />
-                        <div className="flex w-full flex-1 flex-col justify-center">
+                        <div className="flex flex-col justify-center flex-1 w-full">
                           <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
                             New Weekly Format!
                           </h3>
@@ -545,7 +565,7 @@ const FitnessPage = () => {
                 )}
                 <InstallApp />
                 {showInitialScreen === true && (
-                  <div className=" mt-3 w-full">
+                  <div className="w-full mt-3 ">
                     <p className=" mt-2  font-sfpro  text-[14px] font-medium text-white-opacity-50">
                       Don't worry, you can update your schedule anytime with
                       your coach
@@ -555,14 +575,15 @@ const FitnessPage = () => {
 
                 {showInitialScreen === false && (
                   <>
-                    <div className="my-4 flex justify-center">
+                    <div className="flex justify-center my-4">
                       {homeStats &&
                         Object.keys(homeStats.weeklyWorkout).map(
                           (item, index) => {
                             const slicedDay = item.substr(0, 3);
                             return (
                               <div
-                                className="flex w-full flex-row items-center justify-between"
+                                key={slicedDay}
+                                className="flex flex-row items-center justify-between w-full"
                                 onClick={() => setSelectedDay(item)}
                               >
                                 <CalendarTile
@@ -587,19 +608,20 @@ const FitnessPage = () => {
 
                 {showInitialScreen === false && (
                   <>
-                    <div className="my-4 flex w-full items-center justify-between">
+                    <div className="flex items-center justify-between w-full my-4">
                       <h3>Today's Plan</h3>
 
                       <div
-                        className=" flex   "
+                        className="flex "
                         onClick={() => setShowActivity(true)}
                       >
                         <div className="flex h-[34px] grow items-center justify-between rounded-lg bg-black-opacity-45 p-1">
                           <span className="ml-[15px] mr-[12px]  text-sm text-floYellow">
                             Log Activity
                           </span>
-                          <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
+                          <div className="flex items-center justify-center rounded-lg bg-floYellow ">
                             <img
+                              loading="lazy"
                               src="/assets/fitness-add.svg"
                               className="h-[30px] w-[30px]"
                             />
@@ -610,11 +632,11 @@ const FitnessPage = () => {
                   </>
                 )}
 
-                <div className=" flex h-fit flex-col gap-4">
+                <div className="flex flex-col gap-4 h-fit">
                   {showInitialScreen === true && (
                     <section>
                       <div
-                        className="mt-8 flex items-center"
+                        className="flex items-center mt-8"
                         style={{
                           opacity: isDisabled ? 0.5 : 1,
                           pointerEvents: isDisabled ? 'none' : 'auto',
@@ -625,21 +647,22 @@ const FitnessPage = () => {
                           to="/workout/today"
                           className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
                         >
-                          <div className="flex h-full flex-col justify-center">
-                            <h2 className="text-xl  ">Strength Training</h2>
+                          <div className="flex flex-col justify-center h-full">
+                            <h2 className="text-xl ">Strength Training</h2>
                           </div>
                         </Link>
                       </div>
                     </section>
                   )}
-                  {/* <StepTracker /> */}
+                  <StepTracker date={date[0]} />
 
                   <WokoutTileContainer
                     key={selectedDay}
-                    className="flex max-h-max flex-col gap-2"
+                    className="flex flex-col gap-2 max-h-max"
                   >
                     {homeStats && showInitialScreen === false && (
                       <WorkoutTile
+                        date={date[0]}
                         homeStats={homeStats?.weeklyWorkout[selectedDay]}
                         isDisabled={isDisabled}
                         setHomeStats={setHomeStats}

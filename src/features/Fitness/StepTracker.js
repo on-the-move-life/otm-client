@@ -22,44 +22,49 @@ const InputContainer = styled.div`
   max-height: 100px; /* Adjust as needed */
 `;
 
-const StepTracker = () => {
+const StepTracker = ({ date }) => {
   const [showInput, setShowInput] = useState(false);
   const [stepCount, setStepCount] = useState(null);
   const [showStepCount, setShowStepCount] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [stepTrackerDate, setStepTrackerDate] = useState(null);
 
   useEffect(() => {
     setShowStepCount(true);
     setLoader(true);
-    async function getUserData() {
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/step-count`,
-          {
-            params: {
-              memberCode: JSON.parse(localStorage.getItem('user'))['code'],
-              date: new Date(),
+    if (date && date !== stepTrackerDate) {
+      async function getUserData() {
+        try {
+          const res = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/step-count`,
+            {
+              params: {
+                memberCode: JSON.parse(localStorage.getItem('user'))['code'],
+                date: date,
+              },
             },
-          },
-        );
-        if (res.data) {
-          setStepCount(res.data.data[0].stepCount);
+          );
+          if (res.data) {
+            setStepCount(res.data.data[0].stepCount);
+          }
+          if (res.data.success === true && res.data.data[0].stepCount > 0) {
+            setShowStepCount(false);
+          }
+        } catch (err) {
+          console.error(err.message);
+        } finally {
+          setLoader(false);
+          setStepTrackerDate(date);
         }
-        if (res.data.success === true && res.data.data[0].stepCount > 0) {
-          setShowStepCount(false);
-        }
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoader(false);
       }
+
+      getUserData();
     }
-    getUserData();
-  }, []);
+  }, [date]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (stepCount) {
+    if (stepCount && date) {
       const today = new Date();
       setShowStepCount(false);
       setShowInput(false);
@@ -69,7 +74,7 @@ const StepTracker = () => {
           {
             stepCount: Number(stepCount),
             memberCode: JSON.parse(localStorage.getItem('user'))['code'],
-            date: today,
+            date: date,
           },
         );
         console.log('Submission successful');
@@ -139,6 +144,7 @@ const StepTracker = () => {
                   ) : (
                     <div className="flex  items-center justify-center rounded-lg bg-floYellow ">
                       <img
+                        loading="lazy"
                         src="/assets/fitness-add.svg"
                         className="h-[30px] w-[30px]"
                         onClick={handleShowInput}
@@ -176,7 +182,7 @@ const StepTracker = () => {
               disabled={!stepCount}
               className="h-[30px] rounded px-2 font-medium"
             >
-              <img src="./assets/tick-green.svg" />
+              <img loading="lazy" src="./assets/tick-green.svg" />
             </button>
           </form>
         </InputContainer>

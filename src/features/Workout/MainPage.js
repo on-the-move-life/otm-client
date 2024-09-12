@@ -20,8 +20,6 @@ const MainPage = () => {
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
-  console.log('xccvcvc', movementId);
-
   useEffect(() => {
     if (
       workoutData &&

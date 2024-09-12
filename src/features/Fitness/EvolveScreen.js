@@ -7,6 +7,7 @@ const EvolveScreen = ({ homeStats, getUserData }) => {
   return (
     <div className="relative z-50 flex h-screen flex-col justify-between overflow-y-scroll bg-[#161513] px-[16px] ">
       <img
+        loading="lazy"
         src="assets/movement-frame.svg"
         className="absolute left-0 top-0 -z-10 h-full w-full"
       />
