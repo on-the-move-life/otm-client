@@ -13,6 +13,7 @@ const DynamicStretchScreen = () => {
   const queryString = window.location.search;
   const queryParams = new URLSearchParams(queryString);
   const movementId = queryParams.get('movementId');
+  const movementName = queryParams.get('movementName');
 
   const handleAlertDialog = (confirm) => {
     if (confirm === true) {
@@ -23,7 +24,7 @@ const DynamicStretchScreen = () => {
           {
             movementId: movementId,
             memberCode: memberCode,
-            isCompleted: true,
+            movementName: movementName,
             action: 'update_completion_status',
           },
         )
