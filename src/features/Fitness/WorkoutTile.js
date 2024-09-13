@@ -118,8 +118,6 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
       setEveningInput(false);
     }
 
-    console.log('xxdffdfdfdf', name);
-
     axios
       .put(`${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout`, {
         movementId: id,
