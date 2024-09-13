@@ -118,6 +118,8 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
       setEveningInput(false);
     }
 
+    console.log('xxdffdfdfdf', name);
+
     axios
       .put(`${process.env.REACT_APP_BASE_URL}/api/v1/weekly-movement/workout`, {
         movementId: id,
@@ -296,6 +298,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                           postWorkoutData({
                             id: item.movementId,
                             text: 'Evening Zone',
+                            name: item.movementName,
                           })
                         }
                         className="text-black rounded w-14 bg-green"
