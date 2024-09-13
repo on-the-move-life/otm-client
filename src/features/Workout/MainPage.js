@@ -17,6 +17,7 @@ const MainPage = () => {
   const queryString = window.location.search;
   const queryParams = new URLSearchParams(queryString);
   const movementId = queryParams.get('movementId');
+  const date = queryParams.get('date');
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
@@ -70,7 +71,9 @@ const MainPage = () => {
 
   const handleStart = () => {
     dispatch(setIndex(0));
-    navigate(`/section-details/${params.value}?movementId=${movementId}`);
+    navigate(
+      `/section-details/${params.value}?movementId=${movementId}&date=${date}`,
+    );
   };
 
   if (status === 'loading') {
@@ -82,33 +85,33 @@ const MainPage = () => {
   }
 
   return (
-    <div className="h-screen w-screen">
+    <div className="w-screen h-screen">
       {showUpdateWorkout && <UpdateWorkout onClose={handleUpdateClose} />}
 
       {!showUpdateWorkout && (
         <>
           {' '}
           <AnimatedComponent>
-            <div className="mb-4 flex h-fit bg-black/70 bg-workout-cover bg-cover py-6 bg-blend-soft-light">
-              <div className="flex w-full justify-between px-4">
-                <div className="flex h-full w-full flex-col items-start justify-between gap-4">
+            <div className="flex py-6 mb-4 bg-cover h-fit bg-black/70 bg-workout-cover bg-blend-soft-light">
+              <div className="flex justify-between w-full px-4">
+                <div className="flex flex-col items-start justify-between w-full h-full gap-4">
                   <HiArrowNarrowLeft
                     size={20}
                     onClick={() => {
                       navigate('/home');
                     }}
                   />
-                  <div className="mt-2 flex w-full flex-col items-start justify-center">
-                    <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
+                  <div className="flex flex-col items-start justify-center w-full mt-2">
+                    <h1 className="text-2xl font-semibold metallic-workout-gradient-text ">
                       {memberName}
                     </h1>
-                    <span className="text-xs font-extralight tracking-wider text-lightGray">
+                    <span className="text-xs tracking-wider font-extralight text-lightGray">
                       Let's crush this workout
                     </span>
                     <span className="mt-6 text-xs tracking-widest text-lightGray">
                       TODAY'S FOCUS
                     </span>
-                    <div className="flex w-full items-center justify-between sm:justify-normal sm:gap-5">
+                    <div className="flex items-center justify-between w-full sm:justify-normal sm:gap-5">
                       {workoutData.theme && (
                         <div className="flex items-center gap-2">
                           <div>
@@ -163,6 +166,7 @@ const MainPage = () => {
                 updatedWorkoutProgram.map((data, index) => (
                   <SectionItem
                     movementId={movementId}
+                    date={date}
                     sectionList={updatedWorkoutProgram}
                     index={index}
                     key={index}
@@ -170,7 +174,7 @@ const MainPage = () => {
                 ))}
             </AnimatedComponent>
           </div>
-          <footer className="fixed bottom-4 w-full px-4">
+          <footer className="fixed w-full px-4 bottom-4">
             <button
               className="workout-gradient-button mt-4 flex h-12 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center"
               onClick={handleStart}

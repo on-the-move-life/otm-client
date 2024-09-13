@@ -47,6 +47,7 @@ const WorkoutSummary = () => {
   const queryString = window.location.search;
   const queryParams = new URLSearchParams(queryString);
   const movementId = queryParams.get('movementId');
+  const date = queryParams.get('date');
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
@@ -135,6 +136,7 @@ const WorkoutSummary = () => {
       day: workout.day,
       batch: 'HYPER',
       workoutId: movementId,
+      date: new Date(date),
     };
 
     dispatch(setStatus('loading'));
@@ -246,8 +248,8 @@ const WorkoutSummary = () => {
       {status === 'loading' && <Loader />}
 
       {status === 'success' && Object.keys(workoutSummary).length > 0 && (
-        <div className="relative flex h-full w-full flex-col">
-          <div className="flex-1 overflow-y-auto pb-16">
+        <div className="relative flex flex-col w-full h-full">
+          <div className="flex-1 pb-16 overflow-y-auto">
             <div ref={summaryRef} className="px-4 py-8">
               <AnimatedComponent>
                 <div className="mb-4">
@@ -255,7 +257,7 @@ const WorkoutSummary = () => {
                     {today}
                   </p>
                   <div className="flex items-center justify-between">
-                    <h2 className="workout-gradient-text text-2xl font-bold">
+                    <h2 className="text-2xl font-bold workout-gradient-text">
                       Workout Summary
                     </h2>
                     <Link to="/home">
@@ -268,7 +270,7 @@ const WorkoutSummary = () => {
                   <h4 className="text-[10px] uppercase tracking-[3px]">
                     total workouts
                   </h4>
-                  <div className="mx-4 w-24">
+                  <div className="w-24 mx-4">
                     <Counter
                       currentValue={
                         Number(workoutSummary?.consistency?.total) - 1
@@ -292,7 +294,7 @@ const WorkoutSummary = () => {
                   countToEarnPerfectWeek < 0 && (
                     <p className="mb-4">
                       Fitness Pro Alert! You've surpassed the{' '}
-                      <span className="perfect-week inline-flex w-fit items-center rounded">
+                      <span className="inline-flex items-center rounded perfect-week w-fit">
                         <img src="/assets/star.svg" alt="" />
                         <span className="mx-0.5 text-xs font-bold -tracking-[0.36px] text-[#4a3e1d]">
                           Perfect Week x{workoutSummary?.consistency?.streak}
@@ -311,7 +313,7 @@ const WorkoutSummary = () => {
                       <p>
                         Whoa! You just unlocked the{' '}
                         {parseInt(workoutSummary?.consistency?.streak) > 0 && (
-                          <span className="perfect-week inline-flex items-center">
+                          <span className="inline-flex items-center perfect-week">
                             <img
                               src="/assets/star.svg"
                               alt=""
@@ -330,12 +332,12 @@ const WorkoutSummary = () => {
                   )}
 
                 {achievements.length > 0 && (
-                  <section className="my-8 flex flex-col justify-center ">
+                  <section className="flex flex-col justify-center my-8 ">
                     <h4 className="justify-center text-xs uppercase tracking-[3px] text-lightGray">
                       achievements unlocked
                     </h4>
 
-                    <div className="my-2 flex h-fit w-full items-center justify-between">
+                    <div className="flex items-center justify-between w-full my-2 h-fit">
                       <span>
                         <HiOutlineChevronLeft
                           size={25}
@@ -344,7 +346,7 @@ const WorkoutSummary = () => {
                           }}
                         />
                       </span>
-                      <div className="flex h-full w-full flex-row items-center justify-center px-2 ">
+                      <div className="flex flex-row items-center justify-center w-full h-full px-2 ">
                         <div className="h-[60px] w-[60px]">
                           <img
                             className="h-[60px] w-[60px] rounded-full"
@@ -370,12 +372,12 @@ const WorkoutSummary = () => {
                 )}
 
                 {coachNotes.length > 0 && (
-                  <section className="my-4 flex flex-col items-start justify-center ">
+                  <section className="flex flex-col items-start justify-center my-4 ">
                     <h4 className="justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                       coach notes
                     </h4>
 
-                    <div className="my-4 flex h-20 w-full items-center justify-between">
+                    <div className="flex items-center justify-between w-full h-20 my-4">
                       <span>
                         <HiOutlineChevronLeft
                           size={25}
@@ -400,7 +402,7 @@ const WorkoutSummary = () => {
                   </section>
                 )}
 
-                <div className="flex h-fit w-full flex-col items-center justify-center gap-5">
+                <div className="flex flex-col items-center justify-center w-full gap-5 h-fit">
                   <div className="flex min-h-[100px] w-full flex-row items-center justify-center rounded-[20px] bg-[#121212]">
                     <div
                       className="h-full w-full rounded-[12px] border-[0.5px] border-[#383838]  bg-right  bg-no-repeat  p-3 backdrop-blur-[1px]"
@@ -415,7 +417,7 @@ const WorkoutSummary = () => {
                       <div className="text-[14px] text-lightGray">
                         You earned
                         <img
-                          className="mx-1 inline-block w-4"
+                          className="inline-block w-4 mx-1"
                           src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`}
                           alt="MoveCoins Logo"
                         />
@@ -425,7 +427,7 @@ const WorkoutSummary = () => {
                         <GradientText>treat yourself </GradientText>
                         to something special!
                       </div>
-                      {/* <p className="text-slate-500 break-words font-normal leading-normal">
+                      {/* <p className="font-normal leading-normal break-words text-slate-500">
                   {' '}
                 </p> */}
                     </div>
@@ -440,13 +442,13 @@ const WorkoutSummary = () => {
                           className="my-4 flex h-24 w-full rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 text-xs"
                           key={index}
                         >
-                          <div className="flex basis-1/2 flex-col">
+                          <div className="flex flex-col basis-1/2">
                             <h4 className="text-lg">Assessment</h4>
-                            <p className="overflow-y-auto break-words text-xs text-lightGray">
+                            <p className="overflow-y-auto text-xs break-words text-lightGray">
                               {section?.displayInfo.join(', ')}
                             </p>
                           </div>
-                          <div className="basis-1/2 p-2">
+                          <div className="p-2 basis-1/2">
                             <h4 className="mb-2 justify-center text-[10px] uppercase tracking-[3px] text-lightGray">
                               fitness score
                             </h4>
@@ -488,7 +490,7 @@ const WorkoutSummary = () => {
                       ),
                   )}
 
-                <div className="mt-8 grid grid-cols-2 grid-rows-5 gap-4">
+                <div className="grid grid-cols-2 grid-rows-5 gap-4 mt-8">
                   {workoutSummary &&
                     workoutSummary.sectionPerformance?.map(
                       (section, index) =>
@@ -497,7 +499,7 @@ const WorkoutSummary = () => {
                             className="flex h-28 w-full items-center justify-between overflow-y-auto rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-2"
                             key={index}
                           >
-                            <div className="flex h-full w-full flex-col ">
+                            <div className="flex flex-col w-full h-full ">
                               <div className="mb-2">
                                 <div className="flex justify-between">
                                   <h1 className="items-center text-lg ">
@@ -512,7 +514,7 @@ const WorkoutSummary = () => {
                                 </p>
                               </div>
                               <div className="overflow-y-auto text-xs text-lightGray">
-                                <ul className="list-disc pl-3">
+                                <ul className="pl-3 list-disc">
                                   {section?.displayInfo?.map((i, idx) => {
                                     return <li key={idx}>{i}</li>;
                                   })}
@@ -529,7 +531,7 @@ const WorkoutSummary = () => {
           <div className="fixed bottom-0 left-0 right-0 z-10 px-3 py-2">
             <button
               onClick={captureAndShareToWhatsApp}
-              className="w-full rounded-lg bg-green px-4 py-2 font-semibold text-black"
+              className="w-full px-4 py-2 font-semibold text-black rounded-lg bg-green"
             >
               Share with coach
             </button>

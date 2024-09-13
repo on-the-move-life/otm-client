@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { setIndex } from './WorkoutSlice';
 
-const Section = ({ sectionList, index, isReport, movementId }) => {
+const Section = ({ sectionList, index, isReport, movementId, date }) => {
   const [section, setSection] = useState(sectionList[index]);
 
   const params = useParams();
@@ -14,7 +14,9 @@ const Section = ({ sectionList, index, isReport, movementId }) => {
   const handleClick = (index) => {
     dispatch(setIndex(index));
 
-    navigate(`/section-details/${params.value}?movementId=${movementId}`);
+    navigate(
+      `/section-details/${params.value}?movementId=${movementId}&date=${date}`,
+    );
   };
 
   return (
@@ -23,12 +25,12 @@ const Section = ({ sectionList, index, isReport, movementId }) => {
         className="flex h-fit w-full items-center justify-between rounded-xl border border-[#383838] bg-[linear-gradient(180deg,_#171717_0%,_#0F0F0F_100%)] p-4 px-4  text-3xl"
         onClick={() => handleClick(index)}
       >
-        <div className="flex w-2/3 flex-col">
-          <h1 className="workout-gradient-text items-center text-lg font-bold">
+        <div className="flex flex-col w-2/3">
+          <h1 className="items-center text-lg font-bold workout-gradient-text">
             {sectionList.name || section.name}
           </h1>
           {isReport && (
-            <p className="break-words text-xs text-lightGray">
+            <p className="text-xs break-words text-lightGray">
               {sectionList?.displayInfo.join(', ')}
             </p>
           )}
@@ -38,7 +40,7 @@ const Section = ({ sectionList, index, isReport, movementId }) => {
             <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
           )}
           {!isReport && (
-            <div className="tags flex flex-col items-start justify-center">
+            <div className="flex flex-col items-start justify-center tags">
               {section.meta?.todaysMetconIntensity &&
                 section.meta?.todaysMetconIntensity > 75 && (
                   <span className="bg-[#172339]  p-0.5 text-[10px] text-[#C2D3FA]">
