@@ -296,6 +296,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                           postWorkoutData({
                             id: item.movementId,
                             text: 'Evening Zone',
+                            name: item.movementName,
                           })
                         }
                         className="text-black rounded w-14 bg-green"

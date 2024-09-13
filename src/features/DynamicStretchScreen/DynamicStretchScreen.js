@@ -47,15 +47,15 @@ const DynamicStretchScreen = () => {
   };
 
   return (
-    <div className="relative h-screen w-screen ">
+    <div className="relative w-screen h-screen ">
       <img
         loading="lazy"
         src="assets/movement-frame.svg"
-        className="absolute left-0 top-0 -z-10 h-full w-full"
+        className="absolute top-0 left-0 w-full h-full -z-10"
       />
-      <div className="flex h-full flex-col justify-between px-5 py-8">
+      <div className="flex flex-col justify-between h-full px-5 py-8">
         <div>
-          <div className="flex w-full justify-between ">
+          <div className="flex justify-between w-full ">
             <div className="font-sfpro text-[32px] leading-10 text-offwhite">
               {' '}
               Dynamic Stretch
@@ -65,10 +65,10 @@ const DynamicStretchScreen = () => {
               <RxCross1 onClick={() => navigate('/home')} className="" />
             </div>
           </div>
-          <div className="mt-16 flex items-center justify-center ">
-            <div className="player-wrapper h-[512px] w-11/12  rounded-xl bg-black-opacity-45 p-3">
+
+          <div className="flex items-center justify-center mt-16 ">
+            <div className="player-wrapper h-[512px] max-w-[500px]   rounded-xl bg-black-opacity-45 ">
               <iframe
-                className="rounded-xl"
                 width="100%"
                 height="100%"
                 src={
@@ -84,7 +84,7 @@ const DynamicStretchScreen = () => {
             </div>
           </div>
         </div>
-        <div className="mt-7 pb-5">
+        <div className="pb-5 mt-7">
           <p className="w-full py-3 text-center text-[12px] text-offwhite">
             Submit and save your progress
           </p>
