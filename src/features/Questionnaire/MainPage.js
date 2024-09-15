@@ -38,6 +38,14 @@ function LandingPage() {
   const [showBMIScreen, setShowBMIScreen] = useState(false);
   const navigate = useNavigate();
 
+  const questionnaireIntroducntion = [
+    '  Rishi Solanki to guide you every step of the way',
+    '  Your weekly workout schedule to meet your goals',
+    'Custom made meal planning suited to your taste',
+    ' A personalised lifestyle design that works',
+    'An accounatability coach to fool to proof your success',
+  ];
+
   const StarterText = styled.div`
     color: var(--New-White, rgba(255, 255, 255, 0.26));
     /* H1 */
@@ -54,6 +62,15 @@ function LandingPage() {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  `;
+
+  const GradientText = styled.div`
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #d6b6f0, #848ce9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   `;
 
   // sending response to the backend
@@ -174,7 +191,7 @@ function LandingPage() {
     >
       {pageError && !pageLoading && <Error>Some Error Occured</Error>}
       {pageLoading && (
-        <div className="fixed left-0 top-0 z-50 w-full bg-black">
+        <div className="fixed top-0 left-0 z-50 w-full bg-black">
           <Loader className={'h-screen w-full'} />
         </div>
       )}
@@ -192,7 +209,7 @@ function LandingPage() {
           theme="dark"
         />
       </div>
-      <div className="hide-scrollbar flex flex-col justify-center gap-3 overflow-y-scroll">
+      <div className="flex flex-col justify-center gap-3 overflow-y-scroll hide-scrollbar">
         {showBMIScreen && (
           <BMIScreen
             response={response}
@@ -218,7 +235,7 @@ function LandingPage() {
         )}
         {screen >= 1 && !showBMIScreen && !showAssessmentScreen && (
           <div className="flex flex-col items-center justify-center gap-5">
-            <div className="mx-auto my-4 flex w-full items-center justify-center">
+            <div className="flex items-center justify-center w-full mx-auto my-4">
               {screen >= 1 && (
                 <BackButton
                   size={30}
@@ -236,8 +253,8 @@ function LandingPage() {
           </div>
         )}
       </div>
-      <div className="flex flex-1 flex-col items-start justify-between">
-        <div className="flex w-full flex-col justify-center gap-5">
+      <div className="flex flex-col items-start justify-between flex-1">
+        <div className="flex flex-col justify-center w-full gap-5">
           {/* Section Name */}
           {screen === generalScreen && (
             <h1 className="mt-3 text-[26px] text-[#7e87ef]">
@@ -264,7 +281,7 @@ function LandingPage() {
                 return (
                   <>
                     <div className="flex flex-col justify-center">
-                      <div className="my-5 w-full">
+                      <div className="w-full my-5">
                         {/* Question */}
                         {!['text', 'number'].includes(ques?.inputType) &&
                           ques?.content !== 'Gender' &&
@@ -333,54 +350,67 @@ function LandingPage() {
             )}
             {screen === 0 && (
               <div
-                className="h-screen w-full"
+                className="w-full h-screen"
                 style={{
                   backgroundImage: `url(${'/assets/bg_report.png'})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
               >
-                <div className="flex h-full w-full flex-col items-start justify-between bg-black/70 px-6 py-8 backdrop-blur-[8.5px]">
+                <div className="flex h-full w-full flex-col items-start  bg-black/70 px-6 py-8 backdrop-blur-[8.5px]">
                   <div
                     className={`${screen === 0 ? 'mt-[8rem]' : 'mt-[2rem]'}`}
                   >
                     <img
-                      src={'/assets/otm_logo_lifestyle.svg'}
+                      src={'/assets/omt_logo_small.svg'}
                       alt="otm logo"
                       className="px-[20px] py-[10px]"
                     />
+                    <div></div>
+                    <h5 className="text-[16px] text-white-opacity-50">
+                      Transformation
+                    </h5>
+                    <GradientText className="flex flex-wrap mt-5 text-center w-min ">
+                      Sustainable Solution
+                    </GradientText>
                   </div>
                   <div className="flex flex-col items-center justify-center gap-9">
                     {screen === 0 && (
-                      <div className="w-full">
-                        <StarterText
-                          style={{
-                            background:
-                              'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                            backgroundClip: 'text',
-                          }}
-                          className="px-[20px]"
-                        >
-                          Welcome,{' '}
-                          {JSON.parse(localStorage.getItem('user'))['name']}
-                        </StarterText>
-                        <p
-                          style={{
-                            fontSize: '18px',
-                            fontWeight: '400',
-                            color: `rgba(255,255,255,0.46)`,
-                          }}
-                          className="px-[20px]"
-                        >
-                          Your account has been created
-                        </p>
+                      <div>
+                        <div className="w-full">
+                          <StarterText
+                            style={{
+                              background:
+                                'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
+                              backgroundClip: 'text',
+                            }}
+                            className="px-[20px]"
+                          >
+                            You Get
+                          </StarterText>
+
+                          {questionnaireIntroducntion.map((item) => (
+                            <p
+                              style={{
+                                fontSize: '18px',
+                                fontWeight: '500',
+                                color: `rgba(255,255,255,0.46)`,
+                              }}
+                              className="flex items-start px-[20px] "
+                            >
+                              <img
+                                src={'./assets/correct.svg'}
+                                alt="otm logo"
+                                className="mr-3 mt-1.5"
+                              />
+                              {item}
+                            </p>
+                          ))}
+                        </div>
                       </div>
                     )}
                     {screen === 0 && (
-                      <StarterText
-                        className="px-[20px] py-[10px]"
-                        fontSize="26px"
-                      >
+                      <div className="px-[20px] py-[10px]" fontSize="26px">
                         Shape your{' '}
                         <span
                           style={{
@@ -401,12 +431,12 @@ function LandingPage() {
                         >
                           tailored to your goals
                         </span>
-                      </StarterText>
+                      </div>
                     )}
-                    <div className="flex w-full flex-col justify-center gap-1">
+                    <div className="flex flex-col justify-center w-full gap-1">
                       <Button
                         style={{ fontWeight: 500 }}
-                        text="Craft your journey"
+                        text="Let's gooo"
                         type="lifestyle"
                         action={() => {
                           // increase the screen value
