@@ -121,16 +121,6 @@ const FitnessPage = () => {
                       </div>
                     </div>
                   )}
-                  {homeStats.isLegend && (
-                    <div className="flex items-center ">
-                      <div className="flex items-center my-2 rounded legend-tag w-fit">
-                        <img src="assets/medal.svg" alt="" />
-                        <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
-                          LEGEND
-                        </span>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
               <div className="flex h-[66px] min-w-[148px]  items-center justify-between rounded-lg bg-mediumGray p-1">
