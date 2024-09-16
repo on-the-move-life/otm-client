@@ -14,7 +14,10 @@ const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
-
+  const queryString = window.location.search;
+  const queryParams = new URLSearchParams(queryString);
+  const movementId = queryParams.get('movementId');
+  const date = queryParams.get('date');
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
@@ -68,7 +71,9 @@ const MainPage = () => {
 
   const handleStart = () => {
     dispatch(setIndex(0));
-    navigate(`/section-details/${params.value}`);
+    navigate(
+      `/section-details/${params.value}?movementId=${movementId}&date=${date}`,
+    );
   };
 
   if (status === 'loading') {
@@ -160,6 +165,8 @@ const MainPage = () => {
                 updatedWorkoutProgram.length > 0 &&
                 updatedWorkoutProgram.map((data, index) => (
                   <SectionItem
+                    movementId={movementId}
+                    date={date}
                     sectionList={updatedWorkoutProgram}
                     index={index}
                     key={index}

@@ -58,8 +58,6 @@ const Counter = ({ currentValue }) => {
     ));
   };
 
-
-
   return (
     <>
       <div className="countdown__wrapper counter">

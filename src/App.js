@@ -36,6 +36,9 @@ import NutritionPage from './features/Nutrition/NutritionPage';
 import { MealPlanner } from './features/Nutrition/MealPlanner';
 import WeeklyCheckIn from './features/WeeklyCheckIn/WeeklyCheckIn';
 import ReferralUser from './features/ReferralUser/ReferralUser';
+import FtnesssQuestionare from './features/FitnessQuestionaire/FintessQuesrionire';
+import { ToastContainer } from 'react-toastify';
+import DynamicStretchScreen from './features/DynamicStretchScreen/DynamicStretchScreen';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -59,138 +62,150 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/timeline/:value"
-          element={
-            <RouteMiddleware>
-              <Timeline />
-            </RouteMiddleware>
-          }
-        />
-        <Route
-          path="/questionnaire"
-          element={
-            <RouteMiddleware>
-              <Questionnaire />
-            </RouteMiddleware>
-          }
-        />
-        <Route
-          path="/questionnaire/fitness-score"
-          element={
-            <RouteMiddleware>
-              <FitnessScoreScreen />
-            </RouteMiddleware>
-          }
-        />
-        <Route path="/questionnaire/lifestyle" element={<LifeStyle />} />
-        <Route
-          path="/questionnaire/lifestyle/result/:sessionID"
-          element={<Report />}
-        />
-        <Route
-          path="/section-details/:value"
-          element={
-            <RouteMiddleware>
-              <SectionDetail />
-            </RouteMiddleware>
-          }
-        />
-        <Route
-          path="/workout/:value"
-          element={
-            <RouteMiddleware>
-              <Workout />
-            </RouteMiddleware>
-          }
-        />
-        <Route
-          path="/workout-summary/:value"
-          element={
-            <RouteMiddleware>
-              <WorkoutSummary />
-            </RouteMiddleware>
-          }
-        />
-        <Route
-          path="/marketplace"
-          element={
-            <RouteMiddleware>
-              <MarketPlace />
-            </RouteMiddleware>
-          }
-        />
-        <Route path="*" element={<PageNotFound />} />
-        <Route path="/referral-user" element={<ReferralUser />} />
-        <Route
-          path="/monthly-wrapped"
-          element={
-            <RouteMiddleware>
-              <MonthlyWrapped />
-            </RouteMiddleware>
-          }
-        />
-        <Route
-          path="/journey-reflection/:reportId"
-          element={<JourneyReflectionPage />}
-        />
-        <Route
-          path="/leaderboard/:value"
-          element={
-            <RouteMiddleware>
-              <Leaderboard />
-            </RouteMiddleware>
-          }
-        />{' '}
-        <Route element={<MainLayout />}>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/login" element={<Login />} />
           <Route
-            path="/lifestyle-routine"
+            path="/timeline/:value"
             element={
-              <Provider store={store}>
+              <RouteMiddleware>
+                <Timeline />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/questionnaire"
+            element={
+              <RouteMiddleware>
+                <Questionnaire />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/questionnaire/fitness-score"
+            element={
+              <RouteMiddleware>
+                <FitnessScoreScreen />
+              </RouteMiddleware>
+            }
+          />
+          <Route path="/questionnaire/lifestyle" element={<LifeStyle />} />
+          <Route
+            path="/questionnaire/lifestyle/result/:sessionID"
+            element={<Report />}
+          />
+          <Route
+            path="/section-details/:value"
+            element={
+              <RouteMiddleware>
+                <SectionDetail />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/warm-up"
+            element={
+              <RouteMiddleware>
+                <DynamicStretchScreen />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/workout/:value"
+            element={
+              <RouteMiddleware>
+                <Workout />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/workout-summary/:value"
+            element={
+              <RouteMiddleware>
+                <WorkoutSummary />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/marketplace"
+            element={
+              <RouteMiddleware>
+                <MarketPlace />
+              </RouteMiddleware>
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="/referral-user" element={<ReferralUser />} />
+          <Route
+            path="/monthly-wrapped"
+            element={
+              <RouteMiddleware>
+                <MonthlyWrapped />
+              </RouteMiddleware>
+            }
+          />
+          <Route
+            path="/journey-reflection/:reportId"
+            element={<JourneyReflectionPage />}
+          />
+          <Route path="/fitness-plan" element={<FtnesssQuestionare />} />
+          <Route
+            path="/leaderboard/:value"
+            element={
+              <RouteMiddleware>
+                <Leaderboard />
+              </RouteMiddleware>
+            }
+          />{' '}
+          <Route element={<MainLayout />}>
+            <Route
+              path="/lifestyle-routine"
+              element={
+                <Provider store={store}>
+                  <RouteMiddleware>
+                    <LifeStyleRoutine />
+                  </RouteMiddleware>
+                </Provider>
+              }
+            />
+            <Route
+              path="/nutrition"
+              element={
+                <Provider store={mealPlannerStore}>
+                  <RouteMiddleware>
+                    <NutritionPage />
+                  </RouteMiddleware>
+                </Provider>
+              }
+            />
+            <Route
+              path="/home"
+              element={
                 <RouteMiddleware>
-                  <LifeStyleRoutine />
+                  <FitnessPage />
                 </RouteMiddleware>
-              </Provider>
-            }
-          />
-          <Route
-            path="/nutrition"
-            element={
-              <RouteMiddleware>
-                <NutritionPage />
-              </RouteMiddleware>
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <RouteMiddleware>
-                <FitnessPage />
-              </RouteMiddleware>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <RouteMiddleware>
-                <Profile />
-              </RouteMiddleware>
-            }
-          />
-          <Route
-            path="/community"
-            element={
-              <RouteMiddleware>
-                <Community />
-              </RouteMiddleware>
-            }
-          />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <RouteMiddleware>
+                  <Profile />
+                </RouteMiddleware>
+              }
+            />
+            <Route
+              path="/community"
+              element={
+                <RouteMiddleware>
+                  <Community />
+                </RouteMiddleware>
+              }
+            />
 
-          {/* <Route
+            {/* <Route
             path="/lifestyle"
             element={
               <RouteMiddleware>
@@ -198,44 +213,45 @@ function App() {
               </RouteMiddleware>
             }
           /> */}
-        </Route>
-        <Route
-          path="/MealUpload"
-          element={
-            <RouteMiddleware>
-              <MealUpload />
-            </RouteMiddleware>
-          }
-        />
-        <Route
-          path="/meal-planner"
-          element={
-            <Provider store={mealPlannerStore}>
+          </Route>
+          <Route
+            path="/MealUpload"
+            element={
               <RouteMiddleware>
-                <MealPlanner />
+                <MealUpload />
               </RouteMiddleware>
-            </Provider>
-          }
-        />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route
-          path="/admin-dashboard"
-          element={
-            <AdminRouteMiddleware>
-              <AdminDashboard />
-            </AdminRouteMiddleware>
-          }
-        />
-        <Route
-          path="/weekly-checkin"
-          element={
-            <RouteMiddleware>
-              <WeeklyCheckIn />
-            </RouteMiddleware>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+            }
+          />
+          <Route
+            path="/meal-planner"
+            element={
+              <Provider store={mealPlannerStore}>
+                <RouteMiddleware>
+                  <MealPlanner />
+                </RouteMiddleware>
+              </Provider>
+            }
+          />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <AdminRouteMiddleware>
+                <AdminDashboard />
+              </AdminRouteMiddleware>
+            }
+          />
+          <Route
+            path="/weekly-checkin"
+            element={
+              <RouteMiddleware>
+                <WeeklyCheckIn />
+              </RouteMiddleware>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

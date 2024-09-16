@@ -105,7 +105,7 @@ function FitnessScorePage() {
           </p>
         </div>
         <div
-          className="flex flex-row items-center justify-between w-full px-3"
+          className="flex w-full flex-row items-center justify-between px-3"
           style={{ marginBlock: '8px' }}
         >
           <div className="flex flex-col items-start justify-center gap-1">
@@ -127,7 +127,7 @@ function FitnessScorePage() {
               {score}
             </div>
           </div>
-          <div className="flex flex-col items-start justify-center gap-4 w-fit">
+          <div className="flex w-fit flex-col items-start justify-center gap-4">
             <div className="flex flex-col items-start justify-center gap-1">
               <p
                 className="text-[9.3px] uppercase text-[#929292]"
@@ -198,12 +198,12 @@ function FitnessScorePage() {
       {pageError && !pageLoading && <Error>Some Error Occured</Error>}
       {!pageLoading && !pageError && (
         <div
-          className="z-50 flex flex-col justify-between w-full h-screen px-6 bg-fixed bg-black bg-center bg-no-repeat bg-auto py-9"
+          className="z-50 flex h-screen w-full flex-col justify-between bg-black bg-auto bg-fixed bg-center bg-no-repeat px-6 py-9"
           style={{
             backgroundImage: `url('/assets/fitness_score_gradient.svg')`,
           }}
         >
-          <div className="flex flex-col items-start justify-start w-full gap-4">
+          <div className="flex w-full flex-col items-start justify-start gap-4">
             {/* <div className="flex flex-col items-center justify-center gap-5">
                             <div className="flex items-center justify-center w-full mx-auto my-4">
                                 <BackButton
@@ -215,9 +215,9 @@ function FitnessScorePage() {
                                 />
                             </div>
                         </div> */}
-            <div className="flex flex-col items-start justify-start w-full gap-9">
+            <div className="flex w-full flex-col items-start justify-start gap-9">
               {/* Name */}
-              <div className="flex flex-row items-center justify-start w-full gap-3">
+              <div className="flex w-full flex-row items-center justify-start gap-3">
                 <motion.h1
                   className="text-[32px]"
                   animate={{
@@ -250,7 +250,7 @@ function FitnessScorePage() {
                 </div>
               </div>
               {/* Personalised Workout */}
-              <div className="flex flex-col items-start justify-center w-full">
+              {/* <div className="flex flex-col items-start justify-center w-full">
                 <h1
                   className="text-[25.33px] text-[#7e87ef]"
                   style={{ lineHeight: '40px', marginBlock: '10px' }}
@@ -271,22 +271,22 @@ function FitnessScorePage() {
                     }
                   })}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div
-            className="flex flex-col items-center justify-start w-full gap-2 mt-9"
-            style={{ paddingBottom: isIPhone() ? '100px' : '20px' }}
+            className="mt-9 flex w-full flex-col items-end gap-2"
+            style={{ paddingBottom: isIPhone() ? '20px' : '20px' }}
           >
             <p
-              className="text-[16px] text-[#5ecc7b] "
+              className="text-[16px] text-blue "
               style={{
                 fontWeight: 500,
                 lineHeight: '22px',
                 textShadow: '0px 3px 3px rgba(0,0,0,0.15)',
               }}
             >
-              It’s a journey, we emphasise on longterm lifestyle changes instead
+              It’s a journey, we emphasize on longterm lifestyle changes instead
               of quick fixes
             </p>
             <motion.button

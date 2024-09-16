@@ -569,7 +569,7 @@ button:active {
 .countdown .countdown__box {
   box-sizing: border-box;
   overflow: hidden;
-  height: 8rem;
+  height: 6rem;
 
   /* border-radius: 0.2rem; */
   /* border: 1px solid black; */
@@ -1140,4 +1140,11 @@ body,
   line-height: normal; /* Adjust line-height if needed */
   padding-top: 0; /* Remove any top padding from the placeholder */
   margin: 0; /* Ensure no extra margin is applied */
+}
+
+.transparent-frame {
+  height: min-content;
+  background: rgba(0, 0, 0, 0.45);
+
+  border-radius: 12px;
 }

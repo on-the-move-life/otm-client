@@ -18,6 +18,10 @@ const SectionDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
+  const queryString = window.location.search;
+  const queryParams = new URLSearchParams(queryString);
+  const movementId = queryParams.get('movementId');
+  const date = queryParams.get('date');
 
   const [updatedWorkoutProgram, setUpdatedWorkoutProgram] = useState(null);
   const { workout, index } = useSelector((store) => store.workoutReducer);
@@ -158,7 +162,12 @@ const SectionDetail = () => {
     setShowAlertDialog(false);
 
     if (confirm) {
-      navigate(`/workout-summary/${params.value}`, { replace: true });
+      navigate(
+        `/workout-summary/${params.value}?movementId=${movementId}&date=${date}`,
+        {
+          replace: true,
+        },
+      );
     }
   };
 
@@ -228,7 +237,7 @@ const SectionDetail = () => {
                         </h1>
                       </div>
                       <Link
-                        to={`/workout/${params.value}`}
+                        to={`/workout/${params.value}?movementId=${movementId}&date=${date}`}
                         className="rounded-full bg-[#202020] p-2"
                       >
                         <HiX size={20} />

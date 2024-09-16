@@ -10,7 +10,7 @@ import { TbSwimming } from 'react-icons/tb';
 import { toast, ToastContainer } from 'react-toastify';
 import { Loader } from '../../components';
 
-const AdditionalActivity = ({ setShowActivity }) => {
+const AdditionalActivity = ({ setShowActivity, date }) => {
   const items = Array.from({ length: 42 }, (_, i) => {
     if (i === 0 || i === 1 || i === 2 || i === 41 || i === 40 || i === 39) {
       return '';
@@ -76,7 +76,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
           {
             memberCode: memberCode,
             activity: selectedActivityType,
-            date: new Date(),
+            date: date,
             activityDuration: selectedValue.toString(),
             description: activityDescription,
           },
@@ -120,7 +120,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
       try {
         const today = new Date();
         const res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker?memberCode=${memberCode}&date=${today}`,
+          `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker?memberCode=${memberCode}&date=${date}`,
         );
         if (res.data && res.data.data.activityList.length > 0) {
           setActivityList(res.data.data.activityList);
@@ -136,13 +136,12 @@ const AdditionalActivity = ({ setShowActivity }) => {
   }, []);
 
   const handleActivityType = (e) => {
-    console.log('ccxxccc', e, e.target.innerText);
     setSelectedActivityType(e.target.innerText);
     setShowTypeInput(false);
   };
 
   return (
-    <div className="mb-[78px] h-[calc(100vh-78px)] w-full ">
+    <div className="relative z-40 h-full w-full bg-black pb-[40px] ">
       <div className="fixed top-0 ">
         <ToastContainer
           position="top-center"
@@ -159,15 +158,16 @@ const AdditionalActivity = ({ setShowActivity }) => {
       </div>
       {}
       <img
+        loading="lazy"
         src="assets/movement-frame.svg"
-        className="absolute top-0 left-0 w-full h-full -z-10"
+        className="absolute left-0 top-0 -z-10 h-full w-full"
       />
       {activityListLoader || anotherActivityLoader ? (
         <Loader />
       ) : (
         <div className=" h-full w-full overflow-y-scroll bg-[rgba(0,0,0,0.71)] px-4 pt-[28px]">
           <div className="mx-[9px] mb-[66px] flex justify-between">
-            <h3 className="text-xl font-sfpro text-offwhite">
+            <h3 className="font-sfpro text-xl text-offwhite">
               Log Activity Details
             </h3>
             <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray ">
@@ -180,7 +180,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                 activityList.map((item, index) => (
                   <div
                     key={index}
-                    className="bg-white-opacity-08 mt-3 flex flex-col gap-4 rounded-xl px-[21px] py-[11px]"
+                    className="mt-3 flex flex-col gap-4 rounded-xl bg-white-opacity-08 px-[21px] py-[11px]"
                   >
                     <div>
                       <h4 className="font-sfpro text-[14px] text-offwhite ">
@@ -231,21 +231,23 @@ const AdditionalActivity = ({ setShowActivity }) => {
               <div className="flex flex-col ">
                 <div className="font-sfpro text-[20px] text-offwhite">Type</div>
                 <div className="relative mt-1 max-h-[224px] w-full  rounded-lg py-3 pt-0">
-                  <div className="absolute z-20 right-6 top-4 ">
+                  <div className="absolute right-6 top-4 z-20 ">
                     {showTypeInput === true ? (
                       <img
+                        loading="lazy"
                         src="./assets/up-arrow-white.svg"
                         onClick={() => setShowTypeInput(false)}
                       />
                     ) : (
                       <img
+                        loading="lazy"
                         onClick={() => setShowTypeInput(true)}
                         src="./assets/down-arrow-white.svg"
                       />
                     )}
                   </div>
                   {showTypeInput === true ? (
-                    <div className=" bg-white-opacity-08 max-h-[224px] min-h-[100px] w-full overflow-y-scroll  rounded-xl px-[6px] pl-4">
+                    <div className=" max-h-[224px] min-h-[100px] w-full overflow-y-scroll rounded-xl  bg-white-opacity-08 px-[6px] pl-4">
                       {activityType.length > 0 &&
                         activityType.map((item, index) => {
                           return (
@@ -262,7 +264,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   ) : (
                     <div
                       onClick={() => setShowTypeInput(true)}
-                      className="bg-white-opacity-08 flex h-[48px] w-full items-center rounded-xl px-6 text-white-opacity-50"
+                      className="flex h-[48px] w-full items-center rounded-xl bg-white-opacity-08 px-6 text-white-opacity-50"
                     >
                       {selectedActivityType}
                     </div>
@@ -271,20 +273,21 @@ const AdditionalActivity = ({ setShowActivity }) => {
                 <div className="mt-[30px] font-sfpro text-[20px] text-offwhite">
                   Time
                 </div>
-                <div className="relative w-full py-3 pt-0 mt-1 rounded-lg">
-                  <div className="absolute z-20 right-6 top-4 ">
+                <div className="relative mt-1 w-full rounded-lg py-3 pt-0">
+                  <div className="absolute right-6 top-4 z-20 ">
                     {showTimeInput === true ? (
                       <img
+                        loading="lazy"
                         src="./assets/up-arrow-white.svg"
                         onClick={() => setShowTimeInput(false)}
                       />
                     ) : (
-                      <img src="./assets/down-arrow-white.svg" />
+                      <img loading="lazy" src="./assets/down-arrow-white.svg" />
                     )}
                   </div>
                   {showTimeInput === true ? (
                     <div
-                      className="picker-container bg-white-opacity-08 w-full rounded-xl px-[6px]"
+                      className="picker-container w-full rounded-xl bg-white-opacity-08 px-[6px]"
                       ref={containerRef}
                       onScroll={handleScroll}
                     >
@@ -325,7 +328,7 @@ const AdditionalActivity = ({ setShowActivity }) => {
                   ) : (
                     <div
                       onClick={() => setShowTimeInput(true)}
-                      className="bg-white-opacity-08 flex h-[48px] w-full items-center rounded-xl px-6 text-white-opacity-50 "
+                      className="flex h-[48px] w-full items-center rounded-xl bg-white-opacity-08 px-6 text-white-opacity-50 "
                     >
                       {selectedValue} mins
                     </div>

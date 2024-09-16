@@ -117,7 +117,7 @@ function FitnessScore({ score, percentile }) {
       <div className="flex h-full w-full flex-row justify-between">
         <div className="flex flex-col justify-between ">
           <div className="flex gap-2">
-            <img src="/assets/line-graph-logo.svg" />
+            <img loading="lazy" src="/assets/line-graph-logo.svg" />
             <Heading>Fitness score</Heading>
           </div>
           <div className="flex flex-col">
