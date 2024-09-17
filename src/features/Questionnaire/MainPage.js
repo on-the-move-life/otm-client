@@ -39,7 +39,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   const questionnaireIntroducntion = [
-    '  Rishi Solanki to guide you every step of the way',
+    ' <b className="bg-red"> </b> to guide you every step of the way',
     '  Your weekly workout schedule to meet your goals',
     'Custom made meal planning suited to your taste',
     ' A personalised lifestyle design that works',
@@ -47,26 +47,17 @@ function LandingPage() {
   ];
 
   const StarterText = styled.div`
-    color: var(--New-White, rgba(255, 255, 255, 0.26));
+    color: var(--New-White, rgba(222.37, 222.37, 222.37, 0.5));
     /* H1 */
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: ${(props) =>
-      props.fontSize !== undefined ? props.fontSize : '32px'};
+      props.fontSize !== undefined ? props.fontSize : '14px'};
     font-style: normal;
-    font-weight: 500;
-    line-height: 40px; /* 125% */
-    background: var(
-      --Gradient-silver,
-      linear-gradient(95deg, #8c8c8c 0.94%, #ffffff 84.36%)
-    );
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+    line-height: 16px; /* 125% */
   `;
 
   const GradientText = styled.div`
-    font-size: 2rem;
-    font-weight: bold;
     background: linear-gradient(to right, #d6b6f0, #848ce9);
     -webkit-background-clip: text;
     background-clip: text;
@@ -191,7 +182,7 @@ function LandingPage() {
     >
       {pageError && !pageLoading && <Error>Some Error Occured</Error>}
       {pageLoading && (
-        <div className="fixed top-0 left-0 z-50 w-full bg-black">
+        <div className="fixed left-0 top-0 z-50 w-full bg-black">
           <Loader className={'h-screen w-full'} />
         </div>
       )}
@@ -209,7 +200,7 @@ function LandingPage() {
           theme="dark"
         />
       </div>
-      <div className="flex flex-col justify-center gap-3 overflow-y-scroll hide-scrollbar">
+      <div className="hide-scrollbar flex flex-col justify-center gap-3 overflow-y-scroll">
         {showBMIScreen && (
           <BMIScreen
             response={response}
@@ -235,7 +226,7 @@ function LandingPage() {
         )}
         {screen >= 1 && !showBMIScreen && !showAssessmentScreen && (
           <div className="flex flex-col items-center justify-center gap-5">
-            <div className="flex items-center justify-center w-full mx-auto my-4">
+            <div className="mx-auto my-4 flex w-full items-center justify-center">
               {screen >= 1 && (
                 <BackButton
                   size={30}
@@ -253,8 +244,12 @@ function LandingPage() {
           </div>
         )}
       </div>
-      <div className="flex flex-col items-start justify-between flex-1">
-        <div className="flex flex-col justify-center w-full gap-5">
+      <div
+        className={`flex h-screen  flex-col items-start justify-between ${
+          screen > 0 && 'flex-1'
+        } `}
+      >
+        <div className=" h-full w-full">
           {/* Section Name */}
           {screen === generalScreen && (
             <h1 className="mt-3 text-[26px] text-[#7e87ef]">
@@ -272,7 +267,7 @@ function LandingPage() {
               </p>
             </div>
           )}
-          <div>
+          <div className="h-full">
             {screen >= 1 &&
               currentQuestion &&
               !showBMIScreen &&
@@ -281,7 +276,7 @@ function LandingPage() {
                 return (
                   <>
                     <div className="flex flex-col justify-center">
-                      <div className="w-full my-5">
+                      <div className="my-5 w-full">
                         {/* Question */}
                         {!['text', 'number'].includes(ques?.inputType) &&
                           ques?.content !== 'Gender' &&
@@ -350,93 +345,133 @@ function LandingPage() {
             )}
             {screen === 0 && (
               <div
-                className="w-full h-screen"
+                className="h-full w-full "
                 style={{
                   backgroundImage: `url(${'/assets/bg_report.png'})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
               >
-                <div className="flex h-full w-full flex-col items-start  bg-black/70 px-6 py-8 backdrop-blur-[8.5px]">
+                <div className="flex h-full w-full flex-col items-start justify-between overflow-y-scroll bg-black/70  backdrop-blur-[8.5px]">
                   <div
-                    className={`${screen === 0 ? 'mt-[8rem]' : 'mt-[2rem]'}`}
+                    className={`${
+                      screen === 0 ? 'mt-[4rem]' : 'mt-[2rem]'
+                    } flex w-full flex-col items-center justify-center`}
                   >
                     <img
-                      src={'/assets/omt_logo_small.svg'}
+                      src={'/assets/otm_white.svg'}
                       alt="otm logo"
-                      className="px-[20px] py-[10px]"
+                      className=""
                     />
-                    <div></div>
-                    <h5 className="text-[16px] text-white-opacity-50">
-                      Transformation
-                    </h5>
-                    <GradientText className="flex flex-wrap mt-5 text-center w-min ">
+
+                    <img src={'/assets/text_cut.svg'} className="mt-[44px]" />
+
+                    <GradientText className="mt-2 flex w-min flex-wrap text-center text-4xl">
                       Sustainable Solution
                     </GradientText>
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-9">
+
+                  <div className=" mt-4 w-full gap-9 rounded-t-3xl bg-[rgba(0,0,0,0.7)] px-4 pb-[65px]  pt-[32px]">
                     {screen === 0 && (
                       <div>
                         <div className="w-full">
-                          <StarterText
-                            style={{
-                              background:
-                                'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                              backgroundClip: 'text',
-                            }}
-                            className="px-[20px]"
-                          >
+                          <div className="w-full px-[20px] text-center text-offwhite">
                             You Get
-                          </StarterText>
+                          </div>
 
-                          {questionnaireIntroducntion.map((item) => (
-                            <p
-                              style={{
-                                fontSize: '18px',
-                                fontWeight: '500',
-                                color: `rgba(255,255,255,0.46)`,
-                              }}
-                              className="flex items-start px-[20px] "
-                            >
+                          <div className="flex flex-col items-center px-5">
+                            <div className="flex w-[280px] ">
                               <img
-                                src={'./assets/correct.svg'}
-                                alt="otm logo"
+                                src={'./assets/GreenTick.svg'}
+                                alt="correct"
+                                className="mr-3 "
+                              />
+                              <StarterText
+                                className=" py-[10px]"
+                                fontSize="14px"
+                              >
+                                <span className="text-offwhite">
+                                  Rishi Solanki
+                                </span>{' '}
+                                to guide you every step of the way
+                              </StarterText>
+                            </div>
+
+                            <div className="flex w-[280px] ">
+                              <img
+                                src={'./assets/GreenTick.svg'}
+                                alt="correct"
                                 className="mr-3 mt-1.5"
                               />
-                              {item}
-                            </p>
-                          ))}
+                              <StarterText
+                                className=" py-[10px]"
+                                fontSize="14px"
+                              >
+                                Your{' '}
+                                <span className="text-offwhite">
+                                  weekly workout schedule
+                                </span>{' '}
+                                to meet your goals
+                              </StarterText>
+                            </div>
+
+                            <div className="flex w-[280px] ">
+                              <img
+                                src={'./assets/GreenTick.svg'}
+                                alt="correct"
+                                className="mr-3 mt-1.5"
+                              />
+                              <StarterText
+                                className=" py-[10px]"
+                                fontSize="14px"
+                              >
+                                <span className="text-offwhite">
+                                  Custom made meal planning
+                                </span>{' '}
+                                suited to your taste
+                              </StarterText>
+                            </div>
+                            <div className="flex w-[280px] ">
+                              <img
+                                src={'./assets/GreenTick.svg'}
+                                alt="correct"
+                                className="mr-3 mt-1.5"
+                              />
+                              <StarterText
+                                className=" py-[10px]"
+                                fontSize="14px"
+                              >
+                                <span className="text-offwhite">
+                                  A personalised lifestyle design that works
+                                </span>{' '}
+                              </StarterText>
+                            </div>
+
+                            <div className="flex w-[280px] ">
+                              <img
+                                src={'./assets/GreenTick.svg'}
+                                alt="correct"
+                                className="mr-3 mt-1.5"
+                              />
+                              <StarterText
+                                className=" py-[10px]"
+                                fontSize="14px"
+                              >
+                                <span className="text-offwhite">
+                                  An accountability coach
+                                </span>{' '}
+                                to fool proof your success
+                              </StarterText>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     )}
-                    {screen === 0 && (
-                      <div className="px-[20px] py-[10px]" fontSize="26px">
-                        Shape your{' '}
-                        <span
-                          style={{
-                            background:
-                              'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                            backgroundClip: 'text',
-                          }}
-                        >
-                          fitness journey
-                        </span>{' '}
-                        with a personalized workout program and gain insights{' '}
-                        <span
-                          style={{
-                            background:
-                              'linear-gradient(95deg, #D6B6F0 2.94%, #848CE9 74.36%)',
-                            backgroundClip: 'text',
-                          }}
-                        >
-                          tailored to your goals
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex flex-col justify-center w-full gap-1">
+
+                    <div className="flex w-full flex-col justify-center gap-1">
                       <Button
-                        style={{ fontWeight: 500 }}
-                        text="Let's gooo"
+                        style={{ fontWeight: 500, height: '50px' }}
+                        text="Let's Gooo!!!"
                         type="lifestyle"
                         action={() => {
                           // increase the screen value

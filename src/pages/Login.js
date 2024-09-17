@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginInput from '../components/LoginInput';
 import { HiOutlineMail, HiArrowNarrowLeft } from 'react-icons/hi';
 import AnimatedComponent from '../components/AnimatedComponent';
+import styled from 'styled-components';
 
 const Login = () => {
   const {
@@ -28,6 +29,13 @@ const Login = () => {
 
   const [passwordType, setPasswordType] = useState('');
   const [resetPassword, setResetPassword] = useState(false);
+
+  const GradientText = styled.div`
+    background: linear-gradient(to right, #d6b6f0, #848ce9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  `;
 
   function toggleShowPassword(e) {
     e.preventDefault();
@@ -135,7 +143,7 @@ const Login = () => {
               : 'Enter your login details'}
           </header>
           <form
-            className="flex flex-col w-full mt-4"
+            className="mt-4 flex w-full flex-col"
             action="post"
             onSubmit={handleEmailAuth}
           >
@@ -176,7 +184,7 @@ const Login = () => {
                   <p className="py-2 text-xs text-red">{error}</p>
                 </div>
               )}
-              <div className="flex justify-between mt-4">
+              <div className="mt-4 flex justify-between">
                 <button
                   className="text-sm text-green"
                   type="text"
@@ -212,38 +220,47 @@ const Login = () => {
         </LoginInput>
       ) : (
         <AnimatedComponent>
-          <div className="flex flex-col items-center h-screen bg-no-repeat bg-cover justify-evenly bg-landing-cover">
-            <div className="flex flex-col items-center justify-between w-full h-screen py-16">
-              <div className="h-6 mt-8 w-28">
+          <div className="flex h-screen flex-col items-center justify-evenly bg-landing-cover bg-cover bg-no-repeat">
+            <div className="flex h-screen w-full flex-col items-center justify-between py-16">
+              <div className="mt-8 h-6 ">
                 <img
-                  className="w-full h-full"
-                  src={'/assets/green-logo.svg'}
-                  alt="green-logo"
+                  loading="lazy"
+                  src={'/assets/otm_logo_lifestyle.svg'}
+                  alt="otm logo"
+                  className=""
                 />
               </div>
-              <div className="flex items-center justify-center w-24 h-24">
-                <img src={'/assets/icon.svg'} alt="" />
+
+              <div className="flex flex-col items-center">
+                <img loading="lazy" src={'/assets/your_fitness.svg'} alt="" />
+                <GradientText className="mt-1 text-[44px]">
+                  Lifestyle
+                </GradientText>
+                <p className="text-[32px] leading-[34px] text-offwhite">
+                  coach for life
+                </p>
               </div>
 
-              <footer className="flex flex-col items-center w-11/12">
+              <footer className="flex w-11/12 flex-col items-center">
                 <button
-                  className="main-button-gradient flex w-full justify-start rounded-xl px-3.5 py-2.5 text-lg font-semibold text-black"
+                  className="lifestyle-gradient-button relative flex w-full justify-start rounded-xl px-[30px] py-[14px]  text-lg font-semibold text-black"
                   onClick={() => {
                     setShowSignUpInput(false);
                     setShowLoginInput(true);
                   }}
                 >
-                  <HiOutlineMail size={25} />
-                  <p className="w-full text-base text-center">
+                  <HiOutlineMail size={25} className="absolute z-10" />
+                  <p className="w-full text-center text-base">
                     Login with email
                   </p>
                 </button>
                 <p className="my-2 text-center">or</p>
                 <div
-                  className="flex justify-center w-full mb-10"
+                  className="mb-10 flex w-full justify-center"
                   id="loginDiv"
                 ></div>
-                <div className="flex space-x-1">
+
+                <div className="flex space-x-1 text-[14px]">
                   <p className="text-lightGray">Don't have an account?</p>
                   <button
                     onClick={() => {
@@ -251,7 +268,7 @@ const Login = () => {
                       setShowSignUpInput(true);
                     }}
                     type="button"
-                    className="underline text-green"
+                    className=" text-blue underline"
                   >
                     Sign up
                   </button>
