@@ -27,6 +27,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
   const [activityType, setActivityType] = useState([]);
   const [selectedActivityType, setSelectedActivityType] =
     useState('Please enter type');
+  const [otherActivity, setOtherActivity] = useState(null);
   const [selectedValue, setSelectedValue] = useState('Please enter');
   const [activityDescription, setActivityDescription] = useState('');
   const [showTimeInput, setShowTimeInput] = useState(true);
@@ -75,7 +76,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
           `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker`,
           {
             memberCode: memberCode,
-            activity: selectedActivityType,
+            activity: selectedActivityType === 'Others' ? otherActivity : selectedActivityType,
             date: date,
             activityDuration: selectedValue.toString(),
             description: activityDescription,
@@ -156,7 +157,6 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
           theme="dark"
         />
       </div>
-      {}
       <img
         loading="lazy"
         src="assets/movement-frame.svg"
@@ -260,6 +260,13 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                             </div>
                           );
                         })}
+                      <div
+                        onClick={(e) => handleActivityType(e)}
+                        className="mr-9  flex h-[45px] items-center border-b border-b-darkGray text-[#929292] underline-offset-1"
+                        key={'others'}
+                      >
+                        {'Others'}
+                      </div>
                     </div>
                   ) : (
                     <div
@@ -270,6 +277,29 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                     </div>
                   )}
                 </div>
+                {
+                  selectedActivityType === 'Others' &&
+                  <div>
+                    <input
+                      type='text'
+                      placeholder='Specify the type'
+                      style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                        borderRadius: '8px',
+                        padding: '12px',
+                        boxSizing: 'border-box',
+                        lineHeight: '1.5',
+                        width: '100%', // Ensures the textarea takes full width of its container
+                        resize: 'vertical', // Allows vertical resizing
+                        overflow: 'scroll', // Adds scrollbar when content overflows
+                        border: 'none', // Removes the border
+                        outline: 'none', // Removes the default focus outline
+                      }}
+                      className="mt-1 text-white-opacity-50"
+                      onChange={(e) => setOtherActivity(e.target.value)}
+                    />
+                  </div>
+                }
                 <div className="mt-[30px] font-sfpro text-[20px] text-offwhite">
                   Time
                 </div>
