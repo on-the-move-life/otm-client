@@ -14,31 +14,37 @@ const ProgressBar = ({ progress }) => {
   }
 
   return (
-    <div className="pt-4">
+    <div className="flex pt-4">
       <div
-        className={`gradient-percentage font-anton t-b text-[60px] font-medium leading-[54px]`}
+        className={`gradient-percentage t-b flex items-end font-anton text-[60px] font-medium leading-[53px]`}
       >
         {progress}
-        <span className="font-anton text-[32px] font-bold">%</span>
+        <span className="h-11 font-anton text-[32px] font-bold">%</span>
       </div>
-      <div className="font-body-condensed-bold relative bottom-2 z-10 mx-1 mb-2 font-sfpro text-[14px] text-lightGray">
-        perfect day complete
-      </div>
-      <div className="bg-gray h-4 w-full overflow-hidden rounded-full">
-        <motion.div
-          className="relative h-full rounded-full p-1"
-          style={{ background: gradient, width: `${progress}%` }}
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 1 }}
-        >
-          <div className="absolute right-1 flex ">
-            {/* <span>23</span> */}
-            <span className="  h-2 w-2 rounded-full bg-white"></span>
-          </div>
-        </motion.div>
-        <span className="font-bold text-white">{progress}%</span>
-        <div className="ml-2 h-6 w-6 rounded-full border-2 border-gray-400 bg-white"></div>
+
+      <div className="ml-2 flex w-full flex-col justify-end">
+        <div className="h-3 w-full overflow-hidden rounded-full bg-gray">
+          <motion.div
+            className="relative h-full rounded-full p-1"
+            style={{ background: gradient, width: `${progress}%` }}
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 1 }}
+          >
+            <div className="absolute right-1 flex ">
+              <span className="  -mt-[5px] mr-1 text-[10px] text-black-opacity-45 ">
+                {progress}
+              </span>
+              <span className="  -mt-[2px] h-2 w-2  rounded-full bg-white"></span>
+            </div>
+          </motion.div>
+
+          <span className="font-bold text-white">{progress}%</span>
+          <div className="border-gray-400 ml-2 h-6 w-6 rounded-full border-2 bg-white"></div>
+        </div>
+        <div className="font-body-condensed-bold font-sfpro text-[14px] text-lightGray">
+          perfect day complete
+        </div>
       </div>
     </div>
   );

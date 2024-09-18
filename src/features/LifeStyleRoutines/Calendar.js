@@ -46,10 +46,10 @@ function Calendar({
   }, [completionHistory, selectedDate]);
 
   return (
-    <div className="flex flex-col items-start justify-center w-full">
+    <div className="flex w-full flex-col items-start justify-center">
       {selectedDate && (
         <>
-          {(
+          {
             <h3 className="text-xl " style={{ lineHeight: '41.6px' }}>
               <span className="text-white">
                 {formatDate(selectedDate)[0]},{' '}
@@ -58,8 +58,7 @@ function Calendar({
                 {formatDate(selectedDate)[1]}
               </span>
             </h3>
-          )}
-          
+          }
         </>
       )}
       <div className="w-full rounded-lg">
@@ -68,13 +67,15 @@ function Calendar({
             <ProgressBar progress={percentCompletionOfSelectedDate} />
           )}
 
-        {(percentCompletionOfSelectedDate === null ||
+        {/* can be needed in future */}
+
+        {/* {(percentCompletionOfSelectedDate === null ||
           percentCompletionOfSelectedDate === 0) && (
           <p className="font-body-condensed-bold font-sfpro text-[14px] text-lightGray">
             Let's make today count. Begin by completing your first task
           </p>
-        )}
-        <div className="flex flex-row items-center justify-around mt-4 mb-2">
+        )} */}
+        <div className="mb-2 mt-4 flex flex-row items-center justify-around">
           {reversedCompletionHistory.map((history) => (
             <CalendarTile
               key={history.date}
