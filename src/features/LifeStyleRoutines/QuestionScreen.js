@@ -42,141 +42,17 @@ const Questionare = () => {
   }, [screen, questions]);
 
   useEffect(() => {
-    setQuestions([
-      {
-        content:
-          'Can you take out 15 mins in your morning for sunlight viewing?',
-        inputType: 'singleChoice',
-        code: 'LSD1',
-        rank: 1,
-        screen: 1,
-        target: 'LIFESTYLE',
-        options: [
-          {
-            id: 'YES',
-            value: 'Yes',
-          },
-          {
-            id: 'NO',
-            value: 'No',
-          },
-        ],
-        description:
-          'Can you take out 15 mins in your morning for sunlight viewing?',
-      },
-      {
-        content: 'Do you want to incorporate meditation in your schedule?',
-        inputType: 'singleChoice',
-        code: 'LSD2',
-        rank: 2,
-        screen: 1,
-        target: 'LIFESTYLE',
-        options: [
-          {
-            id: 'YES',
-            value: 'Yes',
-          },
-          {
-            id: 'NO',
-            value: 'No',
-          },
-        ],
-        description: 'Do you want to incorporate meditation in your schedule?',
-      },
-      {
-        content: 'Which supplements are you comfortable taking?',
-        inputType: 'singleChoice',
-        code: 'LSD3',
-        rank: 3,
-        screen: 1,
-        target: 'SUPPLEMENTS',
-        options: [
-          {
-            id: 'OMEGA3',
-            value: 'Omega 3',
-          },
-          {
-            id: 'MULTIV',
-            value: 'Multi V',
-          },
-          {
-            id: 'D3',
-            value: 'D3',
-          },
-          {
-            id: 'MAGNESIUM',
-            value: 'Magnesium',
-          },
-        ],
-        description: 'Which supplements are you comfortable taking?',
-      },
-      {
-        content: 'How long do you want your post-meal digestion walks to be?',
-        inputType: 'singleChoice',
-        code: 'LSD4',
-        rank: 4,
-        screen: 1,
-        target: 'LIFESTYLE',
-        options: [
-          {
-            id: '10MINS',
-            value: '10 mins',
-          },
-          {
-            id: '20MINS',
-            value: '20 mins',
-          },
-          {
-            id: '30MINS',
-            value: '30 mins',
-          },
-        ],
-        description:
-          'How long do you want your post-meal digestion walks to be?',
-      },
-      {
-        content: 'Do you want help with improving your sleep?',
-        inputType: 'singleChoice',
-        code: 'LSD5',
-        rank: 5,
-        screen: 1,
-        target: 'LIFESTYLE',
-        options: [
-          {
-            id: 'YES',
-            value: 'Yes',
-          },
-          {
-            id: 'NO',
-            value: 'No',
-          },
-        ],
-        description: 'Do you want help with improving your sleep?',
-      },
-      {
-        content: 'Choose your preferred method of gut alkalisation',
-        inputType: 'singleChoice',
-        code: 'LSD6',
-        rank: 6,
-        screen: 1,
-        target: 'LIFESTYLE',
-        options: [
-          {
-            id: 'ACV',
-            value: 'ACV with water',
-          },
-          {
-            id: 'LEMON_SALT',
-            value: 'Half lemon + water + salt',
-          },
-          {
-            id: 'LEMON_SALT_TURMERIC',
-            value: 'Half lemon + water + salt + turmeric + black pepper',
-          },
-        ],
-        description: 'Choose your preferred method of gut alkalisation',
-      },
-    ]);
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/questionnaire`)
+      .then((res) => {
+        console.log('trerwe35435355', res.data.data);
+        setQuestions(res.data.data);
+      })
+      .catch((err) => {
+        toast.error('Error with  lifestyle questionnaire');
+        console.log(err.message);
+      })
+      .finally(() => {});
   }, []);
 
   const handleMovementQuestionnaire = () => {

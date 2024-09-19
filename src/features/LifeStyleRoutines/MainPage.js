@@ -46,19 +46,6 @@ function MainPage() {
   const [showInitialScreen, setShowInitialScreen] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/questionnaire`)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        toast.error('Error with  lifestyle questionnaire');
-        console.log(err.message);
-      })
-      .finally(() => {});
-  }, []);
-
-  useEffect(() => {
     const timezone = getDeviceTimezone();
     const currentHour = getCurrentHourInTimezone(timezone);
     const greetingMessage = getGreeting(currentHour);
@@ -73,10 +60,10 @@ function MainPage() {
       lifeStyleMemberCode: state.lifeStyleDetails?.memberCode,
     }));
 
-  console.log('xxxxx', lifeStyleMemberCode);
+  console.log('xxxxx', lifeStyleMemberCode, showInitialScreen);
 
   useEffect(() => {
-    if (lifeStyleMemberCode !== 'GENERAL') {
+    if (lifeStyleMemberCode && lifeStyleMemberCode !== 'GENERAL') {
       setShowInitialScreen(false);
     }
   }, [lifeStyleMemberCode]);
