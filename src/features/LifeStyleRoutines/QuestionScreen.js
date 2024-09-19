@@ -40,6 +40,7 @@ const Questionare = () => {
     // it will update the current question as soon as the screen changes
     questions && updateCurrentQuestion(questions, screen, setCurrentQuestion);
   }, [screen, questions]);
+  console.log('xxxxxxxx', response);
 
   useEffect(() => {
     axios
@@ -58,11 +59,14 @@ const Questionare = () => {
   const handleMovementQuestionnaire = () => {
     setLoader(true);
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/api/v1/questionnaire/`, {
-        memberCode: memberCode,
-        questionnaireName: 'weekly_movement',
-        response: response,
-      })
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/questionnaire/`,
+        {
+          memberCode: memberCode,
+          questionnaireName: 'weekly_movement',
+          response: response,
+        },
+      )
       .then((res) => {
         if (res.data) {
           console.log(res.data);
