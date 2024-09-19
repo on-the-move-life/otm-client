@@ -74,7 +74,7 @@ const FtnesssQuestionare = () => {
       .catch((err) => {
         console.log(err.message);
       })
-      .finally(() => navigate('/home?evolve=evolve'));
+      .finally(() => navigate('/movement?evolve=evolve'));
   };
 
   const isFormValid = useMemo(
@@ -100,7 +100,7 @@ const FtnesssQuestionare = () => {
                               decreaseScreenAndRank(screen, setScreen);
                             }
                             if (screen === 1) {
-                              navigate('/home');
+                              navigate('/movement');
                             }
                           }}
                           className="absolute left-0 w-fit cursor-pointer"

@@ -39,6 +39,7 @@ import ReferralUser from './features/ReferralUser/ReferralUser';
 import FtnesssQuestionare from './features/FitnessQuestionaire/FintessQuesrionire';
 import { ToastContainer } from 'react-toastify';
 import DynamicStretchScreen from './features/DynamicStretchScreen/DynamicStretchScreen';
+import FitnessPageNew from './features/Fitness/FitnessPageNew';
 
 function App() {
   // const { user, getUserFromStorage } = useAuth();
@@ -185,6 +186,14 @@ function App() {
               element={
                 <RouteMiddleware>
                   <FitnessPage />
+                </RouteMiddleware>
+              }
+            />
+            <Route
+              path="/movement"
+              element={
+                <RouteMiddleware>
+                  <FitnessPageNew />
                 </RouteMiddleware>
               }
             />
