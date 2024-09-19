@@ -22,6 +22,8 @@ import {
 } from '../Fitness/utils';
 import ShareCoachScreen from './components/ShareCoachScreen';
 import Questionare from './QuestionScreen';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function MainPage() {
   // Defining states for the fetched data
@@ -41,7 +43,20 @@ function MainPage() {
   const firstName = fullName.split(' ')[0];
   const [shareSummaryVisible, setShareSummaryVisible] = useState(false);
   const [questionnaireScreen, setQuestionnaireScreen] = useState(false);
-  const [showInitialScreen, setShowInitialScreen] = useState(false);
+  const [showInitialScreen, setShowInitialScreen] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/questionnaire`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        toast.error('Error with  lifestyle questionnaire');
+        console.log(err.message);
+      })
+      .finally(() => {});
+  }, []);
 
   useEffect(() => {
     const timezone = getDeviceTimezone();
@@ -50,13 +65,21 @@ function MainPage() {
     setGreeting(greetingMessage);
   }, []);
 
-  const { completionHistory, circles, percentCompletion } = useSelector(
-    (state) => ({
+  const { completionHistory, circles, percentCompletion, lifeStyleMemberCode } =
+    useSelector((state) => ({
       completionHistory: state.completionHistory,
       circles: state.lifeStyleDetails?.circles,
       percentCompletion: state.lifeStyleDetails?.completionHistory,
-    }),
-  );
+      lifeStyleMemberCode: state.lifeStyleDetails?.memberCode,
+    }));
+
+  console.log('xxxxx', lifeStyleMemberCode);
+
+  useEffect(() => {
+    if (lifeStyleMemberCode !== 'GENERAL') {
+      setShowInitialScreen(false);
+    }
+  }, [lifeStyleMemberCode]);
 
   const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
 
@@ -226,7 +249,8 @@ function MainPage() {
                       </>
                     )}
                   </div>
-                  {!isCircleOpen && (
+
+                  {!isCircleOpen && showInitialScreen === false && (
                     <div className="fixed bottom-[78px] left-0 z-50 w-full bg-black/20 py-4 backdrop-blur-sm">
                       <NavigationTab
                         selectedIndex={section}
