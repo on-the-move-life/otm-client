@@ -58,13 +58,17 @@ const Questionare = () => {
 
   const handleMovementQuestionnaire = () => {
     setLoader(true);
+
+    const responseConvert = Object.keys(response).map((key) => ({
+      question: key,
+      answers: response[key],
+    }));
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/questionnaire/`,
         {
           memberCode: memberCode,
-          questionnaireName: 'weekly_movement',
-          response: response,
+          answers: responseConvert,
         },
       )
       .then((res) => {
