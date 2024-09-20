@@ -40,7 +40,7 @@ const EvolveScreen = ({ homeStats, getUserData }) => {
       <button
         type="submit"
         onClick={() => {
-          navigate('/home');
+          navigate('/movement');
           getUserData();
         }}
         style={{
