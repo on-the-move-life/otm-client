@@ -375,7 +375,7 @@ function LandingPage() {
                     {screen === 0 && (
                       <div>
                         <div className="w-full">
-                          <div className="w-full px-[20px] text-center text-offwhite">
+                          <div className="w-full px-[20px] pb-[20px] text-center text-offwhite">
                             You Get
                           </div>
 
@@ -384,7 +384,7 @@ function LandingPage() {
                               <img
                                 src={'./assets/GreenTick.svg'}
                                 alt="correct"
-                                className="mr-3 "
+                                className="mr-6 "
                               />
                               <StarterText
                                 className=" py-[10px]"
@@ -401,7 +401,7 @@ function LandingPage() {
                               <img
                                 src={'./assets/GreenTick.svg'}
                                 alt="correct"
-                                className="mr-3 mt-1.5"
+                                className="mr-6"
                               />
                               <StarterText
                                 className=" py-[10px]"
@@ -419,7 +419,7 @@ function LandingPage() {
                               <img
                                 src={'./assets/GreenTick.svg'}
                                 alt="correct"
-                                className="mr-3 mt-1.5"
+                                className="mr-6"
                               />
                               <StarterText
                                 className=" py-[10px]"
@@ -435,7 +435,7 @@ function LandingPage() {
                               <img
                                 src={'./assets/GreenTick.svg'}
                                 alt="correct"
-                                className="mr-3 mt-1.5"
+                                className="mr-6"
                               />
                               <StarterText
                                 className=" py-[10px]"
@@ -451,7 +451,7 @@ function LandingPage() {
                               <img
                                 src={'./assets/GreenTick.svg'}
                                 alt="correct"
-                                className="mr-3 mt-1.5"
+                                className="mr-6"
                               />
                               <StarterText
                                 className=" py-[10px]"
@@ -468,7 +468,7 @@ function LandingPage() {
                       </div>
                     )}
 
-                    <div className="flex w-full flex-col justify-center gap-1">
+                    <div className="mt-[36px] flex w-full flex-col justify-center gap-1">
                       <Button
                         style={{ fontWeight: 500, height: '50px' }}
                         text="Let's Gooo!!!"
