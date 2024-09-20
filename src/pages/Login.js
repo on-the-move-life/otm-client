@@ -132,10 +132,10 @@ const Login = () => {
         <LoginInput>
           <HiArrowNarrowLeft
             size={20}
-            color={'#5ECC7B'}
+            color={'#7e87ef'}
             onClick={() => handleBack()}
           />
-          <header className="my-6 text-2xl text-green">
+          <header className="my-6 text-2xl text-blue">
             {showSignUpInput
               ? 'Add your account details'
               : resetPassword
@@ -149,7 +149,7 @@ const Login = () => {
           >
             {showSignUpInput && (
               <input
-                style={{ borderColor: '#5ECC7B', marginBottom: '2em' }}
+                style={{ borderColor: '#7e87ef', marginBottom: '2em' }}
                 className="textbox"
                 type="text"
                 placeholder="NAME"
@@ -159,7 +159,7 @@ const Login = () => {
               />
             )}
             <input
-              style={{ borderColor: '#5ECC7B', marginBottom: '2em' }}
+              style={{ borderColor: '#7e87ef', marginBottom: '2em' }}
               className="textbox"
               type="email"
               placeholder="EMAIL"
@@ -170,7 +170,7 @@ const Login = () => {
             <div>
               <input
                 id="pwd"
-                style={{ borderColor: '#5ECC7B' }}
+                style={{ borderColor: '#7e87ef' }}
                 className="textbox"
                 type="password"
                 required
@@ -186,14 +186,14 @@ const Login = () => {
               )}
               <div className="mt-4 flex justify-between">
                 <button
-                  className="text-sm text-green"
+                  className="text-sm text-blue"
                   type="text"
                   onClick={(e) => toggleShowPassword(e)}
                 >
                   {passwordType === 'text' ? 'Hide' : 'Show'}
                 </button>
                 <button
-                  className="text-sm text-green"
+                  className="text-sm text-blue"
                   type="text"
                   onClick={() => {
                     setPassword('');
@@ -211,7 +211,7 @@ const Login = () => {
               className={`continueButton w-full ${
                 !error && (!email || !password || buttonClicked)
                   ? 'bg-darkGray'
-                  : 'bg-green'
+                  : 'bg-blue'
               }`}
             >
               Continue
@@ -250,7 +250,7 @@ const Login = () => {
                   }}
                 >
                   <HiOutlineMail size={25} className="absolute z-10" />
-                  <p className="w-full text-center text-base">
+                  <p className="w-full text-center text-base font-medium">
                     Login with email
                   </p>
                 </button>
