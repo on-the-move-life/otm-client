@@ -61,7 +61,7 @@ const Questionare = () => {
 
     const responseConvert = Object.keys(response).map((key) => ({
       question: key,
-      answers: response[key],
+      answer: response[key],
     }));
     axios
       .post(
