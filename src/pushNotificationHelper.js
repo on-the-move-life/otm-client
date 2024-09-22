@@ -22,7 +22,7 @@ export async function subscribeUser() {
     applicationServerKey: convertedVapidKey
   });
 
-  await fetch('<host>/api/v1/subscribe', {
+  await fetch(`${process.env.REACT_APP_TEST_BASE_URL}/api/v1/subscribe`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export async function subscribeUser() {
 }
 
 export async function sendNotification(title, message) {
-  await fetch('<host>/api/v1/notification', {
+  await fetch(`${process.env.REACT_APP_TEST_BASE_URL}/api/v1/notification`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
