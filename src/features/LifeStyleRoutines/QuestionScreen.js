@@ -17,6 +17,7 @@ import {
   updateCurrentQuestion,
 } from '../LifestyleQuiz/utils/utils';
 import { ProgressBar } from '../LifestyleQuiz';
+import { Loader } from 'rsuite';
 
 const Questionare = ({ setQuestionnaireScreen }) => {
   const [questions, setQuestions] = useState(null);
@@ -42,6 +43,7 @@ const Questionare = ({ setQuestionnaireScreen }) => {
   }, [screen, questions]);
 
   useEffect(() => {
+    setLoader(true);
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/questionnaire`)
       .then((res) => {
@@ -51,7 +53,9 @@ const Questionare = ({ setQuestionnaireScreen }) => {
         toast.error('Error with  lifestyle questionnaire');
         console.log(err.message);
       })
-      .finally(() => {});
+      .finally(() => {
+        setLoader(false);
+      });
   }, []);
 
   const handleMovementQuestionnaire = () => {
@@ -79,7 +83,10 @@ const Questionare = ({ setQuestionnaireScreen }) => {
         console.log(err.message);
         toast.error('Error with lifestyle questionnaire');
       })
-      .finally(() => navigate('/lifestyle-routine?lifestyleLoader=true'));
+      .finally(() => {
+        setLoader(false);
+        navigate('/lifestyle-routine?lifestyleLoader=true');
+      });
   };
 
   const isFormValid = useMemo(
@@ -89,6 +96,7 @@ const Questionare = ({ setQuestionnaireScreen }) => {
 
   return (
     <div className="absolute z-50 h-screen w-full overflow-y-scroll bg-black  px-6 py-8">
+      {loader && <Loader />}
       {questions &&
         questions?.map((ques, idx) => {
           return (
