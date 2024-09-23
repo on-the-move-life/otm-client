@@ -18,7 +18,7 @@ import {
 } from '../LifestyleQuiz/utils/utils';
 import { ProgressBar } from '../LifestyleQuiz';
 
-const Questionare = () => {
+const Questionare = ({ setQuestionnaireScreen }) => {
   const [questions, setQuestions] = useState(null);
   const [loader, setLoader] = useState(null);
   const [response, setResponse] = useState({});
@@ -40,13 +40,11 @@ const Questionare = () => {
     // it will update the current question as soon as the screen changes
     questions && updateCurrentQuestion(questions, screen, setCurrentQuestion);
   }, [screen, questions]);
-  console.log('xxxxxxxx', response);
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/v1/lifestyle/questionnaire`)
       .then((res) => {
-        console.log('trerwe35435355', res.data.data);
         setQuestions(res.data.data);
       })
       .catch((err) => {
@@ -74,12 +72,14 @@ const Questionare = () => {
       .then((res) => {
         if (res.data) {
           console.log(res.data);
+          toast.success('Lifestyle Design Updated');
         }
       })
       .catch((err) => {
         console.log(err.message);
+        toast.error('Error with lifestyle questionnaire');
       })
-      .finally(() => navigate('/home?evolve=evolve'));
+      .finally(() => navigate('/lifestyle-routine?lifestyleLoader=true'));
   };
 
   const isFormValid = useMemo(
@@ -88,7 +88,7 @@ const Questionare = () => {
   );
 
   return (
-    <div className="h-screen overflow-y-scroll bg-black  px-6 py-8">
+    <div className="absolute z-50 h-screen w-full overflow-y-scroll bg-black  px-6 py-8">
       {questions &&
         questions?.map((ques, idx) => {
           return (
@@ -105,7 +105,8 @@ const Questionare = () => {
                               decreaseScreenAndRank(screen, setScreen);
                             }
                             if (screen === 1) {
-                              navigate('/home');
+                              navigate('/lifestyle-routine');
+                              setQuestionnaireScreen(false);
                             }
                           }}
                           className="absolute left-0 w-fit cursor-pointer"

@@ -47,7 +47,7 @@ function Calendar({
 
   return (
     <div className="flex w-full flex-col items-start justify-center">
-      {selectedDate && (
+      {/* {selectedDate && (
         <>
           {
             <h3 className="text-xl " style={{ lineHeight: '41.6px' }}>
@@ -60,7 +60,7 @@ function Calendar({
             </h3>
           }
         </>
-      )}
+      )} */}
       <div className="w-full rounded-lg">
         {percentCompletionOfSelectedDate !== null &&
           percentCompletionOfSelectedDate !== 0 && (

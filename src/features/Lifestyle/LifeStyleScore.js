@@ -40,7 +40,7 @@ const TotalParticipants = styled.div`
   font-weight: 500;
   line-height: normal;
 `;
-function LifeStyleScore({ completionPercentage = 72 }) {
+function LifeStyleScore({ completionPercentage }) {
   let gradient;
 
   if (completionPercentage <= 50) {
@@ -62,13 +62,13 @@ function LifeStyleScore({ completionPercentage = 72 }) {
           transition={{ duration: 1 }}
         ></motion.div>
         <span className="font-bold text-white">{progress}%</span>
-        <div className="w-6 h-6 ml-2 bg-white border-2 border-gray-400 rounded-full"></div>
+        <div className="border-gray-400 ml-2 h-6 w-6 rounded-full border-2 bg-white"></div>
       </div>
     );
   };
 
   return (
-    <Container className="flex flex-col items-center justify-center w-full gap-1">
+    <Container className="flex w-full flex-col items-center justify-center gap-1">
       <Heading>Perfect Day</Heading>
       <Rank>{completionPercentage}%</Rank>
       <TotalParticipants>Of your perfect day complete</TotalParticipants>
