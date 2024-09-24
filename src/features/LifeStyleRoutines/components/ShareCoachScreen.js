@@ -169,19 +169,6 @@ const ShareCoachScreen = forwardRef(
               color={'bg-white-opacity-08'}
             />
           </div>
-
-          <div
-            onClick={() => captureAndSharePage()}
-            style={{
-              backgroundColor: '#F8F8F8',
-
-              color: 'rgba(0,0,0)',
-            }}
-            className="relative  mb-10 mt-10  flex h-[46px] w-full items-center justify-center gap-1 rounded-lg bg-custompurple p-1 font-sfpro text-lg leading-8  text-black backdrop-blur-md  "
-          >
-            Share with coach tools
-            <img src="./assets/upload-black.svg" />
-          </div>
         </div>
       </div>
     );
