@@ -123,8 +123,11 @@ const ShareCoachScreen = forwardRef(
     }, [date]);
 
     return (
-      <div className="bf relative z-[150] h-screen w-full overflow-y-scroll  bg-black  px-4 pb-5 pt-10">
-        <div ref={contentAreaRef} className="h-full w-full  bg-black">
+      <div
+        ref={contentAreaRef}
+        className="bf relative z-[150] h-screen w-full overflow-y-scroll  bg-black  px-4 pb-5 pt-10"
+      >
+        <div className="h-full w-full  bg-black">
           <div className="flex justify-between">
             <div>
               <h2 className="text-[20px] text-offwhite ">Lifestyle Summary</h2>
