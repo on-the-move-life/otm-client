@@ -138,7 +138,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 pb-4 h-max">
+    <div className="flex h-max flex-col gap-2 pb-4">
       {Object.keys(homeStats['Morning Zone']['movements']).length > 0 && (
         <>
           {homeStats['Morning Zone']['movements'].map((item, index) => {
@@ -164,14 +164,14 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                         : 'bg-evening-zone'
                     } `}
                   >
-                    <div className="flex flex-col justify-center h-full">
+                    <div className="flex h-full flex-col justify-center">
                       <h5 className="text-sm font-light text-white-opacity-50">
                         Morning Zone
                       </h5>
                       <h2 className="text-xl "> {item.movementName}</h2>
 
-                      {item.movementName !== 'Rest' && (
-                        <div className="flex gap-3 mt-1">
+                      {/* {item.movementName !== 'Rest' && (
+                        <div className="mt-1 flex gap-3">
                           <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
                             <img
                               src="/assets/yellowTimer.svg"
@@ -180,7 +180,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                             {item.time}
                           </h2>
                         </div>
-                      )}
+                      )} */}
                     </div>
                     {item.movementName !== 'Rest' && (
                       <img
@@ -201,11 +201,11 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                   </div>
 
                   {tileId === item.movementId && morningInput === true && (
-                    <SlideContainer className="relative w-full px-3 pb-3 -top-3 rounded-b-xl bg-black-opacity-45 pt-7">
+                    <SlideContainer className="relative -top-3 w-full rounded-b-xl bg-black-opacity-45 px-3 pb-3 pt-7">
                       <p className="text-center text-offwhite">
                         Have you completed this?
                       </p>
-                      <div className="flex justify-center w-full gap-8 mt-3">
+                      <div className="mt-3 flex w-full justify-center gap-8">
                         <button
                           onClick={() =>
                             postWorkoutData({
@@ -214,7 +214,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                               name: item.movementName,
                             })
                           }
-                          className="text-black rounded w-14 bg-green"
+                          className="w-14 rounded bg-green text-black"
                         >
                           Yes
                         </button>
@@ -223,7 +223,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                             setMorningInput(false);
                             setTileId(null);
                           }} // Use button and attach onClick here
-                          className="text-black rounded w-14 bg-red"
+                          className="w-14 rounded bg-red text-black"
                         >
                           No
                         </button>
@@ -251,12 +251,12 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                       : 'bg-evening-zone'
                   } bg-cover py-2 pl-4 pr-7 `}
                 >
-                  <div className="flex flex-col justify-center h-full">
+                  <div className="flex h-full flex-col justify-center">
                     <h5 className="text-sm font-light text-white-opacity-50">
                       Evening Zone
                     </h5>
                     <h2 className="text-xl "> {item.movementName}</h2>
-                    {item.movementName !== 'Rest' && (
+                    {/* {item.movementName !== 'Rest' && (
                       <div className="flex gap-3 mt-1">
                         <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
                           <img
@@ -266,7 +266,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                           {item.time}
                         </h2>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   {item.movementName !== 'Rest' && (
                     <img
@@ -286,11 +286,11 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                   )}
                 </div>
                 {tileId === item.movementId && eveningInput === true && (
-                  <SlideContainer className="relative w-full px-3 pb-3 -top-3 rounded-b-xl bg-black-opacity-45 pt-7">
+                  <SlideContainer className="relative -top-3 w-full rounded-b-xl bg-black-opacity-45 px-3 pb-3 pt-7">
                     <p className="text-center text-offwhite">
                       Have you completed this?
                     </p>
-                    <div className="flex justify-center w-full gap-8 mt-3">
+                    <div className="mt-3 flex w-full justify-center gap-8">
                       <button
                         onClick={() =>
                           postWorkoutData({
@@ -299,7 +299,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                             name: item.movementName,
                           })
                         }
-                        className="text-black rounded w-14 bg-green"
+                        className="w-14 rounded bg-green text-black"
                       >
                         Yes
                       </button>
@@ -308,7 +308,7 @@ const WorkoutTile = ({ homeStats, isDisabled, setHomeStats, date }) => {
                           setEveningInput(false);
                           setTileId(null);
                         }} // Use button and attach onClick here
-                        className="text-black rounded w-14 bg-red"
+                        className="w-14 rounded bg-red text-black"
                       >
                         No
                       </button>
