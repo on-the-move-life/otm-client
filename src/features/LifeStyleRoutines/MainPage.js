@@ -48,6 +48,14 @@ function MainPage() {
   const queryString = window.location.search;
   const queryParams = new URLSearchParams(queryString);
 
+  const shareScreenRef = useRef(null);
+
+  const handleCaptureAndShare = () => {
+    if (shareScreenRef.current) {
+      shareScreenRef.current.captureAndSharePage();
+    }
+  };
+
   // Get the value of the 'LifestyleLoader' parameter
   const lifestyleLoader = queryParams.get('lifestyleLoader');
   const handleLoader = () => {};
@@ -98,15 +106,6 @@ function MainPage() {
       percentCompletion: state.lifeStyleDetails?.completionHistory,
       lifeStyleMemberCode: state.lifeStyleDetails?.memberCode,
     }));
-
-  console.log(
-    'xxddff',
-    typeof lifestyleLoader,
-    showInitialScreen,
-    lifeStyleMemberCode,
-    showLifestyleLoader,
-    lifestyleLoader,
-  );
 
   useEffect(() => {
     if (lifeStyleMemberCode && lifeStyleMemberCode !== 'GENERAL') {
@@ -174,6 +173,9 @@ function MainPage() {
               lifestyleLoader === 'true' && (
                 <div className="  absolute z-50 flex h-screen w-full items-center bg-black   px-5">
                   <img
+                    style={{
+                      filter: 'brightness(1.5)', // Increase brightness (1.5 means 50% brighter)
+                    }}
                     className="absolute left-0 -z-20 h-screen w-full"
                     src="/assets/lifestyle-main-frame.svg"
                   />
@@ -201,135 +203,139 @@ function MainPage() {
               <Questionare setQuestionnaireScreen={setQuestionnaireScreen} />
             )}
             {!lifestyleLoader && questionnaireScreen === false && (
-              <>
+              <div className="h-full  ">
                 <img
-                  className="absolute -z-20 h-screen w-full"
+                  style={{
+                    filter: ' saturate(1.8) brightness(0.7) ', // Increase brightness (1.5 means 50% brighter)
+                  }}
+                  className="absolute top-0 -z-20 h-screen w-full"
                   src="/assets/lifestyle-main-frame.svg"
                 />
-                {lifeStyleMemberCode &&
-                  lifeStyleMemberCode !== 'GENERAL' &&
-                  shareSummaryVisible === true &&
-                  completionHistory && (
+                <div>
+                  <div className="pointer-events-none absolute opacity-0 ">
                     <ShareCoachScreen
+                      ref={shareScreenRef}
                       circles={circles}
                       date={selectedDate}
                       completionHistory={completionHistory}
                       setShareSummaryVisible={setShareSummaryVisible}
                     />
-                  )}
-                {completionHistory && shareSummaryVisible === false && (
-                  <>
-                    {' '}
-                    <>
-                      <div className="mt-[76px] flex h-full flex-col items-center justify-start gap-3 px-3 py-5">
-                        <div className="w-full">
-                          <h3 className="flex w-full text-start font-sfpro text-[14px] text-offwhite">
-                            {greeting} {firstName}
-                          </h3>
-                          <div className="flex w-11/12 items-start">
-                            <div className="flex-1">
-                              <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
-                                Movement
-                              </h2>
+                  </div>
 
-                              <div className=" text-[14px] text-white-opacity-50">
-                                Everyday is an opportunity to do some main
-                                character shit.
+                  {completionHistory && shareSummaryVisible === false && (
+                    <>
+                      {' '}
+                      <>
+                        <div className="flex h-full flex-col items-center justify-start gap-3 px-3 py-5 pt-[76px]">
+                          <div className="w-full">
+                            <h3 className="flex w-full text-start font-sfpro text-[14px] text-offwhite">
+                              {greeting} {firstName}
+                            </h3>
+                            <div className="flex w-11/12 items-start">
+                              <div className="flex-1">
+                                <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
+                                  Movement
+                                </h2>
+
+                                <div className=" text-[14px] text-white-opacity-50">
+                                  Everyday is an opportunity to do some main
+                                  character shit.
+                                </div>
                               </div>
                             </div>
                           </div>
+
+                          {lifeStyleMemberCode &&
+                            lifeStyleMemberCode === 'GENERAL' && (
+                              <div className="mt-[24px] flex w-full flex-col items-center gap-2">
+                                <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
+                                  <div className="flex w-full justify-between">
+                                    <img
+                                      loading="lazy"
+                                      src="/assets/purple-arm.svg"
+                                      className="h-[120px] w-[120px] p-4"
+                                    />
+                                    <div className="flex w-full flex-1 flex-col justify-center">
+                                      <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
+                                        New Lifestyle Format!
+                                      </h3>
+                                      <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
+                                        Take this short quiz to create your
+                                        weekly workout schedule
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div
+                                    onClick={() => setQuestionnaireScreen(true)}
+                                    className=" w-full rounded-lg bg-white p-2.5 text-center font-sfpro text-[14px] font-medium text-black" // Replaced p-[10px] with Tailwind equivalent
+                                  >
+                                    Let's Go
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                          {lifeStyleMemberCode &&
+                            lifeStyleMemberCode !== 'GENERAL' &&
+                            showInitialScreen === false && (
+                              <>
+                                {' '}
+                                {completionHistory && (
+                                  <Calendar
+                                    completionHistory={completionHistory}
+                                    isSummaryPage={section === 1}
+                                    selectedDate={selectedDate}
+                                    setSelectedDate={setSelectedDate}
+                                  />
+                                )}
+                                {section == 1 ? (
+                                  <div className="flex w-full items-center justify-between px-3">
+                                    <p className="text-lg">Summary</p>
+                                    <button
+                                      className="flex cursor-pointer gap-2 rounded-md bg-black-opacity-45  px-4 py-2 text-sm text-white"
+                                      onClick={() => handleCaptureAndShare()}
+                                    >
+                                      Share with coach{' '}
+                                      <span className="text-[18px] text-[#DEF988]">
+                                        <FiUpload />
+                                      </span>
+                                    </button>
+                                  </div>
+                                ) : null}
+                                {section === 0 ? (
+                                  <Routines
+                                    circles={circles}
+                                    date={selectedDate}
+                                    setReloadCounter={setReloadCounter}
+                                    setIsCircleOpen={setIsCircleOpen}
+                                  />
+                                ) : (
+                                  <Summary
+                                    circles={circles}
+                                    date={selectedDate}
+                                  />
+                                )}
+                              </>
+                            )}
                         </div>
 
                         {lifeStyleMemberCode &&
-                          lifeStyleMemberCode === 'GENERAL' && (
-                            <div className="mt-[24px] flex w-full flex-col items-center gap-2">
-                              <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
-                                <div className="flex w-full justify-between">
-                                  <img
-                                    loading="lazy"
-                                    src="/assets/purple-arm.svg"
-                                    className="h-[120px] w-[120px] p-4"
-                                  />
-                                  <div className="flex w-full flex-1 flex-col justify-center">
-                                    <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
-                                      New Lifestyle Format!
-                                    </h3>
-                                    <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
-                                      Take this short quiz to create your weekly
-                                      workout schedule
-                                    </p>
-                                  </div>
-                                </div>
-                                <div
-                                  onClick={() => setQuestionnaireScreen(true)}
-                                  className=" w-full rounded-lg bg-white p-2.5 text-center font-sfpro text-[14px] font-medium text-black" // Replaced p-[10px] with Tailwind equivalent
-                                >
-                                  Let's Go
-                                </div>
-                              </div>
+                          lifeStyleMemberCode !== 'GENERAL' &&
+                          !lifestyleLoader &&
+                          !isCircleOpen &&
+                          showInitialScreen === false && (
+                            <div className="fixed bottom-[78px] left-0 z-50 w-full bg-black/20 py-4 backdrop-blur-sm">
+                              <NavigationTab
+                                selectedIndex={section}
+                                setSelectedIndex={setSection}
+                              />
                             </div>
                           )}
-
-                        {lifeStyleMemberCode &&
-                          lifeStyleMemberCode !== 'GENERAL' &&
-                          showInitialScreen === false && (
-                            <>
-                              {' '}
-                              {completionHistory && (
-                                <Calendar
-                                  completionHistory={completionHistory}
-                                  isSummaryPage={section === 1}
-                                  selectedDate={selectedDate}
-                                  setSelectedDate={setSelectedDate}
-                                />
-                              )}
-                              {section == 1 ? (
-                                <div className="flex w-full items-center justify-between px-3">
-                                  <p className="text-lg">Summary</p>
-                                  <button
-                                    className="flex cursor-pointer gap-2 rounded-md bg-black-opacity-45  px-4 py-2 text-sm text-white"
-                                    onClick={() => setShareSummaryVisible(true)}
-                                  >
-                                    Share with coach{' '}
-                                    <span className="text-[18px] text-[#DEF988]">
-                                      <FiUpload />
-                                    </span>
-                                  </button>
-                                </div>
-                              ) : null}
-                              {section === 0 ? (
-                                <Routines
-                                  circles={circles}
-                                  date={selectedDate}
-                                  setReloadCounter={setReloadCounter}
-                                  setIsCircleOpen={setIsCircleOpen}
-                                />
-                              ) : (
-                                <Summary
-                                  circles={circles}
-                                  date={selectedDate}
-                                />
-                              )}
-                            </>
-                          )}
-                      </div>
-
-                      {lifeStyleMemberCode &&
-                        lifeStyleMemberCode !== 'GENERAL' &&
-                        !lifestyleLoader &&
-                        !isCircleOpen &&
-                        showInitialScreen === false && (
-                          <div className="fixed bottom-[78px] left-0 z-50 w-full bg-black/20 py-4 backdrop-blur-sm">
-                            <NavigationTab
-                              selectedIndex={section}
-                              setSelectedIndex={setSection}
-                            />
-                          </div>
-                        )}
+                      </>
                     </>
-                  </>
-                )}
-              </>
+                  )}
+                </div>
+              </div>
             )}
           </>
         )}
