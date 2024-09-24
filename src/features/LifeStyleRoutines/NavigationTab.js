@@ -26,7 +26,7 @@ function NavigationTab({ selectedIndex, setSelectedIndex }) {
       >
         <NavigationAnalytics isSelected={selectedIndex === 1 ? true : false} />
         <p
-          className="text-[20px] capitalize"
+          className="text-[18px] capitalize"
           style={{ color: selectedIndex === 1 ? '#DDF988' : '#929292' }}
         >
           Summary
