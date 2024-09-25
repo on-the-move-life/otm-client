@@ -76,16 +76,16 @@ const Questionare = ({ setQuestionnaireScreen }) => {
       .then((res) => {
         if (res.data) {
           console.log(res.data);
-          toast.success('Lifestyle Design Updated');
+          navigate('/lifestyle-routine?lifestyleLoader=true');
         }
       })
       .catch((err) => {
         console.log(err.message);
         toast.error('Error with lifestyle questionnaire');
+        navigate('/lifestyle-routine');
       })
       .finally(() => {
         setLoader(false);
-        navigate('/lifestyle-routine?lifestyleLoader=true');
       });
   };
 

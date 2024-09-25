@@ -234,7 +234,7 @@ function MainPage() {
                             <div className="flex w-11/12 items-start">
                               <div className="flex-1">
                                 <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
-                                  Movement
+                                  Lifestyle
                                 </h2>
 
                                 <div className=" text-[14px] text-white-opacity-50">
@@ -252,22 +252,24 @@ function MainPage() {
                                   <div className="flex w-full justify-between">
                                     <img
                                       loading="lazy"
-                                      src="/assets/purple-arm.svg"
-                                      className="h-[120px] w-[120px] p-4"
+                                      src="./assets/lifestyle-check.svg"
+                                      className=" h-[120px] w-[120px] p-4 "
                                     />
-                                    <div className="flex w-full flex-1 flex-col justify-center">
+
+                                    <div className="mt-2 flex w-full flex-1 flex-col justify-center">
                                       <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
-                                        New Lifestyle Format!
+                                        Unlock your lifestyle design
                                       </h3>
-                                      <p className="relative z-10 mt-2 max-w-[180px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
-                                        Take this short quiz to create your
-                                        weekly workout schedule
+                                      <p className="relative z-10 mt-2 max-w-[200px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
+                                        Answer a few questions to get daily
+                                        habits tailored to your goals for a
+                                        healthier, balanced life
                                       </p>
                                     </div>
                                   </div>
                                   <div
                                     onClick={() => setQuestionnaireScreen(true)}
-                                    className=" w-full rounded-lg bg-white p-2.5 text-center font-sfpro text-[14px] font-medium text-black" // Replaced p-[10px] with Tailwind equivalent
+                                    className=" mt-2 w-full rounded-lg bg-white p-2.5 text-center font-sfpro text-[14px] font-medium text-black" // Replaced p-[10px] with Tailwind equivalent
                                   >
                                     Let's Go
                                   </div>
