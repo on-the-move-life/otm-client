@@ -266,9 +266,10 @@ const WorkoutSummary = () => {
                   </div>
                 </div>
 
+                {/* TODO Do not show workout counts for Flex OR title could be changed to "Total Flex Workouts" */}
                 <div className="flex flex-col items-start text-lightGray">
                   <h4 className="text-[10px] uppercase tracking-[3px]">
-                    total workouts
+                    {params.value === 'flex' ? 'Total Flex Workouts' : 'Total Workouts'}
                   </h4>
                   <div className="w-24 mx-4">
                     <Counter
@@ -279,7 +280,14 @@ const WorkoutSummary = () => {
                   </div>
                 </div>
 
-                {countToEarnPerfectWeek !== null &&
+                {/* TODO add some motivational text for Flex workouts */}
+                {params.value === 'flex' &&
+                  <p className='mb-4'>
+                    You are doing great so far.  Keep crushing it🔥
+                  </p>
+                }
+                {/* TODO Do not show for Flex */}
+                {countToEarnPerfectWeek !== null && params.value !== 'flex' &&
                   countToEarnPerfectWeek > 0 && (
                     <div className="mb-4">
                       Complete{' '}
@@ -289,8 +297,8 @@ const WorkoutSummary = () => {
                       workout(s) this week to earn the perfect week badge
                     </div>
                   )}
-
-                {countToEarnPerfectWeek !== null &&
+                {/* TODO Do not show for Flex */}
+                {countToEarnPerfectWeek !== null && params.value !== 'flex' &&
                   countToEarnPerfectWeek < 0 && (
                     <p className="mb-4">
                       Fitness Pro Alert! You've surpassed the{' '}
@@ -306,8 +314,8 @@ const WorkoutSummary = () => {
                       Keep crushing it🔥
                     </p>
                   )}
-
-                {countToEarnPerfectWeek !== null &&
+                {/* TODO Do not show for Flex */}
+                {countToEarnPerfectWeek !== null && params.value !== 'flex' &&
                   countToEarnPerfectWeek === 0 && (
                     <div className="mb-4">
                       <p>
@@ -401,38 +409,39 @@ const WorkoutSummary = () => {
                     </div>
                   </section>
                 )}
+                {/* TODO Do not show movecoins message */}
+                {params.value !== 'flex' &&
+                  <div className="flex flex-col items-center justify-center w-full gap-5 h-fit">
+                    <div className="flex min-h-[100px] w-full flex-row items-center justify-center rounded-[20px] bg-[#121212]">
+                      <div
+                        className="h-full w-full rounded-[12px] border-[0.5px] border-[#383838]  bg-right  bg-no-repeat  p-3 backdrop-blur-[1px]"
+                        style={{
+                          backgroundImage: `url('/assets/coins_popup_bg.svg')`,
+                        }}
+                      >
+                        <div className="text-[16px] text-[#D6B6F0]">
+                          • Movecoins
+                        </div>
 
-                <div className="flex flex-col items-center justify-center w-full gap-5 h-fit">
-                  <div className="flex min-h-[100px] w-full flex-row items-center justify-center rounded-[20px] bg-[#121212]">
-                    <div
-                      className="h-full w-full rounded-[12px] border-[0.5px] border-[#383838]  bg-right  bg-no-repeat  p-3 backdrop-blur-[1px]"
-                      style={{
-                        backgroundImage: `url('/assets/coins_popup_bg.svg')`,
-                      }}
-                    >
-                      <div className="text-[16px] text-[#D6B6F0]">
-                        • Movecoins
-                      </div>
-
-                      <div className="text-[14px] text-lightGray">
-                        You earned
-                        <img
-                          className="inline-block w-4 mx-1"
-                          src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`}
-                          alt="MoveCoins Logo"
-                        />
-                        <GradientText>{workoutSummary?.moveCoins}</GradientText>{' '}
-                        MoveCoins! <br />
-                        Head to the marketplace and{' '}
-                        <GradientText>treat yourself </GradientText>
-                        to something special!
-                      </div>
-                      {/* <p className="font-normal leading-normal break-words text-slate-500">
+                        <div className="text-[14px] text-lightGray">
+                          You earned
+                          <img
+                            className="inline-block w-4 mx-1"
+                            src={`${process.env.PUBLIC_URL}/assets/move-coins-logo.svg`}
+                            alt="MoveCoins Logo"
+                          />
+                          <GradientText>{workoutSummary?.moveCoins}</GradientText>{' '}
+                          MoveCoins! <br />
+                          Head to the marketplace and{' '}
+                          <GradientText>treat yourself </GradientText>
+                          to something special!
+                        </div>
+                        {/* <p className="font-normal leading-normal break-words text-slate-500">
                   {' '}
                 </p> */}
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </div>}
 
                 {workoutSummary &&
                   workoutSummary.sectionPerformance?.map(
@@ -462,11 +471,10 @@ const WorkoutSummary = () => {
                                 Math.abs(scoreDifference) !== 0.0 && (
                                   <div className="flex flex-col justify-between px-2 text-black">
                                     <div
-                                      className={`flex items-center rounded ${
-                                        scoreDifference > 0.0
+                                      className={`flex items-center rounded ${scoreDifference > 0.0
                                           ? 'bg-green'
                                           : 'bg-red'
-                                      }  p-0.5 text-xs font-bold`}
+                                        }  p-0.5 text-xs font-bold`}
                                     >
                                       {scoreDifference > 0.0 ? (
                                         <FaPlus />
