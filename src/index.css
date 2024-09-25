@@ -171,6 +171,19 @@ input:focus::placeholder {
     #c2982c 115.29%
   );
 }
+.legend-tag {
+  height: 18px;
+  padding: 2px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 0.5px solid transparent;
+  border-image-source: linear-gradient(156.52deg, rgba(255, 139, 127, 0.54) 2.12%, rgba(255, 170, 107, 0.64) 39%, rgba(255, 193, 93, 0.2) 54.33%, #FFCE55 100%);
+  border-image-slice: 1;
+  background: linear-gradient(180deg, #FFE247 0%, #FF8383 100%);
+}
 
 .achievements-bg {
   background-image: url('../public/assets/elipse.svg');

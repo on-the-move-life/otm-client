@@ -21,6 +21,8 @@ const Community = () => {
   const [page, setPage] = useState(1);
   const [isError, setError] = useState(false);
   const [data, setData] = useState(null);
+  const fullName = JSON.parse(localStorage.getItem('user'))['name'];
+  const firstName = fullName.split(' ')[0];
 
   const { getUserFromStorage, user } = useAuth();
   const navigate = useNavigate();
@@ -125,18 +127,29 @@ const Community = () => {
 
   return (
     <div>
-      <img className="absolute right-0 -z-20 " src="/assets/main-frame.svg" />
-      <img
-        className="absolute right-[35px] top-7 -z-10 "
-        src="/assets/community-logo.svg"
-      />
+      <img className="absolute -z-10  w-full " src="/assets/community-bg.svg" />
 
-      <div className=" w-screen grow overflow-scroll px-4 pb-[78px]">
+      <div className=" h-screen w-screen grow overflow-y-scroll px-4 pb-[95px]">
         <div className="mt-[76px]">
-          <TimelineHeading>Community</TimelineHeading>
+          <h3 className=" font-sfpro text-[14px] text-offwhite">
+            Good Morning {firstName}
+          </h3>
+
+          <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
+            Community
+          </h2>
+
+          <div className="font-sfpro text-[14px] text-white-opacity-50">
+            Everyday is an opportunity to do some main character shit.
+          </div>
         </div>
         <div>
-          <div className="flex flex-col w-full gap-2 mt-7">
+          {matchingWorkoutUser && (
+            <div className="mb-3 mt-7 text-[20px] text-offwhite">
+              Leaderboard
+            </div>
+          )}
+          <div className=" flex w-full flex-col gap-2">
             {matchingWorkoutUser && (
               <RankDisplay
                 selectedDataType="workout"
@@ -160,12 +173,15 @@ const Community = () => {
               />
             )}
           </div>
-          <div className="flex flex-col w-full gap-2 mt-7">
-            {data !== null && data.data.length > 0 && (
-              <TimelineDisplay data={data.data[0]} timeline={'community'} />
-            )}
+          {data !== null && data.data.length > 0 && (
+            <div className="mb-3 mt-7 text-[20px] text-offwhite">Timeline</div>
+          )}
+          <div className=" flex w-full flex-col gap-2">
             {userData !== null && userData.data.length > 0 && (
               <TimelineDisplay data={userData.data[0]} timeline={'personal'} />
+            )}
+            {data !== null && data.data.length > 0 && (
+              <TimelineDisplay data={data.data[0]} timeline={'community'} />
             )}
           </div>
         </div>

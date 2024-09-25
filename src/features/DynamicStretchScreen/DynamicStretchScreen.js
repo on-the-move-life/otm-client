@@ -62,13 +62,13 @@ const DynamicStretchScreen = () => {
             </div>
 
             <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray ">
-              <RxCross1 onClick={() => navigate('/home')} className="" />
+              <RxCross1 onClick={() => navigate('/movement')} className="" />
             </div>
           </div>
+
           <div className="mt-16 flex items-center justify-center ">
-            <div className="player-wrapper h-[512px] w-11/12  rounded-xl bg-black-opacity-45 p-3">
+            <div className="player-wrapper h-[512px] max-w-[500px]   rounded-xl bg-black-opacity-45 ">
               <iframe
-                className="rounded-xl"
                 width="100%"
                 height="100%"
                 src={
