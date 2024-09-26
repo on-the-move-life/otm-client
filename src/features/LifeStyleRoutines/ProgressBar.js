@@ -32,9 +32,6 @@ const ProgressBar = ({ progress }) => {
             transition={{ duration: 1 }}
           >
             <div className="absolute right-1 flex ">
-              <span className="  -mt-[5px] mr-1 text-[10px] text-black-opacity-45 ">
-                {progress}
-              </span>
               <span className="  -mt-[2px] h-2 w-2  rounded-full bg-white"></span>
             </div>
           </motion.div>

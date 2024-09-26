@@ -102,7 +102,7 @@ const Questionare = ({ setQuestionnaireScreen }) => {
           return (
             <div className="">
               {ques.screen === screen && (
-                <div className="relative flex h-full flex-col justify-between ">
+                <div className="relative flex h-[calc(100vh-100px)] flex-col justify-between ">
                   <div className="">
                     <div className="flex flex-col items-center justify-center gap-5">
                       <div className="mx-auto my-4 flex w-full items-center justify-center">
@@ -135,10 +135,6 @@ const Questionare = ({ setQuestionnaireScreen }) => {
                             ques?.isRequired ? ' *' : ''
                           }`}
                         </h1>
-                        {/* Description */}
-                        <p className="my-2 space-x-2 text-[14px] text-[#b1b1b1]">
-                          {capitalizeFirstLetter(ques?.description)}
-                        </p>
                       </div>
                       {ques?.inputType?.toUpperCase() === 'SINGLECHOICE' ||
                       ques?.inputType?.toUpperCase() === 'MULTICHOICE' ||
