@@ -88,12 +88,24 @@ function Options({
                   };
                 });
               } else {
-                setResponse((prev) => {
-                  return {
-                    ...prev,
-                    [questionCode]: [...response[questionCode], optionID],
-                  };
-                });
+                if (
+                  optionID === 'NONE' ||
+                  response[questionCode].some((item) => item === 'NONE')
+                ) {
+                  setResponse((prev) => {
+                    return {
+                      ...prev,
+                      [questionCode]: [optionID],
+                    };
+                  });
+                } else {
+                  setResponse((prev) => {
+                    return {
+                      ...prev,
+                      [questionCode]: [...response[questionCode], optionID],
+                    };
+                  });
+                }
               }
             }
           } else if (MCQType === 'singleChoice') {
