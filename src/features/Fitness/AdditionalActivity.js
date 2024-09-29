@@ -76,7 +76,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
           `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker`,
           {
             memberCode: memberCode,
-            activity: selectedActivityType === 'Others' ? otherActivity : selectedActivityType,
+            activity: otherActivity ? otherActivity : selectedActivityType,
             date: date,
             activityDuration: selectedValue.toString(),
             description: activityDescription,
@@ -137,8 +137,18 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
   }, []);
 
   const handleActivityType = (e) => {
+    if (otherActivity) {
+      setOtherActivity('');
+    }
     setSelectedActivityType(e.target.innerText);
     setShowTypeInput(false);
+  };
+
+  const hanldeAnotherActivity = (e) => {
+    if (selectedActivityType) {
+      setSelectedActivityType('Please enter type');
+    }
+    setOtherActivity(e);
   };
 
   return (
@@ -230,7 +240,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
             >
               <div className="flex flex-col ">
                 <div className="font-sfpro text-[20px] text-offwhite">Type</div>
-                <div className="relative mt-1 max-h-[224px] w-full  rounded-lg py-3 pt-0">
+                <div className="relative mt-1  w-full  rounded-lg py-3 pt-0">
                   <div className="absolute right-6 top-4 z-20 ">
                     {showTypeInput === true ? (
                       <img
@@ -260,13 +270,6 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                             </div>
                           );
                         })}
-                      <div
-                        onClick={(e) => handleActivityType(e)}
-                        className="mr-9  flex h-[45px] items-center border-b border-b-darkGray text-[#929292] underline-offset-1"
-                        key={'others'}
-                      >
-                        {'Others'}
-                      </div>
                     </div>
                   ) : (
                     <div
@@ -277,29 +280,29 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                     </div>
                   )}
                 </div>
-                {
-                  selectedActivityType === 'Others' &&
-                  <div>
-                    <input
-                      type='text'
-                      placeholder='Specify the type'
-                      style={{
-                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                        borderRadius: '8px',
-                        padding: '12px',
-                        boxSizing: 'border-box',
-                        lineHeight: '1.5',
-                        width: '100%', // Ensures the textarea takes full width of its container
-                        resize: 'vertical', // Allows vertical resizing
-                        overflow: 'scroll', // Adds scrollbar when content overflows
-                        border: 'none', // Removes the border
-                        outline: 'none', // Removes the default focus outline
-                      }}
-                      className="mt-1 text-white-opacity-50"
-                      onChange={(e) => setOtherActivity(e.target.value)}
-                    />
-                  </div>
-                }
+
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Other"
+                    value={otherActivity}
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                      borderRadius: '8px',
+                      padding: '12px',
+                      boxSizing: 'border-box',
+                      lineHeight: '1.5',
+                      width: '100%', // Ensures the textarea takes full width of its container
+                      resize: 'vertical', // Allows vertical resizing
+                      overflow: 'scroll', // Adds scrollbar when content overflows
+                      border: 'none', // Removes the border
+                      outline: 'none', // Removes the default focus outline
+                    }}
+                    className="mt-1 text-white-opacity-50"
+                    onChange={(e) => hanldeAnotherActivity(e.target.value)}
+                  />
+                </div>
+
                 <div className="mt-[30px] font-sfpro text-[20px] text-offwhite">
                   Time
                 </div>
@@ -396,17 +399,20 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
               <button
                 type="submit"
                 disabled={
-                  selectedActivityType === 'Please enter type' ||
+                  (selectedActivityType === 'Please enter type' &&
+                    (otherActivity === '' || otherActivity === null)) ||
                   selectedValue === 'Please enter'
                 }
                 style={{
                   backgroundColor:
-                    selectedActivityType !== 'Please enter type' &&
+                    (selectedActivityType !== 'Please enter type' ||
+                      (otherActivity !== '' && otherActivity !== null)) &&
                     selectedValue !== 'Please enter'
                       ? '#F8F8F8'
                       : 'rgba(221,221,221,0.08)',
                   color:
-                    selectedActivityType !== 'Please enter type' &&
+                    (selectedActivityType !== 'Please enter type' ||
+                      (otherActivity !== '' && otherActivity !== null)) &&
                     selectedValue !== 'Please enter'
                       ? 'rgba(0,0,0)'
                       : 'rgba(248,248,248,0.8)',
