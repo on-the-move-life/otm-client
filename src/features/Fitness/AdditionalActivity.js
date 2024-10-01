@@ -72,15 +72,21 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
     event.preventDefault();
     if (selectedActivityType && selectedValue) {
       try {
+        const payload = {
+          memberCode: memberCode,
+          activity: otherActivity ? otherActivity : selectedActivityType,
+          date: date,
+          activityDuration: selectedValue.toString(),
+          description: activityDescription,
+        };
+
+        // Conditionally add 'requested' key if 'otherActivity' is present
+        if (otherActivity) {
+          payload.requested = true;
+        }
         await axios.post(
           `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker`,
-          {
-            memberCode: memberCode,
-            activity: otherActivity ? otherActivity : selectedActivityType,
-            date: date,
-            activityDuration: selectedValue.toString(),
-            description: activityDescription,
-          },
+          payload,
         );
         toast.success('Activity Submitted sucessfully');
         console.log('Submission successful');
@@ -239,8 +245,10 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
               onSubmit={handleSubmit}
             >
               <div className="flex flex-col ">
-                <div className="font-sfpro text-[20px] text-offwhite">Type</div>
-                <div className="relative mt-1  w-full  rounded-lg py-3 pt-0">
+                <div className="font-sfpro text-[20px] text-offwhite">
+                  Type *
+                </div>
+                <div className="relative mt-1  w-full  rounded-xl py-3 pt-0">
                   <div className="absolute right-6 top-4 z-20 ">
                     {showTypeInput === true ? (
                       <img
@@ -288,7 +296,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                     value={otherActivity}
                     style={{
                       backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                      borderRadius: '8px',
+                      borderRadius: '12px',
                       padding: '12px',
                       boxSizing: 'border-box',
                       lineHeight: '1.5',
@@ -304,7 +312,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                 </div>
 
                 <div className="mt-[30px] font-sfpro text-[20px] text-offwhite">
-                  Time
+                  Time *
                 </div>
                 <div className="relative mt-1 w-full rounded-lg py-3 pt-0">
                   <div className="absolute right-6 top-4 z-20 ">
@@ -379,7 +387,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                     style={{
                       backgroundColor: 'rgba(255, 255, 255, 0.08)',
                       minHeight: '87px',
-                      borderRadius: '8px',
+                      borderRadius: '12px',
                       padding: '12px',
                       boxSizing: 'border-box',
                       lineHeight: '1.5',
