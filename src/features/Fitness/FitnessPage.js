@@ -17,6 +17,7 @@ import StepTracker from './StepTracker';
 import { AiOutlineRight } from 'react-icons/ai';
 import AdditionalActivity from './AdditionalActivity';
 import { TbSwimming } from 'react-icons/tb';
+import InstallApp from '../../components/InstallPWA';
 import { FaArrowRight } from 'react-icons/fa6';
 
 function formatNumber(num) {
@@ -168,6 +169,7 @@ const FitnessPage = () => {
 
             <section>
               <div className="flex items-center">
+                <InstallApp />
                 <Link
                   to="/workout/today"
                   className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
