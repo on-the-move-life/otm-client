@@ -612,7 +612,7 @@ button:active {
 
 .countdown__inner__sec {
   display: block;
-  width: 100%;
+  width: 120px;
   height: 5rem;
   font-size: 64px;
   font-family: 'Anton', sans-serif;

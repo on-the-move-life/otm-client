@@ -273,19 +273,18 @@ const WorkoutSummary = () => {
                       ? 'Total Flex Workouts'
                       : 'Total Workouts'}
                   </h4>
-                  <div className="mx-4 w-24">
-                    <div
-                      className="countdown__inner__sec      text-[100px]"
-                      style={{ font: '100px' }}
-                    >
-                      {workoutSummary?.consistency?.total}
-                    </div>
-                    {/* <Counter
+
+                  <div
+                    className="countdown__inner__sec      text-[100px]"
+                    style={{ font: '100px' }}
+                  >
+                    {workoutSummary?.consistency?.total}
+                  </div>
+                  {/* <Counter
                       currentValue={
                         Number(workoutSummary?.consistency?.total) - 1
                       }
                     /> */}
-                  </div>
                 </div>
 
                 {/* TODO add some motivational text for Flex workouts */}
