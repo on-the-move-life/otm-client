@@ -257,13 +257,12 @@ function MainPage() {
                                     />
 
                                     <div className="mt-2 flex w-full flex-1 flex-col justify-center">
-                                      <h3 className="  font-sfpro text-[20px] font-medium text-offwhite">
+                                      <h3 className="  font-sfpro text-[18px] font-medium text-offwhite">
                                         Unlock your lifestyle design
                                       </h3>
                                       <p className="relative z-10 mt-2 max-w-[200px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
                                         Answer a few questions to get daily
-                                        habits tailored to your goals for a
-                                        healthier, balanced life
+                                        habits tailored to your goals
                                       </p>
                                     </div>
                                   </div>
