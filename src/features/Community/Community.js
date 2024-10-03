@@ -9,6 +9,8 @@ import RankDisplay from './RankDisplay';
 import TimelineDisplay from './TimelineDisplay';
 import { axiosClient as TimelineAxiosClient } from '../Timeline/apiClient';
 import { TimelineHeading } from '../Timeline/StyledComponents';
+import { useDispatch } from 'react-redux';
+import { fetchCommunityPersonalDetails } from '../../store/actions/community.action';
 
 const Community = () => {
   const [fitnessScoreData, setFitnessScoreData] = useState([]);
@@ -27,6 +29,7 @@ const Community = () => {
   const { getUserFromStorage, user } = useAuth();
   const navigate = useNavigate();
   const { value } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setCommunityLoading(true);
@@ -46,6 +49,13 @@ const Community = () => {
   useEffect(() => {
     setPersonalLoading(true);
     const user = JSON.parse(localStorage.getItem('user'));
+    dispatch(
+      fetchCommunityPersonalDetails({
+        user,
+        page,
+        type: 'personal',
+      }),
+    );
     TimelineAxiosClient.get(
       `?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`,
     )
