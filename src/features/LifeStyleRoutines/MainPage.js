@@ -80,7 +80,7 @@ function MainPage() {
     setQuestionnaireScreen(false);
     // Set a timeout to hide the loader after 5 seconds (5000 ms)
     if (lifestyleLoader) {
-      getData();
+      getData(selectedDate);
       const timer = setTimeout(() => {
         console.log('sixes');
         setShowLifestyleLoader(false);
@@ -123,8 +123,7 @@ function MainPage() {
         const localNavHeight = 60; // Height of the NavigationTab
 
         // Calculate the available height for the content area
-        const availableHeight =
-          window.innerHeight - globalNavHeight - localNavHeight;
+        const availableHeight = window.innerHeight - globalNavHeight;
 
         // Set the content area height
         setContentAreaHeight(availableHeight);
@@ -226,7 +225,7 @@ function MainPage() {
                     <>
                       {' '}
                       <>
-                        <div className="flex h-full flex-col items-center justify-start gap-3 px-3 py-5 pt-[76px]">
+                        <div className="flex h-full flex-col items-center justify-start gap-3 px-3 py-5 pb-16 pt-[76px]">
                           <div className="w-full">
                             <h3 className="flex w-full text-start font-sfpro text-[14px] text-offwhite">
                               {greeting} {firstName}
