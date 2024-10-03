@@ -397,7 +397,7 @@ function LandingPage() {
                               </StarterText>
                             </div>
 
-                            <div className="flex w-[280px] ">
+                            {/* <div className="flex w-[280px] ">
                               <img
                                 src={'./assets/GreenTick.svg'}
                                 alt="correct"
@@ -413,7 +413,7 @@ function LandingPage() {
                                 </span>{' '}
                                 to meet your goals
                               </StarterText>
-                            </div>
+                            </div> */}
 
                             <div className="flex w-[280px] ">
                               <img

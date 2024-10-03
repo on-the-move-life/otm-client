@@ -25,6 +25,7 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [username, getUserFromStoragename] = useState('');
 
   const [passwordType, setPasswordType] = useState('');
@@ -205,6 +206,47 @@ const Login = () => {
                 </button>
               </div>
             </div>
+            {showSignUpInput && (
+              <div>
+                <input
+                  id="confirmpwd"
+                  style={{ borderColor: '#7e87ef' }}
+                  className="textbox"
+                  type="password"
+                  required
+                  placeholder={'CONFIRM PASSWORD'}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={confirmPassword}
+                />
+                {error && (
+                  <div className="flex">
+                    {/* <AiFillWarning size={22} color="red" /> */}
+                    <p className="py-2 text-xs text-red">{error}</p>
+                  </div>
+                )}
+                <div className="mt-4 flex justify-between">
+                  <button
+                    className="text-sm text-blue"
+                    type="text"
+                    onClick={(e) => toggleShowPassword(e)}
+                  >
+                    {passwordType === 'text' ? 'Hide' : 'Show'}
+                  </button>
+                  <button
+                    className="text-sm text-blue"
+                    type="text"
+                    onClick={() => {
+                      setPassword('');
+                      setResetPassword(true);
+                      resetError();
+                    }}
+                  >
+                    {showLoginInput && !resetPassword && 'Forgot Password'}
+                  </button>
+                </div>
+              </div>
+            )}
+
             <button
               disabled={!error && (!email || !password || buttonClicked)}
               type="submit"
