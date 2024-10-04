@@ -18,7 +18,7 @@ const TaskCard = ({ task, index }) => {
                 {task?.duration}
               </p>
             </div>
-            <p className="font-sfpro text-[14px] capitalize text-lightGray">
+            <p className="font-sfpro text-[14px]  text-lightGray">
               {task.description}
             </p>
             {task?.supplements && (

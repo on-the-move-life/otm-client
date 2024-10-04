@@ -29,6 +29,7 @@ function YourCircle({
       'Evening Circle': <EveningCircleIcon />,
       'Night Circle': <NightCircleIcon />,
       'Always Active Circle': <AlwaysActiveIcon />,
+      'Wellness Goals': <AlwaysActiveIcon />,
     }),
     [],
   );
