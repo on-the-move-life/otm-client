@@ -17,7 +17,7 @@ import { getColor } from '../utils';
  * @returns a component which shows the list of completed and incompleted tasks
  */
 
-function SummaryTile({ circle, date }) {
+function SummaryTile({ circle, date, tileColor }) {
   const [completedTasks, setCompletedTasks] = useState([]);
   const [incompletedTasks, setIncompletedTasks] = useState([]);
   const [showSummary, setShowSummary] = useState(false);
@@ -60,7 +60,11 @@ function SummaryTile({ circle, date }) {
           className="flex w-full flex-col items-start justify-start gap-[2px] bg-transparent"
           onClick={() => setShowSummary(true)}
         >
-          <div className="flex w-full flex-row items-center justify-between  rounded-t-[12px] bg-[#1C1C1E] px-4 py-2">
+          <div
+            className={`${
+              tileColor ? tileColor : 'bg-black-opacity-45'
+            } flex w-full flex-row items-center  justify-between rounded-t-[12px] px-4 py-2`}
+          >
             <div className="flex flex-row items-center justify-start gap-[3px]">
               {grayIcons[circle?.name]}
               <p className="text-[14px] text-[#F8F8F8]">{circle?.name}</p>
@@ -73,7 +77,7 @@ function SummaryTile({ circle, date }) {
                 styles={buildStyles({
                   rotation: 0.75,
                   strokeLinecap: 'round',
-                  trailColor: '#ffffff1f',
+                  trailColor: 'rgb(255, 254, 255, 0.12)',
                   pathColor: color,
                   textSize: '16px',
                   pathTransitionDuration: 0.5,
@@ -83,7 +87,11 @@ function SummaryTile({ circle, date }) {
             </div>
           </div>
           {completedTasks.length > 0 && (
-            <div className="flex w-full flex-row flex-wrap items-center justify-start gap-2 bg-[#1C1C1E] px-4 py-2">
+            <div
+              className={`flex w-full flex-row flex-wrap items-center justify-start gap-2  ${
+                tileColor ? tileColor : 'bg-black-opacity-45'
+              }  px-4 py-2`}
+            >
               {circle?.tasks.map((task) => {
                 return (
                   task?.completed === true && (
@@ -99,7 +107,11 @@ function SummaryTile({ circle, date }) {
             </div>
           )}
           {incompletedTasks.length > 0 && (
-            <div className="flex w-full flex-row flex-wrap items-center justify-start gap-2 rounded-b-[12px] bg-[#1C1C1E] px-4 py-2">
+            <div
+              className={`flex w-full flex-row flex-wrap items-center justify-start gap-2 rounded-b-[12px] ${
+                tileColor ? tileColor : 'bg-black-opacity-45'
+              } px-4 py-2`}
+            >
               {circle?.tasks.map((task) => {
                 return (
                   task?.completed !== true && (

@@ -7,14 +7,23 @@ import { getFormattedDate } from './utils';
 import BackButton from '../../components/BackButton';
 import Routines from './Routines';
 import Summary from './Summary';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Loader } from '../LifestyleQuiz';
 import { Error } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInitialStateSuccess } from './ReduxStore/actions';
 import { TimelineHeading } from '../Timeline/StyledComponents';
-import { FiUpload } from "react-icons/fi";
+import { FiUpload } from 'react-icons/fi';
 import domtoimage from 'dom-to-image';
+import {
+  getCurrentHourInTimezone,
+  getDeviceTimezone,
+  getGreeting,
+} from '../Fitness/utils';
+import ShareCoachScreen from './components/ShareCoachScreen';
+import Questionare from './QuestionScreen';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function MainPage() {
   // Defining states for the fetched data
@@ -29,81 +38,27 @@ function MainPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const pageRef = useRef(null);
+  const [greeting, setGreeting] = useState('');
+  const fullName = JSON.parse(localStorage.getItem('user'))['name'];
+  const firstName = fullName.split(' ')[0];
+  const [shareSummaryVisible, setShareSummaryVisible] = useState(false);
+  const [questionnaireScreen, setQuestionnaireScreen] = useState(false);
+  const [showInitialScreen, setShowInitialScreen] = useState(true);
+  const [showLifestyleLoader, setShowLifestyleLoader] = useState(true);
+  const queryString = window.location.search;
+  const queryParams = new URLSearchParams(queryString);
 
-  const { completionHistory, circles, percentCompletion } = useSelector(
-    (state) => ({
-      completionHistory: state.completionHistory,
-      circles: state.lifeStyleDetails?.circles,
-      percentCompletion: state.lifeStyleDetails?.completionHistory,
-    }),
-  );
+  const shareScreenRef = useRef(null);
 
-  const captureAndSharePage = async () => {
-    const contentArea = contentAreaRef.current;
-    if (contentArea) {
-      try {
-        console.log("Attempting to capture image");
-        
-        // Store original styles
-        const originalStyles = {
-          height: contentArea.style.height,
-          overflow: contentArea.style.overflow,
-          position: contentArea.style.position
-        };
-        
-        // Find the NavigationTab
-        const navTab = contentArea.querySelector('div[class*="fixed bottom-[78px]"]');
-        const navTabOriginalDisplay = navTab ? navTab.style.display : null;
-        
-        // Temporarily modify styles for full capture and hide NavigationTab
-        contentArea.style.height = 'auto';
-        contentArea.style.overflow = 'visible';
-        contentArea.style.position = 'static';
-        if (navTab) navTab.style.display = 'none';
-  
-        // Capture screenshot
-        const dataUrl = await domtoimage.toPng(contentArea, {
-          width: contentArea.scrollWidth,
-          height: contentArea.scrollHeight - (navTab ? navTab.offsetHeight : 0)
-        });
-        
-        // Restore original styles and visibility
-        Object.assign(contentArea.style, originalStyles);
-        if (navTab) navTab.style.display = navTabOriginalDisplay;
-  
-        console.log("Image captured successfully");
-  
-        // Create share text
-        const shareText = 'Check out my lifestyle summary!';
-  
-        // Check if it's a mobile device
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  
-        if (isMobile && navigator.share) {
-          console.log("Web Share API is supported");
-          const blob = await (await fetch(dataUrl)).blob();
-          const file = new File([blob], 'lifestyle-summary.png', {
-            type: 'image/png',
-          });
-  
-          await navigator.share({
-            text: shareText,
-            files: [file],
-          });
-        } else {
-          // Download image for desktop devices
-          const link = document.createElement('a');
-          link.download = 'lifestyle-summary.png';
-          link.href = dataUrl;
-          link.click();
-        }
-      } catch (error) {
-        console.error('Error capturing or sharing screenshot:', error);
-      }
+  const handleCaptureAndShare = () => {
+    if (shareScreenRef.current) {
+      shareScreenRef.current.captureAndSharePage();
     }
   };
 
-  const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
+  // Get the value of the 'LifestyleLoader' parameter
+  const lifestyleLoader = queryParams.get('lifestyleLoader');
+  const handleLoader = () => {};
 
   const getData = async (date) => {
     setPageLoading(true);
@@ -120,6 +75,46 @@ function MainPage() {
       setPageLoading(false);
     }
   };
+
+  useEffect(() => {
+    setQuestionnaireScreen(false);
+    // Set a timeout to hide the loader after 5 seconds (5000 ms)
+    if (lifestyleLoader) {
+      getData(selectedDate);
+      const timer = setTimeout(() => {
+        console.log('sixes');
+        setShowLifestyleLoader(false);
+        navigate('/lifestyle-routine');
+      }, 5000);
+
+      // Cleanup the timer if the component is unmounted
+      return () => clearTimeout(timer);
+    }
+  }, [lifestyleLoader]);
+
+  useEffect(() => {
+    const timezone = getDeviceTimezone();
+    const currentHour = getCurrentHourInTimezone(timezone);
+    const greetingMessage = getGreeting(currentHour);
+    setGreeting(greetingMessage);
+  }, []);
+
+  const { completionHistory, circles, percentCompletion, lifeStyleMemberCode } =
+    useSelector((state) => ({
+      completionHistory: state.completionHistory,
+      circles: state.lifeStyleDetails?.circles,
+      percentCompletion: state.lifeStyleDetails?.completionHistory,
+      lifeStyleMemberCode: state.lifeStyleDetails?.memberCode,
+    }));
+
+  useEffect(() => {
+    if (lifeStyleMemberCode && lifeStyleMemberCode !== 'GENERAL') {
+      setShowInitialScreen(false);
+    }
+  }, [lifeStyleMemberCode]);
+
+  const memberCode = JSON.parse(localStorage.getItem('user'))?.code;
+
   useLayoutEffect(() => {
     const handleResize = () => {
       if (contentAreaRef.current) {
@@ -128,7 +123,7 @@ function MainPage() {
         const localNavHeight = 60; // Height of the NavigationTab
 
         // Calculate the available height for the content area
-        const availableHeight = window.innerHeight - globalNavHeight - localNavHeight;
+        const availableHeight = window.innerHeight - globalNavHeight;
 
         // Set the content area height
         setContentAreaHeight(availableHeight);
@@ -143,7 +138,6 @@ function MainPage() {
     };
   }, []);
 
-
   // this will call the API whenever the date is changed
   useEffect(() => {
     if (reloadCounter === false) {
@@ -154,8 +148,8 @@ function MainPage() {
   const renderContent = () => {
     if (pageLoading) {
       return (
-        <div className="fixed top-0 left-0 z-50 w-full h-screen bg-black">
-          <Loader className="w-full h-full" />
+        <div className="fixed left-0 top-0 z-50 h-screen w-full bg-black">
+          <Loader className="h-full w-full" />
         </div>
       );
     }
@@ -170,63 +164,192 @@ function MainPage() {
 
     return (
       <>
-        <div className="flex flex-col items-center justify-start h-full gap-3 px-3 py-5">
-          <TimelineHeading className="mt-[70px] w-full text-left">
-            Lifestyle
-          </TimelineHeading>
-          {completionHistory && (
-            <Calendar
-              completionHistory={completionHistory}
-              isSummaryPage={section === 1}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-            />
-          )}
-          { section == 1 ? (
-          <div className='flex justify-between items-center w-full px-3'>
-            <p className='text-lg'>Summary</p>
-            <button className='border-blue-gray-400 border-[1px] rounded-md py-2 px-4 text-white flex gap-2 text-sm cursor-pointer' onClick={captureAndSharePage}>Share With Coach <span className='text-[#DEF988] text-[18px]'><FiUpload /></span></button>
-          </div>
-          ): null
-           }
-          {section === 0 ? (
-            <Routines
-              circles={circles}
-              date={selectedDate}
-              setReloadCounter={setReloadCounter}
-              setIsCircleOpen={setIsCircleOpen}
-            />
-          ) : (
-            <Summary circles={circles} date={selectedDate} />
-          )}
-        </div>
-        {!isCircleOpen && (
-          <div className="fixed bottom-[78px] left-0 w-full py-4 bg-black/20 backdrop-blur-sm z-50">
-            <NavigationTab
-              selectedIndex={section}
-              setSelectedIndex={setSection}
-            />
-          </div>
+        {!pageLoading && (
+          <>
+            {' '}
+            {questionnaireScreen === false &&
+              showLifestyleLoader &&
+              lifestyleLoader === 'true' && (
+                <div className="  absolute z-50 flex h-screen w-full items-center bg-black   px-5">
+                  <img
+                    style={{
+                      filter: 'brightness(1.5)', // Increase brightness (1.5 means 50% brighter)
+                    }}
+                    className="absolute left-0 -z-20 h-screen w-full"
+                    src="/assets/lifestyle-main-frame.svg"
+                  />
+                  <div className="my-auto rounded-lg  ">
+                    <div className="relative flex justify-center">
+                      <img
+                        loading="lazy"
+                        src="./assets/lifestyle-ai-bg.svg"
+                        className="w-full pb-[27px] "
+                      />
+                      <img
+                        loading="lazy"
+                        src="./assets/lifestyle-check.svg"
+                        className=" absolute  top-16 pb-[27px] "
+                      />
+                    </div>
+                    <p className="w-full text-center text-[20px] text-yellow">
+                      Give us a few seconds to work on your responses to create
+                      the perfect lifestyle design
+                    </p>
+                  </div>
+                </div>
+              )}
+            {questionnaireScreen === true && (
+              <Questionare setQuestionnaireScreen={setQuestionnaireScreen} />
+            )}
+            {!lifestyleLoader && questionnaireScreen === false && (
+              <div className="h-full  ">
+                <img
+                  style={{
+                    filter: ' saturate(1.8) brightness(0.7) ', // Increase brightness (1.5 means 50% brighter)
+                  }}
+                  className="absolute top-0 -z-20 h-screen w-full"
+                  src="/assets/lifestyle-main-frame.svg"
+                />
+                <div>
+                  <div className="pointer-events-none absolute opacity-0 ">
+                    <ShareCoachScreen
+                      ref={shareScreenRef}
+                      circles={circles}
+                      date={selectedDate}
+                      completionHistory={completionHistory}
+                      setShareSummaryVisible={setShareSummaryVisible}
+                    />
+                  </div>
+
+                  {completionHistory && shareSummaryVisible === false && (
+                    <>
+                      {' '}
+                      <>
+                        <div className="flex h-full flex-col items-center justify-start gap-3 px-3 py-5 pb-16 pt-[76px]">
+                          <div className="w-full">
+                            <h3 className="flex w-full text-start font-sfpro text-[14px] text-offwhite">
+                              {greeting} {firstName}
+                            </h3>
+                            <div className="flex w-11/12 items-start">
+                              <div className="flex-1">
+                                <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
+                                  Lifestyle
+                                </h2>
+
+                                <div className=" text-[14px] text-white-opacity-50">
+                                  Everyday is an opportunity to do some main
+                                  character shit.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {lifeStyleMemberCode &&
+                            lifeStyleMemberCode === 'GENERAL' && (
+                              <div className="mt-[24px] flex w-full flex-col items-center gap-2">
+                                <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
+                                  <div className="flex w-full justify-between">
+                                    <img
+                                      loading="lazy"
+                                      src="./assets/lifestyle-check.svg"
+                                      className=" h-[120px] w-[120px] p-4 "
+                                    />
+
+                                    <div className="mt-2 flex w-full flex-1 flex-col justify-center">
+                                      <h3 className="  font-sfpro text-[18px] font-medium text-offwhite">
+                                        Unlock your lifestyle design
+                                      </h3>
+                                      <p className="relative z-10 mt-2 max-w-[200px] font-sfpro  text-[14px] font-medium text-white-opacity-50">
+                                        Answer a few questions to get daily
+                                        habits tailored to your goals
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div
+                                    onClick={() => setQuestionnaireScreen(true)}
+                                    className=" mt-2 w-full rounded-lg bg-white p-2.5 text-center font-sfpro text-[14px] font-medium text-black" // Replaced p-[10px] with Tailwind equivalent
+                                  >
+                                    Let's Go
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                          {lifeStyleMemberCode &&
+                            lifeStyleMemberCode !== 'GENERAL' &&
+                            showInitialScreen === false && (
+                              <>
+                                {' '}
+                                {completionHistory && (
+                                  <Calendar
+                                    completionHistory={completionHistory}
+                                    isSummaryPage={section === 1}
+                                    selectedDate={selectedDate}
+                                    setSelectedDate={setSelectedDate}
+                                  />
+                                )}
+                                {section == 1 ? (
+                                  <div className="flex w-full items-center justify-between px-3">
+                                    <p className="text-lg">Summary</p>
+                                    <button
+                                      className="flex cursor-pointer gap-2 rounded-md bg-black-opacity-45  px-4 py-2 text-sm text-white"
+                                      onClick={() => handleCaptureAndShare()}
+                                    >
+                                      Share with coach{' '}
+                                      <span className="text-[18px] text-[#DEF988]">
+                                        <FiUpload />
+                                      </span>
+                                    </button>
+                                  </div>
+                                ) : null}
+                                {section === 0 ? (
+                                  <Routines
+                                    circles={circles}
+                                    date={selectedDate}
+                                    setReloadCounter={setReloadCounter}
+                                    setIsCircleOpen={setIsCircleOpen}
+                                  />
+                                ) : (
+                                  <Summary
+                                    circles={circles}
+                                    date={selectedDate}
+                                  />
+                                )}
+                              </>
+                            )}
+                        </div>
+
+                        {lifeStyleMemberCode &&
+                          lifeStyleMemberCode !== 'GENERAL' &&
+                          !lifestyleLoader &&
+                          !isCircleOpen &&
+                          showInitialScreen === false && (
+                            <div className="fixed bottom-[78px] left-0 z-50 w-full bg-black/20 py-4 backdrop-blur-sm">
+                              <NavigationTab
+                                selectedIndex={section}
+                                setSelectedIndex={setSection}
+                              />
+                            </div>
+                          )}
+                      </>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </>
     );
   };
 
   return (
-    <div className="relative h-screen overflow-hidden">
-      <img
-        className="absolute right-0 -top-4 -z-20 "
-        src="/assets/main-frame.svg"
-      />
-      <img
-        className="absolute right-[55px] top-10 -z-10 "
-        src="/assets/lifestyle-logo.svg"
-      />
-      <div 
-        className="h-full overflow-y-auto content-area" 
+    <div className=" h-screen overflow-hidden">
+      <div
+        className="content-area h-full overflow-y-auto"
         ref={contentAreaRef}
         style={{
-          height: `${contentAreaHeight}px`,
+          height: shareSummaryVisible === true ? '' : `${contentAreaHeight}px`,
         }}
       >
         {renderContent()}

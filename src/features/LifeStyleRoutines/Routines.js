@@ -5,7 +5,7 @@ function Routines({ circles, date, setReloadCounter, setIsCircleOpen }) {
   return (
     <div className="flex w-full flex-col items-start justify-center gap-3">
       <h3
-        className="text-[20px] capitalize text-[#FFF]"
+        className="text-[20px] capitalize text-offwhite"
         style={{ lineHeight: '32px' }}
       >
         Your Circles

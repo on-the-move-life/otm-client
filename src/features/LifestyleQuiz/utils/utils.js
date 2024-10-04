@@ -106,12 +106,14 @@ export function isAnyEmptyResponse(currentQuestion, response) {
 
 export function isAnyEmptyResponseFitness(currentQuestion, response) {
   let isEmpty = false;
-  console.log(
-    'uuppuuppuuppuuppuuppuupp',
-    currentQuestion,
-    Object.keys(response).length,
-    response,
-  );
+  if (currentQuestion) {
+    const checkRequiredProperty = (isEmpty = currentQuestion.some(
+      (ques, idx) => {
+        if (ques.hasOwnProperty('isRequired') === false) return true;
+      },
+    ));
+  }
+
   if (currentQuestion && Object.keys(response).length !== 0) {
     isEmpty = currentQuestion.some((ques, idx) => {
       if (!ques.isRequired) {
