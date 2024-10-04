@@ -26,6 +26,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const [username, getUserFromStoragename] = useState('');
 
   const [passwordType, setPasswordType] = useState('');
@@ -38,6 +39,12 @@ const Login = () => {
     background-clip: text;
     color: transparent;
   `;
+
+  useEffect(() => {
+    if (password === confirmPassword && passwordError === true) {
+      setPasswordError(false);
+    }
+  }, [password, confirmPassword]);
 
   function toggleShowPassword(e) {
     e.preventDefault();
@@ -66,10 +73,13 @@ const Login = () => {
   }
 
   const handleEmailAuth = (e) => {
-    setButtonClicked(true);
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setPasswordError(true);
+    }
 
-    if (email && password) {
+    if (email && password && password === confirmPassword) {
+      setButtonClicked(true);
       let body = {
         email,
         password,
@@ -126,6 +136,7 @@ const Login = () => {
   function handleBack() {
     setEmail('');
     setPassword('');
+    setConfirmPassword('');
     getUserFromStoragename('');
     reset();
     setShowLoginInput(false);
@@ -140,6 +151,8 @@ const Login = () => {
     console.log('error', error);
     console.log('button Clicked', buttonClicked);
   }, [buttonClicked, error]);
+
+  console.log('xxdfdf', email, password, buttonClicked, confirmPassword);
 
   return (
     <>
@@ -249,24 +262,21 @@ const Login = () => {
                 </div>
               </div>
             )}
+            {passwordError && (
+              <p style={{ color: 'red', fontSize: '0.9em' }}>
+                "Password not matched"
+              </p>
+            )}
 
             <button
               disabled={
                 !error &&
-                (!email ||
-                  !password ||
-                  buttonClicked ||
-                  !confirmPassword ||
-                  password !== confirmPassword)
+                (!email || !password || buttonClicked || !confirmPassword)
               }
               type="submit"
               className={`continueButton w-full ${
                 !error &&
-                (!email ||
-                  !password ||
-                  buttonClicked ||
-                  !confirmPassword ||
-                  password !== confirmPassword)
+                (!email || !password || buttonClicked || !confirmPassword)
                   ? 'bg-darkGray'
                   : 'bg-blue'
               }`}
@@ -277,8 +287,10 @@ const Login = () => {
         </LoginInput>
       ) : (
         <AnimatedComponent>
-          <div className="flex h-screen flex-col items-center justify-evenly bg-landing-cover bg-cover bg-no-repeat">
-            <div className="flex h-screen w-full flex-col items-center justify-between py-16">
+          <div className="flex h-screen   flex-col items-center justify-evenly bg-red bg-landing-cover bg-cover bg-no-repeat">
+            <div className="absolute left-0 top-0 z-[80] h-screen w-full  bg-black-opacity-40"></div>
+
+            <div className="relative z-[100] flex h-screen w-full flex-col items-center justify-between py-16">
               <div className="mt-8 h-6 ">
                 <img
                   loading="lazy"
