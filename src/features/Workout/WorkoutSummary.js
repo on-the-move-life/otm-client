@@ -275,7 +275,7 @@ const WorkoutSummary = () => {
                   </h4>
 
                   <div
-                    className="countdown__inner__sec      text-[100px]"
+                    className="countdown__inner__sec w-full     text-[100px]"
                     style={{ font: '100px' }}
                   >
                     {workoutSummary?.consistency?.total}
