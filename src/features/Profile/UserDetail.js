@@ -24,6 +24,8 @@ import { RxCross1 } from 'react-icons/rx';
 import { Name } from '../LifestyleQuiz';
 import { WhatsappShareButton } from 'react-share';
 import GiftCard from '../ReferralUser/GiftCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProfileDetail } from '../../store/actions/profile.action';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -48,7 +50,6 @@ const IconLabel = styled.div`
 
 const UserDetails = ({ showHistory }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [memberData, setMemberData] = useState();
   const profilePicRef = useRef(null);
   const profilePicCameraRef = useRef(null);
   const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
@@ -61,6 +62,8 @@ const UserDetails = ({ showHistory }) => {
   const [showReferralLinkPopup, setShowReferralLinkPopup] = useState(false);
   const [showReferralWorkPopup, setShowReferralWorkPopup] = useState(false);
   const currentDate = new Date().getDate();
+  const memberData = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
 
   const imageUrl =
     'https://storage.googleapis.com/otm_client_profile_pictures/DUAAKA3938_Dummy_Aakash_7921.jpg';
@@ -86,6 +89,11 @@ Here's a 20% off discount because I'd love for you to get healthy too!
   const showElite =
     memberData && parseInt(memberData.avgIntensity) > 10 ? true : false;
 
+  useEffect(() => {
+    if (memberData.profileDetial === null)
+      dispatch(fetchProfileDetail({ code }));
+  }, []);
+
   async function getMemberData(user) {
     try {
       const res = await axiosClient.get(`/profile`, {
@@ -97,7 +105,6 @@ Here's a 20% off discount because I'd love for you to get healthy too!
         // Trick to avoid the memory caching by the browser, so that the updated profile pic is displayed
         const uniqueKey = Date.now();
         setUniqueImageURLKey(`${data?.profilePicture}?key=${uniqueKey}`);
-        setMemberData({ ...data, ...user });
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -111,7 +118,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
     logout();
   }
 
-  if (isLoading) {
+  if (memberData.profileLoading) {
     return <Loader />;
   }
 
@@ -464,18 +471,19 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                     <div className="text-[32px] font-medium capitalize text-offwhite">
                       {memberData.name}
                     </div>
-                    <div className='flex items-center justify-center'>
+                    <div className="flex items-center justify-center">
                       {memberData.avgIntensity > 10 && (
                         <span
-                          className={`mx-2 rounded  ${showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
-                            } px-2 text-[13px] font-extrabold text-black`}
+                          className={`mx-2 rounded  ${
+                            showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
+                          } px-2 text-[13px] font-extrabold text-black`}
                         >
                           {showElite ? 'Elite' : 'Advanced'}
                         </span>
                       )}
                       {memberData.isLegend && (
                         <div className="flex items-center ">
-                          <div className="flex items-center my-2 rounded legend-tag w-fit">
+                          <div className="legend-tag my-2 flex w-fit items-center rounded">
                             <img src="assets/medal.svg" alt="" />
                             <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
                               LEGEND

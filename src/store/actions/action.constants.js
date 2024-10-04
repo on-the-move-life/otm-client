@@ -7,3 +7,7 @@ export const leaderboardType = {
   FETCH_FITNESS_SCORE: 'leaderboard/get_fitness_score',
   FETCH_CONSISTENCY: 'leaderboard/get_consistency',
 };
+
+export const ProfileType = {
+  FETCH_PROFILE_DETAIL: 'profile/get_profile_detail',
+};

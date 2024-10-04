@@ -7,6 +7,7 @@ import workoutReducer from '../features/Workout/WorkoutSlice';
 import workoutFlexReducer from '../features/Workout/FlexSlice';
 import timelineReducers from './reducers/timeline.reducers';
 import leaderboardReducers from './reducers/leaderboard.reducers';
+import profileReducer from './reducers/profile.reducer';
 
 // import { configureStore } from '@reduxjs/toolkit';
 
@@ -17,6 +18,7 @@ const { createStore, combineReducers, applyMiddleware } = require('redux');
 const rootReducer = combineReducers({
   timeline: timelineReducers,
   leaderboard: leaderboardReducers,
+  profile: profileReducer,
 });
 
 const store = configureStore({

@@ -1,6 +1,8 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import {
+  communityTimelinePageNumber,
+  personalTimelinePageNumber,
   timelineCommunityDetail,
   timelineCommunityLoading,
   timelinePersonalDetail,
@@ -16,8 +18,8 @@ import { timelineType } from '../actions/action.constants';
 // Worker saga: perform increment asynchronously
 function* fetchPersonalTimelineData(action) {
   try {
-    console.log('yyuu', action);
     yield put(timelinePersonalLoading({ loading: true }));
+    yield put(personalTimelinePageNumber({ page: action.payload.page }));
     const response = yield call(fetchPersonalCommumity, action.payload);
     yield put(timelinePersonalDetail({ detail: response.data }));
   } catch (error) {
@@ -30,10 +32,12 @@ function* fetchPersonalTimelineData(action) {
 function* fetchCommunityTimelineData(action) {
   try {
     yield put(timelineCommunityLoading({ loading: true }));
+    console.log();
+    yield put(communityTimelinePageNumber({ page: action.payload.page }));
     //   yield put(setAggregationsLoading({ loading: true }));
 
     const response = yield call(fetchAllCommumity, action.payload);
-    console.log('090909090990909090', response.data);
+
     yield put(timelineCommunityDetail({ detail: response.data }));
   } catch (error) {
     toast.error('Something went wrong');

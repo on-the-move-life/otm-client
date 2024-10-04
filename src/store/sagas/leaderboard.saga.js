@@ -17,7 +17,6 @@ import { fetchLeaderboardApi } from '../../api/leaderboardApi';
 // Worker saga: perform increment asynchronously
 function* fetchFitnessLeaderboardData(action) {
   try {
-    console.log('yyuu', action);
     yield put(leaderboardFitnessScoreLoading({ loading: true }));
     const response = yield call(fetchLeaderboardApi, action.payload);
     yield put(leaderboardFitnessScoreDetail({ detail: response.data }));
@@ -32,7 +31,6 @@ function* fetchConsistencyLeaderboardData(action) {
   try {
     yield put(leaderboardConsistencyLoading({ loading: true }));
     //   yield put(setAggregationsLoading({ loading: true }));
-    console.log('4535345345cbcxgcvb', action.payload);
     const response = yield call(fetchLeaderboardApi, action.payload);
 
     yield put(leaderboardConsistencyDetail({ detail: response.data }));

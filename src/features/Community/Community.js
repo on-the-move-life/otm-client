@@ -33,7 +33,10 @@ const Community = () => {
     console.log('user : ', user);
     if (user) {
       console.log('user : ', user);
-      if (getTimeline.communityDetail === null) {
+      if (
+        getTimeline.communityDetail === null ||
+        getTimeline.communityTimelinePage > 1
+      ) {
         dispatch(
           fetchTimelineCommunityDetails({
             user: otmUser,
@@ -43,7 +46,10 @@ const Community = () => {
         );
       }
 
-      if (getTimeline.personalDetail === null) {
+      if (
+        getTimeline.personalDetail === null ||
+        getTimeline?.personalTimelinePage > 1
+      ) {
         dispatch(
           fetchTimelinePersonalDetails({
             user: otmUser,
