@@ -29,6 +29,7 @@ const Login = () => {
   const [username, getUserFromStoragename] = useState('');
 
   const [passwordType, setPasswordType] = useState('');
+  const [confirmPasswordType, setConfirmPasswordType] = useState('');
   const [resetPassword, setResetPassword] = useState(false);
 
   const GradientText = styled.div`
@@ -48,6 +49,19 @@ const Login = () => {
     } else {
       pwd.type = 'password';
       setPasswordType('password');
+    }
+  }
+
+  function toggleShowConfirmPassword(e) {
+    e.preventDefault();
+
+    const confirmpwd = document.getElementById('confirmpwd');
+    if (confirmpwd.type === 'password') {
+      confirmpwd.type = 'text';
+      setConfirmPasswordType('text');
+    } else {
+      confirmpwd.type = 'password';
+      setConfirmPasswordType('password');
     }
   }
 
@@ -228,30 +242,31 @@ const Login = () => {
                   <button
                     className="text-sm text-blue"
                     type="text"
-                    onClick={(e) => toggleShowPassword(e)}
+                    onClick={(e) => toggleShowConfirmPassword(e)}
                   >
-                    {passwordType === 'text' ? 'Hide' : 'Show'}
-                  </button>
-                  <button
-                    className="text-sm text-blue"
-                    type="text"
-                    onClick={() => {
-                      setPassword('');
-                      setResetPassword(true);
-                      resetError();
-                    }}
-                  >
-                    {showLoginInput && !resetPassword && 'Forgot Password'}
+                    {confirmPasswordType === 'text' ? 'Hide' : 'Show'}
                   </button>
                 </div>
               </div>
             )}
 
             <button
-              disabled={!error && (!email || !password || buttonClicked)}
+              disabled={
+                !error &&
+                (!email ||
+                  !password ||
+                  buttonClicked ||
+                  !confirmPassword ||
+                  password !== confirmPassword)
+              }
               type="submit"
               className={`continueButton w-full ${
-                !error && (!email || !password || buttonClicked)
+                !error &&
+                (!email ||
+                  !password ||
+                  buttonClicked ||
+                  !confirmPassword ||
+                  password !== confirmPassword)
                   ? 'bg-darkGray'
                   : 'bg-blue'
               }`}
