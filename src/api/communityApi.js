@@ -1,11 +1,11 @@
-import { leaderboardAxiosClient } from './leaderboardApiClient';
+import { timelineAxiosClient } from './timelineApiClient';
 
 export const fetchPersonalCommumity = (params) =>
-  leaderboardAxiosClient.get(
+  timelineAxiosClient.get(
     `?type=personal&page=${params.page}&email=${params.user.email}`,
   );
 
 export const fetchAllCommumity = (params) =>
-  leaderboardAxiosClient.get(
+  timelineAxiosClient.get(
     `?type=community&page=${params.page}&email=${params.user.email}`,
   );

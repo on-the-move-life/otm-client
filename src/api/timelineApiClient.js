@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-export const leaderboardAxiosClient = axios.create({
-  baseURL: `${process.env.REACT_APP_INSIGHT_SERVICE_BASE_URL}/leaderboard`,
+export const timelineAxiosClient = axios.create({
+  baseURL: `${process.env.REACT_APP_BASE_URL}/api/v1/timeline`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });
 
-leaderboardAxiosClient.interceptors.response.use(
+timelineAxiosClient.interceptors.response.use(
   function (response) {
     return response;
   },

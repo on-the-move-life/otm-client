@@ -1,4 +1,9 @@
-export const communityType = {
-  FETCH_PERSONAL_DETAIL: 'community/get_personal_value',
-  FETCH_ALL_DETAIL: 'community/get_all_value',
+export const timelineType = {
+  FETCH_PERSONAL_DETAIL: 'timeline/get_personal_detail',
+  FETCH_COMMUNITY_DETAIL: 'timeline/get__community_detail',
+};
+
+export const leaderboardType = {
+  FETCH_FITNESS_SCORE: 'leaderboard/get_fitness_score',
+  FETCH_CONSISTENCY: 'leaderboard/get_consistency',
 };

@@ -5,7 +5,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootSaga from './sagas';
 import workoutReducer from '../features/Workout/WorkoutSlice';
 import workoutFlexReducer from '../features/Workout/FlexSlice';
-import communityReducers from './reducers/community.reducers';
+import timelineReducers from './reducers/timeline.reducers';
+import leaderboardReducers from './reducers/leaderboard.reducers';
+
 // import { configureStore } from '@reduxjs/toolkit';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -13,7 +15,8 @@ const sagaMiddleware = createSagaMiddleware();
 const { createStore, combineReducers, applyMiddleware } = require('redux');
 
 const rootReducer = combineReducers({
-  community: communityReducers,
+  timeline: timelineReducers,
+  leaderboard: leaderboardReducers,
 });
 
 const store = configureStore({
