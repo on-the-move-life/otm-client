@@ -170,14 +170,15 @@ function MainPage() {
             {questionnaireScreen === false &&
               showLifestyleLoader &&
               lifestyleLoader === 'true' && (
-                <div className="  absolute z-50 flex h-screen w-full items-center bg-black   px-5">
+                <div className="  absolute  top-0 z-50 flex h-screen w-full items-center bg-black   px-5">
                   <img
                     style={{
-                      filter: 'brightness(1.5)', // Increase brightness (1.5 means 50% brighter)
+                      filter: ' saturate(1.8) brightness(0.7) ',
                     }}
-                    className="absolute left-0 -z-20 h-screen w-full"
+                    className="absolute left-0 top-0 -z-20 h-screen w-full"
                     src="/assets/lifestyle-main-frame.svg"
                   />
+
                   <div className="my-auto rounded-lg  ">
                     <div className="relative flex justify-center">
                       <img
@@ -205,7 +206,7 @@ function MainPage() {
               <div className="h-full  ">
                 <img
                   style={{
-                    filter: ' saturate(1.8) brightness(0.7) ', // Increase brightness (1.5 means 50% brighter)
+                    filter: ' saturate(1.8) brightness(0.7) ',
                   }}
                   className="absolute top-0 -z-20 h-screen w-full"
                   src="/assets/lifestyle-main-frame.svg"

@@ -12,17 +12,19 @@ function Routines({ circles, date, setReloadCounter, setIsCircleOpen }) {
       </h3>
       {circles &&
         circles.map((circle) => {
-          return (
-            <YourCircle
-              name={circle?.name}
-              percentCompletion={circle?.completionPercentage}
-              tasks={circle?.tasks}
-              date={date}
-              setReloadCounter={setReloadCounter}
-              time={circle?.tasks?.time}
-              setIsCircleOpen={setIsCircleOpen}
-            />
-          );
+          if (circle.tasks.length > 0) {
+            return (
+              <YourCircle
+                name={circle?.name}
+                percentCompletion={circle?.completionPercentage}
+                tasks={circle?.tasks}
+                date={date}
+                setReloadCounter={setReloadCounter}
+                time={circle?.tasks?.time}
+                setIsCircleOpen={setIsCircleOpen}
+              />
+            );
+          } else return null;
         })}
     </div>
   );
