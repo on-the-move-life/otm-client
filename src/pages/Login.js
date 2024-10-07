@@ -6,6 +6,8 @@ import LoginInput from '../components/LoginInput';
 import { HiOutlineMail, HiArrowNarrowLeft } from 'react-icons/hi';
 import AnimatedComponent from '../components/AnimatedComponent';
 import styled from 'styled-components';
+import { BiHide } from 'react-icons/bi';
+import { BiShow } from 'react-icons/bi';
 
 const Login = () => {
   const {
@@ -195,11 +197,11 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <div>
+            <div className="relative mb-[32px]">
               <input
                 id="pwd"
                 style={{ borderColor: '#7e87ef' }}
-                className="textbox"
+                className="textbox pr-[30px]"
                 type="password"
                 required
                 placeholder={resetPassword ? 'NEW PASSWORD' : 'PASSWORD'}
@@ -212,13 +214,13 @@ const Login = () => {
                   <p className="py-2 text-xs text-red">{error}</p>
                 </div>
               )}
-              <div className="mt-4 flex justify-between">
+              <div className="absolute right-1 top-2 mt-4 flex justify-between">
                 <button
                   className="text-sm text-blue"
                   type="text"
                   onClick={(e) => toggleShowPassword(e)}
                 >
-                  {passwordType === 'text' ? 'Hide' : 'Show'}
+                  {passwordType === 'text' ? <BiHide /> : <BiShow />}
                 </button>
                 <button
                   className="text-sm text-blue"
@@ -234,11 +236,11 @@ const Login = () => {
               </div>
             </div>
             {showSignUpInput && (
-              <div>
+              <div className="relative">
                 <input
                   id="confirmpwd"
                   style={{ borderColor: '#7e87ef' }}
-                  className="textbox"
+                  className="textbox pr-[30px] "
                   type="password"
                   required
                   placeholder={'CONFIRM PASSWORD'}
@@ -251,20 +253,20 @@ const Login = () => {
                     <p className="py-2 text-xs text-red">{error}</p>
                   </div>
                 )}
-                <div className="mt-4 flex justify-between">
+                <div className="absolute right-1 top-2 mt-4 flex justify-between">
                   <button
                     className="text-sm text-blue"
                     type="text"
                     onClick={(e) => toggleShowConfirmPassword(e)}
                   >
-                    {confirmPasswordType === 'text' ? 'Hide' : 'Show'}
+                    {confirmPasswordType === 'text' ? <BiHide /> : <BiShow />}
                   </button>
                 </div>
               </div>
             )}
             {passwordError && (
               <p style={{ color: 'red', fontSize: '0.9em' }}>
-                "Password not matched"
+                Password do not matched
               </p>
             )}
 
