@@ -284,7 +284,7 @@ const Login = () => {
             )}
             {passwordError && (
               <p style={{ color: 'red', fontSize: '0.9em' }}>
-                Password do not matched
+                Password do not match
               </p>
             )}
 
