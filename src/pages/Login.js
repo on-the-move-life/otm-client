@@ -76,11 +76,15 @@ const Login = () => {
 
   const handleEmailAuth = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (confirmPassword && password !== confirmPassword) {
       setPasswordError(true);
     }
 
-    if (email && password && password === confirmPassword) {
+    if (
+      email &&
+      password &&
+      (!confirmPassword || password === confirmPassword)
+    ) {
       setButtonClicked(true);
       let body = {
         email,
@@ -222,8 +226,10 @@ const Login = () => {
                 >
                   {passwordType === 'text' ? <BiHide /> : <BiShow />}
                 </button>
+              </div>
+              <div className="mt-4 flex justify-end">
                 <button
-                  className="text-sm text-blue"
+                  className="text-sm text-blue "
                   type="text"
                   onClick={() => {
                     setPassword('');
@@ -272,13 +278,13 @@ const Login = () => {
 
             <button
               disabled={
-                !error &&
-                (!email || !password || buttonClicked || !confirmPassword)
+                (!error && (!email || !password || buttonClicked)) ||
+                (showSignUpInput && !confirmPassword)
               }
               type="submit"
               className={`continueButton w-full ${
-                !error &&
-                (!email || !password || buttonClicked || !confirmPassword)
+                (!error && (!email || !password || buttonClicked)) ||
+                (showSignUpInput && !confirmPassword)
                   ? 'bg-darkGray'
                   : 'bg-blue'
               }`}
