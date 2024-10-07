@@ -143,6 +143,8 @@ const Login = () => {
     setEmail('');
     setPassword('');
     setConfirmPassword('');
+    setPasswordType('password');
+    setConfirmPasswordType('password');
     getUserFromStoragename('');
     reset();
     setShowLoginInput(false);
@@ -194,7 +196,7 @@ const Login = () => {
             )}
             <input
               style={{ borderColor: '#7e87ef', marginBottom: '2em' }}
-              className="textbox"
+              className="textbox "
               type="email"
               placeholder="EMAIL"
               required
@@ -224,10 +226,16 @@ const Login = () => {
                   type="text"
                   onClick={(e) => toggleShowPassword(e)}
                 >
-                  {passwordType === 'text' ? <BiHide /> : <BiShow />}
+                  {passwordType === 'text' ? (
+                    <BiHide className="text-lg" />
+                  ) : (
+                    <BiShow className="text-lg" />
+                  )}
                 </button>
               </div>
-              <div className="mt-4 flex justify-end">
+              <div
+                className={`${showLoginInput && 'mt-4 '}   flex justify-end `}
+              >
                 <button
                   className="text-sm text-blue "
                   type="text"
@@ -265,7 +273,11 @@ const Login = () => {
                     type="text"
                     onClick={(e) => toggleShowConfirmPassword(e)}
                   >
-                    {confirmPasswordType === 'text' ? <BiHide /> : <BiShow />}
+                    {confirmPasswordType === 'text' ? (
+                      <BiHide className="text-lg" />
+                    ) : (
+                      <BiShow className="text-lg" />
+                    )}
                   </button>
                 </div>
               </div>
