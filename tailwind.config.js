@@ -5,7 +5,7 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        offwhite: 'rgba(248.48, 248.48, 248.48, 0.8)',
+        offwhite: 'rgba(248, 248, 248, 0.8)',
         customWhite: '#F8F8F8',
         gray: '#3B3B3B',
         green: '#5ECC7B',
