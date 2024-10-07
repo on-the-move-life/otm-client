@@ -426,9 +426,9 @@ function LandingPage() {
                                 fontSize="14px"
                               >
                                 <span className="text-offwhite">
-                                  Custom made meal planning
+                                  Elite workout programs
                                 </span>{' '}
-                                suited to your taste
+                                designed for maximum results
                               </StarterText>
                             </div>
                             <div className="flex w-[280px] ">
