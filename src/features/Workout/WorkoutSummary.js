@@ -52,38 +52,54 @@ const WorkoutSummary = () => {
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
  
-const captureAndShareToWhatsApp = async () => {
-  if (summaryRef.current) {
-    try {
-      // Capture screenshot using html2canvas
-      const canvas = await html2canvas(summaryRef.current);
-      const dataUrl = canvas.toDataURL('image/png');
-
-      // Create share text
-      const shareText = 'Check out my workout summary!';
-
-      // Check if Web Share API is supported
-      if (navigator.share) {
+  const captureAndShareToWhatsApp = async () => {
+    if (summaryRef.current) {
+      try {
+        // Capture screenshot using html2canvas
+        const canvas = await html2canvas(summaryRef.current);
+        const dataUrl = canvas.toDataURL('image/png');
+  
+        // Create share text
+        const shareText = 'Check out my workout summary!';
+  
+        // Convert data URL to Blob
         const blob = await (await fetch(dataUrl)).blob();
-        const file = new File([blob], 'workout-summary.png', {
-          type: 'image/png',
-        });
-
-        await navigator.share({
-          text: shareText,
-          files: [file],
-        });
-      } else {
-        // Fallback for desktop browsers
-        const encodedText = encodeURIComponent(shareText);
-        const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
-        window.open(whatsappUrl, '_blank');
+        const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
+  
+        // Check if Web Share API is supported
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'Workout Summary',
+              text: shareText
+            });
+          } catch (error) {
+            console.error('Error sharing via Web Share API:', error);
+            // Fallback to WhatsApp URL scheme
+            shareViaWhatsApp(dataUrl, shareText);
+          }
+        } else {
+          // Fallback to WhatsApp URL scheme
+          shareViaWhatsApp(dataUrl, shareText);
+        }
+      } catch (error) {
+        console.error('Error capturing or sharing screenshot:', error);
       }
-    } catch (error) {
-      console.error('Error capturing or sharing screenshot:', error);
     }
-  }
-};
+  };
+  
+  const shareViaWhatsApp = (dataUrl, text) => {
+    // Encode the image data URL
+    const encodedImage = encodeURIComponent(dataUrl);
+    const encodedText = encodeURIComponent(text);
+  
+    // Construct the WhatsApp URL
+    const whatsappUrl = `whatsapp://send?text=${encodedText}&data=${encodedImage}`;
+  
+    // Open the WhatsApp URL
+    window.location.href = whatsappUrl;
+  };
   const getInputValuesFromLocalStorage = () => {
     const storedInputValues = {};
     if (inputIds !== undefined && inputIds.length > 0) {
