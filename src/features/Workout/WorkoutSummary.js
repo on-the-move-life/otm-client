@@ -20,7 +20,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 import { axiosflexClient } from './apiFlexClient.js';
-import domtoimage from 'dom-to-image';
+import html2canvas from 'html2canvas'
 import Counter from '../../components/Counter';
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
@@ -51,38 +51,39 @@ const WorkoutSummary = () => {
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
-  const captureAndShareToWhatsApp = async () => {
-    if (summaryRef.current) {
-      try {
-        // Capture screenshot
-        const dataUrl = await domtoimage.toPng(summaryRef.current);
+ 
+const captureAndShareToWhatsApp = async () => {
+  if (summaryRef.current) {
+    try {
+      // Capture screenshot using html2canvas
+      const canvas = await html2canvas(summaryRef.current);
+      const dataUrl = canvas.toDataURL('image/png');
 
-        // Create share text
-        const shareText = 'Check out my workout summary!';
+      // Create share text
+      const shareText = 'Check out my workout summary!';
 
-        // Check if Web Share API is supported
-        if (navigator.share) {
-          const blob = await (await fetch(dataUrl)).blob();
-          const file = new File([blob], 'workout-summary.png', {
-            type: 'image/png',
-          });
+      // Check if Web Share API is supported
+      if (navigator.share) {
+        const blob = await (await fetch(dataUrl)).blob();
+        const file = new File([blob], 'workout-summary.png', {
+          type: 'image/png',
+        });
 
-          await navigator.share({
-            text: shareText,
-            files: [file],
-          });
-        } else {
-          // Fallback for desktop browsers
-          const encodedText = encodeURIComponent(shareText);
-          const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
-          window.open(whatsappUrl, '_blank');
-        }
-      } catch (error) {
-        console.error('Error capturing or sharing screenshot:', error);
+        await navigator.share({
+          text: shareText,
+          files: [file],
+        });
+      } else {
+        // Fallback for desktop browsers
+        const encodedText = encodeURIComponent(shareText);
+        const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
+        window.open(whatsappUrl, '_blank');
       }
+    } catch (error) {
+      console.error('Error capturing or sharing screenshot:', error);
     }
-  };
-
+  }
+};
   const getInputValuesFromLocalStorage = () => {
     const storedInputValues = {};
     if (inputIds !== undefined && inputIds.length > 0) {

@@ -17,6 +17,7 @@
     "date-fns": "^3.6.0",
     "dom-to-image": "^2.6.0",
     "framer-motion": "^10.16.4",
+    "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.5",
     "json-server": "^0.17.4",
     "lodash": "^4.17.21",
