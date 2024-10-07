@@ -22,6 +22,7 @@ import axios from 'axios';
 import { axiosflexClient } from './apiFlexClient.js';
 import html2canvas from 'html2canvas'
 import Counter from '../../components/Counter';
+import { useScreenshot } from 'use-react-screenshot';
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
   month: 'short',
@@ -48,6 +49,7 @@ const WorkoutSummary = () => {
   const queryParams = new URLSearchParams(queryString);
   const movementId = queryParams.get('movementId');
   const date = queryParams.get('date');
+  const [getScreenshot, { isLoading }] = useScreenshot();
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
@@ -55,18 +57,25 @@ const WorkoutSummary = () => {
   const captureAndShareToWhatsApp = async () => {
     if (summaryRef.current) {
       try {
-        // Capture screenshot using html2canvas
-        const canvas = await html2canvas(summaryRef.current);
-        const dataUrl = canvas.toDataURL('image/png');
-  
+        // Capture screenshot
+        const image = await getScreenshot(summaryRef.current, {
+          useCORS: true,
+          quality: 1.0,
+          width: summaryRef.current.offsetWidth,
+          height: summaryRef.current.offsetHeight,
+          style: {
+            transform: 'scale(1)', // Ensures proper scaling
+          }
+        });
+
         // Create share text
         const shareText = 'Check out my workout summary!';
-  
-        // Convert data URL to Blob
-        const blob = await (await fetch(dataUrl)).blob();
+
+        // Convert base64 to Blob
+        const blob = await fetch(image).then(res => res.blob());
         const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
-  
-        // Check if Web Share API is supported
+
+        // Try Web Share API first
         if (navigator.share) {
           try {
             await navigator.share({
@@ -76,28 +85,21 @@ const WorkoutSummary = () => {
             });
           } catch (error) {
             console.error('Error sharing via Web Share API:', error);
-            // Fallback to WhatsApp URL scheme
-            shareViaWhatsApp(dataUrl, shareText);
+            shareViaWhatsApp(image, shareText);
           }
         } else {
-          // Fallback to WhatsApp URL scheme
-          shareViaWhatsApp(dataUrl, shareText);
+          shareViaWhatsApp(image, shareText);
         }
       } catch (error) {
         console.error('Error capturing or sharing screenshot:', error);
       }
     }
   };
-  
-  const shareViaWhatsApp = (dataUrl, text) => {
-    // Encode the image data URL
-    const encodedImage = encodeURIComponent(dataUrl);
+
+  const shareViaWhatsApp = (imageUrl, text) => {
+    const encodedImage = encodeURIComponent(imageUrl);
     const encodedText = encodeURIComponent(text);
-  
-    // Construct the WhatsApp URL
     const whatsappUrl = `whatsapp://send?text=${encodedText}&data=${encodedImage}`;
-  
-    // Open the WhatsApp URL
     window.location.href = whatsappUrl;
   };
   const getInputValuesFromLocalStorage = () => {

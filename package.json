@@ -42,6 +42,7 @@
     "reselect": "^5.1.1",
     "rsuite": "^5.40.0",
     "styled-components": "^6.1.0",
+    "use-react-screenshot": "^4.0.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
