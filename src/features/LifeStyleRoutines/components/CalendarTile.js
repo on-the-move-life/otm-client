@@ -28,7 +28,7 @@ function CalendarTile({
   return (
     <div
       className={`relative flex h-[65px] w-fit grow flex-col items-center justify-center gap-0 rounded-[7.5px] pt-[9px] ${
-        isSelected ? 'bg-black' : ''
+        isSelected ? 'bg-black-opacity-45' : ''
       }`}
       onClick={() => {
         setSelectedDate(date);
@@ -41,14 +41,14 @@ function CalendarTile({
       )} */}
       <h3
         className={`text-[15px] leading-[17.32px] ${
-          isSelected ? 'text-[#7E87EF]' : 'text-[#929292]'
+          isSelected ? 'text-[#F5C563]' : 'text-[#929292]'
         }`}
       >
         {weekDay}
       </h3>
       <h4
         className={`text-[18px] leading-[17.32px]  ${
-          isSelected ? 'text-[#7E87EF]' : 'text-[#929292]'
+          isSelected ? 'text-[#F5C563]' : 'text-[#929292]'
         }`}
       >
         {day}

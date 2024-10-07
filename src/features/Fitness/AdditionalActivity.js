@@ -27,6 +27,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
   const [activityType, setActivityType] = useState([]);
   const [selectedActivityType, setSelectedActivityType] =
     useState('Please enter type');
+  const [otherActivity, setOtherActivity] = useState(null);
   const [selectedValue, setSelectedValue] = useState('Please enter');
   const [activityDescription, setActivityDescription] = useState('');
   const [showTimeInput, setShowTimeInput] = useState(true);
@@ -71,15 +72,21 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
     event.preventDefault();
     if (selectedActivityType && selectedValue) {
       try {
+        const payload = {
+          memberCode: memberCode,
+          activity: otherActivity ? otherActivity : selectedActivityType,
+          date: date,
+          activityDuration: selectedValue.toString(),
+          description: activityDescription,
+        };
+
+        // Conditionally add 'requested' key if 'otherActivity' is present
+        if (otherActivity) {
+          payload.requested = true;
+        }
         await axios.post(
           `${process.env.REACT_APP_BASE_URL}/api/v1/activity-tracker`,
-          {
-            memberCode: memberCode,
-            activity: selectedActivityType,
-            date: date,
-            activityDuration: selectedValue.toString(),
-            description: activityDescription,
-          },
+          payload,
         );
         toast.success('Activity Submitted sucessfully');
         console.log('Submission successful');
@@ -136,8 +143,18 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
   }, []);
 
   const handleActivityType = (e) => {
+    if (otherActivity) {
+      setOtherActivity('');
+    }
     setSelectedActivityType(e.target.innerText);
     setShowTypeInput(false);
+  };
+
+  const hanldeAnotherActivity = (e) => {
+    if (selectedActivityType) {
+      setSelectedActivityType('Please enter type');
+    }
+    setOtherActivity(e);
   };
 
   return (
@@ -156,7 +173,6 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
           theme="dark"
         />
       </div>
-      {}
       <img
         loading="lazy"
         src="assets/movement-frame.svg"
@@ -229,8 +245,10 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
               onSubmit={handleSubmit}
             >
               <div className="flex flex-col ">
-                <div className="font-sfpro text-[20px] text-offwhite">Type</div>
-                <div className="relative mt-1 max-h-[224px] w-full  rounded-lg py-3 pt-0">
+                <div className="font-sfpro text-[20px] text-offwhite">
+                  Type *
+                </div>
+                <div className="relative mt-1  w-full  rounded-xl py-3 pt-0">
                   <div className="absolute right-6 top-4 z-20 ">
                     {showTypeInput === true ? (
                       <img
@@ -270,8 +288,31 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                     </div>
                   )}
                 </div>
+
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Other"
+                    value={otherActivity}
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                      borderRadius: '12px',
+                      padding: '12px',
+                      boxSizing: 'border-box',
+                      lineHeight: '1.5',
+                      width: '100%', // Ensures the textarea takes full width of its container
+                      resize: 'vertical', // Allows vertical resizing
+                      overflow: 'scroll', // Adds scrollbar when content overflows
+                      border: 'none', // Removes the border
+                      outline: 'none', // Removes the default focus outline
+                    }}
+                    className="mt-1 text-white-opacity-50"
+                    onChange={(e) => hanldeAnotherActivity(e.target.value)}
+                  />
+                </div>
+
                 <div className="mt-[30px] font-sfpro text-[20px] text-offwhite">
-                  Time
+                  Time *
                 </div>
                 <div className="relative mt-1 w-full rounded-lg py-3 pt-0">
                   <div className="absolute right-6 top-4 z-20 ">
@@ -346,7 +387,7 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
                     style={{
                       backgroundColor: 'rgba(255, 255, 255, 0.08)',
                       minHeight: '87px',
-                      borderRadius: '8px',
+                      borderRadius: '12px',
                       padding: '12px',
                       boxSizing: 'border-box',
                       lineHeight: '1.5',
@@ -366,17 +407,20 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
               <button
                 type="submit"
                 disabled={
-                  selectedActivityType === 'Please enter type' ||
+                  (selectedActivityType === 'Please enter type' &&
+                    (otherActivity === '' || otherActivity === null)) ||
                   selectedValue === 'Please enter'
                 }
                 style={{
                   backgroundColor:
-                    selectedActivityType !== 'Please enter type' &&
+                    (selectedActivityType !== 'Please enter type' ||
+                      (otherActivity !== '' && otherActivity !== null)) &&
                     selectedValue !== 'Please enter'
                       ? '#F8F8F8'
                       : 'rgba(221,221,221,0.08)',
                   color:
-                    selectedActivityType !== 'Please enter type' &&
+                    (selectedActivityType !== 'Please enter type' ||
+                      (otherActivity !== '' && otherActivity !== null)) &&
                     selectedValue !== 'Please enter'
                       ? 'rgba(0,0,0)'
                       : 'rgba(248,248,248,0.8)',

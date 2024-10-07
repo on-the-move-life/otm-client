@@ -5,7 +5,7 @@ module.exports = withMT({
   theme: {
     extend: {
       colors: {
-        offwhite: 'rgba(248, 248, 248, 0.8)',
+        offwhite: 'rgba(248.48, 248.48, 248.48, 0.8)',
         customWhite: '#F8F8F8',
         gray: '#3B3B3B',
         green: '#5ECC7B',
@@ -31,6 +31,7 @@ module.exports = withMT({
         'white-opacity-08': 'rgba(221, 221, 221, 0.08)',
         'white-opacity-70': 'rgba(222, 222, 222, 0.7)',
         'black-opacity-45': 'rgba(0, 0, 0, 0.45)',
+        'black-opacity-25': 'rgba(0, 0, 0, 0.25)',
         'black-opacity-40': 'rgba(0, 0, 0, 0.40)',
         'green-opacity-12': 'rgba(94, 204, 123, 0.12)',
         'browm-opacity-12': 'rgba(245, 197, 99, 0.12)',

@@ -180,9 +180,15 @@ input:focus::placeholder {
   flex-shrink: 0;
   border-radius: 4px;
   border: 0.5px solid transparent;
-  border-image-source: linear-gradient(156.52deg, rgba(255, 139, 127, 0.54) 2.12%, rgba(255, 170, 107, 0.64) 39%, rgba(255, 193, 93, 0.2) 54.33%, #FFCE55 100%);
+  border-image-source: linear-gradient(
+    156.52deg,
+    rgba(255, 139, 127, 0.54) 2.12%,
+    rgba(255, 170, 107, 0.64) 39%,
+    rgba(255, 193, 93, 0.2) 54.33%,
+    #ffce55 100%
+  );
   border-image-slice: 1;
-  background: linear-gradient(180deg, #FFE247 0%, #FF8383 100%);
+  background: linear-gradient(180deg, #ffe247 0%, #ff8383 100%);
 }
 
 .achievements-bg {
@@ -606,14 +612,14 @@ button:active {
 
 .countdown__inner__sec {
   display: block;
-  width: 100%;
   height: 5rem;
-  font-size: 3rem;
+  font-size: 64px;
   font-family: 'Anton', sans-serif;
   background: linear-gradient(180deg, #fff 0%, #d6b6f0 100%);
   -webkit-background-clip: text;
   /* WebKit/Blink browsers */
   background-clip: text;
+  letter-spacing: 10px;
   color: transparent;
   /* Make the text transparent so that the gradient shows through */
   line-height: 1;

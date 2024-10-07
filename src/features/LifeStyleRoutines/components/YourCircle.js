@@ -29,6 +29,7 @@ function YourCircle({
       'Evening Circle': <EveningCircleIcon />,
       'Night Circle': <NightCircleIcon />,
       'Always Active Circle': <AlwaysActiveIcon />,
+      'Wellness Goals': <AlwaysActiveIcon />,
     }),
     [],
   );
@@ -75,14 +76,14 @@ function YourCircle({
     <>
       {!showCircleDetails && (
         <div
-          className="flex w-full flex-row items-center justify-between rounded-[12px] bg-[#1C1C1E] px-4 py-2"
+          className="flex w-full flex-row items-center justify-between rounded-[12px] bg-black-opacity-45 px-4 py-2"
           onClick={() => {
             setShowCircleDetails(true);
             setReloadCounter(true);
             setIsCircleOpen(true);
           }}
         >
-          <div className="flex flex-row items-center justify-start w-full gap-5">
+          <div className="flex w-full flex-row items-center justify-start gap-5">
             <div>{circleIcons[name]}</div>
             <div className="flex flex-col items-start justify-center">
               <p
@@ -92,7 +93,7 @@ function YourCircle({
                 {circleTime[name]}
               </p>
               <p className="text-[18.5px] capitalize text-[#F8F8F8]">{name}</p>
-              <p className="w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-[12px] text-[#545454]">
+              <p className=" w-[200px] overflow-hidden text-ellipsis whitespace-nowrap text-[10px] text-[#545454]">
                 {tasksName}
               </p>
             </div>

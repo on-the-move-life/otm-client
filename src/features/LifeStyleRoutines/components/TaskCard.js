@@ -7,7 +7,7 @@ const TaskCard = ({ task, index }) => {
 
   return (
     <div>
-      <div className="p-4 rounded-xl bg-mediumGray">
+      <div className="rounded-xl bg-mediumGray p-4">
         {task?.details.map((task, index) => (
           <div key={index} className="rounded-md ">
             <div className="flex items-center space-x-2">
@@ -18,9 +18,16 @@ const TaskCard = ({ task, index }) => {
                 {task?.duration}
               </p>
             </div>
-            <p className="font-sfpro text-[14px] capitalize text-lightGray">
+            <p className="font-sfpro text-[14px]  text-lightGray">
               {task.description}
             </p>
+            {task?.supplements && (
+              <p className="mt-2 flex flex-col font-sfpro text-[14px] capitalize text-lightGray">
+                {task.supplements.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </p>
+            )}
           </div>
         ))}
       </div>
