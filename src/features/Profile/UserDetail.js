@@ -389,7 +389,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
         {showReferralLinkPopup === false && memberData && (
           <div>
             <img
-              className="absolute left-0 right-0 -z-20"
+              className="absolute left-0 right-0 -z-20 h-screen w-full"
               src="/assets/main-frame-large.svg"
               style={{
                 width: '100%',
@@ -397,7 +397,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                 maxWidth: '-webkit-fill-available',
               }}
             />
-            <div className="w-screen grow overflow-scroll px-4 pb-[78px] pt-8">
+            <div className="h-screen w-screen grow overflow-y-scroll px-4 pb-[98px] pt-8">
               {profilePicError && (
                 <div className="fixed top-0 z-50 h-full w-full bg-black">
                   <Error>Oops! Something went wrong...</Error>
@@ -415,7 +415,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
               {/* User Profile Pic and Name */}
               <div className="mt-[30px] flex flex-col items-center justify-center">
                 <div className="mt-6 flex flex-col items-center justify-center gap-5">
-                  <div className="relative h-[136px] w-[136px] rounded-full">
+                  <div className="relative h-[136px] w-[136px] rounded-[32px]">
                     {chosenPic ? (
                       <ProfilePicture
                         inputPic={chosenPic}
@@ -464,18 +464,19 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                     <div className="text-[32px] font-medium capitalize text-offwhite">
                       {memberData.name}
                     </div>
-                    <div className='flex items-center justify-center'>
+                    <div className="flex items-center justify-center">
                       {memberData.avgIntensity > 10 && (
                         <span
-                          className={`mx-2 rounded  ${showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
-                            } px-2 text-[13px] font-extrabold text-black`}
+                          className={`mx-2 rounded  ${
+                            showElite ? 'bg-[#7E87EF]' : 'bg-[#7CDCF6]'
+                          } px-2 text-[13px] font-extrabold text-black`}
                         >
                           {showElite ? 'Elite' : 'Advanced'}
                         </span>
                       )}
                       {memberData.isLegend && (
                         <div className="flex items-center ">
-                          <div className="flex items-center my-2 rounded legend-tag w-fit">
+                          <div className="legend-tag my-2 flex w-fit items-center rounded">
                             <img src="assets/medal.svg" alt="" />
                             <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
                               LEGEND
@@ -506,13 +507,13 @@ Here's a 20% off discount because I'd love for you to get healthy too!
 
                 <div className="mt-[15px] flex flex-col gap-[10px]">
                   <div
-                    className="mx-auto max-h-max w-full rounded-xl bg-mediumGray px-4 py-3"
+                    className="mx-auto max-h-max w-full rounded-xl bg-black-opacity-45 px-4 py-3"
                     onClick={() => setShowProfilePicPopup(false)}
                   >
                     <div className="flex h-full flex-col ">
                       <section>
                         {/* <div className="text-sm font-medium">Your Plan</div> */}
-                        <div className="text-2xl font-medium leading-10 text-floYellow">
+                        <div className="text-2xl font-medium leading-10 text-offwhite">
                           Membership
                         </div>
                         {/* <div className="text-[8px]  tracking-[5px] text-lightGray ">
@@ -560,10 +561,13 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                       Make Payment
                     </button> */}
                         <div
-                          className="border-zinc-400 mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
+                          style={{
+                            border: '0.5px solid rgba(255,255,255,0.4)',
+                          }}
+                          className="border-zinc-400 border-xl mt-6 inline-flex h-[46px] w-full items-center justify-center gap-2.5 rounded-lg border p-2.5"
                           onClick={() => showHistory()}
                         >
-                          <button className="mt-[2px] text-lg font-medium text-white">
+                          <button className="mt-[2px] text-lg font-medium text-offwhite">
                             Check payment history
                           </button>
                         </div>
@@ -572,7 +576,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                   </div>
                   <div
                     onClick={() => setShowReferralLinkPopup(true)}
-                    className=" flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-mediumGray  text-sm "
+                    className=" flex h-[62px] w-full items-center overflow-hidden rounded-xl bg-black-opacity-45  text-sm "
                   >
                     <img src="./assets/gifts-small.svg" alt="" />
                     <div className="pl-2 text-[18px] text-[#F8F8F8]/[0.8] ">
@@ -582,7 +586,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
 
                   <Link
                     to="/marketplace"
-                    className=" flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-mediumGray "
+                    className=" flex min-h-[190px] w-full flex-col items-center justify-start rounded-[12px]  bg-black-opacity-45 "
                   >
                     <div
                       className="flex h-[80px] w-full flex-col items-start justify-center bg-right-top bg-no-repeat px-3 py-2"
@@ -590,7 +594,9 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                         backgroundImage: `url(${'/assets/Marketplace_bgcoins.svg'})`,
                       }}
                     >
-                      <div>Marketplace </div>
+                      <div className="text-[14px] text-offwhite">
+                        Marketplace{' '}
+                      </div>
                       <Movecoins
                         fontSize={'26px'}
                         coins={memberData.moveCoins}
@@ -612,19 +618,19 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                     </section>
                   )}
                   <div
-                    className=" mx-auto  min-h-[142px] w-full rounded-xl bg-mediumGray px-4 py-3"
+                    className=" mx-auto  min-h-[142px] w-full rounded-xl bg-black-opacity-45 px-4 py-3"
                     onClick={() => setShowProfilePicPopup(false)}
                   >
                     <div className="flex h-full flex-col justify-between ">
                       <section>
-                        <div className="font-sfpro text-sm font-medium text-white ">
+                        <div className="font-sfpro text-sm font-medium text-offwhite ">
                           Book a Call
                         </div>
                         <div
                           className="pt-1 "
                           onClick={() => setShowProfilePicPopup(false)}
                         >
-                          <div className="font-sfpro text-[14px] font-medium  text-white">
+                          <div className="font-sfpro text-[14px] font-medium  text-white-opacity-50">
                             <p>
                               Easily schedule a one-on-one call with your coach
                               for personalised guidance and mentoring.
@@ -657,12 +663,17 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                     handleLogout();
                   }}
                 >
-                  <div className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5">
+                  <div
+                    style={{
+                      border: '0.5px solid rgba(255,255,255,0.4)',
+                    }}
+                    className="bg-neutral-700 border-zinc-400 mx-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg border bg-opacity-5 p-2.5"
+                  >
                     <div className="relative h-5 w-5 origin-top-left">
                       <img src="./assets/logout.svg" alt="" />
                     </div>
                     <div className="text-lg font-medium text-lightGray">
-                      <button className="text-lg font-medium text-lightGray">
+                      <button className="text-lg font-medium text-offwhite">
                         Log Out
                       </button>
                     </div>
