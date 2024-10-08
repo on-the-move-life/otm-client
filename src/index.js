@@ -9,6 +9,7 @@ import { ThemeProvider } from '@material-tailwind/react';
 import { AuthProvider } from './contexts/AuthContext';
 import { UserContextProvider } from './contexts/UserContext';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { subscribeUser } from './pushNotificationHelper';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -46,5 +47,11 @@ serviceWorkerRegistration.register({
       });
       waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
     }
+  },
+  onSuccess: (registration) => {
+    console.log('Service Worker registered successfully.');
+    subscribeUser()
+      .then(() => console.log('User subscribed to push notifications'))
+      .catch(error => console.error('Error subscribing to push notifications:', error));
   },
 });
