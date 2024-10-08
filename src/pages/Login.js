@@ -307,7 +307,7 @@ const Login = () => {
         </LoginInput>
       ) : (
         <AnimatedComponent>
-          <div className="flex h-screen   flex-col items-center justify-evenly bg-red bg-landing-cover bg-cover bg-no-repeat">
+          <div className="flex h-screen   flex-col items-center justify-evenly  bg-landing-cover bg-cover bg-no-repeat">
             <div className="absolute left-0 top-0 z-[80] h-screen w-full  bg-black-opacity-40"></div>
 
             <div className="relative z-[100] flex h-screen w-full flex-col items-center justify-between py-16">
