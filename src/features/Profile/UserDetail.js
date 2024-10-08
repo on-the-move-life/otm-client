@@ -20,6 +20,7 @@ import MoveCoins from './MoveCoins';
 import MonthlyWrapped from './MonthlyWrapped';
 import { CoinsIndicator, Movecoins } from '../Marketplace';
 import { RxCross1 } from 'react-icons/rx';
+import { FaUser } from 'react-icons/fa';
 
 import { Name } from '../LifestyleQuiz';
 import { WhatsappShareButton } from 'react-share';
@@ -415,7 +416,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
               {/* User Profile Pic and Name */}
               <div className="mt-[30px] flex flex-col items-center justify-center">
                 <div className="mt-6 flex flex-col items-center justify-center gap-5">
-                  <div className="relative h-[136px] w-[136px] rounded-[32px]">
+                  <div className="relative h-[136px] w-[136px] rounded-[32px] bg-[#91BDF6]">
                     {chosenPic ? (
                       <ProfilePicture
                         inputPic={chosenPic}
@@ -431,7 +432,11 @@ Here's a 20% off discount because I'd love for you to get healthy too!
                         width={'136px'}
                       />
                     ) : (
-                      <FaUserCircle size={136} color={'#91BDF6'} />
+                      <FaUser
+                        size={136}
+                        color={'rgba(0,0,0,1)'}
+                        className="p-2"
+                      />
                     )}
                     <button
                       className="absolute bottom-0 right-0 flex h-[30px] w-[30px] flex-row items-center justify-center rounded-full bg-green"
