@@ -62,6 +62,7 @@ module.exports = withMT({
         sfpro: ['"SF Pro Display"', 'sans-serif'],
         anton: ['Anton'],
         Future: ['Futura XBlkCnIt BT'],
+        Futusre: ['Futura XBlkCnIt BT'],
       },
       backgroundSize: {
         '25%': '25%',
