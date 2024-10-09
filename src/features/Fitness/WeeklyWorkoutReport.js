@@ -101,9 +101,9 @@ function WeeklyWorkoutReport({
     };
 
     return (
-      <div className="relative h-[48px] w-[6px] rounded-xl bg-[#323232]">
-        <div className="flex flex-col items-center justify-end w-full h-full bg-transparent">
-          <div style={barStyles} className="w-full barStyle rounded-xl"></div>
+      <div className="relative h-[48px] w-[6px] rounded-xl bg-[rgba(168,168,168,0.24)]">
+        <div className="flex h-full w-full flex-col items-center justify-end bg-transparent">
+          <div style={barStyles} className="barStyle w-full rounded-xl"></div>
         </div>
         {isFirstBar && (
           <div className="absolute bottom-0 left-1/2 mt-1 h-[4px] w-[4px] -translate-x-1/2 translate-y-[8px] transform rounded-full bg-white"></div>
@@ -123,16 +123,16 @@ function WeeklyWorkoutReport({
         return 'text-gray-500';
     }
   };
-  const getTrendBorderColor = (trend) => {
+  const getTrendbackgroundColor = (trend) => {
     switch (trend) {
       case 'decreasing':
-        return 'border-[#FA5757]';
+        return 'bg-[rgba(250,87,87,0.12)]';
       case 'maintaining':
-        return 'border-[#F5C563]';
+        return 'bg-[rgba(245,197,99,0.12)]';
       case 'improving':
-        return 'border-[#7FE08A]';
+        return 'bg-[rgba(94,204,123,0.12)]';
       default:
-        return 'border-gray-500';
+        return 'bg-gray-500';
     }
   };
   const capitalizeFirstLetter = (string) => {
@@ -140,15 +140,15 @@ function WeeklyWorkoutReport({
   };
   return (
     <div className=" weekly-workout-consistency">
-      <div className="flex justify-between w-full h-full">
+      <div className="flex h-full w-full justify-between">
         <div className="flex flex-col justify-between">
-          <section className="flex flex-row items-center justify-between w-full">
+          <section className="flex w-full flex-row items-center justify-between">
             <div className="flex gap-2">
               <img src="/assets/bar-graph-logo.svg" />
               <Heading>Weekly workout consistency</Heading>
             </div>
           </section>
-          <section className="flex flex-row items-center justify-between w-full">
+          <section className="flex w-full flex-row items-center justify-between">
             <div className="flex flex-col ">
               <div className="flex items-end">
                 {currentScore ? (
@@ -161,9 +161,9 @@ function WeeklyWorkoutReport({
                   </div>
                 )}
                 <div
-                  className={`mb-2 ml-2 text-[8px] sm:text-[10px] ${getTrendBorderColor(
+                  className={`mb-2 ml-2 text-[10px] sm:text-[10px] ${getTrendbackgroundColor(
                     consistencyTrend,
-                  )} h-min rounded-[6px] border-[1px] px-[6px] py-[3px] sm:px-[6px] sm:py-[3px] ${getTrendTextColor(
+                  )} h-min rounded-[6px]  px-[6px] py-[3px] sm:px-[6px] sm:py-[3px] ${getTrendTextColor(
                     consistencyTrend,
                   )}`}
                 >

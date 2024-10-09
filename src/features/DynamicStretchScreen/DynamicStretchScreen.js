@@ -62,7 +62,7 @@ const DynamicStretchScreen = () => {
             </div>
 
             <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray ">
-              <RxCross1 onClick={() => navigate('/movement')} className="" />
+              <RxCross1 onClick={() => navigate('/home')} className="" />
             </div>
           </div>
 
