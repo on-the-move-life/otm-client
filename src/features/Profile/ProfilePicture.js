@@ -39,6 +39,7 @@ function ProfilePicture({ inputPic, altText, width, height }) {
   return (
     <>
       <motion.img
+        loading="lazy"
         src={inputPic}
         alt={altText}
         className={` rounded-[32px] object-cover h-[${height}] w-[${width}] `}
@@ -53,6 +54,7 @@ function ProfilePicture({ inputPic, altText, width, height }) {
           onClick={handleClose}
         >
           <motion.img
+            loading="lazy"
             src={inputPic}
             alt={altText}
             className="aspect-auto object-contain sm:h-[300px] sm:w-[300px] md:h-[600px] md:w-[600px]"

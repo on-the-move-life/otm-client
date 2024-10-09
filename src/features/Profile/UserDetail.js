@@ -25,6 +25,8 @@ import { FaUser } from 'react-icons/fa';
 import { Name } from '../LifestyleQuiz';
 import { WhatsappShareButton } from 'react-share';
 import GiftCard from '../ReferralUser/GiftCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProfileDetail } from '../../store/actions/profile.action';
 
 const ProfilePicHeading = styled.div`
   color: #d7d7d7;
@@ -49,7 +51,6 @@ const IconLabel = styled.div`
 
 const UserDetails = ({ showHistory }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [memberData, setMemberData] = useState();
   const profilePicRef = useRef(null);
   const profilePicCameraRef = useRef(null);
   const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
@@ -62,6 +63,8 @@ const UserDetails = ({ showHistory }) => {
   const [showReferralLinkPopup, setShowReferralLinkPopup] = useState(false);
   const [showReferralWorkPopup, setShowReferralWorkPopup] = useState(false);
   const currentDate = new Date().getDate();
+  const memberData = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
 
   const imageUrl =
     'https://storage.googleapis.com/otm_client_profile_pictures/DUAAKA3938_Dummy_Aakash_7921.jpg';
@@ -87,6 +90,11 @@ Here's a 20% off discount because I'd love for you to get healthy too!
   const showElite =
     memberData && parseInt(memberData.avgIntensity) > 10 ? true : false;
 
+  useEffect(() => {
+    if (memberData.profileDetial === null)
+      dispatch(fetchProfileDetail({ code }));
+  }, []);
+
   async function getMemberData(user) {
     try {
       const res = await axiosClient.get(`/profile`, {
@@ -98,7 +106,6 @@ Here's a 20% off discount because I'd love for you to get healthy too!
         // Trick to avoid the memory caching by the browser, so that the updated profile pic is displayed
         const uniqueKey = Date.now();
         setUniqueImageURLKey(`${data?.profilePicture}?key=${uniqueKey}`);
-        setMemberData({ ...data, ...user });
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -112,7 +119,7 @@ Here's a 20% off discount because I'd love for you to get healthy too!
     logout();
   }
 
-  if (isLoading) {
+  if (memberData.profileLoading) {
     return <Loader />;
   }
 

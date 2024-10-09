@@ -9,121 +9,84 @@ import RankDisplay from './RankDisplay';
 import TimelineDisplay from './TimelineDisplay';
 import { axiosClient as TimelineAxiosClient } from '../Timeline/apiClient';
 import { TimelineHeading } from '../Timeline/StyledComponents';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchTimelineCommunityDetails,
+  fetchTimelinePersonalDetails,
+} from '../../store/actions/timeline.action';
+import {
+  fetchLeaderboardConsistencyDetails,
+  fetchLeaderboardFitnessDetails,
+} from '../../store/actions/leaderboard.action';
 
 const Community = () => {
-  const [fitnessScoreData, setFitnessScoreData] = useState([]);
-  const [workoutCountData, setWorkoutCountData] = useState([]);
-  const [loadingFitnessScore, setLoadingFitnessScore] = useState(true);
-  const [loadingWorkoutCount, setLoadingWorkoutCount] = useState(true);
-  const [userData, setUserData] = useState(null);
-  const [communityloading, setCommunityLoading] = useState(false);
-  const [personalLoading, setPersonalLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [isError, setError] = useState(false);
-  const [data, setData] = useState(null);
   const fullName = JSON.parse(localStorage.getItem('user'))['name'];
   const firstName = fullName.split(' ')[0];
-
-  const { getUserFromStorage, user } = useAuth();
-  const navigate = useNavigate();
-  const { value } = useParams();
-
-  useEffect(() => {
-    setCommunityLoading(true);
-    const user = JSON.parse(localStorage.getItem('user'));
-    TimelineAxiosClient.get(`?type=community&page=${page}&email=${user.email}`)
-      .then((res) => {
-        setData((prev) => res?.data);
-        setCommunityLoading(false);
-      })
-      .catch((err) => {
-        setError(true);
-        setCommunityLoading(false);
-        console.log(err);
-      });
-  }, [page]);
-
-  useEffect(() => {
-    setPersonalLoading(true);
-    const user = JSON.parse(localStorage.getItem('user'));
-    TimelineAxiosClient.get(
-      `?type=personal&name=${user?.name}&page=${page}&email=${user?.email}`,
-    )
-      .then((res) => {
-        setUserData((prev) => res?.data);
-        setPersonalLoading(false);
-      })
-      .catch((err) => {
-        setError(true);
-        setPersonalLoading(false);
-        console.log(err);
-      });
-  }, [page]);
-
-  async function getFitnessScoreData() {
-    // API call for fitnessScoreData
-    try {
-      const res = await axiosClient.get('/fitnessScore');
-      if (res.data) {
-        const data = res.data;
-        setFitnessScoreData(data);
-      }
-    } catch (error) {
-      console.error('Error fetching fitnessScoreData:', error);
-    } finally {
-      setLoadingFitnessScore(false);
-    }
-  }
-
-  async function getWorkoutCountData() {
-    // API call for workoutCountData
-    try {
-      const res = await axiosClient.get('/consistency');
-      if (res.data) {
-        const data = res.data;
-        setWorkoutCountData(data);
-      }
-    } catch (error) {
-      console.error('Error fetching workoutCountData:', error);
-    } finally {
-      setLoadingWorkoutCount(false);
-    }
-  }
-
-  useEffect(() => {
-    if (user === null) {
-      getUserFromStorage();
-    }
-  }, []);
+  const getTimeline = useSelector((state) => state.timeline);
+  const getLeaderBoard = useSelector((state) => state.leaderboard);
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+  const otmUser = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     console.log('user : ', user);
     if (user) {
       console.log('user : ', user);
-      setLoadingFitnessScore(true);
-      setLoadingWorkoutCount(true);
-      getFitnessScoreData();
-      getWorkoutCountData();
+      if (
+        getTimeline.communityDetail === null ||
+        getTimeline.communityTimelinePage > 1
+      ) {
+        dispatch(
+          fetchTimelineCommunityDetails({
+            user: otmUser,
+            page,
+            type: 'community',
+          }),
+        );
+      }
+
+      if (
+        getTimeline.personalDetail === null ||
+        getTimeline?.personalTimelinePage > 1
+      ) {
+        dispatch(
+          fetchTimelinePersonalDetails({
+            user: otmUser,
+            page,
+            type: 'personal',
+          }),
+        );
+      }
+
+      if (getLeaderBoard.fitnessScoreDetail === null) {
+        dispatch(fetchLeaderboardFitnessDetails('fitnessScore'));
+      }
+
+      if (getLeaderBoard.consistencyDetail === null) {
+        dispatch(fetchLeaderboardConsistencyDetails('consistency'));
+      }
     }
   }, [user]);
 
   if (
     !user ||
-    loadingFitnessScore ||
-    loadingWorkoutCount ||
-    communityloading ||
-    personalLoading
+    getLeaderBoard.fitnessScoreLoading ||
+    getLeaderBoard.consistencyLoading ||
+    getTimeline.personalLoading ||
+    getTimeline.communityLoading
   ) {
     return <Loader />;
   }
 
-  const matchingWorkoutUser = workoutCountData.rankList?.find(
+  const matchingWorkoutUser = getLeaderBoard?.consistencyDetail?.rankList?.find(
     (entry) => entry.code === user.code,
   );
 
-  const matchingFitnessUser = fitnessScoreData.rankList?.find(
-    (entry) => entry.code === user.code,
-  );
+  const matchingFitnessUser =
+    getLeaderBoard?.fitnessScoreDetail?.rankList?.find(
+      (entry) => entry.code === user.code,
+    );
 
   return (
     <div>
@@ -173,16 +136,27 @@ const Community = () => {
               />
             )}
           </div>
-          {data !== null && data.data.length > 0 && (
-            <div className="mb-3 mt-7 text-[20px] text-offwhite">Timeline</div>
-          )}
+          {getTimeline.personalDetail !== null &&
+            getTimeline.personalDetail.data.length > 0 && (
+              <div className="mb-3 mt-7 text-[20px] text-offwhite">
+                Timeline
+              </div>
+            )}
           <div className=" flex w-full flex-col gap-2">
-            {userData !== null && userData.data.length > 0 && (
-              <TimelineDisplay data={userData.data[0]} timeline={'personal'} />
-            )}
-            {data !== null && data.data.length > 0 && (
-              <TimelineDisplay data={data.data[0]} timeline={'community'} />
-            )}
+            {getTimeline.personalDetail !== null &&
+              getTimeline.personalDetail.data.length > 0 && (
+                <TimelineDisplay
+                  data={getTimeline.personalDetail.data[0]}
+                  timeline={'personal'}
+                />
+              )}
+            {getTimeline.communityDetail !== null &&
+              getTimeline.communityDetail.data.length > 0 && (
+                <TimelineDisplay
+                  data={getTimeline.communityDetail.data[0]}
+                  timeline={'community'}
+                />
+              )}
           </div>
         </div>
       </div>
