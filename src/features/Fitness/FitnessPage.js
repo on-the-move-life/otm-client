@@ -28,6 +28,7 @@ import {
 } from './utils';
 import StepTrackerTwo from './StepTrackerTwo';
 import { RxCross1 } from 'react-icons/rx';
+import { FaArrowLeftLong } from 'react-icons/fa6';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -131,12 +132,15 @@ const FitnessPage = () => {
             className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
           />
           <div className="mx-[9px] mb-[26px] flex justify-between">
+            <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-black-opacity-45 ">
+              <FaArrowLeftLong
+                onClick={() => setShowLibrary(false)}
+                className=""
+              />
+            </div>
             <h3 className="font-sfpro text-xl text-offwhite">
               Workout Library
             </h3>
-            <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray ">
-              <RxCross1 onClick={() => setShowLibrary(false)} className="" />
-            </div>
           </div>
           <div className="flex flex-col gap-3">
             <section>

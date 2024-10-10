@@ -84,7 +84,7 @@ const DynamicStretchScreen = () => {
             </div>
           </div>
         </div>
-        <div className="mt-7 pb-5">
+        {/* <div className="mt-7 pb-5">
           <p className="w-full py-3 text-center text-[12px] text-offwhite">
             Submit and save your progress
           </p>
@@ -98,7 +98,7 @@ const DynamicStretchScreen = () => {
           >
             Submit
           </button>
-        </div>
+        </div> */}
         {alertVisible && (
           <AlertDialog
             message="Mark this as completed?"
