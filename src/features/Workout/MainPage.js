@@ -85,33 +85,42 @@ const MainPage = () => {
   }
 
   return (
-    <div className="w-screen h-screen">
+    <div className="h-screen w-screen">
       {showUpdateWorkout && <UpdateWorkout onClose={handleUpdateClose} />}
 
       {!showUpdateWorkout && (
         <>
           {' '}
           <AnimatedComponent>
-            <div className="flex py-6 mb-4 bg-cover h-fit bg-black/70 bg-workout-cover bg-blend-soft-light">
-              <div className="flex justify-between w-full px-4">
-                <div className="flex flex-col items-start justify-between w-full h-full gap-4">
+            <div
+              className={`mb-4 flex h-fit   bg-cover py-6 bg-blend-soft-light  ${
+                workoutData.theme
+                  ? 'bg-black/70 bg-workout-cover'
+                  : 'bg-black/40 bg-movement-flex'
+              } `}
+            >
+              <div className="flex w-full justify-between px-4">
+                <div className="flex h-full w-full flex-col items-start justify-between gap-4">
                   <HiArrowNarrowLeft
                     size={20}
                     onClick={() => {
                       navigate('/home');
                     }}
                   />
-                  <div className="flex flex-col items-start justify-center w-full mt-2">
-                    <h1 className="text-2xl font-semibold metallic-workout-gradient-text ">
+                  <div className="mt-2 flex w-full flex-col items-start justify-center">
+                    <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
                       {memberName}
                     </h1>
-                    <span className="text-xs tracking-wider font-extralight text-lightGray">
+                    <span className="text-xs font-extralight tracking-wider text-lightGray">
                       Let's crush this workout
                     </span>
-                    <span className="mt-6 text-xs tracking-widest text-lightGray">
-                      TODAY'S FOCUS
-                    </span>
-                    <div className="flex items-center justify-between w-full sm:justify-normal sm:gap-5">
+                    {workoutData.theme && (
+                      <span className="mt-6 text-xs tracking-widest text-lightGray">
+                        TODAY'S FOCUS
+                      </span>
+                    )}
+
+                    <div className="flex w-full items-center justify-between sm:justify-normal sm:gap-5">
                       {workoutData.theme && (
                         <div className="flex items-center gap-2">
                           <div>
@@ -174,7 +183,7 @@ const MainPage = () => {
                 ))}
             </AnimatedComponent>
           </div>
-          <footer className="fixed w-full px-4 bottom-4">
+          <footer className="fixed bottom-4 w-full px-4">
             <button
               className="workout-gradient-button mt-4 flex h-12 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center"
               onClick={handleStart}
