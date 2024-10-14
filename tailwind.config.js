@@ -57,6 +57,7 @@ module.exports = withMT({
         'evening-zone': "url('../public/assets/evening-zone.svg')",
         'morning-zone': "url('../public/assets/morning-zone.svg')",
         'movement-flex': "url('../public/assets/movement-Flex.svg')",
+        'movement-frame': "url('../public/assets/Movement-Frame.png')",
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],

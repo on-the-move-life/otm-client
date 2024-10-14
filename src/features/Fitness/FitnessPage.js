@@ -194,7 +194,7 @@ const FitnessPage = () => {
               <div className="flex items-center">
                 <Link
                   to="/workout/flex"
-                  className="bg-movement-flex relative flex h-[105px] grow items-center justify-between rounded-xl bg-cover py-2 pl-4 pr-7 "
+                  className="relative flex h-[105px] grow items-center justify-between rounded-xl bg-movement-flex bg-cover py-2 pl-4 pr-7 "
                 >
                   <div className="flex h-full flex-col justify-center">
                     <div className="flex gap-3">
@@ -418,7 +418,7 @@ const FitnessPage = () => {
               <div className="flex items-center">
                 <Link
                   to="/workout/flex"
-                  className="bg-movement-flex relative flex h-[95px] grow items-center justify-between rounded-xl bg-cover py-2 pl-4 pr-7 "
+                  className="relative flex h-[95px] grow items-center justify-between rounded-xl bg-movement-flex bg-cover py-2 pl-4 pr-7 "
                 >
                   <div className="flex h-full flex-col justify-center">
                     <div className="flex gap-3">

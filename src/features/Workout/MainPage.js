@@ -85,7 +85,7 @@ const MainPage = () => {
   }
 
   return (
-    <div className="h-screen w-screen">
+    <div className=" h-screen w-screen overflow-y-scroll bg-movement-frame bg-cover">
       {showUpdateWorkout && <UpdateWorkout onClose={handleUpdateClose} />}
 
       {!showUpdateWorkout && (
@@ -95,7 +95,7 @@ const MainPage = () => {
             <div
               className={`mb-4 flex h-fit   bg-cover py-6 bg-blend-soft-light  ${
                 workoutData.theme
-                  ? 'bg-black/70 bg-workout-cover'
+                  ? 'bg-black/40 bg-morning-zone'
                   : 'bg-black/40 bg-movement-flex'
               } `}
             >
@@ -108,40 +108,45 @@ const MainPage = () => {
                     }}
                   />
                   <div className="mt-2 flex w-full flex-col items-start justify-center">
-                    <h1 className="metallic-workout-gradient-text text-2xl font-semibold ">
+                    <h1 className="metallic-workout-gradient-text text-3xl font-semibold text-offwhite">
                       {memberName}
                     </h1>
-                    <span className="text-xs font-extralight tracking-wider text-lightGray">
+                    <span className="text-sm font-extralight tracking-wider text-white-opacity-50">
                       Let's crush this workout
                     </span>
-                    {workoutData.theme && (
-                      <span className="mt-6 text-xs tracking-widest text-lightGray">
-                        TODAY'S FOCUS
-                      </span>
-                    )}
+
+                    <span className="mt-6 text-sm tracking-widest text-white-opacity-50">
+                      Today's Focus
+                    </span>
 
                     <div className="flex w-full items-center justify-between sm:justify-normal sm:gap-5">
-                      {workoutData.theme && (
+                      {workoutData.theme ? (
                         <div className="flex items-center gap-2">
                           <div>
-                            <h2 className="text-xl">{workoutData.theme}</h2>
+                            <h2 className="text-xl text-offwhite">
+                              {workoutData.theme}
+                            </h2>
                           </div>
                           <div className="flex items-center justify-center">
                             <button
                               onClick={() => setShowUpdateWorkout(true)}
-                              className="w-fit rounded-[4px] border border-white bg-black p-[3px]"
+                              className="w-fit rounded-[4px]  bg-offwhite px-2 "
                             >
-                              <span className="block rounded-[4px] bg-white px-[2px] py-[1px] text-[10px] font-bold text-black">
+                              <span className=" text-[14px] font-bold leading-[1px] text-black">
                                 Change
                               </span>
                             </button>
                           </div>
                         </div>
+                      ) : (
+                        <div>
+                          <h2 className="text-xl">Core</h2>
+                        </div>
                       )}
 
                       {(workoutData.workoutCalories ||
                         workoutData.workoutDuration) && (
-                        <div className="flex flex-col items-end sm:flex-row sm:gap-2">
+                        <div className="flex flex-col items-end text-offwhite sm:flex-row sm:gap-2">
                           {workoutData.workoutCalories && (
                             <span className="text-sm ">
                               {workoutData.workoutCalories} calories
