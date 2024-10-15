@@ -57,38 +57,50 @@ const WorkoutSummary = () => {
   const captureAndShareToWhatsApp = async () => {
     if (summaryRef.current) {
       try {
-        // Capture screenshot
-        const image = await getScreenshot(summaryRef.current, {
-          useCORS: true,
-          quality: 1.0,
-          width: summaryRef.current.offsetWidth,
-          height: summaryRef.current.offsetHeight,
-          style: {
-            transform: 'scale(1)', // Ensures proper scaling
-          }
+        // Get the HTML content of the summary
+        const htmlContent = summaryRef.current.outerHTML;
+  
+        // Create a Blob with the HTML content
+        const htmlBlob = new Blob([htmlContent], { type: 'text/html' });
+  
+        // Create FormData and append the HTML file
+        const formData = new FormData();
+        formData.append('file', htmlBlob, 'summary.html');
+  
+        // Send the HTML to the backend
+        const response = await axios.post(`${process.env.REACT_APP_BASE_UR}/api/v1/screenshot`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         });
-
-        // Create share text
-        const shareText = 'Check out my workout summary!';
-
-        // Convert base64 to Blob
-        const blob = await fetch(image).then(res => res.blob());
-        const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
-
-        // Try Web Share API first
-        if (navigator.share) {
-          try {
-            await navigator.share({
-              files: [file],
-              title: 'Workout Summary',
-              text: shareText
-            });
-          } catch (error) {
-            console.error('Error sharing via Web Share API:', error);
-            shareViaWhatsApp(image, shareText);
+  
+        if (response.data.success) {
+          // Convert the buffer data to a base64 string
+          const base64Image = btoa(String.fromCharCode.apply(null, response.data.data.data));
+          const imageDataUrl = `data:image/png;base64,${base64Image}`;
+  
+          // Create share text
+          const shareText = 'Check out my workout summary!';
+  
+          // Try Web Share API first
+          if (navigator.share) {
+            try {
+              const blob = await fetch(imageDataUrl).then(res => res.blob());
+              const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
+              await navigator.share({
+                files: [file],
+                title: 'Workout Summary',
+                text: shareText
+              });
+            } catch (error) {
+              console.error('Error sharing via Web Share API:', error);
+              shareViaWhatsApp(imageDataUrl, shareText);
+            }
+          } else {
+            shareViaWhatsApp(imageDataUrl, shareText);
           }
         } else {
-          shareViaWhatsApp(image, shareText);
+          throw new Error('Failed to generate screenshot');
         }
       } catch (error) {
         console.error('Error capturing or sharing screenshot:', error);
