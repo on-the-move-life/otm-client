@@ -20,9 +20,9 @@ const Section = ({ sectionList, index, isReport, movementId, date }) => {
   };
 
   return (
-    <div className="flex items-center px-4 py-2">
+    <div className="flex h-full items-center px-4 py-2">
       <div
-        className="flex h-fit w-full items-center justify-between rounded-xl bg-black-opacity-45 p-4 px-4  text-3xl"
+        className="flex h-full w-full items-center justify-between rounded-xl bg-black-opacity-45 p-4 px-4  text-3xl"
         onClick={() => handleClick(index)}
       >
         <div className="flex w-2/3 flex-col">
@@ -41,7 +41,7 @@ const Section = ({ sectionList, index, isReport, movementId, date }) => {
           )}
           {!isReport && (
             <div className="tags flex flex-col items-start justify-center">
-              {section.meta?.todaysMetconIntensity &&
+              {/* {section.meta?.todaysMetconIntensity &&
                 section.meta?.todaysMetconIntensity > 75 && (
                   <span className="bg-[#172339]  p-0.5 text-[10px] text-[#C2D3FA]">
                     {section.meta.todaysMetconIntensity > 100
@@ -49,7 +49,7 @@ const Section = ({ sectionList, index, isReport, movementId, date }) => {
                       : 'Advanced'}{' '}
                     {section.meta.todaysMetconIntensity}%
                   </span>
-                )}
+                )} */}
               <span className="mt-1 text-xs tracking-widest text-floYellow">
                 {section.movements.length} Movements
               </span>

@@ -54,59 +54,60 @@ const UpdateWorkout = ({ onClose }) => {
   };
 
   return (
-    <div className="relative h-screen w-screen overflow-y-auto bg-[#141414]">
-    <div className="p-4 pb-20">
-      <AnimatedComponent>
-        <div className="flex justify-end">
-          <span onClick={() => onClose(false)} className='bg-[#202020] rounded-full p-1'>
-            <HiX size={15} />
-          </span>
-        </div>
-        <div className="flex flex-col">
-          <h3 className="mt-5 workout-gradient-text text-center text-[24px] uppercase">
-            Customize your workout
-          </h3>
-          <p className='mt-4 text-center sm:text-lg text-[15px]'>
-            Easily update your latest workout by selecting a theme, duration, and available equipment.
-          </p>
-          <section className='mt-8'>
-            <DataInputComponent
-              inputId="customTheme"
-              inputType="select"
-              inputOptions={WORKOUT_THEME_OPTIONS}
-              placeholder="select"
-              label="THEME"
-              
-            />
-            <DataInputComponent
-              inputId="customEquipments"
-              inputType="select"
-              inputOptions={EQUIPMENT_OPTIONS}
-              placeholder="Choose equipment"
-              label="EQUIPMENT (OPTIONAL)"
-              
-            />
-            <DataInputComponent
-              inputId="customDuration"
-              inputType="select"
-              inputOptions={WORKOUT_DURATION_OPTIONS}
-              placeholder="REGULAR"
-              label="WORKOUT DURATION"
-              
-            />
-          </section>
-        </div>
-      </AnimatedComponent>
+    <div className="bg-black-opacity-65 relative h-screen w-screen overflow-y-auto ">
+      <div className="p-4 pb-20">
+        <AnimatedComponent>
+          <div className="flex justify-end">
+            <span
+              onClick={() => onClose(false)}
+              className="rounded-full bg-[#202020] p-1"
+            >
+              <HiX size={15} />
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <h3 className="mt-5 text-center text-[24px] uppercase text-offwhite">
+              Customize your workout
+            </h3>
+            <p className="mt-4 text-center text-[15px] text-offwhite sm:text-lg">
+              Easily update your latest workout by selecting a theme, duration,
+              and available equipment.
+            </p>
+            <section className="mt-8">
+              <DataInputComponent
+                inputId="customTheme"
+                inputType="select"
+                inputOptions={WORKOUT_THEME_OPTIONS}
+                placeholder="select"
+                label="THEME"
+              />
+              <DataInputComponent
+                inputId="customEquipments"
+                inputType="select"
+                inputOptions={EQUIPMENT_OPTIONS}
+                placeholder="Choose equipment"
+                label="EQUIPMENT (OPTIONAL)"
+              />
+              <DataInputComponent
+                inputId="customDuration"
+                inputType="select"
+                inputOptions={WORKOUT_DURATION_OPTIONS}
+                placeholder="REGULAR"
+                label="WORKOUT DURATION"
+              />
+            </section>
+          </div>
+        </AnimatedComponent>
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 bg-[#141414] p-4">
+        <button
+          className=" h-11 w-full items-center justify-center rounded-xl border bg-[#F8F8F8] text-xl font-bold text-black"
+          onClick={handleUpdateWorkout}
+        >
+          Update
+        </button>
+      </div>
     </div>
-    <div className="fixed bottom-0 left-0 right-0 bg-[#141414] p-4">
-      <button
-        className="workout-gradient-button h-11 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-xl font-bold text-black"
-        onClick={handleUpdateWorkout}
-      >
-        Update
-      </button>
-    </div>
-  </div>
   );
 };
 

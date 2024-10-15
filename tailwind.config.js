@@ -33,6 +33,7 @@ module.exports = withMT({
         'black-opacity-45': 'rgba(0, 0, 0, 0.45)',
         'black-opacity-25': 'rgba(0, 0, 0, 0.25)',
         'black-opacity-40': 'rgba(0, 0, 0, 0.40)',
+        'black-opacity-65': 'rgba(0, 0, 0, 0.65)',
         'green-opacity-12': 'rgba(94, 204, 123, 0.12)',
         'browm-opacity-12': 'rgba(245, 197, 99, 0.12)',
         'red-opacity-12': 'rgba(250, 87, 87, 0.12)',
@@ -58,6 +59,8 @@ module.exports = withMT({
         'morning-zone': "url('../public/assets/morning-zone.svg')",
         'movement-flex': "url('../public/assets/movement-Flex.svg')",
         'movement-frame': "url('../public/assets/Movement-Frame.png')",
+        'workout-img': "url('../public/assets/workout-img.svg')",
+        'flex-img': "url('../public/assets/flex-img.svg')",
       },
       fontFamily: {
         serif: ['Inter', 'sans-serif'],

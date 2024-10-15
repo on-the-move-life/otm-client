@@ -21,6 +21,8 @@ const MainPage = () => {
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
+  console.log('xxxxxccccc', updatedWorkoutProgram, showUpdateWorkout);
+
   useEffect(() => {
     if (
       workoutData &&
@@ -85,7 +87,14 @@ const MainPage = () => {
   }
 
   return (
-    <div className=" h-screen w-screen overflow-y-scroll bg-movement-frame bg-cover">
+    <div className=" h-screen w-screen  bg-cover">
+      <img
+        loading="eager"
+        src={'/assets/Movement-Frame.png'}
+        className={`absolute left-0 -z-20 h-screen w-full saturate-150 ${
+          showUpdateWorkout === true ? 'top-0' : 'top-60 '
+        } `}
+      />
       {showUpdateWorkout && <UpdateWorkout onClose={handleUpdateClose} />}
 
       {!showUpdateWorkout && (
@@ -93,12 +102,16 @@ const MainPage = () => {
           {' '}
           <AnimatedComponent>
             <div
-              className={`mb-4 flex h-fit   bg-cover py-6 bg-blend-soft-light  ${
-                workoutData.theme
-                  ? 'bg-black/40 bg-morning-zone'
-                  : 'bg-black/40 bg-movement-flex'
-              } `}
+              className={`mb-4 flex h-[272px]   bg-full py-6 bg-blend-soft-light `}
             >
+              <img
+                src={
+                  workoutData.theme
+                    ? '/assets/workout-img.svg'
+                    : '/assets/flex-img.svg'
+                }
+                className="absolute top-0 -z-10 h-[272px] w-screen object-cover "
+              />
               <div className="flex w-full justify-between px-4">
                 <div className="flex h-full w-full flex-col items-start justify-between gap-4">
                   <HiArrowNarrowLeft
@@ -127,20 +140,19 @@ const MainPage = () => {
                               {workoutData.theme}
                             </h2>
                           </div>
-                          <div className="flex items-center justify-center">
-                            <button
-                              onClick={() => setShowUpdateWorkout(true)}
-                              className="w-fit rounded-[4px]  bg-offwhite px-2 "
-                            >
-                              <span className=" text-[14px] font-bold leading-[1px] text-black">
-                                Change
-                              </span>
-                            </button>
-                          </div>
+
+                          <button
+                            onClick={() => setShowUpdateWorkout(true)}
+                            className="flex h-[18px] w-fit  justify-center rounded-[4px] bg-offwhite px-2 "
+                          >
+                            <span className="  text-[12px] text-black">
+                              Change
+                            </span>
+                          </button>
                         </div>
                       ) : (
                         <div>
-                          <h2 className="text-xl">Core</h2>
+                          <h2 className="text-xl text-offwhite">Core</h2>
                         </div>
                       )}
 
@@ -190,7 +202,7 @@ const MainPage = () => {
           </div>
           <footer className="fixed bottom-4 w-full px-4">
             <button
-              className="workout-gradient-button mt-4 flex h-12 w-full items-center justify-center rounded-xl border border-[rgba(209,209,209,0.70)] text-center"
+              className=" mt-4 flex h-12 w-full items-center justify-center rounded-xl bg-[#F8F8F8]   text-center"
               onClick={handleStart}
             >
               <p className="text-lg font-semibold text-black">START</p>
