@@ -20,8 +20,9 @@ import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 import { axiosflexClient } from './apiFlexClient.js';
-import domtoimage from 'dom-to-image';
+import html2canvas from 'html2canvas'
 import Counter from '../../components/Counter';
+import { useScreenshot } from 'use-react-screenshot';
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
   month: 'short',
@@ -48,34 +49,58 @@ const WorkoutSummary = () => {
   const queryParams = new URLSearchParams(queryString);
   const movementId = queryParams.get('movementId');
   const date = queryParams.get('date');
+  const [getScreenshot, { isLoading }] = useScreenshot();
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
+ 
   const captureAndShareToWhatsApp = async () => {
     if (summaryRef.current) {
       try {
-        // Capture screenshot
-        const dataUrl = await domtoimage.toPng(summaryRef.current);
-
-        // Create share text
-        const shareText = 'Check out my workout summary!';
-
-        // Check if Web Share API is supported
-        if (navigator.share) {
-          const blob = await (await fetch(dataUrl)).blob();
-          const file = new File([blob], 'workout-summary.png', {
-            type: 'image/png',
-          });
-
-          await navigator.share({
-            text: shareText,
-            files: [file],
-          });
+        // Get the HTML content of the summary
+        const htmlContent = summaryRef.current.outerHTML;
+  
+        // Create a Blob with the HTML content
+        const htmlBlob = new Blob([htmlContent], { type: 'text/html' });
+  
+        // Create FormData and append the HTML file
+        const formData = new FormData();
+        formData.append('file', htmlBlob, 'summary.html');
+  
+        // Send the HTML to the backend
+        const response = await axios.post(`${process.env.REACT_APP_BASE_UR}/api/v1/screenshot`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+  
+        if (response.data.success) {
+          // Convert the buffer data to a base64 string
+          const base64Image = btoa(String.fromCharCode.apply(null, response.data.data.data));
+          const imageDataUrl = `data:image/png;base64,${base64Image}`;
+  
+          // Create share text
+          const shareText = 'Check out my workout summary!';
+  
+          // Try Web Share API first
+          if (navigator.share) {
+            try {
+              const blob = await fetch(imageDataUrl).then(res => res.blob());
+              const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
+              await navigator.share({
+                files: [file],
+                title: 'Workout Summary',
+                text: shareText
+              });
+            } catch (error) {
+              console.error('Error sharing via Web Share API:', error);
+              shareViaWhatsApp(imageDataUrl, shareText);
+            }
+          } else {
+            shareViaWhatsApp(imageDataUrl, shareText);
+          }
         } else {
-          // Fallback for desktop browsers
-          const encodedText = encodeURIComponent(shareText);
-          const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
-          window.open(whatsappUrl, '_blank');
+          throw new Error('Failed to generate screenshot');
         }
       } catch (error) {
         console.error('Error capturing or sharing screenshot:', error);
@@ -83,6 +108,12 @@ const WorkoutSummary = () => {
     }
   };
 
+  const shareViaWhatsApp = (imageUrl, text) => {
+    const encodedImage = encodeURIComponent(imageUrl);
+    const encodedText = encodeURIComponent(text);
+    const whatsappUrl = `whatsapp://send?text=${encodedText}&data=${encodedImage}`;
+    window.location.href = whatsappUrl;
+  };
   const getInputValuesFromLocalStorage = () => {
     const storedInputValues = {};
     if (inputIds !== undefined && inputIds.length > 0) {
