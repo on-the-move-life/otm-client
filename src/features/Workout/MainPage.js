@@ -7,6 +7,8 @@ import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { setIndex } from './WorkoutSlice';
 import { useEffect, useState } from 'react';
 import AnimatedComponent from '../../components/AnimatedComponent';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import LazyImage from '../../components/LazyLoadImage';
 
 const MainPage = () => {
   const [showUpdateWorkout, setShowUpdateWorkout] = useState(false);
@@ -104,14 +106,23 @@ const MainPage = () => {
             <div
               className={`mb-4 flex h-[272px]   bg-full py-6 bg-blend-soft-light `}
             >
-              <img
+              <LazyImage
+                hash={
+                  workoutData.theme
+                    ? 'T18NteL~00-V4Txu?^01M{%~DjVs'
+                    : 'TABDTh_3WB-oR*t7~q%MbHx]ofRj'
+                }
+                altText={'Image not found'}
                 src={
                   workoutData.theme
                     ? '/assets/workout-img.svg'
                     : '/assets/flex-img.svg'
                 }
-                className="absolute top-0 -z-10 h-[272px] w-screen object-cover "
+                ImageWrapperClassName={
+                  'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
+                }
               />
+
               <div className="flex w-full justify-between px-4">
                 <div className="flex h-full w-full flex-col items-start justify-between gap-4">
                   <HiArrowNarrowLeft

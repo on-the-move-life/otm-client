@@ -29,6 +29,7 @@ import {
 import StepTrackerTwo from './StepTrackerTwo';
 import { RxCross1 } from 'react-icons/rx';
 import { FaArrowLeftLong } from 'react-icons/fa6';
+import LazyImage from '../../components/LazyLoadImage';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -370,8 +371,16 @@ const FitnessPage = () => {
                 <InstallApp />
                 <Link
                   to="/workout/today"
-                  className="relative flex h-[95px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
+                  className="relative flex h-[95px] w-full grow items-center justify-between overflow-hidden rounded-xl   py-2 pl-4 pr-7 "
                 >
+                  <LazyImage
+                    hash={'T18NteL~00-V4Txu?^01M{%~DjVs'}
+                    altText={'Image not found'}
+                    src={'assets/morning-zone.svg'}
+                    ImageWrapperClassName={
+                      'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
+                    }
+                  />
                   <div className="flex h-full flex-col justify-center">
                     <h2 className="text-2xl font-medium ">Workout</h2>
 
@@ -418,8 +427,16 @@ const FitnessPage = () => {
               <div className="flex items-center">
                 <Link
                   to="/workout/flex"
-                  className="relative flex h-[95px] grow items-center justify-between rounded-xl bg-movement-flex bg-cover py-2 pl-4 pr-7 "
+                  className="relative flex h-[95px] grow items-center justify-between overflow-hidden rounded-xl  bg-cover py-2 pl-4 pr-7 "
                 >
+                  <LazyImage
+                    hash={'TABDTh_3WB-oR*t7~q%MbHx]ofRj'}
+                    altText={'Image not found'}
+                    src={'assets/movement-Flex.svg'}
+                    ImageWrapperClassName={
+                      'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
+                    }
+                  />
                   <div className="flex h-full flex-col justify-center">
                     <div className="flex gap-3">
                       <h2 className="text-3xl font-medium ">Flex</h2>
