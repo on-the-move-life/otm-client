@@ -160,8 +160,6 @@ const Login = () => {
     console.log('button Clicked', buttonClicked);
   }, [buttonClicked, error]);
 
-  console.log('xxdfdf', email, password, buttonClicked, confirmPassword);
-
   return (
     <>
       {showLoginInput || showSignUpInput ? (

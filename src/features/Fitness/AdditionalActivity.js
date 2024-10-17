@@ -173,11 +173,13 @@ const AdditionalActivity = ({ setShowActivity, date }) => {
           theme="dark"
         />
       </div>
+
       <img
         loading="lazy"
-        src="assets/movement-frame.svg"
-        className="absolute left-0 top-0 -z-10 h-full w-full"
+        src="assets/Movement-Frame.png"
+        className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
       />
+
       {activityListLoader || anotherActivityLoader ? (
         <Loader />
       ) : (
