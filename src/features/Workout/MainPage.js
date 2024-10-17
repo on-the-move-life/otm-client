@@ -221,7 +221,7 @@ const MainPage = () => {
               className=" mt-4 flex h-12 w-full items-center justify-center rounded-lg bg-[#F8F8F8]   text-center"
               onClick={handleStart}
             >
-              <p className="text-lg font-semibold text-black">START</p>
+              <p className="text-lg font-semibold text-black">Start</p>
             </button>
             <style>
               {`

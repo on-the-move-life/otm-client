@@ -132,7 +132,7 @@ const FitnessPage = () => {
             src="assets/Movement-Frame.png"
             className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
           />
-          <div className="mx-[9px] mb-[26px] flex justify-between">
+          <div className="mx-[9px] mb-[26px] flex items-center justify-between">
             <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-black-opacity-45 ">
               <FaArrowLeftLong
                 onClick={() => setShowLibrary(false)}
@@ -151,7 +151,7 @@ const FitnessPage = () => {
                   className="relative flex h-[105px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
                 >
                   <div className="flex h-full flex-col justify-center">
-                    <h2 className="text-3xl font-medium ">Workout</h2>
+                    <h2 className="text-2xl font-medium ">Workout</h2>
 
                     <div className="mt-2 flex gap-3">
                       <h2
@@ -199,7 +199,7 @@ const FitnessPage = () => {
                 >
                   <div className="flex h-full flex-col justify-center">
                     <div className="flex gap-3">
-                      <h2 className="text-3xl font-medium ">Flex</h2>
+                      <h2 className="text-2xl font-medium ">Flex</h2>
                     </div>
 
                     <div className="mt-2 flex gap-3">
@@ -443,7 +443,7 @@ const FitnessPage = () => {
                   />
                   <div className="flex h-full flex-col justify-center">
                     <div className="flex gap-3">
-                      <h2 className="text-3xl font-medium ">Flex</h2>
+                      <h2 className="text-2xl font-medium ">Flex</h2>
                     </div>
 
                     <div className="mt-2 flex gap-3">

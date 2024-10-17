@@ -50,9 +50,12 @@ const Section = ({ sectionList, index, isReport, movementId, date }) => {
                     {section.meta.todaysMetconIntensity}%
                   </span>
                 )} */}
-              <span className="mt-1 text-xs text-floYellow">
-                {section.movements.length} Movements
-              </span>
+              {section.movements.length > 0 && (
+                <span className="mt-1 text-xs text-floYellow">
+                  {section.movements.length}{' '}
+                  {section.movements.length > 1 ? 'Movements' : 'Movement'}
+                </span>
+              )}
             </div>
           )}
         </div>

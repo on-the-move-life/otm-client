@@ -84,7 +84,7 @@ const UpdateWorkout = ({ onClose }) => {
                 inputType="select"
                 inputOptions={EQUIPMENT_OPTIONS}
                 placeholder="Choose equipment"
-                label="EQUIPMENT (OPTIONAL)"
+                label="EQUIPMENT "
               />
               <DataInputComponent
                 inputId="customDuration"
@@ -99,7 +99,7 @@ const UpdateWorkout = ({ onClose }) => {
       </div>
       <div className="fixed bottom-0 left-0 right-0  p-4">
         <button
-          className=" h-11 w-full items-center justify-center rounded-lg border bg-[#F8F8F8] text-xl font-bold text-black"
+          className=" h-11 w-full items-center justify-center rounded-lg border bg-[#F8F8F8] text-xl  text-black"
           onClick={handleUpdateWorkout}
         >
           Update
