@@ -26,7 +26,7 @@ const Section = ({ sectionList, index, isReport, movementId, date }) => {
         onClick={() => handleClick(index)}
       >
         <div className="flex w-2/3 flex-col">
-          <h1 className="items-center text-lg font-bold text-offwhite">
+          <h1 className="items-center text-lg  text-offwhite">
             {sectionList.name || section.name}
           </h1>
           {isReport && (
@@ -50,7 +50,7 @@ const Section = ({ sectionList, index, isReport, movementId, date }) => {
                     {section.meta.todaysMetconIntensity}%
                   </span>
                 )} */}
-              <span className="mt-1 text-xs tracking-widest text-floYellow">
+              <span className="mt-1 text-xs text-floYellow">
                 {section.movements.length} Movements
               </span>
             </div>

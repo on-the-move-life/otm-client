@@ -374,7 +374,9 @@ const FitnessPage = () => {
                   className="relative flex h-[95px] w-full grow items-center justify-between overflow-hidden rounded-xl   py-2 pl-4 pr-7 "
                 >
                   <LazyImage
-                    hash={'T18NteL~00-V4Txu?^01M{%~DjVs'}
+                    hash={
+                      '|28NteQ-4TNH_M4TH?b^%#$*8xt7kqxa%LtRx]bb.89FRP.7Ndx[RjV@R5yXIBV@V[RjS4xus:n4RPt7tR%LIAM|R+ozxuxtofaKWBbcWBR+RkX8jFj[n$bbtRV@jFjZRkH?tRbcozjEsmo2jFRPV[WXaKaexuaxtQt7of'
+                    }
                     altText={'Image not found'}
                     src={'assets/morning-zone.svg'}
                     ImageWrapperClassName={
@@ -430,7 +432,9 @@ const FitnessPage = () => {
                   className="relative flex h-[95px] grow items-center justify-between overflow-hidden rounded-xl  bg-cover py-2 pl-4 pr-7 "
                 >
                   <LazyImage
-                    hash={'TABDTh_3WB-oR*t7~q%MbHx]ofRj'}
+                    hash={
+                      '|ABDTh_3WBRPxus:Rkoeof-oR*t7ofWBofazjZfk~q%MbHRjbHt7WBWVkCx]ofRjofofV@ofayayjERjoffkWBofWBj[j@o#j[WBkCjsWBj[jZa|x[oKWVj@ofWBofayazRij[a|j[WBofWBj[a|ozWVayoLazWBj]j[WB'
+                    }
                     altText={'Image not found'}
                     src={'assets/movement-Flex.svg'}
                     ImageWrapperClassName={

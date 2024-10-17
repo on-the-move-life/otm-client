@@ -5,6 +5,7 @@ import DataInputComponent from './DataInputComponent';
 import { updateWorkout } from './WorkoutSlice';
 import { HiX } from 'react-icons/hi';
 import AnimatedComponent from '../../components/AnimatedComponent';
+import { RxCross1 } from 'react-icons/rx';
 
 const WORKOUT_BASE_THEME_OPTIONS = [
   'Horizontal Push',
@@ -54,16 +55,13 @@ const UpdateWorkout = ({ onClose }) => {
   };
 
   return (
-    <div className="bg-black-opacity-65 relative h-screen w-screen overflow-y-auto ">
+    <div className="relative h-screen w-screen overflow-y-auto bg-black-opacity-65 ">
       <div className="p-4 pb-20">
         <AnimatedComponent>
           <div className="flex justify-end">
-            <span
-              onClick={() => onClose(false)}
-              className="rounded-full bg-[#202020] p-1"
-            >
-              <HiX size={15} />
-            </span>
+            <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray ">
+              <RxCross1 onClick={() => onClose(false)} className="" />
+            </div>
           </div>
           <div className="flex flex-col">
             <h3 className="mt-5 text-center text-[24px] uppercase text-offwhite">
@@ -99,9 +97,9 @@ const UpdateWorkout = ({ onClose }) => {
           </div>
         </AnimatedComponent>
       </div>
-      <div className="fixed bottom-0 left-0 right-0 bg-[#141414] p-4">
+      <div className="fixed bottom-0 left-0 right-0  p-4">
         <button
-          className=" h-11 w-full items-center justify-center rounded-xl border bg-[#F8F8F8] text-xl font-bold text-black"
+          className=" h-11 w-full items-center justify-center rounded-lg border bg-[#F8F8F8] text-xl font-bold text-black"
           onClick={handleUpdateWorkout}
         >
           Update

@@ -23,8 +23,6 @@ const MainPage = () => {
   const status = useSelector((store) => store.workoutReducer.status);
   const workoutData = useSelector((store) => store.workoutReducer.workout);
 
-  console.log('xxxxxccccc', updatedWorkoutProgram, showUpdateWorkout);
-
   useEffect(() => {
     if (
       workoutData &&
@@ -104,13 +102,13 @@ const MainPage = () => {
           {' '}
           <AnimatedComponent>
             <div
-              className={`mb-4 flex h-[272px]   bg-full py-6 bg-blend-soft-light `}
+              className={` flex  h-[246px] overflow-hidden  bg-full py-6 bg-blend-soft-light `}
             >
               <LazyImage
                 hash={
                   workoutData.theme
-                    ? 'T18NteL~00-V4Txu?^01M{%~DjVs'
-                    : 'TABDTh_3WB-oR*t7~q%MbHx]ofRj'
+                    ? '|28NteQ-4TNH_M4TH?b^%#$*8xt7kqxa%LtRx]bb.89FRP.7Ndx[RjaKR5yXIUV@V[RjS4xuofn4RPt7tR%LIAM|R+ozxuxtofaKWBbcWBR+RkX8jFj[n$bbtRV@jFjZRkH?tRbbozjEsmo2jFRPV[WXaKaexuaxt7t7of'
+                    : '|ABDTh_3WBRPxus:Rkoeof-oR*t7ofWBofazjZfk~q%MbHRjbHt7WBWVkCx]ofRjofofV@ofayayjERjoffkWBofWBj[j@o#j[WBkCjsWBj[jZa|x[oKWVj@ofWBofayazRij[a|j[WBofWBj[a|ozWVayoLazWBj]j[WB'
                 }
                 altText={'Image not found'}
                 src={
@@ -119,8 +117,9 @@ const MainPage = () => {
                     : '/assets/flex-img.svg'
                 }
                 ImageWrapperClassName={
-                  'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
+                  'absolute left-0 top-0 -z-10  h-[246px] w-full '
                 }
+                ImageClassName={'h-[246px] w-screen  object-cover'}
               />
 
               <div className="flex w-full justify-between px-4">
@@ -132,56 +131,62 @@ const MainPage = () => {
                     }}
                   />
                   <div className="mt-2 flex w-full flex-col items-start justify-center">
-                    <h1 className="metallic-workout-gradient-text text-3xl font-semibold text-offwhite">
+                    <h1 className="metallic-workout-gradient-text text-[32px] leading-[40px]  text-offwhite">
                       {memberName}
                     </h1>
-                    <span className="text-sm font-extralight tracking-wider text-white-opacity-50">
+                    <span className="text-sm   text-white-opacity-50">
                       Let's crush this workout
                     </span>
 
-                    <span className="mt-6 text-sm tracking-widest text-white-opacity-50">
-                      Today's Focus
-                    </span>
+                    <div className="flex w-full justify-between">
+                      <div className="flex grow flex-col">
+                        <span className="mt-4 text-sm  text-white-opacity-50">
+                          Today's Focus
+                        </span>
 
-                    <div className="flex w-full items-center justify-between sm:justify-normal sm:gap-5">
-                      {workoutData.theme ? (
-                        <div className="flex items-center gap-2">
-                          <div>
-                            <h2 className="text-xl text-offwhite">
-                              {workoutData.theme}
-                            </h2>
-                          </div>
-
-                          <button
-                            onClick={() => setShowUpdateWorkout(true)}
-                            className="flex h-[18px] w-fit  justify-center rounded-[4px] bg-offwhite px-2 "
-                          >
-                            <span className="  text-[12px] text-black">
-                              Change
-                            </span>
-                          </button>
-                        </div>
-                      ) : (
                         <div>
-                          <h2 className="text-xl text-offwhite">Core</h2>
-                        </div>
-                      )}
+                          {workoutData.theme ? (
+                            <div className="flex items-center gap-2">
+                              <div>
+                                <h2 className="text-xl text-offwhite">
+                                  {workoutData.theme}
+                                </h2>
+                              </div>
 
-                      {(workoutData.workoutCalories ||
-                        workoutData.workoutDuration) && (
-                        <div className="flex flex-col items-end text-offwhite sm:flex-row sm:gap-2">
-                          {workoutData.workoutCalories && (
-                            <span className="text-sm ">
-                              {workoutData.workoutCalories} calories
-                            </span>
-                          )}
-                          {workoutData.workoutDuration && (
-                            <span className="text-sm ">
-                              {workoutData.workoutDuration} mins
-                            </span>
+                              <button
+                                onClick={() => setShowUpdateWorkout(true)}
+                                className="flex h-[18px] w-fit  justify-center rounded-[4px] bg-offwhite px-2 "
+                              >
+                                <span className="  text-[12px] text-black">
+                                  Change
+                                </span>
+                              </button>
+                            </div>
+                          ) : (
+                            <div>
+                              <h2 className="text-xl text-offwhite">Core</h2>
+                            </div>
                           )}
                         </div>
-                      )}
+                      </div>
+
+                      <div className="flex  items-end justify-between sm:justify-normal sm:gap-5">
+                        {(workoutData.workoutCalories ||
+                          workoutData.workoutDuration) && (
+                          <div className="flex flex-col items-end text-offwhite sm:flex-row sm:gap-2">
+                            {workoutData.workoutCalories && (
+                              <span className="text-sm ">
+                                {workoutData.workoutCalories} calories
+                              </span>
+                            )}
+                            {workoutData.workoutDuration && (
+                              <span className="text-sm ">
+                                {workoutData.workoutDuration} mins
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -194,7 +199,7 @@ const MainPage = () => {
               </div>
             </div>
           </AnimatedComponent>
-          <div className="pb-32">
+          <div className="pb-32 pt-[24px]">
             <AnimatedComponent
               transition={{ duration: 0.8, ease: 'easeInOut' }}
             >
@@ -213,7 +218,7 @@ const MainPage = () => {
           </div>
           <footer className="fixed bottom-4 w-full px-4">
             <button
-              className=" mt-4 flex h-12 w-full items-center justify-center rounded-xl bg-[#F8F8F8]   text-center"
+              className=" mt-4 flex h-12 w-full items-center justify-center rounded-lg bg-[#F8F8F8]   text-center"
               onClick={handleStart}
             >
               <p className="text-lg font-semibold text-black">START</p>

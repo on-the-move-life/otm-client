@@ -10,7 +10,7 @@ const LazyImage = ({
   altText,
   hash,
   ImageWrapperClassName,
-  blurHeight,
+  ImageClassName,
 }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [isLoadStarted, setLoadStarted] = useState(false);
@@ -32,16 +32,19 @@ const LazyImage = ({
         alt={altText}
         onLoad={handleLoad}
         beforeLoad={handleLoadStarted}
-        className="w-screen object-cover"
+        className={`${!isLoaded && 'absolute -z-10'}  w-full ${ImageClassName}`}
       />
       {!isLoaded && (
         // <LazyLoadComponent>
+
         <Blurhash
           height="100%"
           width="100%" // Set width to 100% of the parent container
           hash={hash}
           punch={1}
+          className="absolute top-0  "
         />
+
         // </LazyLoadComponent>
       )}
     </ImageWrapper>
