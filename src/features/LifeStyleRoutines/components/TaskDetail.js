@@ -334,9 +334,9 @@ const TaskDetail = ({
                   {SelectedCircle}
                 </div>{' '}
               </span>
-              <span className="mt-1 block font-sfpro text-lg text-custompurple">
+              {/* <span className="mt-1 block font-sfpro text-lg text-custompurple">
                 {task?.time}
-              </span>
+              </span> */}
             </div>
           </div>
 
