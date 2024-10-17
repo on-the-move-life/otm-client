@@ -35,7 +35,7 @@ const Section = ({ sectionList, index, isReport, movementId, date }) => {
             </p>
           )}
         </div>
-        <div className="text-xs tracking-widest text-lightGray">
+        <div className="text-xs  text-lightGray">
           {isReport && (
             <p id="mc">{sectionList.round ? sectionList.round : '0 round'}</p>
           )}

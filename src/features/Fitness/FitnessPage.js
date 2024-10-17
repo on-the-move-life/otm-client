@@ -378,7 +378,7 @@ const FitnessPage = () => {
                       '|28NteQ-4TNH_M4TH?b^%#$*8xt7kqxa%LtRx]bb.89FRP.7Ndx[RjV@R5yXIBV@V[RjS4xus:n4RPt7tR%LIAM|R+ozxuxtofaKWBbcWBR+RkX8jFj[n$bbtRV@jFjZRkH?tRbcozjEsmo2jFRPV[WXaKaexuaxtQt7of'
                     }
                     altText={'Image not found'}
-                    src={'assets/morning-zone.svg'}
+                    src={'assets/movement-workout.png'}
                     ImageWrapperClassName={
                       'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
                     }
@@ -436,7 +436,7 @@ const FitnessPage = () => {
                       '|ABDTh_3WBRPxus:Rkoeof-oR*t7ofWBofazjZfk~q%MbHRjbHt7WBWVkCx]ofRjofofV@ofayayjERjoffkWBofWBj[j@o#j[WBkCjsWBj[jZa|x[oKWVj@ofWBofayazRij[a|j[WBofWBj[a|ozWVayoLazWBj]j[WB'
                     }
                     altText={'Image not found'}
-                    src={'assets/movement-Flex.svg'}
+                    src={'assets/movement-Flex.png'}
                     ImageWrapperClassName={
                       'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
                     }

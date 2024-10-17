@@ -113,8 +113,8 @@ const MainPage = () => {
                 altText={'Image not found'}
                 src={
                   workoutData.theme
-                    ? '/assets/workout-img.svg'
-                    : '/assets/flex-img.svg'
+                    ? '/assets/workout-img.png'
+                    : '/assets/flex-img.png'
                 }
                 ImageWrapperClassName={
                   'absolute left-0 top-0 -z-10  h-[246px] w-full '
