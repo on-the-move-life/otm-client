@@ -62,7 +62,7 @@ const DynamicStretchScreen = () => {
             </div>
 
             <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-mediumGray ">
-              <RxCross1 onClick={() => navigate('/movement')} className="" />
+              <RxCross1 onClick={() => navigate('/home')} className="" />
             </div>
           </div>
 
@@ -84,7 +84,7 @@ const DynamicStretchScreen = () => {
             </div>
           </div>
         </div>
-        <div className="mt-7 pb-5">
+        {/* <div className="mt-7 pb-5">
           <p className="w-full py-3 text-center text-[12px] text-offwhite">
             Submit and save your progress
           </p>
@@ -98,7 +98,7 @@ const DynamicStretchScreen = () => {
           >
             Submit
           </button>
-        </div>
+        </div> */}
         {alertVisible && (
           <AlertDialog
             message="Mark this as completed?"

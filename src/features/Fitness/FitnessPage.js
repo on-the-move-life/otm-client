@@ -19,6 +19,17 @@ import AdditionalActivity from './AdditionalActivity';
 import { TbSwimming } from 'react-icons/tb';
 import InstallApp from '../../components/InstallPWA';
 import { FaArrowRight } from 'react-icons/fa6';
+import {
+  getCurrentHourInTimezone,
+  getCurrentWeekDates,
+  getCurrentWeekFullDate,
+  getDeviceTimezone,
+  getGreeting,
+} from './utils';
+import StepTrackerTwo from './StepTrackerTwo';
+import { RxCross1 } from 'react-icons/rx';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import LazyImage from '../../components/LazyLoadImage';
 
 function formatNumber(num) {
   if (num >= 1000) {
@@ -38,6 +49,19 @@ const FitnessPage = () => {
   const { getUserFromStorage, user } = useAuth();
   const [showActivity, setShowActivity] = useState(false);
   const currentDate = new Date().getDate();
+  const [showLibrary, setShowLibrary] = useState(false);
+
+  const [greeting, setGreeting] = useState('');
+  const fullName = JSON.parse(localStorage.getItem('user'))['name'];
+  const firstName = fullName.split(' ')[0];
+
+  useEffect(() => {
+    const timezone = getDeviceTimezone();
+    const currentHour = getCurrentHourInTimezone(timezone);
+    const greetingMessage = getGreeting(currentHour);
+    setGreeting(greetingMessage);
+  }, []);
+
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
   console.log(showActivity);
@@ -100,20 +124,185 @@ const FitnessPage = () => {
           date={new Date()}
         />
       )}
+      {showLibrary === true && (
+        <div className="h-screen bg-black-opacity-45 px-4 pb-[90px] pt-10">
+          {' '}
+          <img
+            loading="lazy"
+            src="assets/Movement-Frame.png"
+            className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
+          />
+          <div className="mx-[9px] mb-[26px] flex items-center justify-between">
+            <div className="  flex h-[37px] w-[37px] items-center justify-center rounded-full bg-black-opacity-45 ">
+              <FaArrowLeftLong
+                onClick={() => setShowLibrary(false)}
+                className=""
+              />
+            </div>
+            <h3 className="font-sfpro text-xl text-offwhite">
+              Workout Library
+            </h3>
+          </div>
+          <div className="flex flex-col gap-3">
+            <section>
+              <div className="flex items-center">
+                <Link
+                  to="/workout/today"
+                  className="relative flex h-[105px] w-full grow items-center justify-between rounded-xl bg-morning-zone bg-cover py-2 pl-4 pr-7 "
+                >
+                  <div className="flex h-full flex-col justify-center">
+                    <h2 className="text-2xl font-medium ">Workout</h2>
 
-      {showActivity === false && homeStats && (
+                    <div className="mt-2 flex gap-3">
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow"
+                      >
+                        <img
+                          src="/assets/yellowTimer.svg"
+                          className="mr-[2px]"
+                        />
+                        {homeStats.hyperWorkoutParams.duration} mins
+                      </h2>
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow"
+                      >
+                        <img
+                          src="/assets/yellow-power.svg"
+                          className="mr-[2px]"
+                        />
+                        {homeStats.hyperWorkoutParams.calories} cal
+                      </h2>
+                    </div>
+                  </div>
+                  {/* <img
+                    className="rounded-xl"
+                    style={{
+                      boxShadow:
+                        '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
+                    }}
+                    src="/assets/yellow-play.svg"
+                  /> */}
+                </Link>
+              </div>
+            </section>
+            <section>
+              <div className="flex items-center">
+                <Link
+                  to="/workout/flex"
+                  className="relative flex h-[105px] grow items-center justify-between rounded-xl bg-movement-flex bg-cover py-2 pl-4 pr-7 "
+                >
+                  <div className="flex h-full flex-col justify-center">
+                    <div className="flex gap-3">
+                      <h2 className="text-2xl font-medium ">Flex</h2>
+                    </div>
+
+                    <div className="mt-2 flex gap-3">
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow"
+                      >
+                        <img
+                          src="/assets/yellowTimer.svg"
+                          className="mr-[2px]"
+                        />
+                        {homeStats.flexWorkoutParams.duration} mins
+                      </h2>
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow"
+                      >
+                        <img
+                          src="/assets/yellow-power.svg"
+                          className="mr-[2px]"
+                        />
+                        {homeStats.flexWorkoutParams.calories} cal
+                      </h2>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </section>
+            <section>
+              <div className="flex items-center">
+                <Link
+                  to="/warm-up"
+                  className="relative flex h-[105px] grow items-center justify-between rounded-xl bg-evening-zone bg-cover py-2 pl-4 pr-7 "
+                >
+                  <div className="flex h-full flex-col justify-center">
+                    <div className="flex gap-3">
+                      <h2 className="text-3xl font-medium ">Dynamic Stretch</h2>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </section>
+          </div>
+        </div>
+      )}
+
+      {showLibrary === false && showActivity === false && homeStats && (
         <div>
           <img
-            className="absolute -top-5 right-0 -z-20 "
-            src="/assets/main-frame.svg"
-          />
-          <img
-            className="absolute right-[75px] top-8 -z-10 "
-            src="/assets/movement-logo.svg"
+            loading="lazy"
+            src="assets/Movement-Frame.png"
+            className="absolute left-0 top-0 -z-10 h-full w-full saturate-150"
           />
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
             <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
-              <div>
+              <div className="w-full">
+                <h3 className=" font-sfpro text-[14px] text-offwhite">
+                  {greeting} {firstName}
+                </h3>
+                <div className="flex w-full items-end">
+                  <div className="flex-1">
+                    <h2 className="font-sfpro text-[32px] leading-10 text-offwhite">
+                      Movement
+                    </h2>
+
+                    <div className="flex items-center">
+                      {parseInt(homeStats.streak) > 0 && (
+                        <div className="flex items-center ">
+                          <div className="perfect-week mt-2 flex w-fit items-center rounded">
+                            <img src="assets/star.svg" alt="" />
+                            <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
+                              Perfect Week x{homeStats.streak}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 justify-end">
+                    <div className="flex h-[51px] max-w-[188px]  items-center justify-between rounded-xl bg-black-opacity-45 p-1">
+                      <span className="pl-2 text-sm text-offwhite">
+                        Total workouts
+                      </span>
+                      <div
+                        className={`flex h-min w-[61px] items-center  justify-center rounded-lg text-center font-anton text-4xl  text-blue   `}
+                      >
+                        {homeStats &&
+                          formatNumber(
+                            homeStats?.totalWorkoutsDone
+                              ? homeStats?.totalWorkoutsDone
+                              : 0,
+                          )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div>
                 <TimelineHeading>Movement</TimelineHeading>
                 <div className="flex items-center">
                   {parseInt(homeStats.streak) > 0 && (
@@ -127,8 +316,8 @@ const FitnessPage = () => {
                     </div>
                   )}
                 </div>
-              </div>
-              <div className="flex h-[66px] min-w-[148px]  items-center justify-between rounded-lg bg-mediumGray p-1">
+              </div> */}
+              {/* <div className="flex h-[66px] min-w-[148px]  items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="w-9 pl-2 text-sm">Total workouts</span>
                 <div
                   className={`
@@ -142,8 +331,35 @@ const FitnessPage = () => {
                 >
                   {formatNumber(homeStats?.totalWorkoutsDone)}
                 </div>
-              </div>
+              </div> */}
             </section>
+
+            <section>
+              <WeeklyWorkoutReport
+                consistencyTrend={homeStats?.consistencyTrend}
+                suggestedWorkoutPerWeek={homeStats?.frequency}
+                lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
+              />
+            </section>
+
+            <section>
+              {currentDate < 5 && (
+                <section className="flex w-full flex-row items-center justify-center gap-3 ">
+                  <MonthlyWrapped />
+                </section>
+              )}
+            </section>
+
+            <div className="flex items-center justify-between">
+              <div>Browse workout library</div>
+              <div
+                onClick={() => setShowLibrary(true)}
+                className="flex items-center gap-2 rounded-lg bg-blue px-2 py-1 text-black"
+              >
+                Explore <FaArrowRight />
+              </div>
+            </div>
+
             {/* <div className="flex w-full gap-2 mt-2">
               <div className="flex h-[76px] grow items-center justify-between rounded-lg bg-mediumGray p-1">
                 <span className="pl-4 text-sm w-9 text-floYellow">
@@ -160,32 +376,44 @@ const FitnessPage = () => {
             </h2> */}
 
             <section>
-              {currentDate < 5 && (
-                <section className="flex w-full flex-row items-center justify-center gap-3 ">
-                  <MonthlyWrapped />
-                </section>
-              )}
-            </section>
-
-            <section>
               <div className="flex items-center">
                 <InstallApp />
                 <Link
                   to="/workout/today"
-                  className="relative flex h-[85px] w-full grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
+                  className="relative flex h-[95px] w-full grow items-center justify-between overflow-hidden rounded-xl   py-2 pl-4 pr-7 "
                 >
+                  <LazyImage
+                    hash={
+                      '|28NteQ-4TNH_M4TH?b^%#$*8xt7kqxa%LtRx]bb.89FRP.7Ndx[RjV@R5yXIBV@V[RjS4xus:n4RPt7tR%LIAM|R+ozxuxtofaKWBbcWBR+RkX8jFj[n$bbtRV@jFjZRkH?tRbcozjEsmo2jFRPV[WXaKaexuaxtQt7of'
+                    }
+                    altText={'Image not found'}
+                    src={'assets/movement-workout.png'}
+                    ImageWrapperClassName={
+                      'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
+                    }
+                  />
                   <div className="flex h-full flex-col justify-center">
-                    <h2 className="text-xl font-medium ">Strength Training</h2>
+                    <h2 className="text-2xl font-medium ">Workout</h2>
 
                     <div className="mt-2 flex gap-3">
-                      <h2 className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow">
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow"
+                      >
                         <img
                           src="/assets/yellowTimer.svg"
                           className="mr-[2px]"
                         />
                         {homeStats.hyperWorkoutParams.duration} mins
                       </h2>
-                      <h2 className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow">
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow"
+                      >
                         <img
                           src="/assets/yellow-power.svg"
                           className="mr-[2px]"
@@ -194,30 +422,91 @@ const FitnessPage = () => {
                       </h2>
                     </div>
                   </div>
-                  <img
+                  {/* <img
                     className="rounded-xl"
                     style={{
                       boxShadow:
                         '0 4px 6px rgba(221, 249, 136, 0.4), 0 -4px 6px rgba(221, 249, 136, 0.4), 4px 0 6px rgba(221, 249, 136, 0.4), -4px 0 6px rgba(221, 249, 136, 0.4)',
                     }}
                     src="/assets/yellow-play.svg"
+                  /> */}
+                </Link>
+              </div>
+            </section>
+
+            <section>
+              <div className="flex items-center">
+                <Link
+                  to="/workout/flex"
+                  className="relative flex h-[95px] grow items-center justify-between overflow-hidden rounded-xl  bg-cover py-2 pl-4 pr-7 "
+                >
+                  <LazyImage
+                    hash={
+                      '|ABDTh_3WBRPxus:Rkoeof-oR*t7ofWBofazjZfk~q%MbHRjbHt7WBWVkCx]ofRjofofV@ofayayjERjoffkWBofWBj[j@o#j[WBkCjsWBj[jZa|x[oKWVj@ofWBofayazRij[a|j[WBofWBj[a|ozWVayoLazWBj]j[WB'
+                    }
+                    altText={'Image not found'}
+                    src={'assets/movement-Flex.png'}
+                    ImageWrapperClassName={
+                      'absolute left-0 top-0 -z-10   h-[272px] w-screen object-cover'
+                    }
                   />
+                  <div className="flex h-full flex-col justify-center">
+                    <div className="flex gap-3">
+                      <h2 className="text-2xl font-medium ">Flex</h2>
+                    </div>
+
+                    <div className="mt-2 flex gap-3">
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className="flex  rounded-md border border-floYellow bg-gray px-1   font-sfpro text-[12px] text-floYellow"
+                      >
+                        <img
+                          src="/assets/yellowTimer.svg"
+                          className="mr-[2px]"
+                        />
+                        {homeStats.flexWorkoutParams.duration} mins
+                      </h2>
+                      <h2
+                        style={{
+                          border: '0.5px solid rgba(221,249,136,0.4)',
+                        }}
+                        className=" flex rounded-md border border-floYellow bg-gray px-1  font-sfpro text-[12px] text-floYellow"
+                      >
+                        <img
+                          src="/assets/yellow-power.svg"
+                          className="mr-[2px]"
+                        />
+                        {homeStats.flexWorkoutParams.calories} cal
+                      </h2>
+                    </div>
+                  </div>
                 </Link>
               </div>
             </section>
 
             <div
               onClick={() => setShowActivity(true)}
-              className="to-blue-500 relative flex items-center justify-between rounded-full bg-gradient-to-r from-[#9299de] to-[#404fe3] px-4 py-2"
+              className="to-blue-500 relative flex h-[50px] items-center justify-between rounded-xl bg-black-opacity-45 py-2 pl-4 pr-3"
             >
-              <div className="flex gap-2">
-                <TbSwimming className="text-xl" />
-                Log an additional activity
+              <div className="flex gap-2 ">
+                <TbSwimming className="mt-0.5 text-xl" />
+                <span className="text-offwhite">
+                  {' '}
+                  Log an additional activity
+                </span>
               </div>
-              <FaArrowRight />
+              <div className="flex items-center justify-center rounded-lg bg-floYellow ">
+                <img
+                  loading="lazy"
+                  src="/assets/fitness-add.svg"
+                  className="h-[30px] w-[30px]"
+                />
+              </div>
             </div>
 
-            <StepTracker />
+            <StepTrackerTwo date={new Date()} />
 
             {isWeekend && (
               <Link to="/weekly-checkin" className="">
@@ -240,14 +529,7 @@ const FitnessPage = () => {
               </Link>
             )}
 
-            <section>
-              <WeeklyWorkoutReport
-                consistencyTrend={homeStats?.consistencyTrend}
-                suggestedWorkoutPerWeek={homeStats?.frequency}
-                lastEightWeeksWorkout={homeStats?.lastEightWeeksWorkout}
-              />
-            </section>
-            <section>
+            {/* <section>
               <FitnessScore
                 score={homeStats?.score}
                 percentile={homeStats?.fitnessPercentileScore}
@@ -263,35 +545,7 @@ const FitnessPage = () => {
             <div className="text-sm text-offwhite ">
               Follow this module to workout your core
             </div>
-
-            <section>
-              <div className="flex items-center">
-                <Link
-                  to="/workout/flex"
-                  className="relative flex h-[85px] grow items-center justify-between rounded-xl bg-gym-workout py-2 pl-4 pr-7 "
-                >
-                  <div className="flex h-full flex-col justify-between">
-                    <div className="flex gap-3">
-                      <h2 className="text-3xl font-medium ">Flex</h2>
-                      <img src="/assets/flex-logo.svg" />
-                    </div>
-
-                    <div className="flex gap-3">
-                      <h2 className="rounded-md border border-white bg-gray px-2 py-[2px] font-sfpro text-[12px] text-white">
-                        {homeStats.flexWorkoutParams.theme}
-                      </h2>
-                      <h2 className="rounded-md  border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                        {homeStats.flexWorkoutParams.duration} mins
-                      </h2>
-                      <h2 className=" rounded-md border border-white bg-gray px-2 py-[2px]  font-sfpro text-[12px] text-white">
-                        {' '}
-                        {homeStats.flexWorkoutParams.calories} cal
-                      </h2>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            </section>
+ */}
 
             {/* <div className="pt-2 pb-5 pl-4 rounded-xl bg-mediumGray">
               <p className="text-sm text-red">Injury guide</p>
