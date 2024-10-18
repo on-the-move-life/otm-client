@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import MoveCoinsPopUp from './MoveCoinsPopUp.js';
 import { Error, Loader } from '../../components';
 import {
   HiHome,
@@ -16,12 +15,9 @@ import { axiosClient } from './apiClient';
 import { setStatus } from './WorkoutSlice';
 import AnimatedComponent from '../../components/AnimatedComponent.js';
 import useLocalStorage from '../../hooks/useLocalStorage.js';
-import { AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 import { axiosflexClient } from './apiFlexClient.js';
-import domtoimage from 'dom-to-image';
-import Counter from '../../components/Counter';
 const today = new Date().toLocaleDateString('en-us', {
   year: 'numeric',
   month: 'short',
@@ -51,38 +47,83 @@ const WorkoutSummary = () => {
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
+ 
   const captureAndShareToWhatsApp = async () => {
     if (summaryRef.current) {
       try {
-        // Capture screenshot
-        const dataUrl = await domtoimage.toPng(summaryRef.current);
-
-        // Create share text
-        const shareText = 'Check out my workout summary!';
-
-        // Check if Web Share API is supported
-        if (navigator.share) {
-          const blob = await (await fetch(dataUrl)).blob();
-          const file = new File([blob], 'workout-summary.png', {
-            type: 'image/png',
-          });
-
-          await navigator.share({
-            text: shareText,
-            files: [file],
-          });
+        // Get the HTML content of the summary
+        const htmlContent = summaryRef.current.outerHTML;
+        console.log(htmlContent);
+  
+        // Create a Blob with the HTML content
+        const htmlBlob = new Blob([htmlContent], { type: 'text/html' });
+  
+        // Create a File object from the Blob
+        const htmlFile = new File([htmlBlob], 'summary.html', { type: 'text/html' });
+  
+        // Create FormData and append the file
+        const formData = new FormData();
+        formData.append('file', htmlFile);
+  
+        // Send the request to the server
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/screenshot`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+  
+        if (response.data.success) {
+          // Convert the buffer data to a base64 string
+          const base64Image = btoa(String.fromCharCode.apply(null, response.data.data.data));
+          const imageDataUrl = `data:image/png;base64,${base64Image}`;
+  
+          // Create share text
+          const shareText = 'Check out my workout summary!';
+  
+          // Try Web Share API first
+          if (navigator.share) {
+            try {
+              const blob = await fetch(imageDataUrl).then(res => res.blob());
+              const file = new File([blob], 'workout-summary.png', { type: 'image/png' });
+              await navigator.share({
+                files: [file],
+                title: 'Workout Summary',
+                text: shareText
+              });
+            }  catch (error) {
+              console.error('Error capturing or sharing screenshot:', error);
+              if (error.response) {
+                console.error('Server responded with:', error.response.data);
+                alert(`Error: ${error.response.data.message || 'Unknown server error'}`);
+              } else if (error.request) {
+                console.error('No response received:', error.request);
+                alert('No response from server. Please check your connection.');
+              } else {
+                console.error('Error details:', error.message);
+                alert(`Error: ${error.message}`);
+              }
+            }
+          } else {
+            shareViaWhatsApp(imageDataUrl, shareText);
+          }
         } else {
-          // Fallback for desktop browsers
-          const encodedText = encodeURIComponent(shareText);
-          const whatsappUrl = `https://web.whatsapp.com/send?text=${encodedText}`;
-          window.open(whatsappUrl, '_blank');
+          throw new Error('Failed to generate screenshot');
         }
       } catch (error) {
         console.error('Error capturing or sharing screenshot:', error);
+        // Add user-friendly error handling here
+        alert('An error occurred while sharing the workout summary. Please try again.');
       }
     }
   };
+  
 
+  const shareViaWhatsApp = (imageUrl, text) => {
+    const encodedImage = encodeURIComponent(imageUrl);
+    const encodedText = encodeURIComponent(text);
+    const whatsappUrl = `whatsapp://send?text=${encodedText}&data=${encodedImage}`;
+    window.location.href = whatsappUrl;
+  };
   const getInputValuesFromLocalStorage = () => {
     const storedInputValues = {};
     if (inputIds !== undefined && inputIds.length > 0) {
