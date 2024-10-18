@@ -259,7 +259,7 @@ const FitnessPage = () => {
           />
           <div className="flex w-screen grow flex-col gap-5 overflow-y-scroll px-4  pb-[78px]">
             <section className="mt-[40px] flex w-full items-center justify-between pb-0 pt-5">
-              <div>
+              <div className="w-full">
                 <h3 className=" font-sfpro text-[14px] text-offwhite">
                   {greeting} {firstName}
                 </h3>
@@ -269,8 +269,17 @@ const FitnessPage = () => {
                       Movement
                     </h2>
 
-                    <div className="font-sfpro text-[14px] text-white-opacity-50">
-                      Everyday is an opportunity to do some main character shit.
+                    <div className="flex items-center">
+                      {parseInt(homeStats.streak) > 0 && (
+                        <div className="flex items-center ">
+                          <div className="perfect-week mt-2 flex w-fit items-center rounded">
+                            <img src="assets/star.svg" alt="" />
+                            <span className="mx-0.5  text-xs font-[700] -tracking-[0.36px] text-[#4a3e1d]">
+                              Perfect Week x{homeStats.streak}
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 
