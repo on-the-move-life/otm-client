@@ -3,14 +3,14 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FiUpload } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Error } from '../../components';
+import { Error, Loader } from '../../components';
 import { capitalizeFirstLetter } from '../../utils';
 import {
   getCurrentHourInTimezone,
   getDeviceTimezone,
   getGreeting,
 } from '../Fitness/utils';
-import { Loader } from '../LifestyleQuiz';
+
 import { axiosClient } from './apiClient';
 import Calendar from './Calendar';
 import ShareCoachScreen from './components/ShareCoachScreen';
