@@ -173,13 +173,29 @@ function Options({
             (item) => item.code === questionCode,
           );
 
+          const tagArray = response.find((item) => item.code === 'onb5');
+
+          const filteredOptions =
+            selectedNestedChoice.modifications[3].ingredients.filter(
+              (category) => {
+                if (category.type !== 'Fats') {
+                  return {
+                    type: category.type,
+                    options: category.options.filter((option) =>
+                      option.tags.some((tag) => tagArray.value.includes(tag)),
+                    ),
+                  };
+                }
+              },
+            );
+
           // Construct the new response for the selected option
           const newNestedChoice = {
             meal: optionID,
             time: '9:00 AM',
             plateSize: 'small_plate',
             mealProportion: selectedMealProportion,
-            ingredients: selectedNestedChoice.modifications[3].ingredients,
+            ingredients: filteredOptions,
           };
 
           if (existingQuestionResponse.value[0] !== '') {
@@ -273,7 +289,7 @@ function Options({
       </div>
     );
   };
-  console.log(response, questionCode);
+
   const responseValue = response?.find((item) => item.code === questionCode)
     .value[0];
 

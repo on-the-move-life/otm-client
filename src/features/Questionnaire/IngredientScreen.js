@@ -29,12 +29,47 @@ const IngredientScreen = ({
   ingredient,
   setShowIngredientScreen,
 }) => {
+  const tagArray = response.find((item) => item.code === 'onb5');
+
   const ingredientResponse = response
     .find((item) => item.code === 'onb15')
     .value.find((item) => item.meal === ingredient.id).ingredients;
+
   const [selectedTime, setSelectedTime] = useState(dayjs());
   const [showIngredient, setShowIngredients] = useState(null);
   const [ingredientType, setIngredientType] = useState(ingredientResponse);
+  const [filteredOptions, setFilteredOptions] = useState(null);
+
+  useEffect(() => {
+    const filterOptions = ingredient.modifications.map((item, index) => {
+      if (index === 3) {
+        const newMenu = item.ingredients.filter((category) => {
+          if (category.type !== 'Fats') {
+            return {
+              type: category.type,
+              options: category.options.filter((option) =>
+                option.tags.some((tag) => tagArray.value.includes(tag)),
+              ),
+            };
+          }
+        });
+
+        return {
+          code: item.code,
+          content: item.content,
+          description: item.description,
+          ingredients: newMenu,
+          inputType: item.inputType,
+          rank: item.rank,
+          section: item.section,
+          sectionDescription: item.sectionDescription,
+          target: item.target,
+        };
+      } else return item;
+    });
+
+    setFilteredOptions(filterOptions);
+  }, [ingredient]);
 
   const ress = response
     .find((item) => item.code === 'onb15')
@@ -111,7 +146,6 @@ const IngredientScreen = ({
       (item) => item === ingredient,
     );
 
-    console.log(existingIngredient, existingType, ingredient);
     if (existingIngredient) {
       setIngredientType((prevData) => {
         // Check if the type already exists in the state
@@ -120,7 +154,6 @@ const IngredientScreen = ({
         );
 
         if (existingType) {
-          console.log(existingType);
           // If the type exists, update the options array by removing the ingredient
           return prevData.map((item) =>
             item.type === showIngredient
@@ -142,7 +175,6 @@ const IngredientScreen = ({
         );
 
         if (existingType) {
-          console.log(existingType);
           // If the type exists, update the options array
           return prevData.map((item) =>
             item.type === showIngredient
@@ -196,6 +228,65 @@ const IngredientScreen = ({
         return item;
       }),
     );
+
+    if ('carbs' in proportionData) {
+      setResponse((prevResponse) =>
+        prevResponse.map((item) => {
+          if (item.code === 'onb15') {
+            return {
+              ...item,
+              value: item.value.map((mealObj) =>
+                mealObj.meal === ingredient.id
+                  ? {
+                      ...mealObj,
+                      ingredients:
+                        ingredient.modifications[3].ingredients.filter(
+                          (item) => item.type !== 'Fats',
+                        ),
+                    }
+                  : mealObj,
+              ),
+            };
+          }
+          return item;
+        }),
+      );
+
+      setIngredientType(
+        ingredient.modifications[3].ingredients.filter(
+          (item) => item.type !== 'Fats',
+        ),
+      );
+    }
+
+    if ('fats' in proportionData) {
+      setResponse((prevResponse) =>
+        prevResponse.map((item) => {
+          if (item.code === 'onb15') {
+            return {
+              ...item,
+              value: item.value.map((mealObj) =>
+                mealObj.meal === ingredient.id
+                  ? {
+                      ...mealObj,
+                      ingredients:
+                        ingredient.modifications[3].ingredients.filter(
+                          (item) => item.type !== 'Carbs',
+                        ),
+                    }
+                  : mealObj,
+              ),
+            };
+          }
+          return item;
+        }),
+      );
+      setIngredientType(
+        ingredient.modifications[3].ingredients.filter(
+          (item) => item.type !== 'Carbs',
+        ),
+      );
+    }
   };
 
   const IngredientResponse = response
@@ -368,14 +459,19 @@ const IngredientScreen = ({
       <div className="flex flex-col gap-2">
         {ingredient?.modifications
           ?.find((item) => item.target.includes('ingredients'))
-          .ingredients.map((item) => (
+          ?.ingredients.filter((item) =>
+            IngredientResponse.ingredients.some(
+              (foodType) => foodType.type === item.type,
+            ),
+          )
+          .map((item) => (
             <div key={item.id}>
-              <div className=" items-center rounded-xl bg-white-opacity-08 px-4 py-[19px] capitalize">
+              <div className="items-center rounded-xl bg-white-opacity-08 px-4 py-[19px] capitalize">
                 <div
                   className="flex w-full justify-between"
                   onClick={() => handleIngredientTabs(item.type)}
                 >
-                  <div className=" flex w-full justify-between pr-3 text-center font-sfpro text-sm text-customWhiteSecond">
+                  <div className="text-customWhiteSecond flex w-full justify-between pr-3 text-center font-sfpro text-sm">
                     {item.type}
                     <div className="text-center text-xs text-green">
                       {(() => {
@@ -388,15 +484,8 @@ const IngredientScreen = ({
                             ? matchedData.options.length
                             : '0'
                         } selected`;
-                      })()}{' '}
+                      })()}
                     </div>
-                    {/* {ingredientType &&
-                    ingredientType.length > 0 &&
-                    ingredientType.find((data) => data?.type === item?.type)
-                      .options.length
-                      ? ingredientType.find((data) => data?.type === item?.type)
-                          .options.length
-                      : ''} */}
                   </div>
                   <img
                     src="assets/arrow-down-gree.svg"
@@ -419,7 +508,7 @@ const IngredientScreen = ({
                             : 'bg-black-opacity-45 text-offwhite'
                         } `}
                       >
-                        {ingredient}
+                        {ingredient.name}
                       </div>
                     ))}
                   </div>
@@ -428,10 +517,11 @@ const IngredientScreen = ({
             </div>
           ))}
       </div>
+
       <div className="fixed bottom-6 left-0 z-[150] w-full px-4">
         <button
           style={{ fontWeight: 500 }}
-          className=" flex min-h-[54px] w-full items-center justify-center rounded-xl bg-customWhiteSecond text-center text-black"
+          className=" bg-customWhiteSecond flex min-h-[54px] w-full items-center justify-center rounded-xl text-center text-black"
           onClick={() => setShowIngredientScreen(false)}
         >
           Done

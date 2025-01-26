@@ -179,13 +179,7 @@ function FitnessScorePage({
 
   return (
     <>
-      {timer && fitnessScorePageLoading && (
-        <div className="relative z-[140] flex h-screen w-screen flex-col justify-between bg-black bg-auto bg-fixed bg-center bg-no-repeat">
-          <FitnessLoader />
-        </div>
-      )}
-
-      {!timer && !fitnessScorePageLoading && (
+      {!timer && !fitnessScorePageLoading && fitnessScoreData ? (
         <div
           className="relative z-[140] flex  h-screen w-screen flex-col justify-between overflow-y-scroll bg-black bg-auto bg-fixed bg-center bg-no-repeat "
           style={{
@@ -294,6 +288,10 @@ function FitnessScorePage({
               Next
             </button>
           </div>
+        </div>
+      ) : (
+        <div className="relative z-[140] flex h-screen w-screen flex-col justify-between bg-black bg-auto bg-fixed bg-center bg-no-repeat">
+          <FitnessLoader />
         </div>
       )}
     </>

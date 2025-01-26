@@ -27,7 +27,7 @@ import MealScreen from './MealScreen';
 import PlansScreen from './PlansScreen';
 import QuestionniareProgress from './QuestionniareProgress';
 import {
-  DummyData,
+  dums,
   handleBackFunc,
   handleNextFunc,
   mealResponse,
@@ -156,6 +156,8 @@ function LandingPage() {
       setSection,
       setShowMealScreen,
       showMealScreen,
+      response,
+      setResponse,
     });
   };
 
@@ -225,9 +227,10 @@ function LandingPage() {
         const questionnaireRes = await axiosClient.get();
 
         // Update the state based on the first API response
-        setSection(questionnaireRes.data.msg[0].section);
-        setQuestions(questionnaireRes.data.msg);
-        const initialResponse = questionnaireRes.data.msg.map((item) => ({
+
+        setSection(dums[0].section);
+        setQuestions(dums);
+        const initialResponse = dums.map((item) => ({
           code: item.code,
           value: [''],
         }));
@@ -238,8 +241,9 @@ function LandingPage() {
           `${process.env.REACT_APP_BASE_URL}/api/v1/onboarding/response?memberCode=${code}`,
         );
 
-        if (responseRes.data.msg.length > 0) {
+        if (responseRes.data.msg.response.length > 0) {
           // Map the response data and update the state
+
           const resultArray = initialResponse.map((item) => {
             const updatedValue = responseRes.data.msg.response.find(
               (updatedItem) => updatedItem.code === item.code,
@@ -283,7 +287,7 @@ function LandingPage() {
     setMealId(e);
     setShowIngredientScreen(true);
 
-    const targetObject = DummyData.find((item) => item.code === 'onb15');
+    const targetObject = dums.find((item) => item.code === 'onb15');
     if (!targetObject) return null;
 
     const targetOption = targetObject.options.find(
@@ -625,7 +629,7 @@ function LandingPage() {
               <button
                 style={{ fontWeight: 500 }}
                 disabled={buttonDisable}
-                className="flex min-h-[54px] w-full items-center justify-center gap-1 rounded-xl bg-customWhiteSecond text-center text-black disabled:bg-gray disabled:text-offwhite"
+                className="bg-customWhiteSecond flex min-h-[54px] w-full items-center justify-center gap-1 rounded-xl text-center text-black disabled:bg-gray disabled:text-offwhite"
                 onClick={() => {
                   // checking for empty response
 
