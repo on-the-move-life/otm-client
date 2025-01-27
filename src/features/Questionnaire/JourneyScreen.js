@@ -6,7 +6,7 @@ const JourneyScreen = ({ id }) => {
   return (
     <div className="relative z-20 h-screen w-screen overflow-y-scroll bg-black">
       <img
-        src="/assets/weekly-checkin-intro.svg"
+        src="/assets/weekly-checkin-intro.png"
         className=" w-full object-cover"
         onLoad={() => setShowComponent(true)}
         alt="intro_image"

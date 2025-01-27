@@ -175,19 +175,31 @@ function Options({
 
           const tagArray = response.find((item) => item.code === 'onb5');
 
+          let mealType = tagArray.value;
+
+          if (mealType[0] === 'non_vegetarian') {
+            mealType = ['vegetarian', 'non_vegetarian'];
+          }
+          if (mealType[0] === 'pescatarian') {
+            mealType = ['vegetarian', 'pescatarian'];
+          }
+          if (mealType[0] === 'eggetarian') {
+            mealType = ['vegetarian', 'eggetarian'];
+          }
+
           const filteredOptions =
-            selectedNestedChoice.modifications[3].ingredients.filter(
-              (category) => {
-                if (category.type !== 'Fats') {
-                  return {
-                    type: category.type,
-                    options: category.options.filter((option) =>
-                      option.tags.some((tag) => tagArray.value.includes(tag)),
-                    ),
-                  };
-                }
-              },
-            );
+            selectedNestedChoice.modifications[3].ingredients
+              .filter((category) => category.type !== 'Fats') // Filter out categories with type 'Fats'
+              .map((category) => ({
+                type: category.type, // Return the type
+                options: category.options.filter((option) => {
+                  // Filter options by matching tags
+                  const isMatch = option.tags.some((tag) =>
+                    mealType.includes(tag),
+                  );
+                  return isMatch;
+                }),
+              }));
 
           // Construct the new response for the selected option
           const newNestedChoice = {

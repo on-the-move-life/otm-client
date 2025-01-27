@@ -59,7 +59,7 @@ export const dums = [
   },
   {
     content: 'Please select any dietary preferences that you have',
-    inputType: 'multiChoiceAndOther',
+    inputType: 'singleChoice',
     code: 'onb5',
     rank: 1,
     screen: 1,
