@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import { mealproportion } from '../../utils';
 import { FULL, HOME, LIA, MOA, NOEQ, SED, SHRED, SIZE, SUA, VEA } from '../svg';
 
+const mealOrder = [
+  'gut_opening',
+  'breakfast',
+  'brunch',
+  'lunch',
+  'evening_snacks',
+  'dinner',
+];
+
 function Options({
   questionCode,
   options,
@@ -222,9 +231,13 @@ function Options({
                 item.code === questionCode
                   ? {
                       ...item,
-                      value: item.value.filter(
-                        (nestedItem) => nestedItem.meal !== optionID,
-                      ),
+                      value: item.value
+                        .filter((nestedItem) => nestedItem.meal !== optionID) // Remove the unwanted `meal`
+                        .sort(
+                          (a, b) =>
+                            mealOrder.indexOf(a.meal) -
+                            mealOrder.indexOf(b.meal),
+                        ), // Sort by custom order
                     }
                   : item,
               );
@@ -234,7 +247,13 @@ function Options({
                 item.code === questionCode
                   ? {
                       ...item,
-                      value: [...item.value, newNestedChoice], // Add the new choice
+                      value: [
+                        ...item.value,
+                        newNestedChoice, // Add the new choice
+                      ].sort(
+                        (a, b) =>
+                          mealOrder.indexOf(a.meal) - mealOrder.indexOf(b.meal),
+                      ), // Sort by custom order
                     }
                   : item,
               );

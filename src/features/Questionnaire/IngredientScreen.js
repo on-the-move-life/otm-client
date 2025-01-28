@@ -43,29 +43,30 @@ const IngredientScreen = ({
   useEffect(() => {
     const filterOptions = ingredient.modifications.map((item, index) => {
       if (index === 3) {
-        const newMenu = item.ingredients.filter((category) => {
-          if (category.type !== 'Fats') {
-            return {
-              type: category.type,
-              options: category.options.filter((option) =>
-                option.tags.some((tag) => tagArray.value.includes(tag)),
-              ),
-            };
-          }
-        });
+        let mealType = tagArray.value;
+
+        if (mealType[0] === 'non_vegetarian') {
+          mealType = ['vegetarian', 'non_vegetarian'];
+        }
+        if (mealType[0] === 'pescatarian') {
+          mealType = ['vegetarian', 'pescatarian'];
+        }
+        if (mealType[0] === 'eggetarian') {
+          mealType = ['vegetarian', 'eggetarian'];
+        }
+        const newIngredients = item.ingredients.map((category) => ({
+          ...category, // Spread to preserve other properties
+          options: category.options.filter((option) =>
+            option.tags.some((tag) => mealType.includes(tag)),
+          ),
+        }));
 
         return {
-          code: item.code,
-          content: item.content,
-          description: item.description,
-          ingredients: newMenu,
-          inputType: item.inputType,
-          rank: item.rank,
-          section: item.section,
-          sectionDescription: item.sectionDescription,
-          target: item.target,
+          ...item, // Spread the original item properties
+          ingredients: newIngredients, // Replace ingredients with filtered and mapped ones
         };
-      } else return item;
+      }
+      return item; // Return unmodified items for other indices
     });
 
     setFilteredOptions(filterOptions);
@@ -239,10 +240,9 @@ const IngredientScreen = ({
                 mealObj.meal === ingredient.id
                   ? {
                       ...mealObj,
-                      ingredients:
-                        ingredient.modifications[3].ingredients.filter(
-                          (item) => item.type !== 'Fats',
-                        ),
+                      ingredients: filteredOptions[3].ingredients.filter(
+                        (item) => item.type !== 'Fats',
+                      ),
                     }
                   : mealObj,
               ),
@@ -253,9 +253,7 @@ const IngredientScreen = ({
       );
 
       setIngredientType(
-        ingredient.modifications[3].ingredients.filter(
-          (item) => item.type !== 'Fats',
-        ),
+        filteredOptions[3].ingredients.filter((item) => item.type !== 'Fats'),
       );
     }
 
@@ -269,10 +267,9 @@ const IngredientScreen = ({
                 mealObj.meal === ingredient.id
                   ? {
                       ...mealObj,
-                      ingredients:
-                        ingredient.modifications[3].ingredients.filter(
-                          (item) => item.type !== 'Carbs',
-                        ),
+                      ingredients: filteredOptions[3].ingredients.filter(
+                        (item) => item.type !== 'Carbs',
+                      ),
                     }
                   : mealObj,
               ),
@@ -282,9 +279,7 @@ const IngredientScreen = ({
         }),
       );
       setIngredientType(
-        ingredient.modifications[3].ingredients.filter(
-          (item) => item.type !== 'Carbs',
-        ),
+        filteredOptions[3].ingredients.filter((item) => item.type !== 'Carbs'),
       );
     }
   };
@@ -457,7 +452,7 @@ const IngredientScreen = ({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {ingredient?.modifications
+        {filteredOptions
           ?.find((item) => item.target.includes('ingredients'))
           ?.ingredients.filter((item) =>
             IngredientResponse.ingredients.some(
@@ -471,7 +466,7 @@ const IngredientScreen = ({
                   className="flex w-full justify-between"
                   onClick={() => handleIngredientTabs(item.type)}
                 >
-                  <div className="text-customWhiteSecond flex w-full justify-between pr-3 text-center font-sfpro text-sm">
+                  <div className="flex w-full justify-between pr-3 text-center font-sfpro text-sm text-customWhiteSecond">
                     {item.type}
                     <div className="text-center text-xs text-green">
                       {(() => {
@@ -521,7 +516,7 @@ const IngredientScreen = ({
       <div className="fixed bottom-6 left-0 z-[150] w-full px-4">
         <button
           style={{ fontWeight: 500 }}
-          className=" bg-customWhiteSecond flex min-h-[54px] w-full items-center justify-center rounded-xl text-center text-black"
+          className=" flex min-h-[54px] w-full items-center justify-center rounded-xl bg-customWhiteSecond text-center text-black"
           onClick={() => setShowIngredientScreen(false)}
         >
           Done

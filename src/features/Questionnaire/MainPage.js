@@ -241,7 +241,7 @@ function LandingPage() {
           `${process.env.REACT_APP_BASE_URL}/api/v1/onboarding/response?memberCode=${code}`,
         );
 
-        if (responseRes.data.msg.response.length > 0) {
+        if (responseRes.data.msg.length > 0) {
           // Map the response data and update the state
 
           const resultArray = initialResponse.map((item) => {
@@ -629,7 +629,7 @@ function LandingPage() {
               <button
                 style={{ fontWeight: 500 }}
                 disabled={buttonDisable}
-                className="bg-customWhiteSecond flex min-h-[54px] w-full items-center justify-center gap-1 rounded-xl text-center text-black disabled:bg-gray disabled:text-offwhite"
+                className="flex min-h-[54px] w-full items-center justify-center gap-1 rounded-xl bg-customWhiteSecond text-center text-black disabled:bg-gray disabled:text-offwhite"
                 onClick={() => {
                   // checking for empty response
 

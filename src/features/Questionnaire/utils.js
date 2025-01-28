@@ -1134,46 +1134,22 @@ export const dums = [
                   {
                     id: 'cucumber',
                     name: 'Cucumber',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'radish',
                     name: 'Radish',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'tomato',
                     name: 'Tomatoes',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'carrot',
                     name: 'Carrots',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'capsicum',
@@ -1200,45 +1176,22 @@ export const dums = [
                   {
                     id: 'lettuce',
                     name: 'Lettuce',
-                    tags: [
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['vegetarian'],
                   },
                   {
                     id: 'raw_spinach',
                     name: 'Raw Spinach',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'turnip',
                     name: 'Turnips',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'beetroot',
                     name: 'Beetroot',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                 ],
               },
@@ -1248,46 +1201,22 @@ export const dums = [
                   {
                     id: 'potato',
                     name: 'Potatoes',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'okra',
                     name: 'Okra',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'bottle_gourd',
                     name: 'Bottle Gourd',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'ridge_gourd',
                     name: 'Ridge Gourd',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'eggplant',
@@ -1314,46 +1243,22 @@ export const dums = [
                   {
                     id: 'cooked_spinach',
                     name: 'Cooked Spinach',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'pointed_gourd',
                     name: 'Pointed Gourd',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'bitter_gourd',
                     name: 'Bitter Gourd',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                   {
                     id: 'fenugreek_leaves',
                     name: 'Fenugreek Leaves',
-                    tags: [
-                      'indian',
-                      'vegetarian',
-                      'gluten_free',
-                      'eggetarian',
-                      'pescatarian',
-                    ],
+                    tags: ['indian', 'vegetarian'],
                   },
                 ],
               },
@@ -1399,7 +1304,12 @@ export const dums = [
                   {
                     id: 'egg',
                     name: 'Eggs',
-                    tags: ['indian', 'non_vegetarian', 'gluten_free'],
+                    tags: [
+                      'indian',
+                      'eggetarian',
+                      'non_vegetarian',
+                      'gluten_free',
+                    ],
                   },
                   {
                     id: 'paneer',
@@ -1471,7 +1381,7 @@ export const dums = [
                     name: 'Ghee',
                     tags: [
                       'indian',
-                      'veg',
+                      'vegetarian',
                       'gluten_free',
                       'eggetarian',
                       'pescatarian',
@@ -1481,7 +1391,7 @@ export const dums = [
                     id: 'butter',
                     name: 'Butter',
                     tags: [
-                      'veg',
+                      'vegetarian',
                       'gluten_free',
                       'dairy',
                       'eggetarian',
@@ -1493,7 +1403,7 @@ export const dums = [
                     name: 'Coconut Oil',
                     tags: [
                       'indian',
-                      'veg',
+                      'vegetarian',
                       'gluten_free',
                       'eggetarian',
                       'pescatarian',
@@ -1502,18 +1412,28 @@ export const dums = [
                   {
                     id: 'olive_oil',
                     name: 'Olive Oil',
-                    tags: ['veg', 'gluten_free', 'eggetarian', 'pescatarian'],
+                    tags: [
+                      'vegetarian',
+                      'gluten_free',
+                      'eggetarian',
+                      'pescatarian',
+                    ],
                   },
                   {
                     id: 'avocado',
                     name: 'Avocado',
-                    tags: ['veg', 'gluten_free', 'eggetarian', 'pescatarian'],
+                    tags: [
+                      'vegetarian',
+                      'gluten_free',
+                      'eggetarian',
+                      'pescatarian',
+                    ],
                   },
                   {
                     id: 'cream',
                     name: 'Cream',
                     tags: [
-                      'veg',
+                      'vegetarian',
                       'gluten_free',
                       'dairy',
                       'eggetarian',
@@ -1524,7 +1444,7 @@ export const dums = [
                     id: 'cheese',
                     name: 'Cheese',
                     tags: [
-                      'veg',
+                      'vegetarian',
                       'gluten_free',
                       'dairy',
                       'eggetarian',
@@ -2113,7 +2033,12 @@ export const dums = [
                   {
                     id: 'egg',
                     name: 'Eggs',
-                    tags: ['indian', 'non_vegetarian', 'gluten_free'],
+                    tags: [
+                      'indian',
+                      'eggetarian',
+                      'non_vegetarian',
+                      'gluten_free',
+                    ],
                   },
                   {
                     id: 'paneer',
