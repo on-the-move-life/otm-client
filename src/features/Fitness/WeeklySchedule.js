@@ -55,6 +55,21 @@ const WeeklySchedule = ({ stats }) => {
                   </div> */}
                 </div>
               )}
+              {key === 'description' && (
+                <div
+                  className="flex h-auto justify-between  px-2 pb-2"
+                  style={{
+                    borderBottom:
+                      stats.length - 1 !== index
+                        ? '0.5px solid rgba(255, 255, 255, 0.13)'
+                        : 'none',
+                  }}
+                >
+                  <div className="flex items-center gap-1 text-xs text-offwhite">
+                    {value}
+                  </div>
+                </div>
+              )}
             </>
           ))}
       </div>

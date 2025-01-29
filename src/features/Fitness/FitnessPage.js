@@ -367,13 +367,7 @@ const FitnessPage = () => {
                         of the week complete
                       </div>
                     </div> */}
-                      {homeStats.workoutPlan.workout ? (
-                        <WeeklySchedule stats={homeStats.workoutPlan} />
-                      ) : (
-                        <div className="leading-2 mt-2 text-xs text-offwhite">
-                          {homeStats.workoutPlan.description}
-                        </div>
-                      )}
+                      {<WeeklySchedule stats={homeStats.workoutPlan} />}
                     </div>
                   </div>
                 </section>
