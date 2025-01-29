@@ -144,7 +144,7 @@ const FitnessPage = () => {
 
   const showElite =
     homeStats && parseInt(homeStats.avgIntensity) > 100 ? true : false;
-  console.log(showActivity);
+
   const navigate = useNavigate();
   const todayDate = new Date();
 
@@ -367,7 +367,13 @@ const FitnessPage = () => {
                         of the week complete
                       </div>
                     </div> */}
-                      <WeeklySchedule stats={homeStats.workoutPlan} />
+                      {homeStats.workoutPlan.workout ? (
+                        <WeeklySchedule stats={homeStats.workoutPlan} />
+                      ) : (
+                        <div className="leading-2 mt-2 text-xs text-offwhite">
+                          {homeStats.workoutPlan.description}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </section>

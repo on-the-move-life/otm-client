@@ -104,7 +104,7 @@ function FitnessScorePage({
   const ScoreIndicator = ({ score }) => {
     const [tag, color, position, colors, tags] = useTagAndColor(score, 40);
     return (
-      <div className="flex w-full flex-col  justify-start gap-2 rounded-t-[12px] bg-black-opacity-65 p-4">
+      <div className="flex w-full flex-col  justify-start gap-2 rounded-[12px] bg-black-opacity-65 p-4">
         <p
           className=" font-sfpro text-[14px] text-white
           "
@@ -224,7 +224,7 @@ function FitnessScorePage({
                 {fitnessScoreData && (
                   <ScoreIndicator score={fitnessScoreData?.fitnessScore} />
                 )}
-                <div className="w-full rounded-b-[12px] bg-black-opacity-65 px-4 pb-4">
+                {/* <div className="w-full rounded-b-[12px] bg-black-opacity-65 px-4 pb-4">
                   {fitnessScoreData && (
                     <p
                       className="text-[14px] text-[#fff]"
@@ -234,7 +234,7 @@ function FitnessScorePage({
                       {fitnessScoreData?.fitnessPercetile}% of the OTM community
                     </p>
                   )}
-                </div>
+                </div> */}
               </div>
               {/* Personalised Workout */}
               {/* <div className="flex flex-col items-start justify-center w-full">
