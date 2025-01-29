@@ -417,7 +417,7 @@ const WeeklyCheckinResult = ({ setScreen, week, weeklyReport }) => {
                               Number(weeklyReport?.last4WeekStepCount[1].steps),
                           )}
                           <span className="font-sfpro text-[10px] text-white-opacity-50">
-                            steps more than{' '}
+                            steps{' '}
                             {Number(weeklyReport?.last4WeekStepCount[0].steps) -
                               Number(
                                 weeklyReport?.last4WeekStepCount[1].steps,
@@ -425,7 +425,7 @@ const WeeklyCheckinResult = ({ setScreen, week, weeklyReport }) => {
                             0
                               ? 'more'
                               : 'less'}{' '}
-                            week
+                            than last week
                           </span>
                         </div>
                       )}
@@ -766,7 +766,7 @@ const WeeklyCheckinResult = ({ setScreen, week, weeklyReport }) => {
                                 weeklyReport?.userLast8WeekWeightHistory[1]
                                   ?.weight,
                               ),
-                          )}{' '}
+                          ).toFixed(2)}{' '}
                           {weeklyReport?.weightUnit}
                         </div>
                         <p className="font-sfpro text-[10px] text-white-opacity-50">
