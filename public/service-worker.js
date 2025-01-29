@@ -1,14 +1,13 @@
-  /* eslint-disable no-restricted-globals */
-
+/* eslint-disable no-restricted-globals */
 const CACHE_NAME = 'your-app-cache-v1';
 const APP_SHELL = [
   "/",
-"/index.html",
-"/static/js/main.chunk.js",
-"/static/js/0.chunk.js",
-"/static/js/bundle.js",
-"/static/css/main.chunk.css",
-"/manifest.json",
+  "/index.html",
+  "/static/js/main.chunk.js",
+  "/static/js/0.chunk.js",
+  "/static/js/bundle.js",
+  "/static/css/main.chunk.css",
+  "/manifest.json",
 ];
 
 self.addEventListener('install', (event) => {
@@ -42,6 +41,34 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       })
       .catch(() => caches.match(event.request))
+  );
+});
+
+self.addEventListener('push', function(event) {
+  if (event.data) {
+    const data = event.data.json();
+    const options = {
+      body: data.message,
+      icon: 'path/to/icon.png', // Add your app icon path here
+      badge: 'path/to/badge.png', // Add your badge icon path here
+    };
+    
+    event.waitUntil(
+      self.registration.showNotification(data.title, options)
+    );
+  }
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.openWindow('/')
+      .then((windowClient) => {
+        // If a window client is available, focus it
+        if (windowClient) {
+          return windowClient.focus();
+        }
+      })
   );
 });
 
