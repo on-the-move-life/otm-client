@@ -27,7 +27,6 @@ import MealScreen from './MealScreen';
 import PlansScreen from './PlansScreen';
 import QuestionniareProgress from './QuestionniareProgress';
 import {
-  dums,
   handleBackFunc,
   handleNextFunc,
   mealResponse,
@@ -227,10 +226,11 @@ function LandingPage() {
         const questionnaireRes = await axiosClient.get();
 
         // Update the state based on the first API response
+        console.log(questionnaireRes);
 
-        setSection(dums[0].section);
-        setQuestions(dums);
-        const initialResponse = dums.map((item) => ({
+        setSection(questionnaireRes.data.msg[0].section);
+        setQuestions(questionnaireRes.data.msg);
+        const initialResponse = questionnaireRes.data.msg.map((item) => ({
           code: item.code,
           value: [''],
         }));
@@ -287,7 +287,7 @@ function LandingPage() {
     setMealId(e);
     setShowIngredientScreen(true);
 
-    const targetObject = dums.find((item) => item.code === 'onb15');
+    const targetObject = questions.find((item) => item.code === 'onb15');
     if (!targetObject) return null;
 
     const targetOption = targetObject.options.find(

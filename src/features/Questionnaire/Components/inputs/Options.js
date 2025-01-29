@@ -201,13 +201,15 @@ function Options({
               .filter((category) => category.type !== 'Fats') // Filter out categories with type 'Fats'
               .map((category) => ({
                 type: category.type, // Return the type
-                options: category.options.filter((option) => {
-                  // Filter options by matching tags
-                  const isMatch = option.tags.some((tag) =>
-                    mealType.includes(tag),
-                  );
-                  return isMatch;
-                }),
+                options: category.options
+                  .filter((option) => {
+                    // Filter options by matching tags
+                    const isMatch = option.tags.some((tag) =>
+                      mealType.includes(tag),
+                    );
+                    return isMatch;
+                  })
+                  .map((item) => item.name),
               }));
 
           // Construct the new response for the selected option

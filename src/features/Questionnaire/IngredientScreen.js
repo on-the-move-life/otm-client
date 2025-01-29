@@ -40,6 +40,8 @@ const IngredientScreen = ({
   const [ingredientType, setIngredientType] = useState(ingredientResponse);
   const [filteredOptions, setFilteredOptions] = useState(null);
 
+  console.log(filteredOptions);
+
   useEffect(() => {
     const filterOptions = ingredient.modifications.map((item, index) => {
       if (index === 3) {
@@ -56,9 +58,11 @@ const IngredientScreen = ({
         }
         const newIngredients = item.ingredients.map((category) => ({
           ...category, // Spread to preserve other properties
-          options: category.options.filter((option) =>
-            option.tags.some((tag) => mealType.includes(tag)),
-          ),
+          options: category.options
+            .filter((option) =>
+              option.tags.some((tag) => mealType.includes(tag)),
+            )
+            .map((item) => item.name),
         }));
 
         return {
@@ -503,7 +507,7 @@ const IngredientScreen = ({
                             : 'bg-black-opacity-45 text-offwhite'
                         } `}
                       >
-                        {ingredient.name}
+                        {ingredient}
                       </div>
                     ))}
                   </div>
