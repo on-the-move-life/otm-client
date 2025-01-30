@@ -53,7 +53,7 @@ const QuestionnaireTile = () => {
                 </span>
               </div>
               <div className=" w-[60%] font-sfpro text-[14px] leading-5 text-black">
-                Complete your onboarding now to update your program
+                Complete our new onboarding flow to update your program
               </div>
             </div>
 
