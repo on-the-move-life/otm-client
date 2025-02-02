@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const axiosClient = axios.create({
   // baseURL: `http://localhost:3001`,
-  baseURL:`${process.env.REACT_APP_BASE_URL}/api/v1/questionnaire`,
+  baseURL: `${process.env.REACT_APP_BASE_URL}/api/v1/onboarding/questionairre`,
 
   headers: {
     Accept: 'application/json',

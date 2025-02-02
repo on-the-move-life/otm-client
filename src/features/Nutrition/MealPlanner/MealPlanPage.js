@@ -10,6 +10,7 @@ import * as Selectors from './Redux/selectors';
 
 function capitalizeWords(sentence) {
   return sentence
+    .replace(/_/g, ' ')
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
@@ -149,7 +150,7 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
     <>
       {dateWiseWeeklyPlan && (
         <div className="relative z-10 my-4 flex h-full w-full flex-col items-start justify-start ">
-          <div
+          {/* <div
             onClick={() => navigateQuestionnaire()}
             className="flex items-center gap-2 rounded-md bg-black-opacity-45 px-3 py-1 text-green"
           >
@@ -159,7 +160,7 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
               alt="img"
             />{' '}
             <div>Generate New Meal Plan</div>
-          </div>
+          </div> */}
           <div className="mt-2 flex w-full flex-row items-center justify-between ">
             {weeklyPlan &&
               weeklyPlan.map((item) => {
@@ -227,7 +228,7 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
             </div>
           )}
           <div
-            className={`my-[20px] flex h-[38px] w-full items-center justify-between gap-2 overflow-x-scroll rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
+            className={`my-[20px] flex h-[38px] w-full items-center  gap-2 overflow-x-scroll rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
           >
             {mealSelected &&
               dateWiseWeeklyPlan &&

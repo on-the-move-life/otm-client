@@ -285,7 +285,7 @@ function MainPage() {
                             </div>
                           </div>
 
-                          {lifeStyleMemberCode &&
+                          {/* {lifeStyleMemberCode &&
                             lifeStyleMemberCode === 'GENERAL' && (
                               <div className="mt-[24px] flex w-full flex-col items-center gap-2">
                                 <div className="flex w-full flex-col items-center justify-between rounded-xl bg-black-opacity-45 px-[8px] pb-[8px]">
@@ -315,7 +315,7 @@ function MainPage() {
                                   </div>
                                 </div>
                               </div>
-                            )}
+                            )} */}
 
                           {lifeStyleMemberCode &&
                             lifeStyleMemberCode !== 'GENERAL' &&

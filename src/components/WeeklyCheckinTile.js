@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const WeeklyCheckinTile = ({ isWeeklyReviewSubmitted }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -56,7 +56,7 @@ const WeeklyCheckinTile = ({ isWeeklyReviewSubmitted }) => {
                   alt="calender"
                 />
                 <span className="pl-1 text-[15px] text-black">
-                  weekly checkin
+                  Weekly Checkin
                 </span>
               </div>
               <div className=" font-sfpro text-[14px] leading-5 text-black">

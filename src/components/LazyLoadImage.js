@@ -25,7 +25,7 @@ const LazyImage = ({
         src={src}
         alt={altText}
         onLoad={handleLoad}
-        className={`${!isLoaded && 'absolute -z-10'}  w-full ${ImageClassName}`}
+        className={`${!isLoaded && 'absolute -z-10'}  ${ImageClassName}`}
       />
       {!isLoaded && (
         // <LazyLoadComponent>

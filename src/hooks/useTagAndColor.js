@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const useTagAndColor = (inputScore, barWidth = 29) => {
   const tags = useMemo(

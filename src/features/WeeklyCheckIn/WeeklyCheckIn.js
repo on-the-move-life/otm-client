@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import axios from 'axios';
-import { updateCurrentQuestion } from '../LifestyleQuiz/utils/utils';
+import { updateCurrentWeeklyCheckinQuestion } from '../LifestyleQuiz/utils/utils';
 import WeeklyCheckinInitialIntro from './WeeklyCheckinInitialIntro';
 import WeeklyCheckinResult from './WeeklyCheckinResult';
 import WeeklyCheckinSecondaryIntro from './WeeklyCheckinSecondaryIntro';
@@ -176,7 +176,7 @@ const WeeklyCheckIn = () => {
   useEffect(() => {
     // it will update the current question as soon as the screen changes
     questionnaireForm &&
-      updateCurrentQuestion(
+      updateCurrentWeeklyCheckinQuestion(
         questionnaireForm,
         questionnaireScreen,
         setCurrentQuestion,

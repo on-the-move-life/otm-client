@@ -139,16 +139,11 @@ const ScoreIndicator = ({ height, weight }) => {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-between gap-[9rem]">
-      <div className="flex w-full flex-col items-center justify-center gap-[3rem]">
-        <div
-          className="flex w-full flex-col items-center justify-center"
-          style={{ marginBlock: '3.8em' }}
-        >
+      <div className="flex w-full flex-col items-center justify-center gap-[4rem]">
+        <div className="flex w-full flex-col items-center justify-center">
           <p
-            className="text-[90px] uppercase"
+            className="font-futura text-[90px] uppercase"
             style={{
-              fontFamily: 'Anton',
-              fontWeight: 400,
               color: tagColorPosition[1],
             }}
           >
@@ -156,7 +151,7 @@ const ScoreIndicator = ({ height, weight }) => {
           </p>
           <p
             className="textbox-text relative text-center uppercase tracking-wider"
-            style={{ top: '-20px' }}
+            style={{ top: '-25px' }}
           >
             current bmi
           </p>
@@ -165,13 +160,13 @@ const ScoreIndicator = ({ height, weight }) => {
           <div className="relative flex w-full flex-col items-center justify-center gap-4">
             <div className="relative w-fit">
               <div
-                className={`absolute top-[-37px] flex h-[50px] w-[100px] flex-row items-start justify-center bg-cover bg-no-repeat text-[12px] font-bold text-black`}
+                className={`absolute top-[-37px] z-[70] flex h-[50px] w-[100px] flex-row items-start justify-center bg-cover bg-no-repeat text-[12px] font-bold text-black`}
                 style={{
                   left: `${tagColorPosition[2] - 41}px`,
                   backgroundImage: `url(${'/assets/scoreIndicator_dialogue.svg'})`,
                 }}
               >
-                <TagText className="pt-[5px]">Your BMI</TagText>
+                <TagText className="relative z-50 pt-[5px]">Your BMI</TagText>
               </div>
               <Indicator
                 style={{
@@ -195,8 +190,8 @@ const ScoreIndicator = ({ height, weight }) => {
             </div>
           </div>
           <p
-            className="mt-[10px] text-center text-[18px] text-[#545454]"
-            style={{ fontWeight: 400, lineHeight: '25px' }}
+            className="mt-[10px] text-center font-sfpro text-[18px] text-offwhite"
+            style={{ fontWeight: 300, lineHeight: '25px' }}
           >
             Your current BMI according to your height & weight is {score}, which
             is{' '}

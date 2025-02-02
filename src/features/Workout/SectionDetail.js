@@ -298,7 +298,7 @@ const SectionDetail = () => {
                               className="min-w-[120%]"
                               src={'/assets/bullet-points.svg'}
                               alt=""
-                            />
+                            />sdf
                           </div>
                         )}
                         <ul className="pl-2 text-sm leading-7 text-lightGray ">
