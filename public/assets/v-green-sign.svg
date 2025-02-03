@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1080" height="1080" viewBox="0 0 1080 1080" xml:space="preserve">
+<desc>Created with Fabric.js 5.2.4</desc>
+<defs>
+</defs>
+<g transform="matrix(1 0 0 1 540 540)" id="4a73be7b-b7ed-4624-ac0b-805235da65d7"  >
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke"  x="-540" y="-540" rx="0" ry="0" width="1080" height="1080" />
+</g>
+<g transform="matrix(1 0 0 1 540 540)" id="7a8a1bed-4b35-4cf2-8c16-3cee316c78ab"  >
+</g>
+<g transform="matrix(9.23 0 0 9.23 540 540)"  >
+<radialGradient id="SVGID_paint0_radial_8675_12547_3" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-0.08 47.79 -51.82 -0.09 43.49 0)"  cx="0" cy="0" r="1" fx="0" fy="0">
+<stop offset="0%" style="stop-color:rgb(151,235,173);stop-opacity: 1"/>
+<stop offset="100%" style="stop-color:rgb(67,146,88);stop-opacity: 1"/>
+</radialGradient>
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: url(#SVGID_paint0_radial_8675_12547_3); fill-rule: nonzero; opacity: 1;"  transform=" translate(-43.41, -23.89)" d="M 17.5 21.7521 L 26.4181 21.7521 L 31.4272 36.7937 L 53.3882 0 L 69.3158 0 L 34.4077 47.7895 L 26.4181 47.7895 L 17.5 21.7521 Z" stroke-linecap="round" />
+</g>
+</svg>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Loader } from '../../components';
 import { capitalizeFirstLetter } from '../../utils';
 import {
@@ -120,7 +119,7 @@ const NutritionPage = () => {
               filter: 'brightness(0.5)',
             }}
           />
-          <div className="relative z-20 flex w-screen  flex-col  bg-transparent px-4 pb-[78px] ">
+          <div className="relative z-20 flex w-screen  flex-col   px-4 pb-[78px] ">
             <div className="mt-[77px] flex justify-between">
               <div>
                 <h3 className="font-sfpro text-[14px] text-offwhite">
@@ -151,7 +150,7 @@ const NutritionPage = () => {
                 )}
               </div>
             </div>
-            {weeklyPlan === null ? (
+            {/* {weeklyPlan === null ? (
               <div className="mt-[24px] flex flex-col items-center gap-2">
                 <div
                   style={{
@@ -215,7 +214,9 @@ const NutritionPage = () => {
                   </div>
                 </Link>
               </div>
-            ) : (
+              
+            ) : ( */}
+            {weeklyPlan && (
               <>
                 <MealPlanPage
                   mealData={mealData}

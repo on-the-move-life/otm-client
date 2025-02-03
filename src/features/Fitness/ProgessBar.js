@@ -15,7 +15,7 @@ const ProgressBar = ({ progress }) => {
 
   return (
     <div className="flex pt-4">
-      <div className="mx-3 flex w-full flex-col justify-end">
+      <div className=" flex w-full flex-col justify-end">
         <div className="h-3 w-full overflow-hidden rounded-full bg-gray">
           <motion.div
             className="relative h-full rounded-full p-1"

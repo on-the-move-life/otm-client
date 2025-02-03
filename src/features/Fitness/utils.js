@@ -67,3 +67,36 @@ export const getGreeting = (hour) => {
     return 'Good Evening';
   }
 };
+
+export const dummyStats = [
+  {
+    name: 'Dynamic Stretch',
+    total: 3,
+    completed: 0,
+  },
+  {
+    name: 'Walking',
+    total: 1,
+    completed: 0,
+  },
+  {
+    name: 'Workout',
+    total: 5,
+    completed: 0,
+  },
+  {
+    name: 'Rest',
+    total: 3,
+    completed: 0,
+  },
+  {
+    name: 'Aerobic Session',
+    total: 2,
+    completed: 0,
+  },
+  {
+    name: 'Flex',
+    total: 1,
+    completed: 0,
+  },
+];

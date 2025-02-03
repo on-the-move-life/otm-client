@@ -1,5 +1,5 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import NutrientsBubble from './NutrientsBubble';
 
@@ -18,6 +18,7 @@ function MealInfoTile({
 
   function capitalizeWords(sentence) {
     return sentence
+      .replace(/_/g, ' ')
       .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
