@@ -8,6 +8,16 @@ import MealUploadTile from './Components/MealUploadTile';
 import * as Actions from './Redux/actions';
 import * as Selectors from './Redux/selectors';
 
+const mealOrder = [
+  'gut_opening',
+  'breakfast',
+  'brunch',
+  'lunch',
+  'evening_snacks',
+  'evening_snack',
+  'dinner',
+];
+
 function capitalizeWords(sentence) {
   return sentence
     .replace(/_/g, ' ')
@@ -228,35 +238,42 @@ function MealPlanPage({ mealData, setSelectedDate, selectedDate }) {
             </div>
           )}
           <div
-            className={`my-[20px] flex h-[38px] w-full items-center  gap-2 overflow-x-scroll rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
+            className={`my-[20px] flex h-[38px] w-full items-center justify-between  gap-2 overflow-x-scroll rounded-[7px] bg-[rgba(0,0,0,0.45)] p-[2px]`}
           >
             {mealSelected &&
               dateWiseWeeklyPlan &&
-              dateWiseWeeklyPlan.plan.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      border:
+              dateWiseWeeklyPlan.plan
+                .sort(
+                  (a, b) =>
+                    mealOrder.indexOf(a.meal) - mealOrder.indexOf(b.meal),
+                )
+                .map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      style={{
+                        border:
+                          capitalizeWords(item.meal) ===
+                          capitalizeWords(mealSelected)
+                            ? '0.5px solid rgba(221, 249, 136, 0.50)'
+                            : '',
+                        borderRadius: '7px',
+                        // Ensures enough space per item
+                      }}
+                      className={`${
                         capitalizeWords(item.meal) ===
                         capitalizeWords(mealSelected)
-                          ? '0.5px solid rgba(221, 249, 136, 0.50)'
-                          : '',
-                      borderRadius: '7px',
-                      // Ensures enough space per item
-                    }}
-                    className={`${
-                      capitalizeWords(item.meal) ===
-                      capitalizeWords(mealSelected)
-                        ? `bg-[rgba(77,77,77,0.4)] text-floYellow`
-                        : 'text-white-opacity-50'
-                    } h-full w-auto flex-shrink-0 items-center justify-center px-2 pt-1`}
-                    onClick={() => setMealSelected(capitalizeWords(item.meal))}
-                  >
-                    {capitalizeWords(item.meal)}
-                  </div>
-                );
-              })}
+                          ? `bg-[rgba(77,77,77,0.4)] text-floYellow`
+                          : 'text-white-opacity-50'
+                      } h-full w-auto flex-shrink-0 items-center justify-center px-2 pt-1`}
+                      onClick={() =>
+                        setMealSelected(capitalizeWords(item.meal))
+                      }
+                    >
+                      {capitalizeWords(item.meal)}
+                    </div>
+                  );
+                })}
           </div>
           <div className="flex w-full flex-col items-center justify-start gap-2 ">
             {mealSelected &&

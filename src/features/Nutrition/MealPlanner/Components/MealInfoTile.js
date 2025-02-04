@@ -10,8 +10,6 @@ function MealInfoTile({
   ingredients,
   macros,
   mealSuggestionImage,
-  mealPreference,
-  dietPreference,
   container,
 }) {
   const [isCollapsed, setCollapsed] = useState(true);
@@ -45,8 +43,12 @@ function MealInfoTile({
         <div className="relative w-full">
           {(capitalizeWords(meal) === 'Lunch' ||
             capitalizeWords(meal) === 'Dinner' ||
+            capitalizeWords(meal) === 'Breakfast' ||
+            capitalizeWords(meal) === 'Brunch' ||
+            capitalizeWords(meal) === 'Gut Opening' ||
             capitalizeWords(meal) === 'Gut Opening Meal' ||
-            capitalizeWords(meal) === 'Evening Snack') && (
+            capitalizeWords(meal) === 'Evening Snack' ||
+            capitalizeWords(meal) === 'Evening Snacks') && (
             <div className="relative">
               <h1 className="ml-[7px] text-sm capitalize text-offwhite">
                 {capitalizeWords(meal)} Guide
@@ -67,8 +69,24 @@ function MealInfoTile({
                       className={`relative  object-cover`}
                     />
                   )}
+                  {capitalizeWords(meal) === 'Breakfast' && (
+                    <img
+                      alt="dinner-guide"
+                      src="./assets/food-breakfast.png"
+                      className={`relative  object-cover`}
+                    />
+                  )}
+                  {capitalizeWords(meal) === 'Brunch' && (
+                    <img
+                      alt="dinner-guide"
+                      src="./assets/food-brunch.png"
+                      className={`relative  object-cover`}
+                    />
+                  )}
                   {(capitalizeWords(meal) === 'Gut Opening Meal' ||
-                    capitalizeWords(meal) === 'Evening Snack') && (
+                    capitalizeWords(meal) === 'Gut Opening' ||
+                    capitalizeWords(meal) === 'Evening Snack' ||
+                    capitalizeWords(meal) === 'Evening Snacks') && (
                     <img
                       alt="gut-meal-guide"
                       src="./assets/GutMealandEveningSnack.png"
