@@ -14,7 +14,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { capitalizeFirstLetter, formatDate } from '../../utils';
 import { CoinsIndicator, Movecoins } from '../Marketplace';
 import { axiosClient } from './apiProfileClient';
-import MonthlyWrapped from './MonthlyWrapped';
 import ProfilePicture from './ProfilePicture';
 
 import mixpanel from 'mixpanel-browser';
@@ -671,11 +670,11 @@ Here's a 20% off discount because I'd love for you to get healthy too!
 
                   {/* <MoveCoins coins={0} /> */}
 
-                  {currentDate >= 5 && (
+                  {/* {currentDate >= 5 && (
                     <section className="flex w-full flex-row items-center justify-center ">
                       <MonthlyWrapped />
                     </section>
-                  )}
+                  )} */}
                   <div
                     className=" mx-auto  min-h-[142px] w-full rounded-xl bg-black-opacity-45 px-4 py-3"
                     onClick={() => setShowProfilePicPopup(false)}

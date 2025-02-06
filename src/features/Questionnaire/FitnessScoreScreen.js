@@ -27,6 +27,7 @@ function FitnessScorePage({
   setShowFitnessInsightScreen,
   fitnessScorePageLoading,
   fitnessScoreData,
+  setLoading,
 }) {
   const [name, setName] = useState(null);
   const [timer, setTimer] = useState(true);
@@ -281,7 +282,10 @@ function FitnessScorePage({
           </div>
           <div className="fixed bottom-6 left-0 flex w-full gap-[10px] px-4">
             <button
-              onClick={() => setShowFitnessInsightScreen(false)}
+              onClick={() => {
+                setShowFitnessInsightScreen(false);
+                setLoading(true);
+              }}
               className="    flex h-[54px] w-full items-center justify-center rounded-lg bg-white text-center text-black "
             >
               {' '}

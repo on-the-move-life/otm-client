@@ -2565,10 +2565,10 @@ export const handleNextFunc = ({
     setScreen(screen + 1);
   }
   if (section === 'fitness' && screen === 5) {
-    // setShowFitnessInsightScreen(true);
-
-    setSection('nutrition');
-    setScreen(1);
+    // setShowFitnessInsightScreen(true); // Not necessary
+    // setSection('nutrition');
+    // setScreen(1);
+    // setLoading(true);
   }
   if (section === 'nutrition' && screen < 4) {
     setScreen(screen + 1);
