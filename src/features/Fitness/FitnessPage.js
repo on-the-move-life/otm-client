@@ -7,7 +7,6 @@ import { Error, Loader } from '../../components';
 import FeatureUpdatePopup from '../../components/FeatureUpdatePopup';
 import InstallApp from '../../components/InstallPWA';
 import LazyImage from '../../components/LazyLoadImage';
-import QuestionnaireTile from '../../components/QuestionnaireTile';
 import WeeklyCheckinTile from '../../components/WeeklyCheckinTile';
 import { useAuth } from '../../contexts/AuthContext';
 import { useUserContext } from '../../contexts/UserContext';
@@ -327,7 +326,7 @@ const FitnessPage = () => {
                   <DuePaymentIndicator />
                 </section>
               )}
-              {!homeStats?.onboardingCompleted && <QuestionnaireTile />}
+              {/* {!homeStats?.onboardingCompleted && <QuestionnaireTile />} */}
 
               {showComponent && (
                 <WeeklyCheckinTile
