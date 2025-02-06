@@ -111,7 +111,7 @@ function LandingPage() {
 
       memberCode: code,
       response: filteredResponse,
-      ...(screen === 2 && section === 'lifestyle' && { completed: true }), // Add `completed: true` if section is 'lifestyle'
+      ...(screen === 5 && section === 'fitness' && { completed: true }), // Add `completed: true` if section is 'lifestyle'
     };
     setButtonDisable(true);
     if (screen === 4 && section === 'nutrition' && showMealScreen === false) {
@@ -346,6 +346,7 @@ function LandingPage() {
             fitnessScoreData={fitnessScoreData}
             setShowFitnessInsightScreen={setShowFitnessInsightScreen}
             fitnessScorePageLoading={fitnessScorePageLoading}
+            setLoading={setLoading}
           />{' '}
         </div>
       )}

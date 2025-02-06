@@ -13,7 +13,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useUserContext } from '../../contexts/UserContext';
 import { capitalizeFirstLetter } from '../../utils';
 import { axiosClient } from '../Profile/apiProfileClient';
-import MonthlyWrapped from '../Profile/MonthlyWrapped';
 import AdditionalActivity from './AdditionalActivity';
 import DuePaymentIndicator from './DuePaymentIndicator';
 import StepTrackerTwo from './StepTrackerTwo';
@@ -345,12 +344,12 @@ const FitnessPage = () => {
               </section>
 
               <StepTrackerTwo date={new Date()} />
-
+              {/* 
               {currentDate < 5 && (
                 <section className="flex w-full flex-row items-center justify-center gap-3 ">
                   <MonthlyWrapped />
                 </section>
-              )}
+              )} */}
               {homeStats.workoutPlan && (
                 <section>
                   <div className="rounded-xl bg-black-opacity-45 pl-[15px] pr-[12px] pt-2">
