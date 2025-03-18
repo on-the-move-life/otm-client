@@ -36,22 +36,24 @@ const UpdateWorkout = ({ onClose }) => {
   WORKOUT_THEME_OPTIONS.unshift(workout.theme);
 
   useEffect(() => {
-    async function getUserData() {
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/v1/workout/hyper/theme?memberCode=${code}`,
-        );
-        if (res.data) {
-          console.log('ress', res.data);
-          setWorkoutOptions(res.data.msg);
+    if (code) {
+      async function getUserData() {
+        try {
+          const res = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/api/v1/workout/hyper/theme?memberCode=${code}`,
+          );
+          if (res.data) {
+            console.log('ress', res.data);
+            setWorkoutOptions(res.data.msg);
+          }
+        } catch (err) {
+          console.error(err.message);
+        } finally {
         }
-      } catch (err) {
-        console.error(err.message);
-      } finally {
       }
+      getUserData();
     }
-    getUserData();
-  }, []);
+  }, [code]);
 
   const handleUpdateWorkout = () => {
     const { customTheme, customEquipments, customDuration } = inputValues;

@@ -42,6 +42,7 @@ const WorkoutSummary = () => {
   const movementId = queryParams.get('movementId');
   const date = queryParams.get('date');
   const storedLegendTag = localStorage.getItem('isLegend');
+  const code = JSON.parse(localStorage.getItem('user'))['code'];
 
   const { workout, status } = useSelector((store) => store.workoutReducer);
   const summaryRef = useRef(null);
@@ -137,7 +138,7 @@ const WorkoutSummary = () => {
     console.log('input Values : ', inputValues);
     const payload = {
       ...inputValues,
-      code: workout.memberCode,
+      code: code,
       day: workout.day,
       batch: 'HYPER',
       workoutId: movementId,
@@ -145,8 +146,11 @@ const WorkoutSummary = () => {
     };
 
     dispatch(setStatus('loading'));
+    if (!code) {
+      dispatch(setStatus('error'));
+    }
 
-    if (params.value === 'flex') {
+    if (code && params.value === 'flex') {
       axiosflexClient
         .post('/score', payload)
         .then((res) => {
@@ -176,7 +180,7 @@ const WorkoutSummary = () => {
         });
     }
 
-    if (params.value === 'today') {
+    if (code && params.value === 'today') {
       axiosClient
         .post('/score', payload)
         .then((res) => {
